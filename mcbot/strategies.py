@@ -173,6 +173,30 @@ def double_dot_only(mc: pd.DataFrame) -> pd.DataFrame:
     return double_dot(mc, second_only=True)
 
 
+# --- Multi-timeframe dots ------------------------------------------------------
+
+def _armed(start: pd.Series, cancel: pd.Series, window: int) -> pd.Series:
+    """True for up to `window` bars after `start` (inclusive), until `cancel`."""
+    pos = pd.Series(range(len(start)), index=start.index, dtype=float)
+    since_start = pos - pos.where(start).ffill()
+    since_cancel = pos - pos.where(cancel & ~start).ffill()
+    not_cancelled = since_cancel.isna() | (since_cancel > since_start)
+    return (since_start < window) & not_cancelled
+
+
+def mtf_dots(mc: pd.DataFrame, wait_htf_candles: int = 3) -> pd.DataFrame:
+    """A higher-timeframe green dot (on a closed HTF candle) arms the setup;
+    enter on the next lower-timeframe green dot within `wait_htf_candles` HTF
+    candles. An HTF red dot cancels it. Shorts mirror it.
+    Exit on a lower-timeframe red dot (long) / green dot (short)."""
+    window = mc.attrs.get("htf_factor", 4) * wait_htf_candles
+    htf_green = mc["htf_green_dot"] & mc["htf_new"]
+    htf_red = mc["htf_red_dot"] & mc["htf_new"]
+    long_entry = mc["green_dot"] & _armed(htf_green, htf_red, window)
+    short_entry = mc["red_dot"] & _armed(htf_red, htf_green, window)
+    return _frame(mc, long_entry, mc["red_dot"], short_entry, mc["green_dot"])
+
+
 # --- Heikin Ashi --------------------------------------------------------------
 
 def heikin_ashi_trend(mc: pd.DataFrame) -> pd.DataFrame:
@@ -188,6 +212,7 @@ def heikin_ashi_trend(mc: pd.DataFrame) -> pd.DataFrame:
 
 
 STRATEGIES = {
+    "mtf_dots": mtf_dots,
     "double_dot": double_dot,
     "double_dot_only": double_dot_only,
     "heikin_ashi_trend": heikin_ashi_trend,

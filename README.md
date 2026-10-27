@@ -15,6 +15,14 @@ A simple bot that trades with Market Cipher A/B style signals. You can backtest 
 | Money flow divergence / convergence | Compares the last 20 bars of price and money flow with the 20 bars before them (see below) |
 | EMA ribbon | Cipher A EMAs 5/11/15/18/21/24/28/34. Bullish when EMA5 > EMA34 |
 
+## Higher-timeframe dot confirmed by a lower-timeframe dot
+`mtf_dots`: a green dot on the higher timeframe (`--htf 4` = 4 chart candles, so 1h → 4h) arms the setup once that HTF candle has **closed**. The bot then waits up to 3 HTF candles for a green dot on the chart timeframe and enters on it. A green dot that came *before* the HTF dot doesn't count, and an HTF red dot cancels the setup. It exits on a chart-timeframe red dot (or your stops/targets). Shorts mirror it. The higher timeframe is built from real candles and then converted to Heikin Ashi on its own.
+
+```bash
+python main.py backtest --exchange binance --symbol BTC/USDT --timeframe 1h --htf 4 --strategy mtf_dots
+python main.py backtest --exchange binance --symbol BTC/USDT --timeframe 15m --htf 4 --strategy mtf_dots   # 1h dot, 15m confirm
+```
+
 ## Double green dot ("uneven butt cheeks")
 - `double_dot`: take a green dot if momentum lines up (money flow rising). If it doesn't, skip it and wait for a **second green dot within 30 bars that sits higher on the wave** (a higher low: the smaller, "uneven" cheek), with money flow rising this time. Exit on a red dot, or when money flow turns negative. Shorts mirror it with a second, lower red dot.
 - `double_dot_only`: only takes the second-dot setup and never trades single dots.

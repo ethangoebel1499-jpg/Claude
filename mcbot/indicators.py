@@ -182,11 +182,13 @@ def anchor_trigger(wt2: pd.Series, cross_up: pd.Series, cross_down: pd.Series,
     return bull, bear
 
 
-def higher_timeframe(df: pd.DataFrame, factor: int = 4) -> pd.DataFrame:
-    """Money flow, WaveTrend and ribbon trend on a timeframe `factor` times larger.
+def higher_timeframe(df: pd.DataFrame, factor: int = 4, use_heikin_ashi: bool = False,
+                     ob_level: float = OB_LEVEL, os_level: float = OS_LEVEL) -> pd.DataFrame:
+    """Money flow, WaveTrend, dots and ribbon trend on a timeframe `factor` times larger.
 
     Each bar only sees the last *completed* higher-timeframe candle, so there is
-    no lookahead.
+    no lookahead. htf_new marks the first bar after an HTF candle closes, i.e.
+    the bar on which that candle's dot first becomes known.
     """
     if isinstance(df.index, pd.DatetimeIndex) and len(df) > 1:
         # Align to the clock so candles don't shift when the data window moves.
@@ -199,8 +201,14 @@ def higher_timeframe(df: pd.DataFrame, factor: int = 4) -> pd.DataFrame:
     htf = df.groupby(group).agg(open=("open", "first"), high=("high", "max"),
                                 low=("low", "min"), close=("close", "last"),
                                 volume=("volume", "sum"))
-    _, wt2 = wavetrend(htf)
+    if use_heikin_ashi:
+        htf = heikin_ashi(htf)
+    wt1, wt2 = wavetrend(htf)
+    cross_up = (wt1 > wt2) & (wt1.shift() <= wt2.shift())
+    cross_down = (wt1 < wt2) & (wt1.shift() >= wt2.shift())
     vals = pd.DataFrame({
+        "htf_green_dot": cross_up & (wt2 <= os_level),
+        "htf_red_dot": cross_down & (wt2 >= ob_level),
         "htf_money_flow": money_flow(htf),
         "htf_wt2": wt2,
         "htf_wt_rising": wt2 > wt2.shift(),
@@ -208,8 +216,9 @@ def higher_timeframe(df: pd.DataFrame, factor: int = 4) -> pd.DataFrame:
     })
     # Bar in group g uses group g-1 (the last finished HTF candle).
     out = vals.reindex(group - 1).set_axis(df.index)
-    for col in ("htf_wt_rising", "htf_ribbon_bull"):
+    for col in ("htf_wt_rising", "htf_ribbon_bull", "htf_green_dot", "htf_red_dot"):
         out[col] = out[col].astype("boolean").fillna(False).astype(bool)
+    out["htf_new"] = np.r_[True, group[1:] != group[:-1]]
     return out
 
 
@@ -235,13 +244,16 @@ def heikin_ashi(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def market_cipher(df: pd.DataFrame, ob_level: float = OB_LEVEL,
-                  os_level: float = OS_LEVEL, use_heikin_ashi: bool = False) -> pd.DataFrame:
+                  os_level: float = OS_LEVEL, use_heikin_ashi: bool = False,
+                  htf_factor: int = 4) -> pd.DataFrame:
     """Compute all Cipher A/B components and return them alongside df.
 
     With use_heikin_ashi, everything is calculated on Heikin Ashi candles and the
     returned open/high/low/close are the Heikin Ashi values. Fill trades at the
     real prices: Heikin Ashi prices can't actually be traded.
     """
+    # Higher timeframe is built from the real candles (then Heikin Ashi'd on its own).
+    htf = higher_timeframe(df, htf_factor, use_heikin_ashi, ob_level, os_level)
     if use_heikin_ashi:
         df = heikin_ashi(df)
     out = df.copy()
@@ -266,7 +278,8 @@ def market_cipher(df: pd.DataFrame, ob_level: float = OB_LEVEL,
     out["sfp_bull"], out["sfp_bear"] = swing_failure(df)
     out["swing_low50"] = df["low"].rolling(50).min()
     out["swing_high50"] = df["high"].rolling(50).max()
-    out = out.join(higher_timeframe(df))
+    out = out.join(htf)
+    out.attrs["htf_factor"] = htf_factor
     # Candle colour / strength (most useful with Heikin Ashi): a green candle with
     # no lower wick, or a red one with no upper wick, signals a strong trend.
     out["candle_bull"] = df["close"] > df["open"]

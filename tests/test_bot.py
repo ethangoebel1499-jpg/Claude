@@ -249,3 +249,28 @@ def test_liquidation_before_wide_stop():
     res = _one_trade([100.5], [98], [98.5], stop_loss=0.03, take_profits=TP, leverage=50)
     assert res.trades[0].reason == "liquidated"
     assert res.stats["final_equity"] == 0
+
+
+def test_mtf_dots_htf_dot_waits_for_ltf_dot():
+    from mcbot.strategies import mtf_dots
+    n = 30
+    idx = pd.date_range("2024-01-01", periods=n, freq="h", tz="UTC")
+    mc = pd.DataFrame(False, index=idx, columns=["green_dot", "red_dot", "htf_green_dot",
+                                                 "htf_red_dot", "htf_new"])
+    mc.attrs["htf_factor"] = 4                 # window = 4 * 3 = 12 bars
+    mc.loc[idx[2], "green_dot"] = True         # LTF dot BEFORE the HTF dot: ignored
+    mc.loc[idx[4], ["htf_green_dot", "htf_new"]] = True   # HTF dot known on bar 4
+    mc.loc[idx[7], "green_dot"] = True         # LTF dot confirms: enter
+    mc.loc[idx[20], "green_dot"] = True        # 16 bars later: window expired
+    sig = mtf_dots(mc)
+    assert sig["long_entry"].tolist().count(True) == 1 and sig["long_entry"].iloc[7]
+
+    # An HTF red dot between them cancels the setup.
+    mc.loc[idx[5], ["htf_red_dot", "htf_new"]] = True
+    assert not mtf_dots(mc)["long_entry"].iloc[7]
+
+
+def test_htf_dots_use_only_closed_htf_candles(df):
+    full = market_cipher(df)
+    cut = market_cipher(df.iloc[:1501])
+    pd.testing.assert_series_equal(full["htf_green_dot"].iloc[:1501], cut["htf_green_dot"])
