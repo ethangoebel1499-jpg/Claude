@@ -24,6 +24,8 @@ Every condition is shown as 🟢 YES / 🔴 NO with an overall 🟢 TRADE / 🔴
 - The stop **trails the 21 EMA** on every closed candle, which moves it into profit and lets the rest ride.
 - A full opposite setup also closes the trade. When the lights are green, `signals` prints the exact stop and target prices.
 
+`--min-rr 1.5` only takes a trade if target 1 is at least 1.5× as far as the stop. If the first level is too close, the next level becomes target 1; if neither qualifies, the trade is skipped. `--from 2017-01-01` limits the backtest to recent data.
+
 `--exits fixed` keeps the percentage exits (`--stop`, `--tp`, `--trail`).
 
 **Short:** the mirror image. A rejection below a zone, price below a falling 21 EMA, a red-dot anchor, money flow falling into red, and a lower-high trigger wave.

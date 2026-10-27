@@ -43,6 +43,8 @@ def signals_for(df: pd.DataFrame, args) -> tuple[pd.DataFrame, pd.DataFrame]:
 
 def cmd_backtest(args) -> None:
     df = load(args)
+    if args.start:
+        df = df[df.index >= pd.Timestamp(args.start, tz="UTC")]
     mc, sig = signals_for(df, args)
     print(f"{len(df)} bars  {df.index[0]} -> {df.index[-1]}  "
           f"({'Heikin Ashi' if args.heikin_ashi else 'regular'} candles, {args.exits} exits)\n")
@@ -50,7 +52,8 @@ def cmd_backtest(args) -> None:
         # Stop under the 21 EMA (above resistance for shorts), 50% at the next 4h
         # level, 25% at the level after, stop trails the 21 EMA.
         res = run_level_backtest(df, sig, topdown_exit_levels(mc, buffer=args.stop_buffer),
-                                 allow_short=args.short, leverage=args.leverage, fee=args.fee)
+                                 allow_short=args.short, leverage=args.leverage, fee=args.fee,
+                                 min_rr=args.min_rr)
     else:
         res = run_backtest(df, sig, allow_short=args.short,
                            stop_loss=args.stop or None, take_profit=args.target or None,
@@ -143,6 +146,10 @@ def main() -> None:
     b.add_argument("--exits", choices=["video", "fixed"], default="video",
                    help="video: stop under the 21 EMA, 50%% / 25%% at the next 4h levels, trail the "
                         "21 EMA (default). fixed: --stop/--tp/--trail percentages")
+    b.add_argument("--min-rr", type=float, default=None,
+                   help="video exits: target 1 must be at least this many times the stop distance; "
+                        "use the next level if not, skip if no level qualifies (e.g. 1.5)")
+    b.add_argument("--from", dest="start", help="only use candles from this date on, e.g. 2017-01-01")
     b.add_argument("--stop-buffer", type=float, default=0.002,
                    help="video exits: distance beyond the 21 EMA / level for the stop (0.002 = 0.2%%)")
     b.add_argument("--breakeven", action="store_true", help="move stop to entry after the first target")
