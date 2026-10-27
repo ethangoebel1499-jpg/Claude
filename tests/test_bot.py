@@ -172,3 +172,39 @@ def test_stops_on_close_ignores_wicks():
     on_close = run_backtest(df, sig, stop_loss=0.03, take_profit=None, fee=0, stops_on_close=True)
     t = on_close.trades[0]
     assert t.exit_time == idx[4] and t.exit_price == 95 and t.reason == "stop"
+
+
+def _dot_frame(green_at, wt2_vals, mf_vals):
+    n = len(wt2_vals)
+    idx = pd.date_range("2024-01-01", periods=n, freq="h", tz="UTC")
+    green = pd.Series(False, index=idx)
+    green.iloc[green_at] = True
+    return pd.DataFrame({"wt2": wt2_vals, "money_flow": mf_vals, "green_dot": green,
+                         "red_dot": False}, index=idx)
+
+
+def test_double_dot_waits_for_higher_second_dot():
+    from mcbot.strategies import double_dot, double_dot_only
+    # Dot 1 at bar 4 (wt2 -70): money flow falling, so skip.
+    # Dot 2 at bar 10 (wt2 -55, higher): money flow rising, so enter.
+    mf = [5, 4, 3, 2, 1, 1, 1, 2, 3, 4, 5, 6]
+    wt2 = [-50, -60, -65, -68, -70, -60, -50, -52, -54, -56, -55, -40]
+    mc = _dot_frame([4, 10], wt2, mf)
+    sig = double_dot(mc)
+    assert not sig["long_entry"].iloc[4]
+    assert sig["long_entry"].iloc[10]
+    assert double_dot_only(mc)["long_entry"].iloc[10]
+
+    # Second dot LOWER than the first is not the double-dot setup.
+    # (double_dot still takes it as a plain dot with momentum.)
+    wt2_lower = wt2.copy()
+    wt2_lower[10] = -80
+    assert not double_dot_only(_dot_frame([4, 10], wt2_lower, mf))["long_entry"].iloc[10]
+
+
+def test_double_dot_takes_first_dot_when_momentum_lines_up():
+    from mcbot.strategies import double_dot, double_dot_only
+    mf = [1, 2, 3, 4, 5, 6, 7, 8]
+    mc = _dot_frame([4], [-60] * 8, mf)
+    assert double_dot(mc)["long_entry"].iloc[4]
+    assert not double_dot_only(mc)["long_entry"].iloc[4]

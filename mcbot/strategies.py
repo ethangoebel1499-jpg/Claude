@@ -133,6 +133,46 @@ def casper_swing(mc: pd.DataFrame) -> pd.DataFrame:
     return _frame(mc, long_entry, long_exit, short_entry, short_exit)
 
 
+# --- Double dot ("uneven butt cheeks") ----------------------------------------
+
+def _previous_dot(dot: pd.Series, wt2: pd.Series, confirmed: pd.Series):
+    """For every bar: bars since the previous dot, its wt2 level, and whether
+    momentum lined up at it. Only looks at dots strictly before the bar."""
+    pos = pd.Series(range(len(dot)), index=dot.index, dtype=float)
+    last_pos = pos.where(dot).shift().ffill()
+    last_wt2 = wt2.where(dot).shift().ffill()
+    last_ok = confirmed.astype(float).where(dot).shift().ffill()
+    return pos - last_pos, last_wt2, last_ok == 1
+
+
+def double_dot(mc: pd.DataFrame, max_gap: int = 30, min_gap: int = 3,
+               second_only: bool = False) -> pd.DataFrame:
+    """Take a green dot when momentum (money flow) lines up. If it doesn't,
+    wait for a second, *higher* green dot (a higher low on the wave, the
+    "uneven butt cheeks") within `max_gap` bars where momentum does line up.
+    Shorts mirror it with a second, lower red dot. With second_only, single
+    dots are never traded."""
+    mf = mc["money_flow"]
+    wt2 = mc["wt2"]
+
+    def entries(dot, mom, higher):
+        gap, prev_wt2, prev_ok = _previous_dot(dot, wt2, mom)
+        uneven = (wt2 > prev_wt2) if higher else (wt2 < prev_wt2)
+        second = dot & mom & ~prev_ok & uneven & gap.between(min_gap, max_gap)
+        return second if second_only else second | (dot & mom)
+
+    long_entry = entries(mc["green_dot"], mf > mf.shift(3), higher=True)
+    short_entry = entries(mc["red_dot"], mf < mf.shift(3), higher=False)
+    long_exit = mc["red_dot"] | ((mf < 0) & (mf.shift() >= 0))
+    short_exit = mc["green_dot"] | ((mf > 0) & (mf.shift() <= 0))
+    return _frame(mc, long_entry, long_exit, short_entry, short_exit)
+
+
+def double_dot_only(mc: pd.DataFrame) -> pd.DataFrame:
+    """Only the second, higher green dot (or lower red dot); skip single dots."""
+    return double_dot(mc, second_only=True)
+
+
 # --- Heikin Ashi --------------------------------------------------------------
 
 def heikin_ashi_trend(mc: pd.DataFrame) -> pd.DataFrame:
@@ -148,6 +188,8 @@ def heikin_ashi_trend(mc: pd.DataFrame) -> pd.DataFrame:
 
 
 STRATEGIES = {
+    "double_dot": double_dot,
+    "double_dot_only": double_dot_only,
     "heikin_ashi_trend": heikin_ashi_trend,
     "cryptoface_swing": cryptoface_swing,
     "cryptoface_scalp": cryptoface_scalp,

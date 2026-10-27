@@ -15,6 +15,10 @@ A simple bot that trades with Market Cipher A/B style signals. You can backtest 
 | Money flow divergence / convergence | Compares the last 20 bars of price and money flow with the 20 bars before them (see below) |
 | EMA ribbon | Cipher A EMAs 5/11/15/18/21/24/28/34. Bullish when EMA5 > EMA34 |
 
+## Double green dot ("uneven butt cheeks")
+- `double_dot`: take a green dot if momentum lines up (money flow rising). If it doesn't, skip it and wait for a **second green dot within 30 bars that sits higher on the wave** (a higher low: the smaller, "uneven" cheek), with money flow rising this time. Exit on a red dot, or when money flow turns negative. Shorts mirror it with a second, lower red dot.
+- `double_dot_only`: only takes the second-dot setup and never trades single dots.
+
 ## Heikin Ashi candles
 All indicators and signals are calculated on **Heikin Ashi** candles by default. These are smoothed candles: close = (O+H+L+C)/4, and open = the average of the previous HA open and close. Backtest and live trades still fill at **real** prices, because Heikin Ashi prices don't exist on the exchange and filling at them would give fake results. Add `--no-heikin-ashi` to use regular candles.
 
