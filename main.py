@@ -18,6 +18,7 @@ import pandas as pd
 
 from mcbot import bot, data
 from mcbot.backtest import parse_take_profits, run_backtest
+from mcbot.entry_quality import summarize
 from mcbot.indicators import market_cipher
 from mcbot.strategies import STRATEGIES, build_signals
 
@@ -66,6 +67,19 @@ def cmd_signals(args) -> None:
     sig = build_signals(mc, args.strategy, mf_turn=args.mf_turn,
                         convergence=args.convergence).iloc[-1]
     print(f"\n{args.strategy} on last closed bar: { {k: bool(v) for k, v in sig.items()} }")
+
+
+def cmd_entries(args) -> None:
+    """Score entries only: how often price hits the target before the stop."""
+    df = load(args)
+    mc = market_cipher(df, use_heikin_ashi=args.heikin_ashi, htf_factor=args.htf)
+    names = list(STRATEGIES) if args.compare else [args.strategy]
+    unit = "x ATR" if args.mode == "atr" else "price fraction"
+    print(f"{len(df)} bars. Target {args.target_dist} / stop {args.stop_dist} ({unit}), "
+          f"within {args.max_bars} bars.\n")
+    rows = {n: summarize(df, build_signals(mc, n, mf_turn=args.mf_turn, convergence=args.convergence),
+                         args.target_dist, args.stop_dist, args.mode, args.max_bars) for n in names}
+    print(pd.DataFrame(rows).T.sort_values("hit_rate_pct", ascending=False).to_string())
 
 
 def cmd_trade(args, live: bool) -> None:
@@ -126,6 +140,15 @@ def main() -> None:
     b.add_argument("--tp", help='scaled take-profits, price%%:size%%, e.g. "1:50,2:25,3:25"; '
                         '"ride" = hold the rest until the opposite setup, e.g. "1.5:50,2.5:25,ride:25"')
     b.set_defaults(func=cmd_backtest)
+
+    e = sub.add_parser("entries", parents=[common, source],
+                       help="score entry quality: target-before-stop hit rate vs random")
+    e.add_argument("--compare", action="store_true", help="score every strategy")
+    e.add_argument("--mode", choices=["pct", "atr"], default="pct")
+    e.add_argument("--target-dist", type=float, default=0.015, help="target distance (0.015 = 1.5%%)")
+    e.add_argument("--stop-dist", type=float, default=0.03, help="stop distance (0.03 = 3%%)")
+    e.add_argument("--max-bars", type=int, default=48)
+    e.set_defaults(func=cmd_entries)
 
     s = sub.add_parser("signals", parents=[common, source])
     s.add_argument("--rows", type=int, default=15)

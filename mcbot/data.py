@@ -43,13 +43,20 @@ def fetch_ohlcv(exchange, symbol: str, timeframe: str = "1h", limit: int = 1000)
 
 
 def load_csv(path: str) -> pd.DataFrame:
-    """CSV with a timestamp column (first column) and open/high/low/close/volume."""
+    """CSV with a timestamp column (first column) and open/high/low/close/volume.
+
+    The timestamp can be unix seconds (TradingView exports), unix milliseconds,
+    or a date string. Volume is optional.
+    """
     df = pd.read_csv(path)
     df.columns = [c.strip().lower() for c in df.columns]
-    ts_col = df.columns[0]
-    ts = df[ts_col]
-    df.index = pd.to_datetime(ts, unit="ms", utc=True) if np.issubdtype(ts.dtype, np.number) \
-        else pd.to_datetime(ts, utc=True)
+    ts = df[df.columns[0]]
+    if pd.api.types.is_numeric_dtype(ts):
+        df.index = pd.to_datetime(ts, unit="s" if ts.max() < 1e11 else "ms", utc=True)
+    else:
+        df.index = pd.to_datetime(ts, utc=True)
+    if "volume" not in df.columns:
+        df["volume"] = 1.0
     return df[COLUMNS].astype(float)
 
 

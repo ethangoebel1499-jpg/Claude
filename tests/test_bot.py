@@ -380,3 +380,42 @@ def test_trail_stop_moves_to_target1_after_target2():
     assert tr.pnl_pct == pytest.approx(0.5 * 0.075 + 0.25 * 0.125 + 0.25 * 0.075)
     # With breakeven only, the runner is still open at the end (no stop at +1.5%).
     assert be[0].reason == "end"
+
+
+def test_entry_quality_outcomes():
+    from mcbot.entry_quality import outcomes
+    idx = pd.date_range("2024-01-01", periods=6, freq="h", tz="UTC")
+    df = pd.DataFrame({"open": [100] * 6, "high": [100, 100.5, 101.6, 100, 100, 100],
+                       "low": [100, 99.5, 99.0, 100, 96, 100], "close": [100] * 6}, index=idx, dtype=float)
+    e = pd.Series([True, False, False, True, False, False], index=idx)
+    res = outcomes(df, e, "long", 0.015, 0.03, "pct", max_bars=3)
+    assert res.iloc[0] == 1.0     # +1.5% at bar 2 before -3%
+    assert res.iloc[1] == 0.0     # entry bar 4 open 100 -> low 96 hits the stop
+
+
+def test_second_dot_confirmed_waits_for_green_candle():
+    from mcbot.strategies import second_dot_confirmed
+    n = 15
+    idx = pd.date_range("2024-01-01", periods=n, freq="h", tz="UTC")
+    mc = pd.DataFrame({"green_dot": False, "red_dot": False, "candle_bull": False,
+                       "wt2": -50.0}, index=idx)
+    mc.loc[idx[3], ["green_dot", "wt2"]] = [True, -75.0]   # first, deeper dot
+    mc.loc[idx[9], ["green_dot", "wt2"]] = [True, -58.0]   # second, higher dot
+    mc.loc[idx[10], "candle_bull"] = True                  # confirming candle
+    sig = second_dot_confirmed(mc)
+    assert sig["long_entry"].tolist().count(True) == 1 and sig["long_entry"].iloc[10]
+    mc.loc[idx[10], "candle_bull"] = False                 # no confirmation -> no trade
+    assert not second_dot_confirmed(mc)["long_entry"].any()
+
+
+@pytest.mark.parametrize("times", [[1704067200, 1704070800],                 # unix seconds (TradingView)
+                                   [1704067200000, 1704070800000],           # unix ms
+                                   ["2024-01-01 00:00:00", "2024-01-01 01:00:00"]])
+def test_load_csv_timestamp_formats(tmp_path, times):
+    from mcbot.data import load_csv
+    p = tmp_path / "c.csv"
+    pd.DataFrame({"time": times, "open": [1, 2], "high": [2, 3], "low": [0.5, 1.5],
+                  "close": [1.5, 2.5]}).to_csv(p, index=False)
+    df = load_csv(str(p))
+    assert df.index[0] == pd.Timestamp("2024-01-01", tz="UTC")
+    assert (df["volume"] == 1.0).all()

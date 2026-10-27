@@ -171,6 +171,38 @@ def double_dot_only(mc: pd.DataFrame) -> pd.DataFrame:
     return double_dot(mc, second_only=True)
 
 
+# --- Refined entries ------------------------------------------------------------
+# Chosen by entry quality (hitting a target before a stop twice as far away) on
+# real EUR/USD 1h data: plain dots ~72%, random ~66%, these two ~82-84%.
+
+def _confirm_next_candle(long_setup: pd.Series, short_setup: pd.Series, mc: pd.DataFrame):
+    """Enter one bar after the setup, only if that candle closes in our direction
+    (green / red Heikin Ashi candle when running on Heikin Ashi)."""
+    return (long_setup.shift(1, fill_value=False) & mc["candle_bull"],
+            short_setup.shift(1, fill_value=False) & ~mc["candle_bull"])
+
+
+def second_dot_confirmed(mc: pd.DataFrame) -> pd.DataFrame:
+    """Second green dot within 3-30 bars that is HIGHER on the wave than the
+    first (uneven butt cheeks), then a green candle to confirm. Shorts mirror it."""
+    yes = pd.Series(True, index=mc.index)
+    gap, prev_wt2, _ = _previous_dot(mc["green_dot"], mc["wt2"], yes)
+    long_setup = mc["green_dot"] & gap.between(3, 30) & (mc["wt2"] > prev_wt2)
+    gap, prev_wt2, _ = _previous_dot(mc["red_dot"], mc["wt2"], yes)
+    short_setup = mc["red_dot"] & gap.between(3, 30) & (mc["wt2"] < prev_wt2)
+    long_entry, short_entry = _confirm_next_candle(long_setup, short_setup, mc)
+    return _frame(mc, long_entry, mc["red_dot"], short_entry, mc["green_dot"])
+
+
+def dot_htf_confirmed(mc: pd.DataFrame, htf_level: float = -40) -> pd.DataFrame:
+    """Green dot while the higher-timeframe wave is oversold (below -40), then a
+    green candle to confirm. Shorts mirror it above +40."""
+    long_setup = mc["green_dot"] & (mc["htf_wt2"] < htf_level)
+    short_setup = mc["red_dot"] & (mc["htf_wt2"] > -htf_level)
+    long_entry, short_entry = _confirm_next_candle(long_setup, short_setup, mc)
+    return _frame(mc, long_entry, mc["red_dot"], short_entry, mc["green_dot"])
+
+
 # --- Multi-timeframe dots ------------------------------------------------------
 
 def _armed(start: pd.Series, cancel: pd.Series, window: int) -> pd.Series:
@@ -209,6 +241,8 @@ def heikin_ashi_trend(mc: pd.DataFrame) -> pd.DataFrame:
 
 
 STRATEGIES = {
+    "second_dot_confirmed": second_dot_confirmed,
+    "dot_htf_confirmed": dot_htf_confirmed,
     "mtf_dots": mtf_dots,
     "double_dot": double_dot,
     "double_dot_only": double_dot_only,

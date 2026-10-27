@@ -15,6 +15,25 @@ A simple bot that trades with Market Cipher A/B style signals. You can backtest 
 | Money flow divergence / convergence | Compares the last 20 bars of price and money flow with the 20 bars before them (see below) |
 | EMA ribbon | Cipher A EMAs 5/11/15/18/21/24/28/34. Bullish when EMA5 > EMA34 |
 
+## Better entries (entry quality)
+Your exits (target 1 at half the stop distance) only pay off if an entry hits target 1 before the stop about **75–80%** of the time. A random entry manages about **66%**. Use `entries` to score this for any strategy, with no exits involved:
+
+```bash
+python main.py entries --exchange binance --symbol BTC/USDT --timeframe 1h --limit 5000 --compare   # 1.5% target vs 3% stop
+python main.py entries --csv tradingview_export.csv --compare --mode atr --target-dist 1 --stop-dist 2
+```
+
+On real **EUR/USD 1h data (2017)**, using a target of 1 ATR and a stop of 2 ATR:
+
+| Entry | Hit target first | Signals |
+|---|---|---|
+| Random | 66% | — |
+| Plain green dot (`dots`) | 72% | 292 |
+| `second_dot_confirmed`: second dot higher than the first (3–30 bars apart), then a green candle confirms | **82%** | 45 |
+| `dot_htf_confirmed`: green dot while the 4h wave is below -40, then a green candle confirms | **84%** | 61 |
+
+Both held up in each half of the year, and with a 2 ATR target and 4 ATR stop. Caveats: this is forex, not crypto, it covers one year, and the samples are small (about ±6–7 points), so confirm on crypto data with `entries` before trusting it.
+
 ## Higher-timeframe dot confirmed by a lower-timeframe dot
 `mtf_dots`: a green dot on the higher timeframe (`--htf 4` = 4 chart candles, so 1h → 4h) arms the setup once that HTF candle has **closed**. The bot then waits up to 3 HTF candles for a green dot on the chart timeframe and enters on it. A green dot that came *before* the HTF dot doesn't count, and an HTF red dot cancels the setup. It exits on a chart-timeframe red dot (or your stops/targets). Shorts mirror it. The higher timeframe is built from real candles and then converted to Heikin Ashi on its own.
 
