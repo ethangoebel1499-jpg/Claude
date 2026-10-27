@@ -435,21 +435,3 @@ def test_make_exchange_honours_proxy_env():
     from mcbot.data import make_exchange
     ex = make_exchange("kraken")
     assert ex.requests_trust_env is True
-
-
-def test_min_reward_to_risk_uses_next_level_or_skips():
-    from mcbot.backtest import run_level_backtest
-    idx = pd.date_range("2024-01-01", periods=4, freq="h", tz="UTC")
-    df = pd.DataFrame({"open": [100, 100, 101, 104], "high": [100, 101.2, 104.5, 104.5],
-                       "low": [99.5, 99.6, 100.8, 103], "close": [100, 101, 104, 104], "volume": 1.0}, index=idx)
-    sig = pd.DataFrame(False, index=idx, columns=["long_entry", "long_exit", "short_entry", "short_exit"])
-    sig.iloc[0, 0] = True
-    base = {"long_stop": 99.0, "long_trail": 99.0, "short_stop": np.nan, "short_trail": np.nan,
-            "short_tp1": np.nan, "short_tp2": np.nan}
-    # Stop 1.0 away; level 1 only 1.0 away (1:1) -> level 2 (4.0 away) becomes target 1.
-    lv = pd.DataFrame({**base, "long_tp1": 101.0, "long_tp2": 104.0}, index=idx)
-    t = run_level_backtest(df, sig, lv, fee=0, min_rr=1.5).trades[0]
-    assert t.fills[0][3] == "target1" and t.fills[0][1] == 104.0 and t.fills[0][2] == 0.5
-    # Neither level far enough -> no trade.
-    lv = pd.DataFrame({**base, "long_tp1": 101.0, "long_tp2": 101.2}, index=idx)
-    assert run_level_backtest(df, sig, lv, fee=0, min_rr=1.5).trades == []

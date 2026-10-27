@@ -24,7 +24,7 @@ Every condition is shown as 🟢 YES / 🔴 NO with an overall 🟢 TRADE / 🔴
 - The stop **trails the 21 EMA** on every closed candle, which moves it into profit and lets the rest ride.
 - A full opposite setup also closes the trade. When the lights are green, `signals` prints the exact stop and target prices.
 
-`--min-rr 1.5` only takes a trade if target 1 is at least 1.5× as far as the stop. If the first level is too close, the next level becomes target 1; if neither qualifies, the trade is skipped. `--from 2017-01-01` limits the backtest to recent data.
+`--from 2017-01-01` limits the backtest to recent data.
 
 `--exits fixed` keeps the percentage exits (`--stop`, `--tp`, `--trail`).
 
@@ -83,7 +83,6 @@ CSV files need a timestamp first column (unix seconds as in TradingView exports,
 
 ## Money flow sensitivity
 - `--mf-period N` (default 60): how many candles money flow averages over. **Smaller makes it looser and faster**, so it crosses zero more often and the money flow light turns green more.
-- `--mf-multiplier X` (default 150): scales the wave's height only. It barely changes when money flow crosses zero.
 
 Measured on the real data (EUR/USD 1h, BTC daily as 1h, 4 stocks as 1h) with the video's exits at 5×:
 
@@ -94,7 +93,7 @@ Measured on the real data (EUR/USD 1h, BTC daily as 1h, 4 stocks as 1h) with the
 | 20 | 51 | 10.8% | 14 | 10 | 20% | -2.2% |
 | 14 | 61 | 13.0% | 26 | 21 | 33% | -1.3% |
 
-(Multiplier 300 gave almost identical results.) The samples are still small.
+The samples are still small.
 
 ## Exits and risk (backtest)
 - `--stop` and `--tp` levels are **price** moves. At 5x, a 3% stop costs 15% of the account, plus fees charged on the leveraged notional.

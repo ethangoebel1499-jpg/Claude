@@ -37,7 +37,7 @@ def load(args) -> pd.DataFrame:
 
 def signals_for(df: pd.DataFrame, args) -> tuple[pd.DataFrame, pd.DataFrame]:
     mc = market_cipher(df, use_heikin_ashi=args.heikin_ashi, htf_factor=args.htf,
-                       mf_period=args.mf_period, mf_multiplier=args.mf_multiplier)
+                       mf_period=args.mf_period)
     return mc, build_signals(mc)
 
 
@@ -52,8 +52,7 @@ def cmd_backtest(args) -> None:
         # Stop under the 21 EMA (above resistance for shorts), 50% at the next 4h
         # level, 25% at the level after, stop trails the 21 EMA.
         res = run_level_backtest(df, sig, topdown_exit_levels(mc, buffer=args.stop_buffer),
-                                 allow_short=args.short, leverage=args.leverage, fee=args.fee,
-                                 min_rr=args.min_rr)
+                                 allow_short=args.short, leverage=args.leverage, fee=args.fee)
     else:
         res = run_backtest(df, sig, allow_short=args.short,
                            stop_loss=args.stop or None, take_profit=args.target or None,
@@ -107,7 +106,7 @@ def cmd_trade(args, live: bool) -> None:
             fraction=args.fraction, stop_loss=args.stop or None, take_profit=args.target or None,
             poll_seconds=args.poll, heikin_ashi=args.heikin_ashi,
             stops_on_close=args.stops_on_close, htf_factor=args.htf,
-            mf_period=args.mf_period, mf_multiplier=args.mf_multiplier)
+            mf_period=args.mf_period)
 
 
 def main() -> None:
@@ -126,8 +125,6 @@ def main() -> None:
                         help="support/resistance timeframe = this many chart candles (4: 1h -> 4h)")
     common.add_argument("--mf-period", type=int, default=60,
                         help="money flow length in candles; smaller = looser / faster (default 60)")
-    common.add_argument("--mf-multiplier", type=float, default=150,
-                        help="money flow height multiplier (default 150)")
     common.add_argument("--stops-on-close", action="store_true",
                         help="only trigger stop-loss/take-profit on a closed candle (default: intrabar)")
     common.add_argument("--heikin-ashi", default=True, action=argparse.BooleanOptionalAction,
@@ -146,9 +143,6 @@ def main() -> None:
     b.add_argument("--exits", choices=["video", "fixed"], default="video",
                    help="video: stop under the 21 EMA, 50%% / 25%% at the next 4h levels, trail the "
                         "21 EMA (default). fixed: --stop/--tp/--trail percentages")
-    b.add_argument("--min-rr", type=float, default=None,
-                   help="video exits: target 1 must be at least this many times the stop distance; "
-                        "use the next level if not, skip if no level qualifies (e.g. 1.5)")
     b.add_argument("--from", dest="start", help="only use candles from this date on, e.g. 2017-01-01")
     b.add_argument("--stop-buffer", type=float, default=0.002,
                    help="video exits: distance beyond the 21 EMA / level for the stop (0.002 = 0.2%%)")

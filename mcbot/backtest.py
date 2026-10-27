@@ -203,7 +203,6 @@ def run_level_backtest(df: pd.DataFrame, signals: pd.DataFrame, levels: pd.DataF
                        allow_short: bool = False, leverage: float = 1.0,
                        maintenance_margin: float = 0.005, fee: float = 0.001,
                        sizes: tuple[float, float] = (0.5, 0.25),
-                       min_rr: float | None = None,
                        start_equity: float = 10_000.0) -> Result:
     """Backtest with price-level exits (the top-down video's exit plan).
 
@@ -213,10 +212,6 @@ def run_level_backtest(df: pd.DataFrame, signals: pd.DataFrame, levels: pd.DataF
     the rest has no target. After every closed bar the stop trails to
     long_trail (only ever upward; downward for shorts). The opposite entry setup
     closes the trade. Stop is assumed to fill first if a bar touches both.
-
-    min_rr: target 1 must be at least min_rr times as far from the entry as the
-    stop. If the first level is too close, the second level becomes target 1
-    (and there is no target 2); if neither qualifies the trade is skipped.
     """
     o, h, lo, c = (df[k].to_numpy(dtype=float) for k in ("open", "high", "low", "close"))
     idx = df.index
@@ -260,11 +255,6 @@ def run_level_backtest(df: pd.DataFrame, signals: pd.DataFrame, levels: pd.DataF
         levels = [t for t in (t1, t2) if np.isfinite(t) and beyond(t, e)]
         if len(levels) == 2 and not beyond(levels[1], levels[0]):
             levels = levels[:1]
-        if min_rr:
-            risk = abs(e - s0)
-            levels = [t for t in levels if abs(t - e) >= min_rr * risk]
-            if not levels:
-                return  # no target far enough away: skip the trade
         tg = [(t, size) for t, size in zip(levels, sizes)]
         pos = Trade(side, idx[i], e)
         stop, targets = s0, tg

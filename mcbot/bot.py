@@ -131,7 +131,7 @@ def run(exchange, symbol: str, timeframe: str, broker, *,
         allow_short: bool = False, fraction: float = 0.95, stop_loss: float | None = 0.03,
         take_profit: float | None = 0.06, poll_seconds: int = 30, history: int = 500,
         heikin_ashi: bool = True, stops_on_close: bool = False, htf_factor: int = 4,
-        mf_period: int = 60, mf_multiplier: float = 150) -> None:
+        mf_period: int = 60) -> None:
     """Trade only on confirmed (closed) candles.
 
     Entries and signal exits happen once per closed candle. Stops and targets are
@@ -163,7 +163,7 @@ def run(exchange, symbol: str, timeframe: str, broker, *,
                 if stops_on_close:
                     check_stops(broker, float(df["close"].iloc[-1]), stop_loss, take_profit)
                 mc = market_cipher(df, use_heikin_ashi=heikin_ashi, htf_factor=htf_factor,
-                                   mf_period=mf_period, mf_multiplier=mf_multiplier)
+                                   mf_period=mf_period)
                 sig = build_signals(mc).iloc[-1]
                 log.info("\n%s", checklist(mc))
                 pos = broker.position
