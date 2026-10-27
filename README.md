@@ -74,7 +74,8 @@ export MCBOT_API_KEY=... MCBOT_API_SECRET=...
 python main.py live --exchange binance --symbol BTC/USDT --live --sandbox
 ```
 
-Saved data: `datasets/btc_daily_close.csv` holds BTC daily closing prices from 2010-07-18 to 2026-09-15 (5,904 days, `Date,Price`, close only, no open/high/low).
+Saved data: `datasets/btc_1h_kraken_recent.csv` holds the last ~30 days of real Kraken BTC/USD 1h candles (2026-09-27 to 2026-10-27). Kraken's public candle API only serves the latest 720 candles.
+`datasets/btc_daily_close.csv` holds BTC daily closing prices from 2010-07-18 to 2026-09-15 (5,904 days, `Date,Price`, close only, no open/high/low).
 
 CSV files need a timestamp first column (unix seconds as in TradingView exports, unix ms, or a date) plus open/high/low/close, with volume optional.
 

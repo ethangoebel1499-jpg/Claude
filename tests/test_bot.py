@@ -429,3 +429,9 @@ def test_resample_minutes_to_hours(tmp_path):
     h = resample(load_csv(str(p)), "1h")
     assert len(h) == 2
     assert h.iloc[0].tolist() == [100, 160, 99, 159.5, 60]
+
+
+def test_make_exchange_honours_proxy_env():
+    from mcbot.data import make_exchange
+    ex = make_exchange("kraken")
+    assert ex.requests_trust_env is True

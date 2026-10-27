@@ -20,6 +20,10 @@ def make_exchange(name: str, api_key: str | None = None, secret: str | None = No
                   sandbox: bool = False):
     import ccxt
     ex = getattr(ccxt, name)({"apiKey": api_key, "secret": secret, "enableRateLimit": True})
+    # ccxt ignores HTTP(S)_PROXY by default; honour it so the bot works behind a proxy.
+    ex.requests_trust_env = True
+    if hasattr(ex, "session") and ex.session is not None:
+        ex.session.trust_env = True
     if sandbox:
         ex.set_sandbox_mode(True)
     return ex
