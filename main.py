@@ -40,7 +40,7 @@ def cmd_backtest(args) -> None:
     for name in names:
         res = run_backtest(df, STRATEGIES[name](mc), allow_short=args.short,
                            stop_loss=args.stop or None, take_profit=args.target or None,
-                           fee=args.fee)
+                           fee=args.fee, stops_on_close=args.stops_on_close)
         rows[name] = res.stats
         if not args.compare:
             for t in res.trades[-10:]:
@@ -75,7 +75,8 @@ def cmd_trade(args, live: bool) -> None:
         allow_short = args.short
     bot.run(ex, args.symbol, args.timeframe, args.strategy, broker, allow_short=allow_short,
             fraction=args.fraction, stop_loss=args.stop or None, take_profit=args.target or None,
-            poll_seconds=args.poll, heikin_ashi=args.heikin_ashi)
+            poll_seconds=args.poll, heikin_ashi=args.heikin_ashi,
+            stops_on_close=args.stops_on_close)
 
 
 def main() -> None:
@@ -91,6 +92,8 @@ def main() -> None:
     common.add_argument("--stop", type=float, default=0.03, help="stop-loss fraction, 0 to disable")
     common.add_argument("--target", type=float, default=0.06, help="take-profit fraction, 0 to disable")
     common.add_argument("--fee", type=float, default=0.001, help="fee per side")
+    common.add_argument("--stops-on-close", action="store_true",
+                        help="only trigger stop-loss/take-profit on a closed candle (default: intrabar)")
     common.add_argument("--heikin-ashi", default=True, action=argparse.BooleanOptionalAction,
                         help="calculate signals on Heikin Ashi candles (trades still fill at real prices)")
 

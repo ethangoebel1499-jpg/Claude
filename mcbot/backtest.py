@@ -1,8 +1,10 @@
 """Bar-by-bar backtester.
 
-Signals computed on bar i's close are filled at bar i+1's open. Stop-loss and
-take-profit are checked against each bar's high/low; if both are hit in the
-same bar the stop is assumed to fill first (conservative).
+Signals computed on bar i's close (a confirmed candle) are filled at bar i+1's
+open. By default stop-loss and take-profit are checked intrabar against each
+bar's high/low; if both are hit in the same bar the stop is assumed to fill
+first (conservative). With stops_on_close they are only checked against each
+bar's close and filled at the next open, like every other exit.
 """
 
 from __future__ import annotations
@@ -33,7 +35,8 @@ class Result:
 
 def run_backtest(df: pd.DataFrame, signals: pd.DataFrame, *, allow_short: bool = False,
                  stop_loss: float | None = 0.03, take_profit: float | None = 0.06,
-                 fee: float = 0.001, start_equity: float = 10_000.0) -> Result:
+                 fee: float = 0.001, start_equity: float = 10_000.0,
+                 stops_on_close: bool = False) -> Result:
     o = df["open"].to_numpy()
     h = df["high"].to_numpy()
     lo = df["low"].to_numpy()
@@ -60,6 +63,13 @@ def run_backtest(df: pd.DataFrame, signals: pd.DataFrame, *, allow_short: bool =
         # 1) act on the previous bar's signals at this bar's open
         if i > 0:
             p = i - 1
+            if pos is not None and stops_on_close:
+                direction = 1 if pos.side == "long" else -1
+                move = direction * (c[p] - pos.entry_price) / pos.entry_price
+                if stop_loss and move <= -stop_loss:
+                    close(i, o[i], "stop")
+                elif take_profit and move >= take_profit:
+                    close(i, o[i], "target")
             if pos is not None:
                 if pos.side == "long" and sig["long_exit"][p]:
                     close(i, o[i], "signal")
@@ -72,7 +82,7 @@ def run_backtest(df: pd.DataFrame, signals: pd.DataFrame, *, allow_short: bool =
                     pos = Trade("short", idx[i], o[i])
 
         # 2) intrabar stop-loss / take-profit
-        if pos is not None:
+        if pos is not None and not stops_on_close:
             ep = pos.entry_price
             if pos.side == "long":
                 sl = ep * (1 - stop_loss) if stop_loss else None

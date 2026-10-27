@@ -15,6 +15,8 @@ import time
 from dataclasses import asdict, dataclass
 from pathlib import Path
 
+import pandas as pd
+
 from .data import fetch_ohlcv
 from .indicators import market_cipher
 from .strategies import STRATEGIES
@@ -116,10 +118,25 @@ def check_stops(broker, price: float, stop_loss: float | None, take_profit: floa
         broker.close(price, "target")
 
 
+def closed_candles(exchange, symbol: str, timeframe: str, history: int = 500) -> pd.DataFrame:
+    """Fetch candles and drop the last one if it is still forming."""
+    tf_ms = exchange.parse_timeframe(timeframe) * 1000
+    df = fetch_ohlcv(exchange, symbol, timeframe, limit=history)
+    if df.index[-1].value // 10**6 + tf_ms > exchange.milliseconds():
+        df = df.iloc[:-1]
+    return df
+
+
 def run(exchange, symbol: str, timeframe: str, strategy: str, broker, *,
         allow_short: bool = False, fraction: float = 0.95, stop_loss: float | None = 0.03,
         take_profit: float | None = 0.06, poll_seconds: int = 30, history: int = 500,
-        heikin_ashi: bool = True) -> None:
+        heikin_ashi: bool = True, stops_on_close: bool = False) -> None:
+    """Trade only on confirmed (closed) candles.
+
+    Entries and signal exits happen once per closed candle. Stops and targets are
+    checked on every poll unless stops_on_close is set, in which case they are
+    also only checked against each closed candle's close.
+    """
     strat = STRATEGIES[strategy]
     tf_ms = exchange.parse_timeframe(timeframe) * 1000
     last_bar = None
@@ -129,15 +146,22 @@ def run(exchange, symbol: str, timeframe: str, strategy: str, broker, *,
     while True:
         try:
             price = float(exchange.fetch_ticker(symbol)["last"])
-            check_stops(broker, price, stop_loss, take_profit)
+            if not stops_on_close:
+                check_stops(broker, price, stop_loss, take_profit)
 
-            df = fetch_ohlcv(exchange, symbol, timeframe, limit=history)
-            # Drop the candle that is still forming.
-            if df.index[-1].value // 10**6 + tf_ms > exchange.milliseconds():
-                df = df.iloc[:-1]
+            df = closed_candles(exchange, symbol, timeframe, history)
             bar = df.index[-1]
             if bar != last_bar:
+                first = last_bar is None
                 last_bar = bar
+                closed_ago_ms = exchange.milliseconds() - (bar.value // 10**6 + tf_ms)
+                if first and closed_ago_ms > 2 * poll_seconds * 1000:
+                    log.info("Bar %s closed %ds ago; waiting for the next candle to close",
+                             bar, closed_ago_ms // 1000)
+                    time.sleep(poll_seconds)
+                    continue
+                if stops_on_close:
+                    check_stops(broker, float(df["close"].iloc[-1]), stop_loss, take_profit)
                 sig = strat(market_cipher(df, use_heikin_ashi=heikin_ashi)).iloc[-1]
                 pos = broker.position
                 log.info("Bar %s close=%.2f signals=%s pos=%s", bar, df["close"].iloc[-1],

@@ -76,6 +76,11 @@ export MCBOT_API_KEY=... MCBOT_API_SECRET=...
 python main.py live --exchange binance --symbol BTC/USDT --timeframe 1h --live --sandbox
 ```
 
+## Candle confirmation
+- **Entries and signal exits only happen on closed candles.** The backtest fills a signal from candle *i* at candle *i+1*'s open. The bot drops the still-forming candle and acts once per newly closed candle.
+- On startup, the bot won't trade off a candle that closed a while ago. It waits for the next candle to close.
+- **Stop-loss and take-profit fire intrabar by default**, so they can exit mid-candle. Add `--stops-on-close` to only trigger them on a closed candle as well. The risk: in a fast drop, you exit at the next open, possibly far below your stop.
+
 ## Important caveats
 - The stop-loss and take-profit are checked by the bot itself, not placed as orders on the exchange. They only protect you while the bot is running.
 - On real data, the plain `dots` strategy usually loses money once fees are included. Backtest across several symbols and timeframes, then paper trade for a while before you risk real money.

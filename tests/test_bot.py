@@ -129,3 +129,46 @@ def test_heikin_ashi_signals_fill_at_real_prices(df):
     for t in res.trades[:20]:
         if t.reason == "signal":
             assert t.entry_price in df["open"].values
+
+
+class FakeExchange:
+    """Hourly candles; the clock is 20 minutes into the newest candle."""
+    rateLimit = 0
+
+    def __init__(self, n=5):
+        self.start = 1_704_067_200_000
+        self.n = n
+        self.now = self.start + (n - 1) * 3_600_000 + 20 * 60_000
+
+    def parse_timeframe(self, tf):
+        return 3600
+
+    def milliseconds(self):
+        return self.now
+
+    def fetch_ohlcv(self, symbol, timeframe, since=None, limit=None):
+        return [[self.start + i * 3_600_000, 1, 2, 0.5, 1.5, 10] for i in range(self.n)]
+
+
+def test_bot_drops_forming_candle():
+    from mcbot.bot import closed_candles
+    ex = FakeExchange(n=5)
+    df = closed_candles(ex, "BTC/USDT", "1h", history=5)
+    assert len(df) == 4  # the 5th candle is only 20 minutes old
+    ex.now = ex.start + 5 * 3_600_000 + 1  # 5th candle has now closed
+    assert len(closed_candles(ex, "BTC/USDT", "1h", history=5)) == 5
+
+
+def test_stops_on_close_ignores_wicks():
+    idx = pd.date_range("2024-01-01", periods=5, freq="h", tz="UTC")
+    # Bar 2 wicks to -10% but closes flat; bar 3 closes -5%.
+    df = pd.DataFrame({"open": [100, 100, 100, 100, 95], "high": [101] * 5,
+                       "low": [99, 99, 90, 94, 94], "close": [100, 100, 100, 95, 95],
+                       "volume": 1.0}, index=idx)
+    sig = pd.DataFrame(False, index=idx, columns=["long_entry", "long_exit", "short_entry", "short_exit"])
+    sig.iloc[0, 0] = True  # enter at bar 1 open (100)
+    intrabar = run_backtest(df, sig, stop_loss=0.03, take_profit=None, fee=0)
+    assert intrabar.trades[0].exit_time == idx[2]       # wick stopped it out
+    on_close = run_backtest(df, sig, stop_loss=0.03, take_profit=None, fee=0, stops_on_close=True)
+    t = on_close.trades[0]
+    assert t.exit_time == idx[4] and t.exit_price == 95 and t.reason == "stop"
