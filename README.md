@@ -61,6 +61,8 @@ export MCBOT_API_KEY=... MCBOT_API_SECRET=...
 python main.py live --exchange binance --symbol BTC/USDT --live --sandbox
 ```
 
+Saved data: `datasets/btc_daily_close.csv` holds BTC daily closing prices from 2010-07-18 to 2026-09-15 (5,904 days, `Date,Price`, close only, no open/high/low).
+
 CSV files need a timestamp first column (unix seconds as in TradingView exports, unix ms, or a date) plus open/high/low/close, with volume optional.
 
 ## Exits and risk (backtest)
