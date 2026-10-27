@@ -150,6 +150,10 @@ CATALOG = {
     "S2": {"name": "4-hour / 15-minute",
            "source": "rules pending (send the transcript)",
            "timeframes": "4h bias, 15m entries", "func": None},
+    "S3": {"name": "GRIND BTC (wielkieef)",
+           "source": "wielkieef's own indicators only (volume weight, volume delta, ADX, RSI); "
+                     "rules pending (needs the Pine source)",
+           "timeframes": "45m (built from Kraken 15m candles)", "func": None},
 }
 STRATEGIES = {sid: v["func"] for sid, v in CATALOG.items() if v["func"] is not None}
 

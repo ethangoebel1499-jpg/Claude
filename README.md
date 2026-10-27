@@ -11,6 +11,7 @@ Each strategy gets a number and a label so they stay separate. List them with `p
 |---|---|---|---|
 | S1 | Top-down confluence | 4h levels, 1h entries | 🟢 ready |
 | S2 | 4-hour / 15-minute | 4h bias, 15m entries | 🔴 rules pending (send the transcript) |
+| S3 | GRIND BTC (wielkieef) | 45m (from Kraken 15m candles) | 🔴 rules pending (needs the Pine source). Uses only its own indicators, none of S1's |
 
 Real Kraken BTC/USD data for these: `datasets/XBTUSD_15.csv` (15m, 387,797 candles), `datasets/XBTUSD_60.csv` (1h) and `datasets/XBTUSD_240.csv` (4h), all from 2013-10 to 2026-09.
 
