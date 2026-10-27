@@ -57,8 +57,24 @@ def divergence(mc: pd.DataFrame, window: int = 5) -> pd.DataFrame:
     return _frame(mc, long_entry, mc["red_dot"], short_entry, mc["green_dot"])
 
 
+def money_flow_div(mc: pd.DataFrame) -> pd.DataFrame:
+    """Money flow divergence / convergence.
+
+    Long: bullish money flow divergence (price lower low, money flow higher low)
+    and money flow turning up. Exit when price and money flow converge to the
+    downside, or on a bearish divergence. Shorts are the mirror image.
+    """
+    mf = mc["money_flow"]
+    long_entry = mc["bull_mf_div"] & (mf > mf.shift())
+    short_entry = mc["bear_mf_div"] & (mf < mf.shift())
+    long_exit = mc["bear_mf_div"] | mc["bear_mf_conv"]
+    short_exit = mc["bull_mf_div"] | mc["bull_mf_conv"]
+    return _frame(mc, long_entry, long_exit, short_entry, short_exit)
+
+
 STRATEGIES = {
     "dots": dots,
     "dots_confirmed": dots_confirmed,
     "divergence": divergence,
+    "money_flow_div": money_flow_div,
 }

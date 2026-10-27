@@ -52,7 +52,8 @@ def cmd_backtest(args) -> None:
 def cmd_signals(args) -> None:
     mc = market_cipher(load(args))
     cols = ["close", "wt1", "wt2", "money_flow", "rsi", "stoch_k", "ribbon_bull",
-            "green_dot", "red_dot", "bull_div", "bear_div"]
+            "green_dot", "red_dot", "bull_div", "bear_div",
+            "bull_mf_div", "bear_mf_div", "bull_mf_conv", "bear_mf_conv"]
     print(mc[cols].tail(args.rows).round(2).to_string())
     sig = STRATEGIES[args.strategy](mc).iloc[-1]
     print(f"\n{args.strategy} on last closed bar: { {k: bool(v) for k, v in sig.items()} }")

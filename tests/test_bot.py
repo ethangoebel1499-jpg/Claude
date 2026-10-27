@@ -66,3 +66,17 @@ def test_paper_broker_round_trip(tmp_path):
     assert b.cash == pytest.approx(940)
     # state persists
     assert PaperBroker(str(tmp_path / "s.json")).cash == pytest.approx(940)
+
+
+def test_money_flow_divergence():
+    from mcbot.indicators import mf_convergence
+    idx = pd.date_range("2024-01-01", periods=4, freq="h", tz="UTC")
+    # Window of 2: price makes a lower low, money flow makes a higher low.
+    df = pd.DataFrame({"high": [10, 10, 10, 10], "low": [5, 5, 4, 4]}, index=idx)
+    mf = pd.Series([-10, -10, -5, -5], index=idx)
+    out = mf_convergence(df, mf, window=2)
+    assert out["bull_mf_div"].iloc[-1]
+    assert not out["bear_mf_conv"].iloc[-1]
+    # Money flow also makes a lower low -> bearish convergence instead.
+    out = mf_convergence(df, pd.Series([-10, -10, -20, -20], index=idx), window=2)
+    assert out["bear_mf_conv"].iloc[-1] and not out["bull_mf_div"].iloc[-1]

@@ -114,6 +114,35 @@ def divergences(df: pd.DataFrame, osc: pd.Series, top_limit: float = 45,
     return pd.Series(bull, index=df.index), pd.Series(bear, index=df.index)
 
 
+def mf_convergence(df: pd.DataFrame, mf: pd.Series, window: int = 20) -> pd.DataFrame:
+    """Compare price with money flow over the last `window` bars vs the window before.
+
+    Divergence (they disagree, a reversal warning):
+      bull_mf_div: price made a lower low, money flow made a higher low
+      bear_mf_div: price made a higher high, money flow made a lower high
+    Convergence (they agree, the move is confirmed):
+      bull_mf_conv: price and money flow both made a higher high
+      bear_mf_conv: price and money flow both made a lower low
+    """
+    def now(s, fn):
+        return getattr(s.rolling(window), fn)()
+
+    def prev(s, fn):
+        return now(s, fn).shift(window)
+
+    price_lower_low = now(df["low"], "min") < prev(df["low"], "min")
+    price_higher_high = now(df["high"], "max") > prev(df["high"], "max")
+    mf_lower_low = now(mf, "min") < prev(mf, "min")
+    mf_higher_high = now(mf, "max") > prev(mf, "max")
+
+    return pd.DataFrame({
+        "bull_mf_div": price_lower_low & ~mf_lower_low,
+        "bear_mf_div": price_higher_high & ~mf_higher_high,
+        "bull_mf_conv": price_higher_high & mf_higher_high,
+        "bear_mf_conv": price_lower_low & mf_lower_low,
+    }, index=df.index)
+
+
 def ema_ribbon(df: pd.DataFrame) -> pd.DataFrame:
     return pd.DataFrame({f"ema{n}": ema(df["close"], n) for n in RIBBON_LENGTHS},
                         index=df.index)
@@ -134,6 +163,7 @@ def market_cipher(df: pd.DataFrame, ob_level: float = OB_LEVEL,
     out["red_dot"] = cross_down & (wt2 >= ob_level)
 
     out["money_flow"] = money_flow(df)
+    out = out.join(mf_convergence(df, out["money_flow"]))
     out["rsi"] = rsi(df["close"])
     out["stoch_k"], out["stoch_d"] = stoch_rsi(df["close"])
     out["bull_div"], out["bear_div"] = divergences(df, wt2)

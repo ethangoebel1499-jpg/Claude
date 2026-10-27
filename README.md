@@ -12,12 +12,27 @@ A simple bot that trades with Market Cipher A/B style signals. You can backtest 
 | Money flow | RSI+MFI area (period 60, multiplier 150). Above 0 means buying pressure |
 | RSI, Stoch RSI | 14-period |
 | Divergences | Fractal-based regular WT divergences, flagged on the bar they're confirmed (no lookahead) |
+| Money flow divergence / convergence | Compares the last 20 bars of price and money flow with the 20 bars before them (see below) |
 | EMA ribbon | Cipher A EMAs 5/11/15/18/21/24/28/34. Bullish when EMA5 > EMA34 |
 
 ## Strategies (`mcbot/strategies.py`)
 - `dots`: buy green dots, sell red dots.
 - `dots_confirmed` (default): a green dot only counts if money flow is rising, price is above EMA200, and the ribbon is bullish. Exits on a red dot or when money flow flips negative. Shorts are the mirror image.
 - `divergence`: a dot that comes within 5 bars of a matching WT divergence.
+- `money_flow_div`: buys a bullish money flow divergence once money flow turns up. Exits when price and money flow converge down, or on a bearish divergence.
+
+### Money flow divergence vs convergence
+| Signal | Price | Money flow | Meaning |
+|---|---|---|---|
+| Bullish divergence | lower low | higher low | Sellers are running out, so a bounce is likely |
+| Bearish divergence | higher high | lower high | Buyers are running out, so a drop is likely |
+| Bullish convergence | higher high | higher high | The uptrend is confirmed |
+| Bearish convergence | lower low | lower low | The downtrend is confirmed |
+
+```bash
+python examples/money_flow_divergence.py                      # demo data
+python examples/money_flow_divergence.py binance BTC/USDT 4h  # real data
+```
 
 To add your own strategy, write a function that returns `long_entry/long_exit/short_entry/short_exit` columns and register it in `STRATEGIES`.
 
