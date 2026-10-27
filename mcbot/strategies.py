@@ -116,7 +116,7 @@ def checklist(mc: pd.DataFrame, bar: int = -1) -> str:
     long_c, short_c = topdown_conditions(mc)
     real = mc.attrs.get("real_dates")
     ts = real[bar] if real is not None else mc.index[bar]
-    lines = [f"Checklist for candle closed {ts:%Y-%m-%d %H:%M} UTC "
+    lines = [f"[{strategy_label('S1')}] Checklist for candle closed {ts:%Y-%m-%d %H:%M} UTC "
              f"(close {mc['real_close'].iloc[bar]:,.2f})"]
     for side, cond, labels in (("LONG", long_c, LONG_LABELS), ("SHORT", short_c, SHORT_LABELS)):
         row = cond.iloc[bar]
@@ -141,10 +141,26 @@ def _exit_plan(mc: pd.DataFrame, bar: int, side: str) -> list[str]:
             f"    Rest      stop trails {trail} the 21 EMA"]
 
 
-STRATEGIES = {"topdown_confluence": topdown_confluence}
+# Strategy catalog: each strategy from a video/source gets a number and a label so
+# they stay separate. Rules marked pending are waiting for their transcript.
+CATALOG = {
+    "S1": {"name": "Top-down confluence",
+           "source": "Market Cipher top-down analysis video (4h levels, 21 EMA, MCB anchor/trigger)",
+           "timeframes": "4h levels, 1h entries", "func": topdown_confluence},
+    "S2": {"name": "4-hour / 15-minute",
+           "source": "rules pending (send the transcript)",
+           "timeframes": "4h bias, 15m entries", "func": None},
+}
+STRATEGIES = {sid: v["func"] for sid, v in CATALOG.items() if v["func"] is not None}
 
 
-def build_signals(mc: pd.DataFrame, strategy: str = "topdown_confluence") -> pd.DataFrame:
+def strategy_label(sid: str) -> str:
+    return f"{sid} - {CATALOG[sid]['name']}"
+
+
+def build_signals(mc: pd.DataFrame, strategy: str = "S1") -> pd.DataFrame:
+    if CATALOG.get(strategy, {}).get("func") is None:
+        raise SystemExit(f"{strategy} has no rules yet: {CATALOG.get(strategy, {}).get('source', 'unknown')}")
     return STRATEGIES[strategy](mc)
 
 

@@ -4,7 +4,17 @@ A bot that trades one strategy: **top-down confluence**. It combines 4h support/
 
 > Market Cipher is a closed-source, paid TradingView indicator. This project uses the open-source **VuManChu Cipher B** approximation (WaveTrend, green/red dots, RSI+MFI money flow), so its values are close to the real indicator but not identical.
 
-## The strategy (`mcbot/strategies.py`)
+## Strategy catalog
+Each strategy gets a number and a label so they stay separate. List them with `python main.py strategies`, and pick one with `--strategy S1`.
+
+| ID | Name | Timeframes | Status |
+|---|---|---|---|
+| S1 | Top-down confluence | 4h levels, 1h entries | 🟢 ready |
+| S2 | 4-hour / 15-minute | 4h bias, 15m entries | 🔴 rules pending (send the transcript) |
+
+Real Kraken BTC/USD data for these: `datasets/XBTUSD_15.csv` (15m, 387,797 candles), `datasets/XBTUSD_60.csv` (1h) and `datasets/XBTUSD_240.csv` (4h), all from 2013-10 to 2026-09.
+
+## S1 - Top-down confluence (`mcbot/strategies.py`)
 Rules taken from a Market Cipher top-down analysis video and adapted to 4h levels with 1h entries.
 
 **Long**, when all seven lights are green on a closed 1h candle:

@@ -20,7 +20,7 @@ from mcbot import bot, data
 from mcbot.backtest import parse_take_profits, run_backtest, run_level_backtest
 from mcbot.entry_quality import summarize
 from mcbot.indicators import market_cipher
-from mcbot.strategies import build_signals, checklist, topdown_exit_levels
+from mcbot.strategies import CATALOG, build_signals, checklist, strategy_label, topdown_exit_levels
 
 
 def load(args) -> pd.DataFrame:
@@ -38,7 +38,7 @@ def load(args) -> pd.DataFrame:
 def signals_for(df: pd.DataFrame, args) -> tuple[pd.DataFrame, pd.DataFrame]:
     mc = market_cipher(df, use_heikin_ashi=args.heikin_ashi, htf_factor=args.htf,
                        mf_period=args.mf_period)
-    return mc, build_signals(mc)
+    return mc, build_signals(mc, args.strategy)
 
 
 def cmd_backtest(args) -> None:
@@ -46,7 +46,7 @@ def cmd_backtest(args) -> None:
     if args.start:
         df = df[df.index >= pd.Timestamp(args.start, tz="UTC")]
     mc, sig = signals_for(df, args)
-    print(f"{len(df)} bars  {df.index[0]} -> {df.index[-1]}  "
+    print(f"[{strategy_label(args.strategy)}]  {len(df)} bars  {df.index[0]} -> {df.index[-1]}  "
           f"({'Heikin Ashi' if args.heikin_ashi else 'regular'} candles, {args.exits} exits)\n")
     if args.exits == "video":
         # Stop under the 21 EMA (above resistance for shorts), 50% at the next 4h
@@ -68,6 +68,13 @@ def cmd_backtest(args) -> None:
     print(pd.Series(res.stats).to_string())
 
 
+def cmd_strategies(args) -> None:
+    for sid, v in CATALOG.items():
+        status = "ready" if v["func"] else "rules pending"
+        print(f"{'🟢' if v['func'] else '🔴'} {strategy_label(sid):30} [{status}]  {v['timeframes']}\n"
+              f"     source: {v['source']}")
+
+
 def cmd_signals(args) -> None:
     mc, _ = signals_for(load(args), args)
     if args.date:
@@ -83,7 +90,7 @@ def cmd_entries(args) -> None:
     df = load(args)
     _, sig = signals_for(df, args)
     unit = "x ATR" if args.mode == "atr" else "price fraction"
-    print(f"{len(df)} bars. Target {args.target_dist} / stop {args.stop_dist} ({unit}), "
+    print(f"[{strategy_label(args.strategy)}]  {len(df)} bars. Target {args.target_dist} / stop {args.stop_dist} ({unit}), "
           f"within {args.max_bars} bars.\n")
     st = summarize(df, sig, args.target_dist, args.stop_dist, args.mode, args.max_bars)
     print(pd.Series(st).to_string())
@@ -117,6 +124,8 @@ def main() -> None:
     common.add_argument("--exchange", default="binance", help="any ccxt exchange id")
     common.add_argument("--symbol", default="BTC/USDT")
     common.add_argument("--timeframe", default="1h", help="chart timeframe (default 1h)")
+    common.add_argument("--strategy", default="S1", choices=list(CATALOG),
+                        help="which strategy to run (see: python main.py strategies)")
     common.add_argument("--short", action="store_true", help="allow short trades (backtest/paper)")
     common.add_argument("--stop", type=float, default=0.03, help="stop-loss fraction, 0 to disable")
     common.add_argument("--target", type=float, default=0.06, help="take-profit fraction, 0 to disable")
@@ -166,6 +175,8 @@ def main() -> None:
                        help="green/red light checklist for the last closed candle")
     s.add_argument("--date", help="show the checklist for the candle at or before this date instead")
     s.set_defaults(func=cmd_signals)
+
+    sub.add_parser("strategies", help="list the labelled strategies").set_defaults(func=cmd_strategies)
 
     for name, live in (("paper", False), ("live", True)):
         t = sub.add_parser(name, parents=[common])
