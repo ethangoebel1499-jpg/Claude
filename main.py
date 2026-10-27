@@ -32,9 +32,10 @@ def load(args) -> pd.DataFrame:
 
 def cmd_backtest(args) -> None:
     df = load(args)
-    mc = market_cipher(df)
+    mc = market_cipher(df, use_heikin_ashi=args.heikin_ashi)
     names = list(STRATEGIES) if args.compare else [args.strategy]
-    print(f"{len(df)} bars  {df.index[0]} -> {df.index[-1]}\n")
+    print(f"{len(df)} bars  {df.index[0]} -> {df.index[-1]}  "
+          f"({'Heikin Ashi' if args.heikin_ashi else 'regular'} candles)\n")
     rows = {}
     for name in names:
         res = run_backtest(df, STRATEGIES[name](mc), allow_short=args.short,
@@ -50,8 +51,8 @@ def cmd_backtest(args) -> None:
 
 
 def cmd_signals(args) -> None:
-    mc = market_cipher(load(args))
-    cols = ["close", "wt1", "wt2", "money_flow", "rsi", "stoch_k", "ribbon_bull",
+    mc = market_cipher(load(args), use_heikin_ashi=args.heikin_ashi)
+    cols = ["close", "candle_bull", "wt1", "wt2", "money_flow", "rsi", "stoch_k", "ribbon_bull",
             "green_dot", "red_dot", "bull_div", "bear_div",
             "bull_mf_div", "bear_mf_div", "bull_mf_conv", "bear_mf_conv"]
     print(mc[cols].tail(args.rows).round(2).to_string())
@@ -74,7 +75,7 @@ def cmd_trade(args, live: bool) -> None:
         allow_short = args.short
     bot.run(ex, args.symbol, args.timeframe, args.strategy, broker, allow_short=allow_short,
             fraction=args.fraction, stop_loss=args.stop or None, take_profit=args.target or None,
-            poll_seconds=args.poll)
+            poll_seconds=args.poll, heikin_ashi=args.heikin_ashi)
 
 
 def main() -> None:
@@ -90,6 +91,8 @@ def main() -> None:
     common.add_argument("--stop", type=float, default=0.03, help="stop-loss fraction, 0 to disable")
     common.add_argument("--target", type=float, default=0.06, help="take-profit fraction, 0 to disable")
     common.add_argument("--fee", type=float, default=0.001, help="fee per side")
+    common.add_argument("--heikin-ashi", default=True, action=argparse.BooleanOptionalAction,
+                        help="calculate signals on Heikin Ashi candles (trades still fill at real prices)")
 
     source = argparse.ArgumentParser(add_help=False)
     source.add_argument("--limit", type=int, default=3000, help="number of candles")

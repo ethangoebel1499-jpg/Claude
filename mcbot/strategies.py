@@ -133,7 +133,22 @@ def casper_swing(mc: pd.DataFrame) -> pd.DataFrame:
     return _frame(mc, long_entry, long_exit, short_entry, short_exit)
 
 
+# --- Heikin Ashi --------------------------------------------------------------
+
+def heikin_ashi_trend(mc: pd.DataFrame) -> pd.DataFrame:
+    """Green dot in the last 5 bars, confirmed by a strong green Heikin Ashi
+    candle (no lower wick) with money flow rising. Ride the trend until the
+    first red candle. Use with --heikin-ashi (the default)."""
+    mf = mc["money_flow"]
+    recent_green = mc["green_dot"].astype(int).rolling(5, min_periods=1).max() > 0
+    recent_red = mc["red_dot"].astype(int).rolling(5, min_periods=1).max() > 0
+    long_entry = recent_green & mc["candle_strong_bull"] & (mf > mf.shift())
+    short_entry = recent_red & mc["candle_strong_bear"] & (mf < mf.shift())
+    return _frame(mc, long_entry, ~mc["candle_bull"], short_entry, mc["candle_bull"])
+
+
 STRATEGIES = {
+    "heikin_ashi_trend": heikin_ashi_trend,
     "cryptoface_swing": cryptoface_swing,
     "cryptoface_scalp": cryptoface_scalp,
     "casper_swing": casper_swing,

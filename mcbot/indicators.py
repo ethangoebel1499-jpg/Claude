@@ -218,9 +218,32 @@ def ema_ribbon(df: pd.DataFrame) -> pd.DataFrame:
                         index=df.index)
 
 
+def heikin_ashi(df: pd.DataFrame) -> pd.DataFrame:
+    """Heikin Ashi candles: smoothed averages that filter out noise."""
+    o, h, l, c = (df[k].to_numpy(dtype=float) for k in ("open", "high", "low", "close"))
+    ha_close = (o + h + l + c) / 4
+    ha_open = np.empty(len(df))
+    if len(df):
+        ha_open[0] = (o[0] + c[0]) / 2
+    for i in range(1, len(df)):
+        ha_open[i] = (ha_open[i - 1] + ha_close[i - 1]) / 2
+    out = df.copy()
+    out["open"], out["close"] = ha_open, ha_close
+    out["high"] = np.maximum.reduce([h, ha_open, ha_close])
+    out["low"] = np.minimum.reduce([l, ha_open, ha_close])
+    return out
+
+
 def market_cipher(df: pd.DataFrame, ob_level: float = OB_LEVEL,
-                  os_level: float = OS_LEVEL) -> pd.DataFrame:
-    """Compute all Cipher A/B components and return them alongside df."""
+                  os_level: float = OS_LEVEL, use_heikin_ashi: bool = False) -> pd.DataFrame:
+    """Compute all Cipher A/B components and return them alongside df.
+
+    With use_heikin_ashi, everything is calculated on Heikin Ashi candles and the
+    returned open/high/low/close are the Heikin Ashi values. Fill trades at the
+    real prices: Heikin Ashi prices can't actually be traded.
+    """
+    if use_heikin_ashi:
+        df = heikin_ashi(df)
     out = df.copy()
     wt1, wt2 = wavetrend(df)
     out["wt1"], out["wt2"] = wt1, wt2
@@ -244,6 +267,11 @@ def market_cipher(df: pd.DataFrame, ob_level: float = OB_LEVEL,
     out["swing_low50"] = df["low"].rolling(50).min()
     out["swing_high50"] = df["high"].rolling(50).max()
     out = out.join(higher_timeframe(df))
+    # Candle colour / strength (most useful with Heikin Ashi): a green candle with
+    # no lower wick, or a red one with no upper wick, signals a strong trend.
+    out["candle_bull"] = df["close"] > df["open"]
+    out["candle_strong_bull"] = out["candle_bull"] & (df[["open", "close"]].min(axis=1) <= df["low"])
+    out["candle_strong_bear"] = ~out["candle_bull"] & (df[["open", "close"]].max(axis=1) >= df["high"])
 
     ribbon = ema_ribbon(df)
     out = out.join(ribbon)

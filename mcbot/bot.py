@@ -118,11 +118,13 @@ def check_stops(broker, price: float, stop_loss: float | None, take_profit: floa
 
 def run(exchange, symbol: str, timeframe: str, strategy: str, broker, *,
         allow_short: bool = False, fraction: float = 0.95, stop_loss: float | None = 0.03,
-        take_profit: float | None = 0.06, poll_seconds: int = 30, history: int = 500) -> None:
+        take_profit: float | None = 0.06, poll_seconds: int = 30, history: int = 500,
+        heikin_ashi: bool = True) -> None:
     strat = STRATEGIES[strategy]
     tf_ms = exchange.parse_timeframe(timeframe) * 1000
     last_bar = None
-    log.info("Starting %s on %s %s with %s", strategy, symbol, timeframe, type(broker).__name__)
+    log.info("Starting %s on %s %s with %s (%s candles)", strategy, symbol, timeframe,
+             type(broker).__name__, "Heikin Ashi" if heikin_ashi else "regular")
 
     while True:
         try:
@@ -136,7 +138,7 @@ def run(exchange, symbol: str, timeframe: str, strategy: str, broker, *,
             bar = df.index[-1]
             if bar != last_bar:
                 last_bar = bar
-                sig = strat(market_cipher(df)).iloc[-1]
+                sig = strat(market_cipher(df, use_heikin_ashi=heikin_ashi)).iloc[-1]
                 pos = broker.position
                 log.info("Bar %s close=%.2f signals=%s pos=%s", bar, df["close"].iloc[-1],
                          {k: bool(v) for k, v in sig.items() if v}, pos.side if pos else None)

@@ -108,3 +108,24 @@ def test_higher_timeframe_groups_bars(df):
     assert h["htf_money_flow"].notna().sum() > len(df) // 2
     # 4 consecutive bars share one HTF value.
     assert h["htf_wt2"].iloc[-400:].nunique() == pytest.approx(100, abs=1)
+
+
+def test_heikin_ashi_values():
+    from mcbot.indicators import heikin_ashi
+    idx = pd.date_range("2024-01-01", periods=2, freq="h", tz="UTC")
+    df = pd.DataFrame({"open": [10, 12], "high": [13, 15], "low": [9, 11], "close": [12, 14],
+                       "volume": 1.0}, index=idx)
+    ha = heikin_ashi(df)
+    assert ha["close"].tolist() == [11, 13]          # (o+h+l+c)/4
+    assert ha["open"].tolist() == [11, 11]           # (o0+c0)/2, then prev (ha_open+ha_close)/2
+    assert ha["high"].tolist() == [13, 15] and ha["low"].tolist() == [9, 11]
+
+
+def test_heikin_ashi_signals_fill_at_real_prices(df):
+    mc = market_cipher(df, use_heikin_ashi=True)
+    assert not np.allclose(mc["close"], df["close"])
+    res = run_backtest(df, STRATEGIES["heikin_ashi_trend"](mc))
+    assert res.trades
+    for t in res.trades[:20]:
+        if t.reason == "signal":
+            assert t.entry_price in df["open"].values

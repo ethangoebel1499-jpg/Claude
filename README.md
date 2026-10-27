@@ -15,6 +15,11 @@ A simple bot that trades with Market Cipher A/B style signals. You can backtest 
 | Money flow divergence / convergence | Compares the last 20 bars of price and money flow with the 20 bars before them (see below) |
 | EMA ribbon | Cipher A EMAs 5/11/15/18/21/24/28/34. Bullish when EMA5 > EMA34 |
 
+## Heikin Ashi candles
+All indicators and signals are calculated on **Heikin Ashi** candles by default. These are smoothed candles: close = (O+H+L+C)/4, and open = the average of the previous HA open and close. Backtest and live trades still fill at **real** prices, because Heikin Ashi prices don't exist on the exchange and filling at them would give fake results. Add `--no-heikin-ashi` to use regular candles.
+
+`heikin_ashi_trend`: a green dot in the last 5 bars, confirmed by a strong green HA candle (no lower wick) with money flow rising. It holds until the first red HA candle.
+
 ## Strategies (`mcbot/strategies.py`)
 
 ### Trader-inspired strategies
@@ -58,6 +63,7 @@ pip install -r requirements.txt
 python main.py backtest --exchange binance --symbol BTC/USDT --timeframe 4h --limit 3000 --compare
 python main.py backtest --csv my_candles.csv --strategy divergence --short
 python main.py backtest --synthetic --compare          # offline demo on random data
+python main.py backtest --synthetic --compare --no-heikin-ashi  # same, regular candles
 
 # See the current indicator values and signal
 python main.py signals --exchange binance --symbol ETH/USDT --timeframe 1h
