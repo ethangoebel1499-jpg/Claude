@@ -328,3 +328,13 @@ def test_topdown_backtest_fills_at_real_prices():
     assert res.trades
     opens = set(data["open"].round(8))
     assert all(round(t.entry_price, 8) in opens for t in res.trades)
+
+
+def test_load_kraken_ohlcvt_without_header(tmp_path):
+    from mcbot.data import load_csv
+    p = tmp_path / "XBTUSD_60.csv"
+    p.write_text("1704067200,42000.1,42500,41900,42300.5,12.5,340\n"
+                 "1704070800,42300.5,42400,42100,42200,8.1,210\n")
+    df = load_csv(str(p))
+    assert len(df) == 2 and df.index[0] == pd.Timestamp("2024-01-01", tz="UTC")
+    assert df["close"].tolist() == [42300.5, 42200.0]

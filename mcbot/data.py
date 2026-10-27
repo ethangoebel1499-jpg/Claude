@@ -46,10 +46,16 @@ def load_csv(path: str) -> pd.DataFrame:
     """CSV with a timestamp column (first column) and open/high/low/close/volume.
 
     The timestamp can be unix seconds (TradingView exports), unix milliseconds,
-    or a date string. Volume is optional.
+    or a date string. Volume is optional. Headerless Kraken OHLCVT files
+    (time, open, high, low, close, volume, trades) are detected automatically.
     """
     df = pd.read_csv(path)
-    df.columns = [c.strip().lower() for c in df.columns]
+    first = str(df.columns[0]).strip()
+    if first.replace(".", "", 1).isdigit():
+        # No header row: Kraken OHLCVT export (time, open, high, low, close, volume, trades).
+        df = pd.read_csv(path, header=None)
+        df.columns = ["time", "open", "high", "low", "close", "volume", "trades"][:df.shape[1]]
+    df.columns = [str(c).strip().lower() for c in df.columns]
     ts = df[df.columns[0]]
     if pd.api.types.is_numeric_dtype(ts):
         df.index = pd.to_datetime(ts, unit="s" if ts.max() < 1e11 else "ms", utc=True)
