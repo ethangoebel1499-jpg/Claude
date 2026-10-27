@@ -30,6 +30,8 @@ def load(args) -> pd.DataFrame:
         df = data.load_csv(args.csv)
     else:
         df = data.fetch_ohlcv(data.make_exchange(args.exchange), args.symbol, args.timeframe, args.limit)
+    if args.resample:
+        df = data.resample(df, args.resample)
     return data.relabel(df, args.relabel) if args.relabel else df
 
 
@@ -126,6 +128,8 @@ def main() -> None:
     source.add_argument("--limit", type=int, default=3000, help="number of candles")
     source.add_argument("--csv", help="load candles from a CSV instead of the exchange")
     source.add_argument("--synthetic", action="store_true", help="use random demo data")
+    source.add_argument("--resample", metavar="TIMEFRAME",
+                        help="combine smaller candles into this timeframe, e.g. 1-minute data into 1h")
     source.add_argument("--relabel", metavar="TIMEFRAME",
                         help="treat candles as this timeframe, e.g. daily stock data as 1h")
 

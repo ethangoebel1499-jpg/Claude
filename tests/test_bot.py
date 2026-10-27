@@ -416,3 +416,16 @@ def test_level_exits_initial_stop_below_ema():
     t = run_level_backtest(df, sig, lv, leverage=5, fee=0).trades[0]
     assert t.reason == "stop" and t.exit_price == 98
     assert t.pnl_pct == pytest.approx(5 * -0.02)
+
+
+def test_resample_minutes_to_hours(tmp_path):
+    from mcbot.data import load_csv, resample
+    p = tmp_path / "btc_1min.csv"   # Kaggle layout: Timestamp,Open,High,Low,Close,Volume
+    rows = ["Timestamp,Open,High,Low,Close,Volume"]
+    for m in range(120):
+        ts = 1704067200 + 60 * m
+        rows.append(f"{ts}.0,{100 + m},{101 + m},{99 + m},{100.5 + m},1.0")
+    p.write_text("\n".join(rows) + "\n")
+    h = resample(load_csv(str(p)), "1h")
+    assert len(h) == 2
+    assert h.iloc[0].tolist() == [100, 160, 99, 159.5, 60]

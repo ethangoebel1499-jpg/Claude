@@ -74,6 +74,13 @@ def load_csv(path: str) -> pd.DataFrame:
     return df[COLUMNS].astype(float)
 
 
+def resample(df: pd.DataFrame, timeframe: str = "1h") -> pd.DataFrame:
+    """Combine smaller candles (e.g. 1-minute) into `timeframe` candles."""
+    out = df.resample(pd.Timedelta(timeframe), label="left", closed="left").agg(
+        {"open": "first", "high": "max", "low": "min", "close": "last", "volume": "sum"})
+    return out.dropna(subset=["open", "close"])
+
+
 def relabel(df: pd.DataFrame, timeframe: str = "1h") -> pd.DataFrame:
     """Give candles consecutive timestamps `timeframe` apart, keeping their order.
 
