@@ -127,11 +127,10 @@ def closed_candles(exchange, symbol: str, timeframe: str, history: int = 500) ->
     return df
 
 
-def run(exchange, symbol: str, timeframe: str, strategy: str, broker, *,
+def run(exchange, symbol: str, timeframe: str, broker, *,
         allow_short: bool = False, fraction: float = 0.95, stop_loss: float | None = 0.03,
         take_profit: float | None = 0.06, poll_seconds: int = 30, history: int = 500,
-        heikin_ashi: bool = True, stops_on_close: bool = False, htf_factor: int = 4,
-        mf_turn: bool = False, convergence: bool = False) -> None:
+        heikin_ashi: bool = True, stops_on_close: bool = False, htf_factor: int = 4) -> None:
     """Trade only on confirmed (closed) candles.
 
     Entries and signal exits happen once per closed candle. Stops and targets are
@@ -140,7 +139,7 @@ def run(exchange, symbol: str, timeframe: str, strategy: str, broker, *,
     """
     tf_ms = exchange.parse_timeframe(timeframe) * 1000
     last_bar = None
-    log.info("Starting %s on %s %s with %s (%s candles)", strategy, symbol, timeframe,
+    log.info("Starting top-down confluence on %s %s with %s (%s candles)", symbol, timeframe,
              type(broker).__name__, "Heikin Ashi" if heikin_ashi else "regular")
 
     while True:
@@ -163,7 +162,7 @@ def run(exchange, symbol: str, timeframe: str, strategy: str, broker, *,
                 if stops_on_close:
                     check_stops(broker, float(df["close"].iloc[-1]), stop_loss, take_profit)
                 mc = market_cipher(df, use_heikin_ashi=heikin_ashi, htf_factor=htf_factor)
-                sig = build_signals(mc, strategy, mf_turn=mf_turn, convergence=convergence).iloc[-1]
+                sig = build_signals(mc).iloc[-1]
                 pos = broker.position
                 log.info("Bar %s close=%.2f signals=%s pos=%s", bar, df["close"].iloc[-1],
                          {k: bool(v) for k, v in sig.items() if v}, pos.side if pos else None)

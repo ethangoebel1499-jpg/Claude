@@ -1,12 +1,12 @@
-"""Market Cipher trading bot CLI.
+"""Top-down confluence trading bot CLI.
 
 Examples:
-  python main.py backtest --synthetic
-  python main.py backtest --exchange binance --symbol BTC/USDT --timeframe 4h --strategy dots_confirmed
-  python main.py backtest --csv btc_1h.csv --compare
-  python main.py signals --exchange binance --symbol ETH/USDT
-  python main.py paper --exchange binance --symbol BTC/USDT --timeframe 1h
-  python main.py live  --exchange binance --symbol BTC/USDT --timeframe 1h --live
+  python main.py backtest --exchange binance --symbol BTC/USDT --short --leverage 5 \\
+      --stop 0.03 --tp "1.5:50,2.5:25,ride:25" --trail --fee 0.0005
+  python main.py entries --csv btc_1h.csv
+  python main.py signals --exchange binance --symbol BTC/USDT
+  python main.py paper --exchange binance --symbol BTC/USDT
+  python main.py live  --exchange binance --symbol BTC/USDT --live
 """
 
 from __future__ import annotations
@@ -20,7 +20,7 @@ from mcbot import bot, data
 from mcbot.backtest import parse_take_profits, run_backtest
 from mcbot.entry_quality import summarize
 from mcbot.indicators import market_cipher
-from mcbot.strategies import STRATEGIES, build_signals
+from mcbot.strategies import build_signals
 
 
 def load(args) -> pd.DataFrame:
@@ -33,55 +33,47 @@ def load(args) -> pd.DataFrame:
     return data.relabel(df, args.relabel) if args.relabel else df
 
 
+def signals_for(df: pd.DataFrame, args) -> tuple[pd.DataFrame, pd.DataFrame]:
+    mc = market_cipher(df, use_heikin_ashi=args.heikin_ashi, htf_factor=args.htf)
+    return mc, build_signals(mc)
+
+
 def cmd_backtest(args) -> None:
     df = load(args)
-    mc = market_cipher(df, use_heikin_ashi=args.heikin_ashi, htf_factor=args.htf)
-    names = list(STRATEGIES) if args.compare else [args.strategy]
+    _, sig = signals_for(df, args)
     print(f"{len(df)} bars  {df.index[0]} -> {df.index[-1]}  "
           f"({'Heikin Ashi' if args.heikin_ashi else 'regular'} candles)\n")
-    rows = {}
-    for name in names:
-        sig = build_signals(mc, name, mf_turn=args.mf_turn, convergence=args.convergence)
-        res = run_backtest(df, sig, allow_short=args.short,
-                           stop_loss=args.stop or None, take_profit=args.target or None,
-                           fee=args.fee, stops_on_close=args.stops_on_close,
-                           leverage=args.leverage, breakeven_after_tp1=args.breakeven,
-                           trail_targets=args.trail,
-                           take_profits=parse_take_profits(args.tp) if args.tp else None)
-        rows[name] = res.stats
-        if not args.compare:
-            for t in res.trades[-10:]:
-                print(f"  {t.side:5} {t.entry_time:%Y-%m-%d %H:%M} {t.entry_price:>10.2f} -> "
-                      f"{t.exit_price:>10.2f} {t.pnl_pct * 100:+7.2f}% ({t.reason}, "
-                      f"{t.targets_hit} targets)")
-            print()
-    print(pd.DataFrame(rows).to_string())
+    res = run_backtest(df, sig, allow_short=args.short,
+                       stop_loss=args.stop or None, take_profit=args.target or None,
+                       fee=args.fee, stops_on_close=args.stops_on_close,
+                       leverage=args.leverage, breakeven_after_tp1=args.breakeven,
+                       trail_targets=args.trail,
+                       take_profits=parse_take_profits(args.tp) if args.tp else None)
+    for t in res.trades[-10:]:
+        print(f"  {t.side:5} {t.entry_time:%Y-%m-%d %H:%M} {t.entry_price:>10.2f} -> "
+              f"{t.exit_price:>10.2f} {t.pnl_pct * 100:+7.2f}% ({t.reason}, "
+              f"{t.targets_hit} targets)")
+    print()
+    print(pd.Series(res.stats).to_string())
 
 
 def cmd_signals(args) -> None:
-    mc = market_cipher(load(args), use_heikin_ashi=args.heikin_ashi,
-                       htf_factor=args.htf)
-    cols = ["close", "candle_bull", "htf_green_dot", "htf_red_dot", "wt1", "wt2", "money_flow",
-            "rsi", "stoch_k", "ribbon_bull",
-            "green_dot", "red_dot", "bull_div", "bear_div",
-            "bull_mf_div", "bear_mf_div", "bull_mf_conv", "bear_mf_conv"]
+    mc, sig = signals_for(load(args), args)
+    cols = ["real_close", "real_ema21", "sr_next_below", "sr_next_above", "sr_reclaim_up",
+            "sr_reject_down", "wt2", "green_dot", "red_dot", "money_flow"]
     print(mc[cols].tail(args.rows).round(2).to_string())
-    sig = build_signals(mc, args.strategy, mf_turn=args.mf_turn,
-                        convergence=args.convergence).iloc[-1]
-    print(f"\n{args.strategy} on last closed bar: { {k: bool(v) for k, v in sig.items()} }")
+    print(f"\nLast closed bar: { {k: bool(v) for k, v in sig.iloc[-1].items()} }")
 
 
 def cmd_entries(args) -> None:
     """Score entries only: how often price hits the target before the stop."""
     df = load(args)
-    mc = market_cipher(df, use_heikin_ashi=args.heikin_ashi, htf_factor=args.htf)
-    names = list(STRATEGIES) if args.compare else [args.strategy]
+    _, sig = signals_for(df, args)
     unit = "x ATR" if args.mode == "atr" else "price fraction"
     print(f"{len(df)} bars. Target {args.target_dist} / stop {args.stop_dist} ({unit}), "
           f"within {args.max_bars} bars.\n")
-    rows = {n: summarize(df, build_signals(mc, n, mf_turn=args.mf_turn, convergence=args.convergence),
-                         args.target_dist, args.stop_dist, args.mode, args.max_bars) for n in names}
-    print(pd.DataFrame(rows).T.sort_values("hit_rate_pct", ascending=False).to_string())
+    st = summarize(df, sig, args.target_dist, args.stop_dist, args.mode, args.max_bars)
+    print(pd.Series(st).to_string())
 
 
 def cmd_trade(args, live: bool) -> None:
@@ -97,11 +89,10 @@ def cmd_trade(args, live: bool) -> None:
         ex = data.make_exchange(args.exchange)
         broker = bot.PaperBroker(args.state, fee=args.fee)
         allow_short = args.short
-    bot.run(ex, args.symbol, args.timeframe, args.strategy, broker, allow_short=allow_short,
+    bot.run(ex, args.symbol, args.timeframe, broker, allow_short=allow_short,
             fraction=args.fraction, stop_loss=args.stop or None, take_profit=args.target or None,
             poll_seconds=args.poll, heikin_ashi=args.heikin_ashi,
-            stops_on_close=args.stops_on_close, htf_factor=args.htf,
-            mf_turn=args.mf_turn, convergence=args.convergence)
+            stops_on_close=args.stops_on_close, htf_factor=args.htf)
 
 
 def main() -> None:
@@ -112,21 +103,16 @@ def main() -> None:
     common.add_argument("--exchange", default="binance", help="any ccxt exchange id")
     common.add_argument("--symbol", default="BTC/USDT")
     common.add_argument("--timeframe", default="1h", help="chart timeframe (default 1h)")
-    common.add_argument("--strategy", default="dots_confirmed", choices=list(STRATEGIES))
     common.add_argument("--short", action="store_true", help="allow short trades (backtest/paper)")
     common.add_argument("--stop", type=float, default=0.03, help="stop-loss fraction, 0 to disable")
     common.add_argument("--target", type=float, default=0.06, help="take-profit fraction, 0 to disable")
     common.add_argument("--fee", type=float, default=0.001, help="fee per side")
-    common.add_argument("--mf-turn", action="store_true",
-                        help="only enter when money flow just changed direction in the trade's favour")
-    common.add_argument("--convergence", action="store_true",
-                        help="only enter after a matching money flow divergence/convergence")
     common.add_argument("--htf", type=int, default=4,
-                        help="higher timeframe = this many chart candles (4: 1h chart -> 4h)")
+                        help="support/resistance timeframe = this many chart candles (4: 1h -> 4h)")
     common.add_argument("--stops-on-close", action="store_true",
                         help="only trigger stop-loss/take-profit on a closed candle (default: intrabar)")
     common.add_argument("--heikin-ashi", default=True, action=argparse.BooleanOptionalAction,
-                        help="calculate signals on Heikin Ashi candles (trades still fill at real prices)")
+                        help="Market Cipher B on Heikin Ashi candles (trades still fill at real prices)")
 
     source = argparse.ArgumentParser(add_help=False)
     source.add_argument("--limit", type=int, default=3000, help="number of candles")
@@ -136,7 +122,6 @@ def main() -> None:
                         help="treat candles as this timeframe, e.g. daily stock data as 1h")
 
     b = sub.add_parser("backtest", parents=[common, source])
-    b.add_argument("--compare", action="store_true", help="run every strategy")
     b.add_argument("--breakeven", action="store_true", help="move stop to entry after the first target")
     b.add_argument("--trail", action="store_true",
                    help="step the stop up: breakeven after target 1, target 1 after target 2, ...")
@@ -147,7 +132,6 @@ def main() -> None:
 
     e = sub.add_parser("entries", parents=[common, source],
                        help="score entry quality: target-before-stop hit rate vs random")
-    e.add_argument("--compare", action="store_true", help="score every strategy")
     e.add_argument("--mode", choices=["pct", "atr"], default="pct")
     e.add_argument("--target-dist", type=float, default=0.015, help="target distance (0.015 = 1.5%%)")
     e.add_argument("--stop-dist", type=float, default=0.03, help="stop distance (0.03 = 3%%)")

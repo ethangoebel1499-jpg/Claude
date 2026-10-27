@@ -5,8 +5,8 @@ import pytest
 from mcbot.backtest import run_backtest
 from mcbot.bot import PaperBroker, check_stops
 from mcbot.data import synthetic
-from mcbot.indicators import market_cipher, rsi
-from mcbot.strategies import STRATEGIES
+from mcbot.indicators import market_cipher
+from mcbot.strategies import build_signals, topdown_confluence
 
 
 @pytest.fixture(scope="module")
@@ -17,8 +17,8 @@ def df():
 def test_indicators_have_no_lookahead(df):
     full = market_cipher(df)
     cut = market_cipher(df.iloc[:1500])
-    cols = ["wt1", "wt2", "money_flow", "rsi", "green_dot", "red_dot", "bull_div", "bear_div",
-            "vwap", "sfp_bull", "sfp_bear", "anchor_trigger_bull", "htf_money_flow", "htf_wt_rising"]
+    cols = ["wt1", "wt2", "money_flow", "green_dot", "red_dot", "sr_reclaim_up", "sr_reject_down",
+            "sr_next_above", "sr_next_below", "real_ema21"]
     pd.testing.assert_frame_equal(full[cols].iloc[:1500], cut[cols])
 
 
@@ -27,21 +27,6 @@ def test_wavetrend_produces_dots(df):
     assert mc["green_dot"].sum() > 0 and mc["red_dot"].sum() > 0
     assert (mc.loc[mc["green_dot"], "wt2"] <= -53).all()
     assert (mc.loc[mc["red_dot"], "wt2"] >= 53).all()
-
-
-def test_rsi_bounds(df):
-    r = rsi(df["close"]).dropna()
-    assert r.between(0, 100).all()
-
-
-@pytest.mark.parametrize("name", list(STRATEGIES))
-def test_strategies_backtest(df, name):
-    mc = market_cipher(df)
-    res = run_backtest(df, STRATEGIES[name](mc), allow_short=True)
-    assert len(res.equity) == len(df)
-    assert np.isfinite(res.equity).all()
-    for t in res.trades:
-        assert t.exit_time >= t.entry_time
 
 
 def test_backtest_fills_next_open():
@@ -69,47 +54,6 @@ def test_paper_broker_round_trip(tmp_path):
     assert PaperBroker(str(tmp_path / "s.json")).cash == pytest.approx(940)
 
 
-def test_money_flow_divergence():
-    from mcbot.indicators import mf_convergence
-    idx = pd.date_range("2024-01-01", periods=4, freq="h", tz="UTC")
-    # Window of 2: price makes a lower low, money flow makes a higher low.
-    df = pd.DataFrame({"high": [10, 10, 10, 10], "low": [5, 5, 4, 4]}, index=idx)
-    mf = pd.Series([-10, -10, -5, -5], index=idx)
-    out = mf_convergence(df, mf, window=2)
-    assert out["bull_mf_div"].iloc[-1]
-    assert not out["bear_mf_conv"].iloc[-1]
-    # Money flow also makes a lower low -> bearish convergence instead.
-    out = mf_convergence(df, pd.Series([-10, -10, -20, -20], index=idx), window=2)
-    assert out["bear_mf_conv"].iloc[-1] and not out["bull_mf_div"].iloc[-1]
-
-
-def test_swing_failure_pattern():
-    from mcbot.indicators import swing_failure
-    idx = pd.date_range("2024-01-01", periods=4, freq="h", tz="UTC")
-    # Bar 3 wicks below the prior low (9) but closes back above it.
-    df = pd.DataFrame({"high": [11, 11, 11, 11], "low": [9, 9.5, 9.5, 8.5],
-                       "close": [10, 10, 10, 9.8]}, index=idx)
-    bull, bear = swing_failure(df, lookback=3)
-    assert bull.iloc[-1] and not bear.iloc[-1]
-
-
-def test_higher_timeframe_stable_when_window_moves(df):
-    from mcbot.indicators import higher_timeframe
-    a = higher_timeframe(df.iloc[:1200])
-    b = higher_timeframe(df.iloc[1:1200])
-    # Same clock-aligned HTF candles regardless of where the window starts
-    # (compare after indicator warm-up).
-    pd.testing.assert_series_equal(a["htf_ribbon_bull"].iloc[-200:], b["htf_ribbon_bull"].iloc[-200:])
-
-
-def test_higher_timeframe_groups_bars(df):
-    from mcbot.indicators import higher_timeframe
-    h = higher_timeframe(df)
-    assert h["htf_money_flow"].notna().sum() > len(df) // 2
-    # 4 consecutive bars share one HTF value.
-    assert h["htf_wt2"].iloc[-400:].nunique() == pytest.approx(100, abs=1)
-
-
 def test_heikin_ashi_values():
     from mcbot.indicators import heikin_ashi
     idx = pd.date_range("2024-01-01", periods=2, freq="h", tz="UTC")
@@ -119,16 +63,6 @@ def test_heikin_ashi_values():
     assert ha["close"].tolist() == [11, 13]          # (o+h+l+c)/4
     assert ha["open"].tolist() == [11, 11]           # (o0+c0)/2, then prev (ha_open+ha_close)/2
     assert ha["high"].tolist() == [13, 15] and ha["low"].tolist() == [9, 11]
-
-
-def test_heikin_ashi_signals_fill_at_real_prices(df):
-    mc = market_cipher(df, use_heikin_ashi=True)
-    assert not np.allclose(mc["close"], df["close"])
-    res = run_backtest(df, STRATEGIES["heikin_ashi_trend"](mc))
-    assert res.trades
-    for t in res.trades[:20]:
-        if t.reason == "signal":
-            assert t.entry_price in df["open"].values
 
 
 class FakeExchange:
@@ -174,45 +108,6 @@ def test_stops_on_close_ignores_wicks():
     assert t.exit_time == idx[4] and t.exit_price == 95 and t.reason == "stop"
 
 
-def _dot_frame(green_at, wt2_vals, mf_vals):
-    n = len(wt2_vals)
-    idx = pd.date_range("2024-01-01", periods=n, freq="h", tz="UTC")
-    green = pd.Series(False, index=idx)
-    green.iloc[green_at] = True
-    from mcbot.indicators import mf_turn
-    mc = pd.DataFrame({"wt2": wt2_vals, "money_flow": mf_vals, "green_dot": green,
-                       "red_dot": False}, index=idx)
-    mc["mf_turn_up"], mc["mf_turn_down"] = mf_turn(mc["money_flow"].astype(float))
-    return mc
-
-
-def test_double_dot_waits_for_higher_second_dot():
-    from mcbot.strategies import double_dot, double_dot_only
-    # Dot 1 at bar 4 (wt2 -70): money flow still falling, so skip.
-    # Dot 2 at bar 10 (wt2 -55, higher): money flow just turned up, so enter.
-    mf = [5, 4, 3, 2, 1, 1, 1, 1, 1, 0.5, 1, 2]
-    wt2 = [-50, -60, -65, -68, -70, -60, -50, -52, -54, -56, -55, -40]
-    mc = _dot_frame([4, 10], wt2, mf)
-    sig = double_dot(mc)
-    assert not sig["long_entry"].iloc[4]
-    assert sig["long_entry"].iloc[10]
-    assert double_dot_only(mc)["long_entry"].iloc[10]
-
-    # Second dot LOWER than the first is not the double-dot setup.
-    # (double_dot still takes it as a plain dot with momentum.)
-    wt2_lower = wt2.copy()
-    wt2_lower[10] = -80
-    assert not double_dot_only(_dot_frame([4, 10], wt2_lower, mf))["long_entry"].iloc[10]
-
-
-def test_double_dot_takes_first_dot_when_momentum_lines_up():
-    from mcbot.strategies import double_dot, double_dot_only
-    mf = [3, 2, 1, 0, 1, 2, 3, 4]  # turns up on bar 4, the dot
-    mc = _dot_frame([4], [-60] * 8, mf)
-    assert double_dot(mc)["long_entry"].iloc[4]
-    assert not double_dot_only(mc)["long_entry"].iloc[4]
-
-
 def _one_trade(highs, lows, closes, **kw):
     n = len(highs) + 1
     idx = pd.date_range("2024-01-01", periods=n, freq="h", tz="UTC")
@@ -254,31 +149,6 @@ def test_liquidation_before_wide_stop():
     assert res.stats["final_equity"] == 0
 
 
-def test_mtf_dots_htf_dot_waits_for_ltf_dot():
-    from mcbot.strategies import mtf_dots
-    n = 30
-    idx = pd.date_range("2024-01-01", periods=n, freq="h", tz="UTC")
-    mc = pd.DataFrame(False, index=idx, columns=["green_dot", "red_dot", "htf_green_dot",
-                                                 "htf_red_dot", "htf_new"])
-    mc.attrs["htf_factor"] = 4                 # window = 4 * 3 = 12 bars
-    mc.loc[idx[2], "green_dot"] = True         # LTF dot BEFORE the HTF dot: ignored
-    mc.loc[idx[4], ["htf_green_dot", "htf_new"]] = True   # HTF dot known on bar 4
-    mc.loc[idx[7], "green_dot"] = True         # LTF dot confirms: enter
-    mc.loc[idx[20], "green_dot"] = True        # 16 bars later: window expired
-    sig = mtf_dots(mc)
-    assert sig["long_entry"].tolist().count(True) == 1 and sig["long_entry"].iloc[7]
-
-    # An HTF red dot between them cancels the setup.
-    mc.loc[idx[5], ["htf_red_dot", "htf_new"]] = True
-    assert not mtf_dots(mc)["long_entry"].iloc[7]
-
-
-def test_htf_dots_use_only_closed_htf_candles(df):
-    full = market_cipher(df)
-    cut = market_cipher(df.iloc[:1501])
-    pd.testing.assert_series_equal(full["htf_green_dot"].iloc[:1501], cut["htf_green_dot"])
-
-
 def test_breakeven_after_first_target():
     # Bar 1 hits +1% (TP1), bar 2 falls back through entry to -3.5%.
     kw = dict(stop_loss=0.03, take_profits=TP, leverage=5, fee=0.001)
@@ -296,26 +166,6 @@ def test_breakeven_not_triggered_in_same_bar_as_tp1():
     res = _one_trade([101.5, 102.5, 103.5], [99.8, 100.5, 101.5], [101, 102, 103],
                      stop_loss=0.03, take_profits=TP, leverage=5, breakeven_after_tp1=True)
     assert res.trades[0].targets_hit == 3
-
-
-def test_mf_turn_detects_direction_change():
-    from mcbot.indicators import mf_turn
-    mf = pd.Series([5, 4, 3, 2, 3, 4, 5, 6, 5])
-    up, down = mf_turn(mf, lookback=3)
-    assert up.tolist() == [False, False, False, False, True, True, True, False, False]
-    # bar 4 curls up from the trough at bar 3; still counts for 3 bars, then it's
-    # just a rising trend. Bar 8 turns down.
-    assert down.iloc[8] and not down.iloc[:8].any()
-
-
-def test_filters_only_remove_entries(df):
-    from mcbot.strategies import build_signals
-    mc = market_cipher(df)
-    base = build_signals(mc, "dots")
-    filt = build_signals(mc, "dots", mf_turn=True, convergence=True)
-    assert (filt["long_entry"] <= base["long_entry"]).all()
-    assert filt["long_entry"].sum() < base["long_entry"].sum()
-    pd.testing.assert_series_equal(filt["long_exit"], base["long_exit"])
 
 
 RIDE = [(0.015, 0.5), (0.025, 0.25), (None, 0.25)]
@@ -393,21 +243,6 @@ def test_entry_quality_outcomes():
     assert res.iloc[1] == 0.0     # entry bar 4 open 100 -> low 96 hits the stop
 
 
-def test_second_dot_confirmed_waits_for_green_candle():
-    from mcbot.strategies import second_dot_confirmed
-    n = 15
-    idx = pd.date_range("2024-01-01", periods=n, freq="h", tz="UTC")
-    mc = pd.DataFrame({"green_dot": False, "red_dot": False, "candle_bull": False,
-                       "wt2": -50.0}, index=idx)
-    mc.loc[idx[3], ["green_dot", "wt2"]] = [True, -75.0]   # first, deeper dot
-    mc.loc[idx[9], ["green_dot", "wt2"]] = [True, -58.0]   # second, higher dot
-    mc.loc[idx[10], "candle_bull"] = True                  # confirming candle
-    sig = second_dot_confirmed(mc)
-    assert sig["long_entry"].tolist().count(True) == 1 and sig["long_entry"].iloc[10]
-    mc.loc[idx[10], "candle_bull"] = False                 # no confirmation -> no trade
-    assert not second_dot_confirmed(mc)["long_entry"].any()
-
-
 @pytest.mark.parametrize("times", [[1704067200, 1704070800],                 # unix seconds (TradingView)
                                    [1704067200000, 1704070800000],           # unix ms
                                    ["2024-01-01 00:00:00", "2024-01-01 01:00:00"]])
@@ -451,3 +286,45 @@ def test_sr_level_reclaim():
     out = sr_levels(df, factor=1, zone_pct=0.004)
     assert out["sr_reclaim_up"].iloc[11]
     assert out["sr_next_below"].iloc[11] == pytest.approx(100.05, abs=0.1)
+
+
+def _topdown_frame(n=30):
+    idx = pd.date_range("2024-01-01", periods=n, freq="h", tz="UTC")
+    mc = pd.DataFrame({"real_close": 101.0, "real_ema21": np.linspace(99, 100, n), "money_flow": 2.0,
+                       "wt2": -20.0, "wt_cross_up": False, "wt_cross_down": False, "green_dot": False,
+                       "red_dot": False, "sr_reclaim_up": False, "sr_reject_down": False}, index=idx)
+    mc["money_flow"] = np.r_[np.full(20, -3.0), np.linspace(-1, 3, n - 20)]   # crosses above 0
+    mc.loc[idx[10], ["green_dot", "wt2"]] = [True, -70.0]                   # anchor wave + dot
+    mc.loc[idx[24], ["wt_cross_up", "wt2"]] = [True, -20.0]                 # trigger: higher low, below +20
+    mc.loc[idx[23], "sr_reclaim_up"] = True                                  # closed back above a 4h zone
+    return mc, idx
+
+
+def test_topdown_long_needs_every_layer():
+    mc, idx = _topdown_frame()
+    assert topdown_confluence(mc)["long_entry"].iloc[24]
+    for col, value in (("sr_reclaim_up", False), ("wt_cross_up", False), ("green_dot", False)):
+        broken = mc.copy()
+        broken[col] = value
+        assert not topdown_confluence(broken)["long_entry"].any(), col
+    below_ema = mc.copy()
+    below_ema["real_close"] = 98.0
+    assert not topdown_confluence(below_ema)["long_entry"].any()
+    red_flow = mc.copy()
+    red_flow["money_flow"] = -20.0                                           # money flow red: don't long
+    assert not topdown_confluence(red_flow)["long_entry"].any()
+
+
+def test_topdown_exit_on_close_below_ema21():
+    mc, idx = _topdown_frame()
+    mc.loc[idx[27], "real_close"] = 99.0
+    assert topdown_confluence(mc)["long_exit"].iloc[27]
+
+
+def test_topdown_backtest_fills_at_real_prices():
+    data = synthetic(n=5000, seed=1)
+    sig = build_signals(market_cipher(data, use_heikin_ashi=True))
+    res = run_backtest(data, sig, allow_short=True)
+    assert res.trades
+    opens = set(data["open"].round(8))
+    assert all(round(t.entry_price, 8) in opens for t in res.trades)
