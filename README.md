@@ -12,6 +12,14 @@ Each strategy gets a number and a label so they stay separate. List them with `p
 | S1 | Top-down confluence | 4h levels, 1h entries | 🟢 ready |
 | S2 | 4-hour / 15-minute | 4h bias, 15m entries | 🔴 rules pending (send the transcript) |
 | S3 | GRIND BTC (wielkieef) | 45m (from Kraken 15m candles) | 🔴 rules pending (needs the Pine source). Uses only its own indicators, none of S1's |
+| S4 | The Witcher (wielkieef) | 30m (from Kraken 15m candles) | 🟢 ready. Port of his "The Witcher [30MIN]" script (MPL-2.0), using only its own indicators |
+
+**S4 - The Witcher** (`mcbot/witcher.py`): a long needs all nine of its conditions (ADX > 17 with +DI over -DI, RSI(35) < 70, MFI > 10, midpoint average, SAR, Donchian midline, momentum, rising VWMA, range filter), *or* its Heikin Ashi scalp signal while ADX agrees. Direction alternates. Exits: +1.1% take-profit, 8.2% (long) / 7.8% (short) stop, and an opposite signal flips the position.
+```bash
+python main.py signals  --strategy S4 --csv datasets/XBTUSD_15.csv --resample 30min
+python main.py backtest --strategy S4 --csv datasets/XBTUSD_15.csv --resample 30min --from 2017-01-01 --short --fee 0.001
+```
+On real Kraken BTC 30m data from 2017 onward (no leverage, 0.1% fee): 1,330 trades with a **71% win rate, but -93% total**. The average trade is +0.02% before fees and -0.18% after; entries hit their target first only 0.9 points more often than random (±1.3).
 
 Real Kraken BTC/USD data for these: `datasets/XBTUSD_15.csv` (15m, 387,797 candles), `datasets/XBTUSD_60.csv` (1h) and `datasets/XBTUSD_240.csv` (4h), all from 2013-10 to 2026-09.
 
@@ -29,7 +37,7 @@ Rules taken from a Market Cipher top-down analysis video and adapted to 4h level
 
 Every condition is shown as 🟢 YES / 🔴 NO with an overall 🟢 TRADE / 🔴 NO TRADE light, by `signals` and in the bot's log on every closed candle. The entry is literally "all six lights green", so the checklist and the trades can't disagree.
 
-**Exits (from the video, the `backtest` default `--exits video`):**
+**Exits (from the video, the `backtest` default `--exits strategy`):**
 - **Stop** just below the 21 EMA (0.2% buffer, `--stop-buffer`). For shorts it goes just above the rejected resistance level.
 - **Target 1:** close 50% at the next 4h support/resistance level. **Target 2:** close 25% at the level after that.
 - The stop **trails the 21 EMA** on every closed candle, which moves it into profit and lets the rest ride.

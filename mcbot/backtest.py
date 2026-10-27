@@ -59,6 +59,7 @@ def parse_take_profits(spec: str) -> list[tuple[float | None, float]]:
 
 def run_backtest(df: pd.DataFrame, signals: pd.DataFrame, *, allow_short: bool = False,
                  stop_loss: float | None = 0.03, take_profit: float | None = 0.06,
+                 stop_loss_short: float | None = None,
                  take_profits: list[tuple[float, float]] | None = None,
                  leverage: float = 1.0, maintenance_margin: float = 0.005,
                  fee: float = 0.001, start_equity: float = 10_000.0,
@@ -170,10 +171,11 @@ def run_backtest(df: pd.DataFrame, signals: pd.DataFrame, *, allow_short: bool =
                     exit_part(i, o[i], pos.remaining, "signal")
             if pos is None and equity > 0:
                 stop0 = -stop_loss if stop_loss else None
+                stop0_s = -stop_loss_short if stop_loss_short else stop0
                 if sig["long_entry"][p]:
                     pos = Trade("long", idx[i], o[i], stop_move=stop0)
                 elif allow_short and sig["short_entry"][p]:
-                    pos = Trade("short", idx[i], o[i], stop_move=stop0)
+                    pos = Trade("short", idx[i], o[i], stop_move=stop0_s)
 
         # 2) intrabar stop-loss / take-profits / liquidation
         if pos is not None:

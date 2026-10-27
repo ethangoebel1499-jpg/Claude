@@ -20,6 +20,7 @@ from mcbot import bot, data
 from mcbot.backtest import parse_take_profits, run_backtest, run_level_backtest
 from mcbot.entry_quality import summarize
 from mcbot.indicators import market_cipher
+from mcbot.witcher import witcher_checklist, witcher_signals
 from mcbot.strategies import CATALOG, build_signals, checklist, strategy_label, topdown_exit_levels
 
 
@@ -36,6 +37,9 @@ def load(args) -> pd.DataFrame:
 
 
 def signals_for(df: pd.DataFrame, args) -> tuple[pd.DataFrame, pd.DataFrame]:
+    if CATALOG[args.strategy]["func"] == "raw":
+        # Strategy works on the real candles with its own indicators.
+        return df, witcher_signals(df)
     mc = market_cipher(df, use_heikin_ashi=args.heikin_ashi, htf_factor=args.htf,
                        mf_period=args.mf_period)
     return mc, build_signals(mc, args.strategy)
@@ -48,7 +52,13 @@ def cmd_backtest(args) -> None:
     mc, sig = signals_for(df, args)
     print(f"[{strategy_label(args.strategy)}]  {len(df)} bars  {df.index[0]} -> {df.index[-1]}  "
           f"({'Heikin Ashi' if args.heikin_ashi else 'regular'} candles, {args.exits} exits)\n")
-    if args.exits == "video":
+    own = CATALOG[args.strategy].get("exits")
+    if args.exits == "strategy" and own:
+        # The strategy's own exits (S4: +1.1% take profit, 8.2% / 7.8% stop).
+        res = run_backtest(df, sig, allow_short=args.short, fee=args.fee, leverage=args.leverage,
+                           take_profit=own["take_profit"], stop_loss=own["stop_loss"],
+                           stop_loss_short=own["stop_loss_short"], stops_on_close=args.stops_on_close)
+    elif args.exits == "strategy":
         # Stop under the 21 EMA (above resistance for shorts), 50% at the next 4h
         # level, 25% at the level after, stop trails the 21 EMA.
         res = run_level_backtest(df, sig, topdown_exit_levels(mc, buffer=args.stop_buffer),
@@ -82,7 +92,10 @@ def cmd_signals(args) -> None:
         bar = int(dates.get_indexer([pd.Timestamp(args.date, tz="UTC")], method="pad")[0])
     else:
         bar = -1
-    print(checklist(mc, bar))
+    if CATALOG[args.strategy]["func"] == "raw":
+        print(witcher_checklist(mc, bar))
+    else:
+        print(checklist(mc, bar))
 
 
 def cmd_entries(args) -> None:
@@ -149,9 +162,10 @@ def main() -> None:
                         help="treat candles as this timeframe, e.g. daily stock data as 1h")
 
     b = sub.add_parser("backtest", parents=[common, source])
-    b.add_argument("--exits", choices=["video", "fixed"], default="video",
-                   help="video: stop under the 21 EMA, 50%% / 25%% at the next 4h levels, trail the "
-                        "21 EMA (default). fixed: --stop/--tp/--trail percentages")
+    b.add_argument("--exits", choices=["strategy", "fixed"], default="strategy",
+                   help="strategy: each strategy's own exits (S1: stop under the 21 EMA, 50%%/25%% at "
+                        "the next 4h levels, trail the 21 EMA; S4: +1.1%% TP, 8.2%%/7.8%% stop). "
+                        "fixed: --stop/--tp/--trail percentages")
     b.add_argument("--from", dest="start", help="only use candles from this date on, e.g. 2017-01-01")
     b.add_argument("--stop-buffer", type=float, default=0.002,
                    help="video exits: distance beyond the 21 EMA / level for the stop (0.002 = 0.2%%)")

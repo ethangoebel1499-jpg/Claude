@@ -435,3 +435,28 @@ def test_make_exchange_honours_proxy_env():
     from mcbot.data import make_exchange
     ex = make_exchange("kraken")
     assert ex.requests_trust_env is True
+
+
+def test_witcher_no_lookahead_and_alternates(df):
+    from mcbot.witcher import witcher_conditions, witcher_signals
+    lc_full, sc_full, ls_full, _ = witcher_conditions(df)
+    lc_cut, sc_cut, ls_cut, _ = witcher_conditions(df.iloc[:1500])
+    pd.testing.assert_frame_equal(lc_full.iloc[:1500], lc_cut)
+    pd.testing.assert_series_equal(ls_full.iloc[:1500], ls_cut)
+    sig = witcher_signals(df)
+    assert sig["long_entry"].sum() > 0 and sig["short_entry"].sum() > 0
+    # Direction alternates: never two long (or two short) entries in a row.
+    seq = [s for s in sig.index if sig.at[s, "long_entry"] or sig.at[s, "short_entry"]]
+    sides = ["L" if sig.at[s, "long_entry"] else "S" for s in seq]
+    assert all(a != b for a, b in zip(sides, sides[1:]))
+
+
+def test_witcher_checklist_and_exits(df):
+    from mcbot.witcher import witcher_checklist, witcher_signals
+    sig = witcher_signals(df)
+    bar = int(np.flatnonzero(sig["long_entry"].to_numpy())[0])
+    text = witcher_checklist(df, bar)
+    assert "LONG: 🟢 TRADE" in text and "Take profit" in text and "(8.2%)" in text
+    res = run_backtest(df, sig, allow_short=True, take_profit=0.011, stop_loss=0.082,
+                       stop_loss_short=0.078, fee=0)
+    assert res.trades and all(t.reason in ("target1", "stop", "opposite setup", "signal", "end") for t in res.trades)

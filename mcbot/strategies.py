@@ -154,8 +154,13 @@ CATALOG = {
            "source": "wielkieef's own indicators only (volume weight, volume delta, ADX, RSI); "
                      "rules pending (needs the Pine source)",
            "timeframes": "45m (built from Kraken 15m candles)", "func": None},
+    "S4": {"name": "The Witcher (wielkieef)",
+           "source": "wielkieef's 'The Witcher [30MIN]' TradingView script (MPL-2.0), its own "
+                     "indicators only: ADX, RSI, MFI, SAR, Donchian, momentum, VWMA, range filter, HA scalp",
+           "timeframes": "30m (built from Kraken 15m candles)", "func": "raw",
+           "exits": {"take_profit": 0.011, "stop_loss": 0.082, "stop_loss_short": 0.078}},
 }
-STRATEGIES = {sid: v["func"] for sid, v in CATALOG.items() if v["func"] is not None}
+STRATEGIES = {sid: v["func"] for sid, v in CATALOG.items() if callable(v["func"])}
 
 
 def strategy_label(sid: str) -> str:
