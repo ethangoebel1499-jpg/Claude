@@ -429,3 +429,25 @@ def test_relabel_daily_as_hourly():
     out = relabel(df, "1h")
     assert (out.index.to_series().diff().dropna() == pd.Timedelta("1h")).all()
     assert out["close"].tolist() == [1, 2, 3]
+
+
+def test_sr_levels_no_lookahead(df):
+    from mcbot.indicators import sr_levels
+    full = sr_levels(df)
+    cut = sr_levels(df.iloc[:1501])
+    pd.testing.assert_frame_equal(full.iloc[:1501], cut)
+
+
+def test_sr_level_reclaim():
+    from mcbot.indicators import sr_levels
+    # 4h candles (factor 1 here) that repeatedly turn at ~100, then a dip under
+    # 100 that closes back above it.
+    lows = [104, 102, 100, 102, 104, 102, 100.1, 102, 104, 103, 101, 99, 102, 103, 104]
+    highs = [x + 3 for x in lows]
+    closes = [x + 1.5 for x in lows]
+    closes[11] = 100.8  # bar 11 dips to 99, closes above the zone
+    idx = pd.date_range("2024-01-01", periods=len(lows), freq="h", tz="UTC")
+    df = pd.DataFrame({"open": closes, "high": highs, "low": lows, "close": closes}, index=idx)
+    out = sr_levels(df, factor=1, zone_pct=0.004)
+    assert out["sr_reclaim_up"].iloc[11]
+    assert out["sr_next_below"].iloc[11] == pytest.approx(100.05, abs=0.1)

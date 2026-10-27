@@ -51,6 +51,30 @@ No entry clearly beat random entries on stocks, and the two EUR/USD winners came
 python main.py entries --csv SPY_daily.csv --relabel 1h --compare --mode atr --target-dist 1 --stop-dist 2
 ```
 
+## Top-down confluence (`topdown_confluence`)
+Rules taken from a Market Cipher top-down analysis video and adapted to 4h levels with 1h entries:
+1. **Levels (4h):** support/resistance zones where several 4h turning points line up (about 0.4% wide). These use only *closed* 4h candles.
+2. **Naked chart (1h, real candles):** a candle closed back above a zone in the last 3 bars, price is closed above the **21 EMA**, and the EMA is rising (the video's "white" EMA).
+3. **Market Cipher B:**
+   - a green-dot anchor wave in the last 20 bars,
+   - money flow rising and either crossed above 0 in the last 10 bars or within 5 of crossing,
+   - a trigger wave: a WaveTrend cross up at a higher low, still below +20 (not about to print a red dot).
+4. **Exit:** a candle closes below the 21 EMA. Combine it with `--tp` and `--trail` for partial profits.
+
+Shorts mirror all of the above. Vague parts I had to interpret: what counts as a level, the EMA colour, "big" anchor waves, "tight" triggers, and money flow "about to cross".
+
+**Results on real data** (EUR/USD 1h plus 4 stocks treated as 1h; hit 1 ATR before a 2 ATR stop):
+
+| Layer | Signals | Hit target first | vs. random |
+|---|---|---|---|
+| Random | 37,459 | 66.2% | — |
+| Chart only (level reclaim + rising 21 EMA) | 4,322 | 68.6% | **+2.4 (±0.7)** |
+| + Market Cipher B trigger wave | 447 | 65.3% | -0.9 (±2.2) |
+| + anchor green dot | 187 | 69.5% | +3.3 (±3.5) |
+| Full strategy (+ money flow) | 31 | 61.3% | -4.9 (±8.5) |
+
+The naked-chart part (level + 21 EMA) showed a small but statistically solid edge. Adding the (approximated) Market Cipher B layers didn't improve it on this data. The full rule set fires too rarely to judge (31 signals).
+
 ## Higher-timeframe dot confirmed by a lower-timeframe dot
 `mtf_dots`: a green dot on the higher timeframe (`--htf 4` = 4 chart candles, so 1h → 4h) arms the setup once that HTF candle has **closed**. The bot then waits up to 3 HTF candles for a green dot on the chart timeframe and enters on it. A green dot that came *before* the HTF dot doesn't count, and an HTF red dot cancels the setup. It exits on a chart-timeframe red dot (or your stops/targets). Shorts mirror it. The higher timeframe is built from real candles and then converted to Heikin Ashi on its own.
 

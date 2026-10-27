@@ -237,6 +237,82 @@ def higher_timeframe(df: pd.DataFrame, factor: int = 4, use_heikin_ashi: bool = 
     return out
 
 
+def sr_levels(df: pd.DataFrame, factor: int = 4, zone_pct: float = 0.004, min_touches: int = 2,
+              max_levels: int = 30) -> pd.DataFrame:
+    """Support/resistance zones from the higher timeframe (top-down analysis).
+
+    Turning points (fractal highs/lows) on `factor`x candles are clustered: a
+    turning point becomes a level once at least `min_touches` turning points sit
+    within `zone_pct` of each other (price reacted there repeatedly). Each bar
+    only uses turning points confirmed by a *closed* higher-timeframe candle.
+
+    Returns per bar:
+      sr_reclaim_up   low dipped into / below a zone and the candle closed above it
+                      (bounce off support, or confirmed break above resistance)
+      sr_reject_down  high pushed into / above a zone and the candle closed below it
+      sr_next_above / sr_next_below   nearest level above / below the close
+    """
+    if isinstance(df.index, pd.DatetimeIndex) and len(df) > 1:
+        ts = df.index.asi8
+        keys = ts // (int(np.median(np.diff(ts))) * factor)
+    else:
+        keys = np.arange(len(df)) // factor
+    group = pd.factorize(keys)[0]
+    htf = df.groupby(group).agg(high=("high", "max"), low=("low", "min"))
+    hh, ll = htf["high"].to_numpy(), htf["low"].to_numpy()
+
+    # Pivot at HTF candle j is confirmed when candle j+2 closes, usable from group j+3.
+    pivots_by_group: dict[int, list[float]] = {}
+    for j in range(2, len(htf) - 2):
+        found = []
+        if hh[j] > max(hh[j - 2], hh[j - 1], hh[j + 1], hh[j + 2]):
+            found.append(hh[j])
+        if ll[j] < min(ll[j - 2], ll[j - 1], ll[j + 1], ll[j + 2]):
+            found.append(ll[j])
+        if found:
+            pivots_by_group.setdefault(j + 3, []).extend(found)
+
+    o_low, o_high, close = (df[k].to_numpy(dtype=float) for k in ("low", "high", "close"))
+    n = len(df)
+    reclaim = np.zeros(n, dtype=bool)
+    reject = np.zeros(n, dtype=bool)
+    above = np.full(n, np.nan)
+    below = np.full(n, np.nan)
+    pivots: list[float] = []
+    levels = np.array([])
+    current = -1
+    for i in range(n):
+        g = group[i]
+        if g != current:
+            current = g
+            new = pivots_by_group.get(g)
+            if new:
+                pivots.extend(new)
+                pivots = pivots[-200:]
+                p = np.array(pivots)
+                # A level = pivot with >= min_touches pivots (itself included) in its zone.
+                counts = np.array([(np.abs(p - x) <= x * zone_pct).sum() for x in p])
+                cand = np.sort(p[counts >= min_touches])
+                merged: list[float] = []
+                for x in cand:  # merge overlapping zones into one level
+                    if merged and x - merged[-1] <= merged[-1] * zone_pct:
+                        merged[-1] = (merged[-1] + x) / 2
+                    else:
+                        merged.append(x)
+                levels = np.array(merged[-max_levels:])
+        if len(levels):
+            top = levels * (1 + zone_pct / 2)
+            bot = levels * (1 - zone_pct / 2)
+            reclaim[i] = bool(((o_low[i] <= top) & (close[i] > top)).any())
+            reject[i] = bool(((o_high[i] >= bot) & (close[i] < bot)).any())
+            up = levels[levels > close[i]]
+            dn = levels[levels < close[i]]
+            above[i] = up.min() if len(up) else np.nan
+            below[i] = dn.max() if len(dn) else np.nan
+    return pd.DataFrame({"sr_reclaim_up": reclaim, "sr_reject_down": reject,
+                         "sr_next_above": above, "sr_next_below": below}, index=df.index)
+
+
 def ema_ribbon(df: pd.DataFrame) -> pd.DataFrame:
     return pd.DataFrame({f"ema{n}": ema(df["close"], n) for n in RIBBON_LENGTHS},
                         index=df.index)
@@ -269,6 +345,10 @@ def market_cipher(df: pd.DataFrame, ob_level: float = OB_LEVEL,
     """
     # Higher timeframe is built from the real candles (then Heikin Ashi'd on its own).
     htf = higher_timeframe(df, htf_factor, use_heikin_ashi, ob_level, os_level)
+    # Naked-chart pieces (top-down strategy) always use the real candles.
+    naked = sr_levels(df, htf_factor)
+    naked["real_close"] = df["close"]
+    naked["real_ema21"] = ema(df["close"], 21)
     if use_heikin_ashi:
         df = heikin_ashi(df)
     out = df.copy()
@@ -294,7 +374,7 @@ def market_cipher(df: pd.DataFrame, ob_level: float = OB_LEVEL,
     out["sfp_bull"], out["sfp_bear"] = swing_failure(df)
     out["swing_low50"] = df["low"].rolling(50).min()
     out["swing_high50"] = df["high"].rolling(50).max()
-    out = out.join(htf)
+    out = out.join(htf).join(naked)
     out.attrs["htf_factor"] = htf_factor
     # Candle colour / strength (most useful with Heikin Ashi): a green candle with
     # no lower wick, or a red one with no upper wick, signals a strong trend.

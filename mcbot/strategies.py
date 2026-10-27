@@ -203,6 +203,50 @@ def dot_htf_confirmed(mc: pd.DataFrame, htf_level: float = -40) -> pd.DataFrame:
     return _frame(mc, long_entry, mc["red_dot"], short_entry, mc["green_dot"])
 
 
+# --- Top-down confluence (from a Market Cipher top-down analysis video) ----------
+# 4h support/resistance + 21 EMA on the naked chart, confirmed by Market Cipher B
+# (anchor wave with green dot, money flow crossing, trigger wave). Entries on
+# the chart timeframe (1h); levels from the 4x higher timeframe.
+
+def topdown_confluence(mc: pd.DataFrame, window: int = 3, anchor_lookback: int = 20,
+                       mf_lookback: int = 10, mf_near: float = 5, trigger_max: float = 20) -> pd.DataFrame:
+    """Long when, within the last `window` bars:
+      * a candle closed back above a 4h support/resistance zone,
+      * price is closed above the 21 EMA and the EMA is rising ("white"),
+      * Market Cipher B: a green-dot anchor wave in the last `anchor_lookback`
+        bars, money flow rising and either crossed above 0 in the last
+        `mf_lookback` bars or within `mf_near` of crossing ("crossed, or right
+        about to cross"), and a trigger wave (WT cross up at a higher low than the
+        anchor, still below +`trigger_max`, i.e. not about to print a red dot).
+    Exit when a candle closes below the 21 EMA. Shorts mirror everything.
+    """
+    close, e21 = mc["real_close"], mc["real_ema21"]
+    mf, wt2 = mc["money_flow"], mc["wt2"]
+    ema_up = e21 > e21.shift()
+    mf_cross_up = (mf > 0) & (mf.shift() <= 0)
+    mf_cross_down = (mf < 0) & (mf.shift() >= 0)
+    anchor_low = wt2.rolling(anchor_lookback).min()
+    anchor_high = wt2.rolling(anchor_lookback).max()
+
+    trigger_up = mc["wt_cross_up"] & (wt2 > anchor_low + 5) & (wt2 < trigger_max)
+    trigger_down = mc["wt_cross_down"] & (wt2 < anchor_high - 5) & (wt2 > -trigger_max)
+
+    mf_long_ok = (mf > mf.shift(3)) & ((_recent(mf_cross_up, mf_lookback) & (mf > 0))
+                                       | mf.between(-mf_near, 0))
+    mf_short_ok = (mf < mf.shift(3)) & ((_recent(mf_cross_down, mf_lookback) & (mf < 0))
+                                        | mf.between(0, mf_near))
+
+    long_entry = (_recent(mc["sr_reclaim_up"], window) & (close > e21) & ema_up
+                  & _recent(mc["green_dot"], anchor_lookback) & mf_long_ok
+                  & _recent(trigger_up, window))
+    short_entry = (_recent(mc["sr_reject_down"], window) & (close < e21) & ~ema_up
+                   & _recent(mc["red_dot"], anchor_lookback) & mf_short_ok
+                   & _recent(trigger_down, window))
+    long_exit = close < e21
+    short_exit = close > e21
+    return _frame(mc, long_entry, long_exit, short_entry, short_exit)
+
+
 # --- Multi-timeframe dots ------------------------------------------------------
 
 def _armed(start: pd.Series, cancel: pd.Series, window: int) -> pd.Series:
@@ -241,6 +285,7 @@ def heikin_ashi_trend(mc: pd.DataFrame) -> pd.DataFrame:
 
 
 STRATEGIES = {
+    "topdown_confluence": topdown_confluence,
     "second_dot_confirmed": second_dot_confirmed,
     "dot_htf_confirmed": dot_htf_confirmed,
     "mtf_dots": mtf_dots,
