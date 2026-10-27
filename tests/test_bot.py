@@ -338,3 +338,27 @@ def test_load_kraken_ohlcvt_without_header(tmp_path):
     df = load_csv(str(p))
     assert len(df) == 2 and df.index[0] == pd.Timestamp("2024-01-01", tz="UTC")
     assert df["close"].tolist() == [42300.5, 42200.0]
+
+
+def test_checklist_matches_entries():
+    from mcbot.strategies import checklist, topdown_conditions
+    mc, idx = _topdown_frame()
+    long_c, _ = topdown_conditions(mc)
+    sig = topdown_confluence(mc)
+    pd.testing.assert_series_equal(long_c.all(axis=1), sig["long_entry"], check_names=False)
+    text = checklist(mc, 24)
+    assert "LONG: 🟢 TRADE  (6/6 yes)" in text and "SHORT: 🔴 NO TRADE" in text
+    assert text.count("🟢 YES") >= 6
+    mc.loc[:, "sr_reclaim_up"] = False
+    text = checklist(mc, 24)
+    assert "LONG: 🔴 NO TRADE  (5/6 yes)" in text
+    assert "🔴 NO   Closed back above a 4h support/resistance zone" in text
+
+
+def test_load_close_only_csv(tmp_path):
+    from mcbot.data import load_csv
+    p = tmp_path / "btc.csv"
+    p.write_text("Date,Price\n2024-01-01,100\n2024-01-02,105\n2024-01-03,103\n")
+    df = load_csv(str(p))
+    assert df["open"].tolist() == [100, 100, 105]
+    assert df["high"].tolist() == [100, 105, 105] and df["low"].tolist() == [100, 100, 103]

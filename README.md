@@ -15,6 +15,8 @@ Rules taken from a Market Cipher top-down analysis video and adapted to 4h level
    - **money flow** rising and either crossed above 0 in the last 10 bars or within 5 of crossing (never long while money flow is clearly red),
    - a **trigger wave**: a WaveTrend cross up at a higher low than the anchor, still below +20 (not about to print a red dot).
 
+Every condition is shown as 🟢 YES / 🔴 NO with an overall 🟢 TRADE / 🔴 NO TRADE light, by `signals` and in the bot's log on every closed candle. The entry is literally "all six lights green", so the checklist and the trades can't disagree.
+
 **Exit:** a candle closes below the 21 EMA (the video's "if price is below the 21 EMA, you were wrong"), or your stop/targets fire first.
 
 **Short:** the mirror image. A rejection below a zone, price below a falling 21 EMA, a red-dot anchor, money flow falling into red, and a lower-high trigger wave.
@@ -50,8 +52,9 @@ python main.py entries --csv tradingview_export.csv --mode atr --target-dist 1 -
 # Daily candles from any CSV, treated as 1h candles
 python main.py entries --csv SPY_daily.csv --relabel 1h
 
-# Current indicator values and signal on the last closed candle
+# Green/red light checklist (every condition YES/NO + TRADE / NO TRADE) for the last closed candle
 python main.py signals --exchange binance --symbol BTC/USDT
+python main.py signals --csv datasets/btc_daily_close.csv --relabel 1h --date 2016-03-04
 
 # Paper trade (simulated account saved to paper_state.json)
 python main.py paper --exchange binance --symbol BTC/USDT

@@ -48,6 +48,7 @@ def load_csv(path: str) -> pd.DataFrame:
     The timestamp can be unix seconds (TradingView exports), unix milliseconds,
     or a date string. Volume is optional. Headerless Kraken OHLCVT files
     (time, open, high, low, close, volume, trades) are detected automatically.
+    Close-only files (e.g. Date,Price) get candles built from consecutive closes.
     """
     df = pd.read_csv(path)
     first = str(df.columns[0]).strip()
@@ -61,6 +62,13 @@ def load_csv(path: str) -> pd.DataFrame:
         df.index = pd.to_datetime(ts, unit="s" if ts.max() < 1e11 else "ms", utc=True)
     else:
         df.index = pd.to_datetime(ts, utc=True)
+    if "close" not in df.columns and "price" in df.columns:
+        df = df.rename(columns={"price": "close"})
+    if "open" not in df.columns:
+        # Close-only data: build candles from consecutive closes (no wicks).
+        df["open"] = df["close"].shift().fillna(df["close"])
+        df["high"] = df[["open", "close"]].max(axis=1)
+        df["low"] = df[["open", "close"]].min(axis=1)
     if "volume" not in df.columns:
         df["volume"] = 1.0
     return df[COLUMNS].astype(float)
@@ -74,6 +82,7 @@ def relabel(df: pd.DataFrame, timeframe: str = "1h") -> pd.DataFrame:
     bars-per-year all behave as on a 1h chart.
     """
     out = df.copy()
+    out.attrs["real_dates"] = df.index  # keep the true dates for display
     out.index = pd.date_range("2000-01-01", periods=len(df), freq=pd.Timedelta(timeframe), tz="UTC")
     return out
 

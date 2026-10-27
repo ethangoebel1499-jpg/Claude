@@ -19,7 +19,7 @@ import pandas as pd
 
 from .data import fetch_ohlcv
 from .indicators import market_cipher
-from .strategies import build_signals
+from .strategies import build_signals, checklist
 
 log = logging.getLogger("mcbot")
 
@@ -163,6 +163,7 @@ def run(exchange, symbol: str, timeframe: str, broker, *,
                     check_stops(broker, float(df["close"].iloc[-1]), stop_loss, take_profit)
                 mc = market_cipher(df, use_heikin_ashi=heikin_ashi, htf_factor=htf_factor)
                 sig = build_signals(mc).iloc[-1]
+                log.info("\n%s", checklist(mc))
                 pos = broker.position
                 log.info("Bar %s close=%.2f signals=%s pos=%s", bar, df["close"].iloc[-1],
                          {k: bool(v) for k, v in sig.items() if v}, pos.side if pos else None)

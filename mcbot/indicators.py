@@ -148,6 +148,7 @@ def market_cipher(df: pd.DataFrame, ob_level: float = OB_LEVEL,
     Heikin Ashi candles and the returned open/high/low/close are the Heikin Ashi
     values. Trades always fill at real prices.
     """
+    real_dates = df.attrs.get("real_dates")
     naked = sr_levels(df, htf_factor)
     naked["real_close"] = df["close"]
     naked["real_ema21"] = ema(df["close"], 21)
@@ -165,4 +166,6 @@ def market_cipher(df: pd.DataFrame, ob_level: float = OB_LEVEL,
     out["money_flow"] = money_flow(df)
     out = out.join(naked)
     out.attrs["htf_factor"] = htf_factor
+    if real_dates is not None:
+        out.attrs["real_dates"] = real_dates
     return out

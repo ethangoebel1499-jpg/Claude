@@ -20,7 +20,7 @@ from mcbot import bot, data
 from mcbot.backtest import parse_take_profits, run_backtest
 from mcbot.entry_quality import summarize
 from mcbot.indicators import market_cipher
-from mcbot.strategies import build_signals
+from mcbot.strategies import build_signals, checklist
 
 
 def load(args) -> pd.DataFrame:
@@ -58,11 +58,13 @@ def cmd_backtest(args) -> None:
 
 
 def cmd_signals(args) -> None:
-    mc, sig = signals_for(load(args), args)
-    cols = ["real_close", "real_ema21", "sr_next_below", "sr_next_above", "sr_reclaim_up",
-            "sr_reject_down", "wt2", "green_dot", "red_dot", "money_flow"]
-    print(mc[cols].tail(args.rows).round(2).to_string())
-    print(f"\nLast closed bar: { {k: bool(v) for k, v in sig.iloc[-1].items()} }")
+    mc, _ = signals_for(load(args), args)
+    if args.date:
+        dates = mc.attrs.get("real_dates", mc.index)
+        bar = int(dates.get_indexer([pd.Timestamp(args.date, tz="UTC")], method="pad")[0])
+    else:
+        bar = -1
+    print(checklist(mc, bar))
 
 
 def cmd_entries(args) -> None:
@@ -138,8 +140,9 @@ def main() -> None:
     e.add_argument("--max-bars", type=int, default=48)
     e.set_defaults(func=cmd_entries)
 
-    s = sub.add_parser("signals", parents=[common, source])
-    s.add_argument("--rows", type=int, default=15)
+    s = sub.add_parser("signals", parents=[common, source],
+                       help="green/red light checklist for the last closed candle")
+    s.add_argument("--date", help="show the checklist for the candle at or before this date instead")
     s.set_defaults(func=cmd_signals)
 
     for name, live in (("paper", False), ("live", True)):
