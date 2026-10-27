@@ -26,6 +26,7 @@ class Trade:
     pnl_pct: float = 0.0              # return on account equity, after leverage and fees
     remaining: float = 1.0            # fraction of the position still open
     targets_hit: int = 0
+    stop_move: float | None = None    # current stop as a price move (-0.03, or 0 at breakeven)
     fills: list = field(default_factory=list)  # (time, price, fraction, reason)
 
 
@@ -55,12 +56,15 @@ def run_backtest(df: pd.DataFrame, signals: pd.DataFrame, *, allow_short: bool =
                  take_profits: list[tuple[float, float]] | None = None,
                  leverage: float = 1.0, maintenance_margin: float = 0.005,
                  fee: float = 0.001, start_equity: float = 10_000.0,
-                 stops_on_close: bool = False) -> Result:
+                 stops_on_close: bool = False, breakeven_after_tp1: bool = False) -> Result:
     """stop_loss / take_profit levels are price moves (0.03 = 3%). With leverage L,
     each 1% price move is L% on the account, and fees are charged on the
     leveraged notional. take_profits overrides take_profit with scaled exits.
     The whole account is used as margin; a position is liquidated (-100%) if
     price moves 1/L - maintenance_margin against it before the stop fills.
+    With breakeven_after_tp1, the stop moves to the entry price once the first
+    target fills, starting from the next bar (within one bar the order of the
+    high and low is unknown).
     """
     o = df["open"].to_numpy()
     h = df["high"].to_numpy()
@@ -109,13 +113,14 @@ def run_backtest(df: pd.DataFrame, signals: pd.DataFrame, *, allow_short: bool =
     def check_levels(i: int, worst: float, best: float, fill_open: float | None) -> None:
         """worst/best: the most adverse / favourable price move seen. Stop first
         (conservative), then each target in order."""
-        if liq_move is not None and worst <= -liq_move and (not stop_loss or stop_loss >= liq_move
+        stop = pos.stop_move
+        if liq_move is not None and worst <= -liq_move and (stop is None or -stop >= liq_move
                                                            or move_of(o[i]) <= -liq_move):
             liquidate(i)
             return
-        if stop_loss and worst <= -stop_loss:
-            px = fill_open if fill_open is not None else price_at(min(-stop_loss, move_of(o[i])))
-            exit_part(i, px, pos.remaining, "stop")
+        if stop is not None and worst <= stop:
+            px = fill_open if fill_open is not None else price_at(min(stop, move_of(o[i])))
+            exit_part(i, px, pos.remaining, "breakeven" if stop == 0 else "stop")
             return
         while pos is not None and pos.targets_hit < len(targets):
             level, size = targets[pos.targets_hit]
@@ -123,6 +128,8 @@ def run_backtest(df: pd.DataFrame, signals: pd.DataFrame, *, allow_short: bool =
                 break
             px = fill_open if fill_open is not None else price_at(max(level, move_of(o[i])))
             pos.targets_hit += 1
+            if breakeven_after_tp1:
+                pos.stop_move = 0.0
             last = pos.targets_hit == len(targets)
             exit_part(i, px, pos.remaining if last else size, f"target{pos.targets_hit}")
 
@@ -139,10 +146,11 @@ def run_backtest(df: pd.DataFrame, signals: pd.DataFrame, *, allow_short: bool =
                 elif pos.side == "short" and sig["short_exit"][p]:
                     exit_part(i, o[i], pos.remaining, "signal")
             if pos is None and equity > 0:
+                stop0 = -stop_loss if stop_loss else None
                 if sig["long_entry"][p]:
-                    pos = Trade("long", idx[i], o[i])
+                    pos = Trade("long", idx[i], o[i], stop_move=stop0)
                 elif allow_short and sig["short_entry"][p]:
-                    pos = Trade("short", idx[i], o[i])
+                    pos = Trade("short", idx[i], o[i], stop_move=stop0)
 
         # 2) intrabar stop-loss / take-profits / liquidation
         if pos is not None:
@@ -187,6 +195,7 @@ def _stats(df: pd.DataFrame, trades: list[Trade], eq: pd.Series, start: float) -
         "sharpe": round(float(sharpe), 2),
         "final_equity": round(float(eq.iloc[-1]), 2),
         "stopped_out": sum(t.reason == "stop" for t in trades),
+        "breakeven_exits": sum(t.reason == "breakeven" for t in trades),
         "liquidated": sum(t.reason == "liquidated" for t in trades),
         "hit_target1_pct": round(sum(t.targets_hit >= 1 for t in trades) / len(trades) * 100, 1) if trades else 0.0,
     }

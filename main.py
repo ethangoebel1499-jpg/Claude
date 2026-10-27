@@ -41,7 +41,7 @@ def cmd_backtest(args) -> None:
         res = run_backtest(df, STRATEGIES[name](mc), allow_short=args.short,
                            stop_loss=args.stop or None, take_profit=args.target or None,
                            fee=args.fee, stops_on_close=args.stops_on_close,
-                           leverage=args.leverage,
+                           leverage=args.leverage, breakeven_after_tp1=args.breakeven,
                            take_profits=parse_take_profits(args.tp) if args.tp else None)
         rows[name] = res.stats
         if not args.compare:
@@ -111,6 +111,7 @@ def main() -> None:
 
     b = sub.add_parser("backtest", parents=[common, source])
     b.add_argument("--compare", action="store_true", help="run every strategy")
+    b.add_argument("--breakeven", action="store_true", help="move stop to entry after the first target")
     b.add_argument("--leverage", type=float, default=1.0, help="e.g. 5 for 5x")
     b.add_argument("--tp", help='scaled take-profits, price%%:size%%, e.g. "1:50,2:25,3:25"')
     b.set_defaults(func=cmd_backtest)

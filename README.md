@@ -97,7 +97,7 @@ python main.py backtest --exchange binance --symbol BTC/USDT --timeframe 1h \
 - Stop and target levels are **price** moves. At 5x, a 3% stop costs 15% of the account, plus fees.
 - Fees are charged on the leveraged notional. The whole account is used as margin, and a position is liquidated (-100%) if price moves `1/leverage - 0.5%` against it before the stop fills.
 - If a stop and a target are both hit in the same candle, the stop is assumed to fill first (conservative).
-- The stop stays at -3% after targets are hit. It isn't moved to breakeven.
+- Add `--breakeven` to move the stop to the entry price after the first target fills. It takes effect from the next candle, because within one candle we can't tell whether the high or the low came first.
 - Break-even math for this setup: a full win is about +8.25% of the account and a full stop about -15.5%, so you need to win roughly **65%** of trades just to break even.
 
 ## Candle confirmation

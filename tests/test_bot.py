@@ -274,3 +274,22 @@ def test_htf_dots_use_only_closed_htf_candles(df):
     full = market_cipher(df)
     cut = market_cipher(df.iloc[:1501])
     pd.testing.assert_series_equal(full["htf_green_dot"].iloc[:1501], cut["htf_green_dot"])
+
+
+def test_breakeven_after_first_target():
+    # Bar 1 hits +1% (TP1), bar 2 falls back through entry to -3.5%.
+    kw = dict(stop_loss=0.03, take_profits=TP, leverage=5, fee=0.001)
+    full_stop = _one_trade([101.5, 100.5], [99.8, 96.0], [101, 97], **kw).trades[0]
+    be = _one_trade([101.5, 100.5], [99.8, 96.0], [101, 97], breakeven_after_tp1=True, **kw).trades[0]
+    assert full_stop.reason == "stop" and be.reason == "breakeven"
+    assert be.exit_price == 100.0
+    # Half closed at +1%, half at entry: only fees on the second half.
+    assert be.pnl_pct == pytest.approx(0.5 * (0.05 - 0.01) + 0.5 * (0 - 0.01))
+    assert be.pnl_pct > 0 > full_stop.pnl_pct
+
+
+def test_breakeven_not_triggered_in_same_bar_as_tp1():
+    # Entry bar dips to 99.8 and reaches 101.5: TP1 fills, BE stop not hit yet.
+    res = _one_trade([101.5, 102.5, 103.5], [99.8, 100.5, 101.5], [101, 102, 103],
+                     stop_loss=0.03, take_profits=TP, leverage=5, breakeven_after_tp1=True)
+    assert res.trades[0].targets_hit == 3
