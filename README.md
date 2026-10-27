@@ -96,13 +96,14 @@ python main.py live --exchange binance --symbol BTC/USDT --timeframe 1h --live -
 ```bash
 # 5x, 3% stop, close 50% at +1%, 25% at +2%, the rest at +3% (price moves)
 python main.py backtest --exchange binance --symbol BTC/USDT --timeframe 1h \
-  --strategy cryptoface_swing --short --leverage 5 --stop 0.03 --tp "1.5:50,2.5:25,ride:25" --breakeven --fee 0.0005
+  --strategy cryptoface_swing --short --leverage 5 --stop 0.03 --tp "1.5:50,2.5:25,ride:25" --trail --fee 0.0005
 ```
 - Stop and target levels are **price** moves. At 5x, a 3% stop costs 15% of the account, plus fees.
 - Fees are charged on the leveraged notional. The whole account is used as margin, and a position is liquidated (-100%) if price moves `1/leverage - 0.5%` against it before the stop fills.
 - If a stop and a target are both hit in the same candle, the stop is assumed to fill first (conservative).
 - Use `ride` for a runner: `--tp "1.5:50,2.5:25,ride:25"` closes 50% at +1.5% and 25% at +2.5%. The last 25% ignores the normal exit signals and stays open until the strategy's **opposite setup** fires (for a long: the full short entry, including money flow turning down and any filters). If `--short` is on, it flips straight into the short. The breakeven stop still protects the runner.
 - The opposite setup now always closes a trade, runner or not.
+- Add `--trail` to step the stop up behind each target: breakeven after target 1, then target 1's level after target 2. With `1.5:50,2.5:25,ride:25`, the runner locks in at least +1.5%. Like breakeven, it takes effect from the next candle.
 - Add `--breakeven` to move the stop to the entry price after the first target fills. It takes effect from the next candle, because within one candle we can't tell whether the high or the low came first.
 - Break-even math for this setup: a full win is about +8.25% of the account and a full stop about -15.5%, so you need to win roughly **65%** of trades just to break even.
 

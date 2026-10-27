@@ -363,3 +363,20 @@ def test_runner_stopped_at_breakeven():
     t = run_backtest(df, sig, stop_loss=0.03, take_profits=RIDE, leverage=5, fee=0,
                      breakeven_after_tp1=True).trades[0]
     assert t.targets_hit == 2 and t.reason == "breakeven" and t.exit_price == 99.5
+
+
+def test_trail_stop_moves_to_target1_after_target2():
+    # +1.5% and +2.5% hit, then price falls back to +1% -> runner stopped at +1.5%.
+    idx = pd.date_range("2024-01-01", periods=5, freq="h", tz="UTC")
+    df = pd.DataFrame({"open": [100, 100, 102, 103, 102], "high": [100, 102, 103, 103.5, 102],
+                       "low": [100, 99.8, 101.6, 101.8, 100.8], "close": [100, 102, 103, 102, 101],
+                       "volume": 1.0}, index=idx)
+    sig = pd.DataFrame(False, index=idx, columns=["long_entry", "long_exit", "short_entry", "short_exit"])
+    sig.iloc[0, 0] = True
+    kw = dict(stop_loss=0.03, take_profits=RIDE, leverage=5, fee=0)
+    be = run_backtest(df, sig, breakeven_after_tp1=True, **kw).trades
+    tr = run_backtest(df, sig, trail_targets=True, **kw).trades[0]
+    assert tr.reason == "trail stop" and tr.exit_price == pytest.approx(101.5)
+    assert tr.pnl_pct == pytest.approx(0.5 * 0.075 + 0.25 * 0.125 + 0.25 * 0.075)
+    # With breakeven only, the runner is still open at the end (no stop at +1.5%).
+    assert be[0].reason == "end"
