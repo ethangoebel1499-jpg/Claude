@@ -20,7 +20,6 @@ A simple bot that trades with Market Cipher A/B style signals. You can backtest 
 
 ```bash
 python main.py backtest --exchange binance --symbol BTC/USDT --timeframe 1h --htf 4 --strategy mtf_dots
-python main.py backtest --exchange binance --symbol BTC/USDT --timeframe 15m --htf 4 --strategy mtf_dots   # 1h dot, 15m confirm
 ```
 
 ## Double green dot ("uneven butt cheeks")
@@ -44,13 +43,18 @@ Neither trader publishes exact mechanical rules. These are rules a bot can follo
 | `casper_swing` | Long-term | Swing failure pattern at support (50-bar low) with money flow turning up | Price reaches resistance (50-bar high) or a bearish SFP |
 | `casper_scalp` | Scalp | Swing failure pattern (wick below the 20-bar low that closes back above it) while price is under the session VWAP | Price gets back to VWAP |
 
-The higher timeframe is 4× the chart timeframe (1h chart → 4h bias). It only uses completed candles, so there's no lookahead. Run scalps on 5m–15m with tight stops (e.g. `--timeframe 15m --stop 0.008 --target 0.012`) and swings on 4h–1d with wider stops (e.g. `--timeframe 4h --stop 0.06 --target 0.15`). Fees eat scalping strategies, so check `--fee` against your exchange.
+The higher timeframe is 4× the chart timeframe (1h chart → 4h bias). It only uses completed candles, so there's no lookahead. Everything runs on the **1h chart** (the default) for consistency. "Scalp" vs "swing" here means how quickly a strategy exits, not a different chart timeframe.
 
 ### Basic strategies
 - `dots`: buy green dots, sell red dots.
 - `dots_confirmed` (default): a green dot only counts if money flow is rising, price is above EMA200, and the ribbon is bullish. Exits on a red dot or when money flow flips negative. Shorts are the mirror image.
 - `divergence`: a dot that comes within 5 bars of a matching WT divergence.
 - `money_flow_div`: buys a bullish money flow divergence once money flow turns up. Exits when price and money flow converge down, or on a bearish divergence.
+
+### Money flow filters (any strategy)
+- Money flow conditions in every strategy now mean money flow is **changing direction**: it's rising on this bar after falling within the last 3 bars (curling up), or the mirror for shorts.
+- `--mf-turn`: only enter if money flow turned in the trade's direction within the last 3 bars.
+- `--convergence`: only enter after a matching money flow divergence or convergence in the last 20 bars, and not while price and money flow converge against the trade.
 
 ### Money flow divergence vs convergence
 | Signal | Price | Money flow | Meaning |
@@ -62,7 +66,7 @@ The higher timeframe is 4× the chart timeframe (1h chart → 4h bias). It only 
 
 ```bash
 python examples/money_flow_divergence.py                      # demo data
-python examples/money_flow_divergence.py binance BTC/USDT 4h  # real data
+python examples/money_flow_divergence.py binance BTC/USDT 1h  # real data
 ```
 
 To add your own strategy, write a function that returns `long_entry/long_exit/short_entry/short_exit` columns and register it in `STRATEGIES`.
@@ -72,7 +76,7 @@ To add your own strategy, write a function that returns `long_entry/long_exit/sh
 pip install -r requirements.txt
 
 # Backtest (fills happen at the next bar's open; 3% stop, 6% target, 0.1% fee by default)
-python main.py backtest --exchange binance --symbol BTC/USDT --timeframe 4h --limit 3000 --compare
+python main.py backtest --exchange binance --symbol BTC/USDT --timeframe 1h --limit 3000 --compare
 python main.py backtest --csv my_candles.csv --strategy divergence --short
 python main.py backtest --synthetic --compare          # offline demo on random data
 python main.py backtest --synthetic --compare --no-heikin-ashi  # same, regular candles
@@ -107,7 +111,7 @@ python main.py backtest --exchange binance --symbol BTC/USDT --timeframe 1h \
 
 ## Important caveats
 - The stop-loss and take-profit are checked by the bot itself, not placed as orders on the exchange. They only protect you while the bot is running.
-- On real data, the plain `dots` strategy usually loses money once fees are included. Backtest across several symbols and timeframes, then paper trade for a while before you risk real money.
+- On real data, the plain `dots` strategy usually loses money once fees are included. Backtest across several symbols and market periods, then paper trade for a while before you risk real money.
 - This is educational code, not financial advice.
 
 ## Tests

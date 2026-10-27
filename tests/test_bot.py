@@ -179,15 +179,18 @@ def _dot_frame(green_at, wt2_vals, mf_vals):
     idx = pd.date_range("2024-01-01", periods=n, freq="h", tz="UTC")
     green = pd.Series(False, index=idx)
     green.iloc[green_at] = True
-    return pd.DataFrame({"wt2": wt2_vals, "money_flow": mf_vals, "green_dot": green,
-                         "red_dot": False}, index=idx)
+    from mcbot.indicators import mf_turn
+    mc = pd.DataFrame({"wt2": wt2_vals, "money_flow": mf_vals, "green_dot": green,
+                       "red_dot": False}, index=idx)
+    mc["mf_turn_up"], mc["mf_turn_down"] = mf_turn(mc["money_flow"].astype(float))
+    return mc
 
 
 def test_double_dot_waits_for_higher_second_dot():
     from mcbot.strategies import double_dot, double_dot_only
-    # Dot 1 at bar 4 (wt2 -70): money flow falling, so skip.
-    # Dot 2 at bar 10 (wt2 -55, higher): money flow rising, so enter.
-    mf = [5, 4, 3, 2, 1, 1, 1, 2, 3, 4, 5, 6]
+    # Dot 1 at bar 4 (wt2 -70): money flow still falling, so skip.
+    # Dot 2 at bar 10 (wt2 -55, higher): money flow just turned up, so enter.
+    mf = [5, 4, 3, 2, 1, 1, 1, 1, 1, 0.5, 1, 2]
     wt2 = [-50, -60, -65, -68, -70, -60, -50, -52, -54, -56, -55, -40]
     mc = _dot_frame([4, 10], wt2, mf)
     sig = double_dot(mc)
@@ -204,7 +207,7 @@ def test_double_dot_waits_for_higher_second_dot():
 
 def test_double_dot_takes_first_dot_when_momentum_lines_up():
     from mcbot.strategies import double_dot, double_dot_only
-    mf = [1, 2, 3, 4, 5, 6, 7, 8]
+    mf = [3, 2, 1, 0, 1, 2, 3, 4]  # turns up on bar 4, the dot
     mc = _dot_frame([4], [-60] * 8, mf)
     assert double_dot(mc)["long_entry"].iloc[4]
     assert not double_dot_only(mc)["long_entry"].iloc[4]
@@ -293,3 +296,23 @@ def test_breakeven_not_triggered_in_same_bar_as_tp1():
     res = _one_trade([101.5, 102.5, 103.5], [99.8, 100.5, 101.5], [101, 102, 103],
                      stop_loss=0.03, take_profits=TP, leverage=5, breakeven_after_tp1=True)
     assert res.trades[0].targets_hit == 3
+
+
+def test_mf_turn_detects_direction_change():
+    from mcbot.indicators import mf_turn
+    mf = pd.Series([5, 4, 3, 2, 3, 4, 5, 6, 5])
+    up, down = mf_turn(mf, lookback=3)
+    assert up.tolist() == [False, False, False, False, True, True, True, False, False]
+    # bar 4 curls up from the trough at bar 3; still counts for 3 bars, then it's
+    # just a rising trend. Bar 8 turns down.
+    assert down.iloc[8] and not down.iloc[:8].any()
+
+
+def test_filters_only_remove_entries(df):
+    from mcbot.strategies import build_signals
+    mc = market_cipher(df)
+    base = build_signals(mc, "dots")
+    filt = build_signals(mc, "dots", mf_turn=True, convergence=True)
+    assert (filt["long_entry"] <= base["long_entry"]).all()
+    assert filt["long_entry"].sum() < base["long_entry"].sum()
+    pd.testing.assert_series_equal(filt["long_exit"], base["long_exit"])

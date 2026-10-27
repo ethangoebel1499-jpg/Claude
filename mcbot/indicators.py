@@ -114,6 +114,21 @@ def divergences(df: pd.DataFrame, osc: pd.Series, top_limit: float = 45,
     return pd.Series(bull, index=df.index), pd.Series(bear, index=df.index)
 
 
+def mf_turn(mf: pd.Series, lookback: int = 3) -> tuple[pd.Series, pd.Series]:
+    """Money flow changing direction.
+
+    Turning up: rising on this bar after falling at some point in the previous
+    `lookback` bars (it just curled up from a trough). Turning down is the mirror.
+    """
+    rising = mf > mf.shift()
+    falling = mf < mf.shift()
+    was_falling = falling.shift().astype("boolean").fillna(False).astype(int) \
+        .rolling(lookback, min_periods=1).max() > 0
+    was_rising = rising.shift().astype("boolean").fillna(False).astype(int) \
+        .rolling(lookback, min_periods=1).max() > 0
+    return rising & was_falling, falling & was_rising
+
+
 def mf_convergence(df: pd.DataFrame, mf: pd.Series, window: int = 20) -> pd.DataFrame:
     """Compare price with money flow over the last `window` bars vs the window before.
 
@@ -269,6 +284,7 @@ def market_cipher(df: pd.DataFrame, ob_level: float = OB_LEVEL,
 
     out["money_flow"] = money_flow(df)
     out = out.join(mf_convergence(df, out["money_flow"]))
+    out["mf_turn_up"], out["mf_turn_down"] = mf_turn(out["money_flow"])
     out["rsi"] = rsi(df["close"])
     out["stoch_k"], out["stoch_d"] = stoch_rsi(df["close"])
     out["bull_div"], out["bear_div"] = divergences(df, wt2)

@@ -19,7 +19,7 @@ import pandas as pd
 
 from .data import fetch_ohlcv
 from .indicators import market_cipher
-from .strategies import STRATEGIES
+from .strategies import build_signals
 
 log = logging.getLogger("mcbot")
 
@@ -130,14 +130,14 @@ def closed_candles(exchange, symbol: str, timeframe: str, history: int = 500) ->
 def run(exchange, symbol: str, timeframe: str, strategy: str, broker, *,
         allow_short: bool = False, fraction: float = 0.95, stop_loss: float | None = 0.03,
         take_profit: float | None = 0.06, poll_seconds: int = 30, history: int = 500,
-        heikin_ashi: bool = True, stops_on_close: bool = False, htf_factor: int = 4) -> None:
+        heikin_ashi: bool = True, stops_on_close: bool = False, htf_factor: int = 4,
+        mf_turn: bool = False, convergence: bool = False) -> None:
     """Trade only on confirmed (closed) candles.
 
     Entries and signal exits happen once per closed candle. Stops and targets are
     checked on every poll unless stops_on_close is set, in which case they are
     also only checked against each closed candle's close.
     """
-    strat = STRATEGIES[strategy]
     tf_ms = exchange.parse_timeframe(timeframe) * 1000
     last_bar = None
     log.info("Starting %s on %s %s with %s (%s candles)", strategy, symbol, timeframe,
@@ -162,7 +162,8 @@ def run(exchange, symbol: str, timeframe: str, strategy: str, broker, *,
                     continue
                 if stops_on_close:
                     check_stops(broker, float(df["close"].iloc[-1]), stop_loss, take_profit)
-                sig = strat(market_cipher(df, use_heikin_ashi=heikin_ashi, htf_factor=htf_factor)).iloc[-1]
+                mc = market_cipher(df, use_heikin_ashi=heikin_ashi, htf_factor=htf_factor)
+                sig = build_signals(mc, strategy, mf_turn=mf_turn, convergence=convergence).iloc[-1]
                 pos = broker.position
                 log.info("Bar %s close=%.2f signals=%s pos=%s", bar, df["close"].iloc[-1],
                          {k: bool(v) for k, v in sig.items() if v}, pos.side if pos else None)

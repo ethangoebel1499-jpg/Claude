@@ -35,8 +35,8 @@ def dots_confirmed(mc: pd.DataFrame) -> pd.DataFrame:
     Short: the mirror image. Exit on the opposite dot or when money flow flips.
     """
     mf = mc["money_flow"]
-    mf_rising = mf > mf.shift(3)
-    mf_falling = mf < mf.shift(3)
+    mf_rising = mc["mf_turn_up"]
+    mf_falling = mc["mf_turn_down"]
     uptrend = (mc["close"] > mc["ema200"]) & mc["ribbon_bull"]
     downtrend = (mc["close"] < mc["ema200"]) & ~mc["ribbon_bull"]
 
@@ -64,9 +64,8 @@ def money_flow_div(mc: pd.DataFrame) -> pd.DataFrame:
     and money flow turning up. Exit when price and money flow converge to the
     downside, or on a bearish divergence. Shorts are the mirror image.
     """
-    mf = mc["money_flow"]
-    long_entry = mc["bull_mf_div"] & (mf > mf.shift())
-    short_entry = mc["bear_mf_div"] & (mf < mf.shift())
+    long_entry = mc["bull_mf_div"] & mc["mf_turn_up"]
+    short_entry = mc["bear_mf_div"] & mc["mf_turn_down"]
     long_exit = mc["bear_mf_div"] | mc["bear_mf_conv"]
     short_exit = mc["bull_mf_div"] | mc["bull_mf_conv"]
     return _frame(mc, long_entry, long_exit, short_entry, short_exit)
@@ -94,14 +93,13 @@ def cryptoface_scalp(mc: pd.DataFrame) -> pd.DataFrame:
     """Scalp: green dot while money flow is rising and the VWAP wave crosses
     above zero, only with the higher-timeframe wave. Quick exit on the
     opposite WaveTrend cross."""
-    mf = mc["money_flow"]
     v = mc["mcb_vwap"]
     vwap_up = (v > 0) & (v.shift() <= 0)
     vwap_down = (v < 0) & (v.shift() >= 0)
     recent_green = mc["green_dot"].astype(int).rolling(3, min_periods=1).max() > 0
     recent_red = mc["red_dot"].astype(int).rolling(3, min_periods=1).max() > 0
-    long_entry = recent_green & vwap_up & (mf > mf.shift()) & mc["htf_wt_rising"]
-    short_entry = recent_red & vwap_down & (mf < mf.shift()) & ~mc["htf_wt_rising"]
+    long_entry = recent_green & vwap_up & mc["mf_turn_up"] & mc["htf_wt_rising"]
+    short_entry = recent_red & vwap_down & mc["mf_turn_down"] & ~mc["htf_wt_rising"]
     return _frame(mc, long_entry, mc["wt_cross_down"], short_entry, mc["wt_cross_up"])
 
 
@@ -124,8 +122,8 @@ def casper_swing(mc: pd.DataFrame) -> pd.DataFrame:
     agrees, and hold to resistance (the 50-bar high)."""
     near_support = mc["low"] <= mc["swing_low50"].shift() * 1.01
     near_resistance = mc["high"] >= mc["swing_high50"].shift() * 0.99
-    mf_up = mc["money_flow"] > mc["money_flow"].shift(3)
-    mf_down = mc["money_flow"] < mc["money_flow"].shift(3)
+    mf_up = mc["mf_turn_up"]
+    mf_down = mc["mf_turn_down"]
     long_entry = mc["sfp_bull"] & near_support & mf_up
     short_entry = mc["sfp_bear"] & near_resistance & mf_down
     long_exit = near_resistance | mc["sfp_bear"]
@@ -161,8 +159,8 @@ def double_dot(mc: pd.DataFrame, max_gap: int = 30, min_gap: int = 3,
         second = dot & mom & ~prev_ok & uneven & gap.between(min_gap, max_gap)
         return second if second_only else second | (dot & mom)
 
-    long_entry = entries(mc["green_dot"], mf > mf.shift(3), higher=True)
-    short_entry = entries(mc["red_dot"], mf < mf.shift(3), higher=False)
+    long_entry = entries(mc["green_dot"], mc["mf_turn_up"], higher=True)
+    short_entry = entries(mc["red_dot"], mc["mf_turn_down"], higher=False)
     long_exit = mc["red_dot"] | ((mf < 0) & (mf.shift() >= 0))
     short_exit = mc["green_dot"] | ((mf > 0) & (mf.shift() <= 0))
     return _frame(mc, long_entry, long_exit, short_entry, short_exit)
@@ -203,11 +201,10 @@ def heikin_ashi_trend(mc: pd.DataFrame) -> pd.DataFrame:
     """Green dot in the last 5 bars, confirmed by a strong green Heikin Ashi
     candle (no lower wick) with money flow rising. Ride the trend until the
     first red candle. Use with --heikin-ashi (the default)."""
-    mf = mc["money_flow"]
     recent_green = mc["green_dot"].astype(int).rolling(5, min_periods=1).max() > 0
     recent_red = mc["red_dot"].astype(int).rolling(5, min_periods=1).max() > 0
-    long_entry = recent_green & mc["candle_strong_bull"] & (mf > mf.shift())
-    short_entry = recent_red & mc["candle_strong_bear"] & (mf < mf.shift())
+    long_entry = recent_green & mc["candle_strong_bull"] & mc["mf_turn_up"]
+    short_entry = recent_red & mc["candle_strong_bear"] & mc["mf_turn_down"]
     return _frame(mc, long_entry, ~mc["candle_bull"], short_entry, mc["candle_bull"])
 
 
@@ -225,3 +222,33 @@ STRATEGIES = {
     "divergence": divergence,
     "money_flow_div": money_flow_div,
 }
+
+
+def _recent(s: pd.Series, n: int) -> pd.Series:
+    return s.astype(int).rolling(n, min_periods=1).max() > 0
+
+
+def apply_filters(sig: pd.DataFrame, mc: pd.DataFrame, *, mf_turn: bool = False,
+                  convergence: bool = False, mf_window: int = 3,
+                  conv_window: int = 20) -> pd.DataFrame:
+    """Extra entry filters that can be added to any strategy.
+
+    mf_turn: money flow changed direction in our favour within `mf_window` bars.
+    convergence: a bullish money flow divergence or convergence within
+    `conv_window` bars and no bearish convergence now (mirror for shorts).
+    """
+    sig = sig.copy()
+    if mf_turn:
+        sig["long_entry"] &= _recent(mc["mf_turn_up"], mf_window)
+        sig["short_entry"] &= _recent(mc["mf_turn_down"], mf_window)
+    if convergence:
+        sig["long_entry"] &= (_recent(mc["bull_mf_div"], conv_window) |
+                              _recent(mc["bull_mf_conv"], conv_window)) & ~mc["bear_mf_conv"]
+        sig["short_entry"] &= (_recent(mc["bear_mf_div"], conv_window) |
+                               _recent(mc["bear_mf_conv"], conv_window)) & ~mc["bull_mf_conv"]
+    return sig
+
+
+def build_signals(mc: pd.DataFrame, strategy: str, *, mf_turn: bool = False,
+                  convergence: bool = False) -> pd.DataFrame:
+    return apply_filters(STRATEGIES[strategy](mc), mc, mf_turn=mf_turn, convergence=convergence)

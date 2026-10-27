@@ -19,7 +19,7 @@ import pandas as pd
 from mcbot import bot, data
 from mcbot.backtest import parse_take_profits, run_backtest
 from mcbot.indicators import market_cipher
-from mcbot.strategies import STRATEGIES
+from mcbot.strategies import STRATEGIES, build_signals
 
 
 def load(args) -> pd.DataFrame:
@@ -38,7 +38,8 @@ def cmd_backtest(args) -> None:
           f"({'Heikin Ashi' if args.heikin_ashi else 'regular'} candles)\n")
     rows = {}
     for name in names:
-        res = run_backtest(df, STRATEGIES[name](mc), allow_short=args.short,
+        sig = build_signals(mc, name, mf_turn=args.mf_turn, convergence=args.convergence)
+        res = run_backtest(df, sig, allow_short=args.short,
                            stop_loss=args.stop or None, take_profit=args.target or None,
                            fee=args.fee, stops_on_close=args.stops_on_close,
                            leverage=args.leverage, breakeven_after_tp1=args.breakeven,
@@ -61,7 +62,8 @@ def cmd_signals(args) -> None:
             "green_dot", "red_dot", "bull_div", "bear_div",
             "bull_mf_div", "bear_mf_div", "bull_mf_conv", "bear_mf_conv"]
     print(mc[cols].tail(args.rows).round(2).to_string())
-    sig = STRATEGIES[args.strategy](mc).iloc[-1]
+    sig = build_signals(mc, args.strategy, mf_turn=args.mf_turn,
+                        convergence=args.convergence).iloc[-1]
     print(f"\n{args.strategy} on last closed bar: { {k: bool(v) for k, v in sig.items()} }")
 
 
@@ -81,7 +83,8 @@ def cmd_trade(args, live: bool) -> None:
     bot.run(ex, args.symbol, args.timeframe, args.strategy, broker, allow_short=allow_short,
             fraction=args.fraction, stop_loss=args.stop or None, take_profit=args.target or None,
             poll_seconds=args.poll, heikin_ashi=args.heikin_ashi,
-            stops_on_close=args.stops_on_close, htf_factor=args.htf)
+            stops_on_close=args.stops_on_close, htf_factor=args.htf,
+            mf_turn=args.mf_turn, convergence=args.convergence)
 
 
 def main() -> None:
@@ -91,12 +94,16 @@ def main() -> None:
     common = argparse.ArgumentParser(add_help=False)
     common.add_argument("--exchange", default="binance", help="any ccxt exchange id")
     common.add_argument("--symbol", default="BTC/USDT")
-    common.add_argument("--timeframe", default="1h")
+    common.add_argument("--timeframe", default="1h", help="chart timeframe (default 1h)")
     common.add_argument("--strategy", default="dots_confirmed", choices=list(STRATEGIES))
     common.add_argument("--short", action="store_true", help="allow short trades (backtest/paper)")
     common.add_argument("--stop", type=float, default=0.03, help="stop-loss fraction, 0 to disable")
     common.add_argument("--target", type=float, default=0.06, help="take-profit fraction, 0 to disable")
     common.add_argument("--fee", type=float, default=0.001, help="fee per side")
+    common.add_argument("--mf-turn", action="store_true",
+                        help="only enter when money flow just changed direction in the trade's favour")
+    common.add_argument("--convergence", action="store_true",
+                        help="only enter after a matching money flow divergence/convergence")
     common.add_argument("--htf", type=int, default=4,
                         help="higher timeframe = this many chart candles (4: 1h chart -> 4h)")
     common.add_argument("--stops-on-close", action="store_true",
