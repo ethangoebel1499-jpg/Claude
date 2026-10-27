@@ -208,3 +208,44 @@ def test_double_dot_takes_first_dot_when_momentum_lines_up():
     mc = _dot_frame([4], [-60] * 8, mf)
     assert double_dot(mc)["long_entry"].iloc[4]
     assert not double_dot_only(mc)["long_entry"].iloc[4]
+
+
+def _one_trade(highs, lows, closes, **kw):
+    n = len(highs) + 1
+    idx = pd.date_range("2024-01-01", periods=n, freq="h", tz="UTC")
+    df = pd.DataFrame({"open": [100.0] * 2 + list(closes[:-1]), "high": [100.0] + list(highs),
+                       "low": [100.0] + list(lows), "close": [100.0] + list(closes),
+                       "volume": 1.0}, index=idx)
+    sig = pd.DataFrame(False, index=idx, columns=["long_entry", "long_exit", "short_entry", "short_exit"])
+    sig.iloc[0, 0] = True  # enter at bar 1 open = 100
+    return run_backtest(df, sig, **kw)
+
+
+TP = [(0.01, 0.5), (0.02, 0.25), (0.03, 0.25)]
+
+
+def test_scaled_take_profits_with_leverage():
+    from mcbot.backtest import parse_take_profits
+    assert parse_take_profits("1:50,2:25,3:25") == TP
+    res = _one_trade([101.5, 102.5, 103.5], [99.5, 100.5, 101.5], [101, 102, 103],
+                     stop_loss=0.03, take_profits=TP, leverage=5, fee=0.001)
+    t = res.trades[0]
+    assert t.targets_hit == 3 and t.reason == "target3"
+    # 50% at +1%, 25% at +2%, 25% at +3%, 5x, 0.1% fee per side on notional.
+    expected = 0.5 * (5 * 0.01 - 0.01) + 0.25 * (5 * 0.02 - 0.01) + 0.25 * (5 * 0.03 - 0.01)
+    assert t.pnl_pct == pytest.approx(expected)
+
+
+def test_target1_then_stop():
+    res = _one_trade([101.5, 100], [99.5, 96.5], [101, 97],
+                     stop_loss=0.03, take_profits=TP, leverage=5, fee=0.001)
+    t = res.trades[0]
+    assert t.targets_hit == 1 and t.reason == "stop"
+    assert t.pnl_pct == pytest.approx(0.5 * (0.05 - 0.01) + 0.5 * (-0.15 - 0.01))
+
+
+def test_liquidation_before_wide_stop():
+    # 50x: liquidated after ~1.5% adverse move, well before the 3% stop.
+    res = _one_trade([100.5], [98], [98.5], stop_loss=0.03, take_profits=TP, leverage=50)
+    assert res.trades[0].reason == "liquidated"
+    assert res.stats["final_equity"] == 0

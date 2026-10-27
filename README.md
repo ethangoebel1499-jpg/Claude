@@ -80,6 +80,18 @@ export MCBOT_API_KEY=... MCBOT_API_SECRET=...
 python main.py live --exchange binance --symbol BTC/USDT --timeframe 1h --live --sandbox
 ```
 
+## Leverage and scaled take-profits
+```bash
+# 5x, 3% stop, close 50% at +1%, 25% at +2%, the rest at +3% (price moves)
+python main.py backtest --exchange binance --symbol BTC/USDT --timeframe 1h \
+  --strategy cryptoface_swing --short --leverage 5 --stop 0.03 --tp "1:50,2:25,3:25" --fee 0.0005
+```
+- Stop and target levels are **price** moves. At 5x, a 3% stop costs 15% of the account, plus fees.
+- Fees are charged on the leveraged notional. The whole account is used as margin, and a position is liquidated (-100%) if price moves `1/leverage - 0.5%` against it before the stop fills.
+- If a stop and a target are both hit in the same candle, the stop is assumed to fill first (conservative).
+- The stop stays at -3% after targets are hit. It isn't moved to breakeven.
+- Break-even math for this setup: a full win is about +8.25% of the account and a full stop about -15.5%, so you need to win roughly **65%** of trades just to break even.
+
 ## Candle confirmation
 - **Entries and signal exits only happen on closed candles.** The backtest fills a signal from candle *i* at candle *i+1*'s open. The bot drops the still-forming candle and acts once per newly closed candle.
 - On startup, the bot won't trade off a candle that closed a while ago. It waits for the next candle to close.
