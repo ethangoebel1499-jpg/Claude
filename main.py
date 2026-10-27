@@ -25,10 +25,12 @@ from mcbot.strategies import STRATEGIES, build_signals
 
 def load(args) -> pd.DataFrame:
     if args.synthetic:
-        return data.synthetic(n=args.limit, timeframe=args.timeframe)
-    if args.csv:
-        return data.load_csv(args.csv)
-    return data.fetch_ohlcv(data.make_exchange(args.exchange), args.symbol, args.timeframe, args.limit)
+        df = data.synthetic(n=args.limit, timeframe=args.timeframe)
+    elif args.csv:
+        df = data.load_csv(args.csv)
+    else:
+        df = data.fetch_ohlcv(data.make_exchange(args.exchange), args.symbol, args.timeframe, args.limit)
+    return data.relabel(df, args.relabel) if args.relabel else df
 
 
 def cmd_backtest(args) -> None:
@@ -130,6 +132,8 @@ def main() -> None:
     source.add_argument("--limit", type=int, default=3000, help="number of candles")
     source.add_argument("--csv", help="load candles from a CSV instead of the exchange")
     source.add_argument("--synthetic", action="store_true", help="use random demo data")
+    source.add_argument("--relabel", metavar="TIMEFRAME",
+                        help="treat candles as this timeframe, e.g. daily stock data as 1h")
 
     b = sub.add_parser("backtest", parents=[common, source])
     b.add_argument("--compare", action="store_true", help="run every strategy")

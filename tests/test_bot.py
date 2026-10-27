@@ -419,3 +419,13 @@ def test_load_csv_timestamp_formats(tmp_path, times):
     df = load_csv(str(p))
     assert df.index[0] == pd.Timestamp("2024-01-01", tz="UTC")
     assert (df["volume"] == 1.0).all()
+
+
+def test_relabel_daily_as_hourly():
+    from mcbot.data import relabel
+    idx = pd.to_datetime(["2020-01-02", "2020-01-03", "2020-01-06"], utc=True)  # weekend gap
+    df = pd.DataFrame({"open": [1, 2, 3], "high": [1, 2, 3], "low": [1, 2, 3], "close": [1, 2, 3],
+                       "volume": 1.0}, index=idx)
+    out = relabel(df, "1h")
+    assert (out.index.to_series().diff().dropna() == pd.Timedelta("1h")).all()
+    assert out["close"].tolist() == [1, 2, 3]

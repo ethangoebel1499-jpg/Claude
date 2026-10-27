@@ -60,6 +60,18 @@ def load_csv(path: str) -> pd.DataFrame:
     return df[COLUMNS].astype(float)
 
 
+def relabel(df: pd.DataFrame, timeframe: str = "1h") -> pd.DataFrame:
+    """Give candles consecutive timestamps `timeframe` apart, keeping their order.
+
+    Lets you treat e.g. daily stock candles as if they were 1h candles: the
+    indicators see the same bars, but session VWAP, the higher timeframe and
+    bars-per-year all behave as on a 1h chart.
+    """
+    out = df.copy()
+    out.index = pd.date_range("2000-01-01", periods=len(df), freq=pd.Timedelta(timeframe), tz="UTC")
+    return out
+
+
 def synthetic(n: int = 3000, seed: int = 7, start_price: float = 30_000.0,
               timeframe: str = "1h") -> pd.DataFrame:
     """Random-walk candles with drifting trend regimes. For demos and tests only."""

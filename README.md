@@ -32,7 +32,24 @@ On real **EUR/USD 1h data (2017)**, using a target of 1 ATR and a stop of 2 ATR:
 | `second_dot_confirmed`: second dot higher than the first (3–30 bars apart), then a green candle confirms | **82%** | 45 |
 | `dot_htf_confirmed`: green dot while the 4h wave is below -40, then a green candle confirms | **84%** | 61 |
 
-Both held up in each half of the year, and with a 2 ATR target and 4 ATR stop. Caveats: this is forex, not crypto, it covers one year, and the samples are small (about ±6–7 points), so confirm on crypto data with `entries` before trusting it.
+Both held up in each half of the year, and with a 2 ATR target and 4 ATR stop.
+
+**But they didn't hold up on stocks.** On real daily data for SPY (1993–2021), GOOGL (2009–2018), GOOG (2004–2009) and 002032 (2004–2016), treated as 1h candles with `--relabel 1h`, about 25,000 bars in total:
+
+| Entry | Hit 1 ATR before 2 ATR stop | Signals |
+|---|---|---|
+| Random | 66.1% | — |
+| `dots` | 64.8% | 732 |
+| `second_dot_confirmed` | 60.0% | 140 |
+| `dot_htf_confirmed` | 59.4% | 224 |
+| best (`double_dot_only`) | 71.2% (±5.8) | 66 |
+
+No entry clearly beat random entries on stocks, and the two EUR/USD winners came out *below* random. The EUR/USD result was most likely luck or specific to that market. Treat every entry as unproven until `entries` shows an edge on the market you actually trade.
+
+```bash
+# Daily candles from any CSV, treated as 1h candles
+python main.py entries --csv SPY_daily.csv --relabel 1h --compare --mode atr --target-dist 1 --stop-dist 2
+```
 
 ## Higher-timeframe dot confirmed by a lower-timeframe dot
 `mtf_dots`: a green dot on the higher timeframe (`--htf 4` = 4 chart candles, so 1h → 4h) arms the setup once that HTF candle has **closed**. The bot then waits up to 3 HTF candles for a green dot on the chart timeframe and enters on it. A green dot that came *before* the HTF dot doesn't count, and an HTF red dot cancels the setup. It exits on a chart-timeframe red dot (or your stops/targets). Shorts mirror it. The higher timeframe is built from real candles and then converted to Heikin Ashi on its own.
