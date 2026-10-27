@@ -143,6 +143,76 @@ def mf_convergence(df: pd.DataFrame, mf: pd.Series, window: int = 20) -> pd.Data
     }, index=df.index)
 
 
+def vwap(df: pd.DataFrame) -> pd.Series:
+    """Session VWAP, reset every UTC day."""
+    tp = (df["high"] + df["low"] + df["close"]) / 3
+    day = df.index.floor("D") if isinstance(df.index, pd.DatetimeIndex) else np.zeros(len(df))
+    pv = (tp * df["volume"]).groupby(day).cumsum()
+    v = df["volume"].groupby(day).cumsum().replace(0, np.nan)
+    return pv / v
+
+
+def swing_failure(df: pd.DataFrame, lookback: int = 20) -> tuple[pd.Series, pd.Series]:
+    """Swing failure pattern (SFP).
+
+    Bullish: wick below the lowest low of the previous `lookback` bars, close back above it.
+    Bearish: wick above the highest high of the previous `lookback` bars, close back below it.
+    """
+    swing_low = df["low"].rolling(lookback).min().shift()
+    swing_high = df["high"].rolling(lookback).max().shift()
+    bull = (df["low"] < swing_low) & (df["close"] > swing_low)
+    bear = (df["high"] > swing_high) & (df["close"] < swing_high)
+    return bull, bear
+
+
+def anchor_trigger(wt2: pd.Series, cross_up: pd.Series, cross_down: pd.Series,
+                   anchor_level: float = -60, lookback: int = 30) -> tuple[pd.Series, pd.Series]:
+    """CryptoFace anchor/trigger waves.
+
+    Bullish: a deep "anchor" wave at or below -60 in the last `lookback` bars, then a
+    shallower "trigger" wave (higher low, still below 0) that crosses up.
+    Bearish is the mirror image above +60.
+    """
+    anchor_low = wt2.rolling(lookback).min().shift(5)
+    anchor_high = wt2.rolling(lookback).max().shift(5)
+    recent_low = wt2.rolling(5).min()
+    recent_high = wt2.rolling(5).max()
+    bull = cross_up & (anchor_low <= anchor_level) & (recent_low > anchor_low + 5) & (wt2 < 0)
+    bear = cross_down & (anchor_high >= -anchor_level) & (recent_high < anchor_high - 5) & (wt2 > 0)
+    return bull, bear
+
+
+def higher_timeframe(df: pd.DataFrame, factor: int = 4) -> pd.DataFrame:
+    """Money flow, WaveTrend and ribbon trend on a timeframe `factor` times larger.
+
+    Each bar only sees the last *completed* higher-timeframe candle, so there is
+    no lookahead.
+    """
+    if isinstance(df.index, pd.DatetimeIndex) and len(df) > 1:
+        # Align to the clock so candles don't shift when the data window moves.
+        ts = df.index.asi8  # integer timestamps (unit depends on the index)
+        step = int(np.median(np.diff(ts)))
+        keys = ts // (step * factor)
+    else:
+        keys = np.arange(len(df)) // factor
+    group = pd.factorize(keys)[0]
+    htf = df.groupby(group).agg(open=("open", "first"), high=("high", "max"),
+                                low=("low", "min"), close=("close", "last"),
+                                volume=("volume", "sum"))
+    _, wt2 = wavetrend(htf)
+    vals = pd.DataFrame({
+        "htf_money_flow": money_flow(htf),
+        "htf_wt2": wt2,
+        "htf_wt_rising": wt2 > wt2.shift(),
+        "htf_ribbon_bull": ema(htf["close"], 5) > ema(htf["close"], 34),
+    })
+    # Bar in group g uses group g-1 (the last finished HTF candle).
+    out = vals.reindex(group - 1).set_axis(df.index)
+    for col in ("htf_wt_rising", "htf_ribbon_bull"):
+        out[col] = out[col].astype("boolean").fillna(False).astype(bool)
+    return out
+
+
 def ema_ribbon(df: pd.DataFrame) -> pd.DataFrame:
     return pd.DataFrame({f"ema{n}": ema(df["close"], n) for n in RIBBON_LENGTHS},
                         index=df.index)
@@ -167,6 +237,13 @@ def market_cipher(df: pd.DataFrame, ob_level: float = OB_LEVEL,
     out["rsi"] = rsi(df["close"])
     out["stoch_k"], out["stoch_d"] = stoch_rsi(df["close"])
     out["bull_div"], out["bear_div"] = divergences(df, wt2)
+    out["mcb_vwap"] = wt1 - wt2  # Cipher B's "VWAP" wave
+    out["anchor_trigger_bull"], out["anchor_trigger_bear"] = anchor_trigger(wt2, cross_up, cross_down)
+    out["vwap"] = vwap(df)
+    out["sfp_bull"], out["sfp_bear"] = swing_failure(df)
+    out["swing_low50"] = df["low"].rolling(50).min()
+    out["swing_high50"] = df["high"].rolling(50).max()
+    out = out.join(higher_timeframe(df))
 
     ribbon = ema_ribbon(df)
     out = out.join(ribbon)

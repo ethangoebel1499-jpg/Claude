@@ -16,6 +16,20 @@ A simple bot that trades with Market Cipher A/B style signals. You can backtest 
 | EMA ribbon | Cipher A EMAs 5/11/15/18/21/24/28/34. Bullish when EMA5 > EMA34 |
 
 ## Strategies (`mcbot/strategies.py`)
+
+### Trader-inspired strategies
+Neither trader publishes exact mechanical rules. These are rules a bot can follow, built from public material: Market Cipher B guides for CryptoFace (Market Cipher's creator), and course topics for Jayson Casper (swing failure patterns, VWAP, support to resistance). They're approximations, not their actual systems.
+
+| Strategy | Style | Entry | Exit |
+|---|---|---|---|
+| `cryptoface_swing` | Long-term | Anchor wave (≤ -60), then a higher-low trigger wave crossing up, with higher-timeframe money flow > 0 and a bullish ribbon | Bearish anchor/trigger, a red dot while the HTF wave falls, or HTF money flow < 0 |
+| `cryptoface_scalp` | Scalp | Green dot in the last 3 bars, plus the Cipher B VWAP wave crossing above 0 with money flow rising, in the direction of the HTF wave | Next bearish WaveTrend cross |
+| `casper_swing` | Long-term | Swing failure pattern at support (50-bar low) with money flow turning up | Price reaches resistance (50-bar high) or a bearish SFP |
+| `casper_scalp` | Scalp | Swing failure pattern (wick below the 20-bar low that closes back above it) while price is under the session VWAP | Price gets back to VWAP |
+
+The higher timeframe is 4× the chart timeframe (1h chart → 4h bias). It only uses completed candles, so there's no lookahead. Run scalps on 5m–15m with tight stops (e.g. `--timeframe 15m --stop 0.008 --target 0.012`) and swings on 4h–1d with wider stops (e.g. `--timeframe 4h --stop 0.06 --target 0.15`). Fees eat scalping strategies, so check `--fee` against your exchange.
+
+### Basic strategies
 - `dots`: buy green dots, sell red dots.
 - `dots_confirmed` (default): a green dot only counts if money flow is rising, price is above EMA200, and the ribbon is bullish. Exits on a red dot or when money flow flips negative. Shorts are the mirror image.
 - `divergence`: a dot that comes within 5 bars of a matching WT divergence.

@@ -17,7 +17,8 @@ def df():
 def test_indicators_have_no_lookahead(df):
     full = market_cipher(df)
     cut = market_cipher(df.iloc[:1500])
-    cols = ["wt1", "wt2", "money_flow", "rsi", "green_dot", "red_dot", "bull_div", "bear_div"]
+    cols = ["wt1", "wt2", "money_flow", "rsi", "green_dot", "red_dot", "bull_div", "bear_div",
+            "vwap", "sfp_bull", "sfp_bear", "anchor_trigger_bull", "htf_money_flow", "htf_wt_rising"]
     pd.testing.assert_frame_equal(full[cols].iloc[:1500], cut[cols])
 
 
@@ -80,3 +81,30 @@ def test_money_flow_divergence():
     # Money flow also makes a lower low -> bearish convergence instead.
     out = mf_convergence(df, pd.Series([-10, -10, -20, -20], index=idx), window=2)
     assert out["bear_mf_conv"].iloc[-1] and not out["bull_mf_div"].iloc[-1]
+
+
+def test_swing_failure_pattern():
+    from mcbot.indicators import swing_failure
+    idx = pd.date_range("2024-01-01", periods=4, freq="h", tz="UTC")
+    # Bar 3 wicks below the prior low (9) but closes back above it.
+    df = pd.DataFrame({"high": [11, 11, 11, 11], "low": [9, 9.5, 9.5, 8.5],
+                       "close": [10, 10, 10, 9.8]}, index=idx)
+    bull, bear = swing_failure(df, lookback=3)
+    assert bull.iloc[-1] and not bear.iloc[-1]
+
+
+def test_higher_timeframe_stable_when_window_moves(df):
+    from mcbot.indicators import higher_timeframe
+    a = higher_timeframe(df.iloc[:1200])
+    b = higher_timeframe(df.iloc[1:1200])
+    # Same clock-aligned HTF candles regardless of where the window starts
+    # (compare after indicator warm-up).
+    pd.testing.assert_series_equal(a["htf_ribbon_bull"].iloc[-200:], b["htf_ribbon_bull"].iloc[-200:])
+
+
+def test_higher_timeframe_groups_bars(df):
+    from mcbot.indicators import higher_timeframe
+    h = higher_timeframe(df)
+    assert h["htf_money_flow"].notna().sum() > len(df) // 2
+    # 4 consecutive bars share one HTF value.
+    assert h["htf_wt2"].iloc[-400:].nunique() == pytest.approx(100, abs=1)

@@ -72,7 +72,72 @@ def money_flow_div(mc: pd.DataFrame) -> pd.DataFrame:
     return _frame(mc, long_entry, long_exit, short_entry, short_exit)
 
 
+# --- CryptoFace (Market Cipher creator) style -------------------------------
+# Built from public Market Cipher B guides: higher-timeframe bias first,
+# anchor/trigger waves for swing entries, dots + money flow + VWAP wave for scalps.
+
+def cryptoface_swing(mc: pd.DataFrame) -> pd.DataFrame:
+    """Long-term: trade the anchor/trigger wave in the direction of the
+    higher-timeframe money flow. Hold until the higher timeframe turns."""
+    htf_bull = (mc["htf_money_flow"] > 0) & mc["htf_ribbon_bull"]
+    htf_bear = (mc["htf_money_flow"] < 0) & ~mc["htf_ribbon_bull"]
+    long_entry = mc["anchor_trigger_bull"] & htf_bull
+    short_entry = mc["anchor_trigger_bear"] & htf_bear
+    long_exit = mc["anchor_trigger_bear"] | (mc["red_dot"] & ~mc["htf_wt_rising"]) | \
+        (mc["htf_money_flow"] < 0)
+    short_exit = mc["anchor_trigger_bull"] | (mc["green_dot"] & mc["htf_wt_rising"]) | \
+        (mc["htf_money_flow"] > 0)
+    return _frame(mc, long_entry, long_exit, short_entry, short_exit)
+
+
+def cryptoface_scalp(mc: pd.DataFrame) -> pd.DataFrame:
+    """Scalp: green dot while money flow is rising and the VWAP wave crosses
+    above zero, only with the higher-timeframe wave. Quick exit on the
+    opposite WaveTrend cross."""
+    mf = mc["money_flow"]
+    v = mc["mcb_vwap"]
+    vwap_up = (v > 0) & (v.shift() <= 0)
+    vwap_down = (v < 0) & (v.shift() >= 0)
+    recent_green = mc["green_dot"].astype(int).rolling(3, min_periods=1).max() > 0
+    recent_red = mc["red_dot"].astype(int).rolling(3, min_periods=1).max() > 0
+    long_entry = recent_green & vwap_up & (mf > mf.shift()) & mc["htf_wt_rising"]
+    short_entry = recent_red & vwap_down & (mf < mf.shift()) & ~mc["htf_wt_rising"]
+    return _frame(mc, long_entry, mc["wt_cross_down"], short_entry, mc["wt_cross_up"])
+
+
+# --- Jayson Casper style -----------------------------------------------------
+# Built from his course topics: swing failure patterns, VWAP, and swing
+# trading from support to the next resistance.
+
+def casper_scalp(mc: pd.DataFrame) -> pd.DataFrame:
+    """Scalp: bullish SFP (stop hunt below a swing low) while price is under
+    the session VWAP; take profit when price gets back to VWAP."""
+    long_entry = mc["sfp_bull"] & (mc["close"] < mc["vwap"])
+    short_entry = mc["sfp_bear"] & (mc["close"] > mc["vwap"])
+    long_exit = (mc["close"] >= mc["vwap"]) | mc["sfp_bear"]
+    short_exit = (mc["close"] <= mc["vwap"]) | mc["sfp_bull"]
+    return _frame(mc, long_entry, long_exit, short_entry, short_exit)
+
+
+def casper_swing(mc: pd.DataFrame) -> pd.DataFrame:
+    """Long-term: buy an SFP at support (near the 50-bar low) once money flow
+    agrees, and hold to resistance (the 50-bar high)."""
+    near_support = mc["low"] <= mc["swing_low50"].shift() * 1.01
+    near_resistance = mc["high"] >= mc["swing_high50"].shift() * 0.99
+    mf_up = mc["money_flow"] > mc["money_flow"].shift(3)
+    mf_down = mc["money_flow"] < mc["money_flow"].shift(3)
+    long_entry = mc["sfp_bull"] & near_support & mf_up
+    short_entry = mc["sfp_bear"] & near_resistance & mf_down
+    long_exit = near_resistance | mc["sfp_bear"]
+    short_exit = near_support | mc["sfp_bull"]
+    return _frame(mc, long_entry, long_exit, short_entry, short_exit)
+
+
 STRATEGIES = {
+    "cryptoface_swing": cryptoface_swing,
+    "cryptoface_scalp": cryptoface_scalp,
+    "casper_swing": casper_swing,
+    "casper_scalp": casper_scalp,
     "dots": dots,
     "dots_confirmed": dots_confirmed,
     "divergence": divergence,
