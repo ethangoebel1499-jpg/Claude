@@ -17,10 +17,10 @@ import logging
 import pandas as pd
 
 from mcbot import bot, data
-from mcbot.backtest import parse_take_profits, run_backtest
+from mcbot.backtest import parse_take_profits, run_backtest, run_level_backtest
 from mcbot.entry_quality import summarize
 from mcbot.indicators import market_cipher
-from mcbot.strategies import build_signals, checklist
+from mcbot.strategies import build_signals, checklist, topdown_exit_levels
 
 
 def load(args) -> pd.DataFrame:
@@ -40,15 +40,21 @@ def signals_for(df: pd.DataFrame, args) -> tuple[pd.DataFrame, pd.DataFrame]:
 
 def cmd_backtest(args) -> None:
     df = load(args)
-    _, sig = signals_for(df, args)
+    mc, sig = signals_for(df, args)
     print(f"{len(df)} bars  {df.index[0]} -> {df.index[-1]}  "
-          f"({'Heikin Ashi' if args.heikin_ashi else 'regular'} candles)\n")
-    res = run_backtest(df, sig, allow_short=args.short,
-                       stop_loss=args.stop or None, take_profit=args.target or None,
-                       fee=args.fee, stops_on_close=args.stops_on_close,
-                       leverage=args.leverage, breakeven_after_tp1=args.breakeven,
-                       trail_targets=args.trail,
-                       take_profits=parse_take_profits(args.tp) if args.tp else None)
+          f"({'Heikin Ashi' if args.heikin_ashi else 'regular'} candles, {args.exits} exits)\n")
+    if args.exits == "video":
+        # Stop under the 21 EMA (above resistance for shorts), 50% at the next 4h
+        # level, 25% at the level after, stop trails the 21 EMA.
+        res = run_level_backtest(df, sig, topdown_exit_levels(mc, buffer=args.stop_buffer),
+                                 allow_short=args.short, leverage=args.leverage, fee=args.fee)
+    else:
+        res = run_backtest(df, sig, allow_short=args.short,
+                           stop_loss=args.stop or None, take_profit=args.target or None,
+                           fee=args.fee, stops_on_close=args.stops_on_close,
+                           leverage=args.leverage, breakeven_after_tp1=args.breakeven,
+                           trail_targets=args.trail,
+                           take_profits=parse_take_profits(args.tp) if args.tp else None)
     for t in res.trades[-10:]:
         print(f"  {t.side:5} {t.entry_time:%Y-%m-%d %H:%M} {t.entry_price:>10.2f} -> "
               f"{t.exit_price:>10.2f} {t.pnl_pct * 100:+7.2f}% ({t.reason}, "
@@ -124,6 +130,11 @@ def main() -> None:
                         help="treat candles as this timeframe, e.g. daily stock data as 1h")
 
     b = sub.add_parser("backtest", parents=[common, source])
+    b.add_argument("--exits", choices=["video", "fixed"], default="video",
+                   help="video: stop under the 21 EMA, 50%% / 25%% at the next 4h levels, trail the "
+                        "21 EMA (default). fixed: --stop/--tp/--trail percentages")
+    b.add_argument("--stop-buffer", type=float, default=0.002,
+                   help="video exits: distance beyond the 21 EMA / level for the stop (0.002 = 0.2%%)")
     b.add_argument("--breakeven", action="store_true", help="move stop to entry after the first target")
     b.add_argument("--trail", action="store_true",
                    help="step the stop up: breakeven after target 1, target 1 after target 2, ...")

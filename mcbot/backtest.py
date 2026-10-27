@@ -199,6 +199,122 @@ def run_backtest(df: pd.DataFrame, signals: pd.DataFrame, *, allow_short: bool =
     return Result(trades, eq, _stats(df, trades, eq, start_equity))
 
 
+def run_level_backtest(df: pd.DataFrame, signals: pd.DataFrame, levels: pd.DataFrame, *,
+                       allow_short: bool = False, leverage: float = 1.0,
+                       maintenance_margin: float = 0.005, fee: float = 0.001,
+                       sizes: tuple[float, float] = (0.5, 0.25),
+                       start_equity: float = 10_000.0) -> Result:
+    """Backtest with price-level exits (the top-down video's exit plan).
+
+    At entry (next bar's open after the signal bar) the trade takes its stop and
+    two targets from `levels` on the signal bar: long_stop/long_tp1/long_tp2 (or
+    the short_ columns). `sizes` of the position close at target 1 and target 2;
+    the rest has no target. After every closed bar the stop trails to
+    long_trail (only ever upward; downward for shorts). The opposite entry setup
+    closes the trade. Stop is assumed to fill first if a bar touches both.
+    """
+    o, h, lo, c = (df[k].to_numpy(dtype=float) for k in ("open", "high", "low", "close"))
+    idx = df.index
+    sig = {k: signals[k].to_numpy() for k in signals.columns}
+    lv = {k: levels[k].to_numpy(dtype=float) for k in levels.columns}
+    liq_move = 1 / leverage - maintenance_margin if leverage > 1 else None
+
+    equity = start_equity
+    curve = np.empty(len(df))
+    trades: list[Trade] = []
+    pos: Trade | None = None
+    stop = 0.0
+    targets: list[tuple[float, float]] = []
+
+    def move(price: float) -> float:
+        d = 1 if pos.side == "long" else -1
+        return d * (price - pos.entry_price) / pos.entry_price
+
+    def exit_part(i: int, price: float, frac: float, reason: str) -> None:
+        nonlocal equity, pos
+        frac = min(frac, pos.remaining)
+        pos.pnl_pct += frac * (leverage * move(price) - 2 * fee * leverage)
+        pos.remaining -= frac
+        pos.fills.append((idx[i], price, frac, reason))
+        if pos.remaining <= 1e-9:
+            pos.pnl_pct = max(pos.pnl_pct, -1.0)
+            equity *= 1 + pos.pnl_pct
+            pos.exit_time, pos.exit_price, pos.reason = idx[i], price, reason
+            trades.append(pos)
+            pos = None
+
+    def open_trade(i: int, p: int, side: str) -> None:
+        nonlocal pos, stop, targets
+        e = o[i]
+        s0 = lv[f"{side}_stop"][p]
+        t1, t2 = lv[f"{side}_tp1"][p], lv[f"{side}_tp2"][p]
+        ok = (lambda x: x < e) if side == "long" else (lambda x: x > e)
+        beyond = (lambda x, y: x > y) if side == "long" else (lambda x, y: x < y)
+        if not np.isfinite(s0) or not ok(s0):
+            return  # no valid stop on the right side of the entry: skip the trade
+        tg = []
+        if np.isfinite(t1) and beyond(t1, e):
+            tg.append((t1, sizes[0]))
+            if np.isfinite(t2) and beyond(t2, t1):
+                tg.append((t2, sizes[1]))
+        pos = Trade(side, idx[i], e)
+        stop, targets = s0, tg
+
+    for i in range(len(df)):
+        if i > 0:
+            p = i - 1
+            if pos is not None:
+                # Trail the stop with the previous closed bar's level.
+                if pos.side == "long":
+                    stop = max(stop, lv["long_trail"][p])
+                else:
+                    stop = min(stop, lv["short_trail"][p])
+                opposite = "short_entry" if pos.side == "long" else "long_entry"
+                if sig[opposite][p]:
+                    exit_part(i, o[i], pos.remaining, "opposite setup")
+            if pos is None and equity > 0:
+                if sig["long_entry"][p]:
+                    open_trade(i, p, "long")
+                elif allow_short and sig["short_entry"][p]:
+                    open_trade(i, p, "short")
+
+        if pos is not None:
+            long_ = pos.side == "long"
+            worst = lo[i] if long_ else h[i]
+            best = h[i] if long_ else lo[i]
+            if liq_move is not None and move(worst) <= -liq_move and \
+                    move(stop) < -liq_move:
+                pos.pnl_pct, pos.remaining = -1.0, 0.0
+                equity = 0.0
+                pos.exit_time, pos.exit_price, pos.reason = idx[i], worst, "liquidated"
+                trades.append(pos)
+                pos = None
+            elif (worst <= stop) if long_ else (worst >= stop):
+                fill = min(stop, o[i]) if long_ else max(stop, o[i])
+                reason = "stop" if move(stop) < 0 else "trail stop"
+                exit_part(i, fill, pos.remaining, reason)
+            else:
+                while pos is not None and pos.targets_hit < len(targets):
+                    price, size = targets[pos.targets_hit]
+                    if (best < price) if long_ else (best > price):
+                        break
+                    fill = max(price, o[i]) if long_ else min(price, o[i])
+                    pos.targets_hit += 1
+                    exit_part(i, fill, size, f"target{pos.targets_hit}")
+
+        if pos is not None:
+            unreal = pos.remaining * (leverage * move(c[i]) - fee * leverage)
+            curve[i] = equity * (1 + max(pos.pnl_pct + unreal, -1.0))
+        else:
+            curve[i] = equity
+
+    if pos is not None:
+        exit_part(len(df) - 1, c[-1], pos.remaining, "end")
+        curve[-1] = equity
+    eq = pd.Series(curve, index=idx)
+    return Result(trades, eq, _stats(df, trades, eq, start_equity))
+
+
 def _stats(df: pd.DataFrame, trades: list[Trade], eq: pd.Series, start: float) -> dict:
     pnls = np.array([t.pnl_pct for t in trades])
     wins = pnls[pnls > 0]

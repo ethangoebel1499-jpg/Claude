@@ -295,15 +295,19 @@ def _topdown_frame(n=30):
                        "red_dot": False, "sr_reclaim_up": False, "sr_reject_down": False}, index=idx)
     mc["money_flow"] = np.r_[np.full(20, -3.0), np.linspace(-1, 3, n - 20)]   # crosses above 0
     mc.loc[idx[10], ["green_dot", "wt2"]] = [True, -70.0]                   # anchor wave + dot
+    mc.loc[idx[[5, 14]], "wt_cross_down"] = True                             # red dots below zero (came down)
     mc.loc[idx[24], ["wt_cross_up", "wt2"]] = [True, -20.0]                 # trigger: higher low, below +20
-    mc.loc[idx[23], "sr_reclaim_up"] = True                                  # closed back above a 4h zone
+    mc.loc[idx[24], "sr_reclaim_up"] = True                                  # this candle reclaimed a 4h zone
+    mc["sr_next_above"], mc["sr_next_above2"] = 104.0, 108.0                # next 4h levels
+    mc["sr_next_below"], mc["sr_next_below2"] = 97.0, 94.0
     return mc, idx
 
 
 def test_topdown_long_needs_every_layer():
     mc, idx = _topdown_frame()
     assert topdown_confluence(mc)["long_entry"].iloc[24]
-    for col, value in (("sr_reclaim_up", False), ("wt_cross_up", False), ("green_dot", False)):
+    for col, value in (("sr_reclaim_up", False), ("wt_cross_up", False), ("green_dot", False),
+                       ("wt_cross_down", False)):
         broken = mc.copy()
         broken[col] = value
         assert not topdown_confluence(broken)["long_entry"].any(), col
@@ -347,12 +351,13 @@ def test_checklist_matches_entries():
     sig = topdown_confluence(mc)
     pd.testing.assert_series_equal(long_c.all(axis=1), sig["long_entry"], check_names=False)
     text = checklist(mc, 24)
-    assert "LONG: 🟢 TRADE  (6/6 yes)" in text and "SHORT: 🔴 NO TRADE" in text
-    assert text.count("🟢 YES") >= 6
+    assert "LONG: 🟢 TRADE  (7/7 yes)" in text and "SHORT: 🔴 NO TRADE" in text
+    assert "Target 1  103.79  -> close 50%" in text and "Target 2  107.78  -> close 25%" in text
+    assert text.count("🟢 YES") >= 7
     mc.loc[:, "sr_reclaim_up"] = False
     text = checklist(mc, 24)
-    assert "LONG: 🔴 NO TRADE  (5/6 yes)" in text
-    assert "🔴 NO   Closed back above a 4h support/resistance zone" in text
+    assert "LONG: 🔴 NO TRADE  (6/7 yes)" in text
+    assert "🔴 NO   This candle closed back above a 4h support/resistance zone" in text
 
 
 def test_load_close_only_csv(tmp_path):
@@ -362,3 +367,52 @@ def test_load_close_only_csv(tmp_path):
     df = load_csv(str(p))
     assert df["open"].tolist() == [100, 100, 105]
     assert df["high"].tolist() == [100, 105, 105] and df["low"].tolist() == [100, 100, 103]
+
+
+def test_money_flow_must_be_blue_and_fresh():
+    mc, idx = _topdown_frame()
+    stale = mc.copy()
+    stale["money_flow"] = np.r_[np.full(10, -3.0), np.full(20, 2.0)]   # crossed 14 bars before the entry
+    assert not topdown_confluence(stale)["long_entry"].iloc[24]
+    nearly = mc.copy()
+    nearly["money_flow"] = np.r_[np.full(20, -3.0), np.linspace(-2.9, -0.5, 10)]  # rising but still red
+    assert not topdown_confluence(nearly)["long_entry"].iloc[24]
+
+
+def test_came_down_needs_red_dots_mostly_below_zero():
+    mc, idx = _topdown_frame()
+    mc.loc[idx[[8, 11, 18]], ["wt_cross_down", "wt2"]] = [True, 30.0]  # 3 of 5 red dots above zero
+    assert not topdown_confluence(mc)["long_entry"].iloc[24]
+
+
+def test_level_exits_target_then_ema_trail():
+    from mcbot.backtest import run_level_backtest
+    idx = pd.date_range("2024-01-01", periods=5, freq="h", tz="UTC")
+    #            signal   entry@100  hits 103   trail->102   falls to 101.5
+    df = pd.DataFrame({"open": [100, 100, 102, 103, 102.5], "high": [100, 101, 103.5, 104, 102.6],
+                       "low": [99, 99.5, 101.5, 102.5, 101.5], "close": [100, 101, 103, 103, 101.8],
+                       "volume": 1.0}, index=idx)
+    sig = pd.DataFrame(False, index=idx, columns=["long_entry", "long_exit", "short_entry", "short_exit"])
+    sig.iloc[0, 0] = True
+    lv = pd.DataFrame({"long_stop": 98.0, "long_trail": [98, 98, 102, 102, 102], "long_tp1": 103.0,
+                       "long_tp2": 106.0, "short_stop": np.nan, "short_trail": np.nan,
+                       "short_tp1": np.nan, "short_tp2": np.nan}, index=idx)
+    t = run_level_backtest(df, sig, lv, fee=0).trades[0]
+    assert [f[3] for f in t.fills] == ["target1", "trail stop"]
+    assert t.fills[1][1] == 102 and t.exit_time == idx[4]
+    assert t.pnl_pct == pytest.approx(0.5 * 0.03 + 0.5 * 0.02)
+
+
+def test_level_exits_initial_stop_below_ema():
+    from mcbot.backtest import run_level_backtest
+    idx = pd.date_range("2024-01-01", periods=3, freq="h", tz="UTC")
+    df = pd.DataFrame({"open": [100, 100, 99], "high": [100, 100.5, 99.5], "low": [100, 99.2, 97],
+                       "close": [100, 99.5, 97.5], "volume": 1.0}, index=idx)
+    sig = pd.DataFrame(False, index=idx, columns=["long_entry", "long_exit", "short_entry", "short_exit"])
+    sig.iloc[0, 0] = True
+    lv = pd.DataFrame({"long_stop": 98.0, "long_trail": 98.0, "long_tp1": 103.0, "long_tp2": np.nan,
+                       "short_stop": np.nan, "short_trail": np.nan, "short_tp1": np.nan,
+                       "short_tp2": np.nan}, index=idx)
+    t = run_level_backtest(df, sig, lv, leverage=5, fee=0).trades[0]
+    assert t.reason == "stop" and t.exit_price == 98
+    assert t.pnl_pct == pytest.approx(5 * -0.02)

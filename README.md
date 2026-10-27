@@ -7,17 +7,24 @@ A bot that trades one strategy: **top-down confluence**. It combines 4h support/
 ## The strategy (`mcbot/strategies.py`)
 Rules taken from a Market Cipher top-down analysis video and adapted to 4h levels with 1h entries.
 
-**Long**, when all of these happened within the last 3 closed 1h candles:
-1. **Levels (4h):** a candle closed back above a support/resistance zone. Zones are where several 4h turning points line up (about 0.4% wide), and they only use *closed* 4h candles.
+**Long**, when all seven lights are green on a closed 1h candle:
+1. **Levels (4h):** *this* candle closed back above a support/resistance zone. Zones are where several 4h turning points line up (about 0.4% wide), and they only use *closed* 4h candles.
 2. **21 EMA (real candles):** price is closed above the 21 EMA, and the EMA is rising (the video's "white" EMA).
 3. **Market Cipher B:**
    - a green-dot **anchor wave** in the last 20 bars,
-   - **money flow** rising and either crossed above 0 in the last 10 bars or within 5 of crossing (never long while money flow is clearly red),
+   - Market Cipher B **came down first**: red dots (bearish wave crosses) printing mostly below the zero line in the last 30 bars,
+   - **money flow blue** (above 0) and crossed up within the last 5 bars (never long while it's red),
    - a **trigger wave**: a WaveTrend cross up at a higher low than the anchor, still below +20 (not about to print a red dot).
 
 Every condition is shown as 🟢 YES / 🔴 NO with an overall 🟢 TRADE / 🔴 NO TRADE light, by `signals` and in the bot's log on every closed candle. The entry is literally "all six lights green", so the checklist and the trades can't disagree.
 
-**Exit:** a candle closes below the 21 EMA (the video's "if price is below the 21 EMA, you were wrong"), or your stop/targets fire first.
+**Exits (from the video, the `backtest` default `--exits video`):**
+- **Stop** just below the 21 EMA (0.2% buffer, `--stop-buffer`). For shorts it goes just above the rejected resistance level.
+- **Target 1:** close 50% at the next 4h support/resistance level. **Target 2:** close 25% at the level after that.
+- The stop **trails the 21 EMA** on every closed candle, which moves it into profit and lets the rest ride.
+- A full opposite setup also closes the trade. When the lights are green, `signals` prints the exact stop and target prices.
+
+`--exits fixed` keeps the percentage exits (`--stop`, `--tp`, `--trail`).
 
 **Short:** the mirror image. A rejection below a zone, price below a falling 21 EMA, a red-dot anchor, money flow falling into red, and a lower-high trigger wave.
 
@@ -42,8 +49,11 @@ pip install -r requirements.txt
 
 # Backtest with partial take-profits: 50% at +1.5%, 25% at +2.5%, rest rides until the
 # opposite setup; stop steps up behind each target; 5x leverage; shorts on.
+python main.py backtest --exchange binance --symbol BTC/USDT --limit 5000 --short --leverage 5 --fee 0.0005
+
+# Or the fixed-percentage exits instead of the video's
 python main.py backtest --exchange binance --symbol BTC/USDT --limit 5000 --short \
-  --leverage 5 --stop 0.03 --tp "1.5:50,2.5:25,ride:25" --trail --fee 0.0005
+  --exits fixed --leverage 5 --stop 0.03 --tp "1.5:50,2.5:25,ride:25" --trail --fee 0.0005
 
 # Entry quality: how often price hits the target before the stop, vs random entries
 python main.py entries --exchange binance --symbol BTC/USDT --limit 5000           # 1.5% target / 3% stop

@@ -29,26 +29,37 @@ def _recent(s: pd.Series, n: int) -> pd.Series:
 
 # Plain-English names for each condition, in checklist order.
 LONG_LABELS = {
-    "level": "Closed back above a 4h support/resistance zone (last 3 bars)",
+    "level": "This candle closed back above a 4h support/resistance zone",
     "above_ema": "Price closed above the 21 EMA",
     "ema_trend": "21 EMA rising (white)",
     "anchor_dot": "Green-dot anchor wave (last 20 bars)",
-    "money_flow": "Money flow rising and crossed / about to cross above 0",
+    "came_down": "MCB came down first: red dots printing mostly below zero (last 30 bars)",
+    "money_flow": "Money flow blue (above 0), crossed up in the last 5 bars",
     "trigger": "Trigger wave: higher low, below +20 (last 3 bars)",
 }
 SHORT_LABELS = {
-    "level": "Rejected below a 4h support/resistance zone (last 3 bars)",
+    "level": "This candle rejected below a 4h support/resistance zone",
     "above_ema": "Price closed below the 21 EMA",
     "ema_trend": "21 EMA falling (grey)",
     "anchor_dot": "Red-dot anchor wave (last 20 bars)",
-    "money_flow": "Money flow falling and crossed / about to cross below 0",
+    "came_down": "MCB went up first: green dots printing mostly above zero (last 30 bars)",
+    "money_flow": "Money flow red (below 0), crossed down in the last 5 bars",
     "trigger": "Trigger wave: lower high, above -20 (last 3 bars)",
 }
 
 
+def _mostly(crosses: pd.Series, side_ok: pd.Series, lookback: int, min_count: int = 2,
+            share: float = 2 / 3) -> pd.Series:
+    """At least `min_count` crosses in the last `lookback` bars, and at least
+    `share` of them on the required side of the zero line."""
+    total = crosses.astype(int).rolling(lookback, min_periods=1).sum()
+    good = (crosses & side_ok).astype(int).rolling(lookback, min_periods=1).sum()
+    return (total >= min_count) & (good >= share * total)
+
+
 def topdown_conditions(mc: pd.DataFrame, window: int = 3, anchor_lookback: int = 20,
-                       mf_lookback: int = 10, mf_near: float = 5,
-                       trigger_max: float = 20) -> tuple[pd.DataFrame, pd.DataFrame]:
+                       mf_lookback: int = 5, trigger_max: float = 20,
+                       came_down_lookback: int = 30) -> tuple[pd.DataFrame, pd.DataFrame]:
     """Every entry condition as its own yes/no column, for longs and shorts.
 
     An entry fires only when every column is True, so the checklist and the
@@ -65,21 +76,21 @@ def topdown_conditions(mc: pd.DataFrame, window: int = 3, anchor_lookback: int =
     trigger_down = mc["wt_cross_down"] & (wt2 < anchor_high - 5) & (wt2 > -trigger_max)
 
     long_c = pd.DataFrame({
-        "level": _recent(mc["sr_reclaim_up"], window),
+        "level": mc["sr_reclaim_up"],
         "above_ema": close > e21,
         "ema_trend": ema_up,
         "anchor_dot": _recent(mc["green_dot"], anchor_lookback),
-        "money_flow": (mf > mf.shift(3)) & ((_recent(mf_cross_up, mf_lookback) & (mf > 0))
-                                            | mf.between(-mf_near, 0)),
+        "came_down": _mostly(mc["wt_cross_down"], wt2 < 0, came_down_lookback),
+        "money_flow": (mf > 0) & _recent(mf_cross_up, mf_lookback),
         "trigger": _recent(trigger_up, window),
     }, index=mc.index)
     short_c = pd.DataFrame({
-        "level": _recent(mc["sr_reject_down"], window),
+        "level": mc["sr_reject_down"],
         "above_ema": close < e21,
         "ema_trend": ~ema_up,
         "anchor_dot": _recent(mc["red_dot"], anchor_lookback),
-        "money_flow": (mf < mf.shift(3)) & ((_recent(mf_cross_down, mf_lookback) & (mf < 0))
-                                            | mf.between(0, mf_near)),
+        "came_down": _mostly(mc["wt_cross_up"], wt2 > 0, came_down_lookback),
+        "money_flow": (mf < 0) & _recent(mf_cross_down, mf_lookback),
         "trigger": _recent(trigger_down, window),
     }, index=mc.index)
     return long_c.fillna(False).astype(bool), short_c.fillna(False).astype(bool)
@@ -87,11 +98,12 @@ def topdown_conditions(mc: pd.DataFrame, window: int = 3, anchor_lookback: int =
 
 def topdown_confluence(mc: pd.DataFrame, **kw) -> pd.DataFrame:
     """Long when every long condition is a yes (see topdown_conditions):
-      * a candle closed back above a 4h support/resistance zone,
+      * this candle closed back above a 4h support/resistance zone,
       * price is closed above the 21 EMA and the EMA is rising ("white"),
-      * Market Cipher B: a green-dot anchor wave, money flow rising and crossed
-        or about to cross above 0, and a trigger wave (WT cross up at a higher
-        low than the anchor, not about to print a red dot).
+      * Market Cipher B: a green-dot anchor wave, momentum came down first (red
+        dots printing mostly below zero), money flow blue and freshly crossed
+        up, and a trigger wave (WT cross up at a higher low than the anchor,
+        not about to print a red dot).
     Exit when a candle closes below the 21 EMA. Shorts mirror everything.
     """
     long_c, short_c = topdown_conditions(mc, **kw)
@@ -113,7 +125,20 @@ def checklist(mc: pd.DataFrame, bar: int = -1) -> str:
         lines.append(f"{side}: {'🟢 TRADE' if go else '🔴 NO TRADE'}  ({int(row.sum())}/{len(row)} yes)")
         for key, label in labels.items():
             lines.append(f"  {'🟢 YES' if row[key] else '🔴 NO '}  {label}")
+        if go:
+            lines.extend(_exit_plan(mc, bar, side.lower()))
     return "\n".join(lines)
+
+
+def _exit_plan(mc: pd.DataFrame, bar: int, side: str) -> list[str]:
+    lv = topdown_exit_levels(mc).iloc[bar]
+    fmt = (lambda x: f"{x:,.2f}" if pd.notna(x) else "none (no level)")
+    trail = "under" if side == "long" else "above"
+    return ["  Exit plan (from the video):",
+            f"    Stop      {fmt(lv[f'{side}_stop'])}",
+            f"    Target 1  {fmt(lv[f'{side}_tp1'])}  -> close 50%",
+            f"    Target 2  {fmt(lv[f'{side}_tp2'])}  -> close 25%",
+            f"    Rest      stop trails {trail} the 21 EMA"]
 
 
 STRATEGIES = {"topdown_confluence": topdown_confluence}
@@ -121,3 +146,27 @@ STRATEGIES = {"topdown_confluence": topdown_confluence}
 
 def build_signals(mc: pd.DataFrame, strategy: str = "topdown_confluence") -> pd.DataFrame:
     return STRATEGIES[strategy](mc)
+
+
+def topdown_exit_levels(mc: pd.DataFrame, buffer: float = 0.002, zone: float = 0.004) -> pd.DataFrame:
+    """The video's exits as prices, per bar (used at the entry bar, and every bar
+    for the trailing stop):
+
+      long:  stop just below the 21 EMA; 50% at the next 4h level above, 25% at
+             the level after; the stop then keeps trailing under the 21 EMA.
+      short: stop just above the rejected resistance level; 50% / 25% at the next
+             levels below; the stop trails above the 21 EMA.
+
+    Targets sit at the near edge of each zone (zone = zone width as a fraction).
+    """
+    e21 = mc["real_ema21"]
+    return pd.DataFrame({
+        "long_stop": e21 * (1 - buffer),
+        "long_trail": e21 * (1 - buffer),
+        "long_tp1": mc["sr_next_above"] * (1 - zone / 2),
+        "long_tp2": mc["sr_next_above2"] * (1 - zone / 2),
+        "short_stop": mc["sr_next_above"] * (1 + zone / 2 + buffer),
+        "short_trail": e21 * (1 + buffer),
+        "short_tp1": mc["sr_next_below"] * (1 + zone / 2),
+        "short_tp2": mc["sr_next_below2"] * (1 + zone / 2),
+    }, index=mc.index)

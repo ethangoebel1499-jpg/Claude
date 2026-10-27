@@ -60,6 +60,7 @@ def sr_levels(df: pd.DataFrame, factor: int = 4, zone_pct: float = 0.004, min_to
                       (bounce off support, or confirmed break above resistance)
       sr_reject_down  high pushed into / above a zone and the candle closed below it
       sr_next_above / sr_next_below   nearest level above / below the close
+      sr_next_above2 / sr_next_below2 the level after that
     """
     if isinstance(df.index, pd.DatetimeIndex) and len(df) > 1:
         ts = df.index.asi8
@@ -87,6 +88,8 @@ def sr_levels(df: pd.DataFrame, factor: int = 4, zone_pct: float = 0.004, min_to
     reject = np.zeros(n, dtype=bool)
     above = np.full(n, np.nan)
     below = np.full(n, np.nan)
+    above2 = np.full(n, np.nan)
+    below2 = np.full(n, np.nan)
     pivots: list[float] = []
     levels = np.array([])
     current = -1
@@ -114,12 +117,18 @@ def sr_levels(df: pd.DataFrame, factor: int = 4, zone_pct: float = 0.004, min_to
             bot = levels * (1 - zone_pct / 2)
             reclaim[i] = bool(((o_low[i] <= top) & (close[i] > top)).any())
             reject[i] = bool(((o_high[i] >= bot) & (close[i] < bot)).any())
+            # Levels are sorted ascending.
             up = levels[levels > close[i]]
             dn = levels[levels < close[i]]
-            above[i] = up.min() if len(up) else np.nan
-            below[i] = dn.max() if len(dn) else np.nan
+            if len(up):
+                above[i] = up[0]
+                above2[i] = up[1] if len(up) > 1 else np.nan
+            if len(dn):
+                below[i] = dn[-1]
+                below2[i] = dn[-2] if len(dn) > 1 else np.nan
     return pd.DataFrame({"sr_reclaim_up": reclaim, "sr_reject_down": reject,
-                         "sr_next_above": above, "sr_next_below": below}, index=df.index)
+                         "sr_next_above": above, "sr_next_below": below,
+                         "sr_next_above2": above2, "sr_next_below2": below2}, index=df.index)
 
 
 def heikin_ashi(df: pd.DataFrame) -> pd.DataFrame:
