@@ -78,6 +78,21 @@ Saved data: `datasets/btc_daily_close.csv` holds BTC daily closing prices from 2
 
 CSV files need a timestamp first column (unix seconds as in TradingView exports, unix ms, or a date) plus open/high/low/close, with volume optional.
 
+## Money flow sensitivity
+- `--mf-period N` (default 60): how many candles money flow averages over. **Smaller makes it looser and faster**, so it crosses zero more often and the money flow light turns green more.
+- `--mf-multiplier X` (default 150): scales the wave's height only. It barely changes when money flow crosses zero.
+
+Measured on the real data (EUR/USD 1h, BTC daily as 1h, 4 stocks as 1h) with the video's exits at 5×:
+
+| Period | Zero crosses / 1,000 candles | Money flow light green | Signals | Trades | Win % | Avg trade (5×) |
+|---|---|---|---|---|---|---|
+| 60 (default) | 25 | 5.3% | 2 | 1 | 100% | +4.9% |
+| 30 | 40 | 8.4% | 4 | 3 | 0% | -14.0% |
+| 20 | 51 | 10.8% | 14 | 10 | 20% | -2.2% |
+| 14 | 61 | 13.0% | 26 | 21 | 33% | -1.3% |
+
+(Multiplier 300 gave almost identical results.) The samples are still small.
+
 ## Exits and risk (backtest)
 - `--stop` and `--tp` levels are **price** moves. At 5x, a 3% stop costs 15% of the account, plus fees charged on the leveraged notional.
 - `--tp "1.5:50,2.5:25,ride:25"`: the `ride` portion ignores the 21 EMA exit and stays open until the **opposite setup** fires. With `--short` it flips straight into the short.

@@ -36,7 +36,8 @@ def load(args) -> pd.DataFrame:
 
 
 def signals_for(df: pd.DataFrame, args) -> tuple[pd.DataFrame, pd.DataFrame]:
-    mc = market_cipher(df, use_heikin_ashi=args.heikin_ashi, htf_factor=args.htf)
+    mc = market_cipher(df, use_heikin_ashi=args.heikin_ashi, htf_factor=args.htf,
+                       mf_period=args.mf_period, mf_multiplier=args.mf_multiplier)
     return mc, build_signals(mc)
 
 
@@ -102,7 +103,8 @@ def cmd_trade(args, live: bool) -> None:
     bot.run(ex, args.symbol, args.timeframe, broker, allow_short=allow_short,
             fraction=args.fraction, stop_loss=args.stop or None, take_profit=args.target or None,
             poll_seconds=args.poll, heikin_ashi=args.heikin_ashi,
-            stops_on_close=args.stops_on_close, htf_factor=args.htf)
+            stops_on_close=args.stops_on_close, htf_factor=args.htf,
+            mf_period=args.mf_period, mf_multiplier=args.mf_multiplier)
 
 
 def main() -> None:
@@ -119,6 +121,10 @@ def main() -> None:
     common.add_argument("--fee", type=float, default=0.001, help="fee per side")
     common.add_argument("--htf", type=int, default=4,
                         help="support/resistance timeframe = this many chart candles (4: 1h -> 4h)")
+    common.add_argument("--mf-period", type=int, default=60,
+                        help="money flow length in candles; smaller = looser / faster (default 60)")
+    common.add_argument("--mf-multiplier", type=float, default=150,
+                        help="money flow height multiplier (default 150)")
     common.add_argument("--stops-on-close", action="store_true",
                         help="only trigger stop-loss/take-profit on a closed candle (default: intrabar)")
     common.add_argument("--heikin-ashi", default=True, action=argparse.BooleanOptionalAction,

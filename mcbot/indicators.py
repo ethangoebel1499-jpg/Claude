@@ -149,8 +149,12 @@ def heikin_ashi(df: pd.DataFrame) -> pd.DataFrame:
 
 def market_cipher(df: pd.DataFrame, ob_level: float = OB_LEVEL,
                   os_level: float = OS_LEVEL, use_heikin_ashi: bool = False,
-                  htf_factor: int = 4) -> pd.DataFrame:
+                  htf_factor: int = 4, mf_period: int = 60,
+                  mf_multiplier: float = 150) -> pd.DataFrame:
     """Compute every input the strategy uses and return them alongside df.
+
+    mf_period / mf_multiplier tune the money flow: a shorter period makes it
+    react faster (crosses zero more often); the multiplier scales its height.
 
     Support/resistance and the 21 EMA always use the real candles (the "naked
     chart"). With use_heikin_ashi, the Market Cipher B parts are calculated on
@@ -172,7 +176,7 @@ def market_cipher(df: pd.DataFrame, ob_level: float = OB_LEVEL,
     out["wt_cross_down"] = cross_down
     out["green_dot"] = cross_up & (wt2 <= os_level)
     out["red_dot"] = cross_down & (wt2 >= ob_level)
-    out["money_flow"] = money_flow(df)
+    out["money_flow"] = money_flow(df, period=mf_period, multiplier=mf_multiplier)
     out = out.join(naked)
     out.attrs["htf_factor"] = htf_factor
     if real_dates is not None:
