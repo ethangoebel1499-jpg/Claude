@@ -37,18 +37,24 @@ class Result:
     stats: dict = field(default_factory=dict)
 
 
-def parse_take_profits(spec: str) -> list[tuple[float, float]]:
+def parse_take_profits(spec: str) -> list[tuple[float | None, float]]:
     """"1:50,2:25,3:25" -> [(0.01, 0.5), (0.02, 0.25), (0.03, 0.25)].
 
     Each item is price-move percent : percent of the original position to close.
+    Use "ride" instead of a percent for a runner that stays open until the
+    opposite setup appears: "1.5:50,2.5:25,ride:25".
     """
     levels = []
     for part in spec.split(","):
         pct, size = part.split(":")
-        levels.append((float(pct) / 100, float(size) / 100))
+        level = None if pct.strip().lower() == "ride" else float(pct) / 100
+        levels.append((level, float(size) / 100))
     if abs(sum(size for _, size in levels) - 1) > 1e-9:
         raise ValueError("take-profit sizes must add up to 100%")
-    return sorted(levels)
+    if sum(level is None for level, _ in levels) > 1:
+        raise ValueError("only one 'ride' portion is allowed")
+    fixed = sorted(lv for lv in levels if lv[0] is not None)
+    return fixed + [lv for lv in levels if lv[0] is None]
 
 
 def run_backtest(df: pd.DataFrame, signals: pd.DataFrame, *, allow_short: bool = False,
@@ -60,6 +66,9 @@ def run_backtest(df: pd.DataFrame, signals: pd.DataFrame, *, allow_short: bool =
     """stop_loss / take_profit levels are price moves (0.03 = 3%). With leverage L,
     each 1% price move is L% on the account, and fees are charged on the
     leveraged notional. take_profits overrides take_profit with scaled exits.
+    A take_profits level of None is a runner: once every fixed target has
+    filled, the rest ignores normal exit signals and stays open until the
+    opposite entry setup appears (or the stop / breakeven stop is hit).
     The whole account is used as margin; a position is liquidated (-100%) if
     price moves 1/L - maintenance_margin against it before the stop fills.
     With breakeven_after_tp1, the stop moves to the entry price once the first
@@ -73,6 +82,8 @@ def run_backtest(df: pd.DataFrame, signals: pd.DataFrame, *, allow_short: bool =
     idx = df.index
     sig = {k: signals[k].to_numpy() for k in signals.columns}
     targets = take_profits if take_profits else ([(take_profit, 1.0)] if take_profit else [])
+    has_runner = any(level is None for level, _ in targets)
+    targets = [t for t in targets if t[0] is not None]
     liq_move = 1 / leverage - maintenance_margin if leverage > 1 else None
 
     equity = start_equity
@@ -130,7 +141,7 @@ def run_backtest(df: pd.DataFrame, signals: pd.DataFrame, *, allow_short: bool =
             pos.targets_hit += 1
             if breakeven_after_tp1:
                 pos.stop_move = 0.0
-            last = pos.targets_hit == len(targets)
+            last = pos.targets_hit == len(targets) and not has_runner
             exit_part(i, px, pos.remaining if last else size, f"target{pos.targets_hit}")
 
     for i in range(len(df)):
@@ -141,9 +152,14 @@ def run_backtest(df: pd.DataFrame, signals: pd.DataFrame, *, allow_short: bool =
                 m = move_of(c[p])
                 check_levels(i, m, m, o[i])
             if pos is not None:
-                if pos.side == "long" and sig["long_exit"][p]:
-                    exit_part(i, o[i], pos.remaining, "signal")
-                elif pos.side == "short" and sig["short_exit"][p]:
+                # The opposite setup always closes the trade. A runner (all fixed
+                # targets hit) ignores the normal exit signals and rides until then.
+                riding = has_runner and pos.targets_hit == len(targets)
+                exit_now, opposite = (("long_exit", "short_entry") if pos.side == "long"
+                                      else ("short_exit", "long_entry"))
+                if sig[opposite][p]:
+                    exit_part(i, o[i], pos.remaining, "opposite setup")
+                elif sig[exit_now][p] and not riding:
                     exit_part(i, o[i], pos.remaining, "signal")
             if pos is None and equity > 0:
                 stop0 = -stop_loss if stop_loss else None

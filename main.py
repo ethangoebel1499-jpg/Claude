@@ -120,7 +120,8 @@ def main() -> None:
     b.add_argument("--compare", action="store_true", help="run every strategy")
     b.add_argument("--breakeven", action="store_true", help="move stop to entry after the first target")
     b.add_argument("--leverage", type=float, default=1.0, help="e.g. 5 for 5x")
-    b.add_argument("--tp", help='scaled take-profits, price%%:size%%, e.g. "1:50,2:25,3:25"')
+    b.add_argument("--tp", help='scaled take-profits, price%%:size%%, e.g. "1:50,2:25,3:25"; '
+                        '"ride" = hold the rest until the opposite setup, e.g. "1.5:50,2.5:25,ride:25"')
     b.set_defaults(func=cmd_backtest)
 
     s = sub.add_parser("signals", parents=[common, source])

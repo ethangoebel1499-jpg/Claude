@@ -316,3 +316,50 @@ def test_filters_only_remove_entries(df):
     assert (filt["long_entry"] <= base["long_entry"]).all()
     assert filt["long_entry"].sum() < base["long_entry"].sum()
     pd.testing.assert_series_equal(filt["long_exit"], base["long_exit"])
+
+
+RIDE = [(0.015, 0.5), (0.025, 0.25), (None, 0.25)]
+
+
+def _runner_case(allow_short=False):
+    # Price climbs past +1.5% and +2.5%, then keeps going to +8%.
+    closes = [101, 102, 103, 104, 106, 108, 107]
+    n = len(closes) + 1
+    idx = pd.date_range("2024-01-01", periods=n, freq="h", tz="UTC")
+    df = pd.DataFrame({"open": [100.0, 100.0] + closes[:-1], "high": [100.0] + [c + 0.5 for c in closes],
+                       "low": [100.0] + [c - 1.5 for c in closes], "close": [100.0] + closes,
+                       "volume": 1.0}, index=idx)
+    sig = pd.DataFrame(False, index=idx, columns=["long_entry", "long_exit", "short_entry", "short_exit"])
+    sig.iloc[0, 0] = True                              # long at bar 1 open (100)
+    sig.loc[idx[4], "long_exit"] = True                 # normal exit signal: runner ignores it
+    sig.loc[idx[6], "short_entry"] = True               # short setup -> runner closes at bar 7 open (108)
+    return run_backtest(df, sig, stop_loss=0.03, take_profits=RIDE, leverage=5, fee=0.001,
+                        breakeven_after_tp1=True, allow_short=allow_short)
+
+
+def test_runner_rides_until_short_setup():
+    from mcbot.backtest import parse_take_profits
+    assert parse_take_profits("1.5:50,2.5:25,ride:25") == RIDE
+    t = _runner_case().trades[0]
+    assert t.reason == "opposite setup" and t.exit_price == 108
+    assert [round(f[2], 2) for f in t.fills] == [0.5, 0.25, 0.25]
+    expected = 0.5 * (5 * 0.015 - 0.01) + 0.25 * (5 * 0.025 - 0.01) + 0.25 * (5 * 0.08 - 0.01)
+    assert t.pnl_pct == pytest.approx(expected)
+
+
+def test_runner_flips_into_short():
+    trades = _runner_case(allow_short=True).trades
+    assert [t.side for t in trades] == ["long", "short"]
+    assert trades[1].entry_price == 108
+
+
+def test_runner_stopped_at_breakeven():
+    idx = pd.date_range("2024-01-01", periods=5, freq="h", tz="UTC")
+    df = pd.DataFrame({"open": [100, 100, 102, 103, 99.5], "high": [100, 102, 103, 103.5, 100],
+                       "low": [100, 99.8, 101.5, 101, 99], "close": [100, 102, 103, 101, 99.5],
+                       "volume": 1.0}, index=idx)
+    sig = pd.DataFrame(False, index=idx, columns=["long_entry", "long_exit", "short_entry", "short_exit"])
+    sig.iloc[0, 0] = True
+    t = run_backtest(df, sig, stop_loss=0.03, take_profits=RIDE, leverage=5, fee=0,
+                     breakeven_after_tp1=True).trades[0]
+    assert t.targets_hit == 2 and t.reason == "breakeven" and t.exit_price == 99.5
