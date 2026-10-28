@@ -483,3 +483,66 @@ def test_bull_bear_power_simple_candles():
     # Up candle after an up close: bull power = full range; bear = max(open-low, high-close).
     bull, bear = _bull_bear_power([10, 10], [12, 12], [9, 9], [11, 11])
     assert bull[1] == 3 and bear[1] == max(11 - 9, 12 - 11)
+
+
+def test_waves_find_bullish_divergence():
+    from mcbot.divergence import waves, pair_divergences
+    # Two oscillator troughs: the second is higher (-40 vs -80) while price makes a lower low.
+    osc = pd.Series([0, -50, -80, -50, 0, 20, 0, -30, -40, -20, 10], dtype=float)
+    low = pd.Series([100, 95, 90, 95, 100, 102, 98, 92, 85, 90, 95], dtype=float)
+    high = low + 1
+    up = pd.Series([False] * 3 + [True] + [False] * 5 + [True, False])
+    down = pd.Series([True] + [False] * 5 + [True] + [False] * 4)
+    w = waves(osc, low, high, up, down)
+    assert (w.t1_osc.iloc[9], w.t1_px.iloc[9], w.t0_osc.iloc[9], w.t0_px.iloc[9]) == (-40, 85, -80, 90)
+    div = pair_divergences(w, up, down, max_gap=20)
+    assert div.bull.iloc[9] and not div.bull.iloc[3] and not div.hidden_bull.any()
+
+
+def _assert_entries_no_lookahead(full, cut):
+    for k in ("long_entry", "short_entry"):
+        pd.testing.assert_series_equal(full[k].iloc[:len(cut)], cut[k], check_names=False)
+
+
+def test_s2_no_lookahead_and_backtest():
+    from mcbot import s2
+    d = synthetic(n=6000, seed=3, timeframe="24min")
+    fr = s2.signals(d)
+    _assert_entries_no_lookahead(fr, s2.signals(d.iloc[:4500]))
+    assert fr.long_entry.any() and fr.short_entry.any()
+    res = s2.backtest(d, fr, fee=0)
+    assert res.trades and {t.reason for t in res.trades} <= {"stop", "trail stop", "ema turned", "end"}
+    bar = int(np.flatnonzero(fr.long_entry.to_numpy())[0])
+    assert "LONG: 🟢 TRADE" in s2.checklist(d, bar)
+
+
+def test_s6_no_lookahead_and_backtest():
+    from mcbot import s6
+    d = synthetic(n=6000, seed=4, timeframe="1min")
+    fr = s6.signals(d)
+    _assert_entries_no_lookahead(fr, s6.signals(d.iloc[:4000]))
+    assert fr.long_entry.any() and fr.short_entry.any()
+    res = s6.backtest(d, fr, fee=0)
+    assert res.trades and {t.reason for t in res.trades} <= {"stop", "target1"}
+    # Every long's stop sat below its entry.
+    bar = int(np.flatnonzero(fr.long_entry.to_numpy())[0])
+    assert "LONG: 🟢 TRADE" in s6.checklist(d, bar)
+
+
+def test_s7_no_lookahead_and_backtest():
+    from mcbot import s7
+    d = synthetic(n=8000, seed=5, timeframe="12min")
+    fr = s7.signals(d)
+    _assert_entries_no_lookahead(fr, s7.signals(d.iloc[:6000]))
+    res = s7.backtest(d, fr, fee=0)
+    assert all(t.reason in ("stop", "breakeven", "target1", "target2", "opposite setup", "end") for t in res.trades)
+    assert "LONG:" in s7.checklist(d, -1)
+
+
+def test_s5_no_lookahead():
+    from mcbot import s5
+    d = synthetic(n=20000, seed=6, timeframe="1min")
+    fr = s5.signals(d)
+    _assert_entries_no_lookahead(fr, s5.signals(d.iloc[:15000]))
+    s5.backtest(d, fr, fee=0)
+    assert "4. 1m money flow" in s5.checklist(d, -1)

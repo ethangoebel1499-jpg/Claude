@@ -47,7 +47,7 @@ def money_flow(df: pd.DataFrame, period: int = 60, multiplier: float = 150,
 
 
 def sr_levels(df: pd.DataFrame, factor: int = 4, zone_pct: float = 0.004, min_touches: int = 2,
-              max_levels: int = 30) -> pd.DataFrame:
+              max_levels: int | None = None) -> pd.DataFrame:
     """Support/resistance zones from the higher timeframe (top-down analysis).
 
     Turning points (fractal highs/lows) on `factor`x candles are clustered: a
@@ -111,7 +111,7 @@ def sr_levels(df: pd.DataFrame, factor: int = 4, zone_pct: float = 0.004, min_to
                         merged[-1] = (merged[-1] + x) / 2
                     else:
                         merged.append(x)
-                levels = np.array(merged[-max_levels:])
+                levels = np.array(merged if max_levels is None else merged[-max_levels:])
         if len(levels):
             top = levels * (1 + zone_pct / 2)
             bot = levels * (1 - zone_pct / 2)

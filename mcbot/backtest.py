@@ -204,7 +204,7 @@ def run_backtest(df: pd.DataFrame, signals: pd.DataFrame, *, allow_short: bool =
 def run_level_backtest(df: pd.DataFrame, signals: pd.DataFrame, levels: pd.DataFrame, *,
                        allow_short: bool = False, leverage: float = 1.0,
                        maintenance_margin: float = 0.005, fee: float = 0.001,
-                       sizes: tuple[float, float] = (0.5, 0.25),
+                       sizes: tuple[float, ...] = (0.5, 0.25), breakeven_after_tp1: bool = False,
                        start_equity: float = 10_000.0) -> Result:
     """Backtest with price-level exits (the top-down video's exit plan).
 
@@ -214,6 +214,7 @@ def run_level_backtest(df: pd.DataFrame, signals: pd.DataFrame, levels: pd.DataF
     the rest has no target. After every closed bar the stop trails to
     long_trail (only ever upward; downward for shorts). The opposite entry setup
     closes the trade. Stop is assumed to fill first if a bar touches both.
+    With breakeven_after_tp1 the stop moves to the entry once target 1 fills.
     """
     o, h, lo, c = (df[k].to_numpy(dtype=float) for k in ("open", "high", "low", "close"))
     idx = df.index
@@ -292,7 +293,7 @@ def run_level_backtest(df: pd.DataFrame, signals: pd.DataFrame, levels: pd.DataF
                 pos = None
             elif (worst <= stop) if long_ else (worst >= stop):
                 fill = min(stop, o[i]) if long_ else max(stop, o[i])
-                reason = "stop" if move(stop) < 0 else "trail stop"
+                reason = "stop" if move(stop) < 0 else "breakeven" if move(stop) == 0 else "trail stop"
                 exit_part(i, fill, pos.remaining, reason)
             else:
                 while pos is not None and pos.targets_hit < len(targets):
@@ -302,6 +303,8 @@ def run_level_backtest(df: pd.DataFrame, signals: pd.DataFrame, levels: pd.DataF
                     fill = max(price, o[i]) if long_ else min(price, o[i])
                     pos.targets_hit += 1
                     exit_part(i, fill, size, f"target{pos.targets_hit}")
+                    if breakeven_after_tp1 and pos is not None and pos.targets_hit == 1:
+                        stop = max(stop, pos.entry_price) if long_ else min(stop, pos.entry_price)
 
         if pos is not None:
             unreal = pos.remaining * (leverage * move(c[i]) - fee * leverage)

@@ -20,7 +20,7 @@ from mcbot import bot, data
 from mcbot.backtest import parse_take_profits, run_backtest, run_level_backtest
 from mcbot.entry_quality import summarize
 from mcbot.indicators import market_cipher
-from mcbot.strategies import CATALOG, raw_strategy, build_signals, checklist, strategy_label, topdown_exit_levels
+from mcbot.strategies import CATALOG, custom_module, raw_strategy, build_signals, checklist, strategy_label, topdown_exit_levels
 
 
 def load(args) -> pd.DataFrame:
@@ -36,6 +36,8 @@ def load(args) -> pd.DataFrame:
 
 
 def signals_for(df: pd.DataFrame, args) -> tuple[pd.DataFrame, pd.DataFrame]:
+    if CATALOG[args.strategy]["func"] == "custom":
+        return df, custom_module(args.strategy).signals(df)
     if CATALOG[args.strategy]["func"] == "raw":
         # Strategy works on the real candles with its own indicators.
         return df, raw_strategy(args.strategy)[0](df)
@@ -46,13 +48,18 @@ def signals_for(df: pd.DataFrame, args) -> tuple[pd.DataFrame, pd.DataFrame]:
 
 def cmd_backtest(args) -> None:
     df = load(args)
+    if CATALOG[args.strategy].get("fill_gaps"):
+        df = data.fill_gaps(df, CATALOG[args.strategy]["fill_gaps"])
     if args.start:
         df = df[df.index >= pd.Timestamp(args.start, tz="UTC")]
     mc, sig = signals_for(df, args)
     print(f"[{strategy_label(args.strategy)}]  {len(df)} bars  {df.index[0]} -> {df.index[-1]}  "
           f"({'Heikin Ashi' if args.heikin_ashi else 'regular'} candles, {args.exits} exits)\n")
     own = raw_strategy(args.strategy)[2] if CATALOG[args.strategy]["func"] == "raw" else None
-    if args.exits == "strategy" and own:
+    if CATALOG[args.strategy]["func"] == "custom" and args.exits == "strategy":
+        # The strategy's own exits (see each module's docstring).
+        res = custom_module(args.strategy).backtest(df, sig, allow_short=args.short, fee=args.fee)
+    elif args.exits == "strategy" and own:
         # The strategy's own exits (S3: 9% stop, 1.7/2.3/3.4% targets; S4: +1.1%, 8.2%/7.8% stop).
         res = run_backtest(df, sig, allow_short=args.short, fee=args.fee, leverage=args.leverage,
                            stops_on_close=args.stops_on_close, **own)
@@ -90,7 +97,9 @@ def cmd_signals(args) -> None:
         bar = int(dates.get_indexer([pd.Timestamp(args.date, tz="UTC")], method="pad")[0])
     else:
         bar = -1
-    if CATALOG[args.strategy]["func"] == "raw":
+    if CATALOG[args.strategy]["func"] == "custom":
+        print(custom_module(args.strategy).checklist(mc, bar))
+    elif CATALOG[args.strategy]["func"] == "raw":
         print(raw_strategy(args.strategy)[1](mc, bar))
     else:
         print(checklist(mc, bar))

@@ -85,6 +85,18 @@ def resample(df: pd.DataFrame, timeframe: str = "1h") -> pd.DataFrame:
     return out.dropna(subset=["open", "close"])
 
 
+def fill_gaps(df: pd.DataFrame, freq: str = "1min") -> pd.DataFrame:
+    """Kraken leaves out minutes with no trades. Put them back as flat candles at
+    the last close (volume 0) so rolling windows count real minutes."""
+    full = pd.date_range(df.index[0], df.index[-1], freq=freq)
+    out = df.reindex(full)
+    out["close"] = out["close"].ffill()
+    for k in ("open", "high", "low"):
+        out[k] = out[k].fillna(out["close"])
+    out["volume"] = out["volume"].fillna(0)
+    return out
+
+
 def relabel(df: pd.DataFrame, timeframe: str = "1h") -> pd.DataFrame:
     """Give candles consecutive timestamps `timeframe` apart, keeping their order.
 

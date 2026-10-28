@@ -147,9 +147,11 @@ CATALOG = {
     "S1": {"name": "Top-down confluence",
            "source": "Market Cipher top-down analysis video (4h levels, 21 EMA, MCB anchor/trigger)",
            "timeframes": "4h levels, 1h entries", "func": topdown_confluence},
-    "S2": {"name": "4-hour / 15-minute",
-           "source": "rules pending (send the transcript)",
-           "timeframes": "4h bias, 15m entries", "func": None},
+    "S2": {"name": "4-hour / 24-minute",
+           "source": "'Definitive guide to my 4 hour 24 minute strategy' video: 4h trigger wave + WolfPack ID, "
+                     "24m anchor/trigger waves, money flow and WolfPack crosses; swing-low trailing stop",
+           "timeframes": "4h environment, 24m entries (datasets/XBTUSD_24m.csv)", "func": "custom",
+           "module": "s2"},
     "S3": {"name": "GRIND BTC (wielkieef)",
            "source": "wielkieef's 'GRIND BTC [45MIN]' TradingView strategy, its own indicators only: "
                      "Masanakamura ADX, RSI, MFI, volume weight, volume delta, MACD, SMA, SAR, HA scalp",
@@ -160,7 +162,28 @@ CATALOG = {
                      "indicators only: ADX, RSI, MFI, SAR, Donchian, momentum, VWMA, range filter, HA scalp",
            "timeframes": "30m (built from Kraken 15m candles)", "func": "raw",
            "raw": "witcher"},
+    "S5": {"name": "Levels + MTF divergence scalp",
+           "source": "Jason Casper's scalping video: price at a level, higher timeframes 4h/2h/1h, divergences "
+                     "on 24m/12m/6m, entry on the 1m money flow cross; take profits at the next levels",
+           "timeframes": "1m execution (1m candles via tools/kraken_extract.py)", "func": "custom",
+           "module": "s5", "fill_gaps": "1min"},
+    "S6": {"name": "1m Bollinger + AO divergence",
+           "source": "Jason Casper's 1-minute scalping video: Bollinger Band touch + Awesome Oscillator "
+                     "divergence, target the opposite band",
+           "timeframes": "1m (1m candles via tools/kraken_extract.py)", "func": "custom",
+           "module": "s6", "fill_gaps": "1min"},
+    "S7": {"name": "Range levels + 24m/12m",
+           "source": "Jason Casper's 'bread and butter' video: range highs/lows, two big green dots + bullish "
+                     "divergence (longs) or bearish divergence + falling money flow (shorts) on 24m and 12m",
+           "timeframes": "4h levels, 24m + 12m confirmations (datasets/XBTUSD_12m.csv)", "func": "custom",
+           "module": "s7"},
 }
+
+
+def custom_module(sid: str):
+    """Strategies with their own signals / backtest / checklist (S2, S5, S6, S7)."""
+    import importlib
+    return importlib.import_module(f"mcbot.{CATALOG[sid]['module']}")
 
 
 def raw_strategy(sid: str):
