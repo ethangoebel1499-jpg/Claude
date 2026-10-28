@@ -7,6 +7,8 @@ notional_usd, net_pnl_usd, return_pct (one row per partial exit). Checks:
   1. the list's own numbers: positions, win rate, compounding, fee sensitivity
   2. do the prices exist? each entry vs Kraken 15m opens on the listed day / the day before
   3. does our GRIND port take the same trades (same side, price within 0.5%, within a day)?
+  4. the list's own trades replayed with GRIND's exits on Kraken 1h candles, at the
+     listed prices vs at a price a daily chart can actually fill (the listed day's open)
 """
 
 from __future__ import annotations
@@ -30,6 +32,22 @@ def positions(tv: pd.DataFrame) -> pd.DataFrame:
     p["entry_date"] = pd.to_datetime(p.entry_date).dt.tz_localize("UTC")
     p["ret"] = p.pnl / p.notional
     return p
+
+
+def replay(h1: pd.DataFrame, t, px: float, sgn: int, until, fee: float = 0.0004) -> float:
+    """One position with GRIND's exits (stop checked first in a bar), closed at `until`."""
+    left, pnl, k, last = 1.0, 0.0, 0, px
+    for _, b in h1[(h1.index >= t) & (h1.index < until)].iterrows():
+        worst, best = (b.low, b.high) if sgn > 0 else (b.high, b.low)
+        if sgn * (worst - px) / px <= -STOP:
+            return pnl + left * (-STOP - 2 * fee)
+        while k < len(TAKE_PROFITS) and sgn * (best - px) / px >= TAKE_PROFITS[k][0]:
+            size = left if k == len(TAKE_PROFITS) - 1 else TAKE_PROFITS[k][1]
+            pnl, left, k = pnl + size * (TAKE_PROFITS[k][0] - 2 * fee), left - size, k + 1
+        if left <= 1e-9:
+            return pnl
+        last = b.close
+    return pnl + left * (sgn * (last - px) / px - 2 * fee)
 
 
 def main(path: str) -> None:
@@ -71,6 +89,24 @@ def main(path: str) -> None:
                    for _, p in pos.iterrows())
         print(f"   {tf:>5}: {both:3}/{len(pos)} of the list's positions | our run: {res.stats['trades']} trades, "
               f"{res.stats['total_return_pct']:+,.0f}%, max DD {res.stats['max_drawdown_pct']:.0f}%")
+
+    print("\n4. THE LIST'S OWN TRADES REPLAYED (GRIND exits, 0.04% fee, Kraken 1h)")
+    for label, shift in (("at the listed prices", None), ("at the listed day's open", 0)):
+        rets = []
+        for i, p in pos.iterrows():
+            sgn = 1 if p.side == "Long" else -1
+            until = pos.entry_date.iloc[i + 1] if i + 1 < len(pos) else h1.index[-1]
+            if shift is None:
+                t, px = p.entry_date - pd.Timedelta("1D"), p.entry_price
+            else:
+                t = p.entry_date
+                if t not in h1.index:
+                    continue
+                px = h1.open.loc[t]
+            rets.append(replay(h1, t, px, sgn, max(until, t + pd.Timedelta("1h"))))
+        eq = (1 + pd.Series(rets)).cumprod()
+        print(f"   {label:26}: win {(pd.Series(rets) > 0).mean():.0%}, total {eq.iloc[-1] * 100 - 100:+,.0f}%, "
+              f"max DD {(eq / eq.cummax() - 1).min():.0%}")
 
 
 if __name__ == "__main__":
