@@ -65,8 +65,13 @@ def _rsi(s: pd.Series, n: int) -> pd.Series:
 
 
 def _wma(s: pd.Series, n: int) -> pd.Series:
+    """Linearly weighted moving average (Pine wma), via convolution for speed."""
     w = np.arange(1, n + 1, dtype=float)
-    return s.rolling(n).apply(lambda x: np.dot(x, w) / w.sum(), raw=True)
+    x = s.to_numpy(dtype=float)
+    out = np.full(len(x), np.nan)
+    if len(x) >= n:
+        out[n - 1:] = np.convolve(x, w[::-1], mode="valid") / w.sum()
+    return pd.Series(out, index=s.index)
 
 
 def _hma(s: pd.Series, n: int) -> pd.Series:
