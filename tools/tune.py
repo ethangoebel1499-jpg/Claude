@@ -112,7 +112,7 @@ def tune_s5(m1):
             lv["long_tp1"], lv["short_tp1"] = lv.long_tp2, lv.short_tp2
             lv["long_tp2"] = lv["short_tp2"] = np.nan
             sizes, be = (1.0,), False
-        elif exits.endswith("R"):
+        elif exits in ("2R", "3R", "5R"):
             k = float(exits[:-1])
             lv["long_tp1"] = c + k * (c - lv.long_stop)
             lv["short_tp1"] = c - k * (lv.short_stop - c)
