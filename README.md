@@ -37,6 +37,8 @@ python main.py backtest --strategy S4 --csv datasets/XBTUSD_15.csv --resample 30
 ```
 On real Kraken BTC 30m data from 2017 onward (no leverage, 0.1% fee): 1,330 trades with a **71% win rate, but -93% total**. The average trade is +0.02% before fees and -0.18% after; entries hit their target first only 0.9 points more often than random (±1.3).
 
+Real Kraken 1h data for other coins: `datasets/ETHUSD_60.csv` (2015-2026), `datasets/SOLUSD_60.csv` (2021-2026), `datasets/XRPUSD_60.csv` (2017-2026); build any slower timeframe with `--resample`.
+
 Real Kraken BTC/USD data for these: `datasets/XBTUSD_15.csv` (15m, 387,797 candles), `datasets/XBTUSD_60.csv` (1h) and `datasets/XBTUSD_240.csv` (4h), all from 2013-10 to 2026-09.
 
 ## S1 - Top-down confluence (`mcbot/strategies.py`)
