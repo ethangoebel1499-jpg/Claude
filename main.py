@@ -61,8 +61,10 @@ def cmd_backtest(args) -> None:
         res = custom_module(args.strategy).backtest(df, sig, allow_short=args.short, fee=args.fee)
     elif args.exits == "strategy" and own:
         # The strategy's own exits (S3: 9% stop, 1.7/2.3/3.4% targets; S4: +1.1%, 8.2%/7.8% stop).
-        res = run_backtest(df, sig, allow_short=args.short, fee=args.fee, leverage=args.leverage,
-                           stops_on_close=args.stops_on_close, **own)
+        if args.stop is not None:
+            own = {**own, "stop_loss": args.stop or None}   # e.g. a safety stop for S8
+        res = run_backtest(df, sig, allow_short=args.short and not CATALOG[args.strategy].get("long_only"),
+                           fee=args.fee, leverage=args.leverage, stops_on_close=args.stops_on_close, **own)
     elif args.exits == "strategy":
         # Stop under the 21 EMA (above resistance for shorts), 50% at the next 4h
         # level, 25% at the level after, stop trails the 21 EMA.
@@ -70,7 +72,7 @@ def cmd_backtest(args) -> None:
                                  allow_short=args.short, leverage=args.leverage, fee=args.fee)
     else:
         res = run_backtest(df, sig, allow_short=args.short,
-                           stop_loss=args.stop or None, take_profit=args.target or None,
+                           stop_loss=(0.03 if args.stop is None else args.stop) or None, take_profit=args.target or None,
                            fee=args.fee, stops_on_close=args.stops_on_close,
                            leverage=args.leverage, breakeven_after_tp1=args.breakeven,
                            trail_targets=args.trail,
@@ -130,7 +132,7 @@ def cmd_trade(args, live: bool) -> None:
         broker = bot.PaperBroker(args.state, fee=args.fee)
         allow_short = args.short
     bot.run(ex, args.symbol, args.timeframe, broker, allow_short=allow_short,
-            fraction=args.fraction, stop_loss=args.stop or None, take_profit=args.target or None,
+            fraction=args.fraction, stop_loss=(0.03 if args.stop is None else args.stop) or None, take_profit=args.target or None,
             poll_seconds=args.poll, heikin_ashi=args.heikin_ashi,
             stops_on_close=args.stops_on_close, htf_factor=args.htf,
             mf_period=args.mf_period)
@@ -147,7 +149,9 @@ def main() -> None:
     common.add_argument("--strategy", default="S1", choices=list(CATALOG),
                         help="which strategy to run (see: python main.py strategies)")
     common.add_argument("--short", action="store_true", help="allow short trades (backtest/paper)")
-    common.add_argument("--stop", type=float, default=0.03, help="stop-loss fraction, 0 to disable")
+    common.add_argument("--stop", type=float, default=None,
+                        help="stop-loss fraction, 0 to disable (fixed exits default 0.03; with strategy "
+                             "exits it replaces the strategy's own stop)")
     common.add_argument("--target", type=float, default=0.06, help="take-profit fraction, 0 to disable")
     common.add_argument("--fee", type=float, default=0.001, help="fee per side")
     common.add_argument("--htf", type=int, default=4,

@@ -177,6 +177,11 @@ CATALOG = {
                      "divergence (longs) or bearish divergence + falling money flow (shorts) on 24m and 12m",
            "timeframes": "4h levels, 24m + 12m confirmations (datasets/XBTUSD_12m.csv)", "func": "custom",
            "module": "s7"},
+    "S8": {"name": "Long-only reversal",
+           "source": "Basic rules: WaveTrend green dot below zero + green Heikin Ashi = reversal up (long); "
+                     "red dot above zero + red Heikin Ashi = reversal down (exit). 50% at +2%, 25% at +5%, "
+                     "the rest rides until the reversal down. No shorts",
+           "timeframes": "any (best on 8h-2D)", "func": "raw", "raw": "s8", "long_only": True},
 }
 
 
@@ -188,6 +193,9 @@ def custom_module(sid: str):
 
 def raw_strategy(sid: str):
     """(signals, checklist, exits) for strategies that use only their own indicators."""
+    if CATALOG[sid].get("raw") == "s8":
+        from . import s8
+        return s8.signals, s8.checklist, {"take_profits": s8.TAKE_PROFITS, "stop_loss": None}
     if CATALOG[sid].get("raw") == "grind":
         from . import grind
         return grind.grind_signals, grind.grind_checklist, {

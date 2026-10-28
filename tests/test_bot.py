@@ -546,3 +546,17 @@ def test_s5_no_lookahead():
     _assert_entries_no_lookahead(fr, s5.signals(d.iloc[:15000]))
     s5.backtest(d, fr, fee=0)
     assert "4. 1m money flow" in s5.checklist(d, -1)
+
+
+def test_s8_long_only_reversal(df):
+    from mcbot import s8
+    sig = s8.signals(df)
+    assert sig.long_entry.any() and sig.short_entry.any()
+    res = run_backtest(df, sig, allow_short=False, take_profits=s8.TAKE_PROFITS, stop_loss=None, fee=0)
+    assert res.trades and all(t.side == "long" for t in res.trades)
+    # 50% / 25% / runner: a trade that hit both targets kept a quarter for the reversal down.
+    two = [t for t in res.trades if t.targets_hit == 2]
+    assert two and all(abs(sum(f[2] for f in t.fills) - 1) < 1e-9 for t in two)
+    assert all(t.reason in ("target1", "target2", "opposite setup", "end") for t in res.trades)
+    bar = int(np.flatnonzero(sig.long_entry.to_numpy())[0])
+    assert "LONG: 🟢 TRADE" in s8.checklist(df, bar)
