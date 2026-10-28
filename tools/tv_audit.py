@@ -5,7 +5,9 @@
 Expects columns: trade, side, entry_date, entry_price, exit_date, exit_price,
 notional_usd, net_pnl_usd, return_pct (one row per partial exit). Checks:
   1. the list's own numbers: positions, win rate, compounding, fee sensitivity
-  2. do the prices exist? each entry vs Kraken 15m opens on the listed day / the day before
+  2. do the prices exist? each entry vs Kraken 15m opens on the listed day / the day before,
+     and vs the daily real open and Heikin Ashi open (a backtest run on a Heikin Ashi chart
+     fills at Heikin Ashi prices, which are not real prices)
   3. does our GRIND port take the same trades (same side, price within 0.5%, within a day)?
   4. the list's own trades replayed with GRIND's exits on Kraken 1h candles, at the
      listed prices vs at a price a daily chart can actually fill (the listed day's open)
@@ -24,6 +26,7 @@ import pandas as pd  # noqa: E402
 from mcbot.backtest import run_backtest  # noqa: E402
 from mcbot.data import load_csv, resample  # noqa: E402
 from mcbot.grind import STOP, TAKE_PROFITS, grind_signals  # noqa: E402
+from mcbot.indicators import heikin_ashi  # noqa: E402
 
 
 def positions(tv: pd.DataFrame) -> pd.DataFrame:
@@ -73,6 +76,12 @@ def main(path: str) -> None:
             prev_day += k < r.entry_date
     print(f"\n2. PRICES: {near}/{len(pos)} entries match a real Kraken 15m open within 0.3%; "
           f"{prev_day} of those are on the day BEFORE the listed date")
+    d1 = resample(load_csv(ROOT / "datasets/XBTUSD_60.csv"), "1D")
+    ha = heikin_ashi(d1)
+    for name, opens in (("real daily open", d1.open), ("Heikin Ashi daily open", ha.open)):
+        diff = pd.Series([abs(opens.loc[p.entry_date] / p.entry_price - 1) for _, p in pos.iterrows()
+                          if p.entry_date in opens.index])
+        print(f"   entries within 0.5% of the {name}: {(diff < 0.005).mean():.0%} (median gap {diff.median():.2%})")
 
     print("\n3. OUR PORT (Kraken data, script settings, 0.04% fee): trades taken by both")
     h1 = load_csv(ROOT / "datasets/XBTUSD_60.csv")
