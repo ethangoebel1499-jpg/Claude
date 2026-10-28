@@ -460,3 +460,26 @@ def test_witcher_checklist_and_exits(df):
     res = run_backtest(df, sig, allow_short=True, take_profit=0.011, stop_loss=0.082,
                        stop_loss_short=0.078, fee=0)
     assert res.trades and all(t.reason in ("target1", "stop", "opposite setup", "signal", "end") for t in res.trades)
+
+
+def test_grind_no_lookahead_and_signals(df):
+    from mcbot.grind import grind_conditions, grind_signals, grind_checklist, TAKE_PROFITS, STOP
+    lc_full, sc_full, _, _ = grind_conditions(df)
+    lc_cut, sc_cut, _, _ = grind_conditions(df.iloc[:1500])
+    pd.testing.assert_frame_equal(lc_full.iloc[:1500], lc_cut)
+    pd.testing.assert_frame_equal(sc_full.iloc[:1500], sc_cut)
+    sig = grind_signals(df)
+    assert sig["long_entry"].any() and sig["short_entry"].any()
+    assert not (sig["long_entry"] & sig["short_entry"]).any()
+    bar = int(np.flatnonzero(sig["long_entry"].to_numpy())[0])
+    assert "LONG: 🟢 TRADE" in grind_checklist(df, bar)
+    res = run_backtest(df, sig, allow_short=True, take_profits=TAKE_PROFITS, stop_loss=STOP, fee=0)
+    assert res.trades
+    assert sum(size for _, size in TAKE_PROFITS) == pytest.approx(1.0)
+
+
+def test_bull_bear_power_simple_candles():
+    from mcbot.grind import _bull_bear_power
+    # Up candle after an up close: bull power = full range; bear = max(open-low, high-close).
+    bull, bear = _bull_bear_power([10, 10], [12, 12], [9, 9], [11, 11])
+    assert bull[1] == 3 and bear[1] == max(11 - 9, 12 - 11)

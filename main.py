@@ -20,8 +20,7 @@ from mcbot import bot, data
 from mcbot.backtest import parse_take_profits, run_backtest, run_level_backtest
 from mcbot.entry_quality import summarize
 from mcbot.indicators import market_cipher
-from mcbot.witcher import witcher_checklist, witcher_signals
-from mcbot.strategies import CATALOG, build_signals, checklist, strategy_label, topdown_exit_levels
+from mcbot.strategies import CATALOG, raw_strategy, build_signals, checklist, strategy_label, topdown_exit_levels
 
 
 def load(args) -> pd.DataFrame:
@@ -39,7 +38,7 @@ def load(args) -> pd.DataFrame:
 def signals_for(df: pd.DataFrame, args) -> tuple[pd.DataFrame, pd.DataFrame]:
     if CATALOG[args.strategy]["func"] == "raw":
         # Strategy works on the real candles with its own indicators.
-        return df, witcher_signals(df)
+        return df, raw_strategy(args.strategy)[0](df)
     mc = market_cipher(df, use_heikin_ashi=args.heikin_ashi, htf_factor=args.htf,
                        mf_period=args.mf_period)
     return mc, build_signals(mc, args.strategy)
@@ -52,12 +51,11 @@ def cmd_backtest(args) -> None:
     mc, sig = signals_for(df, args)
     print(f"[{strategy_label(args.strategy)}]  {len(df)} bars  {df.index[0]} -> {df.index[-1]}  "
           f"({'Heikin Ashi' if args.heikin_ashi else 'regular'} candles, {args.exits} exits)\n")
-    own = CATALOG[args.strategy].get("exits")
+    own = raw_strategy(args.strategy)[2] if CATALOG[args.strategy]["func"] == "raw" else None
     if args.exits == "strategy" and own:
-        # The strategy's own exits (S4: +1.1% take profit, 8.2% / 7.8% stop).
+        # The strategy's own exits (S3: 9% stop, 1.7/2.3/3.4% targets; S4: +1.1%, 8.2%/7.8% stop).
         res = run_backtest(df, sig, allow_short=args.short, fee=args.fee, leverage=args.leverage,
-                           take_profit=own["take_profit"], stop_loss=own["stop_loss"],
-                           stop_loss_short=own["stop_loss_short"], stops_on_close=args.stops_on_close)
+                           stops_on_close=args.stops_on_close, **own)
     elif args.exits == "strategy":
         # Stop under the 21 EMA (above resistance for shorts), 50% at the next 4h
         # level, 25% at the level after, stop trails the 21 EMA.
@@ -93,7 +91,7 @@ def cmd_signals(args) -> None:
     else:
         bar = -1
     if CATALOG[args.strategy]["func"] == "raw":
-        print(witcher_checklist(mc, bar))
+        print(raw_strategy(args.strategy)[1](mc, bar))
     else:
         print(checklist(mc, bar))
 

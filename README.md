@@ -11,7 +11,23 @@ Each strategy gets a number and a label so they stay separate. List them with `p
 |---|---|---|---|
 | S1 | Top-down confluence | 4h levels, 1h entries | 🟢 ready |
 | S2 | 4-hour / 15-minute | 4h bias, 15m entries | 🔴 rules pending (send the transcript) |
-| S3 | GRIND BTC (wielkieef) | 45m (from Kraken 15m candles) | 🔴 rules pending (needs the Pine source). Uses only its own indicators, none of S1's |
+| S3 | GRIND BTC (wielkieef) | 45m (from Kraken 15m candles) | 🟢 ready. Port of his "GRIND BTC [45MIN]" strategy, using only its own indicators |
+
+**S3 - GRIND BTC** (`mcbot/grind.py`): a long needs all nine of its conditions (Masanakamura ADX(9) > 12, RSI(100, opens) < 70, MFI > 8, volume > 1.3x its 51-bar average, 50-bar midpoint average, MACD 3/4/7, rising 55-bar SMA, SAR, cumulative volume delta above its 5-bar SMA), *or* its Heikin Ashi scalp signal while ADX agrees. Like the script's backtest it enters whenever conditions hold and reverses on an opposite signal. Exits: 9% stop; take-profits at +1.7% / +2.3% / +3.4% for 33% / 66% / the last ~1%, as TradingView fills them.
+```bash
+python main.py signals  --strategy S3 --csv datasets/XBTUSD_15.csv --resample 45min
+python main.py backtest --strategy S3 --csv datasets/XBTUSD_15.csv --resample 45min --from 2017-01-01 --short --fee 0.0004
+```
+Real Kraken BTC/USD, 2017 onward, no leverage:
+
+| Timeframe | Fee | Trades | Win % | Total | 2017-2021 | 2022-2026 | Entry edge vs random |
+|---|---|---|---|---|---|---|---|
+| 45m (native) | 0.04% | 2,380 | 66% | +2,538% | +1,978% | +29% | +2.3 ±0.5 |
+| 45m (native) | 0.10% | 2,380 | 66% | +52% | +292% | -61% | |
+| 4h | 0.04% | 929 | 81% | +729% | +285% | +113% | +4.7 ±1.1 |
+| 4h | 0.10% | 929 | 81% | +172% | +99% | +35% | |
+
+The first strategy here whose entries beat random by a statistically clear margin. Caveats: the author likely tuned it on BTC history, so 2017-2021 is probably flattering; futures funding and slippage aren't modelled; buy and hold made +8,532% over the same period.
 | S4 | The Witcher (wielkieef) | 30m (from Kraken 15m candles) | 🟢 ready. Port of his "The Witcher [30MIN]" script (MPL-2.0), using only its own indicators |
 
 **S4 - The Witcher** (`mcbot/witcher.py`): a long needs all nine of its conditions (ADX > 17 with +DI over -DI, RSI(35) < 70, MFI > 10, midpoint average, SAR, Donchian midline, momentum, rising VWMA, range filter), *or* its Heikin Ashi scalp signal while ADX agrees. Direction alternates. Exits: +1.1% take-profit, 8.2% (long) / 7.8% (short) stop, and an opposite signal flips the position.

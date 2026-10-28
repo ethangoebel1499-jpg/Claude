@@ -151,15 +151,30 @@ CATALOG = {
            "source": "rules pending (send the transcript)",
            "timeframes": "4h bias, 15m entries", "func": None},
     "S3": {"name": "GRIND BTC (wielkieef)",
-           "source": "wielkieef's own indicators only (volume weight, volume delta, ADX, RSI); "
-                     "rules pending (needs the Pine source)",
-           "timeframes": "45m (built from Kraken 15m candles)", "func": None},
+           "source": "wielkieef's 'GRIND BTC [45MIN]' TradingView strategy, its own indicators only: "
+                     "Masanakamura ADX, RSI, MFI, volume weight, volume delta, MACD, SMA, SAR, HA scalp",
+           "timeframes": "45m (built from Kraken 15m candles)", "func": "raw",
+           "raw": "grind"},
     "S4": {"name": "The Witcher (wielkieef)",
            "source": "wielkieef's 'The Witcher [30MIN]' TradingView script (MPL-2.0), its own "
                      "indicators only: ADX, RSI, MFI, SAR, Donchian, momentum, VWMA, range filter, HA scalp",
            "timeframes": "30m (built from Kraken 15m candles)", "func": "raw",
-           "exits": {"take_profit": 0.011, "stop_loss": 0.082, "stop_loss_short": 0.078}},
+           "raw": "witcher"},
 }
+
+
+def raw_strategy(sid: str):
+    """(signals, checklist, exits) for strategies that use only their own indicators."""
+    if CATALOG[sid].get("raw") == "grind":
+        from . import grind
+        return grind.grind_signals, grind.grind_checklist, {
+            "take_profits": grind.TAKE_PROFITS, "stop_loss": grind.STOP}
+    from . import witcher
+    return witcher.witcher_signals, witcher.witcher_checklist, {
+        "take_profit": witcher.TAKE_PROFIT, "stop_loss": witcher.STOP_LONG,
+        "stop_loss_short": witcher.STOP_SHORT}
+
+
 STRATEGIES = {sid: v["func"] for sid, v in CATALOG.items() if callable(v["func"])}
 
 
