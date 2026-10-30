@@ -5,3 +5,8 @@ __pycache__/
 data/
 *.log
 paper_state.json
+# livepaper (local paper trading)
+live.toml
+*.db
+.paper-trades/
+.paper-trades-export/

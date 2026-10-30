@@ -1,0 +1,5 @@
+# pip install -r requirements.txt -r livepaper/requirements.txt
+streamlit>=1.37
+requests>=2.31
+# Only for the Webull paper account / Webull data:
+webull-openapi-python-sdk>=3.0

@@ -144,6 +144,49 @@ The samples are still small.
 - On startup, the bot won't trade off a candle that closed a while ago.
 - Stops and targets fire intrabar by default. `--stops-on-close` makes them wait for a closed candle too.
 
+## Live paper trading + dashboard (`livepaper/`)
+
+Runs on your own computer: trades the tested strategies on live prices in a
+paper account, records every fill, and shows it all in a local dashboard. The
+live engine uses the same strategy code and exit rules as the backtester; a
+test replays history through it and checks it makes the exact same trades.
+
+**Setup (once)**
+
+    git clone <this repo> && cd <repo>
+    python -m venv .venv && source .venv/bin/activate      # Windows: .venv\Scripts\activate
+    pip install -r requirements.txt -r livepaper/requirements.txt
+    cp livepaper/live.example.toml live.toml                # Windows: copy livepaper\live.example.toml live.toml
+
+Edit `live.toml`: which strategy, symbol, timeframe and capital per run.
+
+**Run it (two terminals)**
+
+    python -m livepaper run          # the trader: checks prices every 30 s, acts on each closed candle
+    python -m livepaper dashboard    # opens the dashboard in your browser (http://localhost:8501)
+
+`python -m livepaper check` tests the data feeds (and Webull keys) without placing orders.
+
+**Brokers**
+
+- `broker = "sim"` (default): built-in paper broker, fills at the live market price. Works
+  right away; crypto prices come from Kraken's public API (no account needed).
+- `broker = "webull"`: your **Webull paper (sandbox) account** through Webull's official SDK.
+  1. In Webull's Developer Center click *Using OpenAPI service in Paper Trading*, then
+     *API Management -> My Application* and apply for the Sandbox Trading API.
+  2. Put the keys in environment variables (never in `live.toml`):
+     `WEBULL_APP_KEY`, `WEBULL_APP_SECRET`, optionally `WEBULL_ACCOUNT_ID`.
+  3. Run `python -m livepaper check`, then `python -m livepaper run`.
+  Stocks use `feed = "webull"`; stock orders are whole shares, regular hours only.
+
+**Shared with Claude:** with `sync_git = true` the trade record (trades, fills, equity,
+signals, events as CSV) is pushed hourly to the `paper-trades` branch, so a Claude session
+can compare live results with the backtests. It uses a separate worktree (`.paper-trades/`),
+so your working branch is never touched. `python -m livepaper sync` pushes immediately.
+
+Spot crypto can't be shorted, so crypto runs are long-only (the backtests in the reports
+include shorts for GRIND and the Witcher; expect different numbers).
+
 ## Important caveats
 - The paper/live bot uses a single stop and target. Leverage, partial take-profits and trailing are backtest-only for now.
 - Bot stops are checked by the bot itself, not placed on the exchange, so they only protect you while it runs.

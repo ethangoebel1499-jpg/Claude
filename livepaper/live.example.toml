@@ -1,0 +1,71 @@
+# livepaper config. Copy to live.toml (in the repo root) and edit.
+# Keys are NEVER stored here: set WEBULL_APP_KEY / WEBULL_APP_SECRET (and optionally
+# WEBULL_ACCOUNT_ID) as environment variables.
+
+[app]
+db = "livepaper.db"
+poll_seconds = 30
+broker = "sim"        # "sim" = built-in paper broker (works now), "webull" = Webull paper (sandbox) account
+fee = 0.001           # fee per side used for P&L (0.1%)
+sync_git = true       # push the trade record to the paper-trades branch so Claude can analyze it
+sync_minutes = 60
+
+[webull]
+region = "us"
+endpoint = "api.sandbox.webull.com"   # Webull's paper-trading (sandbox) host
+
+# One [[run]] per strategy x symbol x timeframe. Each run has its own paper capital.
+# strategy: witcher | grind | s8. Exits default to the settings that held up in testing:
+#   witcher: 4% stop, 50% at +12%, 50% at +24%
+#   grind:   6% stop, targets x3 (5.1% / 6.9% / 10.2%)
+#   s8:      5% stop, 50% at +2%, 25% at +5%, rest rides until the reversal down
+# Override with e.g.  stop = 0.03   take_profits = [[0.05, 0.5], [0.10, 0.5]]   ("ride" = runner)
+# feed: kraken (crypto, no key needed) | webull (stocks or crypto, needs keys)
+# shorts: spot crypto can't be shorted, so keep false for crypto.
+
+[[run]]
+name = "Witcher ETH 2h"
+strategy = "witcher"
+symbol = "ETHUSD"
+asset = "crypto"
+timeframe = "2h"
+feed = "kraken"
+capital = 10000
+
+[[run]]
+name = "Witcher SOL 2h"
+strategy = "witcher"
+symbol = "SOLUSD"
+asset = "crypto"
+timeframe = "2h"
+feed = "kraken"
+capital = 10000
+
+[[run]]
+name = "GRIND BTC 4h"
+strategy = "grind"
+symbol = "XBTUSD"
+asset = "crypto"
+timeframe = "4h"
+feed = "kraken"
+capital = 10000
+
+[[run]]
+name = "S8 ETH 12h"
+strategy = "s8"
+symbol = "ETHUSD"
+asset = "crypto"
+timeframe = "12h"
+feed = "kraken"
+capital = 10000
+
+# A stock example (needs Webull keys; stocks trade whole shares, regular hours only):
+# [[run]]
+# name = "Witcher AAPL 4h"
+# strategy = "witcher"
+# symbol = "AAPL"
+# asset = "stock"
+# timeframe = "4h"
+# feed = "webull"
+# shorts = true
+# capital = 10000
