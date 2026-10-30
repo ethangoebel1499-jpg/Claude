@@ -18,3 +18,5 @@ streams_inbox/
 # dashboard Account tab (plain-text keys, never pushed)
 local_settings.json
 streamlearn_frames/
+.venv/
+trader.log

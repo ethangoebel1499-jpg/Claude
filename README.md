@@ -1,5 +1,15 @@
 # Top-down confluence trading bot
 
+## Run it on your laptop
+
+1. Install **Python 3.10+** from https://www.python.org/downloads/ (Windows: tick "Add python.exe to PATH").
+2. Get the code: `git clone https://github.com/ethangoebel1499-jpg/Claude.git` (or GitHub's Code → Download ZIP; the trade record then can't sync back to Claude).
+3. Setup, once: **Windows** double-click `setup.bat` · **Mac** `bash setup.sh` in Terminal from the folder.
+4. Start: **Windows** double-click `start.bat` · **Mac** `bash start.sh`. The paper trader and the dashboard both start; the dashboard opens at http://localhost:8501.
+5. In the dashboard: ⚙️ Account for Webull keys (optional, the built-in paper broker works without), 🧪 Strategy Lab to pick what to paper trade.
+
+Stop with Ctrl+C (Mac) or by closing both windows (Windows). Open positions are saved and resume next start. The laptop has to stay awake for the trader to see each candle.
+
 A bot that trades one strategy: **top-down confluence**. It combines 4h support/resistance and the 21 EMA on the naked chart with Market Cipher B confirmation, and enters on **1h** candles. You can backtest it, score its entries, paper trade it, or (if you opt in) trade live on any exchange [ccxt](https://github.com/ccxt/ccxt) supports.
 
 > Market Cipher is a closed-source, paid TradingView indicator. This project uses the open-source **VuManChu Cipher B** approximation (WaveTrend, green/red dots, RSI+MFI money flow), so its values are close to the real indicator but not identical.
