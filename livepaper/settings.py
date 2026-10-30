@@ -16,6 +16,7 @@ PATH = Path(os.environ.get("LOCAL_SETTINGS", ROOT / "local_settings.json"))
 DEFAULTS = {
     # paper trading
     "broker": "sim", "fee": 0.001, "poll_seconds": 30, "sync_git": True, "sync_minutes": 60,
+    "max_stop": 0.10,      # safety cap: every trade has a stop, never wider than this
     # Webull paper (sandbox) account
     "webull_app_key": "", "webull_app_secret": "", "webull_account_id": "", "webull_region": "us",
     "webull_endpoint": "api.sandbox.webull.com",

@@ -161,6 +161,15 @@ paper account, records every fill, and shows it all in a local dashboard. The
 live engine uses the same strategy code and exit rules as the backtester; a
 test replays history through it and checks it makes the exact same trades.
 
+### 🛡️ Stop-loss safety (computer off)
+
+- **Every trade has a stop**, never wider than the cap in ⚙️ Account (default 10%), even if a run's stop is set to 0 or wider.
+- **Webull:** when a trade opens, a good-till-cancelled stop order is placed *at Webull*, so it fires with your computer off. It is resized after each take profit and cancelled before the trader sells itself, so nothing is ever sold twice. If it is still open 1% past the stop price, the trader sells at the market itself. The Dashboard's "Stop held by" column shows 🛡️ broker or 💻 this computer.
+- **On restart** the trader asks Webull whether the stop filled while it was off and logs the real fill price.
+- **Built-in paper broker:** the state is saved every price check; after downtime the missed hourly candles are replayed (stop first, then targets) at the prices they would have filled.
+- `python -m livepaper check --test-stop` places and cancels a far-away stop order to confirm Webull accepts them (stocks and crypto separately). If Webull refuses, trades in that asset are protected only while the trader runs, and the Activity log says so.
+- Take profits are handled by the trader while it runs (a broker-side take profit could fill while the stop still covers the whole position).
+
 **Setup (once)**
 
     git clone <this repo> && cd <repo>

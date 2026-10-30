@@ -16,7 +16,7 @@ import streamlit as st  # noqa: E402
 from livepaper import settings  # noqa: E402
 from livepaper.fmt import money, pct, price  # noqa: E402  (full prices, never scientific notation)
 from livepaper.history import CRYPTO, STOCKS, history  # noqa: E402
-from livepaper.runner import exits_for, load_config, normalize_run, seed_runs  # noqa: E402
+from livepaper.runner import exits_for, load_config, max_stop, normalize_run, seed_runs  # noqa: E402
 from livepaper.store import Store  # noqa: E402
 from livepaper.strategies import NOT_LIVE, REGISTRY  # noqa: E402
 from mcbot.backtest import run_backtest  # noqa: E402
@@ -80,6 +80,7 @@ def trade_view(r: dict, state, quote) -> dict | None:
             "Since entry": (price / p.entry_price - 1) * 100, "My trade %": pnl_usd / (p.entry_price * p.qty) * 100,
             "My trade $": pnl_usd,
             "Stop": p.entry_price * (1 - d * ex.stop) if ex.stop else None,
+            "Stop held by": "🛡️ broker" if p.stop_order else "💻 this computer",
             "Next target": p.entry_price * (1 + d * nxt) if nxt else ("rides" if p.targets_hit else None),
             "Left": f"{p.remaining_qty / p.qty:.0%}", "unreal": unreal}
 
@@ -301,6 +302,10 @@ with tab_lab:
         st.checkbox(f"📄 Paper trade this setup as **{run['name']}** ({money(lab['capital'])} paper capital)",
                     value=run["name"] in active, key=key, on_change=toggle_run, args=(run, key))
         st.caption("Takes effect on the trader's next price check. Unticking closes any open paper position.")
+        cap = max_stop()
+        if not lab["stop"] or lab["stop"] > cap:
+            st.warning(f"🛡️ Paper trading always uses a stop: this setup trades with a {cap:.0%} stop (the safety cap "
+                       f"in ⚙️ Account), so live results will differ from the backtest above.")
 
     with st.expander("Manage paper-trading runs"):
         all_runs = store.runs()
@@ -367,6 +372,10 @@ with tab_acct:
             b1, b2 = st.columns(2)
             sync_git = b1.checkbox("Share trades with Claude (push to the paper-trades branch)", bool(cur["sync_git"]))
             sync_min = b2.number_input("Share every (minutes)", 5, 1440, int(cur["sync_minutes"]), 5)
+            cap_pct = st.number_input("🛡️ Maximum stop loss % (safety cap)", 1.0, 50.0, float(cur["max_stop"]) * 100, 0.5,
+                                      help="Every paper trade gets a stop, never wider than this - even if a run has "
+                                           "its stop turned off or set wider. With Webull, the stop is placed as an "
+                                           "order at Webull so it works with this computer off.")
         with st.expander("Webull paper account", expanded=cur["broker"] == "webull"):
             st.caption("Webull Developer Center → *Using OpenAPI service in Paper Trading* → API Management → "
                        "My Application. Use the **sandbox (paper)** keys.")
@@ -391,7 +400,7 @@ with tab_acct:
                                           type="password")
             sl_db = st.text_input("Stream study database", cur["streamlearn_db"])
         if st.form_submit_button("Save settings", type="primary"):
-            settings.save({"broker": broker, "fee": fee / 100, "poll_seconds": int(poll), "sync_git": sync_git,
+            settings.save({"broker": broker, "fee": fee / 100, "max_stop": cap_pct / 100, "poll_seconds": int(poll), "sync_git": sync_git,
                            "sync_minutes": int(sync_min), "webull_app_key": key.strip(),
                            "webull_app_secret": secret.strip(), "webull_account_id": account.strip(),
                            "webull_region": region.strip() or "us", "webull_endpoint": endpoint.strip(),

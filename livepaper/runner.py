@@ -15,6 +15,9 @@ from .core import Exits, PositionManager, SimBroker
 from .store import Store, now_utc
 from .strategies import REGISTRY
 
+DEFAULT_MAX_STOP = 0.10
+CATCH_UP_AFTER = 120          # seconds without a price check before missed candles are replayed
+
 # kept for older imports
 STRATEGIES = {k: (v["signals"], v["checklist"]) for k, v in REGISTRY.items()}
 PRESETS = {k: v["exits"] for k, v in REGISTRY.items()}
@@ -43,13 +46,25 @@ def load_config(path: str | Path) -> dict:
     return cfg
 
 
+def max_stop() -> float:
+    from . import settings
+    return float(settings.get("max_stop") or DEFAULT_MAX_STOP)
+
+
 def exits_for(r: dict) -> Exits:
     base = REGISTRY[r["strategy"]]["exits"]
     stop = r.get("stop")
-    stop = base.stop if stop is None else (stop or None)          # 0 = no stop
+    stop = base.stop if stop is None else stop
+    # safety cap: no trade without a stop, and none wider than the Account tab's maximum
+    stop = min(stop, max_stop()) if stop else max_stop()
     tps = r.get("take_profits")
     tps = [(None if x[0] in (None, "ride") else float(x[0]), float(x[1])) for x in tps] if tps else base.take_profits
     return Exits(stop, tps)
+
+
+def _span(td: pd.Timedelta) -> str:
+    m = int(td.total_seconds() // 60)
+    return f"{m // 1440}d {m % 1440 // 60}h" if m >= 1440 else f"{m // 60}h {m % 60}m" if m >= 60 else f"{m}m"
 
 
 class Runner:
@@ -73,8 +88,54 @@ class Runner:
             return self.feed.price(self.r["symbol"], self.r["asset"])
         return self.feed.price(self.r["symbol"])
 
+    def catch_up(self, now: str) -> None:
+        """The trader was off (laptop asleep / shut down). A stop order resting at the broker
+        is checked in on_tick; with the built-in paper broker, replay the hourly candles that
+        were missed - stop first, then targets - at the prices they would have filled."""
+        st, p = self.pm.state, self.pm.state.position
+        if p is None or st.last_check is None:
+            return
+        since = pd.Timestamp(st.last_check)
+        off = pd.Timestamp(now) - since
+        if off.total_seconds() < CATCH_UP_AFTER:
+            return
+        name = self.r["name"]
+        st.last_check = now                     # once per restart, even if the rest of this poll fails
+        self.store.save_state(name, st)
+        if p.stop_order:
+            self.store.event(name, now, "catch-up", f"trader was off {_span(off)}: checking the broker's stop order")
+            return
+        if not isinstance(self.pm.broker, SimBroker):
+            self.store.event(name, now, "warning", f"⚠️ trader was off {_span(off)} with no stop order at the broker: "
+                                                    "anything missed is acted on at today's price")
+            return
+        try:
+            hourly = self._bars_tf("1h")
+        except Exception:
+            hourly = self._bars()
+        missed = hourly[hourly.index + pd.Timedelta("1h") > since]
+        before = (st.equity, p.targets_hit, p.remaining_qty)
+        mode, self.pm.broker.mode = self.pm.broker.mode, "intended"     # fill at the level, not today's price
+        try:
+            for t, b in missed.iterrows():
+                if self.pm.state.position is None:
+                    break
+                self.pm.on_tick(b.open, b.low, b.high, str(t))
+        finally:
+            self.pm.broker.mode = mode
+        p2 = self.pm.state.position
+        changed = p2 is None or (st.equity, p2.targets_hit, p2.remaining_qty) != before
+        self.store.event(name, now, "catch-up", f"trader was off {_span(off)}: replayed {len(missed)} hourly candles"
+                         + ("" if changed else ", stop and targets not reached"))
+
+    def _bars_tf(self, tf: str) -> pd.DataFrame:
+        if self.r["feed"] == "webull":
+            return self.feed.bars(self.r["symbol"], tf, self.r["asset"])
+        return self.feed.bars(self.r["symbol"], tf)
+
     def step(self) -> None:
         name, now = self.r["name"], now_utc()
+        self.catch_up(now)
         bars = self._bars()
         self.price = self._price()
         ref = bars.close[bars.index <= pd.Timestamp(now) - pd.Timedelta("24h")]
@@ -96,6 +157,8 @@ class Runner:
         else:
             self.pm.retry_pending(self.price, now)
         self.pm.on_tick(self.price, self.price, self.price, now)
+        self.pm.state.last_check = now          # saved every poll, so a restart knows what it missed
+        self.store.save_state(name, self.pm.state)
         if time.time() - self._last_equity_write >= 300:
             self.store.equity(name, now, self.pm.state.equity + self.pm.unrealized(self.price), self.price)
             self._last_equity_write = time.time()

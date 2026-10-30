@@ -66,13 +66,67 @@ class WebullBroker:
             raise RuntimeError(f"no account id in {res.text[:300]}; set WEBULL_ACCOUNT_ID")
         return str(acc)
 
+    def _qty(self, asset: str, qty: float) -> str:
+        return f"{qty:.8f}".rstrip("0").rstrip(".") if asset == "crypto" else str(int(qty))
+
+    @staticmethod
+    def _px(px: float) -> str:
+        return f"{px:.2f}" if px >= 1 else f"{px:.6g}"
+
+    def _detail(self, coid: str):
+        det = self.tc.order_v3.get_order_detail(self.account, coid)
+        if det.status_code != 200:
+            return None, None
+        js = det.json()
+        return str(_find(js, "status", "order_status") or "").upper(), js
+
+    def _as_fill(self, js, coid: str, qty: float, price: float) -> Fill:
+        px = float(_find(js, "filled_price", "avg_filled_price", "avg_price", "filled_avg_price") or price)
+        q = float(_find(js, "filled_quantity", "filled_qty") or qty)
+        return Fill(px, q, abs(px * q) * self.fee, coid)
+
+    # ---- the stop order that rests at Webull (works with the laptop off) ----------
+    def place_stop(self, run: str, side: str, qty: float, stop_price: float) -> str | None:
+        """Good-till-cancelled stop-loss order. Returns its id, or None if Webull refuses it."""
+        symbol, asset = self.assets[run]
+        coid = uuid.uuid4().hex
+        order = {"combo_type": "NORMAL", "client_order_id": coid, "symbol": symbol,
+                 "instrument_type": "CRYPTO" if asset == "crypto" else "EQUITY", "market": "US",
+                 "order_type": "STOP_LOSS", "stop_price": self._px(stop_price), "quantity": self._qty(asset, qty),
+                 "side": side.upper(), "time_in_force": "GTC", "entrust_type": "QTY"}
+        if asset != "crypto":
+            order["support_trading_session"] = "CORE"
+        res = self.tc.order_v3.place_order(self.account, [order])
+        if res.status_code != 200:
+            print(f"[webull] stop order refused ({side} {qty} {symbol} @ {stop_price}): HTTP {res.status_code} "
+                  f"{res.text[:300]}")
+            return None
+        return coid
+
+    def stop_status(self, run: str, coid: str, qty: float, stop_price: float):
+        """A Fill if the stop has filled, 'dead' if cancelled / rejected, else 'open'.
+        qty / stop_price fill in anything Webull's reply leaves out."""
+        status, js = self._detail(coid)
+        if status in FILLED:
+            return self._as_fill(js, coid, qty, stop_price)
+        return "dead" if status in DEAD else "open"
+
+    def cancel_stop(self, run: str, coid: str, qty: float, stop_price: float):
+        """Cancel before we sell ourselves. Returns a Fill if it filled first, else True."""
+        self.tc.order_v3.cancel_order(self.account, coid)
+        for _ in range(5):
+            st = self.stop_status(run, coid, qty, stop_price)
+            if st != "open":
+                return st if isinstance(st, Fill) else True
+            time.sleep(1)
+        return True
+
     def fill(self, run: str, side: str, qty: float, price: float, reason: str) -> Fill | None:
         symbol, asset = self.assets[run]
         coid = uuid.uuid4().hex
         order = {"combo_type": "NORMAL", "client_order_id": coid, "symbol": symbol,
                  "instrument_type": "CRYPTO" if asset == "crypto" else "EQUITY", "market": "US",
-                 "order_type": "MARKET", "quantity": f"{qty:.8f}".rstrip("0").rstrip(".") if asset == "crypto"
-                 else str(int(qty)), "side": side.upper(), "time_in_force": "DAY", "entrust_type": "QTY"}
+                 "order_type": "MARKET", "quantity": self._qty(asset, qty), "side": side.upper(), "time_in_force": "DAY", "entrust_type": "QTY"}
         if asset != "crypto":
             order["support_trading_session"] = "CORE"
         res = self.tc.order_v3.place_order(self.account, [order])
@@ -82,15 +136,11 @@ class WebullBroker:
         deadline = time.time() + self.wait
         while time.time() < deadline:
             time.sleep(2)
-            det = self.tc.order_v3.get_order_detail(self.account, coid)
-            if det.status_code != 200:
+            status, js = self._detail(coid)
+            if status is None:
                 continue
-            js = det.json()
-            status = str(_find(js, "status", "order_status") or "").upper()
             if status in FILLED:
-                px = float(_find(js, "filled_price", "avg_filled_price", "avg_price", "filled_avg_price") or price)
-                q = float(_find(js, "filled_quantity", "filled_qty") or qty)
-                return Fill(px, q, abs(px * q) * self.fee, coid)
+                return self._as_fill(js, coid, qty, price)
             if status in DEAD:
                 print(f"[webull] order {coid} {status}: {str(js)[:300]}")
                 return None

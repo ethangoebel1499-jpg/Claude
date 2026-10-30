@@ -33,6 +33,7 @@ class Position:
     targets_hit: int = 0
     realized_usd: float = 0.0
     fees_usd: float = 0.0
+    stop_order: str | None = None     # id of the stop order resting at the broker (works with the laptop off)
 
 
 @dataclass
@@ -41,6 +42,7 @@ class State:
     position: Position | None = None
     last_bar: str | None = None
     pending_entry: str | None = None   # side waiting for a fill (e.g. stock market closed)
+    last_check: str | None = None      # last time the price was checked (saved every poll)
 
     def to_dict(self) -> dict:
         d = asdict(self)
@@ -49,7 +51,8 @@ class State:
     @classmethod
     def from_dict(cls, d: dict) -> "State":
         pos = Position(**d["position"]) if d.get("position") else None
-        return cls(equity=d["equity"], position=pos, last_bar=d.get("last_bar"), pending_entry=d.get("pending_entry"))
+        return cls(equity=d["equity"], position=pos, last_bar=d.get("last_bar"), pending_entry=d.get("pending_entry"),
+                   last_check=d.get("last_check"))
 
 
 @dataclass
@@ -58,6 +61,9 @@ class Fill:
     qty: float
     fee_usd: float
     order_id: str = ""
+
+
+BACKSTOP = 0.01   # if the broker's stop is still open 1% past the stop price, sell at the market ourselves
 
 
 class PositionManager:
@@ -71,6 +77,8 @@ class PositionManager:
         self.fixed = [t for t in exits.take_profits if t[0] is not None]
         self.has_runner = any(t[0] is None for t in exits.take_profits)
         self.trades: list[dict] = []
+        # brokers that can rest a stop order on their servers (Webull) get one on every entry
+        self.broker_stops = bool(exits.stop) and hasattr(broker, "place_stop")
 
     # ---- helpers -------------------------------------------------------------
     def _dir(self) -> int:
@@ -114,16 +122,74 @@ class PositionManager:
         if self.store:
             self.store.fill(self.name, time, side, "entry", fill)
         self._event(time, "entry", f"{side.upper()} {fmt_qty(fill.qty)} @ {fmt_price(fill.price)}")
+        self._protect(time)
         self._save()
         return True
 
+    # ---- the stop order at the broker -------------------------------------------
+    def _protect(self, time) -> None:
+        """Rest a stop order for everything still open, so the stop works with the laptop off."""
+        p = self.state.position
+        if not self.broker_stops or p is None or p.remaining_qty <= 0:
+            return
+        px = self._price_at(-self.exits.stop)
+        p.stop_order = self.broker.place_stop(self.name, "sell" if p.side == "long" else "buy", p.remaining_qty, px)
+        if p.stop_order:
+            self._event(time, "protect", f"stop order at the broker: {fmt_qty(p.remaining_qty)} @ {fmt_price(px)}")
+        else:
+            self._event(time, "warning", f"⚠️ the broker did not accept a stop order at {fmt_price(px)}: the stop "
+                                          "only works while the trader is running")
+
+    def _unprotect(self, time) -> bool:
+        """Cancel the resting stop before selling ourselves. False if it had already filled
+        (the position is then smaller or closed, and the caller must not sell)."""
+        p = self.state.position
+        if p is None or not p.stop_order:
+            return True
+        res = self.broker.cancel_stop(self.name, p.stop_order, p.remaining_qty, self._price_at(-self.exits.stop))
+        if isinstance(res, Fill):
+            p.stop_order = None
+            self._record(res, time, "stop (at broker)")
+            return False
+        p.stop_order = None
+        return True
+
+    def check_broker_stop(self, time) -> bool:
+        """Did the resting stop fill (maybe while the laptop was off)? Records it. True if it did."""
+        p = self.state.position
+        if p is None or not p.stop_order:
+            return False
+        res = self.broker.stop_status(self.name, p.stop_order, p.remaining_qty, self._price_at(-self.exits.stop))
+        if isinstance(res, Fill):
+            p.stop_order = None
+            self._record(res, time, "stop (at broker)")
+            self._save()
+            return True
+        if res == "dead":                 # cancelled or rejected outside the trader: put it back
+            p.stop_order = None
+            self._event(time, "warning", "⚠️ the stop order at the broker was cancelled - placing it again")
+            self._protect(time)
+            self._save()
+        return False
+
     def close_part(self, qty: float, price: float, time, reason: str) -> bool:
+        if not self._unprotect(time):
+            return True                   # the broker's stop already sold it
         p = self.state.position
         qty = min(qty, p.remaining_qty)
         fill = self.broker.fill(self.name, "sell" if p.side == "long" else "buy", qty, price, reason)
         if fill is None:
             self._event(time, "pending", f"{reason} exit not filled yet (will retry)")
+            self._protect(time)
+            self._save()
             return False
+        self._record(fill, time, reason)
+        self._protect(time)               # resize the stop to what is left
+        self._save()
+        return True
+
+    def _record(self, fill: Fill, time, reason: str) -> None:
+        p = self.state.position
         pnl = self._dir() * (fill.price - p.entry_price) * fill.qty
         p.realized_usd += pnl
         p.fees_usd += fill.fee_usd
@@ -142,7 +208,6 @@ class PositionManager:
                 self.store.trade(trade)
             self._event(time, "exit", f"closed ({reason}) {net:+,.2f} USD")
         self._save()
-        return True
 
     def close_all(self, price: float, time, reason: str) -> bool:
         return self.close_part(self.state.position.remaining_qty, price, time, reason)
@@ -178,8 +243,13 @@ class PositionManager:
         p = self.state.position
         if p is None:
             return
+        if self.check_broker_stop(time):
+            return
+        p = self.state.position
         adverse, favourable = (low, high) if p.side == "long" else (high, low)
         stop = self._stop_move()
+        if p.stop_order and stop is not None:
+            stop -= BACKSTOP              # the broker's order handles the stop; step in only if it hasn't
         if stop is not None and self._move(adverse) <= stop:
             reason = "stop" if stop < 0 else "breakeven" if stop == 0 else "trail stop"
             self.close_all(self._price_at(min(stop, self._move(open_))), time, reason)

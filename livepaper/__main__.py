@@ -4,6 +4,7 @@
   python -m livepaper dashboard [--config live.toml]   open the dashboard in your browser
                                 [--phone]              ...and on your phone (same Wi-Fi)
   python -m livepaper check     [--config live.toml]   test the data feeds / Webull keys, place no orders
+                                [--test-stop]          ...and confirm Webull accepts stop orders
   python -m livepaper sync      [--config live.toml]   push the trade record to the paper-trades branch now
 """
 
@@ -40,6 +41,25 @@ def lan_addresses() -> list[str]:
     return sorted(ips) or ["<this computer's IP>"]
 
 
+def test_stops(runners) -> None:
+    """One tiny buy-stop far above the price per asset type (needs no holdings), then cancel it."""
+    seen = set()
+    for rn in runners:
+        if rn.r["asset"] in seen:
+            continue
+        seen.add(rn.r["asset"])
+        px = rn._price()
+        qty = 1 if rn.r["asset"] == "stock" else round(10 / px, 6) or 1e-6
+        coid = rn.pm.broker.place_stop(rn.r["name"], "buy", qty, px * 1.5)
+        if coid is None:
+            print(f"🔴 {rn.r['asset']}: Webull REFUSED the stop order (reason above). Trades in "
+                  f"{rn.r['asset']} are only protected while the trader runs.")
+            continue
+        rn.pm.broker.cancel_stop(rn.r["name"], coid, qty, px * 1.5)
+        print(f"🟢 {rn.r['asset']}: Webull accepted a stop order ({rn.r['symbol']} @ {price(px * 1.5)}), now "
+              f"cancelled. Trades in {rn.r['asset']} keep their stop with this computer off.")
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(prog="python -m livepaper", description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -48,6 +68,8 @@ def main() -> None:
     ap.add_argument("--phone", action="store_true",
                     help="dashboard: also serve it to your phone / other devices on your Wi-Fi")
     ap.add_argument("--port", type=int, default=8501)
+    ap.add_argument("--test-stop", action="store_true",
+                    help="check: place and cancel a far-away stop order at Webull for each kind of asset")
     a = ap.parse_args()
     if not Path(a.config).exists():
         raise SystemExit(f"{a.config} not found: copy livepaper/live.example.toml to live.toml and edit it")
@@ -85,8 +107,14 @@ def main() -> None:
                 print(f"   raw Webull bar sample: {str(raw)[:400]}")
             print(rn.checklist_fn(bars, -1, label=rn.r["name"]))
             print()
-        if cfg.get("app", {}).get("broker") == "webull" and runners:
-            print(f"Webull paper account found: ...{str(runners[0].pm.broker.account)[-4:]} (no orders placed)")
+        broker = runners[0].pm.broker if runners else None
+        if hasattr(broker, "place_stop"):
+            print(f"Webull paper account found: ...{str(broker.account)[-4:]}")
+            if a.test_stop:
+                test_stops(runners)
+            else:
+                print("No orders placed. Add --test-stop to confirm Webull accepts the stop orders that protect "
+                      "trades while this computer is off.")
 
 
 if __name__ == "__main__":
