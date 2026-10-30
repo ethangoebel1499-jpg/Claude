@@ -189,6 +189,17 @@ def setup_card(c, store, expanded: bool) -> None:
             review_form(c, store)
 
 
+def score_table(df: pd.DataFrame) -> pd.DataFrame:
+    """Text cells so blanks show as '-' (the grid shows NaN as 'None')."""
+    fmt = {"calls": "{:,.0f}", "with levels, closed": "{:,.0f}", "win rate": "{:.0f}%", "avg R": "{:+.2f}",
+           "right after 7d": "{:.0f}%"}
+    out = df.astype(float).copy().astype(object)
+    for col in df.columns:
+        f = fmt.get(col)
+        out[col] = [("-" if pd.isna(v) else f.format(v) if f else pct(v)) for v in df[col].astype(float)]
+    return out
+
+
 def render(db: str) -> None:
     store = Store(db)
     streams, rules, levels = store.table("streams"), store.table("rules"), store.table("levels")
@@ -227,10 +238,7 @@ def render(db: str) -> None:
             st.caption("Setups you punished as extraction mistakes are left out.")
             for name in ("by kind", "by asset", "by direction"):
                 with st.expander(name.capitalize(), expanded=name == "by asset"):
-                    st.dataframe(sc[name].style.format(
-                        {"win rate": lambda x: "-" if pd.isna(x) else f"{x:.0f}%", "avg R": "{:+.2f}",
-                         "right after 7d": lambda x: "-" if pd.isna(x) else f"{x:.0f}%", "avg 7d move": pct},
-                        na_rep="-"), width="stretch")
+                    st.dataframe(score_table(sc[name]), width="stretch")
 
     with t_calls:
         if len(calls):

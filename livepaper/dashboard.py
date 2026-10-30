@@ -150,9 +150,9 @@ def dashboard():
         st.caption("No open trades right now - every run is waiting for its next signal.")
 
     with st.expander("All runs", expanded=True):
-        st.dataframe(pd.DataFrame(rows).style.format({"Price": price, "Equity": money, "Return": pct,
-                                                      "Win rate": lambda v: "-" if v is None or pd.isna(v)
-                                                      else f"{v:.0f}%"}, na_rep="-")
+        table = pd.DataFrame(rows)
+        table["Win rate"] = ["-" if pd.isna(v) else f"{v:.0f}%" for v in table["Win rate"]]   # grid shows NaN as None
+        st.dataframe(table.style.format({"Price": price, "Equity": money, "Return": pct})
                      .map(color, subset=["Return"]), hide_index=True, width="stretch")
 
     st.subheader("Run details")
@@ -321,8 +321,11 @@ with tab_lab:
 with tab_log:
     ev, fills = store.table("events"), store.table("fills")
     with st.expander(f"Events ({len(ev)})", expanded=True):
+        ev["time"] = pd.to_datetime(ev.time, format="ISO8601", utc=True).dt.strftime("%Y-%m-%d %H:%M")
         st.dataframe(ev.iloc[::-1].head(300), hide_index=True, width="stretch")
     with st.expander(f"Fills ({len(fills)})"):
+        if len(fills):
+            fills["time"] = pd.to_datetime(fills.time, format="ISO8601", utc=True).dt.strftime("%Y-%m-%d %H:%M")
         st.dataframe(fills.iloc[::-1].style.format({"price": price, "fee_usd": money}),
                      hide_index=True, width="stretch")
 
