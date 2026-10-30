@@ -135,6 +135,58 @@ def test_dashboard_renders(tmp_path, candles, monkeypatch):
     monkeypatch.setenv("LIVEPAPER_DB", str(tmp_path / "d.db"))
     monkeypatch.setenv("LIVEPAPER_CONFIG", str(cfg))
     at = AppTest.from_file(os.path.join(os.path.dirname(__file__), "..", "livepaper", "dashboard.py"), default_timeout=60)
+    import livepaper.history
+    monkeypatch.setattr(livepaper.history, "history", lambda symbol, asset, tf: candles)
     at.run()
     assert not at.exception
-    assert at.title[0].value.startswith("📈") and len(at.metric) == 4
+    assert at.title[0].value.startswith("📈") and [m.label for m in at.metric][:5] == \
+        ["Total equity", "Open P&L", "Closed P&L", "Open positions", "Win rate"]
+    # Strategy Lab: backtest, then tick "Paper trade this setup"
+    at.button[0].click().run()
+    assert not at.exception and any(m.label == "Strategy return" for m in at.metric)
+    box = next(c for c in at.checkbox if c.label.startswith("📄 Paper trade this setup"))
+    box.check().run()
+    added = [r for r in store.runs() if r["source"] == "dashboard"]
+    assert len(added) == 1 and added[0]["active"] and added[0]["strategy"] == "witcher"
+    assert added[0]["take_profits"] == [[0.12, 0.5], [0.24, 0.5]] and added[0]["stop"] == 0.04
+
+
+def test_runs_added_and_removed_live(tmp_path, candles):
+    """Strategy Lab ticks a run on, the trader starts it; unticking closes its position."""
+    from livepaper.runner import App
+    store = Store(tmp_path / "r.db")
+    feed = FakeFeed(candles, 400)
+    app = App({"app": {"broker": "sim", "fee": 0.0}}, store, feeds={"kraken": feed})
+    run = {"name": "W BTC 4h", "strategy": "witcher", "symbol": "XBTUSD", "asset": "crypto", "timeframe": "4h",
+           "shorts": True, "capital": 10_000.0, "active": 1, "source": "dashboard"}
+    store.upsert_run(run)
+    opened = False
+    for _ in range(600):
+        app.step()
+        feed.i += 1
+        if store.load_state("W BTC 4h").position is not None:
+            opened = True
+            break
+    assert opened and "W BTC 4h" in app.runners
+    assert store.table("quotes").price.iloc[0] > 0
+    store.set_active("W BTC 4h", False)
+    app.step()
+    assert "W BTC 4h" not in app.runners and store.load_state("W BTC 4h").position is None
+    assert store.table("trades").reason.iloc[-1] == "removed from paper trading"
+
+
+def test_orphan_position_closed_on_restart(tmp_path, candles):
+    from livepaper.runner import App
+    store = Store(tmp_path / "o.db")
+    feed = FakeFeed(candles, 400)
+    run = {"name": "W", "strategy": "witcher", "symbol": "X", "asset": "crypto", "timeframe": "4h",
+           "shorts": True, "capital": 10_000.0, "active": 1}
+    store.upsert_run(run)
+    app = App({"app": {"fee": 0.0}}, store, feeds={"kraken": feed})
+    while store.load_state("W") is None or store.load_state("W").position is None:
+        app.step()
+        feed.i += 1
+    store.set_active("W", False)                     # unticked while the trader is off
+    app2 = App({"app": {"fee": 0.0}}, store, feeds={"kraken": feed})
+    app2.step()
+    assert store.load_state("W").position is None and "W" not in app2.runners

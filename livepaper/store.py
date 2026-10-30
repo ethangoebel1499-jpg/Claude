@@ -22,7 +22,13 @@ CREATE TABLE IF NOT EXISTS signals (run TEXT, bar_time TEXT, long_entry INTEGER,
                                     checklist TEXT);
 CREATE TABLE IF NOT EXISTS events (run TEXT, time TEXT, kind TEXT, text TEXT);
 CREATE TABLE IF NOT EXISTS state (run TEXT PRIMARY KEY, json TEXT);
+CREATE TABLE IF NOT EXISTS runs (name TEXT PRIMARY KEY, strategy TEXT, symbol TEXT, asset TEXT, timeframe TEXT,
+                                 feed TEXT, shorts INTEGER, capital REAL, fraction REAL, stop REAL,
+                                 take_profits TEXT, active INTEGER, source TEXT, created TEXT);
+CREATE TABLE IF NOT EXISTS quotes (run TEXT PRIMARY KEY, time TEXT, price REAL, change_24h REAL);
 """
+RUN_FIELDS = ("name", "strategy", "symbol", "asset", "timeframe", "feed", "shorts", "capital", "fraction", "stop",
+              "take_profits", "active", "source", "created")
 
 
 def now_utc() -> str:
@@ -32,7 +38,7 @@ def now_utc() -> str:
 class Store:
     def __init__(self, path: str | Path):
         self.path = str(path)
-        self.db = sqlite3.connect(self.path, check_same_thread=False)
+        self.db = sqlite3.connect(self.path, check_same_thread=False, timeout=30)
         self.db.executescript(SCHEMA)
 
     def _ins(self, table: str, row: dict):
@@ -64,6 +70,40 @@ class Store:
     def load_state(self, run) -> State | None:
         row = self.db.execute("SELECT json FROM state WHERE run = ?", (run,)).fetchone()
         return State.from_dict(json.loads(row[0])) if row else None
+
+    # ---- runs (what the paper trader trades; the dashboard edits these) -------
+    def upsert_run(self, r: dict, *, keep_active: bool = False):
+        row = {k: r.get(k) for k in RUN_FIELDS}
+        row["take_profits"] = json.dumps(r["take_profits"]) if r.get("take_profits") is not None else None
+        row["shorts"], row["active"] = int(bool(r.get("shorts"))), int(r.get("active", 1))
+        row["created"] = row["created"] or now_utc()
+        old = self.db.execute("SELECT active, created FROM runs WHERE name = ?", (r["name"],)).fetchone()
+        if old:
+            row["created"] = old[1]
+            if keep_active:
+                row["active"] = old[0]
+        self.db.execute(f"INSERT OR REPLACE INTO runs ({','.join(RUN_FIELDS)}) VALUES ({','.join('?' * len(RUN_FIELDS))})",
+                        [row[k] for k in RUN_FIELDS])
+        self.db.commit()
+
+    def set_active(self, name: str, active: bool):
+        self.db.execute("UPDATE runs SET active = ? WHERE name = ?", (int(active), name))
+        self.db.commit()
+
+    def runs(self, active_only: bool = False) -> list[dict]:
+        df = pd.read_sql_query("SELECT * FROM runs" + (" WHERE active = 1" if active_only else ""), self.db)
+        out = []
+        for r in df.to_dict("records"):
+            r["take_profits"] = json.loads(r["take_profits"]) if isinstance(r["take_profits"], str) else None
+            r["shorts"], r["active"] = bool(r["shorts"]), bool(r["active"])
+            if r["stop"] is not None and pd.isna(r["stop"]):
+                r["stop"] = None
+            out.append(r)
+        return out
+
+    def quote(self, run, time, price, change_24h):
+        self.db.execute("INSERT OR REPLACE INTO quotes VALUES (?, ?, ?, ?)", (run, str(time), price, change_24h))
+        self.db.commit()
 
     def table(self, name: str, run: str | None = None) -> pd.DataFrame:
         q = f"SELECT * FROM {name}" + (" WHERE run = ?" if run else "")

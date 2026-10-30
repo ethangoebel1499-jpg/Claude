@@ -167,6 +167,22 @@ Edit `live.toml`: which strategy, symbol, timeframe and capital per run.
 
 `python -m livepaper check` tests the data feeds (and Webull keys) without placing orders.
 
+**Dashboard tabs**
+
+- **📊 Dashboard** - every open trade with its current price, the asset's 24h move and move since
+  your entry, and *your trade's* P&L in % and $ (green up / red down); account totals; all runs;
+  and a collapsible detail panel per run (equity curve, closed trades, latest checklist).
+- **🧪 Strategy Lab** - pick any strategy (S1, S3 GRIND original/x3, S4 Witcher original/wide,
+  S8), any crypto (top 20 coins) or stock (any Yahoo ticker; `pip install yfinance`), a timeframe
+  and a period, adjust the exits if you like, and see the backtest against buy & hold (chart,
+  year by year, every trade). Tick **Paper trade this setup** and the trader starts it on its next
+  price check; untick it (here or under *Manage paper-trading runs*) and it closes the open
+  position and stops. Runs live in the database, so no restart is needed.
+- **📜 Activity** - every event and fill.
+
+Stocks in the built-in paper broker use Yahoo prices (about 15 minutes delayed); use the Webull
+feed for real-time.
+
 **Brokers**
 
 - `broker = "sim"` (default): built-in paper broker, fills at the live market price. Works

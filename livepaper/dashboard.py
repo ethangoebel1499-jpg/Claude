@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import os
 import sys
+from datetime import datetime, timezone
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
@@ -12,90 +13,329 @@ import altair as alt  # noqa: E402
 import pandas as pd  # noqa: E402
 import streamlit as st  # noqa: E402
 
-from livepaper.runner import exits_for, load_config  # noqa: E402
+from livepaper.history import CRYPTO, STOCKS, history  # noqa: E402
+from livepaper.runner import exits_for, load_config, normalize_run, seed_runs  # noqa: E402
 from livepaper.store import Store  # noqa: E402
+from livepaper.strategies import NOT_LIVE, REGISTRY  # noqa: E402
+from mcbot.backtest import run_backtest  # noqa: E402
 
 DB = os.environ.get("LIVEPAPER_DB", "livepaper.db")
 CONFIG = os.environ.get("LIVEPAPER_CONFIG", "live.toml")
+TIMEFRAMES = ["1h", "2h", "4h", "6h", "8h", "12h", "1D", "2D"]
+PERIODS = {"Last year": 365, "Last 3 years": 3 * 365, "All history": None}
 
 st.set_page_config(page_title="Paper Trading", page_icon="📈", layout="wide")
 
 
-def exit_text(r: dict) -> str:
-    ex = exits_for(r)
+# ---- helpers ------------------------------------------------------------------
+@st.cache_resource
+def get_store(path: str) -> Store:
+    return Store(path)
+
+
+def money(v) -> str:
+    return "-" if v is None or pd.isna(v) else f"${v:,.2f}" if abs(v) < 1000 else f"${v:,.0f}"
+
+
+def price(v) -> str:
+    """Prices at a sensible precision: 77,169 · 2,226.72 · 95.80 · 0.000012."""
+    if isinstance(v, str):
+        return v
+    if v is None or pd.isna(v):
+        return "-"
+    return f"{v:,.0f}" if abs(v) >= 10_000 else f"{v:,.2f}" if abs(v) >= 1 else f"{v:.6g}"
+
+
+COIN = {pair: coin for coin, pair in CRYPTO.items()}
+
+
+def pct(v) -> str:
+    return "-" if v is None or pd.isna(v) else f"{v:+.2f}%"
+
+
+def color(v):
+    if isinstance(v, (int, float)) and not pd.isna(v):
+        return "color: #16a34a; font-weight: 600" if v > 0 else "color: #dc2626; font-weight: 600" if v < 0 else ""
+    return ""
+
+
+def exit_text(ex) -> str:
     tps = ", ".join(f"{s:.0%} at +{lv:.1%}" if lv is not None else f"{s:.0%} rides" for lv, s in ex.take_profits)
-    return f"stop {ex.stop:.0%}; {tps}" if ex.stop else f"no stop; {tps}"
+    return f"stop {ex.stop:.0%} · {tps}" if ex.stop else f"no stop · {tps}"
 
 
+def parse_tps(text: str) -> list[tuple[float | None, float]]:
+    """'12:50, 24:50' or '2:50, 5:25, ride:25'  ->  [(0.12, 0.5), (0.24, 0.5)]"""
+    out = []
+    for part in text.split(","):
+        move, size = (x.strip() for x in part.split(":"))
+        out.append((None if move.lower() == "ride" else float(move) / 100, float(size) / 100))
+    if abs(sum(s for _, s in out) - 1) > 1e-6:
+        raise ValueError("take-profit sizes must add up to 100")
+    return out
+
+
+def tps_text(tps) -> str:
+    return ", ".join(f"{'ride' if lv is None else f'{lv * 100:g}'}:{s * 100:g}" for lv, s in tps)
+
+
+def trade_view(r: dict, state, quote) -> dict | None:
+    """Live numbers for one open position."""
+    p = state.position if state else None
+    if p is None or quote is None:
+        return None
+    price, d = quote["price"], 1 if p.side == "long" else -1
+    unreal = d * (price - p.entry_price) * p.remaining_qty
+    pnl_usd = p.realized_usd + unreal - p.fees_usd
+    ex = exits_for(r)
+    fixed = [lv for lv, _ in ex.take_profits if lv is not None]
+    nxt = fixed[p.targets_hit] if p.targets_hit < len(fixed) else None
+    return {"Run": r["name"], "Symbol": COIN.get(r["symbol"], r["symbol"]), "Side": "🟢 LONG" if d > 0 else "🔴 SHORT",
+            "Entry": p.entry_price, "Price": price, "24h": quote["change_24h"],
+            "Since entry": (price / p.entry_price - 1) * 100, "My trade %": pnl_usd / (p.entry_price * p.qty) * 100,
+            "My trade $": pnl_usd,
+            "Stop": p.entry_price * (1 - d * ex.stop) if ex.stop else None,
+            "Next target": p.entry_price * (1 + d * nxt) if nxt else ("rides" if p.targets_hit else None),
+            "Left": f"{p.remaining_qty / p.qty:.0%}", "unreal": unreal}
+
+
+# ---- data ---------------------------------------------------------------------
+store = get_store(DB)
+cfg = load_config(CONFIG) if Path(CONFIG).exists() else {"run": [], "app": {}}
+seed_runs(cfg, store)
+
+st.title("📈 Paper Trading")
+tab_dash, tab_lab, tab_log = st.tabs(["📊 Dashboard", "🧪 Strategy Lab", "📜 Activity"])
+
+
+# ---- Dashboard ----------------------------------------------------------------
 @st.fragment(run_every=30)
-def page():
-    store = Store(DB)
-    cfg = load_config(CONFIG) if Path(CONFIG).exists() else {"run": []}
-    runs = {r["name"]: r for r in cfg.get("run", [])}
-    trades, eq, sig, ev = (store.table(t) for t in ("trades", "equity", "signals", "events"))
-    states = {name: store.load_state(name) for name in runs}
-
-    st.title("📈 Paper Trading")
+def dashboard():
+    runs = [normalize_run(r) for r in store.runs(active_only=True)]
+    quotes = store.table("quotes").set_index("run").to_dict("index")
+    trades, eq = store.table("trades"), store.table("equity")
+    states = {r["name"]: store.load_state(r["name"]) for r in runs}
     broker = cfg.get("app", {}).get("broker", "sim")
-    st.caption(f"Broker: **{'Webull paper account' if broker == 'webull' else 'built-in paper broker'}** · "
-               f"database `{DB}` · refreshes every 30 s")
 
-    # ---- summary across runs -------------------------------------------------
-    rows = []
-    for name, r in runs.items():
-        s = states.get(name)
-        e_last = eq[eq.run == name].equity.iloc[-1] if (eq.run == name).any() else (s.equity if s else r["capital"])
-        t = trades[trades.run == name]
-        pos = s.position if s else None
-        rows.append({"Run": name, "Equity": e_last, "Return": (e_last / r["capital"] - 1) * 100,
-                     "Trades": len(t), "Win rate": (t.pnl_usd > 0).mean() * 100 if len(t) else float("nan"),
-                     "Position": f"🟢 {pos.side.upper()} @ {pos.entry_price:,.2f}" if pos else "⚪ flat",
-                     "Last candle": s.last_bar if s else "-"})
-    if rows:
-        total_cap = sum(r["capital"] for r in runs.values())
-        total_eq = sum(x["Equity"] for x in rows)
-        c1, c2, c3, c4 = st.columns(4)
-        c1.metric("Total equity", f"${total_eq:,.0f}", f"{(total_eq / total_cap - 1) * 100:+.1f}%")
-        c2.metric("Closed trades", len(trades))
-        c3.metric("Win rate", f"{(trades.pnl_usd > 0).mean() * 100:.0f}%" if len(trades) else "-")
-        c4.metric("Open positions", sum(1 for s in states.values() if s and s.position))
-        st.dataframe(pd.DataFrame(rows).style.format({"Equity": "${:,.0f}", "Return": "{:+.1f}%",
-                                                      "Win rate": "{:.0f}%"}, na_rep="-"),
+    newest = max((q["time"] for q in quotes.values()), default=None)
+    age = (datetime.now(timezone.utc) - pd.Timestamp(newest)).total_seconds() if newest else None
+    status = ("🟢 trader running" if age is not None and age < 180 else
+              "⚠️ trader not running - start it with `python -m livepaper run`")
+    st.caption(f"{status} · broker: **{'Webull paper account' if broker == 'webull' else 'built-in paper broker'}**"
+               f" · {len(runs)} active runs · refreshes every 30 s")
+    if not runs:
+        st.info("No runs are paper trading yet. Open the **🧪 Strategy Lab** tab, test a strategy, and tick "
+                "**Paper trade this setup**.")
+        return
+
+    opens = [v for r in runs if (v := trade_view(r, states[r["name"]], quotes.get(r["name"])))]
+    rows, total_cap, total_eq = [], 0.0, 0.0
+    for r in runs:
+        s, q, t = states[r["name"]], quotes.get(r["name"]), trades[trades.run == r["name"]]
+        unreal = next((o["unreal"] for o in opens if o["Run"] == r["name"]), 0.0)
+        e = (s.equity if s else r["capital"]) + unreal
+        total_cap, total_eq = total_cap + r["capital"], total_eq + e
+        rows.append({"Run": r["name"], "Strategy": REGISTRY[r["strategy"]]["short"], "Market": COIN.get(r["symbol"], r["symbol"]),
+                     "TF": r["timeframe"], "Price": q["price"] if q else float("nan"), "Equity": e,
+                     "Return": (e / r["capital"] - 1) * 100, "Trades": len(t),
+                     "Win rate": (t.pnl_usd > 0).mean() * 100 if len(t) else float("nan"),
+                     "Position": "🟢 long" if s and s.position and s.position.side == "long" else
+                                 "🔴 short" if s and s.position else "⚪ flat"})
+
+    closed = trades[trades.run.isin([r["name"] for r in runs])]
+    c1, c2, c3, c4, c5 = st.columns(5)
+    c1.metric("Total equity", money(total_eq), pct((total_eq / total_cap - 1) * 100))
+    open_pnl = sum(o["My trade $"] for o in opens)
+    c2.metric("Open P&L", money(open_pnl), delta_color="normal",
+              delta=pct(open_pnl / max(sum(o["Entry"] for o in opens), 1e-9) * 100) if opens else None)
+    c3.metric("Closed P&L", money(closed.pnl_usd.sum()) if len(closed) else "$0")
+    c4.metric("Open positions", len(opens))
+    c5.metric("Win rate", f"{(closed.pnl_usd > 0).mean() * 100:.0f}%" if len(closed) else "-")
+
+    st.subheader("Open trades")
+    if opens:
+        df = pd.DataFrame(opens).drop(columns="unreal")
+        st.dataframe(df.style.format({"Entry": price, "Price": price, "24h": pct, "Since entry": pct,
+                                      "My trade %": pct, "My trade $": money, "Stop": price,
+                                      "Next target": price}, na_rep="-")
+                     .map(color, subset=["24h", "Since entry", "My trade %", "My trade $"]),
                      hide_index=True, width="stretch")
     else:
-        st.info(f"No runs in {CONFIG} yet.")
+        st.caption("No open trades right now - every run is waiting for its next signal.")
 
-    # ---- per run --------------------------------------------------------------
-    if runs:
-        name = st.selectbox("Run", list(runs))
-        r, s = runs[name], states.get(name)
-        st.caption(f"{r['strategy']} · {r['symbol']} {r['timeframe']} · {exit_text(r)} · "
-                   f"shorts {'on' if r['shorts'] else 'off'} · feed {r['feed']}")
-        left, right = st.columns([3, 2])
-        with left:
-            e = eq[eq.run == name]
-            if len(e):
-                ch = alt.Chart(e.assign(time=pd.to_datetime(e.time))).mark_line().encode(
-                    x=alt.X("time:T", title=None), y=alt.Y("equity:Q", title="Equity ($)", scale=alt.Scale(zero=False)),
-                    tooltip=["time:T", alt.Tooltip("equity:Q", format="$,.0f"), alt.Tooltip("price:Q", format=",.2f")])
-                st.altair_chart(ch.properties(height=260), width="stretch")
-            else:
-                st.caption("Equity curve appears after the first few minutes of running.")
-            t = trades[trades.run == name]
-            st.subheader("Closed trades")
-            if len(t):
-                st.dataframe(t.drop(columns=["run"]).iloc[::-1].style.format(
-                    {"entry_price": "{:,.2f}", "exit_price": "{:,.2f}", "qty": "{:g}", "pnl_usd": "{:+,.2f}",
-                     "pnl_pct": "{:+.2f}%"}), hide_index=True, width="stretch")
-            else:
-                st.caption("No closed trades yet.")
-        with right:
-            st.subheader("Latest candle checklist")
-            g = sig[sig.run == name]
-            st.code(g.checklist.iloc[-1] if len(g) else "waiting for the first closed candle", language=None)
-            st.subheader("Activity")
-            st.dataframe(ev[ev.run == name].drop(columns=["run"]).iloc[::-1].head(50),
-                         hide_index=True, width="stretch")
+    with st.expander("All runs", expanded=True):
+        st.dataframe(pd.DataFrame(rows).style.format({"Price": price, "Equity": money, "Return": pct,
+                                                      "Win rate": lambda v: "-" if v is None or pd.isna(v)
+                                                      else f"{v:.0f}%"}, na_rep="-")
+                     .map(color, subset=["Return"]), hide_index=True, width="stretch")
+
+    st.subheader("Run details")
+    for r, row in zip(runs, rows):
+        with st.expander(f"{r['name']} · {pct(row['Return'])} · {row['Position']}"):
+            st.caption(f"{REGISTRY[r['strategy']]['label']} · {r['symbol']} {r['timeframe']} · "
+                       f"{exit_text(exits_for(r))} · shorts {'on' if r['shorts'] else 'off'} · "
+                       f"capital {money(r['capital'])}")
+            left, right = st.columns([3, 2])
+            e = eq[eq.run == r["name"]]
+            with left:
+                if len(e) > 1:
+                    ch = alt.Chart(e.assign(time=pd.to_datetime(e.time, format="ISO8601", utc=True))).mark_line().encode(
+                        x=alt.X("time:T", title=None),
+                        y=alt.Y("equity:Q", title="Equity ($)", scale=alt.Scale(zero=False)),
+                        tooltip=["time:T", alt.Tooltip("equity:Q", format="$,.0f")])
+                    st.altair_chart(ch.properties(height=220), width="stretch")
+                else:
+                    st.caption("Equity curve appears after the trader has run a few minutes.")
+                t = trades[trades.run == r["name"]]
+                if len(t):
+                    st.dataframe(t[["side", "entry_time", "entry_price", "exit_time", "exit_price", "reason",
+                                    "pnl_usd", "pnl_pct"]].iloc[::-1].style.format(
+                        {"entry_price": price, "exit_price": price, "pnl_usd": money, "pnl_pct": pct})
+                        .map(color, subset=["pnl_usd", "pnl_pct"]), hide_index=True, width="stretch")
+            with right:
+                sig = store.table("signals", r["name"])
+                st.code(sig.checklist.iloc[-1] if len(sig) else "waiting for the first closed candle", language=None)
 
 
-page()
+with tab_dash:
+    dashboard()
+
+
+# ---- Strategy Lab ---------------------------------------------------------------
+@st.cache_data(ttl=3600, show_spinner=False)
+def load_history(symbol: str, asset: str, tf: str) -> pd.DataFrame:
+    return history(symbol, asset, tf)
+
+
+@st.cache_data(ttl=3600, show_spinner=False)
+def backtest(strategy, symbol, asset, tf, days, stop, tps, shorts, fee):
+    full = load_history(symbol, asset, tf)
+    sig = REGISTRY[strategy]["signals"](full)
+    start = full.index[-1] - pd.Timedelta(days=days) if days else full.index[min(200, len(full) - 1)]
+    df, s = full[full.index >= start], sig[sig.index >= start]
+    res = run_backtest(df, s, allow_short=shorts, stop_loss=stop, take_profits=list(tps), fee=fee)
+    trades = pd.DataFrame([{"side": t.side, "entry": t.entry_time, "entry price": t.entry_price, "exit": t.exit_time,
+                            "exit price": t.exit_price, "reason": t.reason, "return": t.pnl_pct * 100}
+                           for t in res.trades])
+    bh = df.close / df.close.iloc[0] * res.equity.iloc[0]
+    return res.stats, res.equity, bh, trades
+
+
+def toggle_run(run: dict, key: str):
+    if st.session_state[key]:
+        store.upsert_run({**run, "active": 1, "source": "dashboard"})
+    else:
+        store.set_active(run["name"], False)
+
+
+with tab_lab:
+    st.caption("Backtest any strategy on any crypto or stock, then tick **Paper trade this setup** to trade it "
+               "live in the paper account. Real Kraken / Yahoo candles, signals on closed candles, fills at the "
+               "next open.")
+    keys = list(REGISTRY)
+    c1, c2 = st.columns([3, 2])
+    strategy = c1.selectbox("Strategy", keys, format_func=lambda k: REGISTRY[k]["label"])
+    market = c2.radio("Market", ["Crypto", "Stocks"], horizontal=True)
+    asset = "crypto" if market == "Crypto" else "stock"
+    with st.form("lab_form"):
+        c3, c4, c5 = st.columns([2, 1, 1.4])
+        symbol = c3.selectbox("Coin", list(CRYPTO)) if asset == "crypto" else \
+            c3.text_input("Ticker", "SPY", help="Any Yahoo Finance ticker, e.g. " + ", ".join(STOCKS[:8]))
+        tf = c4.selectbox("Timeframe", TIMEFRAMES, index=2)
+        period = c5.selectbox("Period", list(PERIODS), index=1)
+        base = REGISTRY[strategy]["exits"]
+        with st.expander("Exits & options"):
+            e1, e2, e3, e4 = st.columns([1, 2, 1, 1])
+            stop_pct = e1.number_input("Stop %", 0.0, 50.0, (base.stop or 0) * 100, 0.5,
+                                       help="0 = no stop. Defaults to the strategy's tested setting.")
+            tps_in = e2.text_input("Take profits (move % : size %)", tps_text(base.take_profits),
+                                   help="e.g. 12:50, 24:50  or  2:50, 5:25, ride:25 (ride = runner)")
+            fee_pct = e3.number_input("Fee % per side", 0.0, 1.0, 0.10, 0.01)
+            capital = e4.number_input("Paper capital $", 100.0, 1e7, 10_000.0, 1000.0)
+            long_only = REGISTRY[strategy].get("long_only", False)
+            shorts = st.checkbox("Allow shorts", value=False, disabled=long_only,
+                                 help="Spot crypto can't be shorted in a real account; stocks can.")
+        st.caption(REGISTRY[strategy]["note"])
+        go = st.form_submit_button("Run backtest", type="primary")
+
+    if go:
+        try:
+            tps = tuple(parse_tps(tps_in))
+            with st.spinner("Loading candles and backtesting..."):
+                out = backtest(strategy, symbol.upper(), asset, tf, PERIODS[period], stop_pct / 100 or None, tps,
+                               shorts and not long_only, fee_pct / 100)
+            st.session_state["lab_result"] = {"strategy": strategy, "symbol": symbol.upper(), "asset": asset, "tf": tf,
+                                       "period": period, "stop": stop_pct / 100, "tps": tps,
+                                       "shorts": shorts and not long_only, "capital": capital, "out": out}
+        except Exception as e:
+            st.error(f"Backtest failed: {e}")
+
+    lab = st.session_state.get("lab_result")
+    if lab:
+        stats, equity, bh, trades = lab["out"]
+        spec = REGISTRY[lab["strategy"]]
+        st.subheader(f"{spec['label']} · {lab['symbol']} {lab['tf']} · {lab['period'].lower()}")
+        m = st.columns(6)
+        m[0].metric("Strategy return", pct(stats["total_return_pct"]))
+        m[1].metric("Buy & hold", pct(stats["buy_hold_return_pct"]))
+        m[2].metric("Trades", stats["trades"])
+        m[3].metric("Win rate", f"{stats['win_rate_pct']:.0f}%")
+        m[4].metric("Max drawdown", f"{stats['max_drawdown_pct']:.1f}%")
+        m[5].metric("Profit factor", f"{stats['profit_factor']:.2f}")
+        verdict = "🟢 beat buy & hold" if stats["total_return_pct"] > stats["buy_hold_return_pct"] else \
+            "🟡 made money but trailed buy & hold" if stats["total_return_pct"] > 0 else "🔴 lost money"
+        st.caption(f"{verdict} over this period. A good backtest is a reason to paper trade, not proof.")
+        curve = pd.concat([pd.DataFrame({"time": equity.index, "value": equity.values, "line": "Strategy"}),
+                           pd.DataFrame({"time": bh.index, "value": bh.values, "line": "Buy & hold"})])
+        ch = alt.Chart(curve).mark_line().encode(
+            x=alt.X("time:T", title=None), y=alt.Y("value:Q", title="Account ($)", scale=alt.Scale(zero=False)),
+            color=alt.Color("line:N", title=None, scale=alt.Scale(domain=["Strategy", "Buy & hold"],
+                                                                range=["#2563eb", "#9ca3af"])),
+            tooltip=["line:N", "time:T", alt.Tooltip("value:Q", format="$,.0f")])
+        st.altair_chart(ch.properties(height=300), width="stretch")
+        with st.expander("Year by year"):
+            yearly = pd.DataFrame({"Strategy": equity.resample("YE").last().pct_change().fillna(
+                equity.resample("YE").last().iloc[0] / equity.iloc[0] - 1) * 100,
+                                   "Buy & hold": bh.resample("YE").last().pct_change().fillna(
+                                       bh.resample("YE").last().iloc[0] / bh.iloc[0] - 1) * 100})
+            yearly.index = pd.Index(yearly.index.year, name="Year")
+            st.dataframe(yearly.style.format(pct).map(color), width="stretch")
+        with st.expander(f"Trades ({len(trades)})"):
+            if len(trades):
+                st.dataframe(trades.iloc[::-1].style.format({"entry price": price, "exit price": price,
+                                                             "return": pct}).map(color, subset=["return"]),
+                             hide_index=True, width="stretch")
+
+        run = {"name": f"{spec['short']} {lab['symbol']} {lab['tf']}", "strategy": lab["strategy"],
+               "symbol": CRYPTO.get(lab["symbol"], lab["symbol"]), "asset": lab["asset"], "timeframe": lab["tf"],
+               "shorts": lab["shorts"], "capital": lab["capital"], "fraction": 1.0,
+               "stop": lab["stop"], "take_profits": [list(t) for t in lab["tps"]]}
+        active = {r["name"] for r in store.runs(active_only=True)}
+        key = f"pt::{run['name']}"
+        st.checkbox(f"📄 Paper trade this setup as **{run['name']}** ({money(lab['capital'])} paper capital)",
+                    value=run["name"] in active, key=key, on_change=toggle_run, args=(run, key))
+        st.caption("Takes effect on the trader's next price check. Unticking closes any open paper position.")
+
+    with st.expander("Manage paper-trading runs"):
+        all_runs = store.runs()
+        if not all_runs:
+            st.caption("None yet.")
+        for r in all_runs:
+            key = f"mg::{r['name']}"
+            st.checkbox(f"{r['name']} · {REGISTRY.get(r['strategy'], {}).get('label', r['strategy'])} · "
+                        f"{r['symbol']} {r['timeframe']} · from {r['source']}", value=r["active"], key=key,
+                        on_change=lambda name=r["name"], k=key: store.set_active(name, st.session_state[k]))
+
+    with st.expander("Strategies that can't be paper traded"):
+        for name, why in NOT_LIVE.items():
+            st.markdown(f"- **{name}** - {why}")
+
+
+# ---- Activity -------------------------------------------------------------------
+with tab_log:
+    ev, fills = store.table("events"), store.table("fills")
+    with st.expander(f"Events ({len(ev)})", expanded=True):
+        st.dataframe(ev.iloc[::-1].head(300), hide_index=True, width="stretch")
+    with st.expander(f"Fills ({len(fills)})"):
+        st.dataframe(fills.iloc[::-1].style.format({"price": price, "fee_usd": money}),
+                     hide_index=True, width="stretch")

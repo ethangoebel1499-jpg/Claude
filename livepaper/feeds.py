@@ -136,3 +136,16 @@ def parse_price(js) -> float:
         if key in r and r[key] not in (None, ""):
             return float(r[key])
     raise RuntimeError(f"no price in Webull response: {str(js)[:300]}")
+
+
+class YahooFeed:
+    """US stocks from Yahoo Finance (pip install yfinance). Quotes are delayed ~15 minutes
+    for most exchanges - fine for 1h+ candles; use Webull for real-time."""
+
+    def bars(self, symbol: str, timeframe: str) -> pd.DataFrame:
+        from .history import stock
+        return closed_only(stock(symbol, timeframe), min(TF_MINUTES[timeframe], 60 * 24))
+
+    def price(self, symbol: str) -> float:
+        import yfinance as yf
+        return float(yf.Ticker(symbol).fast_info["last_price"])
