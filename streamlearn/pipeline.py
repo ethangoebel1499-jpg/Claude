@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 import re
+import shutil
+import subprocess
 from datetime import datetime, timezone
 from pathlib import Path
 from zoneinfo import ZoneInfo
@@ -10,7 +12,8 @@ from zoneinfo import ZoneInfo
 import pandas as pd
 
 from . import transcripts
-from .extract import backend as make_backend, mmss
+from .extract import backend as make_backend, mmss, with_examples
+from .learning import examples
 from .store import Store
 
 FILENAME = re.compile(r"^(\d{4}-\d{2}-\d{2})[ _T](\d{2})[-:h]?(\d{2})[ _-]*(.*)$")
@@ -40,10 +43,22 @@ def _clean_num(x):
         return None
 
 
+def grab_frame(media: Path, t: int, out: Path) -> bool:
+    """Save the video frame at t seconds (his chart when he made the call). Needs ffmpeg."""
+    if not shutil.which("ffmpeg") or media.suffix.lower() not in {".mp4", ".mkv", ".webm", ".mov"}:
+        return False
+    out.parent.mkdir(parents=True, exist_ok=True)
+    r = subprocess.run(["ffmpeg", "-loglevel", "error", "-y", "-ss", str(t), "-i", str(media), "-frames:v", "1",
+                        "-q:v", "3", str(out)], capture_output=True)
+    return r.returncode == 0 and out.exists()
+
+
 def add_stream(store: Store, path: str | Path, start: pd.Timestamp, title: str, cfg: dict,
-               llm=None, reextract: bool = False, log=print) -> int:
+               llm=None, reextract: bool = False, log=print, url: str | None = None) -> int:
     path = Path(path)
     sid = store.find_stream(title, str(start))
+    if sid and url:
+        store.set_url(sid, url)
     if sid and not reextract:
         log(f"already added: {title} ({start}); use --reextract to redo")
         return sid
@@ -53,15 +68,18 @@ def add_stream(store: Store, path: str | Path, start: pd.Timestamp, title: str, 
                                                     (sid,)).fetchall()]
     else:
         segs = transcripts.load(path, cfg.get("whisper_model", "small"))
-        sid = store.add_stream(title, str(start), str(path), segs, datetime.now(timezone.utc).isoformat())
+        sid = store.add_stream(title, str(start), str(path), segs, datetime.now(timezone.utc).isoformat(), url)
     llm = llm or make_backend(cfg)
     parts = transcripts.chunks(segs, cfg.get("chunk_minutes", 8), cfg.get("chunk_overlap", 1))
     log(f"{title}: {len(segs)} lines, {segs[-1][0] // 60} min, {len(parts)} chunks -> extracting with "
         f"{cfg.get('backend', 'ollama')}")
+    system = with_examples(examples(store))
+    frames = Path(cfg.get("frames", "streamlearn_frames"))
+    end_of_stream = segs[-1][0] if segs else 0
     seen_calls, seen_rules, n_calls, n_rules, n_levels, failed = [], set(), 0, 0, 0, 0
     for i, (_, _, body) in enumerate(parts, 1):
         try:
-            res = llm.extract(body, title, str(start.date()))
+            res = llm.extract(body, title, str(start.date()), system=system)
         except Exception as e:
             log(f"  chunk {i}/{len(parts)} failed: {e}")
             failed += 1
@@ -76,11 +94,19 @@ def add_stream(store: Store, path: str | Path, start: pd.Timestamp, title: str, 
             if any(k == key and abs(t - kt) <= 180 for k, kt in seen_calls):
                 continue                     # same call caught by two overlapping chunks
             seen_calls.append((key, t))
-            store.add_call(sid, {"t": t, "said_at": str(start + pd.Timedelta(seconds=t)), "asset": asset,
-                                 "direction": c["direction"], "kind": c.get("kind", "idea"),
-                                 "timeframe": c.get("timeframe", ""), "entry": key[2], "stop": key[3],
-                                 "targets": targets, "conditions": c.get("conditions", []),
-                                 "quote": c.get("quote", "")})
+            # the stretch of stream that covers this setup (with a little lead-in / run-out)
+            t0 = mmss(c.get("setup_start", "")) or max(t - 60, 0)
+            t1 = mmss(c.get("setup_end", "")) or t + 120
+            t0, t1 = max(min(t0, t) - 5, 0), min(max(t1, t) + 10, end_of_stream + 30)
+            call_id = store.add_call(sid, {"t": t, "said_at": str(start + pd.Timedelta(seconds=t)), "asset": asset,
+                                           "direction": c["direction"], "kind": c.get("kind", "idea"),
+                                           "timeframe": c.get("timeframe", ""), "entry": key[2], "stop": key[3],
+                                           "targets": targets, "conditions": c.get("conditions", []),
+                                           "quote": c.get("quote", ""), "summary": c.get("summary", ""),
+                                           "t_start": t0, "t_end": t1})
+            frame = frames / f"call_{call_id}.jpg"
+            if grab_frame(path, t, frame):
+                store.set_frame(call_id, str(frame))
             n_calls += 1
         for r in res.get("rules", []):
             norm = re.sub(r"\W+", " ", r.get("rule", "").lower()).strip()

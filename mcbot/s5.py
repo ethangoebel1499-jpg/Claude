@@ -24,6 +24,7 @@ from .backtest import Result, run_level_backtest
 from .data import resample
 from .divergence import recent, waves
 from .indicators import money_flow, sr_levels, wavetrend
+from .fmt import price
 
 NEAR = 0.005
 LEVEL_BARS = 60        # price was at the level within the last hour
@@ -103,7 +104,7 @@ def backtest(m1: pd.DataFrame, fr: pd.DataFrame, *, allow_short: bool = True, fe
 def checklist(m1: pd.DataFrame, bar: int = -1, label: str = "S5 - Levels + MTF divergence scalp") -> str:
     fr = signals(m1)
     r = fr.iloc[bar]
-    lines = [f"[{label}] Checklist for candle {m1.index[bar]:%Y-%m-%d %H:%M} UTC (close {m1['close'].iloc[bar]:,.2f})"]
+    lines = [f"[{label}] Checklist for candle {m1.index[bar]:%Y-%m-%d %H:%M} UTC (close {price(m1['close'].iloc[bar])})"]
     for side, sgn, at, ltf, go in (("LONG", 1, r.at_support, r.ltf_bull, r.long_entry),
                                    ("SHORT", -1, r.at_resist, r.ltf_bear, r.short_entry)):
         word = "bullish" if sgn > 0 else "bearish"

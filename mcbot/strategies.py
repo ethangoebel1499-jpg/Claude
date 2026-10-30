@@ -10,6 +10,7 @@ act on them at the next bar's open.
 """
 
 from __future__ import annotations
+from .fmt import price
 
 import pandas as pd
 
@@ -117,7 +118,7 @@ def checklist(mc: pd.DataFrame, bar: int = -1) -> str:
     real = mc.attrs.get("real_dates")
     ts = real[bar] if real is not None else mc.index[bar]
     lines = [f"[{strategy_label('S1')}] Checklist for candle closed {ts:%Y-%m-%d %H:%M} UTC "
-             f"(close {mc['real_close'].iloc[bar]:,.2f})"]
+             f"(close {price(mc['real_close'].iloc[bar])})"]
     for side, cond, labels in (("LONG", long_c, LONG_LABELS), ("SHORT", short_c, SHORT_LABELS)):
         row = cond.iloc[bar]
         go = bool(row.all())
@@ -132,7 +133,7 @@ def checklist(mc: pd.DataFrame, bar: int = -1) -> str:
 
 def _exit_plan(mc: pd.DataFrame, bar: int, side: str) -> list[str]:
     lv = topdown_exit_levels(mc).iloc[bar]
-    fmt = (lambda x: f"{x:,.2f}" if pd.notna(x) else "none (no level)")
+    fmt = (lambda x: f"{price(x)}" if pd.notna(x) else "none (no level)")
     trail = "under" if side == "long" else "above"
     return ["  Exit plan (from the video):",
             f"    Stop      {fmt(lv[f'{side}_stop'])}",

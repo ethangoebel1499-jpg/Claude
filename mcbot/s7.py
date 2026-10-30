@@ -25,6 +25,7 @@ from .backtest import Result, run_level_backtest
 from .data import resample
 from .divergence import recent, waves
 from .indicators import OS_LEVEL, money_flow, sr_levels, wavetrend
+from .fmt import price
 
 NEAR = 0.005          # "areas, not exact levels": within 0.5%
 LEVEL_BARS = 10       # price touched the level in the last 10 x 24m (4 hours)
@@ -109,7 +110,7 @@ def checklist(m12: pd.DataFrame, bar: int = -1, label: str = "S7 - Range levels 
     fr = signals(m12)
     r = fr.iloc[bar]
     ts = m12.index[bar] + pd.Timedelta("12min")
-    lines = [f"[{label}] Checklist for candle closed {ts:%Y-%m-%d %H:%M} UTC (close {m12['close'].iloc[bar]:,.2f})"]
+    lines = [f"[{label}] Checklist for candle closed {ts:%Y-%m-%d %H:%M} UTC (close {price(m12['close'].iloc[bar])})"]
     for side, conds, go in (
             ("LONG", [(r.at_support, "Price came to a range low / support (4h levels)"),
                       (r.bull24, "24m: two big green dots with a bullish divergence"),

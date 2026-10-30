@@ -1,6 +1,6 @@
 """streamlearn - study livestreams: extract calls and rules, check the calls, build a playbook.
 
-  python -m streamlearn add <file> --start "2026-10-28 20:00" [--title "..."] [--reextract]
+  python -m streamlearn add <file> --start "2026-10-28 20:00" [--title "..."] [--url <YouTube link>] [--reextract]
   python -m streamlearn watch <folder>     process each new file dropped in the folder
                                            (name it "2026-10-28 2000 Title.txt", time in your timezone)
   python -m streamlearn verify             check every call against real prices
@@ -34,10 +34,20 @@ from streamlearn.verify import verify_all  # noqa: E402
 
 
 def load_cfg(path: str) -> dict:
+    """streamlearn.toml, overridden by what was saved in the dashboard's Account tab."""
+    from livepaper import settings
+    cfg = {}
     if Path(path).exists():
         with open(path, "rb") as f:
-            return tomllib.load(f)
-    return {}
+            cfg = tomllib.load(f)
+    saved = settings.saved()
+    for ours, theirs in (("stream_backend", "backend"), ("ollama_model", "ollama_model"), ("ollama_url", "ollama_url"),
+                         ("timezone", "timezone"), ("streamlearn_db", "db")):
+        if saved.get(ours):
+            cfg[theirs] = saved[ours]
+    if settings.get("anthropic_api_key"):
+        cfg["anthropic_api_key"] = settings.get("anthropic_api_key")
+    return cfg
 
 
 def write_reports(store: Store, out: Path) -> tuple[str, str]:
@@ -58,6 +68,7 @@ def main() -> None:
     ap.add_argument("--start", help='when the stream started, e.g. "2026-10-28 20:00" (your timezone)')
     ap.add_argument("--title")
     ap.add_argument("--reextract", action="store_true")
+    ap.add_argument("--url", help="the stream's YouTube link, so each setup can play its part of the stream")
     ap.add_argument("--config", default="streamlearn.toml")
     a = ap.parse_args()
     cfg = load_cfg(a.config)
@@ -66,7 +77,7 @@ def main() -> None:
     out = Path(cfg.get("reports", "streamlearn_reports"))
 
     if a.command == "dashboard":
-        env = {**os.environ, "STREAMLEARN_DB": db}
+        env = {**os.environ, "STREAMLEARN_DB": db, "STREAMLEARN_STANDALONE": "1"}
         raise SystemExit(subprocess.call([sys.executable, "-m", "streamlit", "run", str(HERE / "dashboard.py")], env=env))
     store = Store(db)
 
@@ -82,7 +93,7 @@ def main() -> None:
         else:
             raise SystemExit('give --start "YYYY-MM-DD HH:MM" (or name the file "2026-10-28 2000 Title.txt")')
         title = a.title or (guess[1] if guess else p.stem)
-        add_stream(store, p, start, title, cfg, reextract=a.reextract)
+        add_stream(store, p, start, title, cfg, reextract=a.reextract, url=a.url)
         verify_all(store, only_unchecked=True)
         write_reports(store, out)
         print(f"done -> {out}/playbook.md, {out}/scorecard.md")

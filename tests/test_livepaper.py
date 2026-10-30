@@ -133,6 +133,10 @@ def test_dashboard_renders(tmp_path, candles, monkeypatch):
         runners[0].step()
         feed.i += 1
     monkeypatch.setenv("LIVEPAPER_DB", str(tmp_path / "d.db"))
+    from livepaper import settings
+    monkeypatch.setattr(settings, "PATH", tmp_path / "local_settings.json")
+    monkeypatch.setenv("LOCAL_SETTINGS", str(tmp_path / "local_settings.json"))
+    settings.save({"streamlearn_db": str(tmp_path / "streams.db")})
     monkeypatch.setenv("LIVEPAPER_CONFIG", str(cfg))
     at = AppTest.from_file(os.path.join(os.path.dirname(__file__), "..", "livepaper", "dashboard.py"), default_timeout=60)
     import livepaper.history
@@ -190,3 +194,23 @@ def test_orphan_position_closed_on_restart(tmp_path, candles):
     app2 = App({"app": {"fee": 0.0}}, store, feeds={"kraken": feed})
     app2.step()
     assert store.load_state("W").position is None and "W" not in app2.runners
+
+
+
+def test_prices_never_use_exponents():
+    from mcbot.fmt import money, price
+    for v in (77168.7, 2226.72, 0.5432, 0.0000123456, 1.234e-08, 123456789.123, 3e-12):
+        assert "e" not in price(v) and "e" not in money(v)
+    assert price(77168.7) == "77,168.70" and price(0.0000123456) == "0.00001235" and money(-0.0042) == "-$0.0042"
+
+
+def test_account_settings_round_trip(tmp_path, monkeypatch):
+    from livepaper import settings
+    monkeypatch.setattr(settings, "PATH", tmp_path / "local_settings.json")
+    monkeypatch.delenv("WEBULL_APP_KEY", raising=False)
+    assert settings.get("broker") == "sim" and settings.saved() == {}
+    settings.save({"broker": "webull", "webull_app_key": "abcd1234"})
+    assert settings.get("broker") == "webull" and settings.get("webull_app_key") == "abcd1234"
+    assert settings.mask("abcd1234").endswith("1234")
+    monkeypatch.setenv("WEBULL_APP_KEY", "fromenv")
+    assert settings.get("webull_app_key") == "fromenv"

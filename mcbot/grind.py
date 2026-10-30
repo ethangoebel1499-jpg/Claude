@@ -23,6 +23,7 @@ import pandas as pd
 
 from .indicators import heikin_ashi
 from .witcher import _bars_since, _psar, _rma
+from .fmt import price
 
 STOP = 0.09
 TAKE_PROFITS = [(0.017, 0.33), (0.023, 0.66), (0.034, 0.01)]
@@ -187,7 +188,7 @@ def grind_checklist(df: pd.DataFrame, bar: int = -1, label: str = "S3 - GRIND BT
     long_c, short_c, l_scalp, s_scalp = grind_conditions(df)
     real = df.attrs.get("real_dates")
     ts = real[bar] if real is not None else df.index[bar]
-    lines = [f"[{label}] Checklist for candle closed {ts:%Y-%m-%d %H:%M} UTC (close {df['close'].iloc[bar]:,.2f})"]
+    lines = [f"[{label}] Checklist for candle closed {ts:%Y-%m-%d %H:%M} UTC (close {price(df['close'].iloc[bar])})"]
     for side, cond, scalp, labels in (("LONG", long_c, l_scalp, LONG_LABELS),
                                       ("SHORT", short_c, s_scalp, SHORT_LABELS)):
         row = cond.iloc[bar]
@@ -200,7 +201,7 @@ def grind_checklist(df: pd.DataFrame, bar: int = -1, label: str = "S3 - GRIND BT
             d = 1 if side == "LONG" else -1
             px = df["close"].iloc[bar]
             lines += ["  Exit plan (from the script):",
-                      f"    TP1 {px * (1 + d * 0.017):,.2f} (+1.7%, 33%)   TP2 {px * (1 + d * 0.023):,.2f} "
-                      f"(+2.3%, 66%)   TP3 {px * (1 + d * 0.034):,.2f} (+3.4%, rest)",
-                      f"    Stop {px * (1 - d * STOP):,.2f} (9%)   An opposite signal reverses the position"]
+                      f"    TP1 {price(px * (1 + d * 0.017))} (+1.7%, 33%)   TP2 {price(px * (1 + d * 0.023))} "
+                      f"(+2.3%, 66%)   TP3 {price(px * (1 + d * 0.034))} (+3.4%, rest)",
+                      f"    Stop {price(px * (1 - d * STOP))} (9%)   An opposite signal reverses the position"]
     return "\n".join(lines)

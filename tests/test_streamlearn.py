@@ -16,10 +16,13 @@ FIX = Path(__file__).parent / "fixtures" / "stream_sample.txt"
 
 class FakeLLM:
     """Stands in for Ollama / Claude: returns what a good model would extract."""
-    def extract(self, chunk, title, date):
+    def extract(self, chunk, title, date, system=None):
+        self.system = system
         out = {"calls": [], "rules": [], "levels": []}
         if "sixty four thousand" in chunk:
-            out["calls"].append({"time": "[1:06]", "asset": "btc", "direction": "long", "kind": "entered",
+            out["calls"].append({"time": "[1:06]", "setup_start": "0:09", "setup_end": "2:05",
+                                 "summary": "Long BTC from 64,200 with a stop under 62,000, targeting 67,000.",
+                                 "asset": "btc", "direction": "long", "kind": "entered",
                                  "timeframe": "4h", "entry": 64200, "stop": 62000, "targets": [67000],
                                  "conditions": [], "quote": "i'm long bitcoin from sixty four thousand two hundred"})
             out["levels"].append({"time": "1:13", "asset": "BTC", "price": 62000, "kind": "support"})
@@ -172,3 +175,57 @@ def test_claude_backend_request():
     assert kw["betas"] == ["server-side-fallback-2026-07-01"]
     assert kw["output_config"]["format"] == {"type": "json_schema", "schema": extract.SCHEMA}
     assert "thinking" not in kw and "temperature" not in kw
+
+
+
+def test_setup_span_review_and_learning(tmp_path):
+    from streamlearn.learning import accuracy, examples
+    store = Store(tmp_path / "r.db")
+    llm = FakeLLM()
+    start = parse_start("2026-08-20 16:00", "UTC")
+    add_stream(store, FIX, start, "S", {}, llm=llm, log=lambda *a: None, url="https://youtu.be/abc")
+    calls = store.calls_with_streams()
+    btc = calls[calls.asset == "BTC"].iloc[0]
+    assert (btc.t_start, btc.t_end) == (4, 135) and btc.summary.startswith("Long BTC") and btc.url == "https://youtu.be/abc"
+    assert "Feedback from the reviewer" not in llm.system           # nothing reviewed yet
+    eth = calls[calls.asset == "ETH"].iloc[0]
+    store.review(int(btc.id), "correct", "good", {"stop": 61500.0}, "2026-10-30T00:00:00")
+    store.review(int(eth.id), "wrong", "he only said it looks weak, no trade", None, "2026-10-30T00:01:00")
+    assert store.calls_with_streams().set_index("id").loc[int(btc.id), "stop"] == 61500.0
+    assert accuracy(store) == (1, 1)
+    ex = examples(store)
+    assert "CORRECT" in ex and "WRONG" in ex and "no trade" in ex and "i'm long bitcoin" in ex
+    add_stream(store, FIX, start, "S", {}, llm=llm, log=lambda *a: None, reextract=True)
+    assert "WRONG, do not repeat" in llm.system                       # verdicts reach the next extraction
+    assert accuracy(store) == (1, 1)                                  # snapshots survive re-extraction
+
+
+def test_grab_frame_from_video(tmp_path):
+    import shutil
+    from streamlearn.pipeline import grab_frame
+    if not shutil.which("ffmpeg"):
+        pytest.skip("ffmpeg not installed")
+    video = tmp_path / "s.mp4"
+    subprocess.run(["ffmpeg", "-loglevel", "error", "-f", "lavfi", "-i", "testsrc=duration=5:size=320x240:rate=5",
+                    str(video)], check=True)
+    assert grab_frame(video, 3, tmp_path / "f.jpg") and (tmp_path / "f.jpg").stat().st_size > 0
+    assert not grab_frame(tmp_path / "x.txt", 3, tmp_path / "g.jpg")
+
+
+def test_review_tab_awards(tmp_path, monkeypatch):
+    from streamlit.testing.v1 import AppTest
+    from streamlearn import verify
+    store = Store(tmp_path / "v.db")
+    add_stream(store, FIX, parse_start("2026-08-20 16:00", "UTC"), "S", {}, llm=FakeLLM(), log=lambda *a: None)
+    monkeypatch.setattr(verify.Candles, "_api", lambda self, p, since: (_ for _ in ()).throw(RuntimeError("offline")))
+    verify.verify_all(store)
+    monkeypatch.setenv("STREAMLEARN_DB", str(tmp_path / "v.db"))
+    monkeypatch.setenv("STREAMLEARN_STANDALONE", "1")
+    at = AppTest.from_file(str(Path(__file__).parent.parent / "streamlearn" / "dashboard.py"), default_timeout=60)
+    at.run()
+    assert not at.exception
+    assert any("The setup:" in m.value for m in at.markdown)
+    assert all("e+" not in m.value and "e-0" not in m.value for m in at.markdown)   # full prices
+    award = next(b for b in at.button if "award" in b.label)
+    award.click().run()
+    assert not at.exception and store.table("reviews").verdict.tolist() == ["correct"]

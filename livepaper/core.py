@@ -14,6 +14,8 @@ from dataclasses import asdict, dataclass
 
 import pandas as pd
 
+from mcbot.fmt import price as fmt_price, qty as fmt_qty
+
 
 @dataclass
 class Exits:
@@ -111,7 +113,7 @@ class PositionManager:
         self.state.position = Position(side, str(time), fill.price, fill.qty, fill.qty, fees_usd=fill.fee_usd)
         if self.store:
             self.store.fill(self.name, time, side, "entry", fill)
-        self._event(time, "entry", f"{side.upper()} {fill.qty:g} @ {fill.price:,.4f}")
+        self._event(time, "entry", f"{side.upper()} {fmt_qty(fill.qty)} @ {fmt_price(fill.price)}")
         self._save()
         return True
 

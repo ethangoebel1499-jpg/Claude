@@ -22,6 +22,7 @@ import numpy as np
 import pandas as pd
 
 from .indicators import heikin_ashi
+from .fmt import price
 
 TAKE_PROFIT = 0.011
 STOP_LONG = 0.082
@@ -252,7 +253,7 @@ def witcher_checklist(df: pd.DataFrame, bar: int = -1, label: str = "S4 - The Wi
     sig = witcher_signals(df)
     real = df.attrs.get("real_dates")
     ts = real[bar] if real is not None else df.index[bar]
-    lines = [f"[{label}] Checklist for candle closed {ts:%Y-%m-%d %H:%M} UTC (close {df['close'].iloc[bar]:,.2f})"]
+    lines = [f"[{label}] Checklist for candle closed {ts:%Y-%m-%d %H:%M} UTC (close {price(df['close'].iloc[bar])})"]
     for side, cond, scalp, labels, key in (("LONG", long_c, l_scalp, LONG_LABELS, "long_entry"),
                                            ("SHORT", short_c, s_scalp, SHORT_LABELS, "short_entry")):
         row = cond.iloc[bar]
@@ -266,7 +267,7 @@ def witcher_checklist(df: pd.DataFrame, bar: int = -1, label: str = "S4 - The Wi
             d = 1 if side == "LONG" else -1
             px = df["close"].iloc[bar]
             lines += ["  Exit plan (from the script):",
-                      f"    Take profit {px * (1 + d * TAKE_PROFIT):,.2f}  (+1.1%)",
-                      f"    Stop        {px * (1 - d * stop):,.2f}  ({stop * 100:.1f}%)",
+                      f"    Take profit {price(px * (1 + d * TAKE_PROFIT))}  (+1.1%)",
+                      f"    Stop        {price(px * (1 - d * stop))}  ({stop * 100:.1f}%)",
                       "    An opposite signal flips the position"]
     return "\n".join(lines)

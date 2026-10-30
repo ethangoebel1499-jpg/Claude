@@ -20,6 +20,7 @@ import pandas as pd
 
 from .backtest import Result, Trade, _stats
 from .divergence import waves
+from .fmt import price
 
 BB_LEN, BB_MULT = 20, 2.0
 SWING = 3
@@ -99,7 +100,7 @@ def backtest(df: pd.DataFrame, fr: pd.DataFrame, *, allow_short: bool = True, fe
 def checklist(df: pd.DataFrame, bar: int = -1, label: str = "S6 - 1m Bollinger + AO divergence") -> str:
     fr = signals(df)
     r = fr.iloc[bar]
-    lines = [f"[{label}] Checklist for candle {df.index[bar]:%Y-%m-%d %H:%M} UTC (close {df['close'].iloc[bar]:,.2f})"]
+    lines = [f"[{label}] Checklist for candle {df.index[bar]:%Y-%m-%d %H:%M} UTC (close {price(df['close'].iloc[bar])})"]
     for side, touch, div, go, lab in (("LONG", r.touch_low, r.bull_div, r.long_entry, "lower"),
                                       ("SHORT", r.touch_high, r.bear_div, r.short_entry, "upper")):
         lines += ["", f"{side}: {'🟢 TRADE' if go else '🔴 NO TRADE'}",
@@ -108,6 +109,6 @@ def checklist(df: pd.DataFrame, bar: int = -1, label: str = "S6 - 1m Bollinger +
         if go:
             stop = r.long_stop if side == "LONG" else r.short_stop
             tgt = r.upper if side == "LONG" else r.lower
-            lines.append(f"  Exit plan: stop {stop:,.2f}, take profit at the {'upper' if side == 'LONG' else 'lower'} "
-                         f"band (now {tgt:,.2f}, moves with the band)")
+            lines.append(f"  Exit plan: stop {price(stop)}, take profit at the {'upper' if side == 'LONG' else 'lower'} "
+                         f"band (now {price(tgt)}, moves with the band)")
     return "\n".join(lines)

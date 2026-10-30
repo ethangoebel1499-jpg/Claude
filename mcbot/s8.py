@@ -15,6 +15,7 @@ from __future__ import annotations
 import pandas as pd
 
 from .indicators import heikin_ashi, wavetrend
+from .fmt import price
 
 TAKE_PROFITS = [(0.02, 0.5), (0.05, 0.25), (None, 0.25)]   # None = rides until the reversal down
 
@@ -48,12 +49,12 @@ def checklist(df: pd.DataFrame, bar: int = -1, label: str = "S8 - Long-only reve
     up = bool(c.wt_up_below_zero and c.ha_green)
     down = bool(c.wt_down_above_zero and c.ha_red)
     px = df["close"].iloc[bar]
-    lines = [f"[{label}] Checklist for candle {ts:%Y-%m-%d %H:%M} UTC (close {px:,.2f})", "",
+    lines = [f"[{label}] Checklist for candle {ts:%Y-%m-%d %H:%M} UTC (close {price(px)})", "",
              f"LONG: {'🟢 TRADE' if up else '🔴 NO TRADE'}",
              f"  {'🟢 YES' if c.wt_up_below_zero else '🔴 NO '}  WaveTrend crossed up below zero (green dot, wt2 {c.wt2:.0f})",
              f"  {'🟢 YES' if c.ha_green else '🔴 NO '}  Heikin Ashi candle green"]
     if up:
-        lines.append(f"  Exit plan: 50% at {px * 1.02:,.2f} (+2%), 25% at {px * 1.05:,.2f} (+5%), "
+        lines.append(f"  Exit plan: 50% at {price(px * 1.02)} (+2%), 25% at {price(px * 1.05)} (+5%), "
                      "rest rides until the reversal down")
     lines += ["", f"EXIT (reversal down): {'🔴 GET OUT' if down else '🟢 STAY IN'}",
               f"  {'🔴 YES' if c.wt_down_above_zero else '🟢 NO '}  WaveTrend crossed down above zero (red dot)",

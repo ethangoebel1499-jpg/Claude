@@ -2,6 +2,7 @@
 
   python -m livepaper run       [--config live.toml]   start trading (Ctrl+C to stop)
   python -m livepaper dashboard [--config live.toml]   open the dashboard in your browser
+                                [--phone]              ...and on your phone (same Wi-Fi)
   python -m livepaper check     [--config live.toml]   test the data feeds / Webull keys, place no orders
   python -m livepaper sync      [--config live.toml]   push the trade record to the paper-trades branch now
 """
@@ -19,6 +20,24 @@ sys.path.insert(0, str(HERE.parent))
 
 from livepaper.runner import build, load_config, run_forever  # noqa: E402
 from livepaper.store import Store  # noqa: E402
+from mcbot.fmt import price  # noqa: E402
+
+
+def lan_addresses() -> list[str]:
+    """This computer's address(es) on the local network."""
+    import socket
+    ips = set()
+    try:
+        with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
+            sock.connect(("192.168.1.1", 9))          # picks the outgoing interface; nothing is sent
+            ips.add(sock.getsockname()[0])
+    except OSError:
+        pass
+    try:
+        ips.update(ip for ip in socket.gethostbyname_ex(socket.gethostname())[2] if not ip.startswith("127."))
+    except OSError:
+        pass
+    return sorted(ips) or ["<this computer's IP>"]
 
 
 def main() -> None:
@@ -26,6 +45,9 @@ def main() -> None:
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("command", choices=["run", "dashboard", "check", "sync"])
     ap.add_argument("--config", default="live.toml")
+    ap.add_argument("--phone", action="store_true",
+                    help="dashboard: also serve it to your phone / other devices on your Wi-Fi")
+    ap.add_argument("--port", type=int, default=8501)
     a = ap.parse_args()
     if not Path(a.config).exists():
         raise SystemExit(f"{a.config} not found: copy livepaper/live.example.toml to live.toml and edit it")
@@ -34,7 +56,16 @@ def main() -> None:
 
     if a.command == "dashboard":
         env = {**os.environ, "LIVEPAPER_DB": db, "LIVEPAPER_CONFIG": a.config}
-        raise SystemExit(subprocess.call([sys.executable, "-m", "streamlit", "run", str(HERE / "dashboard.py")], env=env))
+        cmd = [sys.executable, "-m", "streamlit", "run", str(HERE / "dashboard.py"), "--server.port", str(a.port),
+               "--browser.gatherUsageStats", "false"]
+        if a.phone:
+            cmd += ["--server.address", "0.0.0.0"]
+            print("\nOpen one of these on your phone (same Wi-Fi), then Share -> 'Add to Home Screen':")
+            for ip in lan_addresses():
+                print(f"   http://{ip}:{a.port}")
+            print("Away from home: install Tailscale on this computer and your phone, then use the computer's "
+                  "Tailscale address instead.\n")
+        raise SystemExit(subprocess.call(cmd, env=env))
 
     store = Store(db)
     if a.command == "run":
@@ -47,7 +78,7 @@ def main() -> None:
         for rn in runners:
             bars = rn._bars()
             print(f"{rn.r['name']}: {len(bars)} closed {rn.r['timeframe']} candles, last {bars.index[-1]}, "
-                  f"price {rn._price():,.4f}")
+                  f"price {price(rn._price())}")
             if rn.r["feed"] == "webull":
                 base = {"crypto": "crypto"}.get(rn.r["asset"], "stock")
                 raw = rn.feed.raw_bars(rn.r["symbol"], base, "M60", count=2)

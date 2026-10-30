@@ -178,7 +178,20 @@ Edit `live.toml`: which strategy, symbol, timeframe and capital per run.
   year by year, every trade). Tick **Paper trade this setup** and the trader starts it on its next
   price check; untick it (here or under *Manage paper-trading runs*) and it closes the open
   position and stops. Runs live in the database, so no restart is needed.
+- **🎙️ Streams** - the stream study agent's review screen (see below), so everything is in one app.
 - **📜 Activity** - every event and fill.
+- **⚙️ Account** - Webull paper keys (with a *Test connection* button), broker, fees, how often to
+  check prices, sharing with Claude, and the stream agent's model / Anthropic key. Saved in plain
+  text in `local_settings.json` on your computer (paper trading only); it's git-ignored, so it is
+  never pushed. Restart the trader after changing the broker or keys.
+
+Every price is written out in full (77,168.70 · 0.00001235), never in scientific notation.
+
+**On your phone:** `python -m livepaper dashboard --phone` prints an address like
+`http://192.168.1.20:8501`; open it on your phone on the same Wi-Fi and use Share -> *Add to Home
+Screen* for an app icon. Away from home, install Tailscale (free) on the computer and the phone
+and use the computer's Tailscale address. Don't port-forward it to the internet: the dashboard has
+no login and the Account tab holds your keys.
 
 Stocks in the built-in paper broker use Yahoo prices (about 15 minutes delayed); use the Webull
 feed for real-time.
@@ -225,8 +238,20 @@ paste into a .txt) or the audio/video you're allowed to keep, then either:
     python -m streamlearn add "stream.txt" --start "2026-10-28 20:00" --title "BTC live"
     python -m streamlearn watch streams_inbox     # or drop files named "2026-10-28 2000 BTC live.txt" here
 
-Then `python -m streamlearn dashboard` (scorecard, calls with outcomes, playbook, searchable
-transcripts), `python -m streamlearn report` (markdown playbook + scorecard), and
+Add `--url <YouTube link>` (or paste the link later in the Streams tab) so every setup can play its
+part of the stream.
+
+**Review and train it** (dashboard -> 🎙️ Streams -> 📝 Review): each setup is a card with the setup
+restated in plain words, the stream clip from where he starts describing it to where he finishes
+(YouTube link or your own video/audio file), the transcript of that part, the price chart around
+the call with his entry / stop / targets drawn on it, a frame of his screen at that moment (when
+you keep the video file; needs ffmpeg), and what actually happened. Fix anything that's off and
+press **👍 Correct - award** or **👎 Wrong - punish** (with a note). Verdicts become worked examples
+in the agent's instructions for the next streams, punished setups drop out of the scorecard, and the
+agent's accuracy is shown at the top.
+
+Then `python -m streamlearn dashboard` (or the 🎙️ Streams tab: scorecard, calls with outcomes,
+playbook, searchable transcripts), `python -m streamlearn report` (markdown playbook + scorecard), and
 `python -m streamlearn sync` to push everything to the `paper-trades` branch so a Claude
 session can turn his most repeated rules into strategies to backtest.
 

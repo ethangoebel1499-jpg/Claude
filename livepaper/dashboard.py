@@ -13,6 +13,8 @@ import altair as alt  # noqa: E402
 import pandas as pd  # noqa: E402
 import streamlit as st  # noqa: E402
 
+from livepaper import settings  # noqa: E402
+from livepaper.fmt import money, pct, price  # noqa: E402  (full prices, never scientific notation)
 from livepaper.history import CRYPTO, STOCKS, history  # noqa: E402
 from livepaper.runner import exits_for, load_config, normalize_run, seed_runs  # noqa: E402
 from livepaper.store import Store  # noqa: E402
@@ -33,24 +35,7 @@ def get_store(path: str) -> Store:
     return Store(path)
 
 
-def money(v) -> str:
-    return "-" if v is None or pd.isna(v) else f"${v:,.2f}" if abs(v) < 1000 else f"${v:,.0f}"
-
-
-def price(v) -> str:
-    """Prices at a sensible precision: 77,169 · 2,226.72 · 95.80 · 0.000012."""
-    if isinstance(v, str):
-        return v
-    if v is None or pd.isna(v):
-        return "-"
-    return f"{v:,.0f}" if abs(v) >= 10_000 else f"{v:,.2f}" if abs(v) >= 1 else f"{v:.6g}"
-
-
 COIN = {pair: coin for coin, pair in CRYPTO.items()}
-
-
-def pct(v) -> str:
-    return "-" if v is None or pd.isna(v) else f"{v:+.2f}%"
 
 
 def color(v):
@@ -105,7 +90,8 @@ cfg = load_config(CONFIG) if Path(CONFIG).exists() else {"run": [], "app": {}}
 seed_runs(cfg, store)
 
 st.title("📈 Paper Trading")
-tab_dash, tab_lab, tab_log = st.tabs(["📊 Dashboard", "🧪 Strategy Lab", "📜 Activity"])
+tab_dash, tab_lab, tab_streams, tab_log, tab_acct = st.tabs(
+    ["📊 Dashboard", "🧪 Strategy Lab", "🎙️ Streams", "📜 Activity", "⚙️ Account"])
 
 
 # ---- Dashboard ----------------------------------------------------------------
@@ -339,3 +325,81 @@ with tab_log:
     with st.expander(f"Fills ({len(fills)})"):
         st.dataframe(fills.iloc[::-1].style.format({"price": price, "fee_usd": money}),
                      hide_index=True, width="stretch")
+
+
+# ---- Streams (the stream study agent) -------------------------------------------
+with tab_streams:
+    from streamlearn.dashboard import render as render_streams
+    render_streams(settings.get("streamlearn_db", "streamlearn.db"))
+
+
+# ---- Account ----------------------------------------------------------------------
+def test_webull() -> str:
+    try:
+        from livepaper.brokers import _find, api_client
+        from webull.trade.trade_client import TradeClient
+    except ImportError:
+        return "❌ Webull's SDK isn't installed: pip install webull-openapi-python-sdk"
+    try:
+        res = TradeClient(api_client()).account_v2.get_account_list()
+    except Exception as e:
+        return f"❌ {e}"
+    if res.status_code != 200:
+        return f"❌ Webull answered HTTP {res.status_code}: {res.text[:300]}"
+    acc = _find(res.json(), "account_id", "accountId")
+    return f"✅ Connected. Paper account found: {acc}" if acc else f"⚠️ Connected, but no account id in: {res.text[:300]}"
+
+
+with tab_acct:
+    cur = settings.load()
+    st.caption(f"Saved on this computer in `{settings.PATH.name}` (plain text, paper trading only; never pushed to "
+               f"GitHub). Restart the trader (`python -m livepaper run`) after changing the broker or keys.")
+    with st.form("account"):
+        with st.expander("Paper trading", expanded=True):
+            a1, a2, a3 = st.columns(3)
+            broker = a1.radio("Broker", ["sim", "webull"], index=0 if cur["broker"] == "sim" else 1,
+                              format_func=lambda b: "Built-in paper broker" if b == "sim" else "Webull paper account")
+            fee = a2.number_input("Fee % per side (for P&L)", 0.0, 1.0, float(cur["fee"]) * 100, 0.01)
+            poll = a3.number_input("Check prices every (seconds)", 10, 600, int(cur["poll_seconds"]), 5)
+            b1, b2 = st.columns(2)
+            sync_git = b1.checkbox("Share trades with Claude (push to the paper-trades branch)", bool(cur["sync_git"]))
+            sync_min = b2.number_input("Share every (minutes)", 5, 1440, int(cur["sync_minutes"]), 5)
+        with st.expander("Webull paper account", expanded=cur["broker"] == "webull"):
+            st.caption("Webull Developer Center → *Using OpenAPI service in Paper Trading* → API Management → "
+                       "My Application. Use the **sandbox (paper)** keys.")
+            w1, w2 = st.columns(2)
+            key = w1.text_input("App key", cur["webull_app_key"])
+            secret = w2.text_input("App secret", cur["webull_app_secret"], type="password")
+            w3, w4, w5 = st.columns([2, 1, 2])
+            account = w3.text_input("Account ID (optional - found automatically)", cur["webull_account_id"])
+            region = w4.text_input("Region", cur["webull_region"])
+            endpoint = w5.text_input("API host", cur["webull_endpoint"],
+                                     help="api.sandbox.webull.com = paper trading")
+        with st.expander("Stream study agent"):
+            s1, s2 = st.columns(2)
+            backend = s1.radio("Extraction model", ["ollama", "claude"], horizontal=True,
+                               index=0 if cur["stream_backend"] == "ollama" else 1,
+                               format_func=lambda b: "Local (Ollama)" if b == "ollama" else "Claude (API)")
+            tz = s2.text_input("Your timezone (for stream start times)", cur["timezone"])
+            s3, s4 = st.columns(2)
+            ollama_model = s3.text_input("Ollama model", cur["ollama_model"])
+            ollama_url = s4.text_input("Ollama address", cur["ollama_url"])
+            anthropic_key = st.text_input("Anthropic API key (only for Claude)", cur["anthropic_api_key"],
+                                          type="password")
+            sl_db = st.text_input("Stream study database", cur["streamlearn_db"])
+        if st.form_submit_button("Save settings", type="primary"):
+            settings.save({"broker": broker, "fee": fee / 100, "poll_seconds": int(poll), "sync_git": sync_git,
+                           "sync_minutes": int(sync_min), "webull_app_key": key.strip(),
+                           "webull_app_secret": secret.strip(), "webull_account_id": account.strip(),
+                           "webull_region": region.strip() or "us", "webull_endpoint": endpoint.strip(),
+                           "stream_backend": backend, "timezone": tz.strip(), "ollama_model": ollama_model.strip(),
+                           "ollama_url": ollama_url.strip(), "anthropic_api_key": anthropic_key.strip(),
+                           "streamlearn_db": sl_db.strip() or "streamlearn.db"})
+            st.success("Saved.")
+    c1, c2 = st.columns([1, 3])
+    if c1.button("Test Webull connection"):
+        c2.write(test_webull())
+    st.caption("Webull keys: " + (f"set ({settings.mask(settings.get('webull_app_key'))})"
+                                  if settings.get("webull_app_key") else "not set") +
+               " · Anthropic key: " + (f"set ({settings.mask(settings.get('anthropic_api_key'))})"
+                                       if settings.get("anthropic_api_key") else "not set"))

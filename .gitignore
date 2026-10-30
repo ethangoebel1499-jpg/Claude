@@ -14,3 +14,7 @@ live.toml
 streamlearn.toml
 streamlearn_reports/
 streams_inbox/
+
+# dashboard Account tab (plain-text keys, never pushed)
+local_settings.json
+streamlearn_frames/

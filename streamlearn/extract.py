@@ -20,10 +20,15 @@ SCHEMA = {
     "properties": {
         "calls": {"type": "array", "items": {
             "type": "object", "additionalProperties": False,
-            "required": ["time", "asset", "direction", "kind", "timeframe", "entry", "stop", "targets",
-                         "conditions", "quote"],
+            "required": ["time", "setup_start", "setup_end", "summary", "asset", "direction", "kind", "timeframe",
+                         "entry", "stop", "targets", "conditions", "quote"],
             "properties": {
                 "time": {"type": "string", "description": "[m:ss] timestamp where it was said"},
+                "setup_start": {"type": "string", "description": "[m:ss] where he starts explaining this setup"},
+                "setup_end": {"type": "string", "description": "[m:ss] where he finishes explaining it"},
+                "summary": {"type": "string",
+                            "description": "the setup restated plainly in 1-3 sentences: what he wants to trade, "
+                                           "what must happen first, entry, stop, targets, and why"},
                 "asset": {"type": "string", "description": "ticker, e.g. BTC, ETH, SOL, SPY"},
                 "direction": {"type": "string", "enum": ["long", "short"]},
                 "kind": {"type": "string", "enum": ["entered", "plan", "idea"],
@@ -71,7 +76,14 @@ Rules:
   above the last swing high"), not one-off comments.
 - Levels are specific prices he marks as support, resistance or targets.
 - Quotes must be verbatim from the transcript.
+- setup_start / setup_end bracket his whole explanation of that setup (from where he starts setting it
+  up to where he moves on), so someone can replay exactly that part of the stream.
 Return JSON matching the schema."""
+
+
+def with_examples(examples: str) -> str:
+    """The base instructions plus the reviewer's past verdicts (how the agent learns)."""
+    return SYSTEM if not examples else f"{SYSTEM}\n\n{examples}"
 
 
 def prompt(chunk: str, title: str, date: str) -> str:
@@ -82,9 +94,9 @@ class OllamaBackend:
     def __init__(self, model: str = "qwen2.5:14b", url: str = "http://localhost:11434"):
         self.model, self.url = model, url.rstrip("/")
 
-    def extract(self, chunk: str, title: str, date: str) -> dict:
+    def extract(self, chunk: str, title: str, date: str, system: str | None = None) -> dict:
         try:
-            r = self._post(chunk, title, date)
+            r = self._post(chunk, title, date, system or SYSTEM)
         except requests.ConnectionError:
             raise RuntimeError(f"Ollama isn't running at {self.url}: start the Ollama app (or `ollama serve`), "
                                f"or set backend = \"claude\" in streamlearn.toml") from None
@@ -93,10 +105,10 @@ class OllamaBackend:
         r.raise_for_status()
         return json.loads(r.json()["message"]["content"])
 
-    def _post(self, chunk: str, title: str, date: str):
+    def _post(self, chunk: str, title: str, date: str, system: str):
         return requests.post(f"{self.url}/api/chat", timeout=600, json={
             "model": self.model, "stream": False, "format": SCHEMA, "options": {"temperature": 0},
-            "messages": [{"role": "system", "content": SYSTEM},
+            "messages": [{"role": "system", "content": system},
                          {"role": "user", "content": prompt(chunk, title, date)}]})
 
 
@@ -104,17 +116,19 @@ class ClaudeBackend:
     """Claude Opus 5.5 with structured outputs. Server-side fallbacks are on, so a
     request a safety classifier declines is re-run on a fallback model in the same call."""
 
-    def __init__(self, model: str = "claude-opus-5-5", effort: str = "medium"):
+    def __init__(self, model: str = "claude-opus-5-5", effort: str = "medium", api_key: str | None = None):
         import anthropic
-        self.client, self.model, self.effort = anthropic.Anthropic(), model, effort
+        # api_key from the Account tab if given; otherwise the SDK finds ANTHROPIC_API_KEY / `ant auth login`
+        self.client = anthropic.Anthropic(api_key=api_key) if api_key else anthropic.Anthropic()
+        self.model, self.effort = model, effort
 
-    def extract(self, chunk: str, title: str, date: str) -> dict:
+    def extract(self, chunk: str, title: str, date: str, system: str | None = None) -> dict:
         response = self.client.beta.messages.create(
             model=self.model,
             max_tokens=16000,
             betas=["server-side-fallback-2026-07-01"],
             fallbacks="default",
-            system=SYSTEM,
+            system=system or SYSTEM,
             output_config={"effort": self.effort, "format": {"type": "json_schema", "schema": SCHEMA}},
             messages=[{"role": "user", "content": prompt(chunk, title, date)}],
         )
@@ -129,7 +143,8 @@ class ClaudeBackend:
 def backend(cfg: dict):
     kind = cfg.get("backend", "ollama")
     if kind == "claude":
-        return ClaudeBackend(cfg.get("claude_model", "claude-opus-5-5"), cfg.get("claude_effort", "medium"))
+        return ClaudeBackend(cfg.get("claude_model", "claude-opus-5-5"), cfg.get("claude_effort", "medium"),
+                             cfg.get("anthropic_api_key") or None)
     if kind == "ollama":
         return OllamaBackend(cfg.get("ollama_model", "qwen2.5:14b"), cfg.get("ollama_url", "http://localhost:11434"))
     raise SystemExit(f"unknown backend {kind} (use ollama or claude)")

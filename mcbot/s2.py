@@ -33,6 +33,7 @@ import pandas as pd
 
 from .backtest import Result, Trade, _stats
 from .indicators import ema, heikin_ashi, money_flow, wavetrend
+from .fmt import price
 
 ANCHOR_LEVEL = 60
 LINE_UP_BARS = 6        # 4h WolfPack cross may come up to 6 bars (1 day) before the 4h dot
@@ -278,7 +279,7 @@ def s2_checklist(ltf: pd.DataFrame, bar: int = -1, label: str = "S2 - 4-hour / 2
     fr = s2_frame(ltf)
     r = fr.iloc[bar]
     ts = ltf.index[bar] + (ltf.index[1] - ltf.index[0])
-    lines = [f"[{label}] Checklist for candle closed {ts:%Y-%m-%d %H:%M} UTC (close {ltf['close'].iloc[bar]:,.2f})"]
+    lines = [f"[{label}] Checklist for candle closed {ts:%Y-%m-%d %H:%M} UTC (close {price(ltf['close'].iloc[bar])})"]
     for side, sign in (("long", 1), ("short", -1)):
         h4_wp = r.h4_armed_long if side == "long" else r.h4_armed_short
         h4_dot = h4_wp or r[f"h4_bars_trig_{side}"] <= ARMED_BARS   # the dot is part of a live confirmation

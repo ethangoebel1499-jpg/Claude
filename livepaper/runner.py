@@ -111,7 +111,9 @@ class Runner:
 
 class App:
     def __init__(self, cfg: dict, store: Store, feeds: dict | None = None):
-        self.cfg, self.store, self.app = cfg, store, cfg.get("app", {})
+        from . import settings
+        # the Account tab's saved settings override live.toml's [app]
+        self.cfg, self.store, self.app = cfg, store, {**cfg.get("app", {}), **settings.saved()}
         self.feeds, self.runners, self.client = dict(feeds or {}), {}, None
         if self.app.get("broker", "sim") == "webull":
             from .brokers import WebullBroker
@@ -124,7 +126,8 @@ class App:
         if self.client is None:
             from .brokers import api_client
             wb = self.cfg.get("webull", {})
-            self.client = api_client(wb.get("region", "us"), wb.get("endpoint", "api.sandbox.webull.com"))
+            self.client = api_client(self.app.get("webull_region") or wb.get("region"),
+                                     self.app.get("webull_endpoint") or wb.get("endpoint"))
         return self.client
 
     def feed(self, kind: str):
@@ -185,7 +188,7 @@ def run_forever(cfg: dict, store: Store) -> None:
     from .sync import sync
     seed_runs(cfg, store)
     app = App(cfg, store)
-    poll = app.app.get("poll_seconds", 30)
+    poll = int(app.app.get("poll_seconds", 30))
     sync_every, last_sync = app.app.get("sync_minutes", 60) * 60, time.time()
     print(f"livepaper: broker={app.app.get('broker', 'sim')}, polling every {poll}s. Runs are managed in the "
           f"dashboard's Strategy Lab. Ctrl+C to stop.")

@@ -1,14 +1,13 @@
 """Webull sandbox (paper) broker through the official SDK.
 
-Keys come from environment variables, never from the config file:
-  WEBULL_APP_KEY, WEBULL_APP_SECRET, optional WEBULL_ACCOUNT_ID
+Keys come from the dashboard's Account tab (local_settings.json) or the environment variables
+WEBULL_APP_KEY, WEBULL_APP_SECRET and optional WEBULL_ACCOUNT_ID.
 The sandbox host is api.sandbox.webull.com (apply for the Sandbox Trading API in
 Webull's Developer Center: API Management -> My Application).
 """
 
 from __future__ import annotations
 
-import os
 import time
 import uuid
 
@@ -18,11 +17,14 @@ FILLED = {"FILLED", "ALL_FILLED", "FINISHED", "COMPLETED"}
 DEAD = {"CANCELLED", "CANCELED", "REJECTED", "FAILED", "EXPIRED"}
 
 
-def api_client(region: str = "us", endpoint: str = "api.sandbox.webull.com"):
+def api_client(region: str | None = None, endpoint: str | None = None):
     from webull.core.client import ApiClient
-    key, secret = os.environ.get("WEBULL_APP_KEY"), os.environ.get("WEBULL_APP_SECRET")
+    from . import settings
+    region = region or settings.get("webull_region", "us")
+    endpoint = endpoint or settings.get("webull_endpoint", "api.sandbox.webull.com")
+    key, secret = settings.get("webull_app_key"), settings.get("webull_app_secret")
     if not key or not secret:
-        raise SystemExit("Set WEBULL_APP_KEY and WEBULL_APP_SECRET (environment variables) first.")
+        raise RuntimeError("No Webull keys yet: add them in the dashboard's Account tab.")
     client = ApiClient(key, secret, region)
     client.add_endpoint(region, endpoint)
     return client
@@ -52,7 +54,8 @@ class WebullBroker:
         from webull.trade.trade_client import TradeClient
         self.tc = TradeClient(client)
         self.assets, self.fee, self.wait = assets, fee, wait_seconds
-        self.account = os.environ.get("WEBULL_ACCOUNT_ID") or self._first_account()
+        from . import settings
+        self.account = settings.get("webull_account_id") or self._first_account()
 
     def _first_account(self) -> str:
         res = self.tc.account_v2.get_account_list()
