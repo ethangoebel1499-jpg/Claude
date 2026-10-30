@@ -187,6 +187,36 @@ so your working branch is never touched. `python -m livepaper sync` pushes immed
 Spot crypto can't be shorted, so crypto runs are long-only (the backtests in the reports
 include shorts for GRIND and the Witcher; expect different numbers).
 
+## Stream study agent (`streamlearn/`)
+
+Studies livestreams on your own computer: pulls out every trade call (asset, direction,
+entry, stop, targets, timeframe, conditions, his exact words and timestamp), every trading
+rule he states and every price level he marks, then **checks each call against real Kraken
+prices** from the moment he said it, and builds a **playbook** of his recurring rules (with
+how many streams repeat each one) plus a **scorecard** (win rate when he gives a stop and
+target, "right direction after 7 days" for every call, by asset / kind / direction).
+
+**Setup (once)**
+
+    pip install -r requirements.txt -r streamlearn/requirements.txt
+    cp streamlearn/streamlearn.example.toml streamlearn.toml     # set your timezone
+    # Local model: install Ollama (https://ollama.com), then:  ollama pull qwen2.5:14b
+    # (or set backend = "claude" in streamlearn.toml to use Anthropic's API instead)
+
+**Each stream** - save the transcript (YouTube: "...more" -> "Show transcript", select all,
+paste into a .txt) or the audio/video you're allowed to keep, then either:
+
+    python -m streamlearn add "stream.txt" --start "2026-10-28 20:00" --title "BTC live"
+    python -m streamlearn watch streams_inbox     # or drop files named "2026-10-28 2000 BTC live.txt" here
+
+Then `python -m streamlearn dashboard` (scorecard, calls with outcomes, playbook, searchable
+transcripts), `python -m streamlearn report` (markdown playbook + scorecard), and
+`python -m streamlearn sync` to push everything to the `paper-trades` branch so a Claude
+session can turn his most repeated rules into strategies to backtest.
+
+Keep it personal: transcripts of paid or members-only streams are for your own study; don't
+redistribute them.
+
 ## Important caveats
 - The paper/live bot uses a single stop and target. Leverage, partial take-profits and trailing are backtest-only for now.
 - Bot stops are checked by the bot itself, not placed on the exchange, so they only protect you while it runs.

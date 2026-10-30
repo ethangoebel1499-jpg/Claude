@@ -10,3 +10,7 @@ live.toml
 *.db
 .paper-trades/
 .paper-trades-export/
+# streamlearn (local stream study)
+streamlearn.toml
+streamlearn_reports/
+streams_inbox/

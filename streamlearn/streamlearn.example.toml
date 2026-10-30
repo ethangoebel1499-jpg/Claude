@@ -1,0 +1,24 @@
+# streamlearn settings. Copy to streamlearn.toml (repo root) and edit.
+
+db = "streamlearn.db"
+reports = "streamlearn_reports"
+timezone = "America/New_York"    # stream start times you type (and file names) are in this timezone
+
+# Extraction model:
+#   "ollama" - runs on your computer (install https://ollama.com, then: ollama pull qwen2.5:14b)
+#              8B models work on most machines; 14B+ is noticeably better at reading prices right.
+#   "claude" - Anthropic's API (pip install anthropic; ANTHROPIC_API_KEY or `ant auth login`).
+#              More accurate on long transcripts; roughly a few dollars per 3-hour stream.
+backend = "ollama"
+ollama_model = "qwen2.5:14b"
+ollama_url = "http://localhost:11434"
+claude_model = "claude-opus-5-5"
+claude_effort = "medium"
+
+# Audio/video transcription (faster-whisper): tiny | base | small | medium | large-v3
+# small is fine on a CPU; large-v3 needs a GPU for 3-hour streams.
+whisper_model = "small"
+
+chunk_minutes = 8      # transcript window sent to the model at a time
+chunk_overlap = 1
+watch_seconds = 60

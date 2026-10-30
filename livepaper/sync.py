@@ -6,7 +6,6 @@ Uses a separate git worktree (.paper-trades/), so your working branch is never t
 
 from __future__ import annotations
 
-import shutil
 import subprocess
 from pathlib import Path
 
@@ -19,17 +18,8 @@ def git(*args, cwd=None, check=True) -> subprocess.CompletedProcess:
     return subprocess.run(["git", *args], cwd=cwd, check=check, capture_output=True, text=True)
 
 
-def export(store: Store, folder: Path) -> list[Path]:
-    folder.mkdir(parents=True, exist_ok=True)
-    out = []
-    for name in ("trades", "fills", "equity", "signals", "events"):
-        p = folder / f"{name}.csv"
-        store.table(name).to_csv(p, index=False)
-        out.append(p)
-    return out
-
-
-def sync(store: Store) -> str:
+def push_files(files: dict[str, str], folder: str) -> str:
+    """Write {filename: text} into <folder>/ on the paper-trades branch, commit and push."""
     repo = Path(git("rev-parse", "--show-toplevel").stdout.strip())
     wt = repo / ".paper-trades"
     if not wt.exists():
@@ -38,18 +28,21 @@ def sync(store: Store) -> str:
         git("worktree", "add", "-B", BRANCH, str(wt), start, cwd=repo)
     else:
         git("pull", "--rebase", "origin", BRANCH, cwd=wt, check=False)
-    tmp = repo / ".paper-trades-export"
-    files = export(store, tmp)
-    dest = wt / "paper_trades"
+    dest = wt / folder
     dest.mkdir(exist_ok=True)
-    for f in files:
-        shutil.copy(f, dest / f.name)
-    shutil.rmtree(tmp, ignore_errors=True)
-    git("add", "paper_trades", cwd=wt)
+    for name, text in files.items():
+        (dest / name).write_text(text)
+    git("add", folder, cwd=wt)
     if git("diff", "--cached", "--quiet", cwd=wt, check=False).returncode == 0:
         return "nothing new"
-    git("commit", "-m", f"Paper trades {now_utc()}", cwd=wt)
+    git("commit", "-m", f"{folder} {now_utc()}", cwd=wt)
     push = git("push", "-u", "origin", BRANCH, cwd=wt, check=False)
     msg = "pushed" if push.returncode == 0 else f"commit saved, push failed: {push.stderr.strip()[:200]}"
     print(f"[sync] {msg}")
     return msg
+
+
+def sync(store: Store) -> str:
+    files = {f"{name}.csv": store.table(name).to_csv(index=False)
+             for name in ("trades", "fills", "equity", "signals", "events")}
+    return push_files(files, "paper_trades")
