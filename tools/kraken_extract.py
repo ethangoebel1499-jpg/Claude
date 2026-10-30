@@ -3,6 +3,7 @@ without downloading the ~9.5 GB archive.
 
   python tools/kraken_extract.py datasets/XBTUSD_60.csv XBTUSD_60.csv
   python tools/kraken_extract.py datasets/ETHUSD_60.csv ETHUSD_60.csv
+  python tools/kraken_extract.py datasets/ BNBUSD_60.csv ADAUSD_60.csv ...   # several into a folder
 
 Needs assets.kraken.com reachable. Part sizes are for the archive as of 2026-10.
 """
@@ -66,10 +67,12 @@ f = RemoteSplitFile()
 z = zipfile.ZipFile(io.BufferedReader(f, buffer_size=1 << 20))
 names = z.namelist()
 print(f"archive: {len(names):,} files, index read with {f.fetched/1e6:.1f} MB downloaded")
-want = [n for n in names if n.split("/")[-1].upper() == sys.argv[2].upper()]
-print("matches:", want, [round(z.getinfo(n).compress_size / 1e6, 1) for n in want])
-if want:
-    data = z.read(want[0])
-    out = sys.argv[1]
-    open(out, "wb").write(data)
-    print(f"extracted {len(data)/1e6:.1f} MB -> {out}; total downloaded {f.fetched/1e6:.1f} MB of {f.size/1e9:.2f} GB")
+folder = sys.argv[1].endswith("/")
+for target in sys.argv[2:]:
+    want = [n for n in names if n.split("/")[-1].upper() == target.upper()]
+    print("matches:", want, [round(z.getinfo(n).compress_size / 1e6, 1) for n in want])
+    if want:
+        data = z.read(want[0])
+        out = sys.argv[1] + want[0].split("/")[-1] if folder else sys.argv[1]
+        open(out, "wb").write(data)
+        print(f"extracted {len(data)/1e6:.1f} MB -> {out}; total downloaded {f.fetched/1e6:.1f} MB of {f.size/1e9:.2f} GB")
