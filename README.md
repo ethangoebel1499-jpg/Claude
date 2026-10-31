@@ -277,6 +277,12 @@ session can turn his most repeated rules into strategies to backtest.
 Keep it personal: transcripts of paid or members-only streams are for your own study; don't
 redistribute them.
 
+### 📐 Chart patterns
+
+- **From streams:** every pattern Jason points out (triangle, wedge, flag, channel, range, double top/bottom, head and shoulders) is extracted with his lines, which way he expects the break, what he says happens on a break up / down and at the apex - with the clip, his screen, and what price actually did (which line broke first, did it reach his target or fail back inside). 👍/👎 to grade the agent.
+- **Check a chart now** (Streams → 📐 Patterns): pick a coin and timeframe; the detector draws the pattern's lines and apex and says which situation price is in - early, breakout zone, squeezed near the apex, past the apex, at a line, broke the textbook way or against it, retest, fake break, target hit - with the levels to act on (full prices).
+- **Pattern playbook:** what to do in every situation for every pattern, next to how that pattern really behaved on 8 coins × 4h/daily since 2017 (`python tools/pattern_stats.py` → `reports/patterns.md`). The detector only uses confirmed swing points, so it never looks ahead.
+
 ## Important caveats
 - The paper/live bot uses a single stop and target. Leverage, partial take-profits and trailing are backtest-only for now.
 - Bot stops are checked by the bot itself, not placed on the exchange, so they only protect you while it runs.

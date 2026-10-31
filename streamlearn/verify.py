@@ -138,6 +138,56 @@ def check(call: dict, candles: pd.DataFrame, now: pd.Timestamp | None = None) ->
     return out
 
 
+def check_pattern(pt: dict, candles: pd.DataFrame, now: pd.Timestamp | None = None) -> dict:
+    """Which of his lines broke first (candle close beyond it), and did the move reach his target
+    (or the pattern's height) before price closed back past the other line - within 14 days."""
+    from mcbot.fmt import price
+    top, bottom = pt.get("top"), pt.get("bottom")
+    if top is None and bottom is None:
+        return {"outcome": "⚪ No levels given - can't check", "broke": None}
+    t0 = pd.Timestamp(pt["said_at"])
+    c = candles[(candles.index > t0) & (candles.index <= t0 + HORIZON)]
+    if c.empty:
+        return {"outcome": "⏳ Too recent to check", "broke": None}
+    up = c.index[c.close > top] if top is not None else []
+    dn = c.index[c.close < bottom] if bottom is not None else []
+    first_up, first_dn = (up[0] if len(up) else None), (dn[0] if len(dn) else None)
+    if first_up is None and first_dn is None:
+        done = (now or pd.Timestamp.now(tz="UTC")) > t0 + HORIZON
+        return {"outcome": "⚪ Didn't break either line within 14 days" if done else "⏳ No break yet", "broke": None}
+    d = "up" if first_dn is None or (first_up is not None and first_up < first_dn) else "down"
+    tb = first_up if d == "up" else first_dn
+    level = top if d == "up" else bottom
+    height = (top - bottom) if top is not None and bottom is not None else level * 0.05
+    tgts = [x for x in json.loads(pt.get("targets") or "[]") if (x > level if d == "up" else x < level)]
+    tgt = (min(tgts) if d == "up" else max(tgts)) if tgts else (level + height if d == "up" else level - height)
+    other = bottom if d == "up" else top
+    after = c[c.index > tb]
+    hit = after.index[after.high >= tgt] if d == "up" else after.index[after.low <= tgt]
+    back = after.index[after.close < other] if (d == "up" and other is not None) else \
+        after.index[after.close > other] if other is not None else []
+    called = pt.get("bias") in ("up", "down")
+    right = "" if not called else (" - the way he expected" if pt["bias"] == d else " - against what he expected")
+    head = f"{'🟢' if d == 'up' else '🔴'} Broke {d.upper()} on {tb:%Y-%m-%d %H:%M} (close {price(c.close.loc[tb])}){right}"
+    if len(hit) and (not len(back) or hit[0] < back[0]):
+        return {"outcome": f"{head}; reached {price(tgt)} on {hit[0]:%Y-%m-%d}", "broke": d}
+    if len(back):
+        return {"outcome": f"{head}; failed - closed back past {price(other)} on {back[0]:%Y-%m-%d}", "broke": d}
+    return {"outcome": f"{head}; target {price(tgt)} not reached within 14 days", "broke": d}
+
+
+def verify_patterns(store) -> int:
+    pats = store.patterns_with_streams()
+    src = Candles()
+    for _, pt in pats.iterrows():
+        try:
+            o = check_pattern(pt.to_dict(), src.get(pt.asset, pd.Timestamp(pt.said_at)))
+        except Exception as e:
+            o = {"outcome": f"error: {e}"[:200], "broke": None}
+        store.update_pattern(int(pt.id), outcome=o["outcome"], broke=o["broke"])
+    return len(pats)
+
+
 def verify_all(store, only_unchecked: bool = False) -> pd.DataFrame:
     calls = store.calls_with_streams()
     if only_unchecked:
@@ -151,4 +201,5 @@ def verify_all(store, only_unchecked: bool = False) -> pd.DataFrame:
             o = {"call_id": int(c.id), "status": f"error: {e}"[:200], "checked": str(pd.Timestamp.now(tz="UTC"))}
         store.save_outcome(o)
         rows.append(o)
+    verify_patterns(store)
     return pd.DataFrame(rows)

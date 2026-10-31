@@ -77,6 +77,7 @@ def add_stream(store: Store, path: str | Path, start: pd.Timestamp, title: str, 
     frames = Path(cfg.get("frames", "streamlearn_frames"))
     end_of_stream = segs[-1][0] if segs else 0
     seen_calls, seen_rules, n_calls, n_rules, n_levels, failed = [], set(), 0, 0, 0, 0
+    seen_pats, n_pats = [], 0
     for i, (_, _, body) in enumerate(parts, 1):
         try:
             res = llm.extract(body, title, str(start.date()), system=system)
@@ -121,8 +122,33 @@ def add_stream(store: Store, path: str | Path, start: pd.Timestamp, title: str, 
                 store.add_level(sid, {"t": mmss(lv.get("time", "")), "asset": str(lv.get("asset", "")).upper(),
                                       "price": float(lv["price"]), "kind": lv.get("kind", "level")})
                 n_levels += 1
+        for pt in res.get("patterns", []):
+            t = mmss(pt.get("time", ""))
+            asset = str(pt.get("asset", "")).upper().strip()
+            if not asset:
+                continue
+            top, bottom = _clean_num(pt.get("top_level")), _clean_num(pt.get("bottom_level"))
+            key = (asset, pt.get("pattern"), top, bottom)
+            if any(k == key and abs(t - kt) <= 180 for k, kt in seen_pats):
+                continue
+            seen_pats.append((key, t))
+            t0 = mmss(pt.get("setup_start", "")) or max(t - 60, 0)
+            t1 = mmss(pt.get("setup_end", "")) or t + 120
+            t0, t1 = max(min(t0, t) - 5, 0), min(max(t1, t) + 10, end_of_stream + 30)
+            pid = store.add_pattern(sid, {
+                "t": t, "said_at": str(start + pd.Timedelta(seconds=t)), "asset": asset,
+                "timeframe": pt.get("timeframe", ""), "pattern": pt.get("pattern", "other"),
+                "pattern_name": pt.get("pattern_name", ""), "bias": pt.get("bias", "unclear"), "top": top,
+                "bottom": bottom, "if_up": pt.get("if_breaks_up", ""), "if_down": pt.get("if_breaks_down", ""),
+                "at_apex": pt.get("at_apex", ""),
+                "targets": sorted({float(x) for x in pt.get("targets", []) if _clean_num(x)}),
+                "summary": pt.get("summary", ""), "quote": pt.get("quote", ""), "t_start": t0, "t_end": t1})
+            frame = frames / f"pattern_{pid}.jpg"
+            if grab_frame(path, t, frame):
+                store.update_pattern(pid, frame=str(frame))
+            n_pats += 1
         store.commit()
-        log(f"  chunk {i}/{len(parts)}: {n_calls} calls, {n_rules} rules, {n_levels} levels so far")
+        log(f"  chunk {i}/{len(parts)}: {n_calls} calls, {n_rules} rules, {n_levels} levels, {n_pats} patterns so far")
     if failed:
         log(f"{failed} of {len(parts)} chunks failed; the transcript is saved - fix the problem and rerun "
             f"with --reextract to extract it again")

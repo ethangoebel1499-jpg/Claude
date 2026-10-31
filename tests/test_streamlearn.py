@@ -18,7 +18,7 @@ class FakeLLM:
     """Stands in for Ollama / Claude: returns what a good model would extract."""
     def extract(self, chunk, title, date, system=None):
         self.system = system
-        out = {"calls": [], "rules": [], "levels": []}
+        out = {"calls": [], "rules": [], "levels": [], "patterns": []}
         if "sixty four thousand" in chunk:
             out["calls"].append({"time": "[1:06]", "setup_start": "0:09", "setup_end": "2:05",
                                  "summary": "Long BTC from 64,200 with a stop under 62,000, targeting 67,000.",
@@ -30,6 +30,13 @@ class FakeLLM:
             out["calls"].append({"time": "3:30", "asset": "ETH", "direction": "short", "kind": "plan",
                                  "timeframe": "", "entry": 2400, "stop": 2550, "targets": [2200],
                                  "conditions": ["lose 2400"], "quote": "if we lose two thousand four hundred i'll short it"})
+            out["patterns"].append({"time": "3:30", "setup_start": "3:20", "setup_end": "3:45", "asset": "eth",
+                                    "timeframe": "4h", "pattern": "descending_triangle",
+                                    "pattern_name": "descending triangle", "bias": "down", "top_level": 2550,
+                                    "bottom_level": 2400, "if_breaks_up": "",
+                                    "if_breaks_down": "short it, first target 2,200", "at_apex": "",
+                                    "targets": [2200], "summary": "ETH is weak; losing 2,400 starts a short.",
+                                    "quote": "ethereum looks weak if we lose two thousand four hundred i'll short it"})
         if "level" in chunk:
             out["rules"].append({"time": "2:05", "category": "entry", "rule": "Only enter a trade when price is at a level.",
                                  "quote": "i only enter a trade if price comes to a level"})

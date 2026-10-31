@@ -18,6 +18,11 @@ CREATE TABLE IF NOT EXISTS calls (id INTEGER PRIMARY KEY, stream_id INTEGER, t I
 CREATE TABLE IF NOT EXISTS rules (id INTEGER PRIMARY KEY, stream_id INTEGER, t INTEGER, category TEXT,
                                   rule TEXT, quote TEXT);
 CREATE TABLE IF NOT EXISTS levels (stream_id INTEGER, t INTEGER, asset TEXT, price REAL, kind TEXT);
+CREATE TABLE IF NOT EXISTS patterns (id INTEGER PRIMARY KEY, stream_id INTEGER, t INTEGER, said_at TEXT,
+                                     asset TEXT, timeframe TEXT, pattern TEXT, pattern_name TEXT, bias TEXT,
+                                     top REAL, bottom REAL, if_up TEXT, if_down TEXT, at_apex TEXT, targets TEXT,
+                                     summary TEXT, quote TEXT, t_start INTEGER, t_end INTEGER, frame TEXT,
+                                     verdict TEXT, outcome TEXT, broke TEXT);
 CREATE TABLE IF NOT EXISTS reviews (call_id INTEGER PRIMARY KEY, verdict TEXT, note TEXT, corrected TEXT,
                                     reviewed TEXT);
 CREATE TABLE IF NOT EXISTS outcomes (call_id INTEGER PRIMARY KEY, status TEXT, entry_time TEXT,
@@ -54,7 +59,7 @@ class Store:
         return row[0] if row else None
 
     def clear_extraction(self, sid):
-        for t in ("calls", "rules", "levels"):
+        for t in ("calls", "rules", "levels", "patterns"):
             self.db.execute(f"DELETE FROM {t} WHERE stream_id = ?", (sid,))
         self.db.commit()
 
@@ -66,6 +71,23 @@ class Store:
              json.dumps(c["targets"]), json.dumps(c["conditions"]), c["quote"], c.get("summary", ""),
              c.get("t_start", c["t"]), c.get("t_end", c["t"])))
         return cur.lastrowid
+
+    def add_pattern(self, sid, p: dict) -> int:
+        cols = ("t", "said_at", "asset", "timeframe", "pattern", "pattern_name", "bias", "top", "bottom", "if_up",
+                "if_down", "at_apex", "targets", "summary", "quote", "t_start", "t_end")
+        vals = [json.dumps(p[c]) if c == "targets" else p.get(c) for c in cols]
+        cur = self.db.execute(f"INSERT INTO patterns (stream_id, {','.join(cols)}) VALUES (?{',?' * len(cols)})",
+                              [sid, *vals])
+        return cur.lastrowid
+
+    def update_pattern(self, pid: int, **fields):
+        sets = ", ".join(f"{k} = ?" for k in fields)
+        self.db.execute(f"UPDATE patterns SET {sets} WHERE id = ?", [*fields.values(), pid])
+        self.db.commit()
+
+    def patterns_with_streams(self) -> pd.DataFrame:
+        return pd.read_sql_query("SELECT p.*, s.title, s.source, s.url FROM patterns p "
+                                 "JOIN streams s ON s.id = p.stream_id", self.db)
 
     def set_frame(self, call_id: int, path: str):
         self.db.execute("UPDATE calls SET frame = ? WHERE id = ?", (path, call_id))

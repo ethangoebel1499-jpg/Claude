@@ -13,10 +13,15 @@ import json
 
 import requests
 
+PATTERN_KINDS = ["ascending_triangle", "descending_triangle", "symmetrical_triangle", "rising_wedge",
+                 "falling_wedge", "ascending_channel", "descending_channel", "range", "bull_flag", "bear_flag",
+                 "pennant", "broadening", "double_top", "double_bottom", "head_shoulders",
+                 "inverse_head_shoulders", "cup_handle", "other"]
+
 SCHEMA = {
     "type": "object",
     "additionalProperties": False,
-    "required": ["calls", "rules", "levels"],
+    "required": ["calls", "rules", "levels", "patterns"],
     "properties": {
         "calls": {"type": "array", "items": {
             "type": "object", "additionalProperties": False,
@@ -52,6 +57,33 @@ SCHEMA = {
                 "rule": {"type": "string", "description": "the rule as one clear sentence"},
                 "quote": {"type": "string"},
             }}},
+        "patterns": {"type": "array", "items": {
+            "type": "object", "additionalProperties": False,
+            "required": ["time", "setup_start", "setup_end", "asset", "timeframe", "pattern", "pattern_name", "bias",
+                         "top_level", "bottom_level", "if_breaks_up", "if_breaks_down", "at_apex", "targets",
+                         "summary", "quote"],
+            "properties": {
+                "time": {"type": "string", "description": "[m:ss] where he points the pattern out"},
+                "setup_start": {"type": "string"}, "setup_end": {"type": "string"},
+                "asset": {"type": "string"},
+                "timeframe": {"type": "string", "description": "chart timeframe, or empty"},
+                "pattern": {"type": "string", "enum": PATTERN_KINDS},
+                "pattern_name": {"type": "string", "description": "what he calls it, in his words"},
+                "bias": {"type": "string", "enum": ["up", "down", "unclear"],
+                         "description": "which way HE expects it to break"},
+                "top_level": {"type": ["number", "null"],
+                              "description": "price of the top line / resistance / neckline he marks, or null"},
+                "bottom_level": {"type": ["number", "null"],
+                                 "description": "price of the bottom line / support / neckline he marks, or null"},
+                "if_breaks_up": {"type": "string", "description": "what he says price will do / he will do if it "
+                                                                  "breaks up; empty if he doesn't say"},
+                "if_breaks_down": {"type": "string", "description": "same for a break down"},
+                "at_apex": {"type": "string", "description": "anything he says about price reaching the point where "
+                                                             "the lines converge, or empty"},
+                "targets": {"type": "array", "items": {"type": "number"}},
+                "summary": {"type": "string", "description": "the pattern and his plan restated in 1-3 sentences"},
+                "quote": {"type": "string"},
+            }}},
         "levels": {"type": "array", "items": {
             "type": "object", "additionalProperties": False,
             "required": ["time", "asset", "price", "kind"],
@@ -75,6 +107,10 @@ Rules:
 - Rules are general, reusable statements about how he trades ("I only short at a level", "stop goes
   above the last swing high"), not one-off comments.
 - Levels are specific prices he marks as support, resistance or targets.
+- Patterns: every chart pattern he points out (triangle, wedge, flag, channel, range, double top/bottom,
+  head and shoulders, ...), even without a trade. Record the lines' prices he gives, which way he expects
+  the break, what he says happens on a break up and on a break down, and anything about price reaching
+  the point where the lines converge. Leave fields empty / null when he doesn't say.
 - Quotes must be verbatim from the transcript.
 - setup_start / setup_end bracket his whole explanation of that setup (from where he starts setting it
   up to where he moves on), so someone can replay exactly that part of the stream.

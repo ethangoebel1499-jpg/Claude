@@ -207,12 +207,17 @@ def render(db: str) -> None:
     good, bad = accuracy(store)
     acc = f"agent accuracy {good}/{good + bad} ({good / (good + bad):.0%})" if good + bad else "no reviews yet"
     st.caption(f"{len(streams)} streams · {len(calls)} setups · {len(rules)} rules · {acc} · `{Path(db).name}`")
+    from streamlearn import patterns_ui
     if streams.empty:
         st.info('No streams yet. Add one: python -m streamlearn add <transcript.txt> --start "2026-10-28 20:00" '
                 '--url <YouTube link>')
+        st.subheader("📐 Patterns")
+        patterns_ui.render(store, clip)
         return
-    t_rev, t_score, t_calls, t_book, t_streams = st.tabs(["📝 Review", "Scorecard", "All setups", "Playbook",
-                                                          "Streams"])
+    t_rev, t_pat, t_score, t_calls, t_book, t_streams = st.tabs(
+        ["📝 Review", "📐 Patterns", "Scorecard", "All setups", "Playbook", "Streams"])
+    with t_pat:
+        patterns_ui.render(store, clip)
     with t_rev:
         show = st.radio("Show", ["Needs review", "Reviewed", "All"], horizontal=True, key="rv_show")
         v = calls if show == "All" else calls[calls.verdict.isna()] if show == "Needs review" else \
