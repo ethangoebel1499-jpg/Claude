@@ -64,6 +64,7 @@ class Pattern:
     highs: list[int] = field(default_factory=list)
     lows: list[int] = field(default_factory=list)
     head: float | None = None        # head & shoulders / double top: the extreme, for the measured move
+    trend: str | None = None         # price higher / lower than 50 candles before the pattern started
 
     def up(self, i: float) -> float:
         return self.upper[0] * i + self.upper[1]
@@ -155,9 +156,11 @@ class Detector:
                     best = p
             if best:
                 break
-        if best is not None and len(best.highs) + len(best.lows) >= 5:
-            return best                  # well-touched lines beat a two-point double top / bottom
-        return self._reversal(hs, ls, end, a) or best
+        if best is None or len(best.highs) + len(best.lows) < 5:   # well-touched lines beat a 2-point double top
+            best = self._reversal(hs, ls, end, a) or best
+        if best is not None:
+            best.trend = self._trend(best.start)
+        return best
 
     def _lines(self, hs, ls, end: int, a: float) -> Pattern | None:
         start = int(min(hs[0], ls[0]))
@@ -284,6 +287,14 @@ class Detector:
         return None
 
 
+# ---- published figures (Bulkowski, US stocks) - only ones confirmed from his site's text ----
+PUBLISHED = {
+    "ascending_triangle": {"up": 63, "text": "breaks up 63%"},
+    "descending_triangle": {"up": 53, "text": "breaks up 53%"},
+    "rising_wedge": {"up": 40, "text": "breaks down 60% (\"close to random\")"},
+}
+
+
 # ---- what actually happened (tools/pattern_stats.py) -------------------------------------
 _STATS = None
 
@@ -302,8 +313,28 @@ def _p(x) -> str:
     return "?" if x is None else f"{x:.0f}%"
 
 
-def history_note(kind: str, key: str | None = None, with_bias: bool | None = None) -> str:
-    """One or two sentences of what this pattern did on real crypto candles since 2017."""
+def odds_note(kind: str, trend: str | None = None) -> str:
+    """'Breaks up 63% of the time (58-68%), 71% after an uptrend' style sentence."""
+    st = stats().get(kind, {})
+    o = st.get("odds")
+    if not o or not o.get("n"):
+        return ""
+    out = f"Chance of breaking UP on crypto: {o['up']:.0f}% (likely {o['lo']:.0f}-{o['hi']:.0f}%, {o['n']} breaks)"
+    t = (st.get("odds_trend") or {}).get(trend) if trend else None
+    if t and t.get("n", 0) >= 20:
+        out += f"; {t['up']:.0f}% when it formed after {'an uptrend' if trend == 'up' else 'a downtrend'} like now"
+    rnd = st.get("random")
+    if rnd:
+        out += (f". On random prices the same shape breaks up {rnd['up']:.0f}% just from how the lines are drawn, "
+                f"so the real edge is {o['up'] - rnd['up']:+.0f} points")
+    pub = PUBLISHED.get(kind)
+    if pub:
+        out += f". Published stock studies (Bulkowski): {pub['text']}"
+    return out + "."
+
+
+def history_note(kind: str, key: str | None = None, with_bias: bool | None = None, trend: str | None = None) -> str:
+    """What this pattern did on real crypto candles since 2017."""
     st = stats().get(kind)
     if not st:
         return ""
@@ -325,7 +356,8 @@ def history_note(kind: str, key: str | None = None, with_bias: bool | None = Non
     else:
         out.append(f"breaks reached their measured target {_p(st['target_all'])} of the time "
                    f"(fakes {_p(st['fake'])}, retests of the broken line {_p(st['retest'])})")
-    return "History: " + ", ".join(out) + "."
+    odds = odds_note(kind, trend)
+    return "History: " + ", ".join(out) + "." + (f" {odds}" if odds and key not in ("target_hit",) else "")
 
 
 # ---- what to do -----------------------------------------------------------------------
@@ -399,7 +431,7 @@ def advice(p: Pattern, key: str, end: int, c: float, d: str | None = None, b: in
            after: dict | None = None) -> str:
     """Plain-English plan for this situation, with full prices, plus what history says."""
     text = _advice(p, key, end, c, d, b, after)
-    note = history_note(p.kind, key, d == p.bias if d else None)
+    note = history_note(p.kind, key, d == p.bias if d else None, p.trend)
     return f"{text} {note}".strip()
 
 

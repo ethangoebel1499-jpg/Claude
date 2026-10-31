@@ -52,7 +52,7 @@ def scan(df: pd.DataFrame) -> tuple[list[dict], list[dict]]:
         c0 = det.c[end]
         later = det.c[min(n - 1, end + 10)]
         move10 = (later / c0 - 1) * 100 * (1 if d == "up" else -1)
-        row = {"kind": p.kind, "dir": d, "with": d == p.bias if p.bias else None, "progress": prog, "late": key in squeezed,
+        row = {"kind": p.kind, "dir": d, "trend": det._trend(p.start), "with": d == p.bias if p.bias else None, "progress": prog, "late": key in squeezed,
                "fake": a["fake"], "retest": a["retest"], "target": a["target_hit"], "stopped": a["stopped"],
                "move10": move10, "time": str(df.index[end])}
         breaks.append(row)
@@ -63,6 +63,38 @@ def scan(df: pd.DataFrame) -> tuple[list[dict], list[dict]]:
         if key not in seen:
             squeezes.append({"kind": key[0], "dir": None, "with": None, "target": False, "fake": False, "move10": 0.0})
     return breaks, squeezes
+
+
+def wilson(k: int, n: int) -> tuple[float, float, float]:
+    """Share and its 95% range (Wilson interval), in %."""
+    if n == 0:
+        return float("nan"), float("nan"), float("nan")
+    z, p = 1.96, k / n
+    mid = (p + z * z / (2 * n)) / (1 + z * z / n)
+    half = z * ((p * (1 - p) / n + z * z / (4 * n * n)) ** 0.5) / (1 + z * z / n)
+    return p * 100, (mid - half) * 100, (mid + half) * 100
+
+
+def up_odds(g: pd.DataFrame) -> dict:
+    k, n = int((g["dir"] == "up").sum()), int(len(g))
+    p, lo, hi = wilson(k, n)
+    return {"n": n, "up": p, "lo": lo, "hi": hi}
+
+
+def random_breaks(series: int = 6, n: int = 15000) -> pd.DataFrame:
+    """The same detector on random prices (fat-tailed, no memory, so no real patterns). Whatever
+    'direction' shows up here comes from how the lines are drawn - the baseline real odds must beat."""
+    import numpy as np
+    rows = []
+    for seed in range(series):
+        rng = np.random.default_rng(seed)
+        c = 100 * np.exp(np.cumsum(rng.standard_t(4, n) * 0.01))
+        o = np.r_[c[0], c[:-1]]
+        sp = np.abs(rng.normal(0, 0.006, n)) * c
+        df = pd.DataFrame({"open": o, "close": c, "high": np.maximum(o, c) + sp, "low": np.minimum(o, c) - sp,
+                           "volume": 1.0}, index=pd.date_range("2018-01-01", periods=n, freq="4h", tz="UTC"))
+        rows += scan(df)[0]
+    return pd.DataFrame(rows)
 
 
 def pct(x) -> str:
@@ -86,6 +118,8 @@ def main() -> None:
             all_s += s
             print(f"{coin} {tf}: {len(df)} candles, {len(b)} breaks, {len(s)} squeezed near the apex")
     B, S = pd.DataFrame(all_b), pd.DataFrame(all_s)
+    print("random-price baseline...")
+    R = random_breaks()
     stats = {}
     lines = ["# What price did after each pattern", "",
              f"Real Kraken candles, 2017 to now, {len(COINS)} coins × {', '.join(TIMEFRAMES)}. The detector walks forward "
@@ -109,6 +143,13 @@ def main() -> None:
               "target_all": float(g.target.mean() * 100),
               "fake": float(g.fake.mean() * 100), "retest": float(g.retest.mean() * 100),
               "move10": float(g.move10.mean())}
+        st["odds"] = up_odds(g)
+        rg = R[R.kind == kind]
+        if len(rg) >= 30:
+            st["random"] = {"n": int(len(rg)), "up": float((rg["dir"] == "up").mean() * 100),
+                            "target": float(rg.target.mean() * 100)}
+        st["odds_trend"] = {t: up_odds(g[g.trend == t]) for t in ("up", "down") if (g.trend == t).any()}
+        st["odds_tf"] = {t: up_odds(g[g.tf == t]) for t in TIMEFRAMES if (g.tf == t).any()}
         sq = S[S.kind == kind] if len(S) else S
         if len(sq):
             st["squeezed"] = int(len(sq))
@@ -127,6 +168,31 @@ def main() -> None:
         if "squeezed" in st:
             lines.append(f"| {NAMES[kind]} | {st['squeezed']} | {pct(st['squeeze_no_break'])} | {pct(st['squeeze_with'])} | "
                          f"{pct(st['squeeze_target'])} | {pct(st['squeeze_fake'])} |")
+    def odds(o):
+        return "-" if not o or not o["n"] else f"{o['up']:.0f}% ({o['lo']:.0f}-{o['hi']:.0f}%, n={o['n']})"
+    lines += ["", "## Chance of breaking UP (95% range, number of breaks)", "",
+              "**On random data** = the same detector on random prices with no real patterns: the share of breaks "
+              "UP that comes purely from how the lines are drawn (the sloped line is closer to price, so it gets "
+              "broken first). **Real edge** = real minus random - the part that is actually market behaviour. ",
+              "",
+              "Break = first candle close beyond either line. The range is where the true chance most likely sits "
+              "given how many breaks were seen. *Trend before* = price higher or lower than 50 candles before "
+              "the pattern started. Published = Bulkowski, *Encyclopedia of Chart Patterns* / thepatternsite.com "
+              "(US stocks).", "",
+              "| Pattern | All | On random data | Real edge | Trend before UP | Trend before DOWN | 4h | Daily | "
+              "Published (stocks) |",
+              "|---|---|---|---|---|---|---|---|---|"]
+    from mcbot.patterns import PUBLISHED
+    for kind, st in stats.items():
+        if kind.startswith("_") or "odds" not in st:
+            continue
+        pub = PUBLISHED.get(kind, {}).get("text", "-")
+        rnd = st.get("random")
+        edge = f"{st['odds']['up'] - rnd['up']:+.0f} pts" if rnd else "-"
+        lines.append(f"| {NAMES[kind]} | {odds(st['odds'])} | {pct(rnd['up']) if rnd else '-'} | {edge} | "
+                     f"{odds(st['odds_trend'].get('up'))} | "
+                     f"{odds(st['odds_trend'].get('down'))} | {odds(st['odds_tf'].get('4h'))} | "
+                     f"{odds(st['odds_tf'].get('1D'))} | {pub} |")
     early = B[(B.kind.isin(CONVERGING)) & (B.progress < 0.75)] if len(B) else B
     late = B[(B.kind.isin(CONVERGING)) & (B.progress >= 0.75)] if len(B) else B
     if len(early) and len(late):

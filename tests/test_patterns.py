@@ -82,3 +82,12 @@ def test_stream_patterns_extracted_checked_and_shown(tmp_path, monkeypatch):
     assert not at.exception
     assert any("What he said" in m.value for m in at.markdown)
     assert any("Every situation" in e.label for e in at.expander)
+
+
+def test_probability_range():
+    import sys
+    sys.path.insert(0, str(Path(__file__).parent.parent / "tools"))
+    from pattern_stats import wilson
+    p, lo, hi = wilson(50, 100)
+    assert p == 50 and lo == pytest.approx(40.4, abs=0.1) and hi == pytest.approx(59.6, abs=0.1)
+    assert wilson(630, 1000)[1] > 59          # 1,000 breaks pins 63% down to about 60-66%

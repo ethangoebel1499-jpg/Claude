@@ -12,7 +12,7 @@ import pandas as pd
 import streamlit as st
 
 from livepaper.fmt import price
-from mcbot.patterns import CONVERGING, NAMES, PLAYBOOK, SITUATIONS, Detector, situation, stats
+from mcbot.patterns import CONVERGING, NAMES, PLAYBOOK, PUBLISHED, SITUATIONS, Detector, situation, stats
 
 KEY_NAMES = dict((k, n) for k, n, _ in SITUATIONS)
 KEY_NAMES.update({"broke": "Broke out"})
@@ -68,7 +68,16 @@ def stats_table(kind: str) -> pd.DataFrame | None:
     if not st_:
         return None
     f = lambda x: "-" if x is None else f"{x:.0f}%"
+    o = lambda d: "-" if not d or not d.get("n") else f"{d['up']:.0f}% (likely {d['lo']:.0f}-{d['hi']:.0f}%, {d['n']:,} breaks)"
     rows = [("Breaks found (8 coins, 4h + daily, 2017 to now)", f"{st_['n']:,}"),
+            ("Chance of breaking UP", o(st_.get("odds"))),
+            ("...when it formed after an uptrend", o((st_.get("odds_trend") or {}).get("up"))),
+            ("...when it formed after a downtrend", o((st_.get("odds_trend") or {}).get("down"))),
+            ("Same shape on random prices breaks UP (from line geometry alone)",
+             f"{st_['random']['up']:.0f}%" if st_.get("random") else "-"),
+            ("Real edge (crypto minus random)",
+             f"{st_['odds']['up'] - st_['random']['up']:+.0f} points" if st_.get("random") and st_.get("odds") else "-"),
+            ("Published stock studies (Bulkowski)", PUBLISHED.get(kind, {}).get("text", "-")),
             ("Broke the textbook direction", f(st_.get("with_pct"))),
             ("Textbook-direction breaks that reached the target", f(st_.get("target_with"))),
             ("Opposite-direction breaks that reached the target", f(st_.get("target_against"))),
