@@ -183,11 +183,16 @@ CATALOG = {
                      "red dot above zero + red Heikin Ashi = reversal down (exit). 50% at +2%, 25% at +5%, "
                      "the rest rides until the reversal down. No shorts",
            "timeframes": "any (best on 8h-2D)", "func": "raw", "raw": "s8", "long_only": True},
+    "S9": {"name": "Falling wedge after uptrend",
+           "source": "Pattern study (reports/patterns.md): falling wedge that formed after an uptrend, candle "
+                     "closes above its top line before 75% of the way to the apex. Stop = bottom line, "
+                     "target = wedge height added to the break. Long only",
+           "timeframes": "2h-1D", "func": "custom", "module": "s9", "long_only": True},
 }
 
 
 def custom_module(sid: str):
-    """Strategies with their own signals / backtest / checklist (S2, S5, S6, S7)."""
+    """Strategies with their own signals / backtest / checklist (S2, S5, S6, S7, S9)."""
     import importlib
     return importlib.import_module(f"mcbot.{CATALOG[sid]['module']}")
 

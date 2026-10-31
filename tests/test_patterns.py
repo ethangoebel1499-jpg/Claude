@@ -91,3 +91,17 @@ def test_probability_range():
     p, lo, hi = wilson(50, 100)
     assert p == 50 and lo == pytest.approx(40.4, abs=0.1) and hi == pytest.approx(59.6, abs=0.1)
     assert wilson(630, 1000)[1] > 59          # 1,000 breaks pins 63% down to about 60-66%
+
+
+def test_s9_buys_the_wedge_break_after_an_uptrend():
+    from mcbot import s9
+    # uptrend, then a falling wedge (both lines falling, top line steeper), then a break up
+    pts = list(np.linspace(60, 120, 10)) + [120, 104, 114, 103, 109.5, 102.4, 106.5] + [110, 115, 120, 126, 132]
+    df = zig(pts)
+    fr = s9.signals(df)
+    assert fr.long_entry.sum() == 1
+    i = int(np.flatnonzero(fr.long_entry.to_numpy())[0])
+    assert fr.long_stop.iloc[i] < df.close.iloc[i] < fr.long_tp1.iloc[i]
+    r = s9.backtest(df, fr)
+    assert r.stats["trades"] == 1 and r.trades[0].reason.startswith("target")
+    assert "LONG:" in s9.checklist(df, i)
