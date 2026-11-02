@@ -15,12 +15,13 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent
 sys.path.insert(0, str(ROOT))
 
-FOLDERS = ("mcbot", "livepaper", "streamlearn", "tools")
+FOLDERS = ("mcbot", "livepaper", "streamlearn", "apprentice", "tools")
 TOP = ("launcher.pyw", "bootstrap.pyw", "updater.py", "healthcheck.py", "main.py")
 MODULES = ("mcbot.backtest", "mcbot.patterns", "mcbot.fmt", "livepaper.core", "livepaper.runner", "livepaper.store",
            "livepaper.strategies", "livepaper.feeds", "livepaper.history", "livepaper.brokers", "livepaper.settings",
            "streamlearn.store", "streamlearn.pipeline", "streamlearn.verify", "streamlearn.patterns_ui",
-           "streamlearn.ollama_local", "streamlearn.add_ui")
+           "streamlearn.ollama_local", "streamlearn.add_ui", "apprentice.store", "apprentice.brain",
+           "apprentice.teach", "apprentice.youtube", "apprentice.strategy", "apprentice.ui")
 
 
 DATA = ("livepaper/data/stocks.csv", "livepaper/static/lightweight-charts.standalone.production.js",

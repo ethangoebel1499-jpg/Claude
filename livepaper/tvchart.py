@@ -75,15 +75,23 @@ def markers_from_trades(candles: pd.DataFrame, trades) -> list[dict]:
 
 
 def html(candles: pd.DataFrame, markers: list[dict] | None = None, lines: list[dict] | None = None,
-         height: int = 460, show_bars: int = 150) -> str:
-    """lines: [{"price", "title", "color"}] drawn across the chart (e.g. the open position)."""
+         height: int = 460, show_bars: int = 150, segments: list[dict] | None = None) -> str:
+    """lines: [{"price", "title", "color"}] drawn across the chart (e.g. the open position).
+    segments: [{"points": [(time, price), (time, price)], "color", "width", "dashed"}] - trendlines
+    such as a chart pattern's top and bottom lines."""
+    segs = []
+    for sg in segments or []:
+        pts = sorted({_ts(t): float(p) for t, p in sg["points"]}.items())
+        if len(pts) >= 2:
+            segs.append({"data": [{"time": t, "value": p} for t, p in pts], "color": sg.get("color", "#facc15"),
+                         "width": sg.get("width", 2), "dashed": bool(sg.get("dashed"))})
     data = [{"time": _ts(t), "open": float(r.open), "high": float(r.high), "low": float(r.low), "close": float(r.close)}
             for t, r in candles[["open", "high", "low", "close"]].iterrows()]
     last = float(candles.close.iloc[-1]) if len(candles) else 1.0
     decimals = 2 if last >= 1 else max(4, min(10, 3 - int(f"{last:e}".split("e")[1])))
     step = (candles.index[-1] - candles.index[-2]).total_seconds() if len(candles) > 1 else 3600
     cfg = {"data": data, "markers": markers or [], "lines": lines or [], "decimals": decimals,
-           "show": show_bars, "step": step}
+           "show": show_bars, "step": step, "segments": segs}
     return f"""<!doctype html><html><head><meta charset="utf-8"><style>
 body {{ margin:0; background:#0b1220; font-family:-apple-system,Segoe UI,Roboto,sans-serif; }}
 #bar {{ display:flex; gap:4px; padding:6px 8px; align-items:center; }}
@@ -124,6 +132,12 @@ s.setData(C.data);
 s.setMarkers(C.markers);
 for (const l of C.lines) s.createPriceLine({{ price: l.price, color: l.color, lineWidth: 2,
   lineStyle: LightweightCharts.LineStyle.Dashed, axisLabelVisible: true, title: l.title }});
+for (const g of C.segments) {{
+  const ls = chart.addLineSeries({{ color: g.color, lineWidth: g.width, lastValueVisible: false,
+    priceLineVisible: false, crosshairMarkerVisible: false,
+    lineStyle: g.dashed ? LightweightCharts.LineStyle.Dashed : LightweightCharts.LineStyle.Solid }});
+  ls.setData(g.data);
+}}
 const n = C.data.length;
 function show(days) {{
   if (!n) return;
@@ -151,12 +165,13 @@ chart.subscribeCrosshairMove(p => {{
 </script></body></html>"""
 
 
-def show(candles: pd.DataFrame, markers=None, lines=None, height: int = 460, show_bars: int = 150) -> None:
+def show(candles: pd.DataFrame, markers=None, lines=None, height: int = 460, show_bars: int = 150,
+         segments=None) -> None:
     import streamlit as st
     if candles is None or candles.empty:
         st.caption("No candles to chart yet.")
         return
-    page = html(candles, markers, lines, height, show_bars)
+    page = html(candles, markers, lines, height, show_bars, segments)
     if hasattr(st, "iframe"):                 # Streamlit 1.5x+ (components.html is being removed)
         st.iframe(page, height=height)
     else:

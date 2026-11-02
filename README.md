@@ -198,6 +198,7 @@ Edit `live.toml`: which strategy, symbol, timeframe and capital per run.
   price check; untick it (here or under *Manage paper-trading runs*) and it closes the open
   position and stops. Runs live in the database, so no restart is needed.
 - **🎙️ Streams** - the stream study agent's review screen (see below), so everything is in one app.
+- **🧠 Apprentice** - a separate trading agent you teach with streams and videos (see below).
 - **📜 Activity** - every event and fill.
 - **⚙️ Account** - Webull paper keys (with a *Test connection* button), broker, fees, how often to
   check prices, sharing with Claude, and the stream agent's model / Anthropic key. Saved in plain
@@ -282,6 +283,46 @@ redistribute them.
 - **From streams:** every pattern Jason points out (triangle, wedge, flag, channel, range, double top/bottom, head and shoulders) is extracted with his lines, which way he expects the break, what he says happens on a break up / down and at the apex - with the clip, his screen, and what price actually did (which line broke first, did it reach his target or fail back inside). 👍/👎 to grade the agent.
 - **Check a chart now** (Streams → 📐 Patterns): pick a coin and timeframe; the detector draws the pattern's lines and apex and says which situation price is in - early, breakout zone, squeezed near the apex, past the apex, at a line, broke the textbook way or against it, retest, fake break, target hit - with the levels to act on (full prices).
 - **Pattern playbook:** what to do in every situation for every pattern, next to how that pattern really behaved on 8 coins × 4h/daily since 2017 (`python tools/pattern_stats.py` → `reports/patterns.md`). The detector only uses confirmed swing points, so it never looks ahead.
+
+## 🧠 Apprentice - an agent you teach to trade (`apprentice/`)
+
+The stream study agent *checks one streamer's calls*. The apprentice is separate: you feed it any
+trading lessons and it learns to analyse charts and trade **on its own**.
+
+1. **📚 Teach** - paste a **YouTube video or a whole playlist** link (it fetches each video's captions by
+   itself and learns them one by one; videos it already learned are skipped, so paste the playlist
+   again when new videos come out), paste a transcript or notes, or import everything the stream agent
+   already studied. The AI (same as the stream agent: local Ollama or Claude) pulls out **concepts**
+   (what to look for, entries, stops, mistakes) and **setups**, translating each setup's conditions into
+   rules it can check on any candle - EMAs, RSI, MACD, Market Cipher, candles (engulfing, hammer,
+   shooting star), support/resistance bounces and rejections, chart-pattern breakouts, squeezes,
+   higher lows... Anything it can't check yet is listed in plain words.
+2. **🎓 Learn** - every setup is tested on real prices (BTC/ETH/SOL 4h and daily by default): enter at the
+   next open, stop 1.5 ATR, target 2R. A setup is **active** only if it beats entering on random candles
+   over at least 10 trades; otherwise it stays a candidate or is retired. You can 📌 pin or 🚫 turn off any.
+3. **📈 Chart** - pick a coin or stock: the chart shows the pattern it sees (its lines), support/resistance,
+   where each active setup fired before (green won / red lost) and 🟡 **good trades it missed** (hindsight:
+   a swing that ran 3× its risk while none of its setups fired), plus its call on the latest candle -
+   **TRADE LONG / SHORT / WAIT** with confidence, entry, stop, target and its reasons (which setups fired
+   and their record, what a nearly-ready setup still needs, the pattern situation, and what it was taught
+   that applies). Calls are journaled and graded automatically.
+4. **Learning from missed trades** - for every missed trade it lists what was true on the chart. *Learn
+   from the trades it missed* finds the conditions that showed up at good entries far more often than
+   usual, builds setups from them on the first 70% of history and checks them on the last 30% it never
+   saw; only ones that held up are adopted automatically (🎓 Learn does this across all charts). 👍 / 👎
+   a missed trade to tell it whether you'd really have taken it.
+5. **⭐ Rate its accuracy** - every setup, concept, chart call and missed trade has a ⭐ button: 1-5 stars
+   and a comment. The ratings make an accuracy score (overall, per kind, and a running average as it
+   learns) with every comment kept; they change how much it trusts each setup (4-5★ up, 1-2★ down; a
+   rated chart call counts for the setups that made it), and your comments are added to the AI's
+   instructions so the next lessons are read better.
+6. **📄 Paper trade** - tick *Let the apprentice paper trade* (or pick **🧠 Apprentice** in Strategy Lab):
+   it trades whenever an active setup fires, and what it trades changes as it learns.
+
+Command line: `python -m apprentice teach <link or file>` · `import-streams` · `learn` · `analyze BTC 4h` ·
+`list`. Its memory is `apprentice.db` on your computer (never pushed). A tested edge is a reason to paper
+trade, not proof - the missed-trade setups are found in hindsight, which is why each is checked on data it
+didn't see.
 
 ## Important caveats
 - The paper/live bot uses a single stop and target. Leverage, partial take-profits and trailing are backtest-only for now.

@@ -99,8 +99,8 @@ cfg = load_config(CONFIG) if Path(CONFIG).exists() else {"run": [], "app": {}}
 seed_runs(cfg, store)
 
 st.title("📈 Paper Trading")
-tab_dash, tab_lab, tab_build, tab_streams, tab_log, tab_acct = st.tabs(
-    ["📊 Dashboard", "🧪 Strategy Lab", "🛠️ Builder", "🎙️ Streams", "📜 Activity", "⚙️ Account"])
+tab_dash, tab_lab, tab_build, tab_streams, tab_app, tab_log, tab_acct = st.tabs(
+    ["📊 Dashboard", "🧪 Strategy Lab", "🛠️ Builder", "🎙️ Streams", "🧠 Apprentice", "📜 Activity", "⚙️ Account"])
 
 
 # ---- Dashboard ----------------------------------------------------------------
@@ -546,6 +546,13 @@ with tab_streams:
     from streamlearn.dashboard import render as render_streams
     render_streams(settings.get("streamlearn_db", "streamlearn.db"))
 
+with tab_app:
+    try:
+        from apprentice.ui import render as render_apprentice
+        render_apprentice(store)
+    except Exception as e:
+        st.error(f"The apprentice couldn't start: {type(e).__name__}: {e}")
+
 
 # ---- Account ----------------------------------------------------------------------
 def test_webull_stops() -> list[str]:
@@ -639,6 +646,8 @@ with tab_acct:
                                          help="auto = qwen2.5vl:3b / 7b sized for this computer; Claude reads "
                                               "charts much better if you use the Claude option")
             sl_db = st.text_input("Stream study database", cur["streamlearn_db"])
+            ap_db = st.text_input("Apprentice database (what the 🧠 Apprentice has learned)",
+                                  cur.get("apprentice_db", "apprentice.db"))
         if st.form_submit_button("Save settings", type="primary"):
             settings.save({"broker": broker, "fee": fee / 100, "max_stop": cap_pct / 100, "poll_seconds": int(poll), "sync_git": sync_git,
                            "sync_minutes": int(sync_min), "webull_app_key": key.strip(),
@@ -647,7 +656,8 @@ with tab_acct:
                            "stream_backend": backend, "timezone": tz.strip(), "ollama_model": ollama_model.strip(),
                            "ollama_url": ollama_url.strip(), "anthropic_api_key": anthropic_key.strip(),
                            "stream_screen": screen_on, "ollama_vision_model": vision_model.strip() or "auto",
-                           "streamlearn_db": sl_db.strip() or "streamlearn.db"})
+                           "streamlearn_db": sl_db.strip() or "streamlearn.db",
+                           "apprentice_db": ap_db.strip() or "apprentice.db"})
             st.success("Saved. The trader switches to these settings on its next price check - no restart needed.")
     c1, c2 = st.columns([1, 3])
     if c1.button("Test Webull connection"):

@@ -141,6 +141,20 @@ class OllamaBackend:
         r.raise_for_status()
         return json.loads(r.json()["message"]["content"])
 
+    def ask(self, system: str, user: str, schema: dict) -> dict:
+        """Any question with a JSON-schema answer (the apprentice uses this)."""
+        try:
+            r = requests.post(f"{self.url}/api/chat", timeout=1800, json={
+                "model": self.model, "stream": False, "format": schema,
+                "options": {"temperature": 0, "num_ctx": 16384},
+                "messages": [{"role": "system", "content": system}, {"role": "user", "content": user}]})
+        except requests.ConnectionError:
+            raise RuntimeError(f"Ollama isn't running at {self.url}") from None
+        if r.status_code == 404:
+            raise RuntimeError(f"model {self.model} isn't installed: run `ollama pull {self.model}`")
+        r.raise_for_status()
+        return json.loads(r.json()["message"]["content"])
+
     def read_frame(self, jpeg: bytes, prompt: str, schema: dict) -> dict:
         """Read a screenshot of his chart with a vision model (e.g. qwen2.5vl)."""
         import base64
@@ -187,6 +201,21 @@ class ClaudeBackend:
             raise RuntimeError("Claude's answer was cut off (max_tokens); use smaller chunks")
         text = next(b.text for b in response.content if b.type == "text")
         return json.loads(text)
+
+
+def _claude_ask(self, system: str, user: str, schema: dict) -> dict:
+    response = self.client.beta.messages.create(
+        model=self.model, max_tokens=16000, betas=["server-side-fallback-2026-07-01"], fallbacks="default",
+        system=system, output_config={"effort": self.effort, "format": {"type": "json_schema", "schema": schema}},
+        messages=[{"role": "user", "content": user}])
+    if response.stop_reason == "refusal":
+        raise RuntimeError(f"Claude declined: {response.stop_details}")
+    if response.stop_reason == "max_tokens":
+        raise RuntimeError("Claude's answer was cut off (max_tokens)")
+    return json.loads(next(b.text for b in response.content if b.type == "text"))
+
+
+ClaudeBackend.ask = _claude_ask
 
 
 def _claude_read_frame(self, jpeg: bytes, prompt: str, schema: dict) -> dict:

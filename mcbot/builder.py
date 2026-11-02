@@ -94,6 +94,110 @@ RULES = {
     "down_pct": ("Price down more than A% over the last B candles", 5, 10,
                  lambda d, a, b: d.close / d.close.shift(int(b)) - 1 < -a / 100),
 }
+
+
+# ---- reading the chart: candles, support / resistance, chart patterns -----------------------------
+def _body(d):
+    return (d.close - d.open).abs()
+
+
+def _range(d):
+    return (d.high - d.low).replace(0, np.nan)
+
+
+def _engulf(d, up: bool) -> pd.Series:
+    po, pc = d.open.shift(), d.close.shift()
+    if up:
+        return (pc < po) & (d.close > d.open) & (d.close >= po) & (d.open <= pc)
+    return (pc > po) & (d.close < d.open) & (d.close <= po) & (d.open >= pc)
+
+
+def _hammer(d, up: bool) -> pd.Series:
+    lower = d[["open", "close"]].min(axis=1) - d.low
+    upper = d.high - d[["open", "close"]].max(axis=1)
+    small = _body(d) <= 0.35 * _range(d)
+    return small & ((lower >= 2 * upper) & (lower >= 0.55 * _range(d)) if up
+                    else (upper >= 2 * lower) & (upper >= 0.55 * _range(d)))
+
+
+_SR_CACHE: dict = {}
+_PAT_CACHE: dict = {}
+
+
+def _key(d) -> tuple:
+    return (id(d), len(d), d.index[0] if len(d) else None, d.index[-1] if len(d) else None)
+
+
+def _sr(d) -> pd.DataFrame:
+    from .indicators import sr_levels
+    k = _key(d)
+    if k not in _SR_CACHE:
+        _SR_CACHE.clear()
+        _SR_CACHE[k] = sr_levels(d)
+    return _SR_CACHE[k]
+
+
+def pattern_frame(d: pd.DataFrame) -> pd.DataFrame:
+    """Per closed candle: the chart pattern price is in (if any), whether it broke up / down on this
+    candle, and how close it is to the apex. Uses mcbot.patterns (confirmed swing points only)."""
+    k = _key(d)
+    if k in _PAT_CACHE:
+        return _PAT_CACHE[k]
+    from .patterns import Detector
+    det = Detector(d)
+    n = len(d)
+    kind = np.array([""] * n, dtype=object)
+    bias = np.array([""] * n, dtype=object)
+    brk = np.array([""] * n, dtype=object)
+    prog = np.full(n, np.nan)
+    prev = None
+    for i in range(n):
+        p = det.find(i) if i >= 30 else None
+        if prev is not None and p is None:          # the pattern of the last candle broke on this one?
+            brk[i] = det.broke(prev, i) or ""
+            if brk[i]:                              # the break candle still belongs to the pattern that broke
+                kind[i], bias[i] = prev.kind, prev.bias or ""
+        if p is not None:
+            kind[i], bias[i] = p.kind, p.bias or ""
+            pr = p.progress(i)
+            prog[i] = np.nan if pr is None else pr
+        prev = p
+    out = pd.DataFrame({"kind": kind, "bias": bias, "broke": brk, "progress": prog}, index=d.index)
+    if len(_PAT_CACHE) > 8:
+        _PAT_CACHE.clear()
+    _PAT_CACHE[k] = out
+    return out
+
+
+RULES.update({
+    "bull_engulf": ("Bullish engulfing candle", None, None, lambda d, a, b: _engulf(d, True)),
+    "bear_engulf": ("Bearish engulfing candle", None, None, lambda d, a, b: _engulf(d, False)),
+    "hammer": ("Hammer / bullish pin bar (long lower wick)", None, None, lambda d, a, b: _hammer(d, True)),
+    "shooting_star": ("Shooting star / bearish pin bar (long upper wick)", None, None,
+                      lambda d, a, b: _hammer(d, False)),
+    "sr_bounce_up": ("Bounced off support / reclaimed a level (closed back above it)", None, None,
+                     lambda d, a, b: _sr(d)["sr_reclaim_up"].astype(bool)),
+    "sr_reject_down": ("Rejected at resistance / lost a level (closed back below it)", None, None,
+                       lambda d, a, b: _sr(d)["sr_reject_down"].astype(bool)),
+    "pattern_break_up": ("Chart pattern broke out upward on this candle", None, None,
+                         lambda d, a, b: pattern_frame(d).broke.eq("up")),
+    "pattern_break_down": ("Chart pattern broke down on this candle", None, None,
+                           lambda d, a, b: pattern_frame(d).broke.eq("down")),
+    "in_bullish_pattern": ("Inside a pattern that usually breaks up (falling wedge, ascending triangle, bull flag...)",
+                           None, None, lambda d, a, b: pattern_frame(d).bias.eq("up")),
+    "in_bearish_pattern": ("Inside a pattern that usually breaks down (rising wedge, descending triangle, "
+                           "bear flag...)", None, None, lambda d, a, b: pattern_frame(d).bias.eq("down")),
+    "near_apex": ("Squeezed near a triangle / wedge apex (A% of the way there or more)", 75, None,
+                  lambda d, a, b: pattern_frame(d).progress >= a / 100),
+    "squeeze": ("Volatility squeeze: ATR (14) below A × its 50-candle average", 0.7, None,
+                lambda d, a, b: (lambda t: t < a * t.rolling(50).mean())(
+                    pd.concat([d.high - d.low, (d.high - d.close.shift()).abs(),
+                               (d.low - d.close.shift()).abs()], axis=1).max(axis=1).rolling(14).mean())),
+    "higher_low": ("Higher low: the last A candles' low is above the A candles before", 5, None,
+                   lambda d, a, b: d.low.rolling(int(a)).min() > d.low.shift(int(a)).rolling(int(a)).min()),
+    "lower_high": ("Lower high: the last A candles' high is below the A candles before", 5, None,
+                   lambda d, a, b: d.high.rolling(int(a)).max() < d.high.shift(int(a)).rolling(int(a)).max()),
+})
 LABELS = {k: v[0] for k, v in RULES.items()}
 BY_LABEL = {v[0]: k for k, v in RULES.items()}
 
