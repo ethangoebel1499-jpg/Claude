@@ -6,7 +6,6 @@ then write how it ended - the dashboard's ➕ Add a stream shows the log while i
 
 from __future__ import annotations
 
-import subprocess
 import sys
 from pathlib import Path
 
@@ -14,12 +13,9 @@ ROOT = Path(__file__).resolve().parent.parent
 
 
 def main() -> int:
+    from streamlearn.jobctl import run_queued
     log, args = Path(sys.argv[1]), sys.argv[2:]
-    with open(log, "a", encoding="utf-8", errors="replace") as out:
-        code = subprocess.call([sys.executable, "-u", "-m", "streamlearn", *args], cwd=ROOT, stdout=out,
-                               stderr=subprocess.STDOUT)
-        out.write(f"\n[finished with exit code {code}]\n")
-    return code
+    return run_queued("streamlearn", log, args, queued=bool(args) and args[0] == "add")
 
 
 if __name__ == "__main__":

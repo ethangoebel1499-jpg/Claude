@@ -163,16 +163,63 @@ def job_state(text: str) -> str:
     return f"⚠️ Done, but no trade setups were found ({rules} rules, {pats} patterns){tail}"
 
 
+def _db():
+    from livepaper import settings
+    from streamlearn.store import Store
+    return Store(settings.get("streamlearn_db", "streamlearn.db"))
+
+
+def delete_job(log: Path, meta: dict) -> int:
+    """Stop the job if it's running, delete the stream it was processing and everything found in it."""
+    from streamlearn import jobctl
+    jobctl.stop(log)
+    n = 0
+    src = meta.get("file")
+    if src:
+        store = _db()
+        for sid in store.streams_from(src):
+            store.delete_stream(sid)
+            n += 1
+        store.db.close()
+        f = Path(src)
+        if f.parent == INBOX and f.exists():
+            f.unlink()
+    jobctl.delete_log(log)
+    return n
+
+
 @st.fragment(run_every=5)
 def jobs() -> None:
-    logs = sorted(JOBS.glob("*.log"), reverse=True)[:5] if JOBS.exists() else []
+    from streamlearn import jobctl
+    logs = sorted(JOBS.glob("*.log"), reverse=True)[:8] if JOBS.exists() else []
     if not logs:
         return
-    st.markdown("**Recent streams**")
+    texts = {log: log.read_text(encoding="utf-8", errors="replace") if log.exists() else "" for log in logs}
+    table = jobctl.processes() if any(DONE not in t for t in texts.values()) else []
+    live = {log for log in logs if DONE not in texts[log] and jobctl.job_pids(log, table)}
+    h1, h2 = st.columns([3, 1.3])
+    h1.markdown(f"**Recent streams** · {len(live)} running")
+    if live and h2.button(f"⏹ Stop all {len(live)} running", key="sl_stopall"):
+        for log in live:
+            jobctl.stop(log)
+        st.rerun()
     for log in logs:
         meta = json.loads(log.with_suffix(".json").read_text()) if log.with_suffix(".json").exists() else {}
-        text = log.read_text(encoding="utf-8", errors="replace") if log.exists() else ""
-        state = job_state(text)
-        with st.expander(f"{meta.get('title', log.stem)} · {state}", expanded=DONE not in text):
+        text = texts[log]
+        state = job_state(text) if (DONE in text or log in live) else "⚪ Not running (stopped or the app was closed)"
+        if log in live and "Waiting for the job before it" in text and "chunk 1/" not in text:
+            state = "⏸️ Queued - waits for the stream before it (one at a time on the AI)"
+        with st.expander(f"{meta.get('title', log.stem)} · {state}", expanded=log in live):
             lines = [x for x in text.splitlines() if x.strip()]
             st.code("\n".join(lines[-12:]) or "starting...", language=None)
+            b1, b2, _ = st.columns([1, 1.3, 3])
+            if log in live and b1.button("⏹ Stop", key=f"sl_stop_{log.stem}",
+                                         help="Ends it now; what it found so far is kept"):
+                jobctl.stop(log)
+                st.rerun()
+            with b2.popover("🗑️ Delete"):
+                st.warning("Stops it if it's running and deletes this stream and everything found in it (setups, "
+                           "rules, patterns, your reviews of them). This can't be undone.")
+                if st.button("Yes, delete", key=f"sl_deljob_{log.stem}", type="primary"):
+                    delete_job(log, meta)
+                    st.rerun()

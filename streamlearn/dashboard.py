@@ -274,7 +274,13 @@ def render(db: str) -> None:
             with st.expander(f"{s['start'][:16]} UTC · {s['title']} · {n} setups"):
                 url = st.text_input("Stream link (YouTube etc.) - lets each setup play its part of the stream",
                                     s.get("url") or "", key=f"url{s['id']}")
-                b1, b2, _ = st.columns([1, 1.4, 3])
+                b1, b2, b3, _ = st.columns([1, 1.4, 1, 2])
+                with b3.popover("🗑️ Delete"):
+                    st.warning("Deletes this stream and everything found in it (setups, rules, patterns, your reviews "
+                               "of them). This can't be undone.")
+                    if st.button("Yes, delete", key=f"delstream{s['id']}", type="primary"):
+                        store.delete_stream(int(s["id"]))
+                        st.rerun()
                 if b1.button("Save link", key=f"saveurl{s['id']}"):
                     store.set_url(int(s["id"]), url.strip())
                     st.rerun()

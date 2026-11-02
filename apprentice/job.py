@@ -32,12 +32,11 @@ def spawn(args: list[str], title: str) -> Path:
 
 
 def main() -> int:
+    from streamlearn.jobctl import run_queued
     log, args = Path(sys.argv[1]), sys.argv[2:]
-    with open(log, "a", encoding="utf-8", errors="replace") as out:
-        code = subprocess.call([sys.executable, "-u", "-m", "apprentice", *args], cwd=ROOT, stdout=out,
-                               stderr=subprocess.STDOUT, env={**os.environ, "PYTHONIOENCODING": "utf-8"})
-        out.write(f"\n{DONE} {code}]\n")
-    return code
+    # reading lessons uses the AI: one at a time. Tests on prices (learn) don't, so they run straight away.
+    return run_queued("apprentice", log, args, queued=bool(args) and args[0] in ("teach", "import-streams")
+                      and "--no-ai" not in args, env={"APPRENTICE_JOB": log.stem})
 
 
 if __name__ == "__main__":

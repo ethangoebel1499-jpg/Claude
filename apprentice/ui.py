@@ -109,18 +109,79 @@ def job_state(text: str) -> str:
     return "✅ Done - " + "; ".join(parts) if parts else "✅ Done"
 
 
+def job_lessons(store: Store, log: Path, meta: dict) -> list[int]:
+    """Lessons a job added: tagged with the job, or (jobs from before tagging) the videos its log names."""
+    ids = [r[0] for r in store.db.execute("SELECT id FROM lessons WHERE job = ?", (log.stem,)).fetchall()]
+    if ids:
+        return ids
+    text = log.read_text(encoding="utf-8", errors="replace") if log.exists() else ""
+    names = set(re.findall(r"^\[\d+/\d+\] (.+?): \d+ caption lines", text, re.M))
+    if meta.get("args") and len(meta["args"]) > 1:
+        names.add(meta["args"][1])
+    started = meta.get("started", "")[:10]
+    return [r[0] for r in store.db.execute("SELECT id, title, source, added FROM lessons").fetchall()
+            if (r[1] in names or r[2] in names) and (r[3] or "")[:10] >= started]
+
+
+def stop_job(store: Store, log: Path, meta: dict) -> None:
+    from streamlearn import jobctl
+    jobctl.stop(log)
+    store.job_stopped(log.stem)
+    for lid in job_lessons(store, log, meta):
+        store.db.execute("UPDATE lessons SET status = 'stopped', note = 'stopped part-way' "
+                         "WHERE id = ? AND status = 'learning'", (lid,))
+    store.commit()
+
+
+def delete_job(store: Store, log: Path, meta: dict) -> int:
+    from streamlearn import jobctl
+    stop_job(store, log, meta)
+    n = 0
+    for lid in job_lessons(store, log, meta):
+        store.forget_lesson(lid)
+        n += 1
+    jobctl.delete_log(log)
+    return n
+
+
 @st.fragment(run_every=5)
 def jobs() -> None:
-    logs = sorted(JOBS.glob("*.log"), reverse=True)[:6] if JOBS.exists() else []
+    from streamlearn import jobctl
+    store = get_store(db_path())
+    logs = sorted(JOBS.glob("*.log"), reverse=True)[:8] if JOBS.exists() else []
     if not logs:
         return
-    st.markdown("**Recent lessons and learning runs**")
+    texts = {log: log.read_text(encoding="utf-8", errors="replace") if log.exists() else "" for log in logs}
+    table = jobctl.processes() if any(DONE not in t for t in texts.values()) else []
+    live = {log for log in logs if DONE not in texts[log] and jobctl.job_pids(log, table)}
+    h1, h2 = st.columns([3, 1.3])
+    h1.markdown(f"**Recent lessons and learning runs** · {len(live)} running")
+    if live and h2.button(f"⏹ Stop all {len(live)} running", key="ap_stopall"):
+        for log in live:
+            meta = json.loads(log.with_suffix(".json").read_text()) if log.with_suffix(".json").exists() else {}
+            stop_job(store, log, meta)
+        st.rerun()
     for log in logs:
         meta = json.loads(log.with_suffix(".json").read_text()) if log.with_suffix(".json").exists() else {}
-        text = log.read_text(encoding="utf-8", errors="replace") if log.exists() else ""
-        with st.expander(f"{meta.get('title', log.stem)} · {job_state(text)}", expanded=DONE not in text):
+        text = texts[log]
+        state = job_state(text) if (DONE in text or log in live) else "⚪ Not running (stopped or the app was closed)"
+        if log in live and "Waiting for the job before it" in text and "[1/" not in text and "part 1/" not in text:
+            state = "⏸️ Queued - waits for the job before it (one at a time on the AI)"
+        with st.expander(f"{meta.get('title', log.stem)} · {state}", expanded=log in live):
             lines = [x for x in text.splitlines() if x.strip()]
             st.code("\n".join(lines[-14:]) or "starting...", language=None)
+            b1, b2, _ = st.columns([1, 1.3, 3])
+            if log in live and b1.button("⏹ Stop", key=f"ap_stop_{log.stem}",
+                                         help="Ends it now; videos it already finished are kept"):
+                stop_job(store, log, meta)
+                st.rerun()
+            with b2.popover("🗑️ Delete"):
+                n = len(job_lessons(store, log, meta))
+                st.warning(f"Stops it if it's running and deletes the {n} lesson(s)/video(s) it added and the setups "
+                           "learned from them (pinned ones stay). This can't be undone.")
+                if st.button("Yes, delete", key=f"ap_deljob_{log.stem}", type="primary"):
+                    delete_job(store, log, meta)
+                    st.rerun()
 
 
 # ---- tabs ---------------------------------------------------------------------------------------
@@ -175,9 +236,11 @@ def teach_tab(store: Store) -> None:
             c1, c2 = st.columns([6, 1])
             c1.markdown(f"**{r.title}** · {r.status} · {r.note or ''}" + (f" · [video]({r.url})" if r.url else "")
                         + (f" · playlist *{r.playlist}*" if r.playlist else ""))
-            if c2.button("Forget", key=f"ap_forget_{r.id}"):
-                store.forget_lesson(r.id)
-                st.rerun()
+            with c2.popover("🗑️ Delete"):
+                st.caption("Deletes this video/lesson, its concepts and the setups learned from it (pinned ones stay).")
+                if st.button("Yes, delete", key=f"ap_forget_{r.id}", type="primary"):
+                    store.forget_lesson(r.id)
+                    st.rerun()
 
 
 def stats_line(s: dict) -> str:

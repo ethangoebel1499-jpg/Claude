@@ -319,6 +319,11 @@ trading lessons and it learns to analyse charts and trade **on its own**.
 6. **📄 Paper trade** - tick *Let the apprentice paper trade* (or pick **🧠 Apprentice** in Strategy Lab):
    it trades whenever an active setup fires, and what it trades changes as it learns.
 
+**Running jobs:** lessons, playlists and streams are processed one at a time on the AI (later ones wait in
+line, shown as ⏸️ Queued). Every job in 📚 Teach and in 🎙️ Streams → ➕ Add stream has **⏹ Stop** (keeps what
+it finished) and **🗑️ Delete** (stops it and deletes the videos/stream it added and what was learned from
+them), plus **⏹ Stop all**. Each learned video and each stream in the Streams list has its own 🗑️ Delete too.
+
 Command line: `python -m apprentice teach <link or file>` · `import-streams` · `learn` · `analyze BTC 4h` ·
 `list`. Its memory is `apprentice.db` on your computer (never pushed). A tested edge is a reason to paper
 trade, not proof - the missed-trade setups are found in hindsight, which is why each is checked on data it

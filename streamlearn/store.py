@@ -63,6 +63,30 @@ class Store:
             self.db.execute(f"DELETE FROM {t} WHERE stream_id = ?", (sid,))
         self.db.commit()
 
+    def delete_stream(self, sid: int) -> None:
+        """Remove a stream and everything found in it (setups, rules, levels, patterns, outcomes, your reviews
+        of its setups, its screen frames)."""
+        ids = [r[0] for r in self.db.execute("SELECT id FROM calls WHERE stream_id = ?", (sid,)).fetchall()]
+        frames = [r[0] for r in self.db.execute("SELECT frame FROM calls WHERE stream_id = ? AND frame IS NOT NULL "
+                                                "UNION SELECT frame FROM patterns WHERE stream_id = ? AND frame IS "
+                                                "NOT NULL", (sid, sid)).fetchall()]
+        if ids:
+            marks = ",".join("?" * len(ids))
+            self.db.execute(f"DELETE FROM outcomes WHERE call_id IN ({marks})", ids)
+            self.db.execute(f"DELETE FROM reviews WHERE call_id IN ({marks})", ids)
+        for t in ("calls", "rules", "levels", "patterns", "segments"):
+            self.db.execute(f"DELETE FROM {t} WHERE stream_id = ?", (sid,))
+        self.db.execute("DELETE FROM streams WHERE id = ?", (sid,))
+        self.db.commit()
+        for f in frames:
+            try:
+                Path(f).unlink()
+            except OSError:
+                pass
+
+    def streams_from(self, source: str) -> list[int]:
+        return [r[0] for r in self.db.execute("SELECT id FROM streams WHERE source = ?", (source,)).fetchall()]
+
     def add_call(self, sid, c: dict) -> int:
         cur = self.db.execute(
             "INSERT INTO calls (stream_id, t, said_at, asset, direction, kind, timeframe, entry, stop, targets, "

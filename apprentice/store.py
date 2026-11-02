@@ -47,6 +47,8 @@ class Store:
         self.db = sqlite3.connect(str(path), check_same_thread=False, timeout=30)
         self.db.row_factory = sqlite3.Row
         self.db.executescript(SCHEMA)
+        if "job" not in {r[1] for r in self.db.execute("PRAGMA table_info(lessons)")}:
+            self.db.execute("ALTER TABLE lessons ADD COLUMN job TEXT")     # which background job added it
         self.db.commit()
 
     # ---- lessons -----------------------------------------------------------------------
@@ -58,9 +60,10 @@ class Store:
         if video_id:                              # a failed earlier try is replaced
             for (lid,) in self.db.execute("SELECT id FROM lessons WHERE video_id = ?", (video_id,)).fetchall():
                 self.forget_lesson(lid)
-        cur = self.db.execute("INSERT INTO lessons (title, source, video_id, url, playlist, lines, added, status) "
-                              "VALUES (?,?,?,?,?,?,?, 'learning')",
-                              (title, source, video_id, url, playlist, lines, now()))
+        import os
+        cur = self.db.execute("INSERT INTO lessons (title, source, video_id, url, playlist, lines, added, status, job) "
+                              "VALUES (?,?,?,?,?,?,?, 'learning', ?)",
+                              (title, source, video_id, url, playlist, lines, now(), os.environ.get("APPRENTICE_JOB")))
         self.db.commit()
         return cur.lastrowid
 
@@ -69,11 +72,24 @@ class Store:
         self.db.commit()
 
     def forget_lesson(self, lid: int):
-        """Remove a lesson and what came only from it (setups you adopted or edited are kept)."""
+        """Remove a lesson and the setups learned from it (ones you pinned are kept)."""
         self.db.execute("DELETE FROM concepts WHERE lesson_id = ?", (lid,))
-        self.db.execute("DELETE FROM setups WHERE lesson_id = ? AND source = 'lesson' AND status = 'candidate'", (lid,))
+        self.db.execute("DELETE FROM setups WHERE lesson_id = ? AND source = 'lesson' AND status != 'pinned'", (lid,))
         self.db.execute("DELETE FROM lessons WHERE id = ?", (lid,))
         self.db.commit()
+
+    def job_stopped(self, job: str):
+        """A job was stopped: the lesson it was in the middle of is marked stopped (paste it again to redo it)."""
+        self.db.execute("UPDATE lessons SET status = 'stopped', note = 'stopped part-way' "
+                        "WHERE job = ? AND status = 'learning'", (job,))
+        self.db.commit()
+
+    def forget_job(self, job: str) -> int:
+        """Delete every lesson a job added, and what was learned only from them."""
+        ids = [r[0] for r in self.db.execute("SELECT id FROM lessons WHERE job = ?", (job,)).fetchall()]
+        for lid in ids:
+            self.forget_lesson(lid)
+        return len(ids)
 
     # ---- knowledge ---------------------------------------------------------------------
     def add_concept(self, lid, c: dict):
