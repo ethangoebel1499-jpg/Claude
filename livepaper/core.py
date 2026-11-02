@@ -34,6 +34,7 @@ class Position:
     realized_usd: float = 0.0
     fees_usd: float = 0.0
     stop_order: str | None = None     # id of the stop order resting at the broker (works with the laptop off)
+    broker: str = "sim"               # which broker holds it ("sim" = the built-in paper broker, "webull")
 
 
 @dataclass
@@ -118,7 +119,8 @@ class PositionManager:
             self._save()
             return False
         self.state.pending_entry = None
-        self.state.position = Position(side, str(time), fill.price, fill.qty, fill.qty, fees_usd=fill.fee_usd)
+        self.state.position = Position(side, str(time), fill.price, fill.qty, fill.qty, fees_usd=fill.fee_usd,
+                                       broker=getattr(self.broker, "name", "sim"))
         if self.store:
             self.store.fill(self.name, time, side, "entry", fill)
         self._event(time, "entry", f"{side.upper()} {fmt_qty(fill.qty)} @ {fmt_price(fill.price)}")
@@ -279,6 +281,7 @@ class PositionManager:
 class SimBroker:
     """Paper broker. fill='intended' fills at the price the logic asks for (replay,
     matches the backtester); fill='market' fills at the latest market price (live)."""
+    name = "sim"
 
     def __init__(self, fee: float = 0.001, fill: str = "intended", market_price=None):
         self.fee, self.mode, self.market_price = fee, fill, market_price

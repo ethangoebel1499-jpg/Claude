@@ -128,6 +128,21 @@ class Runner:
         self.store.event(name, now, "catch-up", f"trader was off {_span(off)}: replayed {len(missed)} hourly candles"
                          + ("" if changed else ", stop and targets not reached"))
 
+    def drop_other_broker(self, now: str) -> None:
+        """A position opened with another broker (e.g. the built-in paper broker before switching to
+        Webull) doesn't exist at this one: close it on the books at today's price, no order sent."""
+        from .core import Fill
+        p = self.pm.state.position
+        here = getattr(self.pm.broker, "name", "sim")
+        if p is None or getattr(p, "broker", "sim") == here:
+            return
+        was = getattr(p, "broker", "sim")
+        p.stop_order = None
+        self.pm._record(Fill(self.price, p.remaining_qty, 0.0, "switch"), now, f"switched from {was} to {here}")
+        still = " It is still open in your Webull account - close it there if you want." if was == "webull" else ""
+        self.store.event(self.r["name"], now, "warning", f"closed the {was} position on the books (switched to {here}); "
+                                                          f"new trades go to {here}.{still}")
+
     def manual(self, now: str) -> None:
         """Force long / force short / close now, sent from the dashboard. A forced trade gets this
         run's stop and take profits like any other (and the stop order at the broker)."""
@@ -165,6 +180,7 @@ class Runner:
         ref = bars.close[bars.index <= pd.Timestamp(now) - pd.Timedelta("24h")]
         change = (self.price / ref.iloc[-1] - 1) * 100 if len(ref) else None
         self.store.quote(name, now, self.price, change)
+        self.drop_other_broker(now)
         self.manual(now)
         last = str(bars.index[-1])
         st = self.pm.state
@@ -229,6 +245,25 @@ class App:
                 self.feeds[kind] = feeds.KrakenFeed()
         return self.feeds[kind]
 
+    BROKER_KEYS = ("broker", "fee", "webull_app_key", "webull_app_secret", "webull_account_id", "webull_region",
+                   "webull_endpoint")
+
+    def reload_if_changed(self) -> "App":
+        """Broker or keys changed in the dashboard's Account tab: switch without restarting the trader."""
+        from . import settings
+        now = {**self.cfg.get("app", {}), **settings.saved()}
+        if all(now.get(k) == self.app.get(k) for k in self.BROKER_KEYS):
+            return self
+        print(f"[livepaper] broker settings changed - switching to {now.get('broker', 'sim')}")
+        try:
+            new = App(self.cfg, self.store, self.feeds)
+        except Exception as e:
+            self.store.event("app", now_utc(), "error", f"couldn't switch broker: {e}")
+            self.app.update({k: now.get(k) for k in self.BROKER_KEYS})     # don't retry every poll
+            return self
+        self.store.event("app", now_utc(), "broker", f"now trading with {new.app.get('broker', 'sim')}")
+        return new
+
     def sync_runs(self) -> None:
         all_runs = self.store.runs()
         wanted = {r["name"]: normalize_run(r) for r in all_runs if r["active"]}
@@ -281,6 +316,7 @@ def run_forever(cfg: dict, store: Store) -> None:
     print(f"livepaper: broker={app.app.get('broker', 'sim')}, polling every {poll}s. Runs are managed in the "
           f"dashboard's Strategy Lab. Ctrl+C to stop.")
     while True:
+        app = app.reload_if_changed()
         app.step()
         if app.app.get("sync_git", False) and time.time() - last_sync >= sync_every:
             try:

@@ -422,6 +422,29 @@ with tab_streams:
 
 
 # ---- Account ----------------------------------------------------------------------
+def test_webull_stops() -> list[str]:
+    """Place and cancel a tiny buy-stop far above the price, for a stock and for crypto: shows whether
+    Webull accepts the stop orders that protect trades while the computer is off. Nothing fills."""
+    from livepaper.brokers import WebullBroker, api_client
+    b = WebullBroker(api_client(), {"stock": ("SPY", "stock"), "crypto": ("XBTUSD", "crypto")}, fee=0)
+    out = []
+    for kind, label in (("stock", "Stocks (SPY)"), ("crypto", "Crypto (BTC)")):
+        try:
+            px = float(history(*(("SPY", "stock") if kind == "stock" else ("XBTUSD", "crypto")), "1D").close.iloc[-1])
+            qty = 1 if kind == "stock" else round(20 / px, 6)
+            coid = b.place_stop(kind, "buy", qty, px * 1.5)
+            if coid is None:
+                out.append(f"🔴 {label}: Webull refused stop orders - those trades are protected only while "
+                           "the trader runs (details in the trader log)")
+                continue
+            b.cancel_stop(kind, coid, qty, px * 1.5)
+            out.append(f"🟢 {label}: stop order accepted (test order at {price(px * 1.5)}, cancelled) - the stop works "
+                       "with this computer off")
+        except Exception as e:
+            out.append(f"🔴 {label}: {type(e).__name__}: {e}")
+    return out
+
+
 def test_webull() -> str:
     try:
         from livepaper.brokers import _find, api_client
@@ -489,10 +512,27 @@ with tab_acct:
                            "stream_backend": backend, "timezone": tz.strip(), "ollama_model": ollama_model.strip(),
                            "ollama_url": ollama_url.strip(), "anthropic_api_key": anthropic_key.strip(),
                            "streamlearn_db": sl_db.strip() or "streamlearn.db"})
-            st.success("Saved.")
+            st.success("Saved. The trader switches to these settings on its next price check - no restart needed.")
     c1, c2 = st.columns([1, 3])
     if c1.button("Test Webull connection"):
         c2.write(test_webull())
+    c3, c4 = st.columns([1, 3])
+    if c3.button("Test stop orders", help="Places and cancels a test stop far from the price - nothing fills"):
+        for line in test_webull_stops():
+            c4.write(line)
+    with st.expander("How to switch to Webull paper trading"):
+        st.markdown(
+            "1. **Get paper (sandbox) API keys** in Webull's Developer Center (developer.webull.com): sign in with your "
+            "Webull account, open API Management → My Application, and create/apply for an application for "
+            "**paper trading**. Approval can take a little while.\n"
+            "2. Paste the **App key** and **App secret** above (Webull paper account section). Leave the API host as "
+            "`api.sandbox.webull.com` - that's the paper (sandbox) server, not real money.\n"
+            "3. Set **Broker** to **Webull paper account** and press **Save settings**.\n"
+            "4. Press **Test Webull connection** (finds your paper account) and **Test stop orders** (checks the "
+            "safety stops work).\n"
+            "5. That's it: from the trader's next price check, every order goes to your Webull paper account. "
+            "Positions from the built-in paper broker are closed on the books (they don't exist at Webull); "
+            "their history stays.")
     st.caption("Webull keys: " + (f"set ({settings.mask(settings.get('webull_app_key'))})"
                                   if settings.get("webull_app_key") else "not set") +
                " · Anthropic key: " + (f"set ({settings.mask(settings.get('anthropic_api_key'))})"

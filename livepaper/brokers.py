@@ -13,6 +13,9 @@ import uuid
 
 from .core import Fill
 
+# Kraken's names (the app's crypto runs use them) -> Webull's
+WEBULL_CRYPTO = {"XBTUSD": "BTCUSD", "XXBTZUSD": "BTCUSD", "XDGUSD": "DOGEUSD", "XXDGZUSD": "DOGEUSD",
+                 "XETHZUSD": "ETHUSD", "XXRPZUSD": "XRPUSD", "XLTCZUSD": "LTCUSD", "XXLMZUSD": "XLMUSD"}
 FILLED = {"FILLED", "ALL_FILLED", "FINISHED", "COMPLETED"}
 DEAD = {"CANCELLED", "CANCELED", "REJECTED", "FAILED", "EXPIRED"}
 
@@ -49,6 +52,12 @@ def _find(d, *keys):
 
 
 class WebullBroker:
+    name = "webull"
+
+    def _symbol(self, run: str) -> tuple[str, str]:
+        symbol, asset = self.assets[run]
+        return (WEBULL_CRYPTO.get(symbol, symbol) if asset == "crypto" else symbol), asset
+
     def __init__(self, client, assets: dict[str, tuple[str, str]], fee: float = 0.0, wait_seconds: int = 20):
         """assets: run name -> (symbol, 'stock' | 'crypto')."""
         from webull.trade.trade_client import TradeClient
@@ -88,7 +97,7 @@ class WebullBroker:
     # ---- the stop order that rests at Webull (works with the laptop off) ----------
     def place_stop(self, run: str, side: str, qty: float, stop_price: float) -> str | None:
         """Good-till-cancelled stop-loss order. Returns its id, or None if Webull refuses it."""
-        symbol, asset = self.assets[run]
+        symbol, asset = self._symbol(run)
         coid = uuid.uuid4().hex
         order = {"combo_type": "NORMAL", "client_order_id": coid, "symbol": symbol,
                  "instrument_type": "CRYPTO" if asset == "crypto" else "EQUITY", "market": "US",
@@ -122,7 +131,7 @@ class WebullBroker:
         return True
 
     def fill(self, run: str, side: str, qty: float, price: float, reason: str) -> Fill | None:
-        symbol, asset = self.assets[run]
+        symbol, asset = self._symbol(run)
         coid = uuid.uuid4().hex
         order = {"combo_type": "NORMAL", "client_order_id": coid, "symbol": symbol,
                  "instrument_type": "CRYPTO" if asset == "crypto" else "EQUITY", "market": "US",

@@ -269,3 +269,30 @@ def test_stock_list_is_searchable_by_name():
     assert len(names) > 1000 and {"AAPL", "SPY", "BRK-B", "PLTR"} <= set(names)
     assert "Apple" in names["AAPL"] and "e+" not in "".join(names)
     assert len(set(stocks.tickers())) == len(stocks.tickers())          # no duplicates
+
+
+def test_switching_broker_drops_positions_the_new_broker_doesnt_hold(tmp_path, candles):
+    store = Store(tmp_path / "w.db")
+    r = {"name": "S", "strategy": "s8", "symbol": "XBTUSD", "asset": "crypto", "timeframe": "4h", "shorts": False,
+         "capital": 10_000.0, "fraction": 1.0, "feed": "kraken", "qty_step": 1e-6, "stop": None, "take_profits": None}
+    feed = FakeFeed(candles, 400)
+    holder = []
+    sim = SimBroker(fee=0.0, fill="market", market_price=lambda run: holder[0].price)
+    holder.append(Runner(r, feed, sim, store))
+    holder[0].step()
+    store.command("S", "long")
+    holder[0].step()
+    assert store.load_state("S").position.broker == "sim"
+
+    class FakeWebull(SimBroker):
+        name = "webull"
+        assets = {}
+    sent = []
+    wb = FakeWebull(fee=0.0, fill="market", market_price=lambda run: holder[-1].price)
+    wb.fill = lambda *a: sent.append(a) or SimBroker.fill(wb, *a)
+    holder.append(Runner(r, feed, wb, store))                  # the trader restarted on Webull
+    holder[-1].step()
+    assert holder[-1].pm.state.position is None and sent == []  # closed on the books, no order to Webull
+    assert "switched from sim to webull" in store.table("trades").reason.iloc[-1]
+    from livepaper.brokers import WEBULL_CRYPTO
+    assert WEBULL_CRYPTO["XBTUSD"] == "BTCUSD" and WEBULL_CRYPTO["XDGUSD"] == "DOGEUSD"
