@@ -1,5 +1,7 @@
 @echo off
-REM One-time setup on a Windows laptop: double-click this file.
+REM One-time setup on a Windows laptop: double-click this file. Nothing needs to be installed first:
+REM it downloads its own private Python and every library into this folder (runtime\ and .venv\),
+REM so nothing else on your computer changes. Delete the folder to remove it all.
 REM Run "setup.bat --streams" to also install the stream agent's audio transcriber (large download).
 cd /d "%~dp0"
 
@@ -16,55 +18,53 @@ if not errorlevel 1 (
   exit /b 1
 )
 
-where py >nul 2>nul
-if errorlevel 1 (
-  echo Python is needed. Install Python 3.13 from https://www.python.org/downloads/windows/
-  echo and tick "Add python.exe to PATH" on the first screen, then run this again.
-  pause
-  exit /b 1
-)
+set "APPDIR=%CD%"
+set "UV=%APPDIR%\runtime\uv.exe"
+set "UV_PYTHON_INSTALL_DIR=%APPDIR%\runtime\python"
+set "UV_CACHE_DIR=%APPDIR%\runtime\cache"
+set "UV_PYTHON_PREFERENCE=only-managed"
+if not exist runtime mkdir runtime
 
-REM Use a Python version every package has ready-made installers for (no compiler needed).
-set "PYV="
-for %%v in (3.13 3.12 3.11 3.10) do (
-  if not defined PYV (
-    py -%%v -c "import sys" >nul 2>nul && set "PYV=%%v"
+REM 1. uv: a small tool (from the makers of the Ruff linter) that downloads Python and libraries.
+if not exist "%UV%" (
+  echo Downloading the installer tool...
+  powershell -NoProfile -ExecutionPolicy Bypass -Command "$ErrorActionPreference = 'Stop'; [Net.ServicePointManager]::SecurityProtocol = 'Tls12'; $zip = Join-Path $env:APPDIR 'runtime\uv.zip'; Invoke-WebRequest -UseBasicParsing 'https://github.com/astral-sh/uv/releases/latest/download/uv-x86_64-pc-windows-msvc.zip' -OutFile $zip; $tmp = Join-Path $env:APPDIR 'runtime\uv_tmp'; Expand-Archive -Force $zip $tmp; Move-Item -Force (Get-ChildItem -Recurse $tmp -Filter uv.exe | Select-Object -First 1).FullName $env:UV; Remove-Item -Recurse -Force $tmp, $zip"
+  if not exist "%UV%" (
+    echo !! Couldn't download the installer tool. Check the internet connection and run setup.bat again.
+    pause
+    exit /b 1
   )
 )
-if not defined PYV (
-  echo.
-  echo Your Python version isn't supported by the trading packages yet:
-  py -c "import sys; print('   found Python', sys.version.split()[0])"
-  echo.
-  echo Install Python 3.13 from https://www.python.org/downloads/windows/ - pick the latest
-  echo "Python 3.13" Windows installer 64-bit. You can keep your current Python; both work side by side.
-  echo Then run setup.bat again.
-  pause
-  exit /b 1
-)
-echo Using Python %PYV%
 
-REM A .venv made by another Python version (e.g. a failed earlier attempt) is rebuilt.
+REM 2. A private Python 3.13 (every library has ready-made installers for it) in a fresh .venv.
 if exist .venv\Scripts\python.exe (
-  .venv\Scripts\python.exe -c "import sys; v=sys.version_info; sys.exit(0 if f'{v[0]}.{v[1]}'=='%PYV%' else 1)" >nul 2>nul
+  .venv\Scripts\python.exe -c "import sys, tkinter; sys.exit(0 if sys.version_info[:2] == (3, 13) else 1)" >nul 2>nul
   if errorlevel 1 (
-    echo Removing the old .venv made with a different Python...
+    echo Replacing an old .venv...
     rmdir /s /q .venv
   )
 )
-if not exist .venv\Scripts\python.exe py -%PYV% -m venv .venv
-set "VPY=.venv\Scripts\python.exe"
+if not exist .venv\Scripts\python.exe (
+  echo Downloading Python 3.13 ^(about 30 MB, only this once^)...
+  "%UV%" venv --python 3.13 --seed .venv
+  if errorlevel 1 (
+    echo !! Couldn't set up Python - send Claude the output above.
+    pause
+    exit /b 1
+  )
+)
+set "VPY=%APPDIR%\.venv\Scripts\python.exe"
 
-%VPY% -m pip install --upgrade pip -q
-echo Installing packages (a few minutes the first time)...
-%VPY% -m pip install -q --only-binary=:all: -r app-requirements.txt
+REM 3. The libraries.
+echo Installing libraries (a minute or two the first time)...
+"%UV%" pip install --python "%VPY%" -r app-requirements.txt
 if errorlevel 1 (
-  echo !! Package install failed - send Claude the output above.
+  echo !! Library install failed - send Claude the output above.
   pause
   exit /b 1
 )
-%VPY% -m pip install -q webull-openapi-python-sdk || echo !! Webull SDK did not install - the built-in paper broker still works.
-if "%1"=="--streams" %VPY% -m pip install -q faster-whisper
+"%UV%" pip install --python "%VPY%" webull-openapi-python-sdk || echo !! Webull SDK did not install - the built-in paper broker still works.
+if "%1"=="--streams" "%UV%" pip install --python "%VPY%" faster-whisper
 
 if not exist live.toml (
   copy livepaper\live.example.toml live.toml >nul
@@ -72,17 +72,22 @@ if not exist live.toml (
 )
 
 echo.
-echo Checking the price feeds (no orders are placed)...
-%VPY% -m livepaper check
+echo Self-check...
+"%VPY%" healthcheck.py
+if errorlevel 1 (
+  echo !! The self-check failed - send Claude the output above.
+  pause
+  exit /b 1
+)
+
 echo.
 echo Creating the "Paper Trader" shortcuts (Desktop and Start menu)...
-set "APPDIR=%CD%"
-powershell -NoProfile -ExecutionPolicy Bypass -Command "$s = New-Object -ComObject WScript.Shell; foreach ($d in @([Environment]::GetFolderPath('Desktop'), [Environment]::GetFolderPath('Programs'))) { $l = $s.CreateShortcut((Join-Path $d 'Paper Trader.lnk')); $l.TargetPath = $env:APPDIR + '\.venv\Scripts\pythonw.exe'; $l.Arguments = [char]34 + $env:APPDIR + '\launcher.pyw' + [char]34; $l.WorkingDirectory = $env:APPDIR; $l.IconLocation = $env:APPDIR + '\assets\icon.ico'; $l.Description = 'Paper Trader'; $l.Save() }"
+powershell -NoProfile -ExecutionPolicy Bypass -Command "$s = New-Object -ComObject WScript.Shell; foreach ($d in @([Environment]::GetFolderPath('Desktop'), [Environment]::GetFolderPath('Programs'))) { $l = $s.CreateShortcut((Join-Path $d 'Paper Trader.lnk')); $l.TargetPath = $env:APPDIR + '\.venv\Scripts\pythonw.exe'; $l.Arguments = [char]34 + $env:APPDIR + '\bootstrap.pyw' + [char]34; $l.WorkingDirectory = $env:APPDIR; $l.IconLocation = $env:APPDIR + '\assets\icon.ico'; $l.Description = 'Paper Trader'; $l.Save() }"
 if errorlevel 1 (
-  echo !! Couldn't create the shortcuts - start the app with start.bat instead.
+  echo !! Couldn't create the shortcuts - open the app with start.bat instead.
 )
 echo.
 echo Setup done. Open "Paper Trader" from your Desktop or Start menu.
-echo It updates itself from GitHub every time it starts.
-start "" "%APPDIR%\.venv\Scripts\pythonw.exe" "%APPDIR%\launcher.pyw"
+echo It updates itself from GitHub, and goes back to the last working version if an update fails.
+start "" "%APPDIR%\.venv\Scripts\pythonw.exe" "%APPDIR%\bootstrap.pyw"
 pause

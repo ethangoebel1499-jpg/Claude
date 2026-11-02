@@ -6,4 +6,4 @@ if not exist .venv\Scripts\pythonw.exe (
   pause
   exit /b 1
 )
-start "" "%~dp0.venv\Scripts\pythonw.exe" "%~dp0launcher.pyw"
+start "" "%~dp0.venv\Scripts\pythonw.exe" "%~dp0bootstrap.pyw"

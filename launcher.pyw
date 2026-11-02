@@ -30,7 +30,7 @@ PORT = 8501
 LOCK_PORT = 47651                        # one Paper Trader at a time
 UPDATE_EVERY = 6 * 3600
 NO_WINDOW = 0x08000000 if os.name == "nt" else 0
-SELF_FILES = ("launcher.pyw", "updater.py")
+SELF_FILES = ("launcher.pyw", "updater.py", "bootstrap.pyw")
 
 
 def python_exe() -> str:
@@ -161,6 +161,7 @@ class App:
         self.q: queue.Queue = queue.Queue()
         self.svc = Services(self.log)
         self.busy = False
+        self.exit_code = 0
 
         if os.name == "nt":                   # taskbar shows the app's own icon, not Python's
             try:
@@ -170,7 +171,7 @@ class App:
                 pass
         self.root = root = tk.Tk()
         root.title("Paper Trader")
-        root.geometry("620x520")
+        root.geometry("760x540")
         root.minsize(520, 420)
         root.configure(bg="#0f172a")
         try:
@@ -218,6 +219,7 @@ class App:
         self.trade_btn.pack(side="left", padx=8)
         ttk.Button(btns, text="Check for updates", command=lambda: self.run_update(manual=True)).pack(side="left")
         ttk.Button(btns, text="Open folder", command=self.open_folder).pack(side="left", padx=8)
+        ttk.Button(btns, text="Undo last update", command=self.undo_update).pack(side="left")
 
         self.phone = tk.BooleanVar(value=False)
         ttk.Checkbutton(root, text="Phone access (same Wi-Fi)", variable=self.phone,
@@ -270,24 +272,56 @@ class App:
 
     # ---- startup / updates -------------------------------------------------------------
     def startup(self):
-        if not self._update():
+        if updater.pending():                 # restarted to run a new version of the app itself
+            self.log("Checking that the new version works...")
+        elif not self._update():
             return
+        self.start_and_verify(first=True)
+
+    def start_and_verify(self, first=False):
+        """Start the trader and dashboard; an update still being checked is kept only if they come up."""
         try:
             self.svc.start_trader()
             self.svc.start_dashboard()
+            ok, why = self._wait_healthy()
         except Exception as e:
-            self.log(f"Couldn't start: {type(e).__name__}: {e}")
-            return
-        for _ in range(120):
+            ok, why = False, f"{type(e).__name__}: {e}"
+        if updater.pending():
+            if ok:
+                updater.confirm()
+                sha = updater.current() or ""
+                self.log(f"Update {sha[:7]} works - keeping it")
+                self.set_upd(f"Updated to {sha[:7]}", "#22c55e")
+            else:
+                self.log(f"The new version has a problem: {why}")
+                if not self._rollback(why, stop=True):
+                    return
+                self.svc.start_trader()
+                self.svc.start_dashboard()
+                ok, why = self._wait_healthy()
+        if not ok:
+            self.log(f"Problem starting: {why}")
+        elif first:
+            webbrowser.open(f"http://localhost:{PORT}")
+            self.log("Dashboard open in your browser")
+
+    def _wait_healthy(self) -> tuple[bool, str]:
+        for _ in range(180):                  # dashboard answering within 90 s
             if self.svc.dashboard_up():
-                webbrowser.open(f"http://localhost:{PORT}")
-                self.log("Dashboard open in your browser")
-                return
+                break
+            if self.svc.dash and self.svc.dash.poll() is not None:
+                return False, "the dashboard stopped (see dashboard.log)"
             time.sleep(0.5)
-        self.log("Dashboard is slow to start - see dashboard.log")
+        else:
+            return False, "the dashboard didn't start within 90 seconds (see dashboard.log)"
+        for _ in range(15):                   # trader still running 15 s later
+            if self.svc.want_trading and not self.svc.trading():
+                return False, "the trader stopped (see trader.log)"
+            time.sleep(1)
+        return True, ""
 
     def _update(self) -> bool:
-        """Update from GitHub. False if the app is restarting itself to load new code."""
+        """Update from GitHub and check it. False if the app is restarting itself."""
         self.busy = True
         self.set_upd("Checking…", "#fbbf24")
         try:
@@ -299,15 +333,36 @@ class App:
             self.busy = False
             return True
         self.log(res["message"])
-        self.busy = False
-        if not res["updated"]:
-            self.set_upd(res["message"], "#22c55e" if res["message"] == "Up to date" else "#fbbf24")
+        try:
+            if not res["updated"]:
+                self.set_upd(res["message"], "#22c55e" if res["message"] == "Up to date" else "#fbbf24")
+                return True
+            if res["deps_changed"] and not updater.install_deps(python_exe(), self.log):
+                return self._rollback("its packages didn't install")
+            self.log("Running the self-check on the new version...")
+            ok, out = updater.healthcheck(python_exe())
+            if not ok:
+                self.log(out)
+                return self._rollback("it failed the self-check")
+            self.log("Self-check passed")
+            if files_hash(SELF_FILES) != before:
+                self.log("The app itself was updated - restarting it")
+                self.q.put("__relaunch__")
+                return False
             return True
-        self.set_upd(f"Updated to {res['to'][:7]}", "#22c55e")
-        if res["deps_changed"]:
+        finally:
+            self.busy = False
+
+    def _rollback(self, reason: str, stop: bool = False) -> bool:
+        """Go back to the version before the update. False if the app is restarting itself."""
+        if stop:
+            self.svc.stop_all()
+        before = files_hash(SELF_FILES)
+        res = updater.rollback(self.log, reason)
+        if res.get("deps_changed"):
             updater.install_deps(python_exe(), self.log)
+        self.set_upd(f"Last update didn't work - back on {(res.get('to') or '?')[:7]}", "#fbbf24")
         if files_hash(SELF_FILES) != before:
-            self.log("The app itself was updated - restarting it")
             self.q.put("__relaunch__")
             return False
         return True
@@ -319,27 +374,40 @@ class App:
         if self.busy:
             return
         def work():
-            had_trader, had_dash = self.svc.trading(), bool(self.svc.dash)
             old = updater.current()
             if not self._update():
                 return
-            if updater.current() != old:          # new code: restart the services on it
+            if updater.pending() and updater.current() != old:   # new code passed the self-check: run it
                 self.log("Restarting the trader and dashboard on the new version")
                 self.svc.stop_all()
-                if had_trader:
-                    self.svc.start_trader()
-                if had_dash:
-                    self.svc.start_dashboard()
+                self.start_and_verify()
         threading.Thread(target=work, daemon=True).start()
 
     def periodic_update(self):
         self.run_update()
         self.root.after(UPDATE_EVERY * 1000, self.periodic_update)
 
+    def undo_update(self):
+        from tkinter import messagebox
+        s = updater.state()
+        if not s:
+            messagebox.showinfo("Paper Trader", "There's no update to undo yet.")
+            return
+        if not messagebox.askyesno("Paper Trader", f"Go back to the version before the last update "
+                                                   f"({(s['from'] or 'previous')[:7]})?"):
+            return
+        def work():
+            if self._rollback("undone by you", stop=True):
+                self.start_and_verify()
+        threading.Thread(target=work, daemon=True).start()
+
     def relaunch(self):
         self.svc.stop_all()
         self.lock.close()
-        subprocess.Popen([sys.executable, str(ROOT / "launcher.pyw")], cwd=ROOT, creationflags=NO_WINDOW)
+        if os.environ.get("PAPERTRADER_BOOTSTRAP"):
+            self.exit_code = 3                # bootstrap.pyw opens the app again
+        else:
+            subprocess.Popen([sys.executable, str(ROOT / "bootstrap.pyw")], cwd=ROOT, creationflags=NO_WINDOW)
         self.root.destroy()
 
     # ---- buttons ---------------------------------------------------------------------
@@ -385,6 +453,7 @@ def main():
         return
     app = App(lock)
     app.root.mainloop()
+    sys.exit(app.exit_code)
 
 
 if __name__ == "__main__":

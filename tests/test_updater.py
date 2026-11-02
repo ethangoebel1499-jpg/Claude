@@ -12,8 +12,6 @@ import updater
 def app(tmp_path, monkeypatch):
     """A ZIP-style install (no .git) in a temp folder."""
     monkeypatch.setattr(updater, "ROOT", tmp_path)
-    monkeypatch.setattr(updater, "VERSION", tmp_path / ".version")
-    monkeypatch.setattr(updater, "MANIFEST", tmp_path / ".manifest")
     (tmp_path / "local_settings.json").write_text('{"webull_app_key": "mine"}')
     (tmp_path / "live.toml").write_text("my runs")
     return tmp_path
@@ -110,3 +108,66 @@ def test_git_install_pulls(tmp_path, monkeypatch):
     (clone / "a.py").write_text("my edit")
     res = updater.update(log=lambda *a: None)
     assert not res["updated"] and "edited" in res["message"] and (clone / "a.py").read_text() == "my edit"
+
+
+def test_failed_update_is_rolled_back_exactly_and_not_retried(app, monkeypatch):
+    (app / ".version").write_text("a" * 40)
+    (app / "keep.py").write_text("old keep")
+    (app / "gone.py").write_text("old gone")
+    compare = {"status": "ahead", "files": [
+        {"filename": "keep.py", "status": "modified"}, {"filename": "gone.py", "status": "removed"},
+        {"filename": "added.py", "status": "added"}]}
+    fake_github(monkeypatch, "b" * 40, compare=compare, raw={"keep.py": "new keep", "added.py": "new"})
+    assert updater.update(log=lambda *a: None)["updated"]
+    assert updater.pending() and (app / "keep.py").read_text() == "new keep"
+    res = updater.rollback(log=lambda *a: None, reason="self-check failed")
+    assert res["ok"] and res["to"] == "a" * 40
+    assert (app / "keep.py").read_text() == "old keep" and (app / "gone.py").read_text() == "old gone"
+    assert not (app / "added.py").exists() and (app / ".version").read_text() == "a" * 40
+    assert "mine" in (app / "local_settings.json").read_text()
+    again = updater.update(log=lambda *a: None)                       # same broken version: skipped
+    assert not again["updated"] and "didn't work" in again["message"]
+    fake_github(monkeypatch, "c" * 40, compare=compare, raw={"keep.py": "fixed", "added.py": "new"})
+    assert updater.update(log=lambda *a: None)["updated"]              # a newer one is tried
+    updater.confirm()
+    assert updater.pending() is None and updater.state()["confirmed"]
+    assert updater.undo_last(log=lambda *a: None)["ok"] and (app / "keep.py").read_text() == "old keep"
+
+
+def test_download_error_changes_nothing(app, monkeypatch):
+    (app / ".version").write_text("a" * 40)
+    (app / "keep.py").write_text("old")
+
+    def get(url, accept="", timeout=60):
+        if url.endswith("/commits/master"):
+            return b"b" * 40
+        raise OSError("connection dropped")
+    monkeypatch.setattr(updater, "_get", get)
+    res = updater.update(log=lambda *a: None)
+    assert not res["updated"] and "nothing changed" in res["message"]
+    assert (app / "keep.py").read_text() == "old" and (app / ".version").read_text() == "a" * 40
+    assert "b" * 40 not in updater.bad_versions()                     # retried next time
+
+
+def test_bootstrap_rolls_back_a_crashing_update(app, monkeypatch):
+    import importlib.machinery
+    import importlib.util
+    path = str(updater.Path(__file__).parent.parent / "bootstrap.pyw")
+    loader = importlib.machinery.SourceFileLoader("bootstrap", path)
+    bootstrap = importlib.util.module_from_spec(importlib.util.spec_from_loader("bootstrap", loader))
+    loader.exec_module(bootstrap)
+    monkeypatch.setattr(bootstrap, "LOG", app / "runtime" / "launcher.log")
+    monkeypatch.setattr(bootstrap, "tell", lambda msg: None)
+    (app / ".version").write_text("a" * 40)
+    (app / "launcher.pyw").write_text("good")
+    fake_github(monkeypatch, "b" * 40, compare={"status": "ahead", "files": [
+        {"filename": "launcher.pyw", "status": "modified"}]}, raw={"launcher.pyw": "broken"})
+    updater.update(log=lambda *a: None)
+    codes = iter([1, 0])                    # new version crashes, then the old one runs and is closed
+    seen = []
+    def launch():
+        seen.append((app / "launcher.pyw").read_text())
+        return next(codes)
+    assert bootstrap.run(launch=launch) == 0
+    assert seen == ["broken", "good"] and "b" * 40 in updater.bad_versions()
+    assert bootstrap.run(launch=lambda: 3 if not seen.append(1) and len(seen) < 4 else 0) == 0   # restart requests

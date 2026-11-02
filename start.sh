@@ -4,4 +4,4 @@ cd "$(dirname "$0")"
 if [ ! -d .venv ]; then
   echo "Run   bash setup.sh   first."; exit 1
 fi
-exec ./.venv/bin/python launcher.pyw
+exec ./.venv/bin/python bootstrap.pyw
