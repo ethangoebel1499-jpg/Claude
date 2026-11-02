@@ -49,14 +49,29 @@ def backend_problem() -> str | None:
     if settings.get("stream_backend") == "claude":
         return None if settings.get("anthropic_api_key") else \
             "The stream agent is set to Claude but there's no Anthropic API key - add it in ⚙️ Account."
-    import requests
-    url = settings.get("ollama_url") or "http://localhost:11434"
-    try:
-        requests.get(f"{url}/api/tags", timeout=1.5)
-        return None
-    except Exception:
-        return (f"The local AI model (Ollama) isn't running at {url}. Start the Ollama app, or switch the "
-                "stream agent to Claude in ⚙️ Account.")
+    return None                                 # the local AI sets itself up (see ai_status)
+
+
+@st.fragment(run_every=5)
+def ai_status() -> None:
+    from livepaper import settings
+    if settings.get("stream_backend") == "claude":
+        return
+    from streamlearn import ollama_local
+    s = ollama_local.status()
+    if s.get("ready"):
+        st.caption(f"🤖 Local AI ready ({s.get('model')})")
+    elif s.get("error"):
+        st.warning(f"🤖 Local AI setup failed: {s['error']}. It retries when you process a stream or reopen "
+                   "the app; or switch the stream agent to Claude in ⚙️ Account.")
+    elif s:
+        pct = s.get("pct")
+        st.info(f"🤖 Setting up the local AI by itself: {s.get('text')}. You can press Process now - it waits "
+                "until the AI is ready.")
+        if pct is not None:
+            st.progress(min(max(pct / 100, 0.0), 1.0))
+    else:
+        st.caption("🤖 The local AI downloads and sets itself up the first time it's needed (a few GB, once).")
 
 
 def start_job(transcript: str, start_local: str, title: str, url: str) -> Path:
@@ -108,6 +123,7 @@ def form() -> None:
     problem = backend_problem()
     if problem:
         st.warning(problem)
+    ai_status()
     ready = bool(segs) and bool(title.strip())
     if st.button("Process stream", type="primary", disabled=not ready, key="add_go"):
         start_local = f"{day:%Y-%m-%d} {at:%H:%M}"

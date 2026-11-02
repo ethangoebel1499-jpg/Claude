@@ -71,7 +71,7 @@ class Services:
 
     def __init__(self, log):
         self.log, self.py = log, python_exe()
-        self.trader = self.dash = None
+        self.trader = self.dash = self.ai = None
         self.phone = False
         self.want_trading = True
         self._last_restart = 0.0
@@ -136,6 +136,10 @@ class Services:
         self._stop(self.trader)
         self._stop(self.dash)
         self.trader = self.dash = None
+
+    def stop_ai(self):
+        self._stop(self.ai)
+        self.ai = None
 
     def trading(self) -> bool:
         return bool(self.trader and self.trader.poll() is None)
@@ -204,7 +208,8 @@ class App:
         card = tk.Frame(root, bg="#1e293b")
         card.pack(fill="x", padx=18, pady=8)
         self.rows = {}
-        for i, (key, label) in enumerate([("trading", "Paper trading"), ("dash", "Dashboard"), ("upd", "Updates")]):
+        for i, (key, label) in enumerate([("trading", "Paper trading"), ("dash", "Dashboard"), ("upd", "Updates"),
+                                          ("ai", "Stream AI")]):
             tk.Label(card, text=label, font=("Segoe UI", 10), fg="#94a3b8", bg="#1e293b").grid(
                 row=i, column=0, sticky="w", padx=14, pady=6)
             v = tk.Label(card, text="…", font=("Segoe UI", 10, "bold"), fg="white", bg="#1e293b", cursor="")
@@ -268,6 +273,7 @@ class App:
             self.rows["dash"].configure(text=f"● {addr}  (click to open)", fg="#38bdf8", cursor="hand2")
         else:
             self.rows["dash"].configure(text="● Starting…" if self.svc.dash else "● Off", fg="#fbbf24", cursor="")
+        self.rows["ai"].configure(**ai_row())
         self.root.after(3000, self.refresh)
 
     # ---- startup / updates -------------------------------------------------------------
@@ -304,6 +310,23 @@ class App:
         elif first:
             webbrowser.open(f"http://localhost:{PORT}")
             self.log("Dashboard open in your browser")
+        if first:
+            self.start_local_ai()
+
+    def start_local_ai(self):
+        """Download / start the stream agent's local AI in the background (only with the local model)."""
+        cfg = app_settings()
+        if cfg.get("stream_backend", "ollama") != "ollama":
+            return
+        def work():
+            try:
+                from streamlearn import ollama_local
+                url, model, proc = ollama_local.ensure(cfg.get("ollama_model"), cfg.get("ollama_url"), self.log)
+                self.svc.ai = proc
+                self.log(f"Stream AI ready ({model})")
+            except Exception as e:
+                self.log(f"Stream AI setup failed: {e} - it retries next time")
+        threading.Thread(target=work, daemon=True).start()
 
     def _wait_healthy(self) -> tuple[bool, str]:
         for _ in range(180):                  # dashboard answering within 90 s
@@ -403,6 +426,7 @@ class App:
 
     def relaunch(self):
         self.svc.stop_all()
+        self.svc.stop_ai()
         self.lock.close()
         if os.environ.get("PAPERTRADER_BOOTSTRAP"):
             self.exit_code = 3                # bootstrap.pyw opens the app again
@@ -441,7 +465,31 @@ class App:
                                 "next time).\n\nClose it?"):
             return
         self.svc.stop_all()
+        self.svc.stop_ai()
         self.root.destroy()
+
+
+def app_settings() -> dict:
+    f = Path(os.environ.get("LOCAL_SETTINGS", ROOT / "local_settings.json"))
+    try:
+        import json
+        return json.loads(f.read_text()) if f.exists() else {}
+    except Exception:
+        return {}
+
+
+def ai_row() -> dict:
+    if app_settings().get("stream_backend", "ollama") != "ollama":
+        return {"text": "● Claude (API)", "fg": "#22c55e"}
+    from streamlearn import ollama_local
+    s = ollama_local.status()
+    if s.get("ready"):
+        return {"text": f"● Ready ({s.get('model')})", "fg": "#22c55e"}
+    if s.get("error"):
+        return {"text": "● Setup failed - retries next start", "fg": "#f87171"}
+    text = s.get("text") or "Not set up yet"
+    return {"text": f"● {text}" + (f" ({s['pct']:.0f}%)" if s.get("pct") is not None and "%" not in text else ""),
+            "fg": "#fbbf24"}
 
 
 def main():

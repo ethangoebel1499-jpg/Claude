@@ -4,3 +4,4 @@ streamlit>=1.37
 requests>=2.31
 yfinance>=0.2
 anthropic>=1.0
+zstandard>=0.22    # unpacks the local AI engine on Linux / NAS

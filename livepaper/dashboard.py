@@ -473,7 +473,9 @@ with tab_acct:
                                format_func=lambda b: "Local (Ollama)" if b == "ollama" else "Claude (API)")
             tz = s2.text_input("Your timezone (for stream start times)", cur["timezone"])
             s3, s4 = st.columns(2)
-            ollama_model = s3.text_input("Ollama model", cur["ollama_model"])
+            ollama_model = s3.text_input("Ollama model", cur["ollama_model"],
+                                         help="auto = sized for this computer's memory and set up by itself "
+                                              "(qwen2.5:3b / 7b / 14b)")
             ollama_url = s4.text_input("Ollama address", cur["ollama_url"])
             anthropic_key = st.text_input("Anthropic API key (only for Claude)", cur["anthropic_api_key"],
                                           type="password")

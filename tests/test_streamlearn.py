@@ -246,6 +246,7 @@ def test_add_stream_from_the_dashboard_form(tmp_path, monkeypatch):
     settings_file.write_text(_json.dumps({"streamlearn_db": str(tmp_path / "s.db"), "stream_backend": "ollama",
                                           "ollama_url": "http://127.0.0.1:9", "timezone": "UTC"}))
     monkeypatch.setenv("LOCAL_SETTINGS", str(settings_file))
+    monkeypatch.setenv("PAPERTRADER_NO_LOCAL_AI", "1")          # don't download Ollama in tests
     monkeypatch.setattr(add_ui, "INBOX", tmp_path / "inbox")
     monkeypatch.setattr(add_ui, "JOBS", tmp_path / "jobs")
     log = add_ui.start_job(FIX.read_text(), "2026-08-20 16:00", "Pasted stream", "https://youtu.be/abc")

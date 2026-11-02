@@ -19,7 +19,8 @@ FOLDERS = ("mcbot", "livepaper", "streamlearn", "tools")
 TOP = ("launcher.pyw", "bootstrap.pyw", "updater.py", "healthcheck.py", "main.py")
 MODULES = ("mcbot.backtest", "mcbot.patterns", "mcbot.fmt", "livepaper.core", "livepaper.runner", "livepaper.store",
            "livepaper.strategies", "livepaper.feeds", "livepaper.history", "livepaper.brokers", "livepaper.settings",
-           "streamlearn.store", "streamlearn.pipeline", "streamlearn.verify", "streamlearn.patterns_ui")
+           "streamlearn.store", "streamlearn.pipeline", "streamlearn.verify", "streamlearn.patterns_ui",
+           "streamlearn.ollama_local", "streamlearn.add_ui")
 
 
 def main() -> int:

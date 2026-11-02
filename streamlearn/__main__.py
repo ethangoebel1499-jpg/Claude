@@ -50,6 +50,16 @@ def load_cfg(path: str) -> dict:
     return cfg
 
 
+def local_ai(cfg: dict):
+    """With the local model: download / start Ollama and its model if needed (no setup by hand)."""
+    if cfg.get("backend", "ollama") != "ollama" or os.environ.get("PAPERTRADER_NO_LOCAL_AI"):
+        return None
+    from streamlearn import ollama_local
+    url, model, proc = ollama_local.ensure(cfg.get("ollama_model"), cfg.get("ollama_url"))
+    cfg["ollama_url"], cfg["ollama_model"] = url, model
+    return proc
+
+
 def write_reports(store: Store, out: Path) -> tuple[str, str]:
     streams = store.table("streams")
     pb = playbook_markdown(group_rules(store.table("rules"), streams), len(streams))
@@ -93,7 +103,12 @@ def main() -> None:
         else:
             raise SystemExit('give --start "YYYY-MM-DD HH:MM" (or name the file "2026-10-28 2000 Title.txt")')
         title = a.title or (guess[1] if guess else p.stem)
-        add_stream(store, p, start, title, cfg, reextract=a.reextract, url=a.url)
+        proc = local_ai(cfg)
+        try:
+            add_stream(store, p, start, title, cfg, reextract=a.reextract, url=a.url)
+        finally:
+            if proc:
+                proc.terminate()
         verify_all(store, only_unchecked=True)
         write_reports(store, out)
         print(f"done -> {out}/playbook.md, {out}/scorecard.md")
@@ -103,6 +118,7 @@ def main() -> None:
         folder.mkdir(exist_ok=True)
         done = folder / "processed"
         done.mkdir(exist_ok=True)
+        local_ai(cfg)
         print(f"watching {folder}/ - drop files named like '2026-10-28 2000 Title.txt'. Ctrl+C to stop.")
         while True:
             for p in sorted(folder.iterdir()):
