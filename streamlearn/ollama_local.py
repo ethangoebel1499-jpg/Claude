@@ -65,6 +65,14 @@ def auto_model(ram: float | None = None) -> str:
     return "qwen2.5:14b" if ram >= 20 else "qwen2.5:7b" if ram >= 10 else "qwen2.5:3b"
 
 
+def pick_vision_model(setting: str | None, ram: float | None = None) -> str:
+    """The model that reads chart screenshots."""
+    ram = ram_gb() if ram is None else ram
+    if not setting or setting == "auto":
+        return "qwen2.5vl:7b" if ram >= 14 else "qwen2.5vl:3b"
+    return setting
+
+
 def pick_model(setting: str | None, ram: float | None = None) -> str:
     """'auto' (or nothing) -> sized for this computer; the old 14b default is downsized if it won't fit."""
     ram = ram_gb() if ram is None else ram

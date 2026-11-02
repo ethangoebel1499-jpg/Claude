@@ -42,9 +42,11 @@ def load_cfg(path: str) -> dict:
             cfg = tomllib.load(f)
     saved = settings.saved()
     for ours, theirs in (("stream_backend", "backend"), ("ollama_model", "ollama_model"), ("ollama_url", "ollama_url"),
-                         ("timezone", "timezone"), ("streamlearn_db", "db")):
+                         ("timezone", "timezone"), ("streamlearn_db", "db"), ("ollama_vision_model", "ollama_vision_model")):
         if saved.get(ours):
             cfg[theirs] = saved[ours]
+    if "stream_screen" in saved:
+        cfg["screen"] = bool(saved["stream_screen"])
     if settings.get("anthropic_api_key"):
         cfg["anthropic_api_key"] = settings.get("anthropic_api_key")
     return cfg
@@ -57,6 +59,15 @@ def local_ai(cfg: dict):
     from streamlearn import ollama_local
     url, model, proc = ollama_local.ensure(cfg.get("ollama_model"), cfg.get("ollama_url"))
     cfg["ollama_url"], cfg["ollama_model"] = url, model
+    if cfg.get("screen", True):                       # the model that reads his chart drawings
+        vision = ollama_local.pick_vision_model(cfg.get("ollama_vision_model"))
+        try:
+            if not ollama_local.has_model(url, vision):
+                ollama_local.get_model(url, vision)
+            cfg["ollama_vision_model"] = vision
+        except Exception as e:
+            print(f"Couldn't get the screen-reading model {vision} ({e}) - reading the transcript only")
+            cfg["screen"] = False
     return proc
 
 

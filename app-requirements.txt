@@ -5,3 +5,6 @@ requests>=2.31
 yfinance>=0.2
 anthropic>=1.0
 zstandard>=0.22    # unpacks the local AI engine on Linux / NAS
+yt-dlp>=2025.1     # finds the stream video so the agent can look at his chart
+imageio-ffmpeg>=0.5   # bundled ffmpeg for grabbing frames
+pillow>=10

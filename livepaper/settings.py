@@ -21,7 +21,7 @@ DEFAULTS = {
     "webull_app_key": "", "webull_app_secret": "", "webull_account_id": "", "webull_region": "us",
     "webull_endpoint": "api.sandbox.webull.com",
     # stream study agent
-    "streamlearn_db": "streamlearn.db", "stream_backend": "ollama", "ollama_model": "auto",
+    "streamlearn_db": "streamlearn.db", "stream_backend": "ollama", "ollama_model": "auto", "stream_screen": True, "ollama_vision_model": "auto",
     "ollama_url": "http://localhost:11434", "anthropic_api_key": "", "timezone": "America/New_York",
 }
 ENV = {"webull_app_key": "WEBULL_APP_KEY", "webull_app_secret": "WEBULL_APP_SECRET",

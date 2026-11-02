@@ -141,6 +141,17 @@ class OllamaBackend:
         r.raise_for_status()
         return json.loads(r.json()["message"]["content"])
 
+    def read_frame(self, jpeg: bytes, prompt: str, schema: dict) -> dict:
+        """Read a screenshot of his chart with a vision model (e.g. qwen2.5vl)."""
+        import base64
+        r = requests.post(f"{self.url}/api/chat", timeout=1800, json={
+            "model": self.model, "stream": False, "format": schema, "options": {"temperature": 0, "num_ctx": 8192},
+            "messages": [{"role": "user", "content": prompt, "images": [base64.b64encode(jpeg).decode()]}]})
+        if r.status_code == 404:
+            raise RuntimeError(f"vision model {self.model} isn't installed")
+        r.raise_for_status()
+        return json.loads(r.json()["message"]["content"])
+
     def _post(self, chunk: str, title: str, date: str, system: str):
         # num_ctx: Ollama's default context is too small for an 8-minute chunk plus the instructions - the
         # model would only see part of it. timeout: a laptop without a graphics card can take many minutes.
@@ -176,6 +187,30 @@ class ClaudeBackend:
             raise RuntimeError("Claude's answer was cut off (max_tokens); use smaller chunks")
         text = next(b.text for b in response.content if b.type == "text")
         return json.loads(text)
+
+
+def _claude_read_frame(self, jpeg: bytes, prompt: str, schema: dict) -> dict:
+    import base64
+    response = self.client.beta.messages.create(
+        model=self.model, max_tokens=4000, betas=["server-side-fallback-2026-07-01"], fallbacks="default",
+        output_config={"effort": "low", "format": {"type": "json_schema", "schema": schema}},
+        messages=[{"role": "user", "content": [
+            {"type": "image", "source": {"type": "base64", "media_type": "image/jpeg",
+                                         "data": base64.b64encode(jpeg).decode()}},
+            {"type": "text", "text": prompt}]}])
+    if response.stop_reason == "refusal":
+        raise RuntimeError("Claude declined this frame")
+    return json.loads(next(b.text for b in response.content if b.type == "text"))
+
+
+ClaudeBackend.read_frame = _claude_read_frame
+
+
+def vision_backend(cfg: dict):
+    """The model that reads his screen: Claude itself, or a local vision model in Ollama."""
+    if cfg.get("backend", "ollama") == "claude":
+        return backend(cfg)
+    return OllamaBackend(cfg.get("ollama_vision_model") or "qwen2.5vl:7b", cfg.get("ollama_url", "http://localhost:11434"))
 
 
 def backend(cfg: dict):

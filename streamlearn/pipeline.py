@@ -152,7 +152,19 @@ def add_stream(store: Store, path: str | Path, start: pd.Timestamp, title: str, 
     if failed:
         log(f"{failed} of {len(parts)} chunks failed; the transcript is saved - fix the problem and rerun "
             f"with --reextract to extract it again")
-    log(f"RESULT setups={n_calls} rules={n_rules} patterns={n_pats} failed={failed} chunks={len(parts)}")
     if parts and failed == len(parts):
+        log(f"RESULT setups={n_calls} rules={n_rules} patterns={n_pats} failed={failed} chunks={len(parts)}")
         raise RuntimeError("every part of the transcript failed - nothing was extracted (see the errors above)")
+    if cfg.get("screen", True):            # what he shows on the chart but doesn't say
+        try:
+            from streamlearn import screen
+            from streamlearn.extract import vision_backend
+            vurl = url or store.db.execute("SELECT url FROM streams WHERE id = ?", (sid,)).fetchone()[0]
+            seen = screen.read_stream(store, sid, segs, str(path), vurl, start, cfg,
+                                      cfg.get("_vision_llm") or vision_backend(cfg), log)
+            n_calls = store.db.execute("SELECT count(*) FROM calls WHERE stream_id = ?", (sid,)).fetchone()[0]
+            log(f"SCREEN readings={seen}")
+        except Exception as e:
+            log(f"Screen reading failed ({type(e).__name__}: {e}) - the transcript setups are kept")
+    log(f"RESULT setups={n_calls} rules={n_rules} patterns={n_pats} failed={failed} chunks={len(parts)}")
     return sid

@@ -511,6 +511,15 @@ with tab_acct:
             ollama_url = s4.text_input("Ollama address", cur["ollama_url"])
             anthropic_key = st.text_input("Anthropic API key (only for Claude)", cur["anthropic_api_key"],
                                           type="password")
+            v1, v2 = st.columns(2)
+            screen_on = v1.checkbox("Read his screen too (trades he draws on the chart but doesn't say)",
+                                    bool(cur.get("stream_screen", True)),
+                                    help="Looks at the stream video for TradingView's long/short position drawing "
+                                         "(green profit box, red stop box) and reads the entry, stop and target "
+                                         "prices off the chart. Needs the stream's YouTube link or video file.")
+            vision_model = v2.text_input("Screen-reading model (local)", cur.get("ollama_vision_model", "auto"),
+                                         help="auto = qwen2.5vl:3b / 7b sized for this computer; Claude reads "
+                                              "charts much better if you use the Claude option")
             sl_db = st.text_input("Stream study database", cur["streamlearn_db"])
         if st.form_submit_button("Save settings", type="primary"):
             settings.save({"broker": broker, "fee": fee / 100, "max_stop": cap_pct / 100, "poll_seconds": int(poll), "sync_git": sync_git,
@@ -519,6 +528,7 @@ with tab_acct:
                            "webull_region": region.strip() or "us", "webull_endpoint": endpoint.strip(),
                            "stream_backend": backend, "timezone": tz.strip(), "ollama_model": ollama_model.strip(),
                            "ollama_url": ollama_url.strip(), "anthropic_api_key": anthropic_key.strip(),
+                           "stream_screen": screen_on, "ollama_vision_model": vision_model.strip() or "auto",
                            "streamlearn_db": sl_db.strip() or "streamlearn.db"})
             st.success("Saved. The trader switches to these settings on its next price check - no restart needed.")
     c1, c2 = st.columns([1, 3])
