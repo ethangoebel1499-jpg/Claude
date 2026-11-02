@@ -25,3 +25,4 @@ dashboard.log
 .manifest
 *.updating
 runtime/
+!livepaper/data/

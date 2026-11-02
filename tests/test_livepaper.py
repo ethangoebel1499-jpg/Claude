@@ -329,3 +329,20 @@ def test_minute_candles_page_back_through_coinbase_and_cache(tmp_path, monkeypat
     assert 30 <= len(calls) - n <= 38 and (three.index[1] - three.index[0]) == pd.Timedelta("3min")
     five = history.history("XBTUSD", "crypto", "15m")
     assert (five.index[1] - five.index[0]) == pd.Timedelta("15min")
+
+
+def test_stock_list_falls_back_instead_of_crashing(monkeypatch, tmp_path):
+    from livepaper import stocks
+    monkeypatch.setattr(stocks, "FILE", tmp_path / "missing.csv")
+    stocks.universe.cache_clear(); stocks.labels.cache_clear()
+    try:
+        assert "SPY" in stocks.labels()
+    finally:
+        stocks.universe.cache_clear(); stocks.labels.cache_clear()
+
+
+def test_files_the_app_needs_are_in_git():
+    import subprocess
+    from healthcheck import DATA
+    tracked = set(subprocess.run(["git", "ls-files"], capture_output=True, text=True).stdout.split())
+    assert [f for f in DATA if f not in tracked] == []

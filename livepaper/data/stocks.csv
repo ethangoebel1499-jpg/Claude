@@ -1,0 +1,1146 @@
+ticker,name,sector,index
+SPY,SPDR S&P 500 ETF,Index ETF,ETF
+VOO,Vanguard S&P 500 ETF,Index ETF,ETF
+QQQ,Invesco Nasdaq 100 ETF,Index ETF,ETF
+DIA,SPDR Dow Jones ETF,Index ETF,ETF
+IWM,iShares Russell 2000 ETF,Index ETF,ETF
+VTI,Vanguard Total Stock Market ETF,Index ETF,ETF
+XLK,Technology Select Sector SPDR,Sector ETF,ETF
+XLF,Financial Select Sector SPDR,Sector ETF,ETF
+XLE,Energy Select Sector SPDR,Sector ETF,ETF
+XLV,Health Care Select Sector SPDR,Sector ETF,ETF
+XLY,Consumer Discretionary Select Sector SPDR,Sector ETF,ETF
+XLP,Consumer Staples Select Sector SPDR,Sector ETF,ETF
+XLI,Industrial Select Sector SPDR,Sector ETF,ETF
+XLU,Utilities Select Sector SPDR,Sector ETF,ETF
+XLB,Materials Select Sector SPDR,Sector ETF,ETF
+XLRE,Real Estate Select Sector SPDR,Sector ETF,ETF
+XLC,Communication Services Select Sector SPDR,Sector ETF,ETF
+SMH,VanEck Semiconductor ETF,Sector ETF,ETF
+SOXX,iShares Semiconductor ETF,Sector ETF,ETF
+ARKK,ARK Innovation ETF,Thematic ETF,ETF
+TLT,iShares 20+ Year Treasury Bond ETF,Bond ETF,ETF
+GLD,SPDR Gold Shares,Commodity ETF,ETF
+SLV,iShares Silver Trust,Commodity ETF,ETF
+GDX,VanEck Gold Miners ETF,Sector ETF,ETF
+USO,United States Oil Fund,Commodity ETF,ETF
+EEM,iShares MSCI Emerging Markets ETF,International ETF,ETF
+EFA,iShares MSCI EAFE ETF,International ETF,ETF
+IBIT,iShares Bitcoin Trust,Bitcoin ETF,ETF
+A,Agilent Technologies,Health Care,S&P 500
+AAPL,Apple Inc.,Information Technology,S&P 500 + Nasdaq 100
+ABBV,AbbVie,Biopharmaceutical,S&P 500
+ABNB,Airbnb,Consumer Discretionary,S&P 500 + Nasdaq 100
+ABT,Abbott Laboratories,Health Care,S&P 500
+ACGL,Arch Capital Group,Financials,S&P 500
+ACN,Accenture,IT Services & Consulting,S&P 500
+ADBE,Adobe Inc.,Information Technology,S&P 500 + Nasdaq 100
+ADI,Analog Devices,Information Technology,S&P 500 + Nasdaq 100
+ADM,Archer Daniels Midland,Consumer Staples,S&P 500
+ADP,ADP,Business services Software,S&P 500 + Nasdaq 100
+ADSK,Autodesk,Information Technology,S&P 500 + Nasdaq 100
+AEE,Ameren,Utilities,S&P 500
+AEP,American Electric Power,Electric utilities,S&P 500 + Nasdaq 100
+AES,AES Corporation,Energy,S&P 500
+AFL,Aflac,Financials,S&P 500
+AIG,American International Group,Financial services,S&P 500
+AIZ,Arthur J. Gallagher & Co.,Financials,S&P 500
+AJG,Arthur J. Gallagher & Co.,Financials,S&P 500
+AKAM,Akamai Technologies,Information Technology,S&P 500
+ALB,Albemarle Corporation,Basic Materials,S&P 500
+ALGN,Align Technology,Health Care,S&P 500
+ALL,Allstate,Financials,S&P 500
+ALLE,Allegion,Communications & Networking,S&P 500
+AMAT,Applied Materials,Information Technology,S&P 500 + Nasdaq 100
+AMCR,Amcor,Materials,S&P 500
+AMD,AMD,Information Technology,S&P 500 + Nasdaq 100
+AME,Ametek,Conglomerate,S&P 500
+AMGN,Amgen,Biotechnology,S&P 500 + Nasdaq 100
+AMP,Ameriprise Financial,Financial services,S&P 500
+AMT,American Tower,Real Estate,S&P 500
+AMZN,Amazon,Conglomerate,S&P 500 + Nasdaq 100
+ANET,Arista Networks,Information Technology,S&P 500
+AON,Aon,Financial services,S&P 500
+AOS,A. O. Smith,Industrials,S&P 500
+APA,APA Corporation,Energy,S&P 500
+APD,Air Products,"Industrial gas , chemicals",S&P 500
+APH,Amphenol,Electronics,S&P 500
+APO,Apollo Commercial Real Estate Finance,Asset management,S&P 500
+APP,AppLovin,Information Technology,S&P 500 + Nasdaq 100
+APTV,Aptiv,Automotive,S&P 500
+ARE,Alexandria Real Estate Equities,Real Estate,S&P 500
+ARES,Ares Management,Asset Management,S&P 500
+ATO,Atmos Energy,Energy,S&P 500
+AVB,AvalonBay Communities,Real Estate,S&P 500
+AVGO,Broadcom,Information Technology,S&P 500 + Nasdaq 100
+AVY,Avery Dennison,Materials,S&P 500
+AWK,American Water Works,Utilities,S&P 500
+AXON,Axon Enterprise,Industrials,S&P 500 + Nasdaq 100
+AXP,American Express,Financial Services,S&P 500
+AZO,AutoZone,Consumer Discretionary,S&P 500
+BA,Boeing,Aerospace,S&P 500
+BAC,Bank of America,Banking & Investment Services,S&P 500
+BAX,Baxter International,Health Care,S&P 500
+BBY,Best Buy,Consumer Discretionary,S&P 500
+BDX,BD,Health Care,S&P 500
+BEN,Franklin Templeton Investments,Financials,S&P 500
+BF-B,Brown–Forman,Consumer Staples,S&P 500
+BG,Bunge Global,Consumer Staples,S&P 500
+BIIB,Biogen,Biotechnology,S&P 500
+BK,BNY,Financial services,S&P 500
+BKNG,Booking Holdings,Consumer Discretionary,S&P 500 + Nasdaq 100
+BKR,Baker Hughes,Energy,S&P 500 + Nasdaq 100
+BLDR,Builders FirstSource,Industrials,S&P 500
+BLK,BlackRock,Banking & Investment Services,S&P 500
+BLL,Ball Corporation,Applied Resources,S&P 500
+BMY,Bristol Myers Squibb,Health Care,S&P 500
+BR,Broadridge Financial Solutions,Financial technology,S&P 500
+BRK-B,Berkshire Hathaway,Conglomerate,S&P 500
+BRO,Brown & Brown,Financials,S&P 500
+BSX,Boston Scientific,Advanced Medical Equipment & Technology,S&P 500
+BX,Blackstone Inc.,Financial services,S&P 500
+BXP,"BXP, Inc.",Real Estate,S&P 500
+C,Citigroup,Banking & Investment Services,S&P 500
+CAG,Conagra Brands,Consumer Staples,S&P 500
+CAH,Cardinal Health,Health Care,S&P 500
+CARR,Carrier Global,Home appliances,S&P 500
+CAT,Caterpillar Inc.,Heavy Machinery & Vehicles,S&P 500
+CB,Chubb Limited,Financials,S&P 500
+CBOE,Cboe Global Markets,Financials,S&P 500
+CBRE,CBRE Group,Real Estate,S&P 500
+CCI,Crown Castle,Real Estate,S&P 500
+CCL,Carnival Corporation & plc,Consumer Cyclicals,S&P 500
+CDNS,Cadence Design Systems,Information Technology,S&P 500 + Nasdaq 100
+CDW,CDW,B2B IT products and services,S&P 500
+CEG,Constellation Energy,Energy,S&P 500 + Nasdaq 100
+CF,CF Industries,Chemicals,S&P 500
+CFG,Citizens Financial Group,Banking,S&P 500
+CHD,Church & Dwight,Consumer Staples,S&P 500
+CHRW,C.H. Robinson,Industrials,S&P 500
+CHTR,Charter Communications,Communication Services,S&P 500 + Nasdaq 100
+CI,Cigna,Health Care,S&P 500
+CIEN,Ciena,Information Technology,S&P 500
+CINF,Cincinnati Financial,Financials,S&P 500
+CL,Colgate-Palmolive,Consumer Staples,S&P 500
+CLX,Clorox,Consumer Staples,S&P 500
+CMCSA,Comcast,Communication Services,S&P 500 + Nasdaq 100
+CME,CME Group,Financial Services,S&P 500
+CMG,Chipotle Mexican Grill,Consumer Discretionary,S&P 500
+CMI,Cummins,"Heavy equipment , automotive",S&P 500
+CMS,CMS Energy,Energy,S&P 500
+CNC,Centene Corporation,Health Care,S&P 500
+CNP,CenterPoint Energy,Utilities,S&P 500
+COF,Capital One,Financial services,S&P 500
+COIN,Coinbase,Cryptocurrency,S&P 500
+COO,The Cooper Companies,Health Care,S&P 500
+COP,ConocoPhillips,Energy,S&P 500
+COR,Cencora,Health Care,S&P 500
+COST,Costco,Consumer Staples,S&P 500 + Nasdaq 100
+CPAY,Corpay,Financial data services,S&P 500
+CPB,Campbell's,Consumer Staples,S&P 500
+CPRT,Copart,Automotive,S&P 500 + Nasdaq 100
+CPT,Camden Property Trust,Real Estate,S&P 500
+CRH,CRH plc,Basic Materials,S&P 500
+CRL,Charles River Laboratories,Health Care,S&P 500
+CRM,Salesforce,Information Technology,S&P 500
+CRWD,CrowdStrike,Information Technology,S&P 500 + Nasdaq 100
+CSCO,Cisco,Information Technology,S&P 500 + Nasdaq 100
+CSGP,CoStar Group,Real Estate,S&P 500 + Nasdaq 100
+CSX,CSX Corporation,Freight & Logistics Services,S&P 500 + Nasdaq 100
+CTAS,Cintas,Industrials,S&P 500 + Nasdaq 100
+CTRA,Coterra,Energy,S&P 500
+CTSH,Cognizant,IT Services & Consulting,S&P 500 + Nasdaq 100
+CTVA,Corteva,Agricultural chemicals,S&P 500
+CVNA,Carvana,Consumer Discretionary,S&P 500
+CVS,CVS Health,Health Care,S&P 500
+CVX,Chevron Corporation,Energy,S&P 500
+D,Dominion Energy,Electric utility,S&P 500
+DAL,Delta Air Lines,Airlines,S&P 500
+DASH,DoorDash,Consumer Discretionary,S&P 500 + Nasdaq 100
+DD,DuPont,Basic Materials,S&P 500
+DDOG,Datadog,Information Technology,S&P 500 + Nasdaq 100
+DE,John Deere,Agricultural machinery Heavy equipment,S&P 500
+DECK,Deckers Brands,Consumer Discretionary,S&P 500
+DELL,Dell Technologies,Information Technology,S&P 500
+DG,Dollar General,Consumer Staples,S&P 500
+DGX,Quest Diagnostics,Health Care,S&P 500
+DHI,D. R. Horton,Consumer Discretionary,S&P 500
+DHR,Danaher Corporation,Advanced Medical Equipment & Technology,S&P 500
+DIS,The Walt Disney Company,Broadcasting,S&P 500
+DLR,Digital Realty,Real Estate,S&P 500
+DLTR,Dollar Tree,Consumer Staples,S&P 500
+DOV,Dover Corporation,Conglomerate,S&P 500
+DOW,Dow Chemical Company,Chemicals,S&P 500
+DPZ,Domino's,Consumer Discretionary,S&P 500
+DRI,Darden Restaurants,Consumer Discretionary,S&P 500
+DTE,DTE Energy,Electric & Gas Utilities,S&P 500
+DUK,Duke Energy,Energy,S&P 500
+DVA,DaVita,Health Care,S&P 500
+DVN,Devon Energy,Energy,S&P 500
+DXCM,DexCom,Health Care,S&P 500 + Nasdaq 100
+EA,Electronic Arts,Communication Services,S&P 500 + Nasdaq 100
+EBAY,EBay,Consumer Discretionary,S&P 500
+ECL,Ecolab,Materials,S&P 500
+ED,Consolidated Edison,Energy,S&P 500
+EFX,Equifax,Credit risk assessment,S&P 500
+EIX,Edison International,Electric Utilities,S&P 500
+EL,The Estée Lauder Companies,Consumer Staples,S&P 500
+ELV,Elevance Health,Health Care,S&P 500
+EME,Emcor,Industrials,S&P 500
+EMR,Emerson Electric,Electrical equipment,S&P 500
+EOG,EOG Resources,Energy,S&P 500
+EPAM,EPAM Systems,Information Technology,S&P 500
+EQIX,Equinix,Commercial REITs,S&P 500
+EQR,Equity Residential,Apartments,S&P 500
+EQT,EQT Corporation,Energy,S&P 500
+ERIE,Erie Insurance Group,Financials,S&P 500
+ES,Eversource Energy,Electric Utilities,S&P 500
+ESS,Essex Property Trust,Real Estate,S&P 500
+ETN,Eaton Corporation,Conglomerate,S&P 500
+ETR,Entergy,Energy industry,S&P 500
+EVRG,Evergy,Electric utility,S&P 500
+EW,Edwards Lifesciences,Health Care,S&P 500
+EXC,Exelon,Public utility,S&P 500 + Nasdaq 100
+EXE,Expand Energy,Energy,S&P 500
+EXPD,Expeditors International,Industrials,S&P 500
+EXPE,Expedia Group,Consumer Cyclicals,S&P 500
+EXR,Extra Space Storage,Real Estate,S&P 500
+F,Ford Motor Company,Auto & Truck Manufacturers,S&P 500
+FANG,Diamondback Energy,Energy,S&P 500 + Nasdaq 100
+FAST,Fastenal,Industrials,S&P 500 + Nasdaq 100
+FCX,Freeport-McMoRan,Materials,S&P 500
+FDS,FactSet,Financial services Technology,S&P 500
+FDX,FedEx,Air Freight & Courier Services,S&P 500
+FE,FirstEnergy,Electric Utility,S&P 500
+FFIV,"F5, Inc.",Information Technology,S&P 500
+FICO,FICO,Data analytics,S&P 500
+FIS,FIS,Financial services,S&P 500
+FISV,Fiserv,Financials,S&P 500
+FITB,Fifth Third Bancorp,Banking & Investment Services,S&P 500
+FIX,Comfort Systems USA,HVAC,S&P 500
+FOXA,Fox Corporation,Broadcasting,S&P 500
+FRT,Federal Realty Investment Trust,Commercial REITs,S&P 500
+FSLR,First Solar,Information Technology,S&P 500
+FTNT,Fortinet,Information Technology,S&P 500 + Nasdaq 100
+FTV,Fortive,Conglomerate,S&P 500
+GD,General Dynamics,Arms industry Shipbuilding,S&P 500
+GDDY,GoDaddy,Information Technology,S&P 500
+GE,GE Aerospace,Aerospace,S&P 500
+GEHC,GE HealthCare,Health Care,S&P 500 + Nasdaq 100
+GEN,Gen Digital,Information Technology,S&P 500
+GEV,GE Vernova,Energy,S&P 500
+GILD,Gilead Sciences,Health Care,S&P 500 + Nasdaq 100
+GIS,General Mills,Consumer Staples,S&P 500
+GL,Globe Life,Financials,S&P 500
+GLW,Corning Inc.,Electronic Equipments & Parts,S&P 500
+GM,General Motors,Automotive,S&P 500
+GNRC,Generac,Industrials,S&P 500
+GOOGL,Alphabet Inc.,Communication Services,S&P 500 + Nasdaq 100
+GPC,Genuine Parts Company,"Auto, Truck & Motorcycle Parts",S&P 500
+GPN,Global Payments,Financials,S&P 500
+GRMN,Garmin,Aerospace & Defense,S&P 500
+GS-PK,Goldman Sachs,Banking & Investment Services,S&P 500
+GWW,W. W. Grainger,Industrial supply distribution,S&P 500
+HAL,Halliburton,Energy,S&P 500
+HAS,Hasbro,Consumer Discretionary,S&P 500
+HBAN,Huntington Bancshares,Banking,S&P 500
+HCA,HCA Healthcare,Health Care,S&P 500
+HD,Home Depot,Consumer Discretionary,S&P 500
+HIG,The Hartford,Financials,S&P 500
+HII,Huntington Ingalls Industries,Defense Shipbuilding,S&P 500
+HLT,Hilton Worldwide,Consumer Discretionary,S&P 500
+HOLX,Hologic,Health Care,S&P 500
+HON,Honeywell,Conglomerate,S&P 500 + Nasdaq 100
+HOOD,Robinhood Markets,Financial services,S&P 500
+HPE,Hewlett Packard Enterprise,Information Technology,S&P 500
+HPQ,HP Inc.,Computer Hardware,S&P 500
+HRL,Hormel Foods,Consumer Staples,S&P 500
+HSIC,Henry Schein,Health Care,S&P 500
+HST,Host Hotels & Resorts,Real Estate,S&P 500
+HSY,The Hershey Company,Confectionery,S&P 500
+HUBB,Hubbell Incorporated,Electronics Public utility,S&P 500
+HUM,Humana,Health Care,S&P 500
+HWM,Howmet Aerospace,Aerospace,S&P 500
+IBKR,Interactive Brokers,Financial services,S&P 500
+IBM,IBM,IT Services & Consulting,S&P 500
+ICE,Intercontinental Exchange,Banking & Investment Services,S&P 500
+IDXX,Idexx Laboratories,Health Care,S&P 500 + Nasdaq 100
+IEX,IDEX Corporation,Industrials,S&P 500
+IFF,International Flavors & Fragrances,Materials,S&P 500
+INCY,Incyte,Health Care,S&P 500
+INTC,Intel,Information Technology,S&P 500 + Nasdaq 100
+INTU,Intuit,Enterprise software,S&P 500 + Nasdaq 100
+INVH,Invitation Homes,Real Estate,S&P 500
+IP,International Paper,Materials,S&P 500
+IQV,IQVIA,Health Care,S&P 500
+IR,Ingersoll Rand,Diversified Machinery,S&P 500
+IRM,Iron Mountain,Real Estate,S&P 500
+ISRG,Intuitive Surgical,Health Care,S&P 500 + Nasdaq 100
+IT,Gartner,Business services,S&P 500
+ITW,Illinois Tool Works,Industrial Conglomerates,S&P 500
+IVZ,Invesco,Banking & Investment Services,S&P 500
+J,Jacobs Solutions,Engineering Architecture Construction,S&P 500
+JBHT,J.B. Hunt,Industrials,S&P 500
+JBL,Jabil,Electronics Manufacturing Services,S&P 500
+JCI,Johnson Controls,Conglomerate,S&P 500
+JKHY,Jack Henry & Associates,Financials,S&P 500
+JNJ,Johnson & Johnson,Health Care,S&P 500
+JPM,JPMorgan Chase,Banking & Investment Services,S&P 500
+KDP,Keurig Dr Pepper,Beverage,S&P 500 + Nasdaq 100
+KEY,KeyCorp,Financials,S&P 500
+KEYS,Keysight Technologies,Information Technology,S&P 500
+KHC,Kraft Heinz,Consumer Staples,S&P 500 + Nasdaq 100
+KIM,Kimco Realty,Real Estate,S&P 500
+KKR,Kohlberg Kravis Roberts,Financials,S&P 500
+KLAC,KLA Corporation,Information Technology,S&P 500 + Nasdaq 100
+KMB,Kimberly-Clark,Consumer Non-Cyclicals,S&P 500
+KMI,Kinder Morgan,Energy,S&P 500
+KO,The Coca-Cola Company,Beverage,S&P 500
+KR,Kroger,Consumer Non-Cyclicals,S&P 500
+KVUE,Kenvue,Consumer Staples,S&P 500
+L,Loews Corporation,Conglomerate,S&P 500
+LDOS,Leidos,Industrials,S&P 500
+LEN,Lennar,Consumer Discretionary,S&P 500
+LH,Labcorp,Health Care,S&P 500
+LHX,L3Harris,Aerospace,S&P 500
+LII,Lennox International,HVAC,S&P 500
+LIN,Linde plc,Basic Materials,S&P 500 + Nasdaq 100
+LLY,Eli Lilly and Company,Health Care,S&P 500
+LMT,Lockheed Martin,Aerospace Defense,S&P 500
+LNT,Alliant Energy,Utilities,S&P 500
+LOW,Lowe's,Consumer Cyclicals,S&P 500
+LRCX,Lam Research,Information Technology,S&P 500 + Nasdaq 100
+LULU,Lululemon,Clothing,S&P 500
+LUV,Southwest Airlines,Industrials,S&P 500
+LVS,Las Vegas Sands,Consumer Discretionary,S&P 500
+LW,Lamb Weston,Consumer Staples,S&P 500
+LYB,LyondellBasell,Basic Materials,S&P 500
+LYV,Live Nation Entertainment,Communication Services,S&P 500
+MA,Mastercard,Financial services,S&P 500
+MAA,Mid-America Apartment Communities,Real Estate,S&P 500
+MAR,Marriott International,Consumer Discretionary,S&P 500 + Nasdaq 100
+MAS,Masco,Industrials,S&P 500
+MCD,McDonald's,Consumer Cyclicals,S&P 500
+MCHP,Microchip Technology,Information Technology,S&P 500 + Nasdaq 100
+MCK,McKesson Corporation,Consumer Non-Cyclicals,S&P 500
+MCO,Moody's Corporation,Business and financial services,S&P 500
+MDLZ,Mondelez International,Consumer Staples,S&P 500 + Nasdaq 100
+MDT,Medtronic,Health Care,S&P 500
+MET,MetLife,Financial services,S&P 500
+META,Meta Platforms,Communication Services,S&P 500 + Nasdaq 100
+MGM,MGM Resorts,Consumer Discretionary,S&P 500
+MKC,McCormick & Company,Consumer Staples,S&P 500
+MLM,Martin Marietta Materials,Construction Materials,S&P 500
+MMM,3M,Conglomerate,S&P 500
+MNST,Monster Beverage,Consumer Staples,S&P 500 + Nasdaq 100
+MO,Altria,Consumer Staples,S&P 500
+MOH,Molina Healthcare,Health Care,S&P 500
+MOS,The Mosaic Company,Agriculture Fertilizer,S&P 500
+MPC,Marathon Petroleum,Energy,S&P 500
+MPWR,Monolithic Power Systems,Information Technology,S&P 500 + Nasdaq 100
+MRK,Merck & Co.,Health Care,S&P 500
+MRNA,Moderna,Biotechnology,S&P 500
+MRSH,Marsh McLennan,Financials,S&P 500
+MS,Morgan Stanley,Banking & Investment Services,S&P 500
+MSCI,MSCI,Financials,S&P 500
+MSFT,Microsoft,Information Technology,S&P 500 + Nasdaq 100
+MSI,Motorola Solutions,Information Technology,S&P 500
+MTB,M&T Bank,Banking Financial services,S&P 500
+MTCH,Match Group,Communication Services,S&P 500
+MTD,Mettler Toledo,Health Care,S&P 500
+MU,Micron Technology,Information Technology,S&P 500 + Nasdaq 100
+NCLH,Norwegian Cruise Line Holdings,Consumer Discretionary,S&P 500
+NDAQ,"Nasdaq, Inc.",Financial services,S&P 500
+NDSN,Nordson Corporation,Industrials,S&P 500
+NEE,NextEra Energy,Utilities,S&P 500
+NEM,Newmont,Basic Materials,S&P 500
+NFLX,"Netflix, Inc.",Communication Services,S&P 500 + Nasdaq 100
+NI,NiSource,Public utility,S&P 500
+NKE,"Nike, Inc.",Accessories,S&P 500
+NOC,Northrop Grumman,"Aerospace , defense",S&P 500
+NOW,ServiceNow,Enterprise software,S&P 500
+NRG,NRG Energy,Electric utilities,S&P 500
+NSC,Norfolk Southern Railway,Industrials,S&P 500
+NTAP,NetApp,Cloud computing Storage device,S&P 500
+NTRS,Northern Trust,Financial services,S&P 500
+NUE,Nucor,Materials,S&P 500
+NVDA,Nvidia,Information Technology,S&P 500 + Nasdaq 100
+NVR,"NVR, Inc.",Consumer Discretionary,S&P 500
+NWSA,News Corp,Communication Services,S&P 500
+NXPI,NXP Semiconductors,Information Technology,S&P 500 + Nasdaq 100
+O,Realty Income,Real Estate,S&P 500
+ODFL,Old Dominion Freight Line,Industrials,S&P 500 + Nasdaq 100
+OKE,Oneok,Energy,S&P 500
+OMC,Omnicom Group,Advertising public relations,S&P 500
+ON,Onsemi,Information Technology,S&P 500
+ORCL,Oracle Corporation,Information Technology,S&P 500
+ORLY,O'Reilly Auto Parts,Consumer Discretionary,S&P 500 + Nasdaq 100
+OTIS,Otis Worldwide,Industrials,S&P 500
+OXY,Occidental Petroleum,Energy,S&P 500
+PANW,Palo Alto Networks,Information Technology,S&P 500 + Nasdaq 100
+PAYC,Paycom,Industrials,S&P 500
+PAYX,Paychex,Industrials,S&P 500 + Nasdaq 100
+PCAR,Paccar,Industrials,S&P 500 + Nasdaq 100
+PCG,PG&E,Electricity,S&P 500
+PEAK,Healthpeak Properties,Financials,S&P 500
+PEG,Public Service Enterprise Group,Utilities,S&P 500
+PEP,PepsiCo,Beverages Food processing,S&P 500 + Nasdaq 100
+PFE,Pfizer,Health Care,S&P 500
+PFG,Principal Financial Group,Financials,S&P 500
+PG,Procter & Gamble,Consumer Staples,S&P 500
+PGR,Progressive Corporation,Financials,S&P 500
+PH,Parker Hannifin,Industrials,S&P 500
+PHM,PulteGroup,Consumer Discretionary,S&P 500
+PKG,Packaging Corporation of America,Applied Resources,S&P 500
+PLD,Prologis,Real Estate,S&P 500
+PLTR,Palantir Technologies,Information Technology,S&P 500 + Nasdaq 100
+PM,Philip Morris International,Consumer Staples,S&P 500
+PNC,PNC Financial Services,Financials,S&P 500
+PNR,Pentair,Industrial Goods,S&P 500
+PNW,Pinnacle West Capital,Electric Utilities,S&P 500
+PODD,Insulet Corporation,Health Care,S&P 500
+POOL,Pool Corporation,Consumer Discretionary,S&P 500
+PPG,PPG Industries,Chemicals,S&P 500
+PPL,PPL Corporation,Electric utilities,S&P 500
+PRU,Prudential Financial,Financial services,S&P 500
+PSA,Public Storage,Financials,S&P 500
+PSKY,Paramount Skydance,Communication Services,S&P 500
+PSX,Phillips 66,Energy,S&P 500
+PTC,PTC (software company),IOT,S&P 500
+PWR,Quanta Services,Industrials,S&P 500
+PYPL,PayPal,Financial technology,S&P 500 + Nasdaq 100
+Q,Qnity Electronics,Information Technology,S&P 500
+QCOM,Qualcomm,Information Technology,S&P 500 + Nasdaq 100
+RCL,Royal Caribbean Group,Consumer Cyclicals,S&P 500
+RE,Everest Group,Financials,S&P 500
+REG,Regency Centers,Real Estate,S&P 500
+REGN,Regeneron Pharmaceuticals,Health Care,S&P 500 + Nasdaq 100
+RF-PB,Regions Financial Corporation,Banking & Investment Services,S&P 500
+RJF,Raymond James Financial,Financials,S&P 500
+RL,Ralph Lauren Corporation,Apparel & Accessories,S&P 500
+RMD,ResMed,Health Care,S&P 500
+ROK,Rockwell Automation,Industrials,S&P 500
+ROL,"Rollins, Inc.",Industrials,S&P 500
+ROP,Roper Technologies,Conglomerate,S&P 500 + Nasdaq 100
+ROST,Ross Stores,Consumer Discretionary,S&P 500 + Nasdaq 100
+RSG,Republic Services,Industrials,S&P 500
+RTX,RTX Corporation,Industrials,S&P 500
+RVTY,Revvity,Biotechnology,S&P 500
+SBAC,SBA Communications,Real Estate,S&P 500
+SBUX,Starbucks,Consumer Discretionary,S&P 500 + Nasdaq 100
+SCHW,Charles Schwab Corporation,Financial services,S&P 500
+SHW,Sherwin-Williams,Chemicals,S&P 500
+SJM,The J.M. Smucker Company,Consumer Staples,S&P 500
+SLB,Schlumberger,Energy,S&P 500
+SMCI,Supermicro,Information Technology,S&P 500
+SNA,Snap-on,Industrials,S&P 500
+SNDK,Sandisk,Computer data storage,S&P 500
+SNPS,Synopsys,Information Technology,S&P 500 + Nasdaq 100
+SO,Southern Company,Electric Utilities,S&P 500
+SOLV,Solventum,Health Care,S&P 500
+SPG,Simon Property Group,Real Estate,S&P 500
+SPGI,S&P Global,Financial services,S&P 500
+SRE,Sempra,Utilities,S&P 500
+STE,Steris,Electric Utilities,S&P 500
+STLD,Steel Dynamics,Materials,S&P 500
+STT,State Street Corporation,Banking & Investment Services,S&P 500
+STX,Seagate Technology,Computer storage,S&P 500 + Nasdaq 100
+STZ,Constellation Brands,Beverages,S&P 500
+SW,Smurfit Westrock,Materials,S&P 500
+SWK,Stanley Black & Decker,Industrials,S&P 500
+SWKS,Skyworks Solutions,Information Technology,S&P 500
+SYF,Synchrony Financial,Banking & Investment Services,S&P 500
+SYK,Stryker Corporation,Health Care,S&P 500
+SYY,Sysco,Consumer Staples,S&P 500
+T,AT&T,Communication Services,S&P 500
+TAP,Molson Coors,Beverages,S&P 500
+TDG,TransDigm Group,Aerospace & Defense,S&P 500
+TDY,Teledyne Technologies,Conglomerate,S&P 500
+TECH,Bio-Techne,Biotechnology,S&P 500
+TEL,TE Connectivity,Information Technology,S&P 500
+TER,Teradyne,Information Technology,S&P 500
+TFC,Truist Financial,Banking & Investment Services,S&P 500
+TGT,Target Corporation,Consumer Cyclicals,S&P 500
+TJX,TJX Companies,Consumer Discretionary,S&P 500
+TKO,TKO Group Holdings,Communication Services,S&P 500
+TMO,Thermo Fisher Scientific,Health Care,S&P 500
+TMUS,T-Mobile US,Communication Services,S&P 500 + Nasdaq 100
+TPL,Texas Pacific Land Corporation,Energy,S&P 500
+TPR,"Tapestry, Inc.",Consumer Discretionary,S&P 500
+TRGP,Targa Resources,Energy,S&P 500
+TRMB,Trimble Inc.,Information Technology,S&P 500
+TROW,T. Rowe Price,Financials,S&P 500
+TRV,The Travelers Companies,Financials,S&P 500
+TSCO,Tractor Supply,Consumer Discretionary,S&P 500
+TSLA,"Tesla, Inc.",Auto & Truck Manufacturers,S&P 500 + Nasdaq 100
+TSN,Tyson Foods,Consumer Staples,S&P 500
+TT,Trane Technologies,Conglomerate,S&P 500
+TTD,The Trade Desk,Communication Services,S&P 500
+TTWO,Take-Two Interactive,Communication Services,S&P 500 + Nasdaq 100
+TXN,Texas Instruments,Information Technology,S&P 500 + Nasdaq 100
+TXT,Textron,Aerospace Automotive Defense,S&P 500
+TYL,Tyler Technologies,Information Technology,S&P 500
+UAL,United Airlines Holdings,Industrials,S&P 500
+UBER,Uber,Industrials,S&P 500
+UDR,"UDR, Inc.",Real Estate,S&P 500
+UHS,Universal Health Services,Health Care,S&P 500
+ULTA,Ulta Beauty,Consumer Discretionary,S&P 500
+UNH,UnitedHealth Group,Health Care,S&P 500
+UNP,Union Pacific Corporation,Freight & Logistics Services,S&P 500
+UPS,United Parcel Service,Courier,S&P 500
+URI,United Rentals,Industrials,S&P 500
+USB,U.S. Bancorp,Banking & Investment Services,S&P 500
+V,Visa Inc.,Financials,S&P 500
+VICI,Vici Properties,Real Estate,S&P 500
+VLO,Valero Energy,Energy,S&P 500
+VLTO,Veralto,Industrials,S&P 500
+VMC,Vulcan Materials Company,Basic Materials,S&P 500
+VRSK,Verisk Analytics,Data analytics and risk assessment,S&P 500 + Nasdaq 100
+VRSN,Verisign,Information Technology,S&P 500
+VRTX,Vertex Pharmaceuticals,Health Care,S&P 500 + Nasdaq 100
+VST,Vistra Corp,Energy and Power Generation,S&P 500
+VTR,Ventas,Real Estate,S&P 500
+VTRS,Viatris,Health Care,S&P 500
+VZ,Verizon,Communication Services,S&P 500
+WAB,Wabtec,Industrials,S&P 500
+WAT,Waters Corporation,Advanced Medical Equipment & Technology,S&P 500
+WBD,Warner Bros. Discovery,Communication Services,S&P 500 + Nasdaq 100
+WDAY,"Workday, Inc.",Cloud computing,S&P 500 + Nasdaq 100
+WDC,Western Digital,Computer data storage,S&P 500 + Nasdaq 100
+WEC,WEC Energy Group,Diversified utilities,S&P 500
+WELL,Welltower,Real Estate,S&P 500
+WFC,Wells Fargo,Banking & Investment Services,S&P 500
+WLTW,Willis Towers Watson,Financials,S&P 500
+WM,"Waste Management, Inc.",Industrials,S&P 500
+WMB,Williams Companies,Energy,S&P 500
+WMT,Walmart,Consumer Non-Cyclicals,S&P 500 + Nasdaq 100
+WRB,W. R. Berkley Corporation,Financials,S&P 500
+WSM,"Williams-Sonoma, Inc.",Consumer Discretionary,S&P 500
+WST,West Pharmaceutical Services,Health Care,S&P 500
+WY,Weyerhaeuser,Real Estate,S&P 500
+WYNN,Wynn Resorts,Consumer Discretionary,S&P 500
+XEL,Xcel Energy,Utilities,S&P 500 + Nasdaq 100
+XOM,ExxonMobil,Energy,S&P 500
+XYL,Xylem Inc.,Industrial Goods,S&P 500
+XYZ,"Block, Inc.",Financials,S&P 500
+YUM,Yum! Brands,Consumer Discretionary,S&P 500
+ZBH,Zimmer Biomet,Health Care,S&P 500
+ZBRA,Zebra Technologies,Information Technology,S&P 500
+ZTS,Zoetis,Health Care,S&P 500
+ALNY,Alnylam Pharmaceuticals,Biotechnology,Nasdaq 100
+ARM,Arm Holdings,Semiconductors,Nasdaq 100
+ASMLF,ASML Holding,Industrial Machinery,Nasdaq 100
+CCEP,Coca-Cola Europacific Partners,Beverages,Nasdaq 100
+FRRVY,Ferrovial,Construction & Engineering,Nasdaq 100
+INSM,Insmed,Biotechnology,Nasdaq 100
+MELI,Mercado Libre,Catalog/Specialty Distribution,Nasdaq 100
+MRVL,Marvell Technology,Semiconductor,Nasdaq 100
+MSTR,MicroStrategy,Computer Software,Nasdaq 100
+PDD,Pinduoduo,EDP Services,Nasdaq 100
+SHOP,Shopify,Computer Software,Nasdaq 100
+TEAM,Atlassian,Computer Software,Nasdaq 100
+TRI,Thomson Reuters,Computer Software,Nasdaq 100
+ZS,Zscaler,EDP Services,Nasdaq 100
+AAMI,Acadian Asset Management,Financials,S&P 600 small cap
+AAP,Advance Auto Parts,Auto Parts Retail,S&P 600 small cap
+AAT,American Assets Trust,Diversified REITs,S&P 600 small cap
+ABCB,Ameris Bancorp,Banking Financial services,S&P 600 small cap
+ABG,Asbury Automotive Group,Auto dealership,S&P 600 small cap
+ABM,ABM Industries,Facility services,S&P 600 small cap
+ABR,Arbor Realty Trust,Financials,S&P 600 small cap
+ACA,"Arcosa, Inc.",Construction & Engineering,S&P 600 small cap
+ACAD,Acadia Pharmaceuticals,Biopharmaceutical Healthcare,S&P 600 small cap
+ACHC,Acadia Healthcare,Health Care,S&P 600 small cap
+ACIW,ACI Worldwide,Information Technology,S&P 600 small cap
+ACLS,Axcelis Technologies,Information Technology,S&P 600 small cap
+ACMR,ACM Research,Information Technology,S&P 600 small cap
+ACT,"Enact Holdings, Inc.",Financials,S&P 600 small cap
+ADAM,"Adamas Trust, Inc.",Mortgage REITs,S&P 600 small cap
+ADEA,Adeia,Information Technology,S&P 600 small cap
+ADMA,"ADMA Biologics, Inc.",Biotechnology,S&P 600 small cap
+ADNT,Adient,Automotive Parts & Equipment,S&P 600 small cap
+ADT,ADT Inc.,Consumer Discretionary,S&P 600 small cap
+ADUS,Addus HomeCare Corp.,Health Care,S&P 600 small cap
+AEO,American Eagle Outfitters,Consumer Discretionary,S&P 600 small cap
+AESI,"Atlas Energy Solutions, Inc.",Energy,S&P 600 small cap
+AGO,Assured Guaranty Ltd.,Financials,S&P 600 small cap
+AGYS,Agilysys,Hospitality Software,S&P 600 small cap
+AHCO,AdaptHealth Corp.,Health Care,S&P 600 small cap
+AHH,"Armada Hoffler Properties, Inc.",Diversified REITs,S&P 600 small cap
+AIN,Albany International,Industrial goods,S&P 600 small cap
+AIR,AAR Corp,Aviation,S&P 600 small cap
+AKR,Acadia Realty Trust,Real Estate,S&P 600 small cap
+AL,Air Lease Corporation,Aircraft leasing,S&P 600 small cap
+ALEX,Alexander & Baldwin,Real Estate,S&P 600 small cap
+ALG,Alamo Group,Industrials,S&P 600 small cap
+ALGT,Allegiant Travel Company,Industrials,S&P 600 small cap
+ALKS,Alkermes,Biotechnology,S&P 600 small cap
+ALRM,Alarm.com,Financials,S&P 600 small cap
+AMN,"Amn Healthcare Services, Inc.",Health Care,S&P 600 small cap
+AMPH,Amphastar Pharmaceuticals,Health Care,S&P 600 small cap
+AMR,Alpha Metallurgical Resources,Materials,S&P 600 small cap
+AMRX,Amneal Pharmaceuticals,Health Care,S&P 600 small cap
+AMSF,"Amerisafe, Inc.",Financials,S&P 600 small cap
+AMTM,Amentum,Industrials,S&P 600 small cap
+AMWD,American Woodmark,Furniture,S&P 600 small cap
+ANDE,The Andersons,Conglomerate,S&P 600 small cap
+ANGI,Angi Inc.,Communication Services,S&P 600 small cap
+ANIP,"ANI Pharmaceuticals, Inc.",Health Care,S&P 600 small cap
+AORT,Artivion,Health Care,S&P 600 small cap
+AOSL,"Alpha and Omega Semiconductor, Ltd.",Information Technology,S&P 600 small cap
+APAM,Artisan Partners,Financials,S&P 600 small cap
+APLE,"Apple Hospitality REIT, Inc.",Hotel & Resort REITs,S&P 600 small cap
+APLS,"Apellis Pharmaceuticals, Inc.",Health Care,S&P 600 small cap
+APOG,"Apogee Enterprises, Inc.",Building Products,S&P 600 small cap
+ARCB,ArcBest,Industrials,S&P 600 small cap
+ARI,Apollo Commercial Real Estate Finance,Asset management,S&P 600 small cap
+ARLO,Arlo Technologies,Information Technology,S&P 600 small cap
+AROC,"Archrock, Inc.",Energy,S&P 600 small cap
+ARR,Armour Residential REIT,Mortgage REITs,S&P 600 small cap
+ASO,Academy Sports + Outdoors,Consumer Discretionary,S&P 600 small cap
+ASTE,"Astec Industries, Inc.",Industrials,S&P 600 small cap
+ASTH,"Astrana Health, Inc.",Health Care,S&P 600 small cap
+ATEN,A10 Networks,Computer networking,S&P 600 small cap
+ATGE,Adtalem Global Education,Consumer Discretionary,S&P 600 small cap
+AUB,Atlantic Union Bank,Financial services,S&P 600 small cap
+AVA,Avista,"Energy , private utility",S&P 600 small cap
+AVNS,Avanos Medical,Health Care,S&P 600 small cap
+AWI,Armstrong World Industries,Construction Materials,S&P 600 small cap
+AWR,American States Water Company,Utilities,S&P 600 small cap
+AX,Axos Financial,Financial services,S&P 600 small cap
+AXL,American Axle,Automotive industry,S&P 600 small cap
+AZTA,Azenta,Biotechnology,S&P 600 small cap
+AZZ,"AZZ, Inc.",Heavy Electrical Equipment,S&P 600 small cap
+BANC,Banc of California,Financial services,S&P 600 small cap
+BANF,BancFirst,Financial services,S&P 600 small cap
+BANR,Banner Bank,Commercial Banks,S&P 600 small cap
+BBT,Beacon Financial Corp.,Financials,S&P 600 small cap
+BCC,Boise Cascade,Forest products,S&P 600 small cap
+BCPC,Balchem Corporation,Materials,S&P 600 small cap
+BFH,Bread Financial,Financials,S&P 600 small cap
+BFS,"Saul Centers, Inc.",Real Estate,S&P 600 small cap
+BGC,BGC Group,Banking Financial services,S&P 600 small cap
+BHE,Benchmark Electronics,Electronics manufacturing services,S&P 600 small cap
+BJRI,BJ’s Restaurants,Consumer Discretionary,S&P 600 small cap
+BKE,Buckle (clothing retailer),Consumer Discretionary,S&P 600 small cap
+BKU,BankUnited,Financial services,S&P 600 small cap
+BL,BlackLine Systems,Information Technology,S&P 600 small cap
+BLFS,"BioLife Solutions, Inc.",Health Care,S&P 600 small cap
+BLMN,Bloomin' Brands,Consumer Discretionary,S&P 600 small cap
+BMI,"Badger Meter, Inc.",Electronic Equipment & Instruments,S&P 600 small cap
+BOH,Bank of Hawaii,Finance,S&P 600 small cap
+BOOT,"Boot Barn Holdings, Inc.",Apparel Retail,S&P 600 small cap
+BOX,Box,Application Software,S&P 600 small cap
+BRC,Brady Corporation,Industrials,S&P 600 small cap
+BTSG,"BrightSpring Health Services, Inc.",Health Care,S&P 600 small cap
+BTU,Peabody Energy,Coal mining,S&P 600 small cap
+BXMT,"Blackstone Mortgage Trust, Inc.",Financials,S&P 600 small cap
+CABO,Cable One,Communication Services,S&P 600 small cap
+CAKE,The Cheesecake Factory,Consumer Discretionary,S&P 600 small cap
+CALM,Cal-Maine,Consumer Staples,S&P 600 small cap
+CALX,"Calix, Inc.",Application Software,S&P 600 small cap
+CARG,CarGurus,Communication Services,S&P 600 small cap
+CARS,Cars.com,Communication Services,S&P 600 small cap
+CASH,MetaBank,Financial services,S&P 600 small cap
+CATY,Cathay General Bancorp,Finance and Insurance,S&P 600 small cap
+CBRL,Cracker Barrel,Consumer Discretionary,S&P 600 small cap
+CBU,"Community Bank, N.A.",Banking,S&P 600 small cap
+CC,Chemours,Chemical,S&P 600 small cap
+CCOI,Cogent Communications,Communication Services,S&P 600 small cap
+CCS,"Century Communities, Inc.",Consumer Discretionary,S&P 600 small cap
+CE,Celanese,Basic Materials,S&P 600 small cap
+CENT,Central Garden & Pet Company,Consumer Staples,S&P 600 small cap
+CENTA,Central Garden & Pet Company (Class A),Consumer Staples,S&P 600 small cap
+CENX,Century Aluminum,Aluminum,S&P 600 small cap
+CERT,"Certara, Inc.",Health Care,S&P 600 small cap
+CFFN,Capitol Federal Savings Bank,Financial services,S&P 600 small cap
+CHCO,City Holding Company,Financials,S&P 600 small cap
+CHEF,"Chefs' Warehouse, Inc.",Consumer Staples,S&P 600 small cap
+CLB,Core Laboratories,Energy,S&P 600 small cap
+CLSK,"CleanSpark, Inc.",Information Technology,S&P 600 small cap
+CNK,Cinemark Theatres,Communication Services,S&P 600 small cap
+CNMD,CONMED Corporation,Health Care,S&P 600 small cap
+CNR,CONSOL Energy,"Coal mining , Natural Gas Production",S&P 600 small cap
+CNS,Cohen & Steers,Financials,S&P 600 small cap
+CNXN,PC Connection,Information Technology,S&P 600 small cap
+COHU,"Cohu, Inc.",Information Technology,S&P 600 small cap
+COLL,"Collegium Pharmaceutical, Inc.",Health Care,S&P 600 small cap
+CON,"Concentra Group Holdings Parent, Inc.",Health Care,S&P 600 small cap
+CORT,Corcept Therapeutics,Health Care,S&P 600 small cap
+CPF,Central Pacific Financial Corp.,Financials,S&P 600 small cap
+CPK,Chesapeake Utilities,Energy,S&P 600 small cap
+CPRX,Catalyst Pharmaceuticals,Biotechnology,S&P 600 small cap
+CRC,California Resources Corporation,Energy,S&P 600 small cap
+CRGY,Crescent Energy Company,Energy,S&P 600 small cap
+CRI,Carter's,"Apparel, Accessories & Luxury Goods",S&P 600 small cap
+CRK,"Comstock Resources, Inc.",Energy,S&P 600 small cap
+CRSR,Corsair Gaming,Information Technology,S&P 600 small cap
+CRVL,CorVel Corporation,Health Care,S&P 600 small cap
+CSGS,"CSG Systems International, Inc.",Data Processing & Outsourced Services,S&P 600 small cap
+CSR,Centerspace Trust,Multi-Family Residential REITs,S&P 600 small cap
+CSW,"CSW Industrials, Inc.",Industrial Conglomerates,S&P 600 small cap
+CTKB,"Cytek Biosciences, Inc.",Health Care,S&P 600 small cap
+CTRE,"CareTrust REIT, Inc.",Health Care REITs,S&P 600 small cap
+CTS,CTS Corporation,Electronic Manufacturing Services,S&P 600 small cap
+CUBI,"Customers Bancorp, Inc.",Financials,S&P 600 small cap
+CURB,Curbline Properties Corp.,Real Estate,S&P 600 small cap
+CVBF,CVB Financial Corp.,Financials,S&P 600 small cap
+CVCO,"Cavco Industries, Inc.",Consumer Discretionary,S&P 600 small cap
+CVI,"CVR Energy, Inc.",Energy,S&P 600 small cap
+CWEN,"Clearway Energy, Inc. (Class C)",Renewable Electricity,S&P 600 small cap
+CWEN-A,"Clearway Energy, Inc. (Class A)",Renewable Electricity,S&P 600 small cap
+CWK,Cushman & Wakefield,Real Estate,S&P 600 small cap
+CWST,Casella Waste Systems,Industrials,S&P 600 small cap
+CWT,California Water Service Group,Utilities,S&P 600 small cap
+CXM,Sprinklr,Customer experience management,S&P 600 small cap
+CXW,CoreCivic,Industrials,S&P 600 small cap
+CZR,Caesars Entertainment,Consumer Discretionary,S&P 600 small cap
+DAN,Dana Incorporated,Automotive industry,S&P 600 small cap
+DCOM,Dime Community Bank,Banking,S&P 600 small cap
+DEA,"Easterly Government Properties, Inc.",Office REITs,S&P 600 small cap
+DEI,Douglas Emmett,Office REITs,S&P 600 small cap
+DFH,"Dream Finders Homes, Inc.",Consumer Discretionary,S&P 600 small cap
+DFIN,Donnelley Financial Solutions,Financial Exchanges & Data,S&P 600 small cap
+DGII,Digi International,Industrial Internet of Things (IIoT),S&P 600 small cap
+DIOD,Diodes Incorporated,Information Technology,S&P 600 small cap
+DLX,Deluxe Corporation,Financial services,S&P 600 small cap
+DNOW,NOW Inc,Industrials,S&P 600 small cap
+DOCN,DigitalOcean,Information Technology,S&P 600 small cap
+DORM,Dorman products,Automotive,S&P 600 small cap
+DRH,DiamondRock Hospitality Company,Hotel & Resort REITs,S&P 600 small cap
+DV,"DoubleVerify Holdings, Inc.",Advertising,S&P 600 small cap
+DXC,DXC Technology,Information Technology,S&P 600 small cap
+DXPE,"DXP Enterprises, Inc.",Industrials,S&P 600 small cap
+EAT,Brinker International Inc,Consumer Discretionary,S&P 600 small cap
+ECG,"Everus Construction Group, Inc.",Construction & Engineering,S&P 600 small cap
+ECPG,Encore Capital Group,Financials,S&P 600 small cap
+EFC,"Ellington Financial, Inc.",Financials,S&P 600 small cap
+EGBN,EagleBank,Financial services,S&P 600 small cap
+EIG,"Employers Holdings, Inc.",Financials,S&P 600 small cap
+EMBC,Embecta Corp.,Health Care,S&P 600 small cap
+EMN,Eastman Chemical Company,Basic Materials,S&P 600 small cap
+ENOV,Enovis,Health Care,S&P 600 small cap
+ENPH,Enphase Energy,High tech,S&P 600 small cap
+ENR,Energizer,Consumer Staples,S&P 600 small cap
+ENVA,"Enova International, Inc.",Consumer Finance,S&P 600 small cap
+EPAC,Enerpac Tool Group,Industrial Tools,S&P 600 small cap
+EPC,Edgewell Personal Care,Consumer Staples,S&P 600 small cap
+EPRT,"Essential Properties Realty Trust, Inc.",Diversified REITs,S&P 600 small cap
+ESE,ESCO Technologies Inc.,Industrials,S&P 600 small cap
+ESI,Element Solutions,Materials,S&P 600 small cap
+ETD,Ethan Allen,Consumer Discretionary,S&P 600 small cap
+ETSY,Etsy,Consumer Discretionary,S&P 600 small cap
+EVTC,"EVERTEC, Inc.",Financials,S&P 600 small cap
+EXPI,"eXp World Holdings, Inc.",Real Estate,S&P 600 small cap
+EXTR,Extreme Networks,Information Technology,S&P 600 small cap
+EYE,National Vision Holdings,Consumer Discretionary,S&P 600 small cap
+EZPW,EZCorp,Financials,S&P 600 small cap
+FBK,FB Financial Corp.,Financials,S&P 600 small cap
+FBNC,First Bancorp,Financial services,S&P 600 small cap
+FBP,First BanCorp,Banking Financial services,S&P 600 small cap
+FBRT,"Franklin BSP Realty Trust, Inc.",Mortgage REITs,S&P 600 small cap
+FCF,First Commonwealth Bank,Banking and Finance,S&P 600 small cap
+FCPT,"Four Corners Property Trust, Inc.",Other Specialized REITs,S&P 600 small cap
+FDP,Fresh Del Monte Produce,Agriculture,S&P 600 small cap
+FELE,Franklin Electric,Industrials,S&P 600 small cap
+FFBC,First Financial Bancorp,Banking,S&P 600 small cap
+FHB,First Hawaiian Bank,Banking,S&P 600 small cap
+FIBK,First Interstate BancSystem,Financial services,S&P 600 small cap
+FIZZ,National Beverage,Beverages (nonalcoholic),S&P 600 small cap
+FMC,FMC Corporation,Basic Materials,S&P 600 small cap
+FORM,"FormFactor, Inc.",Information Technology,S&P 600 small cap
+FOXF,Fox Factory,Automotive Parts & Equipment,S&P 600 small cap
+FRPT,Freshpet,Consumer Staples,S&P 600 small cap
+FSS,Federal Signal Corporation,Industrials,S&P 600 small cap
+FTDR,"Frontdoor, Inc.",Consumer Discretionary,S&P 600 small cap
+FTRE,Fortrea,Health Care,S&P 600 small cap
+FUL,H.B. Fuller Company,Adhesives coatings sealants,S&P 600 small cap
+FULT,Fulton Financial Corporation,Finance,S&P 600 small cap
+FUN,Six Flags,Amusement parks,S&P 600 small cap
+FWRD,Forward Air Corp.,Air Freight & Logistics,S&P 600 small cap
+GBX,The Greenbrier Companies,Industrials,S&P 600 small cap
+GDEN,Golden Entertainment,Consumer Discretionary,S&P 600 small cap
+GDYN,"Grid Dynamics Holdings, Inc.",IT Consulting & Other Services,S&P 600 small cap
+GEO,GEO Group,Industrials,S&P 600 small cap
+GFF,Griffon Corporation,Industrials,S&P 600 small cap
+GIII,G-III Apparel Group,Consumer Discretionary,S&P 600 small cap
+GKOS,Glaukos Corp.,Health Care,S&P 600 small cap
+GNL,"Global Net Lease, Inc.",Diversified REITs,S&P 600 small cap
+GNW,Genworth Financial,Financial services,S&P 600 small cap
+GO,Grocery Outlet,Consumer Staples,S&P 600 small cap
+GOGO,Gogo Inflight Internet,Aviation Technology,S&P 600 small cap
+GOLF,Acushnet Company,Consumer Discretionary,S&P 600 small cap
+GPI,Group 1 Automotive Inc.,Car dealership,S&P 600 small cap
+GRBK,"Green Brick Partners, Inc.",Consumer Discretionary,S&P 600 small cap
+GSHD,"Goosehead Insurance, Inc.",Financials,S&P 600 small cap
+GTES,Gates Corporation,Industrials,S&P 600 small cap
+GTY,Getty Realty Corp.,Real Estate,S&P 600 small cap
+GVA,Granite Construction,Engineering Construction Quarries,S&P 600 small cap
+HAFC,Hanmi Bank,Banking,S&P 600 small cap
+HASI,"Hannon Armstrong Sustainable Infrastructure Capital, Inc.",Financials,S&P 600 small cap
+HAYW,"Hayward Holdings, Inc.",Electrical Components & Equipment,S&P 600 small cap
+HCC,"Warrior Met Coal, Inc.",Materials,S&P 600 small cap
+HCI,"HCI Group, Inc.",Financials,S&P 600 small cap
+HCSG,"Healthcare Services Group, Inc.",Environmental & Facilities Services,S&P 600 small cap
+HE,Hawaiian Electric Industries,Electric Utilities,S&P 600 small cap
+HFWA,Heritage Financial Corporation,Health Care,S&P 600 small cap
+HIW,Highwoods Properties,Office REITs,S&P 600 small cap
+HLIT,Harmonic Inc.,ICT - Broadcast and Media segment,S&P 600 small cap
+HLX,Helix Energy Solutions Group,Energy,S&P 600 small cap
+HMN,Horace Mann Educators Corporation,Financials,S&P 600 small cap
+HNI,HNI Corporation,Industrials,S&P 600 small cap
+HOPE,Bank of Hope,Banking,S&P 600 small cap
+HP,Helmerich & Payne,Energy,S&P 600 small cap
+HRMY,"Harmony Biosciences Holdings, Inc.",Biotechnology,S&P 600 small cap
+HSTM,"HealthStream, Inc.",Health Care,S&P 600 small cap
+HTH,Hilltop Holdings Inc.,Financial services,S&P 600 small cap
+HTLD,"Heartland Express, Inc.",Freight transport,S&P 600 small cap
+HTO,H2O America,Utilities,S&P 600 small cap
+HTZ,The Hertz Corporation,Car rental and leasing,S&P 600 small cap
+HUBG,Hub Group,Freight transport Logistics,S&P 600 small cap
+HWKN,"Hawkins, Inc.",Commodity Chemicals,S&P 600 small cap
+HZO,"MarineMax, Inc.",Consumer Discretionary,S&P 600 small cap
+IAC,IAC Inc.,Communication Services,S&P 600 small cap
+IART,Integra LifeSciences,Health Care,S&P 600 small cap
+IBP,"Installed Building Products, Inc.",Consumer Discretionary,S&P 600 small cap
+ICHR,"Ichor Holdings, Ltd.",Information Technology,S&P 600 small cap
+ICUI,ICU Medical,Health Care,S&P 600 small cap
+IDCC,InterDigital,Information Technology,S&P 600 small cap
+IIIN,"Insteel Industries, Inc.",Building Products,S&P 600 small cap
+IIPR,"Innovative Industrial Properties, Inc.",Industrial REITs,S&P 600 small cap
+INDB,Independent Bank Corp.,Financials,S&P 600 small cap
+INDV,Indivior,Health Care,S&P 600 small cap
+INN,"Summit Hotel Properties, Inc.",Hotel & Resort REITs,S&P 600 small cap
+INSP,"Inspire Medical Systems, Inc.",Health Care,S&P 600 small cap
+INSW,"International Seaways, Inc.",Energy,S&P 600 small cap
+INVA,"Innoviva, Inc.",Health Care,S&P 600 small cap
+INVX,"Innovex International, Inc.",Energy,S&P 600 small cap
+IOSP,Innospec,Materials,S&P 600 small cap
+IPAR,"Inter Parfums, Inc.",Consumer Staples,S&P 600 small cap
+IRDM,Iridium Communications,Communication Services,S&P 600 small cap
+ITGR,Integer Holdings Corporation,Health Care,S&P 600 small cap
+ITRI,Itron,Information Technology,S&P 600 small cap
+JBGS,JBG Smith,Real Estate,S&P 600 small cap
+JBLU,JetBlue,Industrials,S&P 600 small cap
+JBSS,"John B. Sanfilippo & Son, Inc.",Consumer Staples,S&P 600 small cap
+JBTM,JBT Corporation,Industrials,S&P 600 small cap
+JJSF,J & J Snack Foods,Consumer Staples,S&P 600 small cap
+JOE,St. Joe Company,Real Estate,S&P 600 small cap
+JXN,Jackson National Life,Financial services,S&P 600 small cap
+KAI,Kadant,Diversified machinery,S&P 600 small cap
+KALU,Kaiser Aluminum,Aluminum,S&P 600 small cap
+KFY,Korn Ferry,Industrials,S&P 600 small cap
+KGS,"Kodiak Gas Services, Inc.",Energy,S&P 600 small cap
+KLIC,"Kulicke and Soffa Industries, Inc.",Information Technology,S&P 600 small cap
+KMT,Kennametal,Industrials,S&P 600 small cap
+KMX,CarMax,Consumer Discretionary,S&P 600 small cap
+KN,Knowles Corporation,Electronic Components,S&P 600 small cap
+KNTK,"Kinetik Holdings, Inc.",Energy,S&P 600 small cap
+KOP,Koppers,Materials,S&P 600 small cap
+KREF,"KKR Real Estate Finance Trust, Inc.",Financials,S&P 600 small cap
+KRYS,"Krystal Biotech, Inc.",Biotechnology,S&P 600 small cap
+KSS,Kohl's,Consumer Discretionary,S&P 600 small cap
+KTB,Kontoor Brands,Consumer Discretionary,S&P 600 small cap
+KW,Kennedy Wilson,Private equity real estate,S&P 600 small cap
+KWR,Quaker Chemical Corporation,Chemicals,S&P 600 small cap
+LBRT,"Liberty Energy, Inc.",Energy,S&P 600 small cap
+LCII,LCI Industries,Automotive Parts & Equipment,S&P 600 small cap
+LEG,Leggett & Platt,Consumer Discretionary,S&P 600 small cap
+LGIH,LGI Homes,Construction,S&P 600 small cap
+LGND,Ligand Pharmaceuticals,Biopharmaceuticals,S&P 600 small cap
+LKFN,Lakeland Financial,Financials,S&P 600 small cap
+LKQ,LKQ Corporation,Auto parts,S&P 600 small cap
+LMAT,LeMaitre Vascular,Health Care,S&P 600 small cap
+LNC,Lincoln Financial,Financials,S&P 600 small cap
+LNN,Lindsay Corporation,"Manufacturing, Agriculture",S&P 600 small cap
+LPG,Dorian LPG Ltd.,Energy,S&P 600 small cap
+LQDT,Liquidity Services,Industrials,S&P 600 small cap
+LRN,"Stride, Inc.",Consumer Discretionary,S&P 600 small cap
+LTC,"LTC Properties, Inc.",Health Care REITs,S&P 600 small cap
+LUMN,Lumen Technologies,Communication Services,S&P 600 small cap
+LXP,Lexington Realty Trust,Diversified REITs,S&P 600 small cap
+LZ,LegalZoom,Industrials,S&P 600 small cap
+LZB,La-Z-Boy,Consumer Discretionary,S&P 600 small cap
+MAC,Macerich,Real Estate,S&P 600 small cap
+MAN,ManpowerGroup,Industrials,S&P 600 small cap
+MARA,Marathon Digital,Information Technology,S&P 600 small cap
+MATW,Matthews International Corporation,Consumer Discretionary,S&P 600 small cap
+MATX,"Matson, Inc.",Industrials,S&P 600 small cap
+MBC,"MasterBrand, Inc.",Building Products,S&P 600 small cap
+MBIN,Merchants Bancorp,Financials,S&P 600 small cap
+MC,Moelis & Company,Financial services,S&P 600 small cap
+MCRI,"Monarch Casino & Resort, Inc.",Casinos & Gaming,S&P 600 small cap
+MCW,"Mister Car Wash, Inc.",Consumer Discretionary,S&P 600 small cap
+MCY,Mercury General,Financials,S&P 600 small cap
+MD,Pediatrix Medical Group,Health Care,S&P 600 small cap
+MDU,MDU Resources,Electric Power Natural Gas Construction,S&P 600 small cap
+MGEE,MGE Energy,Electricity and Natural Gas Utility,S&P 600 small cap
+MGY,"Magnolia Oil & Gas, Corp.",Energy,S&P 600 small cap
+MHK,Globe Life,Consumer Discretionary,S&P 600 small cap
+MHO,"M/I Homes, Inc.",Consumer Discretionary,S&P 600 small cap
+MIR,"Mirion Technologies, Inc.",Electronic Equipment & Instruments,S&P 600 small cap
+MKTX,MarketAxess,Financial Services,S&P 600 small cap
+MLKN,MillerKnoll,Industrials,S&P 600 small cap
+MMI,Marcus & Millichap,Commercial real estate,S&P 600 small cap
+MMSI,"Merit Medical Systems, Inc.",Health Care,S&P 600 small cap
+MNRO,Monro Muffler Brake,Automotive Retail,S&P 600 small cap
+MODG,Topgolf Callaway Brands,Consumer Discretionary,S&P 600 small cap
+MOG-A,Moog Inc.,Industrials,S&P 600 small cap
+MPT,Medical Properties Trust,Real Estate,S&P 600 small cap
+MRCY,Mercury Systems,Electrical Components & Equipment,S&P 600 small cap
+MRP,"Millrose Properties, Inc.",Real Estate,S&P 600 small cap
+MRTN,"Marten Transport, Ltd.",Freight transport,S&P 600 small cap
+MSEX,Middlesex Water Company,Utilities,S&P 600 small cap
+MSGS,Madison Square Garden Sports,Communication Services,S&P 600 small cap
+MTH,Meritage Homes Corporation,Consumer Discretionary,S&P 600 small cap
+MTRN,Materion,Materials,S&P 600 small cap
+MTUS,Metallus Inc,Materials,S&P 600 small cap
+MTX,Minerals Technologies,Materials,S&P 600 small cap
+MWA,Mueller Water Products,Industrials,S&P 600 small cap
+MXL,MaxLinear,Electronics,S&P 600 small cap
+MYGN,Myriad Genetics,Health Care,S&P 600 small cap
+MYRG,"MYR Group, Inc.",Construction & Engineering,S&P 600 small cap
+NABL,"N-able, Inc.",Information Technology,S&P 600 small cap
+NATL,NCR Atleos,Financials,S&P 600 small cap
+NAVI,Navient,Financial services,S&P 600 small cap
+NBHC,National Bank Holdings Corporation,Financials,S&P 600 small cap
+NBTB,NBT Bank,Finance,S&P 600 small cap
+NE,Noble Corporation,Energy,S&P 600 small cap
+NEO,NeoGenomics,"Biotechnology , Health care",S&P 600 small cap
+NEOG,Neogen,Food safety Animal safety Genomics,S&P 600 small cap
+NGVT,"Ingevity, Corp.",Materials,S&P 600 small cap
+NHC,National Healthcare,Health Care,S&P 600 small cap
+NMIH,"NMI Holdings, Inc.",Financials,S&P 600 small cap
+NOG,"Northern Oil and Gas, Inc.",Energy,S&P 600 small cap
+NPK,National Presto Industries,Consumer products,S&P 600 small cap
+NPO,EnPro Industries,Industrial Technology,S&P 600 small cap
+NSIT,Insight Enterprises,Industrials,S&P 600 small cap
+NSP,Insperity,Industrials,S&P 600 small cap
+NTCT,NetScout Systems,Communications Equipment,S&P 600 small cap
+NVRI,Harsco,Environmental,S&P 600 small cap
+NWBI,Northwest Bank,Banking,S&P 600 small cap
+NWL,Newell Brands,Consumer Discretionary,S&P 600 small cap
+NWN,NW Natural,Utilities,S&P 600 small cap
+NX,Quanex Building Products Corporation,Building Products,S&P 600 small cap
+NXRT,"NexPoint Residential Trust, Inc.",Multi-Family Residential REITs,S&P 600 small cap
+OFG,OFG Bancorp,Finance and Insurance,S&P 600 small cap
+OGN,Organon & Co.,Health Care,S&P 600 small cap
+OI,O-I Glass,Materials,S&P 600 small cap
+OII,Oceaneering International,Energy,S&P 600 small cap
+OMCL,Omnicell,Health Care,S&P 600 small cap
+OPLN,"OPENLANE, Inc.",Diversified Support Services,S&P 600 small cap
+OSIS,OSI Systems,Information Technology,S&P 600 small cap
+OSW,OneSpaWorld Holdings Limited,Consumer Discretionary,S&P 600 small cap
+OTTR,Otter Tail Corporation,Electric Utilities,S&P 600 small cap
+OUT,Outfront Media,Outdoor advertising,S&P 600 small cap
+OXM,Oxford Industries,Consumer Discretionary,S&P 600 small cap
+PAHC,Phibro Animal Health,Animal health and nutrition,S&P 600 small cap
+PARR,Par Pacific Holdings,Energy,S&P 600 small cap
+PATK,"Patrick Industries, Inc.",Automotive Parts & Equipment,S&P 600 small cap
+PAYO,Payoneer,Financials,S&P 600 small cap
+PBH,Prestige Consumer Healthcare,Health Care,S&P 600 small cap
+PBI,Pitney Bowes,Business services,S&P 600 small cap
+PCRX,"Pacira BioSciences, Inc.",Health Care,S&P 600 small cap
+PDFS,PDF Solutions,Big Data Analytics Semiconductor,S&P 600 small cap
+PEB,Pebblebrook Hotel Trust,Hotel & Resort REITs,S&P 600 small cap
+PECO,Phillips Edison & Company,Real Estate,S&P 600 small cap
+PENG,"Penguin Solutions, Inc.",Information Technology,S&P 600 small cap
+PENN,Penn Entertainment,Consumer Discretionary,S&P 600 small cap
+PFBC,Preferred Bank,Financial services,S&P 600 small cap
+PFS,Provident Bank of New Jersey,"Finance, Banking",S&P 600 small cap
+PGNY,Progyny,Health Care,S&P 600 small cap
+PHIN,"PHINIA, Inc.",Automotive Retail,S&P 600 small cap
+PI,Impinj,Information Technology,S&P 600 small cap
+PIPR,Piper Sandler Companies,Financial services,S&P 600 small cap
+PJT,PJT Partners,Financials,S&P 600 small cap
+PLAB,Photronics Inc,Information Technology,S&P 600 small cap
+PLAY,Dave & Buster's,Consumer Discretionary,S&P 600 small cap
+PLMR,"Palomar Holdings, Inc.",Financials,S&P 600 small cap
+PLUS,EPlus,IT Solutions and Services,S&P 600 small cap
+PLXS,Plexus Corp.,Electronic Manufacturing Services,S&P 600 small cap
+PMT,PennyMac Mortgage Investment Trust,Mortgage REITs,S&P 600 small cap
+POWI,Power Integrations,Information Technology,S&P 600 small cap
+POWL,Powell Industries,Electrical Components & Equipment,S&P 600 small cap
+PRA,ProAssurance,Financials,S&P 600 small cap
+PRAA,PRA Group,Consumer Finance,S&P 600 small cap
+PRDO,Career Education Corporation,Consumer Discretionary,S&P 600 small cap
+PRG,"PROG Holdings, Inc.",Consumer Finance,S&P 600 small cap
+PRGO,Perrigo,Health Care,S&P 600 small cap
+PRGS,Progress Software,Computer software,S&P 600 small cap
+PRIM,Primoris Services Corporation,Construction & Engineering,S&P 600 small cap
+PRK,Park National Bank (Ohio),Banking,S&P 600 small cap
+PRKS,United Parks & Resorts,Consumer Discretionary,S&P 600 small cap
+PRLB,Protolabs,Industrials,S&P 600 small cap
+PRSU,Viad,Consumer Discretionary,S&P 600 small cap
+PRVA,"Privia Health Group, Inc.",Health Care,S&P 600 small cap
+PSMT,PriceSmart,Consumer Staples,S&P 600 small cap
+PTCT,PTC Therapeutics,Health Care,S&P 600 small cap
+PTEN,Patterson-UTI,Energy,S&P 600 small cap
+PTGX,"Protagonist Therapeutics, Inc.",Biotechnology,S&P 600 small cap
+PZZA,Papa John's Pizza,Consumer Discretionary,S&P 600 small cap
+QDEL,QuidelOrtho,Health Care,S&P 600 small cap
+QNST,QuinStreet,Communication Services,S&P 600 small cap
+QRVO,Qorvo,Information Technology,S&P 600 small cap
+QTWO,"Q2 Holdings, Inc.",Application Software,S&P 600 small cap
+RAL,Ralliant Corp,Electronic Equipment & Instruments,S&P 600 small cap
+RAMP,LiveRamp,Information Technology,S&P 600 small cap
+RCUS,"Arcus Biosciences, Inc.",Biotechnology,S&P 600 small cap
+RDN,Radian Group,Financials,S&P 600 small cap
+RDNT,RadNet,Health Care,S&P 600 small cap
+RES,"RPC, Inc.",Energy,S&P 600 small cap
+REX,REX American Resources,Basic materials,S&P 600 small cap
+REYN,Reynolds Consumer Products,Consumer Staples,S&P 600 small cap
+REZI,"Resideo Technologies, Inc.",Industrials,S&P 600 small cap
+RHI,Robert Half,Industrials,S&P 600 small cap
+RHP,Ryman Hospitality Properties,REIT Entertainment,S&P 600 small cap
+RNG,RingCentral,Information Technology,S&P 600 small cap
+RNST,Renasant Bank,Finance and insurance Securities,S&P 600 small cap
+ROCK,"Gibraltar Industries, Inc.",Building Products,S&P 600 small cap
+ROG,Rogers Corporation,Advanced specialty materials,S&P 600 small cap
+RRR,"Red Rock Resorts, Inc.",Consumer Discretionary,S&P 600 small cap
+RUN,Sunrun,Industrials,S&P 600 small cap
+RUSHA,Rush Enterprises,"Automotive , Truck Dealerships",S&P 600 small cap
+RWT,"Redwood Trust, Inc.",Mortgage REITs,S&P 600 small cap
+RXO,"RXO, Inc.",Cargo Ground Transportation,S&P 600 small cap
+SABR,Sabre Corporation,Consumer Discretionary,S&P 600 small cap
+SAFE,"Safehold, Inc.",Other Specialized REITs,S&P 600 small cap
+SAFT,"Safety Insurance Group, Inc.",Financials,S&P 600 small cap
+SAH,Sonic Automotive,Automotive,S&P 600 small cap
+SANM,Sanmina Corporation,Electronics Manufacturing Services,S&P 600 small cap
+SBCF,Seacoast Banking Corporation of Florida,Financials,S&P 600 small cap
+SBH,Sally Beauty Holdings,"Beauty , retail",S&P 600 small cap
+SBSI,"Southside Bancshares, Inc.",Financials,S&P 600 small cap
+SCHL,Scholastic Corporation,Children's literacy and education,S&P 600 small cap
+SCL,Stepan Company,Chemicals,S&P 600 small cap
+SCSC,"ScanSource, Inc.",Information Technology,S&P 600 small cap
+SDGR,"Schrödinger, Inc.",Health Care,S&P 600 small cap
+SEDG,SolarEdge,Information Technology,S&P 600 small cap
+SEE,Sealed Air,Materials,S&P 600 small cap
+SEM,Select Medical,Health Care,S&P 600 small cap
+SEZL,Sezzle,Financial technology,S&P 600 small cap
+SFBS,"ServisFirst Bancshares, Inc.",Financials,S&P 600 small cap
+SFNC,Simmons Bank,Financial services,S&P 600 small cap
+SHAK,Shake Shack,Consumer Discretionary,S&P 600 small cap
+SHEN,Shentel,Communication Services,S&P 600 small cap
+SHO,"Sunstone Hotel Investors, Inc.",Hotel & Resort REITs,S&P 600 small cap
+SHOO,Steve Madden,Consumer Discretionary,S&P 600 small cap
+SIG,Signet Jewelers,Consumer Discretionary,S&P 600 small cap
+SITM,SiTime,Information Technology,S&P 600 small cap
+SKT,Tanger Factory Outlet Centers,Real Estate,S&P 600 small cap
+SKY,Champion Homes,Consumer Discretionary,S&P 600 small cap
+SKYW,"SkyWest, Inc.",Aviation,S&P 600 small cap
+SLG,SL Green Realty,Real Estate,S&P 600 small cap
+SLVM,Sylvamo Corp.,Materials,S&P 600 small cap
+SM,SM Energy,Energy,S&P 600 small cap
+SMP,Standard Motor Products,Automobile,S&P 600 small cap
+SMPL,Simply Good Foods Company,Consumer Staples,S&P 600 small cap
+SMTC,Semtech,Information Technology,S&P 600 small cap
+SNCY,Sun Country Airlines,Industrials,S&P 600 small cap
+SNDR,Schneider National,Industrials,S&P 600 small cap
+SNEX,StoneX Group Inc.,Financial services,S&P 600 small cap
+SOLS,Solstice Advanced Materials,Chemicals,S&P 600 small cap
+SONO,Sonos,Consumer Discretionary,S&P 600 small cap
+SPNT,SiriusPoint Ltd.,Financials,S&P 600 small cap
+SPSC,SPS Commerce,Information Technology,S&P 600 small cap
+SRPT,Sarepta Therapeutics,Biotechnology,S&P 600 small cap
+SSTK,Shutterstock,Communication Services,S&P 600 small cap
+STAA,STAAR Surgical Company,Health Care,S&P 600 small cap
+STBA,"S&T Bancorp, Inc.",Financials,S&P 600 small cap
+STC,Stewart Information Services Corporation,Financial services,S&P 600 small cap
+STEL,"Stellar Bancorp, Inc.",Financials,S&P 600 small cap
+STEP,StepStone Group,Financial services,S&P 600 small cap
+STRA,"Strategic Education, Inc.",Consumer Discretionary,S&P 600 small cap
+SUPN,"Supernus Pharmaceuticals, Inc.",Health Care,S&P 600 small cap
+SXC,"SunCoke Energy, Inc.",Materials,S&P 600 small cap
+SXI,Standex International,Industrials,S&P 600 small cap
+SXT,Sensient Technologies,Chemicals,S&P 600 small cap
+TALO,Talos Energy,Energy,S&P 600 small cap
+TBBK,"The Bancorp, Inc.",Financials,S&P 600 small cap
+TDC,Teradata,Information Technology,S&P 600 small cap
+TDS,Telephone and Data Systems,Communication Services,S&P 600 small cap
+TDW,"Tidewater, Inc.",Energy,S&P 600 small cap
+TFIN,"Triumph Bancorp, Inc.",Financials,S&P 600 small cap
+TFX,Teleflex,Health Care,S&P 600 small cap
+TGNA,Tegna Inc.,Broadcasting,S&P 600 small cap
+TGTX,"TG Therapeutics, Inc.",Biotechnology,S&P 600 small cap
+THRM,Gentherm Incorporated,Automotive,S&P 600 small cap
+TILE,"Interface, Inc.",Industrials,S&P 600 small cap
+TMDX,"TransMedics Group, Inc.",Health Care,S&P 600 small cap
+TMP,Tompkins Financial Corporation,Financial services,S&P 600 small cap
+TNC,Tennant Company,Industrials,S&P 600 small cap
+TNDM,Tandem Diabetes Care,Health Care,S&P 600 small cap
+TPH,Tri Pointe Homes,Consumer Discretionary,S&P 600 small cap
+TR,Tootsie Roll Industries,Confectionery,S&P 600 small cap
+TRIP,TripAdvisor,Communication Services,S&P 600 small cap
+TRMK,Trustmark Bank,Banking Financial services,S&P 600 small cap
+TRN,Trinity Industries,Conglomerate,S&P 600 small cap
+TRNO,Terreno Realty Corporation,Industrial REITs,S&P 600 small cap
+TRST,TrustCo Bank,Banking,S&P 600 small cap
+TRUP,Trupanion,Financials,S&P 600 small cap
+TWI,Titan Tire Corporation,Agricultural & Farm Machinery,S&P 600 small cap
+TWO,Two Harbors Investment Corp.,Financials,S&P 600 small cap
+UA,Under Armour,Consumer Discretionary,S&P 600 small cap
+UAA,Under Armour,Consumer Discretionary,S&P 600 small cap
+UCB,United Community Bank,Financials,S&P 600 small cap
+UCTT,"Ultra Clean Holdings, Inc.",Information Technology,S&P 600 small cap
+UE,Urban Edge Properties,Real Estate,S&P 600 small cap
+UFCS,"United Fire Group, Inc.",Financials,S&P 600 small cap
+UFPT,UFP Technologies,Health Care,S&P 600 small cap
+UHT,Universal Health Realty Income Trust,Health Care REITs,S&P 600 small cap
+UNF,UniFirst,Industrials,S&P 600 small cap
+UNFI,United Natural Foods,Consumer Staples,S&P 600 small cap
+UNIT,Uniti Group,Alternative Carriers,S&P 600 small cap
+UPBD,"Upbound Group, Inc.",Computer & Electronics Retail,S&P 600 small cap
+UPWK,Upwork,Freelance marketplace,S&P 600 small cap
+URBN,Urban Outfitters,Consumer Discretionary,S&P 600 small cap
+USPH,"U.S. Physical Therapy, Inc.",Health Care,S&P 600 small cap
+UTL,Unitil Corporation,Utilities,S&P 600 small cap
+UVV,Universal Corporation,Consumer Staples,S&P 600 small cap
+VAC,Marriott Vacations Worldwide Corporation,Consumer Discretionary,S&P 600 small cap
+VCEL,Vericel,Biotechnology,S&P 600 small cap
+VCTR,Victory Capital,Financial services,S&P 600 small cap
+VCYT,"Veracyte, Inc.",Health Care,S&P 600 small cap
+VECO,Veeco,Information Technology,S&P 600 small cap
+VIAV,Viavi Solutions,Communications Equipment,S&P 600 small cap
+VICR,Vicor Corporation,Electronics industry,S&P 600 small cap
+VIR,"Vir Biotechnology, Inc.",Biotechnology,S&P 600 small cap
+VIRT,Virtu Financial,Financial services,S&P 600 small cap
+VITL,Vital Farms,Consumer Staples,S&P 600 small cap
+VRE,Mack-Cali Realty Corporation,Real Estate,S&P 600 small cap
+VRRM,Verra Mobility Corporation,Data Processing & Outsourced Services,S&P 600 small cap
+VRTS,Virtus Investment Partners,Asset Management,S&P 600 small cap
+VSAT,Viasat (American company),Communications,S&P 600 small cap
+VSCO,Victoria's Secret,Apparel,S&P 600 small cap
+VSH,Vishay Intertechnology,Information Technology,S&P 600 small cap
+VSNT,"Versant Media Group, Inc.",Cable & Satellite,S&P 600 small cap
+VSTS,Vestis,Diversified Support Services,S&P 600 small cap
+VTOL,Bristow Group Inc.,Energy,S&P 600 small cap
+VYX,NCR Voyix,Information Technology,S&P 600 small cap
+WABC,Westamerica Bank,Financials,S&P 600 small cap
+WAFD,WaFd Bank,Financial services,S&P 600 small cap
+WAY,Waystar Holding Corp,Health Care,S&P 600 small cap
+WD,Walker & Dunlop,Commercial Real Estate,S&P 600 small cap
+WDFC,WD-40 Company,Chemical,S&P 600 small cap
+WEN,The Wendy's Company,Consumer Discretionary,S&P 600 small cap
+WERN,Werner Enterprises,Cargo Ground Transportation,S&P 600 small cap
+WGO,Winnebago Industries,Consumer Discretionary,S&P 600 small cap
+WHD,"Cactus, Inc.",Energy,S&P 600 small cap
+WINA,Winmark,Consumer Discretionary,S&P 600 small cap
+WKC,World Kinect Corporation,Energy,S&P 600 small cap
+WLY,Wiley (publisher),Communication Services,S&P 600 small cap
+WOR,Worthington Industries,Building products Consumer products,S&P 600 small cap
+WRLD,World Acceptance Corporation,Consumer Finance,S&P 600 small cap
+WS,Worthington Steel,Materials,S&P 600 small cap
+WSC,WillScot Holdings Corp.,Industrials,S&P 600 small cap
+WSFS,WSFS Bank,Financial services,S&P 600 small cap
+WSR,Whitestone REIT,Real Estate,S&P 600 small cap
+WT,WisdomTree Investments,Financials,S&P 600 small cap
+WU,Western Union,Financial services,S&P 600 small cap
+WWW,Wolverine World Wide,Apparel Accessories,S&P 600 small cap
+XHR,Xenia Hotels & Resorts,Real Estate,S&P 600 small cap
+XNCR,Xencor Inc,Biotechnology,S&P 600 small cap
+XPEL,"XPEL, Inc.",Automotive Parts & Equipment,S&P 600 small cap
+YELP,Yelp,Communication Services,S&P 600 small cap
+YOU,Clear Secure,Identity verification,S&P 600 small cap
+ZD,Ziff Davis,Communication Services,S&P 600 small cap
+ZWS,Zurn Elkay Water Solutions Corp.,Industrials,S&P 600 small cap

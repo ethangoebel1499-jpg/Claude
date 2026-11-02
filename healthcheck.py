@@ -23,6 +23,11 @@ MODULES = ("mcbot.backtest", "mcbot.patterns", "mcbot.fmt", "livepaper.core", "l
            "streamlearn.ollama_local", "streamlearn.add_ui")
 
 
+DATA = ("livepaper/data/stocks.csv", "livepaper/static/lightweight-charts.standalone.production.js",
+        "mcbot/pattern_stats.json", "assets/icon.ico", "assets/icon_256.png", "app-requirements.txt",
+        "livepaper/live.example.toml")
+
+
 def main() -> int:
     failures = []
     files = [p for f in FOLDERS for p in (ROOT / f).rglob("*.py")] + [ROOT / t for t in TOP if (ROOT / t).exists()]
@@ -33,6 +38,9 @@ def main() -> int:
             failures.append(f"{f.relative_to(ROOT)} doesn't compile: {e.msg.strip()[:200]}")
     for tmp in ROOT.glob("*.pywc.tmp"):
         tmp.unlink()
+    for need in DATA:                          # files the app reads at run time (not code, so imports don't catch them)
+        if not (ROOT / need).exists():
+            failures.append(f"missing file: {need}")
     import importlib
     for m in MODULES:
         try:

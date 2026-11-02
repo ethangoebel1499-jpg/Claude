@@ -13,6 +13,9 @@ FILE = Path(__file__).with_name("data") / "stocks.csv"
 
 @lru_cache(maxsize=1)
 def universe() -> list[dict]:
+    if not FILE.exists():                      # never crash the dashboard over the list: fall back to the short one
+        from .history import STOCKS
+        return [{"ticker": t, "name": "", "sector": "", "index": ""} for t in STOCKS]
     with open(FILE, newline="", encoding="utf-8") as f:
         return list(csv.DictReader(f))
 
