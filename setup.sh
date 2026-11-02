@@ -6,12 +6,14 @@ cd "$(dirname "$0")"
 
 PY=""
 for p in python3.13 python3.12 python3.11 python3.10 python3; do
-  if command -v "$p" >/dev/null 2>&1 && "$p" -c 'import sys; sys.exit(sys.version_info < (3, 10))'; then
+  # 3.10-3.13: every package has ready-made installers (newer Pythons would need a compiler)
+  if command -v "$p" >/dev/null 2>&1 && "$p" -c 'import sys; sys.exit(not (3, 10) <= sys.version_info[:2] <= (3, 13))'; then
     PY="$p"; break
   fi
 done
 if [ -z "$PY" ]; then
-  echo "Python 3.10 or newer is needed. Mac: install it from https://www.python.org/downloads/ and run this again."
+  echo "Python 3.10-3.13 is needed. Install Python 3.13 from https://www.python.org/downloads/ (it can sit next to"
+  echo "a newer Python) and run this again."
   exit 1
 fi
 echo "Using $($PY --version)"

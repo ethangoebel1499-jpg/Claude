@@ -2,8 +2,8 @@
 
 ## Run it on your laptop
 
-1. Install **Python 3.10+** from https://www.python.org/downloads/ (Windows: tick "Add python.exe to PATH").
-2. Get the code: `git clone https://github.com/ethangoebel1499-jpg/Claude.git` (or GitHub's Code → Download ZIP; the trade record then can't sync back to Claude).
+1. Install **Python 3.13** from https://www.python.org/downloads/ (Windows: tick "Add python.exe to PATH"). Newer versions (3.14+) don't have ready-made installers for all the packages yet; 3.13 can sit next to them.
+2. Get the code: `git clone https://github.com/ethangoebel1499-jpg/Claude.git` (or GitHub's Code → Download ZIP, then right-click it → **Extract All** - don't run it from inside the ZIP; the trade record then can't sync back to Claude).
 3. Setup, once: **Windows** double-click `setup.bat` · **Mac** `bash setup.sh` in Terminal from the folder.
 4. Start: **Windows** double-click `start.bat` · **Mac** `bash start.sh`. The paper trader and the dashboard both start; the dashboard opens at http://localhost:8501.
 5. In the dashboard: ⚙️ Account for Webull keys (optional, the built-in paper broker works without), 🧪 Strategy Lab to pick what to paper trade.
