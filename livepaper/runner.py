@@ -128,6 +128,30 @@ class Runner:
         self.store.event(name, now, "catch-up", f"trader was off {_span(off)}: replayed {len(missed)} hourly candles"
                          + ("" if changed else ", stop and targets not reached"))
 
+    def manual(self, now: str) -> None:
+        """Force long / force short / close now, sent from the dashboard. A forced trade gets this
+        run's stop and take profits like any other (and the stop order at the broker)."""
+        for cid, action in self.store.pending_commands(self.r["name"]):
+            p = self.pm.state.position
+            if action == "close":
+                result = "no open position" if p is None else \
+                    ("closed" if self.pm.close_all(self.price, now, "manual close") else "close order not filled")
+            elif action in ("long", "short"):
+                if p is not None and p.side == action:
+                    result = f"already {action}"
+                else:
+                    if p is not None:
+                        self.pm.close_all(self.price, now, "manual close")
+                    if self.pm.state.position is not None:
+                        result = "couldn't close the open position first"
+                    else:
+                        self.pm.open(action, self.price, now)
+                        result = f"opened {action}" if self.pm.state.position else "entry order not filled yet"
+            else:
+                result = "unknown action"
+            self.store.event(self.r["name"], now, "manual", f"you: {action} -> {result}")
+            self.store.finish_command(cid, result)
+
     def _bars_tf(self, tf: str) -> pd.DataFrame:
         if self.r["feed"] == "webull":
             return self.feed.bars(self.r["symbol"], tf, self.r["asset"])
@@ -141,6 +165,7 @@ class Runner:
         ref = bars.close[bars.index <= pd.Timestamp(now) - pd.Timedelta("24h")]
         change = (self.price / ref.iloc[-1] - 1) * 100 if len(ref) else None
         self.store.quote(name, now, self.price, change)
+        self.manual(now)
         last = str(bars.index[-1])
         st = self.pm.state
         if st.last_bar is None or last > st.last_bar:

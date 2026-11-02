@@ -146,7 +146,7 @@ def test_dashboard_renders(tmp_path, candles, monkeypatch):
     assert at.title[0].value.startswith("📈") and [m.label for m in at.metric][:5] == \
         ["Total equity", "Open P&L", "Closed P&L", "Open positions", "Win rate"]
     # Strategy Lab: backtest, then tick "Paper trade this setup"
-    at.button[0].click().run()
+    next(b for b in at.button if b.label == "Run backtest").click().run()
     assert not at.exception and any(m.label == "Strategy return" for m in at.metric)
     box = next(c for c in at.checkbox if c.label.startswith("📄 Paper trade this setup"))
     box.check().run()
@@ -214,3 +214,50 @@ def test_account_settings_round_trip(tmp_path, monkeypatch):
     assert settings.mask("abcd1234").endswith("1234")
     monkeypatch.setenv("WEBULL_APP_KEY", "fromenv")
     assert settings.get("webull_app_key") == "fromenv"
+
+
+def test_take_profit_plans():
+    import pandas as pd
+    from livepaper.core import Exits
+    from livepaper.tp_plans import plan_text, tp_rows, tps_from_table
+    base = Exits(0.04, [(0.12, 0.5), (0.24, 0.5)])
+    rows = tp_rows("Strategy's tested setting", True, base, 0.04)
+    assert [r["At"] for r in rows] == [3.0, 6.0]                     # 12% / 24% with a 4% stop = 3R / 6R
+    tps = tps_from_table(pd.DataFrame(tp_rows("2 targets: 50 / 50", True, base, 0.04)), True, 0.04)
+    assert tps == [(0.04, 0.5), (0.08, 0.5)]                         # 1R and 2R of a 4% stop
+    run = tps_from_table(pd.DataFrame(tp_rows("2 targets + runner: 50 / 25 / rest rides", False, base, 0.04)), False, 0.04)
+    assert run == [(0.02, 0.5), (0.05, 0.25), (None, 0.25)]
+    assert "rides until the exit signal" in plan_text(run, 0.04) and "e+" not in plan_text(run, 0.04)
+    bad = pd.DataFrame([{"Target": "TP1", "At": 5.0, "Close %": 60}, {"Target": "TP2", "At": 10.0, "Close %": 60}])
+    with pytest.raises(ValueError, match="add up to 100"):
+        tps_from_table(bad, False, 0.04)
+    with pytest.raises(ValueError, match="need a stop"):
+        tps_from_table(pd.DataFrame(tp_rows("1 target (all out)", True, base, 0)), True, 0)
+
+
+def test_force_trades_get_the_runs_exits(tmp_path, candles):
+    store = Store(tmp_path / "f.db")
+    r = {"name": "G", "strategy": "grind", "symbol": "X", "asset": "crypto", "timeframe": "4h", "shorts": False,
+         "capital": 10_000.0, "fraction": 1.0, "feed": "kraken", "qty_step": 1e-6, "stop": None, "take_profits": None}
+    feed = FakeFeed(candles, 400)
+    runners = []
+    broker = SimBroker(fee=0.001, fill="market", market_price=lambda run: runners[0].price)
+    runners.append(Runner(r, feed, broker, store))
+    rn = runners[0]
+    rn.step()                                              # first start: just watching
+    store.command("G", "long")
+    rn.step()
+    p = rn.pm.state.position
+    assert p is not None and p.side == "long"
+    entry = p.entry_price
+    rn.pm.on_tick(entry, entry * 0.93, entry, "later")        # down 7%: GRIND's 6% stop fires
+    assert rn.pm.state.position is None and rn.pm.trades[-1]["reason"] == "stop"
+    store.command("G", "short")
+    rn.step()
+    assert rn.pm.state.position.side == "short"
+    store.command("G", "short")
+    store.command("G", "close")
+    rn.step()
+    assert rn.pm.state.position is None
+    results = [x[0] for x in store.db.execute("SELECT result FROM commands ORDER BY id")]
+    assert results == ["opened long", "opened short", "already short", "closed"]

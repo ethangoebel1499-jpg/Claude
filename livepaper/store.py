@@ -26,6 +26,8 @@ CREATE TABLE IF NOT EXISTS runs (name TEXT PRIMARY KEY, strategy TEXT, symbol TE
                                  feed TEXT, shorts INTEGER, capital REAL, fraction REAL, stop REAL,
                                  take_profits TEXT, active INTEGER, source TEXT, created TEXT);
 CREATE TABLE IF NOT EXISTS quotes (run TEXT PRIMARY KEY, time TEXT, price REAL, change_24h REAL);
+CREATE TABLE IF NOT EXISTS commands (id INTEGER PRIMARY KEY, run TEXT, action TEXT, created TEXT, done TEXT,
+                                     result TEXT);
 """
 RUN_FIELDS = ("name", "strategy", "symbol", "asset", "timeframe", "feed", "shorts", "capital", "fraction", "stop",
               "take_profits", "active", "source", "created")
@@ -100,6 +102,19 @@ class Store:
                 r["stop"] = None
             out.append(r)
         return out
+
+    # ---- manual orders from the dashboard (the trader carries them out on its next price check)
+    def command(self, run: str, action: str) -> None:
+        self.db.execute("INSERT INTO commands (run, action, created) VALUES (?, ?, ?)", (run, action, now_utc()))
+        self.db.commit()
+
+    def pending_commands(self, run: str) -> list[tuple[int, str]]:
+        return self.db.execute("SELECT id, action FROM commands WHERE run = ? AND done IS NULL ORDER BY id",
+                               (run,)).fetchall()
+
+    def finish_command(self, cid: int, result: str) -> None:
+        self.db.execute("UPDATE commands SET done = ?, result = ? WHERE id = ?", (now_utc(), result, cid))
+        self.db.commit()
 
     def quote(self, run, time, price, change_24h):
         self.db.execute("INSERT OR REPLACE INTO quotes VALUES (?, ?, ?, ?)", (run, str(time), price, change_24h))

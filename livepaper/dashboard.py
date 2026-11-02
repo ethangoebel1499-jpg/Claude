@@ -17,6 +17,8 @@ from livepaper import settings  # noqa: E402
 from livepaper.fmt import money, pct, price  # noqa: E402  (full prices, never scientific notation)
 from livepaper.history import CRYPTO, STOCKS, history  # noqa: E402
 from livepaper.runner import exits_for, load_config, max_stop, normalize_run, seed_runs  # noqa: E402
+from livepaper import tvchart  # noqa: E402
+from livepaper.tp_plans import OTHER, STOCK_NAMES, TP_PLANS, plan_text, tp_rows, tps_from_table  # noqa: E402
 from livepaper.store import Store  # noqa: E402
 from livepaper.strategies import NOT_LIVE, REGISTRY  # noqa: E402
 from mcbot.backtest import run_backtest  # noqa: E402
@@ -162,6 +164,8 @@ def dashboard():
             st.caption(f"{REGISTRY[r['strategy']]['label']} · {r['symbol']} {r['timeframe']} · "
                        f"{exit_text(exits_for(r))} · shorts {'on' if r['shorts'] else 'off'} · "
                        f"capital {money(r['capital'])}")
+            run_chart(r, store.load_state(r["name"]))
+            manual_controls(r)
             left, right = st.columns([3, 2])
             e = eq[eq.run == r["name"]]
             with left:
@@ -182,6 +186,53 @@ def dashboard():
             with right:
                 sig = store.table("signals", r["name"])
                 st.code(sig.checklist.iloc[-1] if len(sig) else "waiting for the first closed candle", language=None)
+
+
+def manual_controls(r: dict) -> None:
+    """Force a long / short or close the position now; the trader does it on its next price check
+    with this run's stop and take profits."""
+    ex = exits_for(r)
+    b1, b2, b3, info = st.columns([1, 1, 1, 3])
+    for col, action, label in ((b1, "long", "🟢 Force LONG now"), (b2, "short", "🔴 Force SHORT now"),
+                               (b3, "close", "✖ Close position now")):
+        if col.button(label, key=f"cmd_{action}_{r['name']}"):
+            store.command(r["name"], action)
+            st.toast(f"{r['name']}: {action} sent - the trader does it on its next price check")
+    note = f"Forced trades get this run's exits: {exit_text(ex)}."
+    if not r["shorts"] and r["asset"] == "crypto":
+        note += " Shorting spot crypto only works in the built-in paper broker."
+    info.caption(note)
+    cmds = pd.read_sql_query("SELECT action, created, done, result FROM commands WHERE run = ? ORDER BY id DESC LIMIT 3",
+                             store.db, params=(r["name"],))
+    if len(cmds):
+        info.caption(" · ".join(f"{c.action}: {c.result or 'waiting for the trader...'}" for c in cmds.itertuples()))
+
+
+@st.cache_data(ttl=120, show_spinner=False)
+def live_candles(symbol: str, asset: str, tf: str) -> pd.DataFrame:
+    return history(symbol, asset, tf).iloc[-600:]
+
+
+def run_chart(r: dict, state) -> None:
+    """Candles with this run's entries, take profits and stops, like TradingView's strategy tester."""
+    try:
+        candles = live_candles(r["symbol"], r["asset"], r["timeframe"])
+    except Exception as e:
+        st.caption(f"No chart: couldn't load {r['symbol']} candles ({e})")
+        return
+    fills = store.table("fills", r["name"])
+    marks = tvchart.markers_from_fills(candles, fills.to_dict("records")) if len(fills) else []
+    lines = []
+    p = state.position if state else None
+    if p is not None:
+        ex, d = exits_for(r), 1 if p.side == "long" else -1
+        lines.append({"price": p.entry_price, "title": f"{p.side.capitalize()} entry", "color": tvchart.BLUE})
+        if ex.stop:
+            lines.append({"price": p.entry_price * (1 - d * ex.stop), "title": "SL", "color": tvchart.RED})
+        fixed = [lv for lv, _ in ex.take_profits if lv is not None]
+        for k, lv in enumerate(fixed[p.targets_hit:], start=p.targets_hit + 1):
+            lines.append({"price": p.entry_price * (1 + d * lv), "title": f"TP{k}", "color": tvchart.GREEN})
+    tvchart.show(candles, marks, lines, height=440)
 
 
 with tab_dash:
@@ -205,7 +256,8 @@ def backtest(strategy, symbol, asset, tf, days, stop, tps, shorts, fee):
                             "exit price": t.exit_price, "reason": t.reason, "return": t.pnl_pct * 100}
                            for t in res.trades])
     bh = df.close / df.close.iloc[0] * res.equity.iloc[0]
-    return res.stats, res.equity, bh, trades
+    candles = df[["open", "high", "low", "close"]]
+    return res.stats, res.equity, bh, trades, candles, tvchart.markers_from_trades(candles, res.trades)
 
 
 def toggle_run(run: dict, key: str):
@@ -224,30 +276,56 @@ with tab_lab:
     strategy = c1.selectbox("Strategy", keys, format_func=lambda k: REGISTRY[k]["label"])
     market = c2.radio("Market", ["Crypto", "Stocks"], horizontal=True)
     asset = "crypto" if market == "Crypto" else "stock"
-    with st.form("lab_form"):
-        c3, c4, c5 = st.columns([2, 1, 1.4])
-        symbol = c3.selectbox("Coin", list(CRYPTO)) if asset == "crypto" else \
-            c3.text_input("Ticker", "SPY", help="Any Yahoo Finance ticker, e.g. " + ", ".join(STOCKS[:8]))
-        tf = c4.selectbox("Timeframe", TIMEFRAMES, index=2)
-        period = c5.selectbox("Period", list(PERIODS), index=1)
-        base = REGISTRY[strategy]["exits"]
-        with st.expander("Exits & options"):
-            e1, e2, e3, e4 = st.columns([1, 2, 1, 1])
-            stop_pct = e1.number_input("Stop %", 0.0, 50.0, (base.stop or 0) * 100, 0.5,
-                                       help="0 = no stop. Defaults to the strategy's tested setting.")
-            tps_in = e2.text_input("Take profits (move % : size %)", tps_text(base.take_profits),
-                                   help="e.g. 12:50, 24:50  or  2:50, 5:25, ride:25 (ride = runner)")
-            fee_pct = e3.number_input("Fee % per side", 0.0, 1.0, 0.10, 0.01)
-            capital = e4.number_input("Paper capital $", 100.0, 1e7, 10_000.0, 1000.0)
-            long_only = REGISTRY[strategy].get("long_only", False)
-            shorts = st.checkbox("Allow shorts", value=False, disabled=long_only,
-                                 help="Spot crypto can't be shorted in a real account; stocks can.")
-        st.caption(REGISTRY[strategy]["note"])
-        go = st.form_submit_button("Run backtest", type="primary")
+    c3, c4, c5 = st.columns([2, 1, 1.4])
+    if asset == "crypto":
+        symbol = c3.selectbox("Coin", list(CRYPTO))
+    else:
+        pick = c3.selectbox("Stock", STOCKS + [OTHER], format_func=lambda t: t if t == OTHER else
+                            f"{t} · {STOCK_NAMES.get(t, '')}".rstrip(" ·"))
+        symbol = c3.text_input("Ticker", "", placeholder="any Yahoo Finance ticker, e.g. SHOP") if pick == OTHER else pick
+    tf = c4.selectbox("Timeframe", TIMEFRAMES, index=2)
+    period = c5.selectbox("Period", list(PERIODS), index=1)
+    base = REGISTRY[strategy]["exits"]
+    long_only = REGISTRY[strategy].get("long_only", False)
+    with st.expander("Exits & options", expanded=True):
+        e1, e2, e3 = st.columns(3)
+        stop_pct = e1.number_input("Stop %", 0.0, 50.0, (base.stop or 0) * 100, 0.5, key=f"stop_{strategy}",
+                                   help="0 = no stop (paper trading still caps it - see Account). "
+                                        "Defaults to the strategy's tested setting.")
+        fee_pct = e2.number_input("Fee % per side", 0.0, 1.0, 0.10, 0.01)
+        capital = e3.number_input("Paper capital $", 100.0, 1e7, 10_000.0, 1000.0)
+        t1, t2 = st.columns([2, 3])
+        tp_mode = t1.radio("Targets set as", ["% move", "Risk:reward (× the stop)"], horizontal=True,
+                           help="Risk:reward: 2R = twice the stop distance, e.g. a 4% stop makes 2R = +8%.")
+        r_mode = tp_mode.startswith("Risk")
+        preset = t2.selectbox("Take-profit plan", list(TP_PLANS))
+        rows = tp_rows(preset, r_mode, base, stop_pct / 100)
+        edited = st.data_editor(
+            pd.DataFrame(rows), hide_index=True, width="stretch", num_rows="dynamic",
+            key=f"tp_{strategy}_{preset}_{r_mode}",
+            column_config={
+                "Target": st.column_config.TextColumn(disabled=True),
+                "At": st.column_config.NumberColumn("Take profit at (×R)" if r_mode else "Take profit at (+%)",
+                                                    min_value=0.01, step=0.1, format="%.2f",
+                                                    help="Leave empty on the last row to let the rest ride until "
+                                                         "the exit signal"),
+                "Close %": st.column_config.NumberColumn("Close (% of position)", min_value=1, max_value=100, step=1,
+                                                         format="%d%%")})
+        try:
+            tps = tps_from_table(edited, r_mode, stop_pct / 100)
+            st.caption("Plan: " + plan_text(tps, stop_pct / 100))
+            tp_error = None
+        except ValueError as e:
+            tps, tp_error = None, str(e)
+            st.error(tp_error)
+        shorts = st.checkbox("Allow shorts", value=False, disabled=long_only,
+                             help="Spot crypto can't be shorted in a real account; stocks can.")
+    st.caption(REGISTRY[strategy]["note"])
+    go = st.button("Run backtest", type="primary", disabled=tps is None or not symbol)
 
     if go:
         try:
-            tps = tuple(parse_tps(tps_in))
+            tps = tuple(tps)
             with st.spinner("Loading candles and backtesting..."):
                 out = backtest(strategy, symbol.upper(), asset, tf, PERIODS[period], stop_pct / 100 or None, tps,
                                shorts and not long_only, fee_pct / 100)
@@ -259,7 +337,7 @@ with tab_lab:
 
     lab = st.session_state.get("lab_result")
     if lab:
-        stats, equity, bh, trades = lab["out"]
+        stats, equity, bh, trades, candles, marks = lab["out"]
         spec = REGISTRY[lab["strategy"]]
         st.subheader(f"{spec['label']} · {lab['symbol']} {lab['tf']} · {lab['period'].lower()}")
         m = st.columns(6)
@@ -272,6 +350,7 @@ with tab_lab:
         verdict = "🟢 beat buy & hold" if stats["total_return_pct"] > stats["buy_hold_return_pct"] else \
             "🟡 made money but trailed buy & hold" if stats["total_return_pct"] > 0 else "🔴 lost money"
         st.caption(f"{verdict} over this period. A good backtest is a reason to paper trade, not proof.")
+        tvchart.show(candles, marks, height=480)
         curve = pd.concat([pd.DataFrame({"time": equity.index, "value": equity.values, "line": "Strategy"}),
                            pd.DataFrame({"time": bh.index, "value": bh.values, "line": "Buy & hold"})])
         ch = alt.Chart(curve).mark_line().encode(
