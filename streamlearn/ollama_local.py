@@ -19,6 +19,7 @@ import subprocess
 import sys
 import tarfile
 import time
+import urllib.error
 import urllib.request
 import zipfile
 from pathlib import Path
@@ -29,6 +30,10 @@ MODELS = DIR / "models"
 STATUS = DIR / "status.json"
 LOCK = DIR / "setup.lock"
 RELEASE = "https://github.com/ollama/ollama/releases/latest/download/"
+HF = os.environ.get("PAPERTRADER_HF", "https://huggingface.co")
+# the same models as plain files on Hugging Face, for when Ollama's own model server won't download
+HF_REPOS = {"qwen2.5:0.5b": "bartowski/Qwen2.5-0.5B-Instruct-GGUF", "qwen2.5:3b": "bartowski/Qwen2.5-3B-Instruct-GGUF",
+            "qwen2.5:7b": "bartowski/Qwen2.5-7B-Instruct-GGUF", "qwen2.5:14b": "bartowski/Qwen2.5-14B-Instruct-GGUF"}
 DEFAULT_URL = "http://127.0.0.1:11434"
 OLD_DEFAULT = "qwen2.5:14b"          # what Account used to save by default
 
@@ -115,18 +120,9 @@ def download(log=print) -> Path:
     """Fetch Ollama for this computer into runtime/ollama (once)."""
     DIR.mkdir(parents=True, exist_ok=True)
     name = _asset()
-    part = DIR / (name + ".part")
+    part = DIR / name
     log(f"Downloading the local AI engine (Ollama, {name})...")
-    req = urllib.request.Request(RELEASE + name, headers={"User-Agent": "paper-trader"})
-    with urllib.request.urlopen(req, timeout=60) as r, open(part, "wb") as out:
-        total, done, last = int(r.headers.get("Content-Length") or 0), 0, 0.0
-        while chunk := r.read(1 << 20):
-            out.write(chunk)
-            done += len(chunk)
-            if total and time.time() - last > 1:
-                last = time.time()
-                set_status(f"Downloading the AI engine: {done / 2**20:,.0f} of {total / 2**20:,.0f} MB",
-                           pct=done / total * 100)
+    _resumable(RELEASE + name, part, "Downloading the AI engine")
     set_status("Unpacking the AI engine...")
     target = DIR / "engine"
     shutil.rmtree(target, ignore_errors=True)
@@ -198,6 +194,115 @@ def pull(url: str, model: str, log=print) -> None:
         raise RuntimeError(f"model {model} didn't finish downloading")
 
 
+# ---- when Ollama's model server won't download (it was cut off on some home networks) -----------
+class ipv4_only:
+    """Connect over IPv4 only (a network that drops IPv6 connections to a host then still works)."""
+    def __enter__(self):
+        import socket
+        self.socket, self.orig = socket, socket.getaddrinfo
+        def v4(host, *a, **k):
+            res = self.orig(host, *a, **k)
+            return [r for r in res if r[0] == socket.AF_INET] or res
+        socket.getaddrinfo = v4
+
+    def __exit__(self, *exc):
+        self.socket.getaddrinfo = self.orig
+
+
+def _hf_file(repo: str) -> str:
+    """The single-file 4-bit (Q4_K_M) model in a Hugging Face repo."""
+    with urllib.request.urlopen(f"{HF}/api/models/{repo}", timeout=30) as r:
+        files = [x["rfilename"] for x in json.loads(r.read()).get("siblings", [])]
+    pick = [f for f in files if f.lower().endswith("q4_k_m.gguf") and "-of-" not in f]
+    if not pick:
+        raise RuntimeError(f"no Q4_K_M model file in {repo}")
+    return pick[0]
+
+
+def _resumable(url: str, dest: Path, label: str, attempts: int = 6) -> None:
+    """Download with resume: a dropped connection continues where it stopped."""
+    part = dest.with_name(dest.name + ".part")
+    for attempt in range(attempts):
+        have = part.stat().st_size if part.exists() else 0
+        req = urllib.request.Request(url, headers={"User-Agent": "paper-trader", **({"Range": f"bytes={have}-"} if have else {})})
+        try:
+            with urllib.request.urlopen(req, timeout=60) as r:
+                if have and r.status != 206:            # server ignored the resume: start over
+                    have = 0
+                total = have + int(r.headers.get("Content-Length") or 0)
+                with open(part, "ab" if have else "wb") as out:
+                    done, last = have, 0.0
+                    while chunk := r.read(1 << 20):
+                        out.write(chunk)
+                        done += len(chunk)
+                        if total and time.time() - last > 1:
+                            last = time.time()
+                            set_status(f"{label}: {done / 2**30:.2f} of {total / 2**30:.2f} GB", pct=done / total * 100)
+            if total and done < total:              # connection dropped early: resume, don't keep a cut-off file
+                raise ConnectionError(f"download stopped at {done:,} of {total:,} bytes")
+            part.replace(dest)
+            return
+        except Exception:
+            if attempt == attempts - 1:
+                raise
+            time.sleep(10 * (attempt + 1))
+
+
+def _sha256(path: Path) -> str:
+    import hashlib
+    h = hashlib.sha256()
+    with open(path, "rb") as f:
+        while chunk := f.read(8 << 20):
+            h.update(chunk)
+    return h.hexdigest()
+
+
+def from_hugging_face(url: str, model: str, log=print) -> None:
+    """Download the model file from Hugging Face (IPv4, resumable) and add it to Ollama as `model`."""
+    repo = HF_REPOS[model]
+    with ipv4_only():
+        name = _hf_file(repo)
+        dest = DIR / "gguf" / name
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        if not dest.exists():
+            log(f"Downloading {model} from Hugging Face instead ({name})...")
+            _resumable(f"{HF}/{repo}/resolve/main/{name}", dest, f"Downloading the AI model {model} (Hugging Face)")
+    set_status(f"Adding {model} to the local AI...")
+    digest = "sha256:" + _sha256(dest)
+    try:
+        urllib.request.urlopen(urllib.request.Request(f"{url}/api/blobs/{digest}", method="HEAD"), timeout=30)
+    except urllib.error.HTTPError:
+        with open(dest, "rb") as f:
+            req = urllib.request.Request(f"{url}/api/blobs/{digest}", data=f, method="POST",
+                                         headers={"Content-Length": str(dest.stat().st_size)})
+            urllib.request.urlopen(req, timeout=3600).read()
+    body = json.dumps({"model": model, "files": {name: digest}, "stream": False}).encode()
+    with urllib.request.urlopen(urllib.request.Request(f"{url}/api/create", data=body,
+                                                       headers={"Content-Type": "application/json"}), timeout=3600) as r:
+        res = json.loads(r.read() or b"{}")
+    if res.get("error") or not has_model(url, model):
+        raise RuntimeError(f"couldn't add the downloaded model: {res.get('error', 'not listed afterwards')}")
+    dest.unlink(missing_ok=True)                    # Ollama keeps its own copy
+
+
+def get_model(url: str, model: str, log=print, tries: int = 3, wait: float = 15) -> None:
+    """Ollama's own download, retried; then the same model from Hugging Face."""
+    err = None
+    for attempt in range(tries):
+        try:
+            return pull(url, model, log)
+        except Exception as e:
+            err = e
+            if attempt < tries - 1:
+                log(f"Model download interrupted ({str(e)[:120]}) - retrying...")
+                set_status(f"Model download interrupted - retrying ({attempt + 2} of {tries})...")
+                time.sleep(wait * (attempt + 1))
+    if model not in HF_REPOS:
+        raise err
+    log("Ollama's model server keeps cutting the download off on this network - using Hugging Face instead")
+    from_hugging_face(url, model, log)
+
+
 # ---- the one call everything uses -------------------------------------------------------------
 def ensure(setting_model: str | None = None, url: str | None = None, log=print) -> tuple[str, str, subprocess.Popen | None]:
     """Make the local AI ready. Returns (server url, model, server process if this call started it)."""
@@ -226,7 +331,7 @@ def ensure(setting_model: str | None = None, url: str | None = None, log=print) 
             set_status("Starting the local AI engine...")
             proc = start_server(url, log)
         if not has_model(url, model):
-            pull(url, model, log)
+            get_model(url, model, log)
         set_status(f"Ready ({model})", pct=100, ready=True, url=url, model=model)
         return url, model, proc
     except Exception as e:
