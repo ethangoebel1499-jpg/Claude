@@ -142,8 +142,10 @@ class OllamaBackend:
         return json.loads(r.json()["message"]["content"])
 
     def _post(self, chunk: str, title: str, date: str, system: str):
-        return requests.post(f"{self.url}/api/chat", timeout=600, json={
-            "model": self.model, "stream": False, "format": SCHEMA, "options": {"temperature": 0},
+        # num_ctx: Ollama's default context is too small for an 8-minute chunk plus the instructions - the
+        # model would only see part of it. timeout: a laptop without a graphics card can take many minutes.
+        return requests.post(f"{self.url}/api/chat", timeout=1800, json={
+            "model": self.model, "stream": False, "format": SCHEMA, "options": {"temperature": 0, "num_ctx": 16384},
             "messages": [{"role": "system", "content": system},
                          {"role": "user", "content": prompt(chunk, title, date)}]})
 

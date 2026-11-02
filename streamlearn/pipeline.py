@@ -152,4 +152,7 @@ def add_stream(store: Store, path: str | Path, start: pd.Timestamp, title: str, 
     if failed:
         log(f"{failed} of {len(parts)} chunks failed; the transcript is saved - fix the problem and rerun "
             f"with --reextract to extract it again")
+    log(f"RESULT setups={n_calls} rules={n_rules} patterns={n_pats} failed={failed} chunks={len(parts)}")
+    if parts and failed == len(parts):
+        raise RuntimeError("every part of the transcript failed - nothing was extracted (see the errors above)")
     return sid

@@ -17,7 +17,7 @@ from livepaper import settings  # noqa: E402
 from livepaper.fmt import money, pct, price  # noqa: E402  (full prices, never scientific notation)
 from livepaper.history import CRYPTO, STOCKS, history  # noqa: E402
 from livepaper.runner import exits_for, load_config, max_stop, normalize_run, seed_runs  # noqa: E402
-from livepaper import tvchart  # noqa: E402
+from livepaper import stocks, tvchart  # noqa: E402
 from livepaper.tp_plans import OTHER, STOCK_NAMES, TP_PLANS, plan_text, tp_rows, tps_from_table  # noqa: E402
 from livepaper.store import Store  # noqa: E402
 from livepaper.strategies import NOT_LIVE, REGISTRY  # noqa: E402
@@ -280,8 +280,9 @@ with tab_lab:
     if asset == "crypto":
         symbol = c3.selectbox("Coin", list(CRYPTO))
     else:
-        pick = c3.selectbox("Stock", STOCKS + [OTHER], format_func=lambda t: t if t == OTHER else
-                            f"{t} · {STOCK_NAMES.get(t, '')}".rstrip(" ·"))
+        names = stocks.labels()
+        pick = c3.selectbox(f"Stock ({len(names):,} - type to search by ticker or name)", list(names) + [OTHER],
+                            format_func=lambda t: names.get(t, t))
         symbol = c3.text_input("Ticker", "", placeholder="any Yahoo Finance ticker, e.g. SHOP") if pick == OTHER else pick
     tf = c4.selectbox("Timeframe", TIMEFRAMES, index=2)
     period = c5.selectbox("Period", list(PERIODS), index=1)

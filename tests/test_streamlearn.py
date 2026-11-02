@@ -255,7 +255,17 @@ def test_add_stream_from_the_dashboard_form(tmp_path, monkeypatch):
             break
         _time.sleep(0.5)
     text = log.read_text()
-    assert f"{add_ui.DONE} 0]" in text                       # finished cleanly (the model was unreachable)
-    st = Store(tmp_path / "s.db").table("streams")
+    assert f"{add_ui.DONE} 1]" in text                       # the model was unreachable: reported as failed,
+    assert add_ui.job_state(text).startswith("❌ Failed")     # not "done" with an empty Review tab
+    st = Store(tmp_path / "s.db").table("streams")            # ...but the transcript is kept for a re-read
     assert st.title.tolist() == ["Pasted stream"] and st.url[0] == "https://youtu.be/abc"
     assert st.start[0].startswith("2026-08-20 16:00")
+
+
+def test_job_state_tells_how_it_went():
+    from streamlearn.add_ui import DONE, job_state
+    assert job_state("X: 9 lines, 20 min, 3 chunks -> extracting\n  chunk 1/3: 0 calls") == "⏳ Processing... (1 of 3 parts read)"
+    ok = "RESULT setups=4 rules=2 patterns=1 failed=0 chunks=3\n" + DONE + " 0]"
+    assert job_state(ok).startswith("✅ Done - 4 setups to review")
+    none = "RESULT setups=0 rules=1 patterns=0 failed=1 chunks=3\n" + DONE + " 0]"
+    assert job_state(none).startswith("⚠️ Done, but no trade setups") and "1 of 3 parts failed" in job_state(none)

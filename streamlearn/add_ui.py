@@ -74,20 +74,31 @@ def ai_status() -> None:
         st.caption("🤖 The local AI downloads and sets itself up the first time it's needed (a few GB, once).")
 
 
+def _spawn(args: list[str], title: str, file: str) -> Path:
+    JOBS.mkdir(parents=True, exist_ok=True)
+    log = JOBS / f"{int(time.time() * 1000)}.log"
+    meta = {"title": title, "file": file, "started": datetime.now().isoformat(timespec="seconds")}
+    log.with_suffix(".json").write_text(json.dumps(meta))
+    subprocess.Popen([sys.executable, "-m", "streamlearn.job", str(log), *args], cwd=ROOT, stdin=subprocess.DEVNULL,
+                     stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+                     creationflags=0x08000000 if os.name == "nt" else 0)
+    return log
+
+
+def reread_job(source: str, start: str, title: str, url: str | None) -> Path:
+    """Extract an already-added stream again (e.g. after the AI settings were fixed)."""
+    return _spawn(["add", source, "--start", start, "--title", title, "--reextract"] + (["--url", url] if url else []),
+                  title, source)
+
+
 def start_job(transcript: str, start_local: str, title: str, url: str) -> Path:
     INBOX.mkdir(exist_ok=True)
     JOBS.mkdir(parents=True, exist_ok=True)
     safe = re.sub(r"[^\w\- ]+", "", title).strip()[:60] or "stream"
     f = INBOX / f"{start_local[:10]} {start_local[11:16].replace(':', '')} {safe}.txt"
     f.write_text(transcript, encoding="utf-8")
-    log = JOBS / f"{int(time.time())}.log"
-    meta = {"title": title, "file": str(f), "started": datetime.now().isoformat(timespec="seconds")}
-    log.with_suffix(".json").write_text(json.dumps(meta))
-    cmd = [sys.executable, "-m", "streamlearn.job", str(log), "add", str(f), "--start", start_local,
-           "--title", title] + (["--url", url] if url else [])
-    subprocess.Popen(cmd, cwd=ROOT, stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
-                     creationflags=0x08000000 if os.name == "nt" else 0)
-    return log
+    return _spawn(["add", str(f), "--start", start_local, "--title", title] + (["--url", url] if url else []),
+                  title, str(f))
 
 
 def form() -> None:
@@ -132,6 +143,26 @@ def form() -> None:
     jobs()
 
 
+def job_state(text: str) -> str:
+    """One line on how a stream job went, from its log."""
+    m = re.search(r"RESULT setups=(\d+) rules=(\d+) patterns=(\d+) failed=(\d+) chunks=(\d+)", text)
+    if DONE not in text:
+        done = len(re.findall(r"chunk \d+/\d+", text))
+        total = re.search(r"(\d+) chunks ->", text)
+        return f"⏳ Processing... ({done} of {total.group(1)} parts read)" if total else "⏳ Processing..."
+    if f"{DONE} 0]" not in text:
+        if "already added" in text:
+            return "ℹ️ This stream was added before - nothing new"
+        return "❌ Failed - see the log below"
+    if not m:
+        return "ℹ️ This stream was added before - nothing new" if "already added" in text else "✅ Done"
+    setups, rules, pats, failed, chunks = map(int, m.groups())
+    tail = f" ({failed} of {chunks} parts failed - see the log)" if failed else ""
+    if setups:
+        return f"✅ Done - {setups} setups to review in 📝 Review, {rules} rules, {pats} patterns{tail}"
+    return f"⚠️ Done, but no trade setups were found ({rules} rules, {pats} patterns){tail}"
+
+
 @st.fragment(run_every=5)
 def jobs() -> None:
     logs = sorted(JOBS.glob("*.log"), reverse=True)[:5] if JOBS.exists() else []
@@ -141,11 +172,7 @@ def jobs() -> None:
     for log in logs:
         meta = json.loads(log.with_suffix(".json").read_text()) if log.with_suffix(".json").exists() else {}
         text = log.read_text(encoding="utf-8", errors="replace") if log.exists() else ""
-        if DONE in text:
-            ok = f"{DONE} 0]" in text
-            state = "✅ Done - its setups are in 📝 Review" if ok else "❌ Failed - see the log"
-        else:
-            state = "⏳ Processing..."
+        state = job_state(text)
         with st.expander(f"{meta.get('title', log.stem)} · {state}", expanded=DONE not in text):
             lines = [x for x in text.splitlines() if x.strip()]
             st.code("\n".join(lines[-12:]) or "starting...", language=None)

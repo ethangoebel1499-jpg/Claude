@@ -225,7 +225,10 @@ def render(db: str) -> None:
         v = calls if show == "All" else calls[calls.verdict.isna()] if show == "Needs review" else \
             calls[calls.verdict.notna()]
         v = v.sort_values("said_at", ascending=False)
-        if v.empty:
+        if calls.empty:
+            st.info("No trade setups have been found yet. ➕ Add stream → Recent streams shows how each stream's "
+                    "processing went; the Streams tab can re-read a stream.")
+        elif v.empty:
             st.caption("Nothing here. 🎉" if show == "Needs review" else "No reviews yet.")
         for i, c in enumerate(v.to_dict("records")[:50]):
             setup_card(c, store, expanded=(i == 0 and show == "Needs review"))
@@ -271,9 +274,15 @@ def render(db: str) -> None:
             with st.expander(f"{s['start'][:16]} UTC · {s['title']} · {n} setups"):
                 url = st.text_input("Stream link (YouTube etc.) - lets each setup play its part of the stream",
                                     s.get("url") or "", key=f"url{s['id']}")
-                if st.button("Save link", key=f"saveurl{s['id']}"):
+                b1, b2, _ = st.columns([1, 1.4, 3])
+                if b1.button("Save link", key=f"saveurl{s['id']}"):
                     store.set_url(int(s["id"]), url.strip())
                     st.rerun()
+                if b2.button("🔄 Re-read this stream", key=f"reread{s['id']}",
+                             help="Run the AI over this stream's transcript again (replaces its setups, rules "
+                                  "and patterns; your reviews stay as examples)"):
+                    add_ui.reread_job(s["source"], s["start"], s["title"], s.get("url"))
+                    st.success("Re-reading in the background - progress shows in ➕ Add stream.")
                 q = st.text_input("Search the transcript", key=f"q{s['id']}")
                 seg = pd.read_sql_query("SELECT t, text FROM segments WHERE stream_id = ? ORDER BY t", store.db,
                                         params=(int(s["id"]),))

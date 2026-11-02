@@ -261,3 +261,11 @@ def test_force_trades_get_the_runs_exits(tmp_path, candles):
     assert rn.pm.state.position is None
     results = [x[0] for x in store.db.execute("SELECT result FROM commands ORDER BY id")]
     assert results == ["opened long", "opened short", "already short", "closed"]
+
+
+def test_stock_list_is_searchable_by_name():
+    from livepaper import stocks
+    names = stocks.labels()
+    assert len(names) > 1000 and {"AAPL", "SPY", "BRK-B", "PLTR"} <= set(names)
+    assert "Apple" in names["AAPL"] and "e+" not in "".join(names)
+    assert len(set(stocks.tickers())) == len(stocks.tickers())          # no duplicates
