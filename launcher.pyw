@@ -81,8 +81,12 @@ class Services:
         if not cfg.exists():
             shutil.copy(ROOT / "livepaper" / "live.example.toml", cfg)
             self.log("Created live.toml (your paper-trading runs)")
-        with open(cfg, "rb") as f:
-            db = tomllib.load(f).get("app", {}).get("db", "livepaper.db")
+        try:
+            with open(cfg, "rb") as f:
+                db = tomllib.load(f).get("app", {}).get("db", "livepaper.db")
+        except (OSError, tomllib.TOMLDecodeError) as e:
+            self.log(f"live.toml has a mistake ({e}) - fix it or delete it to get a fresh one")
+            db = "livepaper.db"
         return str(cfg), db
 
     def _spawn(self, args, logname, env=None):
@@ -268,8 +272,12 @@ class App:
     def startup(self):
         if not self._update():
             return
-        self.svc.start_trader()
-        self.svc.start_dashboard()
+        try:
+            self.svc.start_trader()
+            self.svc.start_dashboard()
+        except Exception as e:
+            self.log(f"Couldn't start: {type(e).__name__}: {e}")
+            return
         for _ in range(120):
             if self.svc.dashboard_up():
                 webbrowser.open(f"http://localhost:{PORT}")

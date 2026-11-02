@@ -4,11 +4,11 @@
 
 1. Install **Python 3.13** from https://www.python.org/downloads/ (Windows: tick "Add python.exe to PATH"). Newer versions (3.14+) don't have ready-made installers for all the packages yet; 3.13 can sit next to them.
 2. Get the code: `git clone https://github.com/ethangoebel1499-jpg/Claude.git` (or GitHub's Code → Download ZIP, then right-click it → **Extract All** - don't run it from inside the ZIP; the trade record then can't sync back to Claude).
-3. Setup, once: **Windows** double-click `setup.bat` · **Mac** `bash setup.sh` in Terminal from the folder.
-4. Start: **Windows** double-click `start.bat` · **Mac** `bash start.sh`. The paper trader and the dashboard both start; the dashboard opens at http://localhost:8501.
+3. Setup, once: **Windows** double-click `setup.bat` · **Mac** `bash setup.sh` in Terminal from the folder. It installs everything and creates a **Paper Trader** shortcut with its own icon (Desktop + Start menu on Windows, `~/Applications` on Mac).
+4. Open **Paper Trader**. The app checks GitHub and installs any new version first (only the changed files; your settings, trades and keys are never touched), then starts the paper trader and the dashboard in the background and opens the dashboard in your browser. It checks for updates again every 6 hours and restarts the trader on the new version by itself.
 5. In the dashboard: ⚙️ Account for Webull keys (optional, the built-in paper broker works without), 🧪 Strategy Lab to pick what to paper trade.
 
-Stop with Ctrl+C (Mac) or by closing both windows (Windows). Open positions are saved and resume next start. The laptop has to stay awake for the trader to see each candle.
+The app window shows whether trading and the dashboard are running, has Start/Stop trading, Check for updates, a phone-access switch and a log. Closing it stops paper trading; open positions are saved and resume next time. The laptop has to stay awake for the trader to see each candle. (`start.bat` / `start.sh` open the same app.)
 
 A bot that trades one strategy: **top-down confluence**. It combines 4h support/resistance and the 21 EMA on the naked chart with Market Cipher B confirmation, and enters on **1h** candles. You can backtest it, score its entries, paper trade it, or (if you opt in) trade live on any exchange [ccxt](https://github.com/ccxt/ccxt) supports.
 
