@@ -236,3 +236,25 @@ def test_review_tab_awards(tmp_path, monkeypatch):
     award = next(b for b in at.button if "award" in b.label)
     award.click().run()
     assert not at.exception and store.table("reviews").verdict.tolist() == ["correct"]
+
+
+def test_add_stream_from_the_dashboard_form(tmp_path, monkeypatch):
+    import json as _json
+    import time as _time
+    from streamlearn import add_ui
+    settings_file = tmp_path / "settings.json"
+    settings_file.write_text(_json.dumps({"streamlearn_db": str(tmp_path / "s.db"), "stream_backend": "ollama",
+                                          "ollama_url": "http://127.0.0.1:9", "timezone": "UTC"}))
+    monkeypatch.setenv("LOCAL_SETTINGS", str(settings_file))
+    monkeypatch.setattr(add_ui, "INBOX", tmp_path / "inbox")
+    monkeypatch.setattr(add_ui, "JOBS", tmp_path / "jobs")
+    log = add_ui.start_job(FIX.read_text(), "2026-08-20 16:00", "Pasted stream", "https://youtu.be/abc")
+    for _ in range(120):
+        if log.exists() and add_ui.DONE in log.read_text():
+            break
+        _time.sleep(0.5)
+    text = log.read_text()
+    assert f"{add_ui.DONE} 0]" in text                       # finished cleanly (the model was unreachable)
+    st = Store(tmp_path / "s.db").table("streams")
+    assert st.title.tolist() == ["Pasted stream"] and st.url[0] == "https://youtu.be/abc"
+    assert st.start[0].startswith("2026-08-20 16:00")

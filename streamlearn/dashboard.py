@@ -207,15 +207,17 @@ def render(db: str) -> None:
     good, bad = accuracy(store)
     acc = f"agent accuracy {good}/{good + bad} ({good / (good + bad):.0%})" if good + bad else "no reviews yet"
     st.caption(f"{len(streams)} streams · {len(calls)} setups · {len(rules)} rules · {acc} · `{Path(db).name}`")
-    from streamlearn import patterns_ui
+    from streamlearn import add_ui, patterns_ui
     if streams.empty:
-        st.info('No streams yet. Add one: python -m streamlearn add <transcript.txt> --start "2026-10-28 20:00" '
-                '--url <YouTube link>')
+        st.subheader("➕ Add your first stream")
+        add_ui.form()
         st.subheader("📐 Patterns")
         patterns_ui.render(store, clip)
         return
-    t_rev, t_pat, t_score, t_calls, t_book, t_streams = st.tabs(
-        ["📝 Review", "📐 Patterns", "Scorecard", "All setups", "Playbook", "Streams"])
+    t_add, t_rev, t_pat, t_score, t_calls, t_book, t_streams = st.tabs(
+        ["➕ Add stream", "📝 Review", "📐 Patterns", "Scorecard", "All setups", "Playbook", "Streams"])
+    with t_add:
+        add_ui.form()
     with t_pat:
         patterns_ui.render(store, clip)
     with t_rev:
