@@ -20,3 +20,7 @@ local_settings.json
 streamlearn_frames/
 .venv/
 trader.log
+dashboard.log
+.version
+.manifest
+*.updating

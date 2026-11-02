@@ -1,0 +1,6 @@
+# Everything the app needs (setup and the auto-updater install from this file).
+-r requirements.txt
+streamlit>=1.37
+requests>=2.31
+yfinance>=0.2
+anthropic>=1.0

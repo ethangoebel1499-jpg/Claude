@@ -1,13 +1,9 @@
 @echo off
-REM Start the paper trader and the dashboard: double-click this file.
-REM Two windows open: "Paper trader" (leave it running) and the dashboard. Close both to stop.
+REM Opens the Paper Trader app (same as the Desktop / Start menu shortcut).
 cd /d "%~dp0"
-if not exist .venv (
+if not exist .venv\Scripts\pythonw.exe (
   echo Run setup.bat first.
   pause
   exit /b 1
 )
-start "Paper trader" .venv\Scripts\python.exe -m livepaper run
-REM opens in your browser; the printed address also works on your phone on the same Wi-Fi
-.venv\Scripts\python.exe -m livepaper dashboard --phone
-pause
+start "" "%~dp0.venv\Scripts\pythonw.exe" "%~dp0launcher.pyw"

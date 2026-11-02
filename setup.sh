@@ -22,7 +22,7 @@ echo "Using $($PY --version)"
 . .venv/bin/activate
 python -m pip install --upgrade pip -q
 echo "Installing packages (a few minutes the first time)..."
-pip install -q -r requirements.txt streamlit requests yfinance anthropic
+pip install -q --only-binary=:all: -r app-requirements.txt
 pip install -q webull-openapi-python-sdk || echo "!! Webull SDK did not install - the built-in paper broker still works."
 if [ "$1" = "--streams" ]; then
   pip install -q faster-whisper || echo "!! faster-whisper did not install - you can still add streams from YouTube transcripts."
@@ -36,5 +36,37 @@ fi
 echo
 echo "Checking the price feeds (no orders are placed)..."
 python -m livepaper check || echo "!! The check failed - send Claude the output above."
+# an app you can launch with the custom icon
+APPDIR="$(pwd)"
+if [ "$(uname)" = "Darwin" ]; then
+  APP="$HOME/Applications/Paper Trader.app"
+  mkdir -p "$APP/Contents/MacOS" "$APP/Contents/Resources"
+  cp assets/icon.icns "$APP/Contents/Resources/icon.icns"
+  printf '#!/bin/bash\ncd "%s"\nexec ./.venv/bin/python launcher.pyw\n' "$APPDIR" > "$APP/Contents/MacOS/Paper Trader"
+  chmod +x "$APP/Contents/MacOS/Paper Trader"
+  cat > "$APP/Contents/Info.plist" <<PLIST
+<?xml version="1.0" encoding="UTF-8"?>
+<plist version="1.0"><dict>
+  <key>CFBundleName</key><string>Paper Trader</string>
+  <key>CFBundleExecutable</key><string>Paper Trader</string>
+  <key>CFBundleIconFile</key><string>icon.icns</string>
+  <key>CFBundleIdentifier</key><string>local.papertrader</string>
+  <key>CFBundlePackageType</key><string>APPL</string>
+</dict></plist>
+PLIST
+  echo "Created ~/Applications/Paper Trader.app (drag it to the Dock if you like)."
+else
+  mkdir -p "$HOME/.local/share/applications"
+  cat > "$HOME/.local/share/applications/paper-trader.desktop" <<DESK
+[Desktop Entry]
+Type=Application
+Name=Paper Trader
+Exec=$APPDIR/.venv/bin/python $APPDIR/launcher.pyw
+Icon=$APPDIR/assets/icon.png
+Path=$APPDIR
+DESK
+  echo "Added Paper Trader to your applications menu."
+fi
 echo
-echo "Setup done. Start everything with:   bash start.sh"
+echo "Setup done. Open Paper Trader from Applications (or: bash start.sh)."
+echo "It updates itself from GitHub every time it starts."

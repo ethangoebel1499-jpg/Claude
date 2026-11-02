@@ -57,7 +57,7 @@ set "VPY=.venv\Scripts\python.exe"
 
 %VPY% -m pip install --upgrade pip -q
 echo Installing packages (a few minutes the first time)...
-%VPY% -m pip install -q --only-binary=:all: -r requirements.txt streamlit requests yfinance anthropic
+%VPY% -m pip install -q --only-binary=:all: -r app-requirements.txt
 if errorlevel 1 (
   echo !! Package install failed - send Claude the output above.
   pause
@@ -75,5 +75,14 @@ echo.
 echo Checking the price feeds (no orders are placed)...
 %VPY% -m livepaper check
 echo.
-echo Setup done. Start everything by double-clicking start.bat
+echo Creating the "Paper Trader" shortcuts (Desktop and Start menu)...
+set "APPDIR=%CD%"
+powershell -NoProfile -ExecutionPolicy Bypass -Command "$s = New-Object -ComObject WScript.Shell; foreach ($d in @([Environment]::GetFolderPath('Desktop'), [Environment]::GetFolderPath('Programs'))) { $l = $s.CreateShortcut((Join-Path $d 'Paper Trader.lnk')); $l.TargetPath = $env:APPDIR + '\.venv\Scripts\pythonw.exe'; $l.Arguments = [char]34 + $env:APPDIR + '\launcher.pyw' + [char]34; $l.WorkingDirectory = $env:APPDIR; $l.IconLocation = $env:APPDIR + '\assets\icon.ico'; $l.Description = 'Paper Trader'; $l.Save() }"
+if errorlevel 1 (
+  echo !! Couldn't create the shortcuts - start the app with start.bat instead.
+)
+echo.
+echo Setup done. Open "Paper Trader" from your Desktop or Start menu.
+echo It updates itself from GitHub every time it starts.
+start "" "%APPDIR%\.venv\Scripts\pythonw.exe" "%APPDIR%\launcher.pyw"
 pause
