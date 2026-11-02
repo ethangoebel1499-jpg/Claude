@@ -25,8 +25,10 @@ from mcbot.backtest import run_backtest  # noqa: E402
 
 DB = os.environ.get("LIVEPAPER_DB", "livepaper.db")
 CONFIG = os.environ.get("LIVEPAPER_CONFIG", "live.toml")
-TIMEFRAMES = ["1h", "2h", "4h", "6h", "8h", "12h", "1D", "2D"]
+TIMEFRAMES = ["1m", "3m", "5m", "15m", "30m", "1h", "2h", "4h", "6h", "8h", "12h", "1D", "2D"]
 PERIODS = {"Last year": 365, "Last 3 years": 3 * 365, "All history": None}
+INTRADAY_PERIODS = {"Last day": 1, "Last 3 days": 3, "Last week": 7, "Last 2 weeks": 14, "Last month": 30,
+                    "All available": None}
 
 st.set_page_config(page_title="Paper Trading", page_icon="📈", layout="wide")
 
@@ -284,8 +286,14 @@ with tab_lab:
         pick = c3.selectbox(f"Stock ({len(names):,} - type to search by ticker or name)", list(names) + [OTHER],
                             format_func=lambda t: names.get(t, t))
         symbol = c3.text_input("Ticker", "", placeholder="any Yahoo Finance ticker, e.g. SHOP") if pick == OTHER else pick
-    tf = c4.selectbox("Timeframe", TIMEFRAMES, index=2)
-    period = c5.selectbox("Period", list(PERIODS), index=1)
+    tf = c4.selectbox("Timeframe", TIMEFRAMES, index=TIMEFRAMES.index("4h"))
+    minute_chart = tf.endswith("m")
+    periods = INTRADAY_PERIODS if minute_chart else PERIODS
+    period = c5.selectbox("Period", list(periods), index=2 if minute_chart else 1, key=f"period_{minute_chart}")
+    if minute_chart:
+        st.caption("⏱️ Minute charts: crypto reaches back weeks (Coinbase), stocks 7 days at 1m and 60 days at 5m-30m "
+                   "(Yahoo). Fees weigh much more on small moves, and these strategies were tested on 2h to daily "
+                   "charts - expect different results.")
     base = REGISTRY[strategy]["exits"]
     long_only = REGISTRY[strategy].get("long_only", False)
     with st.expander("Exits & options", expanded=True):
@@ -328,7 +336,7 @@ with tab_lab:
         try:
             tps = tuple(tps)
             with st.spinner("Loading candles and backtesting..."):
-                out = backtest(strategy, symbol.upper(), asset, tf, PERIODS[period], stop_pct / 100 or None, tps,
+                out = backtest(strategy, symbol.upper(), asset, tf, periods[period], stop_pct / 100 or None, tps,
                                shorts and not long_only, fee_pct / 100)
             st.session_state["lab_result"] = {"strategy": strategy, "symbol": symbol.upper(), "asset": asset, "tf": tf,
                                        "period": period, "stop": stop_pct / 100, "tps": tps,

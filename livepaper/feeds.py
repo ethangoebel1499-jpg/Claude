@@ -11,7 +11,7 @@ import requests
 
 from mcbot.data import resample
 
-TF_MINUTES = {"1h": 60, "2h": 120, "4h": 240, "6h": 360, "8h": 480, "12h": 720, "1D": 1440, "2D": 2880}
+from .history import TF_MINUTES  # noqa: E402  (one list of timeframes, down to 1 minute)
 
 
 def closed_only(df: pd.DataFrame, minutes: int) -> pd.DataFrame:
@@ -56,7 +56,7 @@ class KrakenFeed:
 class WebullFeed:
     """Webull market data through the official SDK (pip install webull-openapi-python-sdk).
     The response layout is parsed defensively; `python -m livepaper check` prints a raw sample."""
-    TIMESPANS = {60: "M60", 120: "M120", 240: "M240", 1440: "D"}
+    TIMESPANS = {1: "M1", 5: "M5", 15: "M15", 30: "M30", 60: "M60", 120: "M120", 240: "M240", 1440: "D"}
 
     def __init__(self, api_client):
         from webull.data.data_client import DataClient
@@ -144,7 +144,7 @@ class YahooFeed:
 
     def bars(self, symbol: str, timeframe: str) -> pd.DataFrame:
         from .history import stock
-        return closed_only(stock(symbol, timeframe), min(TF_MINUTES[timeframe], 60 * 24))
+        return closed_only(stock(symbol, timeframe), min(TF_MINUTES[timeframe], 60 * 24))   # down to 1m
 
     def price(self, symbol: str) -> float:
         import yfinance as yf

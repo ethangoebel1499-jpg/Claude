@@ -95,7 +95,7 @@ def live_check() -> None:
     from livepaper.history import CRYPTO, history
     c1, c2, c3 = st.columns([2, 1, 1])
     coin = c1.selectbox("Coin", list(CRYPTO), key="pat_coin")
-    tf = c2.selectbox("Timeframe", ["1h", "2h", "4h", "12h", "1D"], index=2, key="pat_tf")
+    tf = c2.selectbox("Timeframe", ["1m", "5m", "15m", "30m", "1h", "2h", "4h", "12h", "1D"], index=6, key="pat_tf")
     c3.write("")
     go = c3.button("Check chart", type="primary", key="pat_go")
     if go:

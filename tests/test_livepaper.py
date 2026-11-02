@@ -296,3 +296,36 @@ def test_switching_broker_drops_positions_the_new_broker_doesnt_hold(tmp_path, c
     assert "switched from sim to webull" in store.table("trades").reason.iloc[-1]
     from livepaper.brokers import WEBULL_CRYPTO
     assert WEBULL_CRYPTO["XBTUSD"] == "BTCUSD" and WEBULL_CRYPTO["XDGUSD"] == "DOGEUSD"
+
+
+def test_minute_candles_page_back_through_coinbase_and_cache(tmp_path, monkeypatch):
+    import pandas as pd
+    from livepaper import history
+    monkeypatch.setattr(history, "CANDLES", tmp_path)
+    monkeypatch.setattr("time.sleep", lambda s: None)
+    calls = []
+
+    class Res:
+        status_code = 200
+        def __init__(self, rows): self.rows = rows
+        def raise_for_status(self): pass
+        def json(self): return self.rows
+
+    def get(url, params=None, **k):
+        calls.append(params)
+        t0, t1 = pd.Timestamp(params["start"]), pd.Timestamp(params["end"])
+        times = pd.date_range(t0, t1, freq="60s", inclusive="left")
+        return Res([[int(t.timestamp()), 99.0, 101.0, 100.0, 100.5, 1.0] for t in times][::-1])   # newest first
+    monkeypatch.setattr(history.requests, "get", get)
+    df = history.history("XBTUSD", "crypto", "1m")
+    assert len(df) >= 7 * 1440 - 2 and (df.index[1] - df.index[0]) == pd.Timedelta("1min")
+    assert all(p["granularity"] == 60 for p in calls) and len(calls) >= 33          # paged 300 at a time
+    assert (tmp_path / "coinbase_BTC-USD_60.csv").exists()
+    n = len(calls)
+    history.history("XBTUSD", "crypto", "1m")                                    # cached: only the newest bit
+    assert len(calls) - n <= 2
+    n = len(calls)
+    three = history.history("XBTUSD", "crypto", "3m")                            # 14 days: only the older 7 fetched
+    assert 30 <= len(calls) - n <= 38 and (three.index[1] - three.index[0]) == pd.Timedelta("3min")
+    five = history.history("XBTUSD", "crypto", "15m")
+    assert (five.index[1] - five.index[0]) == pd.Timedelta("15min")
