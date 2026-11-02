@@ -50,3 +50,12 @@ NOT_LIVE = {
     "S6 1m Bollinger + AO": "1-minute scalp; only profitable at 0% fees",
     "S7 Range levels + 24m/12m": "needs 12/24-minute candles; failed testing (0 of 66 settings worked)",
 }
+
+
+def refresh() -> dict:
+    """Add your own strategies and names (livepaper/custom.py) - called at start and on every price check."""
+    from .custom import refresh as _refresh
+    return _refresh(REGISTRY)
+
+
+refresh()

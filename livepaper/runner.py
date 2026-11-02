@@ -265,8 +265,10 @@ class App:
         return new
 
     def sync_runs(self) -> None:
+        from .strategies import refresh
+        refresh()                                   # strategies built or renamed in the dashboard
         all_runs = self.store.runs()
-        wanted = {r["name"]: normalize_run(r) for r in all_runs if r["active"]}
+        wanted = {r["name"]: normalize_run(r) for r in all_runs if r["active"] and r["strategy"] in REGISTRY}
         for r in all_runs:              # unticked while the trader was off, with a position still open
             st = self.store.load_state(r["name"]) if not r["active"] and r["name"] not in self.runners else None
             if st is not None and st.position is not None:

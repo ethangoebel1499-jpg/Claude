@@ -346,3 +346,35 @@ def test_files_the_app_needs_are_in_git():
     from healthcheck import DATA
     tracked = set(subprocess.run(["git", "ls-files"], capture_output=True, text=True).stdout.split())
     assert [f for f in DATA if f not in tracked] == []
+
+
+def test_custom_strategy_end_to_end(tmp_path, monkeypatch, candles):
+    from livepaper import custom
+    from livepaper.strategies import REGISTRY, refresh
+    monkeypatch.setattr(custom, "PATH", tmp_path / "custom.json")
+    spec = {"name": "RSI dip in uptrend", "long": [{"rule": "rsi_below", "a": 40}, {"rule": "ema_above_ema", "a": 20, "b": 50}],
+            "short": [], "exit_long": [{"rule": "rsi_above", "a": 65}], "exit_short": [],
+            "stop": 0.05, "take_profits": [[0.06, 0.5], [0.12, 0.5]]}
+    key = custom.save_strategy(spec)
+    refresh()
+    try:
+        s = REGISTRY[key]
+        assert s["label"] == "🛠️ RSI dip in uptrend" and s["long_only"] and s["exits"].stop == 0.05
+        sig = s["signals"](candles)
+        assert sig.long_entry.any() and not sig.short_entry.any()
+        assert "RSI (14) below 40" in s["checklist"](candles, -1, label="X")
+        # paper trading it: the live position logic replays it like any other strategy
+        m = replay(candles, sig, PositionManager("c", s["exits"], shorts=False, broker=SimBroker(0.001)))
+        assert len(m.trades) > 0
+        # rename a built-in and the custom one; deleting removes it
+        custom.rename("s8", "My reversal")
+        custom.rename(key, "Dip buyer")
+        refresh()
+        assert REGISTRY["s8"]["label"] == "My reversal" and REGISTRY[key]["label"] == "🛠️ Dip buyer"
+        custom.rename("s8", "")
+        custom.delete_strategy(key)
+        refresh()
+        assert key not in REGISTRY and REGISTRY["s8"]["label"] == "S8 Long-only reversal"
+    finally:
+        monkeypatch.undo()
+        refresh()

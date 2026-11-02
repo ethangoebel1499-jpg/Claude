@@ -26,3 +26,4 @@ dashboard.log
 *.updating
 runtime/
 !livepaper/data/
+custom_strategies.json

@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import json
 import os
 import sys
 from datetime import datetime, timezone
@@ -20,7 +21,9 @@ from livepaper.runner import exits_for, load_config, max_stop, normalize_run, se
 from livepaper import stocks, tvchart  # noqa: E402
 from livepaper.tp_plans import OTHER, STOCK_NAMES, TP_PLANS, plan_text, tp_rows, tps_from_table  # noqa: E402
 from livepaper.store import Store  # noqa: E402
-from livepaper.strategies import NOT_LIVE, REGISTRY  # noqa: E402
+from livepaper.strategies import NOT_LIVE, REGISTRY, refresh as refresh_strategies  # noqa: E402
+from livepaper import custom  # noqa: E402
+from mcbot import builder  # noqa: E402
 from mcbot.backtest import run_backtest  # noqa: E402
 
 DB = os.environ.get("LIVEPAPER_DB", "livepaper.db")
@@ -91,12 +94,13 @@ def trade_view(r: dict, state, quote) -> dict | None:
 
 # ---- data ---------------------------------------------------------------------
 store = get_store(DB)
+refresh_strategies()                                   # your own strategies and names
 cfg = load_config(CONFIG) if Path(CONFIG).exists() else {"run": [], "app": {}}
 seed_runs(cfg, store)
 
 st.title("📈 Paper Trading")
-tab_dash, tab_lab, tab_streams, tab_log, tab_acct = st.tabs(
-    ["📊 Dashboard", "🧪 Strategy Lab", "🎙️ Streams", "📜 Activity", "⚙️ Account"])
+tab_dash, tab_lab, tab_build, tab_streams, tab_log, tab_acct = st.tabs(
+    ["📊 Dashboard", "🧪 Strategy Lab", "🛠️ Builder", "🎙️ Streams", "📜 Activity", "⚙️ Account"])
 
 
 # ---- Dashboard ----------------------------------------------------------------
@@ -248,7 +252,8 @@ def load_history(symbol: str, asset: str, tf: str) -> pd.DataFrame:
 
 
 @st.cache_data(ttl=3600, show_spinner=False)
-def backtest(strategy, symbol, asset, tf, days, stop, tps, shorts, fee):
+def backtest(strategy, symbol, asset, tf, days, stop, tps, shorts, fee, version=""):
+    """version: a custom strategy's rules, so editing it doesn't reuse a stale cached result."""
     full = load_history(symbol, asset, tf)
     sig = REGISTRY[strategy]["signals"](full)
     start = full.index[-1] - pd.Timedelta(days=days) if days else full.index[min(200, len(full) - 1)]
@@ -337,7 +342,8 @@ with tab_lab:
             tps = tuple(tps)
             with st.spinner("Loading candles and backtesting..."):
                 out = backtest(strategy, symbol.upper(), asset, tf, periods[period], stop_pct / 100 or None, tps,
-                               shorts and not long_only, fee_pct / 100)
+                               shorts and not long_only, fee_pct / 100,
+                               json.dumps(REGISTRY[strategy].get("spec", ""), sort_keys=True))
             st.session_state["lab_result"] = {"strategy": strategy, "symbol": symbol.upper(), "asset": asset, "tf": tf,
                                        "period": period, "stop": stop_pct / 100, "tps": tps,
                                        "shorts": shorts and not long_only, "capital": capital, "out": out}
@@ -424,6 +430,118 @@ with tab_log:
 
 
 # ---- Streams (the stream study agent) -------------------------------------------
+# ---- Builder: your own strategies from rules ---------------------------------------------------
+NEW = "➕ New strategy"
+DEFAULT_SPEC = {"name": "My strategy", "long": [{"rule": "ema_cross_up", "a": 9, "b": 21}], "short": [],
+                "exit_long": [{"rule": "ema_cross_down", "a": 9, "b": 21}], "exit_short": [],
+                "stop": 0.04, "take_profits": [[0.08, 0.5], [0.16, 0.5]]}
+
+
+def rules_editor(title: str, rules: list[dict], key: str) -> list[dict]:
+    st.markdown(title)
+    df = pd.DataFrame([{"Rule": builder.LABELS[r["rule"]], "A": r.get("a"), "B": r.get("b")} for r in rules] or
+                      [{"Rule": None, "A": None, "B": None}][:0], columns=["Rule", "A", "B"])
+    ed = st.data_editor(df, num_rows="dynamic", hide_index=True, width="stretch", key=key, column_config={
+        "Rule": st.column_config.SelectboxColumn("Rule", options=list(builder.LABELS.values()), width="large",
+                                                 help="A and B are the numbers in the rule's name"),
+        "A": st.column_config.NumberColumn("A", step=0.5, help="Empty = the rule's usual value"),
+        "B": st.column_config.NumberColumn("B", step=0.5, help="Empty = the rule's usual value")})
+    out = []
+    for _, row in ed.iterrows():
+        if row["Rule"] in builder.BY_LABEL:
+            rid = builder.BY_LABEL[row["Rule"]]
+            out.append({"rule": rid, "a": None if pd.isna(row["A"]) else float(row["A"]),
+                        "b": None if pd.isna(row["B"]) else float(row["B"])})
+    if out:
+        st.caption(" AND ".join(builder.describe(r) for r in out) if "ANY" not in title else
+                   " OR ".join(builder.describe(r) for r in out))
+    return out
+
+
+with tab_build:
+    st.caption("Make your own strategy from rules - no code. Saved strategies show up in 🧪 Strategy Lab (backtest, "
+               "chart, paper trade) with a checklist of each rule. Rules use closed candles only.")
+    data = custom.load()
+    keys = list(data["strategies"])
+    choice = st.selectbox("Strategy to edit", [NEW] + keys,
+                          format_func=lambda k: k if k == NEW else data["strategies"][k].get("name", k))
+    spec = dict(DEFAULT_SPEC if choice == NEW else data["strategies"][choice])
+    k = choice.replace(" ", "_")
+    name = st.text_input("Name", spec.get("name", ""), key=f"b_name_{k}")
+    long_rules = rules_editor("**Go LONG when ALL of these are true**", spec.get("long", []), f"b_long_{k}")
+    short_rules = rules_editor("**Go SHORT when ALL of these are true** (optional - leave empty for long only)",
+                               spec.get("short", []), f"b_short_{k}")
+    with st.expander("Exit early (optional) - otherwise trades end at the stop, the take profits, or the opposite "
+                     "entry signal"):
+        exit_long = rules_editor("Close a long when ANY of these is true", spec.get("exit_long", []), f"b_xl_{k}")
+        exit_short = rules_editor("Close a short when ANY of these is true", spec.get("exit_short", []), f"b_xs_{k}")
+    x1, x2 = st.columns([1, 3])
+    b_stop = x1.number_input("Stop %", 0.0, 50.0, float(spec.get("stop") or 0) * 100, 0.5, key=f"b_stop_{k}")
+    plan = x2.selectbox("Take-profit plan", list(TP_PLANS), key=f"b_plan_{k}",
+                        index=0 if choice != NEW else list(TP_PLANS).index("2 targets: 50 / 50"))
+    from livepaper.core import Exits as _Exits
+    own = _Exits(spec.get("stop"), [tuple(t) for t in spec.get("take_profits") or [[0.08, 0.5], [0.16, 0.5]]])
+    tp_df = st.data_editor(pd.DataFrame(tp_rows(plan, False, own, b_stop / 100)), hide_index=True, width="stretch",
+                           num_rows="dynamic", key=f"b_tp_{k}_{plan}", column_config={
+                               "Target": st.column_config.TextColumn(disabled=True),
+                               "At": st.column_config.NumberColumn("Take profit at (+%)", min_value=0.01, step=0.5),
+                               "Close %": st.column_config.NumberColumn("Close (% of position)", min_value=1,
+                                                                        max_value=100, step=1)})
+    try:
+        b_tps = tps_from_table(tp_df, False, b_stop / 100)
+        st.caption("Plan: " + plan_text(b_tps, b_stop / 100))
+    except ValueError as e:
+        b_tps = None
+        st.error(str(e))
+    new_spec = {"name": name.strip() or "My strategy", "long": long_rules, "short": short_rules,
+                "exit_long": exit_long, "exit_short": exit_short, "stop": b_stop / 100 or None,
+                "take_profits": [list(t) for t in b_tps or []]}
+    ok = bool(long_rules or short_rules) and b_tps is not None
+    if not (long_rules or short_rules):
+        st.warning("Add at least one rule for longs or shorts.")
+    q1, q2, q3, q4 = st.columns([1.2, 1.2, 1.4, 3])
+    q_coin = q1.selectbox("Quick test on", list(CRYPTO), key="b_coin")
+    q_tf = q2.selectbox("Timeframe", TIMEFRAMES, index=TIMEFRAMES.index("4h"), key="b_tf")
+    if q3.button("🧪 Quick test", disabled=not ok):
+        with st.spinner("Backtesting..."):
+            full = load_history(CRYPTO[q_coin], "crypto", q_tf)
+            minutes = q_tf.endswith("m")
+            start = full.index[-1] - pd.Timedelta(days=30 if minutes else 3 * 365)
+            df_ = full[full.index >= start]
+            sig_ = builder.signals(full, new_spec)[full.index >= start]
+            res = run_backtest(df_, sig_, allow_short=bool(short_rules), stop_loss=new_spec["stop"],
+                               take_profits=[tuple(t) for t in new_spec["take_profits"]], fee=0.001)
+        stt = res.stats
+        m = st.columns(5)
+        m[0].metric("Return", pct(stt["total_return_pct"]))
+        m[1].metric("Buy & hold", pct(stt["buy_hold_return_pct"]))
+        m[2].metric("Trades", stt["trades"])
+        m[3].metric("Win rate", f"{stt['win_rate_pct']:.0f}%" if stt["trades"] else "-")
+        m[4].metric("Max drawdown", f"{stt['max_drawdown_pct']:.1f}%")
+        cndl = df_[["open", "high", "low", "close"]]
+        tvchart.show(cndl, tvchart.markers_from_trades(cndl, res.trades), height=420)
+        st.caption(f"{q_coin} {q_tf}, last {'30 days' if minutes else '3 years'}, 0.1% fee per side. Save it to "
+                   "backtest other markets and paper trade it in 🧪 Strategy Lab.")
+    s1, s2, _ = st.columns([1, 1, 3])
+    if s1.button("💾 Save strategy", type="primary", disabled=not ok):
+        key = custom.save_strategy(new_spec, None if choice == NEW else choice)
+        refresh_strategies()
+        st.success(f"Saved **{new_spec['name']}** - pick it in 🧪 Strategy Lab.")
+    if choice != NEW and s2.button("🗑️ Delete"):
+        custom.delete_strategy(choice)
+        refresh_strategies()
+        st.rerun()
+    with st.expander("✏️ Rename any strategy (built-in ones too)"):
+        r1, r2, r3 = st.columns([2, 2, 1])
+        target = r1.selectbox("Strategy", list(REGISTRY), format_func=lambda x: REGISTRY[x]["label"], key="rn_t")
+        new_name = r2.text_input("New name (empty = original name)", key=f"rn_n_{target}")
+        r3.write("")
+        if r3.button("Rename", key="rn_go"):
+            custom.rename(target, new_name)
+            refresh_strategies()
+            st.rerun()
+
+
 with tab_streams:
     from streamlearn.dashboard import render as render_streams
     render_streams(settings.get("streamlearn_db", "streamlearn.db"))
