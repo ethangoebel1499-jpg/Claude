@@ -445,10 +445,17 @@ def chart_tab(store: Store) -> None:
         a, b = df.index[p.start], df.index[min(end, len(df) - 1)]
         segs += [{"points": [(a, p.up(p.start)), (b, p.up(end))], "color": "#facc15"},
                  {"points": [(a, p.lo(p.start)), (b, p.lo(end))], "color": "#facc15"}]
-    tvchart.show(df, markers, lines, height=520, show_bars=250, segments=segs)
-    st.caption("Arrows: where its active setups fired (green = won, red = lost, grey = too recent). 🟡 dots: good "
-               "trades it missed (hindsight). Yellow lines: the chart pattern it sees. Dashed: support / resistance "
-               "and its entry / stop / target.")
+    tvchart.show(df, markers, lines, height=520, show_bars=min(len(df), 600), segments=segs)
+    span = df.index[-1] - df.index[0]
+    st.caption(f"Loaded **{len(df):,} candles**: {df.index[0]:%Y-%m-%d %H:%M} → {df.index[-1]:%Y-%m-%d %H:%M} UTC "
+               f"({span.days} days{f' {span.seconds // 3600} h' if span.days < 3 else ''}). It opens on the latest "
+               "600 - press **All** / **1M** above the chart or scroll to zoom out. Arrows: where its active setups "
+               "fired (green = won, red = lost, grey = too recent). 🟡 dots: good trades it missed (hindsight). Yellow "
+               "lines: the chart pattern it sees. Dashed: support / resistance and its entry / stop / target.")
+    if tf.endswith("m") and span < pd.Timedelta(days=5):
+        st.warning("Only a few days of minute candles came back - the longer history source (Coinbase) didn't answer, "
+                   "so this is Kraken's latest 720 candles. Try again in a minute, or use a 1h+ timeframe for more "
+                   "history.")
 
     # --- missed trades ---
     st.markdown(f"##### 🟡 Good trades it missed ({len(missed)}, last 1,000 candles)")
