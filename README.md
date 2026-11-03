@@ -203,6 +203,11 @@ Edit `live.toml`: which strategy, symbol, timeframe and capital per run.
   **Awesome Oscillator**, candles, support/resistance, chart patterns...). Awesome Oscillator rules match
   TradingView's AO (SMA(hl2, 5) - SMA(hl2, 34)): column green / red, *changed to green* / *changed to red*
   (the same moments as its two alerts), above / below zero, crosses zero.
+  **Divergences** for RSI, AO, MACD and the Market Cipher wave: regular bullish (price lower low, oscillator
+  higher low), regular bearish (price higher high, oscillator lower high) and the hidden (trend-continuation)
+  versions. A divergence is confirmed when the oscillator turns after the second low / high, so it never
+  looks ahead; A = still counts for this many candles (to line up with other rules), B = most candles
+  between the two lows / highs.
 - **📜 Activity** - every event and fill.
 - **⚙️ Account** - Webull paper keys (with a *Test connection* button), broker, fees, how often to
   check prices, sharing with Claude, and the stream agent's model / Anthropic key. Saved in plain

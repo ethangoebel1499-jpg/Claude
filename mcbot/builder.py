@@ -216,6 +216,60 @@ RULES.update({
     "lower_high": ("Lower high: the last A candles' high is below the A candles before", 5, None,
                    lambda d, a, b: d.high.rolling(int(a)).max() < d.high.shift(int(a)).rolling(int(a)).max()),
 })
+
+
+# ---- divergences: price makes a higher high / lower low but the oscillator doesn't ----------------
+# An oscillator wave is a trough (from a turn down to the next turn up) or a peak. Turns: RSI crossing its
+# 9-candle average, AO changing colour, MACD crossing its signal line, Market Cipher's green / red dots.
+# The two latest completed troughs (peaks) are compared on the candle the second one completes, so nothing
+# looks ahead. mcbot/divergence.py does the work.
+_DIV_CACHE: dict = {}
+OSCILLATORS = {"rsi": "RSI", "ao": "Awesome Oscillator", "macd": "MACD", "wt": "Market Cipher wave"}
+
+
+def _turns(d: pd.DataFrame, osc: str):
+    if osc == "rsi":
+        r = _rsi(d.close)
+        return r, _cross_up(r, sma(r, 9)), _cross_up(sma(r, 9), r)
+    if osc == "ao":
+        diff = _ao_diff(d)
+        return awesome_oscillator(d), _cross_up(diff, 0), _cross_up(-diff, 0)
+    if osc == "macd":
+        line, sig = _macd(d.close)
+        return line, _cross_up(line, sig), _cross_up(sig, line)
+    w1, w2 = wavetrend(d)
+    return w2, _cross_up(w1, w2), _cross_up(w2, w1)
+
+
+def divergences(d: pd.DataFrame, osc: str, max_gap: int = 60) -> pd.DataFrame:
+    """Columns bull / hidden_bull / bear / hidden_bear, True on the candle the divergence is confirmed."""
+    from .divergence import pair_divergences, waves
+    k = (*_key(d), osc, int(max_gap))
+    if k not in _DIV_CACHE:
+        if len(_DIV_CACHE) > 32:
+            _DIV_CACHE.clear()
+        o, up, down = _turns(d, osc)
+        up, down = up.fillna(False), down.fillna(False)
+        _DIV_CACHE[k] = pair_divergences(waves(o, d.low, d.high, up, down), up, down, int(max_gap))
+    return _DIV_CACHE[k]
+
+
+def _div_rule(osc: str, kind: str):
+    return lambda d, a, b: recent_flag(divergences(d, osc, b)[kind], a)
+
+
+def recent_flag(flag: pd.Series, bars) -> pd.Series:
+    return flag.astype(int).rolling(max(int(bars), 1), min_periods=1).max().astype(bool)
+
+
+_DIV_TEXT = {"bull": "Bullish divergence: price lower low, {o} higher low",
+             "bear": "Bearish divergence: price higher high, {o} lower high",
+             "hidden_bull": "Hidden bullish divergence: price higher low, {o} lower low (trend continuation)",
+             "hidden_bear": "Hidden bearish divergence: price lower high, {o} higher high (trend continuation)"}
+for _o, _name in OSCILLATORS.items():
+    for _kind, _text in _DIV_TEXT.items():
+        RULES[f"{_o}_{_kind}_div"] = (_text.format(o=_name) + " - in the last A candles, lows/highs at most B "
+                                      "candles apart", 3, 60, _div_rule(_o, _kind))
 LABELS = {k: v[0] for k, v in RULES.items()}
 BY_LABEL = {v[0]: k for k, v in RULES.items()}
 

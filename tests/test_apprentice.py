@@ -187,3 +187,28 @@ def test_awesome_oscillator_matches_tradingview(df):
     assert "ao_turns_green" in teach.system()                  # the AI can use it when reading lessons
     lesson = teach.guess("[1:00] I go long when the awesome oscillator turns green at support, bounce off support")
     assert any(r["rule"] == "ao_turns_green" for s in lesson["setups"] for r in s["rules"])
+
+
+def test_divergence_rules_no_lookahead(df):
+    for k in ("rsi_bull_div", "ao_bear_div", "macd_hidden_bull_div", "wt_hidden_bear_div"):
+        full = builder.rule_series(df, {"rule": k})
+        cut = builder.rule_series(df.iloc[:1100].copy(), {"rule": k})
+        assert (full.iloc[:1100].to_numpy() == cut.to_numpy()).all(), k
+        assert full.sum() > 0, k
+
+
+def test_bullish_divergence_is_found():
+    # price: drop to a low, bounce, then a slower drift to a LOWER low - momentum fades, so the
+    # oscillator's second low is higher: a classic bullish divergence
+    down1 = np.linspace(100, 80, 15)
+    up1 = np.linspace(80, 90, 15)
+    down2 = np.linspace(90, 78, 30)
+    up2 = np.linspace(78, 88, 15)
+    c = np.r_[np.full(60, 100.0) + np.sin(np.arange(60)) * 0.3, down1, up1, down2, up2]
+    idx = pd.date_range("2024", periods=len(c), freq="4h", tz="UTC")
+    d = pd.DataFrame({"open": np.r_[c[0], c[:-1]], "high": c + 0.3, "low": c - 0.3, "close": c, "volume": 1.0},
+                     index=idx)
+    div = builder.divergences(d, "rsi")
+    hits = np.flatnonzero(div.bull.to_numpy())
+    assert len(hits) and hits[-1] > 60 + 15 + 15 + 25      # confirmed after the second, lower low
+    assert not div.bear.iloc[-20:].any()
