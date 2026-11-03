@@ -249,35 +249,149 @@ _DIV_CACHE: dict = {}
 OSCILLATORS = {"rsi": "RSI", "ao": "Awesome Oscillator", "macd": "MACD", "wt": "Market Cipher wave"}
 
 
-def _turns(d: pd.DataFrame, osc: str):
+# ---- per-rule settings (the ⚙️ panel in the Builder) ------------------------------------------------
+# A rule may carry {"set": {...}}; anything left out uses the default. kinds: int / float / choice / bool
+SOURCES = ["close", "open", "high", "low", "hl2", "hlc3", "ohlc4"]
+BB_SETTINGS = [("length", "Length", 20, "int", 2, 500), ("mult", "StdDev", 2.0, "float", 0.1, 10.0),
+               ("source", "Source", "close", "choice", SOURCES), ("basis", "Basis MA type", "SMA", "choice",
+                                                                    ["SMA", "EMA"])]
+AO_SETTINGS = [("fast", "Fast length", 5, "int", 1, 200), ("slow", "Slow length", 34, "int", 2, 500)]
+OSC_SETTINGS = {
+    "rsi": [("rsi_length", "RSI length", 14, "int", 2, 200), ("rsi_source", "RSI source", "close", "choice", SOURCES),
+            ("rsi_signal", "Turn = RSI crossing its average of (candles)", 9, "int", 2, 100)],
+    "ao": AO_SETTINGS,
+    "macd": [("macd_fast", "MACD fast length", 12, "int", 1, 200), ("macd_slow", "MACD slow length", 26, "int", 2, 500),
+             ("macd_signal", "MACD signal length", 9, "int", 1, 100)],
+    "wt": [("wt_channel", "Channel length", 9, "int", 1, 100), ("wt_average", "Average length", 12, "int", 1, 100)],
+}
+DIV_SETTINGS = [
+    ("method", "Find the lows / highs by", "turns", "choice", ["turns", "pivots"]),
+    ("left", "Pivot lookback left (pivots)", 5, "int", 1, 50),
+    ("right", "Pivot lookback right (pivots - candles to confirm)", 5, "int", 1, 50),
+    ("min_gap", "Min of lookback range (candles between the two lows / highs; TradingView uses 5)", 1, "int", 1, 500),
+    ("zone", "Bullish only when the oscillator is below its midline, bearish only above", False, "bool"),
+    ("min_move", "Price must make the new low / high by at least (%)", 0.0, "float", 0.0, 20.0),
+]
+SETTINGS: dict[str, list] = {}
+_SET_FN: dict = {}
+
+
+def options(r: dict) -> dict:
+    """The rule's settings with defaults filled in."""
+    return {k: (r.get("set") or {}).get(k, spec[2]) for spec in SETTINGS.get(r["rule"], []) for k in [spec[0]]}
+
+
+def _src(d: pd.DataFrame, name: str) -> pd.Series:
+    return {"hl2": (d.high + d.low) / 2, "hlc3": (d.high + d.low + d.close) / 3,
+            "ohlc4": (d.open + d.high + d.low + d.close) / 4}.get(name, d[name] if name in d else d.close)
+
+
+def _bbx(d: pd.DataFrame, o: dict):
+    """(lower, middle, upper) with TradingView's Bollinger settings."""
+    src = _src(d, o.get("source", "close"))
+    n = int(o.get("length", 20))
+    mid = ema(src, n) if o.get("basis") == "EMA" else sma(src, n)
+    sd = src.rolling(n).std(ddof=0)
+    k = float(o.get("mult", 2.0))
+    return mid - k * sd, mid, mid + k * sd
+
+
+def _aox(d: pd.DataFrame, o: dict) -> pd.Series:
+    return awesome_oscillator(d, int(o.get("fast", 5)), int(o.get("slow", 34)))
+
+
+def _turns(d: pd.DataFrame, osc: str, o: dict | None = None):
+    """(oscillator, turned up, turned down, midline)."""
+    o = o or {}
     if osc == "rsi":
-        r = _rsi(d.close)
-        return r, _cross_up(r, sma(r, 9)), _cross_up(sma(r, 9), r)
+        r = _rsi(_src(d, o.get("rsi_source", "close")), int(o.get("rsi_length", 14)))
+        avg = sma(r, int(o.get("rsi_signal", 9)))
+        return r, _cross_up(r, avg), _cross_up(avg, r), 50.0
     if osc == "ao":
-        diff = _ao_diff(d)
-        return awesome_oscillator(d), _cross_up(diff, 0), _cross_up(-diff, 0)
+        ao = _aox(d, o)
+        diff = ao.diff()
+        return ao, _cross_up(diff, 0), _cross_up(-diff, 0), 0.0
     if osc == "macd":
-        line, sig = _macd(d.close)
-        return line, _cross_up(line, sig), _cross_up(sig, line)
-    w1, w2 = wavetrend(d)
-    return w2, _cross_up(w1, w2), _cross_up(w2, w1)
+        c = d.close
+        line = ema(c, int(o.get("macd_fast", 12))) - ema(c, int(o.get("macd_slow", 26)))
+        sig = ema(line, int(o.get("macd_signal", 9)))
+        return line, _cross_up(line, sig), _cross_up(sig, line), 0.0
+    w1, w2 = wavetrend(d, int(o.get("wt_channel", 9)), int(o.get("wt_average", 12)))
+    return w2, _cross_up(w1, w2), _cross_up(w2, w1), 0.0
 
 
-def divergences(d: pd.DataFrame, osc: str, max_gap: int = 60) -> pd.DataFrame:
+def _pivot_divergences(osc: pd.Series, d: pd.DataFrame, left: int, right: int, lo_gap: int, hi_gap: int,
+                       mid: float, zone: bool, move: float) -> pd.DataFrame:
+    """TradingView's divergence method: oscillator pivot lows / highs (`left` candles before, `right` after);
+    compare each with the previous one between lo_gap and hi_gap candles earlier, using price's low / high
+    on those same candles. Flagged `right` candles later, when the pivot is confirmed."""
+    o = osc.to_numpy(float)
+    lo, hi = d.low.to_numpy(float), d.high.to_numpy(float)
+    n, w = len(o), left + right + 1
+    s = pd.Series(o)
+    is_lo = (s == s.rolling(w).min()).shift(-right).fillna(False).to_numpy() if n else np.array([], bool)
+    is_hi = (s == s.rolling(w).max()).shift(-right).fillna(False).to_numpy() if n else np.array([], bool)
+    out = {k: np.zeros(n, bool) for k in ("bull", "hidden_bull", "bear", "hidden_bear")}
+    for piv, name, hname, px, sgn in ((is_lo, "bull", "hidden_bull", lo, 1), (is_hi, "bear", "hidden_bear", hi, -1)):
+        idx = [i for i in np.flatnonzero(piv) if i + right < n]
+        for a, j in enumerate(idx):
+            prev = [p for p in idx[:a] if lo_gap <= j - p <= hi_gap]
+            if not prev:
+                continue
+            p = prev[-1]
+            if zone and (sgn * (o[j] - mid) > 0 or sgn * (o[p] - mid) > 0):
+                continue
+            new_extreme = sgn * (px[p] - px[j]) > px[p] * move / 100        # lower low (higher high), by move%
+            weaker_osc = sgn * (o[j] - o[p]) > 0                            # oscillator higher low (lower high)
+            if new_extreme and weaker_osc:
+                out[name][j + right] = True
+            elif sgn * (px[j] - px[p]) > px[p] * move / 100 and sgn * (o[p] - o[j]) > 0:
+                out[hname][j + right] = True
+    return pd.DataFrame(out, index=d.index)
+
+
+def divergences(d: pd.DataFrame, osc: str, max_gap: int = 60, o: dict | None = None) -> pd.DataFrame:
     """Columns bull / hidden_bull / bear / hidden_bear, True on the candle the divergence is confirmed."""
     from .divergence import pair_divergences, waves
-    k = (*_key(d), osc, int(max_gap))
+    o = o or {}
+    k = (*_key(d), osc, int(max_gap), tuple(sorted(o.items())))
     if k not in _DIV_CACHE:
         if len(_DIV_CACHE) > 32:
             _DIV_CACHE.clear()
-        o, up, down = _turns(d, osc)
+        x, up, down, mid = _turns(d, osc, o)
         up, down = up.fillna(False), down.fillna(False)
-        _DIV_CACHE[k] = pair_divergences(waves(o, d.low, d.high, up, down), up, down, int(max_gap))
+        if o.get("method") == "pivots":
+            res = _pivot_divergences(x, d, int(o.get("left", 5)), int(o.get("right", 5)), int(o.get("min_gap", 1)),
+                                     int(max_gap), mid, bool(o.get("zone")), float(o.get("min_move", 0)))
+        else:
+            w = waves(x, d.low, d.high, up, down)
+            res = pair_divergences(w, up, down, int(max_gap))
+            gap_t, gap_p = w.t1_i - w.t0_i, w.p1_i - w.p0_i
+            min_gap = int(o.get("min_gap", 1))
+            res["bull"] &= gap_t >= min_gap
+            res["hidden_bull"] &= gap_t >= min_gap
+            res["bear"] &= gap_p >= min_gap
+            res["hidden_bear"] &= gap_p >= min_gap
+            mv = float(o.get("min_move", 0)) / 100
+            if mv:
+                res["bull"] &= w.t1_px < w.t0_px * (1 - mv)
+                res["bear"] &= w.p1_px > w.p0_px * (1 + mv)
+                res["hidden_bull"] &= w.t1_px > w.t0_px * (1 + mv)
+                res["hidden_bear"] &= w.p1_px < w.p0_px * (1 - mv)
+            if o.get("zone"):
+                res["bull"] &= (w.t1_osc < mid) & (w.t0_osc < mid)
+                res["hidden_bull"] &= (w.t1_osc < mid) & (w.t0_osc < mid)
+                res["bear"] &= (w.p1_osc > mid) & (w.p0_osc > mid)
+                res["hidden_bear"] &= (w.p1_osc > mid) & (w.p0_osc > mid)
+            res = res.fillna(False).astype(bool)
+        _DIV_CACHE[k] = res
     return _DIV_CACHE[k]
 
 
 def _div_rule(osc: str, kind: str):
-    return lambda d, a, b: recent_flag(divergences(d, osc, b)[kind], a)
+    def fn(d, a, b, o=None):
+        return recent_flag(divergences(d, osc, b, o)[kind], a)
+    return fn
 
 
 _DIV_TEXT = {"bull": "Bullish divergence: price lower low, {o} higher low",
@@ -288,6 +402,39 @@ for _o, _name in OSCILLATORS.items():
     for _kind, _text in _DIV_TEXT.items():
         RULES[f"{_o}_{_kind}_div"] = (_text.format(o=_name) + " - in the last A candles, lows/highs at most B "
                                       "candles apart", 3, 60, _div_rule(_o, _kind))
+
+# rules that take settings: their function gets the settings dict as a 4th argument
+def _bb_rule(fn):
+    return lambda d, a, b, o=None: fn(d, a, b, *_bbx(d, o or {}))
+
+
+_BB_FNS = {
+    "bb_touch_lower": _bb_rule(lambda d, a, b, lo, mid, up: recent_flag(d.low <= lo, a)),
+    "bb_touch_upper": _bb_rule(lambda d, a, b, lo, mid, up: recent_flag(d.high >= up, a)),
+    "bb_above_mid": _bb_rule(lambda d, a, b, lo, mid, up: d.close > mid),
+    "bb_below_mid": _bb_rule(lambda d, a, b, lo, mid, up: d.close < mid),
+    "bb_width_above": _bb_rule(lambda d, a, b, lo, mid, up: (up - lo) / mid * 100 > a),
+}
+for _k, _f in _BB_FNS.items():
+    RULES[_k] = (RULES[_k][0].replace(" (20, 2)", "").replace(" (20-candle average)", ""), RULES[_k][1], RULES[_k][2], _f)
+    SETTINGS[_k] = BB_SETTINGS
+_AO_FNS = {
+    "ao_green": lambda d, a, b, o=None: _aox(d, o or {}).diff() > 0,
+    "ao_red": lambda d, a, b, o=None: _aox(d, o or {}).diff() <= 0,
+    "ao_turns_green": lambda d, a, b, o=None: _cross_up(_aox(d, o or {}).diff(), 0),
+    "ao_turns_red": lambda d, a, b, o=None: _cross_up(-_aox(d, o or {}).diff(), 0),
+    "ao_above_zero": lambda d, a, b, o=None: _aox(d, o or {}) > 0,
+    "ao_below_zero": lambda d, a, b, o=None: _aox(d, o or {}) < 0,
+    "ao_cross_up_zero": lambda d, a, b, o=None: _cross_up(_aox(d, o or {}), 0),
+    "ao_cross_down_zero": lambda d, a, b, o=None: _cross_up(-_aox(d, o or {}), 0),
+}
+for _k, _f in _AO_FNS.items():
+    RULES[_k] = (*RULES[_k][:3], _f)
+    SETTINGS[_k] = AO_SETTINGS
+for _o in OSCILLATORS:
+    for _kind in _DIV_TEXT:
+        SETTINGS[f"{_o}_{_kind}_div"] = OSC_SETTINGS[_o] + DIV_SETTINGS
+
 LABELS = {k: v[0] for k, v in RULES.items()}
 BY_LABEL = {v[0]: k for k, v in RULES.items()}
 
@@ -295,7 +442,8 @@ BY_LABEL = {v[0]: k for k, v in RULES.items()}
 def rule_series(df: pd.DataFrame, r: dict) -> pd.Series:
     label, da, db, fn = RULES[r["rule"]]
     a, b = _n(r.get("a"), da), _n(r.get("b"), db)
-    return fn(df, a, b).fillna(False).astype(bool)
+    out = fn(df, a, b, options(r)) if r["rule"] in SETTINGS else fn(df, a, b)
+    return out.fillna(False).astype(bool)
 
 
 def describe(r: dict) -> str:
@@ -308,7 +456,9 @@ def describe(r: dict) -> str:
         label = re.sub(r"\bA\b", fmt(a), label)
     if b is not None:
         label = re.sub(r"\bB\b", fmt(b), label)
-    return label
+    changed = [f"{spec[1].split(' (')[0].lower()} {fmt(r['set'][spec[0]])}" for spec in SETTINGS.get(r["rule"], [])
+               if spec[0] in (r.get("set") or {}) and r["set"][spec[0]] != spec[2]]
+    return label + (f" [{', '.join(changed)}]" if changed else "")
 
 
 def _all(df: pd.DataFrame, rules: list[dict]) -> pd.Series:
