@@ -14,7 +14,7 @@ import numpy as np
 import pandas as pd
 
 from .fmt import price
-from .indicators import ema, heikin_ashi, money_flow, sma, wavetrend
+from .indicators import awesome_oscillator, ema, heikin_ashi, money_flow, sma, wavetrend
 
 
 def _rsi(c: pd.Series, n: int = 14) -> pd.Series:
@@ -27,6 +27,11 @@ def _rsi(c: pd.Series, n: int = 14) -> pd.Series:
 def _macd(c: pd.Series):
     line = ema(c, 12) - ema(c, 26)
     return line, ema(line, 9)
+
+
+def _ao_diff(d: pd.DataFrame) -> pd.Series:
+    """AO minus AO one candle ago (the Pine script's `diff`)."""
+    return awesome_oscillator(d).diff()
 
 
 def _cross_up(a: pd.Series, b) -> pd.Series:
@@ -78,6 +83,19 @@ RULES = {
                        lambda d, a, b: d.close < sma(d.close, int(a)) - b * d.close.rolling(int(a)).std()),
     "bb_above_upper": ("Close above the upper Bollinger band (A candles, B deviations)", 20, 2,
                        lambda d, a, b: d.close > sma(d.close, int(a)) + b * d.close.rolling(int(a)).std()),
+    # Awesome Oscillator (TradingView: AO = SMA(hl2, 5) - SMA(hl2, 34); green column = AO rose, red = it didn't)
+    "ao_green": ("Awesome Oscillator column is green (AO rising)", None, None, lambda d, a, b: _ao_diff(d) > 0),
+    "ao_red": ("Awesome Oscillator column is red (AO falling)", None, None, lambda d, a, b: _ao_diff(d) <= 0),
+    "ao_turns_green": ("Awesome Oscillator changed to green (TradingView's 'AO color changed to green' alert)",
+                       None, None, lambda d, a, b: _cross_up(_ao_diff(d), 0)),
+    "ao_turns_red": ("Awesome Oscillator changed to red (TradingView's 'AO color changed to red' alert)",
+                     None, None, lambda d, a, b: _cross_up(-_ao_diff(d), 0)),
+    "ao_above_zero": ("Awesome Oscillator above zero", None, None, lambda d, a, b: awesome_oscillator(d) > 0),
+    "ao_below_zero": ("Awesome Oscillator below zero", None, None, lambda d, a, b: awesome_oscillator(d) < 0),
+    "ao_cross_up_zero": ("Awesome Oscillator crosses above zero", None, None,
+                         lambda d, a, b: _cross_up(awesome_oscillator(d), 0)),
+    "ao_cross_down_zero": ("Awesome Oscillator crosses below zero", None, None,
+                           lambda d, a, b: _cross_up(-awesome_oscillator(d), 0)),
     "ha_green": ("Heikin Ashi candle is green", None, None,
                  lambda d, a, b: (lambda h: h.close > h.open)(heikin_ashi(d))),
     "ha_red": ("Heikin Ashi candle is red", None, None, lambda d, a, b: (lambda h: h.close < h.open)(heikin_ashi(d))),

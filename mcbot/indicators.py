@@ -27,6 +27,13 @@ def sma(s: pd.Series, length: int) -> pd.Series:
     return s.rolling(length).mean()
 
 
+def awesome_oscillator(df: pd.DataFrame, fast: int = 5, slow: int = 34) -> pd.Series:
+    """TradingView's Awesome Oscillator: ta.sma(hl2, 5) - ta.sma(hl2, 34). Its columns are green when AO
+    rose from the candle before (diff > 0) and red otherwise (diff <= 0)."""
+    hl2 = (df["high"] + df["low"]) / 2
+    return sma(hl2, fast) - sma(hl2, slow)
+
+
 def wavetrend(df: pd.DataFrame, channel_len: int = 9, average_len: int = 12,
               ma_len: int = 3) -> tuple[pd.Series, pd.Series]:
     src = (df["high"] + df["low"] + df["close"]) / 3

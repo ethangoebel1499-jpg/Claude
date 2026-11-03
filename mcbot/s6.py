@@ -29,8 +29,8 @@ STOP_ROOM = 0.0005    # 0.05% beyond the last low / high
 
 
 def awesome(df: pd.DataFrame) -> pd.Series:
-    hl2 = (df["high"] + df["low"]) / 2
-    return hl2.rolling(5).mean() - hl2.rolling(34).mean()
+    from .indicators import awesome_oscillator
+    return awesome_oscillator(df)
 
 
 def signals(df: pd.DataFrame) -> pd.DataFrame:

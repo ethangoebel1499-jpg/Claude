@@ -166,3 +166,24 @@ def test_decide_and_strategy(df):
 def test_registry_has_apprentice():
     from livepaper.strategies import REGISTRY
     assert "apprentice" in REGISTRY
+
+
+def test_awesome_oscillator_matches_tradingview(df):
+    # the Pine script, written out by hand
+    hl2 = (df.high + df.low) / 2
+    ao = hl2.rolling(5).mean() - hl2.rolling(34).mean()
+    diff = ao - ao.shift()
+    green = diff > 0                                           # color = diff <= 0 ? red : green
+    to_green = (diff > 0) & (diff.shift() <= 0)                # ta.crossover(diff, 0)
+    to_red = (diff < 0) & (diff.shift() >= 0)                  # ta.crossunder(diff, 0)
+    from mcbot.indicators import awesome_oscillator
+    pd.testing.assert_series_equal(awesome_oscillator(df), ao, check_names=False)
+    rule = lambda k: builder.rule_series(df, {"rule": k})
+    assert (rule("ao_green") == green.fillna(False)).all()
+    assert (rule("ao_red") == (diff <= 0).fillna(False)).all()
+    assert (rule("ao_turns_green") == to_green.fillna(False)).all() and rule("ao_turns_green").sum() > 10
+    assert (rule("ao_turns_red") == to_red.fillna(False)).all() and rule("ao_turns_red").sum() > 10
+    assert (rule("ao_above_zero") == (ao > 0)).all() and (rule("ao_cross_up_zero") <= rule("ao_above_zero")).all()
+    assert "ao_turns_green" in teach.system()                  # the AI can use it when reading lessons
+    lesson = teach.guess("[1:00] I go long when the awesome oscillator turns green at support, bounce off support")
+    assert any(r["rule"] == "ao_turns_green" for s in lesson["setups"] for r in s["rules"])

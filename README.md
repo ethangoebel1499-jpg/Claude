@@ -199,6 +199,10 @@ Edit `live.toml`: which strategy, symbol, timeframe and capital per run.
   position and stops. Runs live in the database, so no restart is needed.
 - **🎙️ Streams** - the stream study agent's review screen (see below), so everything is in one app.
 - **🧠 Apprentice** - a separate trading agent you teach with streams and videos (see below).
+- **🛠️ Builder** - make your own strategy from rules (EMAs, SMAs, RSI, MACD, Bollinger bands, Market Cipher,
+  **Awesome Oscillator**, candles, support/resistance, chart patterns...). Awesome Oscillator rules match
+  TradingView's AO (SMA(hl2, 5) - SMA(hl2, 34)): column green / red, *changed to green* / *changed to red*
+  (the same moments as its two alerts), above / below zero, crosses zero.
 - **📜 Activity** - every event and fill.
 - **⚙️ Account** - Webull paper keys (with a *Test connection* button), broker, fees, how often to
   check prices, sharing with Claude, and the stream agent's model / Anthropic key. Saved in plain

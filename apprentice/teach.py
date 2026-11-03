@@ -195,6 +195,10 @@ KEYWORDS = [
     (r"macd cross(es)? (down|below)|bearish macd", "macd_cross_down"),
     (r"volume spike|big volume|high volume", "volume_spike"),
     (r"higher low", "higher_low"), (r"lower high", "lower_high"),
+    (r"(awesome oscillator|\bao\b).{0,30}(turns?|flips?|changes?).{0,10}green", "ao_turns_green"),
+    (r"(awesome oscillator|\bao\b).{0,30}(turns?|flips?|changes?).{0,10}red", "ao_turns_red"),
+    (r"(awesome oscillator|\bao\b).{0,20}(above|over) (the )?zero", "ao_above_zero"),
+    (r"(awesome oscillator|\bao\b).{0,20}(below|under) (the )?zero", "ao_below_zero"),
 ]
 LESSON = re.compile(r"\b(always|never|look for|wait for|you want|rule|should|don't|make sure|the key)\b", re.I)
 
