@@ -227,6 +227,11 @@ Edit `live.toml`: which strategy, symbol, timeframe and capital per run.
   between the two lows / highs.
   **Bollinger** rules: close below / above the bands, low / high *touched* the lower / upper band in the last A
   candles, close above / below the middle band, and band width (enough room to reach the other band).
+  Under each rule the Builder says what its **A** and **B** mean, and rules with more settings have a **⚙️ settings**
+  panel: Bollinger length, StdDev, source and basis MA (SMA / EMA); AO fast / slow; for divergences the
+  oscillator's lengths, how lows / highs are found (oscillator turns, or TradingView-style pivots with lookback
+  left / right), the minimum candles between them, "only below / above the midline", and a minimum price move.
+  **📋 Copy of S10** in the Builder starts from S10 so you can tune it.
 - **📜 Activity** - every event and fill.
 - **⚙️ Account** - Webull paper keys (with a *Test connection* button), broker, fees, how often to
   check prices, sharing with Claude, and the stream agent's model / Anthropic key. Saved in plain

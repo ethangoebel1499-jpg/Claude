@@ -269,3 +269,22 @@ def test_relearn_reads_a_learned_video_again(store, monkeypatch):
     assert cli.teach_source(store, url, None, None, log=lambda *a: None)["skipped"] == 1
     again = cli.teach_source(store, url, None, None, log=lambda *a: None, relearn=True)
     assert again["lessons"] == 1 and len(store.table("lessons")) == 1      # replaced, not duplicated
+
+
+def test_rule_settings(df):
+    rule = lambda k, **kw: builder.rule_series(df, {"rule": k, **kw})
+    # defaults = the old fixed behaviour
+    assert (rule("bb_touch_lower") == rule("bb_touch_lower", set={"length": 20, "mult": 2.0})).all()
+    src = df.close
+    mid = src.ewm(span=30, adjust=False).mean()
+    lo = mid - 2.5 * src.rolling(30).std(ddof=0)
+    got = rule("bb_touch_lower", a=1, set={"length": 30, "mult": 2.5, "basis": "EMA"})
+    assert (got == (df.low <= lo)).all()
+    assert not (rule("ao_turns_green", set={"fast": 3, "slow": 20}) == rule("ao_turns_green")).all()
+    piv = rule("rsi_bull_div", set={"method": "pivots", "min_gap": 5})
+    assert piv.sum() > 0
+    cut = builder.rule_series(df.iloc[:1100].copy(), {"rule": "rsi_bull_div", "set": {"method": "pivots"}})
+    assert (rule("rsi_bull_div", set={"method": "pivots"}).iloc[:1100].to_numpy() == cut.to_numpy()).all()  # no lookahead
+    assert rule("ao_bull_div", set={"zone": True}).sum() <= rule("ao_bull_div").sum()
+    assert "[length 30" in builder.describe({"rule": "bb_touch_lower", "set": {"length": 30}})
+    assert builder.ab_help("bb_below_lower") == "A = Bollinger length (default 20) · B = StdDev (default 2)"

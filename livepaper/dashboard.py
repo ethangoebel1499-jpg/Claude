@@ -452,6 +452,42 @@ def rules_editor(title: str, rules: list[dict], key: str) -> list[dict]:
             rid = builder.BY_LABEL[row["Rule"]]
             out.append({"rule": rid, "a": None if pd.isna(row["A"]) else float(row["A"]),
                         "b": None if pd.isna(row["B"]) else float(row["B"])})
+    for i, r in enumerate(out):                     # what A / B mean, and the rule's ⚙️ settings
+        old = rules[i] if i < len(rules) and rules[i].get("rule") == r["rule"] else {}
+        specs = builder.SETTINGS.get(r["rule"], [])
+        if not specs:
+            st.caption(f"{i + 1}. {builder.LABELS[r['rule']].split(' - ')[0]}: {builder.ab_help(r['rule'])}")
+            continue
+        with st.expander(f"⚙️ {i + 1}. {builder.LABELS[r['rule']].split(' - ')[0]} - settings · "
+                         f"{builder.ab_help(r['rule'])}"):
+            chosen = {}
+            cols = st.columns(3)
+            for j, spec in enumerate(specs):
+                name, label, default, kind = spec[:4]
+                cur = (old.get("set") or {}).get(name, default)
+                wkey = f"{key}_set_{i}_{r['rule']}_{name}"
+                c = cols[j % 3]
+                if kind == "choice":
+                    opts = spec[4]
+                    val = c.selectbox(label, opts, index=opts.index(cur) if cur in opts else 0, key=wkey,
+                                      format_func=lambda v: {"turns": "Oscillator turns (AO colour change, MACD / "
+                                                                      "RSI crossing their signal)",
+                                                             "pivots": "Pivots (TradingView's divergence indicator)"
+                                                             }.get(v, v))
+                elif kind == "bool":
+                    val = c.checkbox(label, bool(cur), key=wkey)
+                elif kind == "int":
+                    val = int(c.number_input(label, int(spec[4]), int(spec[5]), int(cur), 1, key=wkey))
+                else:
+                    val = float(c.number_input(label, float(spec[4]), float(spec[5]), float(cur), 0.1, key=wkey))
+                if val != default:
+                    chosen[name] = val
+            if chosen:
+                r["set"] = chosen
+            if r["rule"].endswith("_div"):
+                st.caption("Pivots: a low is the oscillator's lowest point with *left* candles before and *right* "
+                           "after (so it's confirmed *right* candles later); B = Max of lookback range. Turns: the "
+                           "low between the oscillator turning down and turning back up, confirmed when it turns up.")
     if out:
         st.caption(" AND ".join(builder.describe(r) for r in out) if "ANY" not in title else
                    " OR ".join(builder.describe(r) for r in out))
@@ -463,9 +499,15 @@ with tab_build:
                "chart, paper trade) with a checklist of each rule. Rules use closed candles only.")
     data = custom.load()
     keys = list(data["strategies"])
-    choice = st.selectbox("Strategy to edit", [NEW] + keys,
-                          format_func=lambda k: k if k == NEW else data["strategies"][k].get("name", k))
-    spec = dict(DEFAULT_SPEC if choice == NEW else data["strategies"][choice])
+    from livepaper.strategies import S10_SPEC
+    COPY_S10 = "📋 Copy of S10 1m Bollinger + AO divergence"
+    choice = st.selectbox("Strategy to edit", [NEW, COPY_S10] + keys,
+                          format_func=lambda k: k if k in (NEW, COPY_S10) else data["strategies"][k].get("name", k))
+    if choice == COPY_S10:
+        import copy as _copy
+        spec = {**_copy.deepcopy(S10_SPEC), "name": "S10 (my settings)"}
+    else:
+        spec = dict(DEFAULT_SPEC if choice == NEW else data["strategies"][choice])
     k = choice.replace(" ", "_")
     name = st.text_input("Name", spec.get("name", ""), key=f"b_name_{k}")
     long_rules = rules_editor("**Go LONG when ALL of these are true**", spec.get("long", []), f"b_long_{k}")
@@ -478,7 +520,7 @@ with tab_build:
     x1, x2 = st.columns([1, 3])
     b_stop = x1.number_input("Stop %", 0.0, 50.0, float(spec.get("stop") or 0) * 100, 0.5, key=f"b_stop_{k}")
     plan = x2.selectbox("Take-profit plan", list(TP_PLANS), key=f"b_plan_{k}",
-                        index=0 if choice != NEW else list(TP_PLANS).index("2 targets: 50 / 50"))
+                        index=list(TP_PLANS).index("2 targets: 50 / 50") if choice == NEW else 0)
     from livepaper.core import Exits as _Exits
     own = _Exits(spec.get("stop"), [tuple(t) for t in spec.get("take_profits") or [[0.08, 0.5], [0.16, 0.5]]])
     tp_df = st.data_editor(pd.DataFrame(tp_rows(plan, False, own, b_stop / 100)), hide_index=True, width="stretch",
@@ -524,10 +566,10 @@ with tab_build:
                    "backtest other markets and paper trade it in 🧪 Strategy Lab.")
     s1, s2, _ = st.columns([1, 1, 3])
     if s1.button("💾 Save strategy", type="primary", disabled=not ok):
-        key = custom.save_strategy(new_spec, None if choice == NEW else choice)
+        key = custom.save_strategy(new_spec, None if choice in (NEW, COPY_S10) else choice)
         refresh_strategies()
         st.success(f"Saved **{new_spec['name']}** - pick it in 🧪 Strategy Lab.")
-    if choice != NEW and s2.button("🗑️ Delete"):
+    if choice not in (NEW, COPY_S10) and s2.button("🗑️ Delete"):
         custom.delete_strategy(choice)
         refresh_strategies()
         st.rerun()

@@ -438,6 +438,42 @@ for _o in OSCILLATORS:
 LABELS = {k: v[0] for k, v in RULES.items()}
 BY_LABEL = {v[0]: k for k, v in RULES.items()}
 
+# what A and B mean, in plain words, for the Builder (rules not listed: their label says it)
+_DIV_AB = ("how many candles it stays true after it's confirmed", "most candles between the two lows / highs")
+AB_HELP = {
+    "close_above_ema": ("EMA length", None), "close_below_ema": ("EMA length", None),
+    "close_above_sma": ("SMA length", None), "close_below_sma": ("SMA length", None),
+    "ema_cross_up": ("fast EMA length", "slow EMA length"), "ema_cross_down": ("fast EMA length", "slow EMA length"),
+    "ema_above_ema": ("fast EMA length", "slow EMA length"), "ema_below_ema": ("fast EMA length", "slow EMA length"),
+    "rsi_below": ("RSI level", None), "rsi_above": ("RSI level", None),
+    "rsi_cross_up": ("RSI level", None), "rsi_cross_down": ("RSI level", None),
+    "wt_green_dot": ("only dots below this wave level", None), "wt_red_dot": ("only dots above this wave level", None),
+    "wt_below": ("wave level", None), "wt_above": ("wave level", None),
+    "bb_below_lower": ("Bollinger length", "StdDev"), "bb_above_upper": ("Bollinger length", "StdDev"),
+    "bb_touch_lower": ("touch still counts for this many candles", None),
+    "bb_touch_upper": ("touch still counts for this many candles", None),
+    "bb_width_above": ("band width, % of price", None),
+    "green_candles": ("candles in a row", None), "red_candles": ("candles in a row", None),
+    "breakout_high": ("candles to look back", None), "breakdown_low": ("candles to look back", None),
+    "volume_spike": ("times the average", "average over this many candles"),
+    "up_pct": ("% move", "over this many candles"), "down_pct": ("% move", "over this many candles"),
+    "near_apex": ("% of the way to the apex", None), "squeeze": ("times its 50-candle average", None),
+    "higher_low": ("candles per window", None), "lower_high": ("candles per window", None),
+    **{f"{o}_{k}_div": _DIV_AB for o in OSCILLATORS for k in _DIV_TEXT},
+}
+
+
+def ab_help(rid: str) -> str:
+    """'A = EMA length (default 50)' - for the Builder's rule list."""
+    _, da, db, _ = RULES[rid]
+    names = AB_HELP.get(rid)
+    parts = []
+    for letter, d, name in (("A", da, names[0] if names else None), ("B", db, names[1] if names else None)):
+        if d is None and name is None:
+            continue
+        parts.append(f"{letter} = {name or 'the ' + letter + ' in the rule'}" + (f" (default {d:g})" if d is not None else ""))
+    return " · ".join(parts) if parts else "no numbers to set"
+
 
 def rule_series(df: pd.DataFrame, r: dict) -> pd.Series:
     label, da, db, fn = RULES[r["rule"]]
