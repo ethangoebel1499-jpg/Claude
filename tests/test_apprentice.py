@@ -288,3 +288,25 @@ def test_rule_settings(df):
     assert rule("ao_bull_div", set={"zone": True}).sum() <= rule("ao_bull_div").sum()
     assert "[length 30" in builder.describe({"rule": "bb_touch_lower", "set": {"length": 30}})
     assert builder.ab_help("bb_below_lower") == "A = Bollinger length (default 20) · B = StdDev (default 2)"
+
+
+def test_apprentice_paper_trades_long_and_short_with_moderate_exits(tmp_path, monkeypatch, df):
+    from apprentice import strategy
+    from livepaper.core import PositionManager, SimBroker, replay
+    from livepaper.runner import exits_for, normalize_run
+    monkeypatch.setenv("APPRENTICE_DB", str(tmp_path / "a.db"))
+    st_ = Store(tmp_path / "a.db")
+    st_.add_setup({"name": "AO red short", "direction": "short", "rules": [{"rule": "ao_turns_red"}],
+                   "status": "active", "weight": 0.2})
+    st_.add_setup({"name": "AO green long", "direction": "long", "rules": [{"rule": "ao_turns_green"}],
+                   "status": "active", "weight": 0.2})
+    run = normalize_run(strategy.run_for("BTC", "XBTUSD", "4h"))
+    assert run["shorts"] and run["stop"] == 0.03
+    ex = exits_for(run)
+    assert ex.stop == 0.03 and [tuple(t) for t in ex.take_profits] == [(0.03, 0.5), (0.06, 0.5)]
+    sig = strategy.signals(df)
+    m = replay(df, sig, PositionManager("ap", ex, shorts=True, broker=SimBroker(0.001)))
+    sides = {t["side"] for t in m.trades}
+    assert sides == {"long", "short"}
+    stopped = [t for t in m.trades if t["reason"] == "stop"]
+    assert stopped and all(-0.045 < t["pnl_pct"] / (100 if abs(t["pnl_pct"]) > 1 else 1) < -0.025 for t in stopped)

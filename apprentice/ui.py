@@ -494,28 +494,91 @@ def chart_tab(store: Store) -> None:
             st.success("Adopted - press 🎓 Learn now to test it on more charts.")
 
 
+def trade_bar(lp_store) -> None:
+    """The main page's 🧠 Apprentice bar: pick the markets, and it paper trades them long and short whenever one
+    of its tested setups fires. Shows what it knows, its open trades and how it has done."""
+    from apprentice.strategy import STOP, TAKE_PROFITS, live_setups, run_for
+    from livepaper import settings
+    store = get_store(db_path())
+    live = live_setups()
+    n_long = sum(1 for s in live if s["direction"] == "long")
+    n_short = len(live) - n_long
+    runs = [r for r in lp_store.runs() if r["strategy"] == STRATEGY_KEY]
+    active = [r for r in runs if r["active"]]
+    with st.container(border=True):
+        h1, h2 = st.columns([3, 2])
+        h1.markdown(f"#### 🧠 Apprentice · trades what it learned")
+        h2.caption(f"{len(store.table('lessons'))} lessons · {len(live)} tested setups it trades "
+                   f"({n_long} long, {n_short} short) · stop {STOP:.0%}, half off at +{TAKE_PROFITS[0][0]:.0%}, "
+                   f"rest at +{TAKE_PROFITS[1][0]:.0%}")
+        if not live:
+            st.info("It has no tested setups yet, so it won't trade. Teach it in 🧠 Apprentice → 📚 Teach, then press "
+                    "🎓 Learn now - setups that beat random get traded here automatically.")
+        for r in active:                                  # runs made before: long-only, 4% stop -> today's settings
+            if not r["shorts"] or r["stop"] != STOP or [list(t) for t in r["take_profits"] or []] != \
+                    [list(t) for t in TAKE_PROFITS]:
+                coin = {pair: c for c, pair in CRYPTO.items()}.get(r["symbol"], r["symbol"])
+                lp_store.upsert_run({**run_for(coin, r["symbol"], r["timeframe"], r["capital"]), "name": r["name"],
+                                     "active": 1, "source": "apprentice"})
+        coins = {pair: coin for coin, pair in CRYPTO.items()}
+        c1, c2, c3 = st.columns([4, 1, 1.3])
+        tf = c2.selectbox("Timeframe", ["1h", "4h", "1D"], index=1, key="ap_bar_tf")
+        cap = c3.number_input("Capital per market $", 100.0, 1e7, 10_000.0, 1000.0, key="ap_bar_cap")
+        on = [coins[r["symbol"]] for r in active if r["timeframe"] == tf and r["symbol"] in coins]
+        key = f"ap_bar_coins_{tf}"
+
+        def apply():                                       # only when you change the list
+            pick = st.session_state[key]
+            have = {r["name"] for r in lp_store.runs(active_only=True)
+                    if r["strategy"] == STRATEGY_KEY and r["timeframe"] == tf}
+            for c in pick:
+                if f"Apprentice {c} {tf}" not in have:
+                    lp_store.upsert_run({**run_for(c, CRYPTO[c], tf, st.session_state.get("ap_bar_cap", cap)),
+                                         "active": 1, "source": "apprentice"})
+            for name in have - {f"Apprentice {c} {tf}" for c in pick}:
+                lp_store.set_active(name, False)           # closes its open position on the next price check
+        if key in st.session_state and sorted(st.session_state[key]) != sorted(on):
+            st.session_state[key] = on                     # follow changes made elsewhere (Strategy Lab, runs list)
+        c1.multiselect("Markets it paper trades (long and short)", list(CRYPTO), default=on if key not in
+                       st.session_state else None, key=key, on_change=apply)
+        active = [r for r in lp_store.runs() if r["strategy"] == STRATEGY_KEY and r["active"]]
+        if settings.get("broker") == "webull" and settings.get("webull_crypto", "auto") == "webull":
+            st.warning("Crypto runs are set to trade at Webull, which can't short spot crypto - shorts will be "
+                       "refused. ⚙️ Account → Crypto runs trade in → built-in paper broker.")
+        if not active:
+            st.caption("Not trading yet - pick markets above.")
+            return
+        trades = lp_store.table("trades")
+        rows = []
+        for r in active:
+            state = lp_store.load_state(r["name"])
+            t = trades[trades.run == r["name"]]
+            sig = lp_store.table("signals", r["name"])
+            last = sig.iloc[-1] if len(sig) else None
+            p = state.position if state else None
+            rows.append({
+                "Market": f"{coins.get(r['symbol'], r['symbol'])} {r['timeframe']}",
+                "Position": "🟢 long" if p and p.side == "long" else "🔴 short" if p else "⚪ waiting",
+                "Entry": p.entry_price if p else None,
+                "Last candle": "—" if last is None else "🟢 long signal" if last.long_entry else
+                               "🔴 short signal" if last.short_entry else "no setup fired",
+                "Trades": len(t), "Win rate": f"{(t.pnl_usd > 0).mean() * 100:.0f}%" if len(t) else "-",
+                "Closed P&L $": float(t.pnl_usd.sum()) if len(t) else 0.0,
+                "Equity $": state.equity if state else r["capital"]})
+        df = pd.DataFrame(rows)
+        st.dataframe(df.style.format({"Entry": lambda v: "-" if v is None or pd.isna(v) else price(v),
+                                      "Closed P&L $": "${:,.2f}", "Equity $": "${:,.2f}"}),
+                     hide_index=True, width="stretch")
+        st.caption("It enters on a closed candle when one of its tested setups fires (long or short) and exits at the "
+                   "stop or the two targets. Details and a Force / Close button per market: Run details below.")
+
+
 def paper_tab(store: Store, lp_store=None) -> None:
     st.caption("The apprentice trades on its own in the paper account: whenever one of its active setups fires on "
                "a closed candle. As it learns, what it trades changes by itself.")
     if lp_store is not None:
-        c1, c2, c3 = st.columns([2, 1, 1])
-        coin = c1.selectbox("Coin", list(CRYPTO), key="ap_pt_coin")
-        tf = c2.selectbox("Timeframe", ["1h", "4h", "1D"], index=1, key="ap_pt_tf")
-        cap = c3.number_input("Paper capital $", 100.0, 1e7, 10_000.0, 1000.0, key="ap_pt_cap")
-        name = f"Apprentice {coin} {tf}"
-        active = {r["name"] for r in lp_store.runs(active_only=True)}
-        run = {"name": name, "strategy": STRATEGY_KEY, "symbol": CRYPTO[coin], "asset": "crypto", "timeframe": tf,
-               "shorts": False, "capital": cap, "fraction": 1.0, "stop": 0.04,
-               "take_profits": [[0.06, 0.5], [0.12, 0.5]]}
-        key = f"ap_pt_{name}"
-
-        def toggle():
-            if st.session_state[key]:
-                lp_store.upsert_run({**run, "active": 1, "source": "apprentice"})
-            else:
-                lp_store.set_active(name, False)
-        st.checkbox(f"📄 Let the apprentice paper trade {coin} {tf}", value=name in active, key=key, on_change=toggle)
-        st.caption("Spot crypto is long-only. Results show in 📊 Dashboard like any other run.")
+        st.caption("Pick its markets on the 📊 Dashboard (🧠 Apprentice bar at the top) - long and short, 3% stop, "
+                   "half off at +3%, the rest at +6%.")
     st.markdown("##### Its journal (every trade call it made on a chart)")
     j = store.table("journal")
     if j.empty:

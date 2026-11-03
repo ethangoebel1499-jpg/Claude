@@ -14,6 +14,10 @@ from mcbot import builder
 
 ROOT = Path(__file__).resolve().parent.parent
 KEY = "apprentice"
+# moderate exits: 3% stop, half off at +3% (1R), the rest at +6% (2R) - close to how its setups are tested
+# (1.5 ATR stop, 2R target)
+STOP = 0.03
+TAKE_PROFITS = [(0.03, 0.5), (0.06, 0.5)]
 
 
 def db_path() -> str:
@@ -71,11 +75,18 @@ def checklist(df: pd.DataFrame, bar: int = -1, label: str | None = None) -> str:
 def entry() -> dict:
     from livepaper.core import Exits
     return {"label": "🧠 Apprentice (learns from your lessons)", "short": "Apprentice", "signals": signals,
-            "checklist": checklist, "exits": Exits(0.04, [(0.06, 0.5), (0.12, 0.5)]),
-            "note": "Trades every setup the apprentice has learned and tested (🧠 Apprentice tab). It changes as it "
-                    "learns. Default exits: 4% stop, 50% at +6%, 50% at +12%."}
+            "checklist": checklist, "exits": Exits(STOP, TAKE_PROFITS),
+            "note": "Trades every setup the apprentice has learned and tested (🧠 Apprentice tab), long and short. It "
+                    "changes as it learns. Exits: 3% stop, 50% at +3%, 50% at +6%."}
 
 
 def refresh(registry: dict) -> dict:
     registry[KEY] = entry()
     return registry
+
+
+def run_for(coin: str, pair: str, tf: str, capital: float = 10_000.0) -> dict:
+    """The paper-trading run for one market: long and short, moderate exits."""
+    return {"name": f"Apprentice {coin} {tf}", "strategy": KEY, "symbol": pair, "asset": "crypto", "timeframe": tf,
+            "shorts": True, "capital": capital, "fraction": 1.0, "stop": STOP,
+            "take_profits": [list(t) for t in TAKE_PROFITS]}

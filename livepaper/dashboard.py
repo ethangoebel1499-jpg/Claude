@@ -118,6 +118,11 @@ def dashboard():
               "⚠️ trader not running - start it with `python -m livepaper run`")
     st.caption(f"{status} · broker: **{'Webull paper account' if broker == 'webull' else 'built-in paper broker'}**"
                f" · {len(runs)} active runs · refreshes every 30 s")
+    try:
+        from apprentice.ui import trade_bar
+        trade_bar(store)
+    except Exception as e:
+        st.caption(f"🧠 Apprentice bar unavailable: {type(e).__name__}: {e}")
     if not runs:
         st.info("No runs are paper trading yet. Open the **🧪 Strategy Lab** tab, test a strategy, and tick "
                 "**Paper trade this setup**.")

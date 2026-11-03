@@ -352,8 +352,11 @@ trading lessons and it learns to analyse charts and trade **on its own**.
    learns) with every comment kept; they change how much it trusts each setup (4-5★ up, 1-2★ down; a
    rated chart call counts for the setups that made it), and your comments are added to the AI's
    instructions so the next lessons are read better.
-6. **📄 Paper trade** - tick *Let the apprentice paper trade* (or pick **🧠 Apprentice** in Strategy Lab):
-   it trades whenever an active setup fires, and what it trades changes as it learns.
+6. **📄 Paper trade** - the **🧠 Apprentice bar** at the top of 📊 Dashboard: pick the coins and timeframe and it
+   paper trades them on its own, **long and short**, whenever one of its tested setups fires on a closed
+   candle. Moderate exits: 3% stop, half off at +3%, the rest at +6%. The bar shows how many setups it trades,
+   each market's position, the last candle's signal, trades, win rate and P&L. What it trades changes as it
+   learns. (Also **🧠 Apprentice** in Strategy Lab.)
 
 **Running jobs:** lessons, playlists and streams are processed one at a time on the AI (later ones wait in
 line, shown as ⏸️ Queued). Every job in 📚 Teach and in 🎙️ Streams → ➕ Add stream has **⏹ Stop** (keeps what
