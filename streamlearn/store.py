@@ -43,7 +43,22 @@ class Store:
             have = {r[1] for r in self.db.execute(f"PRAGMA table_info({table})")}
             if col not in have:
                 self.db.execute(f"ALTER TABLE {table} ADD COLUMN {col} {kind}")
+        self._detach_stale_reviews()
         self.db.commit()
+
+    def _detach_stale_reviews(self) -> None:
+        """A review whose setup is gone, or whose id now belongs to a different setup, is kept as a teaching
+        example but no longer marks any setup as reviewed (its id is stored negative)."""
+        for cid, snap in self.db.execute("SELECT call_id, corrected FROM reviews WHERE call_id > 0").fetchall():
+            row = self.db.execute("SELECT quote, asset, direction FROM calls WHERE id = ?", (cid,)).fetchone()
+            try:
+                call = json.loads(snap or "{}").get("call", {})
+            except ValueError:
+                call = {}
+            same = row is not None and (not call or (call.get("quote", row[0]) == row[0]
+                                                     and str(call.get("asset", row[1])).upper() == str(row[1]).upper()))
+            if not same:
+                self.db.execute("UPDATE reviews SET call_id = ? WHERE call_id = ?", (-cid, cid))
 
     def add_stream(self, title, start, source, segs, added, url=None) -> int:
         cur = self.db.execute("INSERT INTO streams (title, start, source, segments, duration_s, added, url) "
@@ -59,6 +74,8 @@ class Store:
         return row[0] if row else None
 
     def clear_extraction(self, sid):
+        self.db.execute("UPDATE reviews SET call_id = -call_id WHERE call_id IN "
+                        "(SELECT id FROM calls WHERE stream_id = ?)", (sid,))
         for t in ("calls", "rules", "levels", "patterns"):
             self.db.execute(f"DELETE FROM {t} WHERE stream_id = ?", (sid,))
         self.db.commit()
@@ -88,10 +105,14 @@ class Store:
         return [r[0] for r in self.db.execute("SELECT id FROM streams WHERE source = ?", (source,)).fetchall()]
 
     def add_call(self, sid, c: dict) -> int:
+        # a fresh id that no review points at (SQLite would reuse the ids of a re-read stream's old setups,
+        # and their old 👍 / 👎 would then show on the new ones)
+        nid = 1 + max(self.db.execute("SELECT coalesce(max(id), 0) FROM calls").fetchone()[0],
+                      self.db.execute("SELECT coalesce(max(abs(call_id)), 0) FROM reviews").fetchone()[0])
         cur = self.db.execute(
-            "INSERT INTO calls (stream_id, t, said_at, asset, direction, kind, timeframe, entry, stop, targets, "
-            "conditions, quote, summary, t_start, t_end) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
-            (sid, c["t"], c["said_at"], c["asset"], c["direction"], c["kind"], c["timeframe"], c["entry"], c["stop"],
+            "INSERT INTO calls (id, stream_id, t, said_at, asset, direction, kind, timeframe, entry, stop, targets, "
+            "conditions, quote, summary, t_start, t_end) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+            (nid, sid, c["t"], c["said_at"], c["asset"], c["direction"], c["kind"], c["timeframe"], c["entry"], c["stop"],
              json.dumps(c["targets"]), json.dumps(c["conditions"]), c["quote"], c.get("summary", ""),
              c.get("t_start", c["t"]), c.get("t_end", c["t"])))
         return cur.lastrowid

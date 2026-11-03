@@ -33,7 +33,7 @@ def test_stop_ends_the_job_and_its_children_but_not_the_ai(tmp_path):
             time.sleep(0.1)
         pids = jobctl.job_pids(log)
         assert len(pids) == 3                                 # job, worker, worker's child - not the AI engine
-        ai = [pid for pid, _, cmd in jobctl.processes() if "ai-engine-stand-in" in cmd]
+        ai = [pid for pid, _, cmd in jobctl.processes() if jobctl.is_ai_engine(cmd) and "ai-engine-stand-in" in cmd]
         assert ai and ai[0] not in pids
         assert jobctl.stop(log) == 3
         p.wait(timeout=10)
@@ -44,7 +44,7 @@ def test_stop_ends_the_job_and_its_children_but_not_the_ai(tmp_path):
     finally:
         p.kill()
         for pid, _, cmd in jobctl.processes():
-            if "ai-engine-stand-in" in cmd:
+            if jobctl.is_ai_engine(cmd) and "ai-engine-stand-in" in cmd:
                 jobctl._kill(pid, hard=True)
 
 

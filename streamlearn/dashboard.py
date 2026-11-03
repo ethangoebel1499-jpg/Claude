@@ -221,17 +221,30 @@ def render(db: str) -> None:
     with t_pat:
         patterns_ui.render(store, clip)
     with t_rev:
-        show = st.radio("Show", ["Needs review", "Reviewed", "All"], horizontal=True, key="rv_show")
+        r1, r2 = st.columns([2, 3])
+        show = r1.radio("Show", ["Needs review", "Reviewed", "All"], horizontal=True, key="rv_show")
+        order = streams.sort_values("id", ascending=False)               # newest processed first
+        counts = calls.groupby("stream_id").size().to_dict() if len(calls) else {}
+        opts = ["all"] + [int(i) for i in order.id]
+        names = {int(r.id): f"{r.title} ({counts.get(r.id, 0)} setups)" for r in order.itertuples()}
+        pick = r2.selectbox("Stream", opts, format_func=lambda x: "All streams (newest first)" if x == "all"
+                            else names.get(x, x), key="rv_stream")
         v = calls if show == "All" else calls[calls.verdict.isna()] if show == "Needs review" else \
             calls[calls.verdict.notna()]
-        v = v.sort_values("said_at", ascending=False)
+        if pick != "all":
+            v = v[v.stream_id == pick]
+        v = v.sort_values(["stream_id", "t"], ascending=[False, True])     # by stream, then in stream order
         if calls.empty:
             st.info("No trade setups have been found yet. ➕ Add stream → Recent streams shows how each stream's "
                     "processing went; the Streams tab can re-read a stream.")
         elif v.empty:
             st.caption("Nothing here. 🎉" if show == "Needs review" else "No reviews yet.")
         for i, c in enumerate(v.to_dict("records")[:50]):
-            setup_card(c, store, expanded=(i == 0 and show == "Needs review"))
+            try:
+                setup_card(c, store, expanded=(i == 0 and show == "Needs review"))
+            except Exception as e:                        # one broken card mustn't hide the rest
+                st.error(f"Couldn't show the {c.get('direction')} {c.get('asset')} setup at "
+                         f"{mmss(c.get('t'))}: {type(e).__name__}: {e}")
         if len(v) > 50:
             st.caption(f"Showing 50 of {len(v)}.")
 

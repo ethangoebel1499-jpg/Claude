@@ -269,3 +269,39 @@ def test_job_state_tells_how_it_went():
     assert job_state(ok).startswith("✅ Done - 4 setups to review")
     none = "RESULT setups=0 rules=1 patterns=0 failed=1 chunks=3\n" + DONE + " 0]"
     assert job_state(none).startswith("⚠️ Done, but no trade setups") and "1 of 3 parts failed" in job_state(none)
+
+
+def test_rereading_a_stream_doesnt_carry_old_verdicts(tmp_path):
+    from streamlearn.store import Store
+    st_ = Store(tmp_path / "r.db")
+    sid = st_.add_stream("BB AO", "2023-02-01 15:00", "x.txt", [(0, "hi")], "now")
+    call = lambda q: {"t": 5, "said_at": "2023-02-01 15:00:05", "asset": "BTC", "direction": "long", "kind": "plan",
+                      "timeframe": "1m", "entry": 23287.5, "stop": 23212.0, "targets": [23500.0], "conditions": [],
+                      "quote": q}
+    a = st_.add_call(sid, call("old quote"))
+    st_.review(a, "wrong", "not a trade")
+    st_.clear_extraction(sid)                                  # re-read the stream
+    b = st_.add_call(sid, call("new quote"))
+    assert b != a
+    df = st_.calls_with_streams()
+    assert df.verdict.isna().all()                             # the new setup needs review
+    from streamlearn.learning import examples
+    assert "not a trade" in examples(st_)                      # the old verdict still teaches the agent
+
+
+def test_old_databases_with_a_reused_id_are_repaired(tmp_path):
+    import json, sqlite3
+    from streamlearn.store import Store
+    path = tmp_path / "old.db"
+    st_ = Store(path)
+    sid = st_.add_stream("S", "2023-02-01", "x.txt", [(0, "hi")], "now")
+    st_.db.execute("INSERT INTO calls (id, stream_id, t, said_at, asset, direction, kind, timeframe, entry, stop, "
+                   "targets, conditions, quote) VALUES (7, ?, 1, 'x', 'BTC', 'long', 'plan', '', 1, 0.9, '[]', '[]', "
+                   "'the new setup')", (sid,))
+    st_.db.execute("INSERT INTO reviews VALUES (7, 'correct', '', ?, 'then')",
+                   (json.dumps({"call": {"quote": "a deleted setup", "asset": "ETH"}}),))   # left over, same id
+    st_.db.commit()
+    st_.db.close()
+    again = Store(path)
+    assert again.calls_with_streams().verdict.isna().all()
+    assert again.db.execute("SELECT call_id FROM reviews").fetchone()[0] == -7
