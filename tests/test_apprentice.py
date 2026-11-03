@@ -226,3 +226,46 @@ def test_bollinger_rules_and_s10(df):
     s10 = REGISTRY["s10"]
     sig = s10["signals"](df)
     assert set(sig.columns) >= {"long_entry", "short_entry"} and s10["exits"].stop == 0.01
+
+
+def test_setup_without_rules_is_kept_for_you_to_map(store, df):
+    class Fake:
+        def ask(self, system, user, schema):
+            assert "bb_touch_lower" in system and "ALWAYS has at least one setup" in system
+            return {"concepts": [], "setups": [
+                {"time": "1:00", "name": "Squeeze play", "direction": "long", "rules": [],
+                 "unchecked": ["wait for the 5 minute candle to close inside the bands"], "stop_atr": None, "rr": None,
+                 "timeframe": "1m", "why": "", "quote": ""},
+                {"time": "2:00", "name": "Another unmapped", "direction": "long", "rules": [],
+                 "unchecked": ["something else"], "stop_atr": None, "rr": None, "timeframe": "", "why": "",
+                 "quote": ""}]}
+    lid = store.add_lesson("L", "x", 1)
+    got = teach.learn_lesson(store, lid, [(0, "x")], "L", llm=Fake(), log=lambda *a: None)
+    assert got["setups"] == 2                                  # both kept, not dropped or merged
+    assert {s["status"] for s in store.setups()} == {"needs rules"}
+    brain.learn(store, {"syn": df}, log=lambda *a: None)
+    assert {s["status"] for s in store.setups()} == {"needs rules"}       # stays until you pick rules
+    sid = store.setups()[0]["id"]
+    store.update_setup(sid, rules=[{"rule": "bb_touch_lower"}], status="candidate")
+    brain.learn(store, {"syn": df}, log=lambda *a: None)
+    assert next(s for s in store.setups() if s["id"] == sid)["status"] != "needs rules"
+
+
+def test_keyword_reading_of_a_bollinger_ao_lesson():
+    res = teach.guess("[0:30] I go long when price touches the lower bollinger band and the awesome oscillator "
+                      "shows divergence, that's the key\n"
+                      "[1:10] for a short, price tags the upper band with bearish AO divergence")
+    rules = {s["direction"]: {r["rule"] for r in s["rules"]} for s in res["setups"]}
+    assert {"bb_touch_lower", "ao_bull_div"} <= rules["long"]
+    assert {"bb_touch_upper", "ao_bear_div"} <= rules["short"]
+
+
+def test_relearn_reads_a_learned_video_again(store, monkeypatch):
+    from apprentice import __main__ as cli
+    monkeypatch.setattr(youtube, "videos", lambda url: [{"id": "v1", "title": "BB AO", "url": "u1"}])
+    monkeypatch.setattr(youtube, "captions", lambda url: ({"title": "BB AO"}, teach.segments(LESSON)))
+    url = "https://youtu.be/v1abcdefghi"
+    cli.teach_source(store, url, None, None, log=lambda *a: None)
+    assert cli.teach_source(store, url, None, None, log=lambda *a: None)["skipped"] == 1
+    again = cli.teach_source(store, url, None, None, log=lambda *a: None, relearn=True)
+    assert again["lessons"] == 1 and len(store.table("lessons")) == 1      # replaced, not duplicated

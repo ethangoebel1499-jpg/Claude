@@ -66,10 +66,14 @@ Learn two things:
 1. concepts - every reusable piece of trading knowledge the teacher states: what to look for, when to
    enter / exit, where stops go, how to read a pattern, candle or indicator, risk rules, and mistakes
    to avoid. One clear sentence each. Skip chit-chat, ads and viewers' questions.
-2. setups - every repeatable trade setup he teaches (not one-off price predictions). Translate its
-   conditions into the rules below, which you can check on any chart. Use only rules that match
-   what he says; put any condition no rule can express into `unchecked` in plain words. Don't invent
-   conditions he didn't give. Typically 2-4 rules per setup.
+2. setups - every repeatable trade setup he teaches (not one-off price predictions). A video that
+   explains a strategy ALWAYS has at least one setup: its long version and, if he trades it, its short
+   version as a separate setup. Translate its conditions into the rules below, which you can check on
+   any chart. Use only rules that match what he says; put any condition no rule can express into
+   `unchecked` in plain words - still record the setup even if no rule fits. Don't invent conditions he
+   didn't give. Typically 2-4 rules per setup. Examples: "price touches the lower Bollinger band" =
+   bb_touch_lower; "AO makes a higher low while price makes a lower low" = ao_bull_div; "AO turns
+   green" = ao_turns_green; "RSI divergence" = rsi_bull_div / rsi_bear_div.
 
 Rules you can check (id: meaning; A and B are its numbers, null = the default shown):
 {menu}
@@ -155,14 +159,17 @@ def learn_lesson(store, lesson_id: int, segs: list[tuple[int, str]], title: str,
             n_c += 1
         for s in res.get("setups", []):
             rules = clean_rules(s.get("rules"))
-            if s.get("direction") not in ("long", "short") or not rules:
+            unchecked = [u for u in s.get("unchecked", []) if str(u).strip()]
+            if s.get("direction") not in ("long", "short") or not (rules or unchecked):
                 continue
-            sig = _signature(s["direction"], rules)
+            # a setup it understood but couldn't put into rules is kept (status "needs rules") so you can
+            # see it and pick the rules yourself, instead of disappearing
+            sig = _signature(s["direction"], rules) if rules else (s["direction"], (s.get("name") or "").lower())
             if sig in known:
                 continue
             known.add(sig)
             store.add_setup({"name": (s.get("name") or "Setup")[:80], "direction": s["direction"], "rules": rules,
-                             "unchecked": [u for u in s.get("unchecked", []) if u.strip()],
+                             "status": "candidate" if rules else "needs rules", "unchecked": unchecked,
                              "stop_atr": s.get("stop_atr") or 1.5, "rr": s.get("rr") or 2.0,
                              "timeframe": s.get("timeframe", ""), "why": s.get("why", ""), "quote": s.get("quote", ""),
                              "source": "lesson", "lesson_id": lesson_id})
@@ -195,6 +202,11 @@ KEYWORDS = [
     (r"macd cross(es)? (down|below)|bearish macd", "macd_cross_down"),
     (r"volume spike|big volume|high volume", "volume_spike"),
     (r"higher low", "higher_low"), (r"lower high", "lower_high"),
+    (r"(touch|tag|hit|pierc)\w* (the )?(lower|bottom) (bollinger )?band", "bb_touch_lower"),
+    (r"(touch|tag|hit|pierc)\w* (the )?(upper|top) (bollinger )?band", "bb_touch_upper"),
+    (r"(awesome oscillator|\bao\b).{0,40}divergen|divergen.{0,40}(awesome oscillator|\bao\b)", "AO_DIV"),
+    (r"\brsi\b.{0,40}divergen|divergen.{0,40}\brsi\b", "RSI_DIV"),
+    (r"\bmacd\b.{0,40}divergen|divergen.{0,40}\bmacd\b", "MACD_DIV"),
     (r"(awesome oscillator|\bao\b).{0,30}(turns?|flips?|changes?).{0,10}green", "ao_turns_green"),
     (r"(awesome oscillator|\bao\b).{0,30}(turns?|flips?|changes?).{0,10}red", "ao_turns_red"),
     (r"(awesome oscillator|\bao\b).{0,20}(above|over) (the )?zero", "ao_above_zero"),
@@ -218,6 +230,8 @@ def guess(body: str) -> dict:
         for pat, rid in KEYWORDS:
             if re.search(pat, low):
                 rid = rid or ("bear_engulf" if bear and not bull else "bull_engulf")
+                if rid.endswith("_DIV"):          # which divergence depends on the trade's direction
+                    rid = f"{rid[:-4].lower()}_{'bear' if bear and not bull else 'bull'}_div"
                 rules.append({"rule": rid, "a": None, "b": None})
         if len(rules) >= 2 and bull != bear:
             setups.append({"time": t, "name": text.strip()[:60], "direction": "long" if bull else "short",

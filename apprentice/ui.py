@@ -101,8 +101,16 @@ def job_state(text: str) -> str:
     m = re.search(r"RESULT lessons=(\d+) concepts=(\d+) setups=(\d+) skipped=(\d+) failed=(\d+)", text)
     if m:
         les, con, sets, skip, fail = map(int, m.groups())
+        if les == 0 and skip and not fail:
+            return "ℹ️ Already learned - nothing new. Use 🔁 Re-learn on the video (Lessons below) to read it again"
+        if les == 0 and fail:
+            why = re.search(r"skipped .*?: (.+)", text)
+            reason = why.group(1).split(" - paste")[0] if why else ""
+            return f"⚠️ Couldn't read the video{': ' + reason if reason else ''} - paste its transcript instead"
         parts.append(f"{les} lesson(s), {con} concepts, {sets} new setups"
                      + (f", {skip} already learned" if skip else "") + (f", {fail} couldn't be read" if fail else ""))
+        if not sets:
+            parts.append("no new setups - see 🧠 What it knows (it may already know them, or they need rules)")
     m = re.search(r"RESULT tested=(\d+) active=(\d+)", text)
     if m:
         parts.append(f"tested {m.group(1)} setups, {m.group(2)} beat random and are active")
@@ -192,6 +200,8 @@ def teach_tab(store: Store) -> None:
     no_ai = st.checkbox("Read lessons without the AI (keyword matching - rough, but needs no model)", False,
                         help="Normally it uses the same AI as the stream agent (⚙️ Account: local or Claude).")
     then_learn = st.checkbox("Test what it learned on real prices right after", True)
+    relearn = st.checkbox("Learn videos again even if it already learned them", False,
+                          help="Use after an update that taught it new rules, or after changing the AI model")
     extra = (["--no-ai"] if no_ai else []) + (["--then-learn"] if then_learn else [])
 
     st.markdown("##### 🔗 YouTube link - a video or a whole playlist")
@@ -207,7 +217,8 @@ def teach_tab(store: Store) -> None:
     elif k == "video":
         st.caption("🎬 One video: it fetches the captions by itself - no need to copy the transcript.")
     if st.button("Learn from this link", type="primary", disabled=not k, key="ap_go_url"):
-        spawn(["teach", url, *extra], f"{'Playlist' if k == 'playlist' else 'Video'}: {url[-40:]}")
+        spawn(["teach", url, *extra, *(["--relearn"] if relearn else [])],
+              f"{'Playlist' if k == 'playlist' else 'Video'}: {url[-40:]}")
         st.success("Learning in the background - progress shows below.")
 
     with st.expander("📝 Or paste a transcript / notes"):
@@ -233,9 +244,19 @@ def teach_tab(store: Store) -> None:
     les = store.table("lessons")
     with st.expander(f"Lessons it has learned ({len(les)})"):
         for r in les.iloc[::-1].itertuples():
-            c1, c2 = st.columns([6, 1])
-            c1.markdown(f"**{r.title}** · {r.status} · {r.note or ''}" + (f" · [video]({r.url})" if r.url else "")
+            c1, c3, c2 = st.columns([6, 1.2, 1])
+            n_set = store.db.execute("SELECT count(*) FROM setups WHERE lesson_id = ?", (r.id,)).fetchone()[0]
+            n_con = store.db.execute("SELECT count(*) FROM concepts WHERE lesson_id = ?", (r.id,)).fetchone()[0]
+            c1.markdown(f"**{r.title}** · {r.status} · {n_con} concepts, {n_set} setups"
+                        + (f" · [video]({r.url})" if r.url else "")
                         + (f" · playlist *{r.playlist}*" if r.playlist else ""))
+            src = r.url or (r.source if r.source and Path(str(r.source)).exists() else None)
+            if src and c3.button("🔁 Re-learn", key=f"ap_relearn_{r.id}",
+                                 help="Read this lesson again with the current AI and rules (replaces what it learned "
+                                      "from it; pinned setups stay)"):
+                store.forget_lesson(r.id)
+                spawn(["teach", src, "--relearn", "--title", r.title, *extra], f"Re-learn: {r.title}")
+                st.rerun()
             with c2.popover("🗑️ Delete"):
                 st.caption("Deletes this video/lesson, its concepts and the setups learned from it (pinned ones stay).")
                 if st.button("Yes, delete", key=f"ap_forget_{r.id}", type="primary"):
@@ -253,7 +274,8 @@ def stats_line(s: dict) -> str:
 
 def knowledge_tab(store: Store) -> None:
     setups = store.setups()
-    by = {k: [s for s in setups if s["status"] == k] for k in ("pinned", "active", "candidate", "retired", "off")}
+    by = {k: [s for s in setups if s["status"] == k]
+          for k in ("needs rules", "pinned", "active", "candidate", "retired", "off")}
     m = st.columns(5)
     m[0].metric("Lessons", len(store.table("lessons")))
     m[1].metric("Concepts", len(store.table("concepts")))
@@ -278,6 +300,24 @@ def knowledge_tab(store: Store) -> None:
                "trades yet. **Retired** = lost to random. 📌 Pin forces one on, 🚫 Off turns it off. Your ratings "
                "change how much it trusts each one.")
     labels = {"auto": "🤖 Let it decide", "pinned": "📌 Always use", "off": "🚫 Off"}
+    if by["needs rules"]:
+        st.markdown(f"##### ✏️ Setups it understood but couldn't put into rules ({len(by['needs rules'])})")
+        st.caption("Pick the rules that match what the teacher said; it then tests the setup like any other.")
+        ids = list(builder.LABELS)
+        for s in by["needs rules"]:
+            with st.expander(f"✏️ {s['direction'].upper()} · {s['name']}"):
+                st.markdown("**What the teacher said:**\n" + "\n".join(f"- {u}" for u in s["unchecked"]))
+                if s["quote"]:
+                    st.markdown(f"> {s['quote']}")
+                pick = st.multiselect("Rules that must all be true (default numbers; change them in 🛠️ Builder)", ids,
+                                      format_func=lambda k: builder.describe({"rule": k}), key=f"ap_nr_{s['id']}")
+                c1, c2 = st.columns([1, 1])
+                if c1.button("Save rules", key=f"ap_nrs_{s['id']}", disabled=not pick, type="primary"):
+                    store.update_setup(s["id"], rules=[{"rule": k} for k in pick], status="candidate")
+                    st.rerun()
+                if c2.button("Delete", key=f"ap_nrd_{s['id']}"):
+                    store.delete_setup(s["id"])
+                    st.rerun()
     for status in ("pinned", "active", "candidate", "retired", "off"):
         for s in by[status]:
             icon = {"pinned": "📌", "active": "🟢", "candidate": "🟡", "retired": "⚪", "off": "🚫"}[status]

@@ -130,6 +130,8 @@ def weight(total: dict, votes: tuple[int, int] = (0, 0)) -> float:
 def status_for(setup: dict, total: dict, w: float) -> str:
     if setup["status"] in ("pinned", "off"):          # your choice wins
         return setup["status"]
+    if not setup.get("rules"):
+        return "needs rules"                           # nothing it can check yet - you pick the rules
     n = total.get("trades") or 0
     if n < MIN_TRADES:
         return "candidate"

@@ -58,14 +58,14 @@ def charts(specs: list[str], log=print) -> dict:
     return out
 
 
-def teach_source(store: Store, source: str, title: str | None, llm, log=print) -> dict:
+def teach_source(store: Store, source: str, title: str | None, llm, log=print, relearn: bool = False) -> dict:
     total = {"lessons": 0, "concepts": 0, "setups": 0, "skipped": 0, "failed": 0}
     k = youtube.kind(source)
     if k:
         vids = youtube.videos(source)
         log(f"{'Playlist' if k == 'playlist' else 'Video'}: {len(vids)} video(s)")
         for n, v in enumerate(vids, 1):
-            if store.has_video(v["id"]):
+            if store.has_video(v["id"]) and not relearn:
                 log(f"[{n}/{len(vids)}] already learned: {v['title'] or v['id']}")
                 total["skipped"] += 1
                 continue
@@ -183,6 +183,7 @@ def main() -> None:
     t.add_argument("--title")
     t.add_argument("--no-ai", action="store_true")
     t.add_argument("--then-learn", action="store_true", help="test what it learned on real prices right after")
+    t.add_argument("--relearn", action="store_true", help="learn videos again even if it already learned them")
     i = sub.add_parser("import-streams")
     i.add_argument("--streams-db", default=None)
     i.add_argument("--no-ai", action="store_true")
@@ -197,7 +198,7 @@ def main() -> None:
     a = ap.parse_args()
     store = Store(a.db or db_path())
     if a.cmd == "teach":
-        teach_source(store, a.source, a.title, model(a.no_ai))
+        teach_source(store, a.source, a.title, model(a.no_ai), relearn=a.relearn)
         if a.then_learn:
             learn(store, DEFAULT_CHARTS)
     elif a.cmd == "import-streams":
