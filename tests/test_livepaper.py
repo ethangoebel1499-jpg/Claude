@@ -260,7 +260,49 @@ def test_force_trades_get_the_runs_exits(tmp_path, candles):
     rn.step()
     assert rn.pm.state.position is None
     results = [x[0] for x in store.db.execute("SELECT result FROM commands ORDER BY id")]
-    assert results == ["opened long", "opened short", "already short", "closed"]
+    assert results[0].startswith("opened long at ") and results[1].startswith("opened short at ")
+    assert results[2:] == ["already short", "closed"]
+
+
+def test_force_trades_on_webull_say_why_they_failed(tmp_path, candles):
+    store = Store(tmp_path / "wf.db")
+    r = {"name": "G", "strategy": "grind", "symbol": "XBTUSD", "asset": "crypto", "timeframe": "4h", "shorts": False,
+         "capital": 10_000.0, "fraction": 1.0, "feed": "kraken", "qty_step": 1e-6, "stop": None, "take_profits": None}
+    feed = FakeFeed(candles, 400)
+    holder = []
+
+    class FakeWebull(SimBroker):
+        name = "webull"
+        assets = {}
+        refuse = True
+        def fill(self, run, side, qty, price, reason):
+            if self.refuse:
+                self.last_error, self.rejected = "insufficient buying power", True
+                return None
+            self.last_error, self.rejected = None, False
+            return SimBroker.fill(self, run, side, qty, price, reason)
+        def place_stop(self, *a):
+            return None
+    wb = FakeWebull(fee=0.0, fill="market", market_price=lambda run: holder[0].price)
+    holder.append(Runner(r, feed, wb, store))
+    rn = holder[0]
+    rn.step()
+    store.command("G", "short")                              # Webull can't short spot crypto: never sent
+    store.command("G", "long")                               # refused, with Webull's reason
+    rn.step()
+    res = [x[0] for x in store.db.execute("SELECT result FROM commands ORDER BY id")]
+    assert res[0].startswith("not sent: webull can't short spot crypto")
+    assert res[1] == "refused by webull: insufficient buying power"
+    assert rn.pm.state.pending_entry is None                 # a refusal isn't retried every price check
+    ev = store.table("events")
+    assert ev.text.str.contains("long entry refused by webull: insufficient buying power").any()
+    wb.refuse = False
+    store.command("G", "long")
+    rn.step()
+    assert rn.pm.state.position.side == "long"
+    store.command("G", "short")                              # refused before closing the long
+    rn.step()
+    assert rn.pm.state.position is not None and rn.pm.state.position.side == "long"
 
 
 def test_stock_list_is_searchable_by_name():

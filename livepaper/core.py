@@ -114,8 +114,15 @@ class PositionManager:
             return True
         fill = self.broker.fill(self.name, "buy" if side == "long" else "sell", qty, price, "entry")
         if fill is None:
+            why = getattr(self.broker, "last_error", None)
+            if getattr(self.broker, "rejected", False):          # refused: retrying won't help
+                self.state.pending_entry = None
+                self._event(time, "error", f"{side} entry refused by {getattr(self.broker, 'name', 'the broker')}"
+                                           + (f": {why}" if why else ""))
+                self._save()
+                return False
             self.state.pending_entry = side
-            self._event(time, "pending", f"{side} entry not filled yet (will retry)")
+            self._event(time, "pending", f"{side} entry not filled yet (will retry)" + (f" - {why}" if why else ""))
             self._save()
             return False
         self.state.pending_entry = None

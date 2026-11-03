@@ -8,6 +8,7 @@ Webull's Developer Center: API Management -> My Application).
 
 from __future__ import annotations
 
+import json
 import time
 import uuid
 
@@ -49,6 +50,29 @@ def _find(d, *keys):
             if r is not None:
                 return r
     return None
+
+
+def _reason(text: str) -> str:
+    """Webull's own words for why an order was refused, from its JSON reply."""
+    try:
+        js = json.loads(text)
+    except (TypeError, ValueError):
+        return (text or "")[:200]
+    found = []
+
+    def walk(x):
+        if isinstance(x, dict):
+            for k, v in x.items():
+                if k.lower() in ("msg", "message", "error_msg", "reject_reason", "reason", "error") and \
+                        isinstance(v, str) and v.strip():
+                    found.append(v.strip())
+                else:
+                    walk(v)
+        elif isinstance(x, list):
+            for v in x:
+                walk(v)
+    walk(js)
+    return "; ".join(dict.fromkeys(found))[:200]
 
 
 class WebullBroker:
@@ -138,9 +162,11 @@ class WebullBroker:
                  "order_type": "MARKET", "quantity": self._qty(asset, qty), "side": side.upper(), "time_in_force": "DAY", "entrust_type": "QTY"}
         if asset != "crypto":
             order["support_trading_session"] = "CORE"
+        self.last_error, self.rejected = None, False
         res = self.tc.order_v3.place_order(self.account, [order])
         if res.status_code != 200:
             print(f"[webull] order rejected ({reason} {side} {qty} {symbol}): HTTP {res.status_code} {res.text[:300]}")
+            self.last_error, self.rejected = _reason(res.text) or f"HTTP {res.status_code}", True
             return None
         deadline = time.time() + self.wait
         while time.time() < deadline:
@@ -152,7 +178,10 @@ class WebullBroker:
                 return self._as_fill(js, coid, qty, price)
             if status in DEAD:
                 print(f"[webull] order {coid} {status}: {str(js)[:300]}")
+                self.last_error, self.rejected = f"order {status.lower()}" + (
+                    f": {_reason(json.dumps(js, default=str))}" if _reason(json.dumps(js, default=str)) else ""), True
                 return None
         print(f"[webull] order {coid} not filled within {self.wait}s; cancelling and retrying later")
+        self.last_error = f"not filled within {self.wait} seconds"
         self.tc.order_v3.cancel_order(self.account, coid)
         return None

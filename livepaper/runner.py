@@ -154,14 +154,25 @@ class Runner:
             elif action in ("long", "short"):
                 if p is not None and p.side == action:
                     result = f"already {action}"
+                elif action == "short" and self.r["asset"] == "crypto" and \
+                        getattr(self.pm.broker, "name", "sim") != "sim":      # checked before closing anything
+                    result = (f"not sent: {self.pm.broker.name} can't short spot crypto (you'd need to own the coin). "
+                              "Only the built-in paper broker can - switch in ⚙️ Account, or force a long")
                 else:
                     if p is not None:
                         self.pm.close_all(self.price, now, "manual close")
+                    broker = getattr(self.pm.broker, "name", "sim")
                     if self.pm.state.position is not None:
                         result = "couldn't close the open position first"
                     else:
                         self.pm.open(action, self.price, now)
-                        result = f"opened {action}" if self.pm.state.position else "entry order not filled yet"
+                        why = getattr(self.pm.broker, "last_error", None)
+                        if self.pm.state.position:
+                            result = f"opened {action} at {self.pm.state.position.entry_price:,.2f}"
+                        elif getattr(self.pm.broker, "rejected", False):
+                            result = f"refused by {broker}: {why or 'no reason given'}"
+                        else:
+                            result = "entry order not filled yet - retrying" + (f" ({why})" if why else "")
             else:
                 result = "unknown action"
             self.store.event(self.r["name"], now, "manual", f"you: {action} -> {result}")

@@ -205,13 +205,23 @@ def manual_controls(r: dict) -> None:
             store.command(r["name"], action)
             st.toast(f"{r['name']}: {action} sent - the trader does it on its next price check")
     note = f"Forced trades get this run's exits: {exit_text(ex)}."
-    if not r["shorts"] and r["asset"] == "crypto":
-        note += " Shorting spot crypto only works in the built-in paper broker."
+    if r["asset"] == "crypto":
+        note += (" Shorting spot crypto only works in the built-in paper broker." if settings.get("broker") == "sim"
+                 else " ⚠️ Webull can't short spot crypto - Force SHORT won't work here.")
     info.caption(note)
+    q = store.db.execute("SELECT time FROM quotes WHERE run = ?", (r["name"],)).fetchone()
+    poll = int(settings.get("poll_seconds") or 30)
+    age = (datetime.now(timezone.utc) - pd.Timestamp(q[0]).tz_convert("UTC")).total_seconds() if q else None
     cmds = pd.read_sql_query("SELECT action, created, done, result FROM commands WHERE run = ? ORDER BY id DESC LIMIT 3",
                              store.db, params=(r["name"],))
-    if len(cmds):
-        info.caption(" · ".join(f"{c.action}: {c.result or 'waiting for the trader...'}" for c in cmds.itertuples()))
+    if age is None or age > max(3 * poll, 180):
+        info.warning("⏸️ The trader isn't checking prices right now"
+                     + (f" (last check {int(age // 60)} min ago)" if age else "") + " - forced trades wait until it runs. "
+                     "Open Paper Trader and press **Start trading**.")
+    for c in cmds.itertuples():
+        res = c.result or "⏳ waiting for the trader's next price check..."
+        bad = c.result and any(w in c.result for w in ("refused", "not sent", "couldn't", "not filled"))
+        (info.error if bad else info.caption)(f"{c.action} ({str(c.created)[11:16]} UTC): {res}")
 
 
 @st.cache_data(ttl=120, show_spinner=False)
