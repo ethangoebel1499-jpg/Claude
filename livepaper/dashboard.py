@@ -206,8 +206,9 @@ def manual_controls(r: dict) -> None:
             st.toast(f"{r['name']}: {action} sent - the trader does it on its next price check")
     note = f"Forced trades get this run's exits: {exit_text(ex)}."
     if r["asset"] == "crypto":
-        note += (" Shorting spot crypto only works in the built-in paper broker." if settings.get("broker") == "sim"
-                 else " ⚠️ Webull can't short spot crypto - Force SHORT won't work here.")
+        on_webull = settings.get("broker") == "webull" and settings.get("webull_crypto", "auto") == "webull"
+        note += (" ⚠️ Webull can't short spot crypto - Force SHORT won't work here." if on_webull else
+                 " Crypto trades here go to the built-in paper broker (shorts work).")
     info.caption(note)
     q = store.db.execute("SELECT time FROM quotes WHERE run = ?", (r["name"],)).fetchone()
     poll = int(settings.get("poll_seconds") or 30)
@@ -675,6 +676,14 @@ with tab_acct:
             region = w4.text_input("Region", cur["webull_region"])
             endpoint = w5.text_input("API host", cur["webull_endpoint"],
                                      help="api.sandbox.webull.com = paper trading")
+            crypto_modes = {"auto": "Automatic - Webull, or the built-in paper broker if Webull refuses crypto",
+                            "sim": "Built-in paper broker (live Kraken prices)", "webull": "Webull"}
+            webull_crypto = st.radio("Crypto runs trade in", list(crypto_modes),
+                                     index=list(crypto_modes).index(cur.get("webull_crypto", "auto"))
+                                     if cur.get("webull_crypto", "auto") in crypto_modes else 0,
+                                     format_func=crypto_modes.get,
+                                     help="Many Webull paper accounts can't trade crypto ('The current account does "
+                                          "not support crypto trading'). Stock runs always go to Webull.")
         with st.expander("Stream study agent"):
             s1, s2 = st.columns(2)
             backend = s1.radio("Extraction model", ["ollama", "claude"], horizontal=True,
@@ -705,6 +714,7 @@ with tab_acct:
                            "sync_minutes": int(sync_min), "webull_app_key": key.strip(),
                            "webull_app_secret": secret.strip(), "webull_account_id": account.strip(),
                            "webull_region": region.strip() or "us", "webull_endpoint": endpoint.strip(),
+                           "webull_crypto": webull_crypto,
                            "stream_backend": backend, "timezone": tz.strip(), "ollama_model": ollama_model.strip(),
                            "ollama_url": ollama_url.strip(), "anthropic_api_key": anthropic_key.strip(),
                            "stream_screen": screen_on, "ollama_vision_model": vision_model.strip() or "auto",

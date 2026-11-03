@@ -20,6 +20,9 @@ DEFAULTS = {
     # Webull paper (sandbox) account
     "webull_app_key": "", "webull_app_secret": "", "webull_account_id": "", "webull_region": "us",
     "webull_endpoint": "api.sandbox.webull.com",
+    # crypto runs with the Webull broker: "auto" = try Webull, switch to the built-in paper broker if the account
+    # can't trade crypto; "sim" = always the built-in paper broker; "webull" = always Webull
+    "webull_crypto": "auto",
     # stream study agent
     "streamlearn_db": "streamlearn.db", "apprentice_db": "apprentice.db", "stream_backend": "ollama", "ollama_model": "auto", "stream_screen": True, "ollama_vision_model": "auto",
     "ollama_url": "http://localhost:11434", "anthropic_api_key": "", "timezone": "America/New_York",

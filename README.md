@@ -260,6 +260,9 @@ feed for real-time.
      `WEBULL_APP_KEY`, `WEBULL_APP_SECRET`, optionally `WEBULL_ACCOUNT_ID`.
   3. Run `python -m livepaper check`, then `python -m livepaper run`.
   Stocks use `feed = "webull"`; stock orders are whole shares, regular hours only.
+  Many Webull paper accounts **can't trade crypto** ("The current account does not support crypto trading").
+  The first time Webull says so, crypto runs move to the built-in paper broker (live Kraken prices, shorts
+  allowed) while stock runs stay at Webull; ⚙️ Account → *Crypto runs trade in* changes it.
 
 **Shared with Claude:** with `sync_git = true` the trade record (trades, fills, equity,
 signals, events as CSV) is pushed hourly to the `paper-trades` branch, so a Claude session

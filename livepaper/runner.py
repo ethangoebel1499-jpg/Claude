@@ -236,6 +236,17 @@ class App:
         else:
             self.broker = SimBroker(fee=self.app.get("fee", 0.001), fill="market",
                                     market_price=lambda run: self.runners[run].price)
+        # built-in paper broker for crypto runs when the Webull account can't trade crypto (stocks stay at Webull)
+        self.sim = self.broker if getattr(self.broker, "name", "sim") == "sim" else \
+            SimBroker(fee=self.app.get("fee", 0.001), fill="market", market_price=lambda run: self.runners[run].price)
+
+    def broker_for(self, r: dict):
+        if r.get("asset") == "crypto" and getattr(self.broker, "name", "sim") == "webull":
+            from . import settings
+            mode = settings.get("webull_crypto", "auto")
+            if mode == "sim" or (mode == "auto" and not getattr(self.broker, "crypto_ok", True)):
+                return self.sim
+        return self.broker
 
     def _webull_client(self):
         if self.client is None:
@@ -283,7 +294,7 @@ class App:
         for r in all_runs:              # unticked while the trader was off, with a position still open
             st = self.store.load_state(r["name"]) if not r["active"] and r["name"] not in self.runners else None
             if st is not None and st.position is not None:
-                rn = Runner(normalize_run(r), self.feed(r["feed"] or "kraken"), self.broker, self.store)
+                rn = Runner(normalize_run(r), self.feed(r["feed"] or "kraken"), self.broker_for(r), self.store)
                 self.runners[r["name"]] = rn
         for name in list(self.runners):
             if name not in wanted:
@@ -291,11 +302,15 @@ class App:
                     self.runners[name].stop()
                 finally:
                     del self.runners[name]
+        for name, r in wanted.items():                # a crypto run whose broker should change (see broker_for)
+            rn = self.runners.get(name)
+            if rn is not None and rn.pm.broker is not self.broker_for(r) and rn.pm.state.position is None:
+                del self.runners[name]
         for name, r in wanted.items():
             if name not in self.runners:
                 if hasattr(self.broker, "assets"):
                     self.broker.assets[name] = (r["symbol"], r["asset"])
-                self.runners[name] = Runner(r, self.feed(r["feed"]), self.broker, self.store)
+                self.runners[name] = Runner(r, self.feed(r["feed"]), self.broker_for(r), self.store)
 
     def step(self) -> None:
         self.sync_runs()
@@ -305,6 +320,20 @@ class App:
             except Exception as e:  # keep the other runs going; the next poll retries
                 self.store.event(rn.r["name"], now_utc(), "error", f"{type(e).__name__}: {e}")
                 traceback.print_exc()
+        self.check_crypto_support()
+
+    def check_crypto_support(self) -> None:
+        """Webull said this account can't trade crypto: remember it, and say what happens now."""
+        if getattr(self.broker, "crypto_ok", True) or getattr(self, "_told_crypto", False):
+            return
+        from . import settings
+        self._told_crypto = True
+        if settings.get("webull_crypto", "auto") == "auto":
+            settings.save({"webull_crypto": "sim"})
+            self.store.event("app", now_utc(), "broker",
+                             "Webull: this paper account doesn't support crypto trading. Crypto runs now trade in the "
+                             "built-in paper broker (live Kraken prices); stock runs stay at Webull. Change it in "
+                             "⚙️ Account.")
 
 
 def seed_runs(cfg: dict, store: Store) -> None:

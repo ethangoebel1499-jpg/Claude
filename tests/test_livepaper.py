@@ -420,3 +420,41 @@ def test_custom_strategy_end_to_end(tmp_path, monkeypatch, candles):
     finally:
         monkeypatch.undo()
         refresh()
+
+
+def test_webull_account_without_crypto_moves_crypto_runs_to_the_built_in_broker(tmp_path, candles, monkeypatch):
+    from livepaper import settings
+    from livepaper.brokers import WebullBroker
+    from livepaper.runner import App
+    monkeypatch.setattr(settings, "PATH", tmp_path / "settings.json")
+    store = Store(tmp_path / "c.db")
+    feed = FakeFeed(candles, 400)
+    app = App({"app": {"broker": "sim", "fee": 0.0}}, store, feeds={"kraken": feed})
+
+    class TC:                                                  # Webull's SDK raises for crypto on this account
+        class order_v3:
+            @staticmethod
+            def place_order(account, orders):
+                if orders[0]["instrument_type"] == "CRYPTO":
+                    raise RuntimeError("ServerException: HTTP Status: 417, Code: OPENAPI_PARAM_ERR, Msg: Parameter "
+                                       "error, The current account does not support crypto trading., RequestID: x")
+                raise AssertionError("no stock orders in this test")
+    wb = WebullBroker.__new__(WebullBroker)
+    wb.tc, wb.account, wb.assets, wb.fee, wb.wait = TC, "acc", {}, 0.0, 1
+    app.broker = wb                                            # the trader is on Webull
+    store.upsert_run({"name": "G", "strategy": "grind", "symbol": "XBTUSD", "asset": "crypto", "timeframe": "4h",
+                      "shorts": False, "capital": 10_000.0, "active": 1, "source": "dashboard"})
+    app.step()
+    assert app.runners["G"].pm.broker is wb
+    store.command("G", "long")
+    app.step()                                                 # refused - the reason is shown, nothing crashes
+    res = store.db.execute("SELECT result FROM commands").fetchone()[0]
+    assert res == "refused by webull: Parameter error, The current account does not support crypto trading"
+    assert settings.get("webull_crypto") == "sim"              # remembered
+    assert "doesn't support crypto" in " ".join(store.table("events").text)
+    app.step()
+    assert app.runners["G"].pm.broker is app.sim               # crypto now trades in the built-in paper broker
+    store.command("G", "short")                                # and shorts work there
+    app.step()
+    assert app.runners["G"].pm.state.position.side == "short"
+    assert app.broker_for({"asset": "stock"}) is wb            # stocks stay at Webull

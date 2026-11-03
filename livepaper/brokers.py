@@ -9,6 +9,7 @@ Webull's Developer Center: API Management -> My Application).
 from __future__ import annotations
 
 import json
+import re
 import time
 import uuid
 
@@ -99,6 +100,29 @@ class WebullBroker:
             raise RuntimeError(f"no account id in {res.text[:300]}; set WEBULL_ACCOUNT_ID")
         return str(acc)
 
+    crypto_ok = True                      # False once Webull says this account can't trade crypto
+
+    def _place(self, order: dict):
+        """place_order, but an exception from the SDK (e.g. HTTP 417 'The current account does not support
+        crypto trading') becomes (None, reason) instead of crashing the price check."""
+        try:
+            res = self.tc.order_v3.place_order(self.account, [order])
+        except Exception as e:
+            text = str(e)
+            m = re.search(r"Msg:\s*(.+?)(?:,\s*RequestID|$)", text)
+            why = (m.group(1) if m else text).strip().rstrip(".")[:200]
+            self._note(why)
+            return None, why
+        if res.status_code != 200:
+            why = _reason(res.text) or f"HTTP {res.status_code}"
+            self._note(why)
+            return None, why
+        return res, None
+
+    def _note(self, why: str) -> None:
+        if "not support crypto" in why.lower():
+            self.crypto_ok = False
+
     def _qty(self, asset: str, qty: float) -> str:
         return f"{qty:.8f}".rstrip("0").rstrip(".") if asset == "crypto" else str(int(qty))
 
@@ -129,10 +153,9 @@ class WebullBroker:
                  "side": side.upper(), "time_in_force": "GTC", "entrust_type": "QTY"}
         if asset != "crypto":
             order["support_trading_session"] = "CORE"
-        res = self.tc.order_v3.place_order(self.account, [order])
-        if res.status_code != 200:
-            print(f"[webull] stop order refused ({side} {qty} {symbol} @ {stop_price}): HTTP {res.status_code} "
-                  f"{res.text[:300]}")
+        res, why = self._place(order)
+        if res is None:
+            print(f"[webull] stop order refused ({side} {qty} {symbol} @ {stop_price}): {why}")
             return None
         return coid
 
@@ -163,10 +186,10 @@ class WebullBroker:
         if asset != "crypto":
             order["support_trading_session"] = "CORE"
         self.last_error, self.rejected = None, False
-        res = self.tc.order_v3.place_order(self.account, [order])
-        if res.status_code != 200:
-            print(f"[webull] order rejected ({reason} {side} {qty} {symbol}): HTTP {res.status_code} {res.text[:300]}")
-            self.last_error, self.rejected = _reason(res.text) or f"HTTP {res.status_code}", True
+        res, why = self._place(order)
+        if res is None:
+            print(f"[webull] order rejected ({reason} {side} {qty} {symbol}): {why}")
+            self.last_error, self.rejected = why, True
             return None
         deadline = time.time() + self.wait
         while time.time() < deadline:
