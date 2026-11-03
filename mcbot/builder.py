@@ -29,6 +29,18 @@ def _macd(c: pd.Series):
     return line, ema(line, 9)
 
 
+def _bb(d: pd.DataFrame, n: int = 20, k: float = 2.0):
+    """(lower, middle, upper) Bollinger bands, as TradingView draws them."""
+    mid = sma(d.close, n)
+    sd = d.close.rolling(n).std(ddof=0)
+    return mid - k * sd, mid, mid + k * sd
+
+
+def recent_flag(flag: pd.Series, bars) -> pd.Series:
+    """True if `flag` was true on any of the last `bars` candles (this one included)."""
+    return flag.astype(int).rolling(max(int(bars), 1), min_periods=1).max().astype(bool)
+
+
 def _ao_diff(d: pd.DataFrame) -> pd.Series:
     """AO minus AO one candle ago (the Pine script's `diff`)."""
     return awesome_oscillator(d).diff()
@@ -96,6 +108,16 @@ RULES = {
                          lambda d, a, b: _cross_up(awesome_oscillator(d), 0)),
     "ao_cross_down_zero": ("Awesome Oscillator crosses below zero", None, None,
                            lambda d, a, b: _cross_up(-awesome_oscillator(d), 0)),
+    "bb_touch_lower": ("Low touched the lower Bollinger band (20, 2) in the last A candles", 3, None,
+                       lambda d, a, b: recent_flag(d.low <= _bb(d)[0], a)),
+    "bb_touch_upper": ("High touched the upper Bollinger band (20, 2) in the last A candles", 3, None,
+                       lambda d, a, b: recent_flag(d.high >= _bb(d)[2], a)),
+    "bb_above_mid": ("Close above the Bollinger middle band (20-candle average)", None, None,
+                     lambda d, a, b: d.close > _bb(d)[1]),
+    "bb_below_mid": ("Close below the Bollinger middle band (20-candle average)", None, None,
+                     lambda d, a, b: d.close < _bb(d)[1]),
+    "bb_width_above": ("Bollinger bands wider than A% of price (enough room to trade)", 0.4, None,
+                       lambda d, a, b: (lambda lo, mid, up: (up - lo) / mid * 100 > a)(*_bb(d))),
     "ha_green": ("Heikin Ashi candle is green", None, None,
                  lambda d, a, b: (lambda h: h.close > h.open)(heikin_ashi(d))),
     "ha_red": ("Heikin Ashi candle is red", None, None, lambda d, a, b: (lambda h: h.close < h.open)(heikin_ashi(d))),
@@ -256,10 +278,6 @@ def divergences(d: pd.DataFrame, osc: str, max_gap: int = 60) -> pd.DataFrame:
 
 def _div_rule(osc: str, kind: str):
     return lambda d, a, b: recent_flag(divergences(d, osc, b)[kind], a)
-
-
-def recent_flag(flag: pd.Series, bars) -> pd.Series:
-    return flag.astype(int).rolling(max(int(bars), 1), min_periods=1).max().astype(bool)
 
 
 _DIV_TEXT = {"bull": "Bullish divergence: price lower low, {o} higher low",

@@ -51,6 +51,23 @@ Real Kraken 1h data for other coins: `datasets/ETHUSD_60.csv` (2015-2026), `data
 
 Real Kraken BTC/USD data for these: `datasets/XBTUSD_15.csv` (15m, 387,797 candles), `datasets/XBTUSD_60.csv` (1h) and `datasets/XBTUSD_240.csv` (4h), all from 2013-10 to 2026-09.
 
+**S10 - 1m Bollinger + AO divergence** (built from Builder rules, in Strategy Lab and paper trading): long when
+the low touched the lower Bollinger band (20, 2) in the last 3 candles **and** the Awesome Oscillator shows a
+bullish divergence **and** AO just changed to green **and** price is above the EMA 60 (the 1-hour trend); short is
+the mirror. 1% stop, 2% target. Use it on 1-minute charts.
+
+Real Kraken 1m candles, Apr-Sep 2026, chosen on the first 4 months and checked on the last 2:
+
+| | BTC first 4 mo | BTC last 2 mo | ETH first 4 mo | ETH last 2 mo |
+|---|---|---|---|---|
+| Trades | 64 | 46 | 89 | 52 |
+| No fees | +4.5% | +4.3% | +1.6% | +6.7% |
+| 0.1% fee per side | -8.1% | -4.9% | -15.0% | -3.8% |
+
+It has a small edge before fees but loses at normal fees: 1-minute moves are too small to pay 0.2% per round
+trip. Versions without the trend filter traded 5-10× more and lost 30-80% after fees (S6, the same idea with
+the band-to-band exit, did the same). Only worth paper trading where fees are near 0.02% (maker / futures).
+
 ## S1 - Top-down confluence (`mcbot/strategies.py`)
 Rules taken from a Market Cipher top-down analysis video and adapted to 4h levels with 1h entries.
 
@@ -208,6 +225,8 @@ Edit `live.toml`: which strategy, symbol, timeframe and capital per run.
   versions. A divergence is confirmed when the oscillator turns after the second low / high, so it never
   looks ahead; A = still counts for this many candles (to line up with other rules), B = most candles
   between the two lows / highs.
+  **Bollinger** rules: close below / above the bands, low / high *touched* the lower / upper band in the last A
+  candles, close above / below the middle band, and band width (enough room to reach the other band).
 - **📜 Activity** - every event and fill.
 - **⚙️ Account** - Webull paper keys (with a *Test connection* button), broker, fees, how often to
   check prices, sharing with Claude, and the stream agent's model / Anthropic key. Saved in plain

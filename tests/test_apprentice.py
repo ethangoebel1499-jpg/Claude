@@ -212,3 +212,17 @@ def test_bullish_divergence_is_found():
     hits = np.flatnonzero(div.bull.to_numpy())
     assert len(hits) and hits[-1] > 60 + 15 + 15 + 25      # confirmed after the second, lower low
     assert not div.bear.iloc[-20:].any()
+
+
+def test_bollinger_rules_and_s10(df):
+    mid = df.close.rolling(20).mean()
+    sd = df.close.rolling(20).std(ddof=0)
+    touch = df.low <= mid - 2 * sd
+    rule = lambda k, **kw: builder.rule_series(df, {"rule": k, **kw})
+    assert (rule("bb_touch_lower", a=1) == touch).all()
+    assert (rule("bb_touch_lower", a=3) == touch.astype(int).rolling(3, min_periods=1).max().astype(bool)).all()
+    assert (rule("bb_above_mid") == (df.close > mid)).all()
+    from livepaper.strategies import REGISTRY
+    s10 = REGISTRY["s10"]
+    sig = s10["signals"](df)
+    assert set(sig.columns) >= {"long_entry", "short_entry"} and s10["exits"].stop == 0.01

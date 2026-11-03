@@ -44,6 +44,35 @@ REGISTRY = {
                         "Failed testing: few trades and no edge."},
 }
 
+# S10: 1-minute Bollinger bands + Awesome Oscillator divergence, built from the Builder's rules (so it can be
+# opened in 🛠️ Builder, copied and changed). Tested on real Kraken 1m BTC/ETH, Apr-Sep 2026: before fees it made
+# +1.6% to +6.7% in each of 4 test periods; at a 0.1% fee per side it lost 4-15% in each.
+S10_SPEC = {
+    "name": "S10 1m Bollinger + AO divergence",
+    "long": [{"rule": "bb_touch_lower"}, {"rule": "ao_bull_div"}, {"rule": "ao_turns_green"},
+             {"rule": "close_above_ema", "a": 60}],
+    "short": [{"rule": "bb_touch_upper"}, {"rule": "ao_bear_div"}, {"rule": "ao_turns_red"},
+              {"rule": "close_below_ema", "a": 60}],
+    "exit_long": [], "exit_short": [], "stop": 0.01, "take_profits": [[0.02, 1.0]],
+}
+
+
+def _s10():
+    from functools import partial
+    from mcbot import builder
+    spec = S10_SPEC
+    return {"label": "S10 1m Bollinger + AO divergence", "short": "S10 BB+AO", "spec": spec,
+            "signals": partial(builder.signals, spec=spec),
+            "checklist": lambda df, bar=-1, label=None: builder.checklist(df, bar, label, spec),
+            "exits": Exits(0.01, [(0.02, 1.0)]),
+            "note": "Use on 1m charts. Long: low touched the lower Bollinger band (last 3 candles) + AO bullish "
+                    "divergence + AO changed to green + close above EMA 60 (the 1h trend). Short: the mirror. 1% stop, "
+                    "2% target. Tested on real 1m BTC/ETH (Apr-Sep 2026): small profit before fees, LOST at a 0.1% "
+                    "fee in every period - only worth it with fees near 0.02% (maker/futures)."}
+
+
+REGISTRY["s10"] = _s10()
+
 NOT_LIVE = {
     "S2 4-hour / 24-minute": "needs 24-minute candles built from 1-minute data; live feeds only give ~12 hours of it",
     "S5 Levels + MTF divergence scalp": "1-minute scalp; lost at every real fee in testing",
