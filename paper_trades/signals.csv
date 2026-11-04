@@ -13739,3 +13739,116 @@ SHORT: 🔴 NO TRADE  (4/9 basic yes)
   🔴 NO   Parabolic SAR above price
   🔴 NO   Cumulative volume delta below its 5-bar average
   🔴 NO   Heikin Ashi scalp signal (counts on its own with ADX)"
+S3 GRIND DOGE 1h,2026-11-04 16:00:00+00:00,0,0,"[S3 GRIND DOGE 1h] Checklist for candle closed 2026-11-04 16:00 UTC (close 0.07752)
+
+LONG: 🔴 NO TRADE  (7/9 basic yes)
+  🟢 YES  ADX (Masanakamura, 9) above 12 and +DI over -DI
+  🟢 YES  RSI(100, opens) below 70
+  🔴 NO   Money flow index above +8
+  🔴 NO   Volume above 1.3x its 51-bar average
+  🟢 YES  Close above its 50-bar midpoint average
+  🟢 YES  MACD (3/4/7) above its signal
+  🟢 YES  55-bar average rising
+  🟢 YES  Parabolic SAR below price
+  🟢 YES  Cumulative volume delta above its 5-bar average
+  🔴 NO   Heikin Ashi scalp signal (counts on its own with ADX)
+
+SHORT: 🔴 NO TRADE  (1/9 basic yes)
+  🔴 NO   ADX (Masanakamura, 9) above 12 and -DI over +DI
+  🟢 YES  RSI(100, opens) above 30
+  🔴 NO   Money flow index below -8
+  🔴 NO   Volume above 1.3x its 51-bar average
+  🔴 NO   Close below its 50-bar midpoint average
+  🔴 NO   MACD (3/4/7) below its signal
+  🔴 NO   55-bar average falling
+  🔴 NO   Parabolic SAR above price
+  🔴 NO   Cumulative volume delta below its 5-bar average
+  🔴 NO   Heikin Ashi scalp signal (counts on its own with ADX)"
+Apprentice BTC 1h,2026-11-04 16:00:00+00:00,0,0,"[Apprentice BTC 1h] candle 2026-11-04 16:00 UTC
+
+SHORT · Short: Close above the upper Bollinger band + Shooting star / bearish pin bar: 🔴 NO TRADE (weight +0.55)
+  🟢 YES  Close above the upper Bollinger band (20 candles, 2 deviations)
+  🔴 NO   Shooting star / bearish pin bar (long upper wick)
+
+SHORT · bb_touch_upper: 🔴 NO TRADE (weight +0.30)
+  🟢 YES  Close above EMA (50)
+  🔴 NO   Bullish divergence: price lower low, RSI higher low - in the last 30 candles, lows/highs at most 70 candles apart
+
+SHORT · Short Setup 1: 🔴 NO TRADE (weight +0.10)
+  🔴 NO   Close below SMA (200)
+  🔴 NO   Volume above 1.5 × its 20-candle average
+
+SHORT · Bearish CVD Divergence: 🔴 NO TRADE (weight +0.09)
+  🟢 YES  Higher low: the last 5 candles' low is above the 5 candles before
+  🔴 NO   Bearish divergence: price higher high, Awesome Oscillator lower high - in the last 3 candles, lows/highs at most 60 candles apart
+
+SHORT · rsi_bull_div: 🔴 NO TRADE (weight +0.27)
+  🔴 NO   RSI (14) below 30
+  🔴 NO   RSI (14) crosses down through 30
+  🟢 YES  Close above SMA (200)"
+Apprentice LTC 1h,2026-11-04 16:00:00+00:00,0,0,"[Apprentice LTC 1h] candle 2026-11-04 16:00 UTC
+
+SHORT · Short: Close above the upper Bollinger band + Shooting star / bearish pin bar: 🔴 NO TRADE (weight +0.55)
+  🟢 YES  Close above the upper Bollinger band (20 candles, 2 deviations)
+  🔴 NO   Shooting star / bearish pin bar (long upper wick)
+
+SHORT · bb_touch_upper: 🔴 NO TRADE (weight +0.30)
+  🟢 YES  Close above EMA (50)
+  🔴 NO   Bullish divergence: price lower low, RSI higher low - in the last 30 candles, lows/highs at most 70 candles apart
+
+SHORT · Short Setup 1: 🔴 NO TRADE (weight +0.10)
+  🔴 NO   Close below SMA (200)
+  🔴 NO   Volume above 1.5 × its 20-candle average
+
+SHORT · Bearish CVD Divergence: 🔴 NO TRADE (weight +0.09)
+  🟢 YES  Higher low: the last 5 candles' low is above the 5 candles before
+  🔴 NO   Bearish divergence: price higher high, Awesome Oscillator lower high - in the last 3 candles, lows/highs at most 60 candles apart
+
+SHORT · rsi_bull_div: 🔴 NO TRADE (weight +0.27)
+  🔴 NO   RSI (14) below 30
+  🔴 NO   RSI (14) crosses down through 30
+  🟢 YES  Close above SMA (200)"
+Apprentice ETH 1h,2026-11-04 16:00:00+00:00,0,0,"[Apprentice ETH 1h] candle 2026-11-04 16:00 UTC
+
+SHORT · Short: Close above the upper Bollinger band + Shooting star / bearish pin bar: 🔴 NO TRADE (weight +0.55)
+  🟢 YES  Close above the upper Bollinger band (20 candles, 2 deviations)
+  🔴 NO   Shooting star / bearish pin bar (long upper wick)
+
+SHORT · bb_touch_upper: 🔴 NO TRADE (weight +0.30)
+  🟢 YES  Close above EMA (50)
+  🔴 NO   Bullish divergence: price lower low, RSI higher low - in the last 30 candles, lows/highs at most 70 candles apart
+
+SHORT · Short Setup 1: 🔴 NO TRADE (weight +0.10)
+  🔴 NO   Close below SMA (200)
+  🟢 YES  Volume above 1.5 × its 20-candle average
+
+SHORT · Bearish CVD Divergence: 🔴 NO TRADE (weight +0.09)
+  🟢 YES  Higher low: the last 5 candles' low is above the 5 candles before
+  🔴 NO   Bearish divergence: price higher high, Awesome Oscillator lower high - in the last 3 candles, lows/highs at most 60 candles apart
+
+SHORT · rsi_bull_div: 🔴 NO TRADE (weight +0.27)
+  🔴 NO   RSI (14) below 30
+  🔴 NO   RSI (14) crosses down through 30
+  🟢 YES  Close above SMA (200)"
+Apprentice SHIB 1h,2026-11-04 16:00:00+00:00,0,0,"[Apprentice SHIB 1h] candle 2026-11-04 16:00 UTC
+
+SHORT · Short: Close above the upper Bollinger band + Shooting star / bearish pin bar: 🔴 NO TRADE (weight +0.55)
+  🔴 NO   Close above the upper Bollinger band (20 candles, 2 deviations)
+  🔴 NO   Shooting star / bearish pin bar (long upper wick)
+
+SHORT · bb_touch_upper: 🔴 NO TRADE (weight +0.30)
+  🟢 YES  Close above EMA (50)
+  🔴 NO   Bullish divergence: price lower low, RSI higher low - in the last 30 candles, lows/highs at most 70 candles apart
+
+SHORT · Short Setup 1: 🔴 NO TRADE (weight +0.10)
+  🔴 NO   Close below SMA (200)
+  🔴 NO   Volume above 1.5 × its 20-candle average
+
+SHORT · Bearish CVD Divergence: 🔴 NO TRADE (weight +0.09)
+  🔴 NO   Higher low: the last 5 candles' low is above the 5 candles before
+  🔴 NO   Bearish divergence: price higher high, Awesome Oscillator lower high - in the last 3 candles, lows/highs at most 60 candles apart
+
+SHORT · rsi_bull_div: 🔴 NO TRADE (weight +0.27)
+  🔴 NO   RSI (14) below 30
+  🔴 NO   RSI (14) crosses down through 30
+  🟢 YES  Close above SMA (200)"
