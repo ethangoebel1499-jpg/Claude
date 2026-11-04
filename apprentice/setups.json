@@ -272,7 +272,10 @@
      "times": 1,
      "train_pct": -3.54,
      "test_pct": 0.0
-    }
+    },
+    "learned_stop": "fixed",
+    "learned_reversal": false,
+    "deployed": true
    },
    "1h": {
     "stop": "fixed",
@@ -298,7 +301,10 @@
      "times": 5,
      "train_pct": 2.03,
      "test_pct": 0.0
-    }
+    },
+    "learned_stop": "fixed",
+    "learned_reversal": false,
+    "deployed": false
    },
    "1D": {
     "stop": "fixed",
@@ -324,7 +330,10 @@
      "times": 0,
      "train_pct": 0.0,
      "test_pct": 0.0
-    }
+    },
+    "learned_stop": "fixed",
+    "learned_reversal": false,
+    "deployed": true
    }
   }
  },
@@ -756,7 +765,10 @@
      "times": 14,
      "train_pct": -8.58,
      "test_pct": -1.51
-    }
+    },
+    "learned_stop": "fixed",
+    "learned_reversal": false,
+    "deployed": true
    },
    "1h": {
     "stop": "fixed",
@@ -782,7 +794,10 @@
      "times": 14,
      "train_pct": -4.71,
      "test_pct": -5.08
-    }
+    },
+    "learned_stop": "fixed",
+    "learned_reversal": false,
+    "deployed": false
    },
    "1D": {
     "stop": "atr",
@@ -808,7 +823,10 @@
      "times": 4,
      "train_pct": -14.73,
      "test_pct": 0.77
-    }
+    },
+    "learned_stop": "atr",
+    "learned_reversal": false,
+    "deployed": true
    }
   }
  },
@@ -1088,7 +1106,10 @@
      "times": 20,
      "train_pct": 10.17,
      "test_pct": -6.24
-    }
+    },
+    "learned_stop": "fixed",
+    "learned_reversal": false,
+    "deployed": true
    },
    "1h": {
     "stop": "fixed",
@@ -1114,7 +1135,10 @@
      "times": 53,
      "train_pct": -9.82,
      "test_pct": 17.95
-    }
+    },
+    "learned_stop": "fixed",
+    "learned_reversal": false,
+    "deployed": false
    },
    "1D": {
     "stop": "atr",
@@ -1140,7 +1164,10 @@
      "times": 0,
      "train_pct": 0.0,
      "test_pct": 0.0
-    }
+    },
+    "learned_stop": "atr",
+    "learned_reversal": false,
+    "deployed": true
    }
   }
  },
@@ -1300,10 +1327,13 @@
      "times": 4,
      "train_pct": -5.38,
      "test_pct": -1.87
-    }
+    },
+    "learned_stop": "swing",
+    "learned_reversal": false,
+    "deployed": true
    },
    "1h": {
-    "stop": "swing",
+    "stop": "fixed",
     "reversal": false,
     "stops": {
      "fixed": {
@@ -1326,7 +1356,10 @@
      "times": 6,
      "train_pct": 1.17,
      "test_pct": -0.13
-    }
+    },
+    "learned_stop": "swing",
+    "learned_reversal": false,
+    "deployed": false
    },
    "1D": {
     "stop": "fixed",
@@ -1352,7 +1385,10 @@
      "times": 2,
      "train_pct": 0.0,
      "test_pct": 2.31
-    }
+    },
+    "learned_stop": "fixed",
+    "learned_reversal": false,
+    "deployed": true
    }
   }
  },
@@ -1514,7 +1550,10 @@
      "times": 1,
      "train_pct": 2.14,
      "test_pct": 0.0
-    }
+    },
+    "learned_stop": "fixed",
+    "learned_reversal": false,
+    "deployed": true
    },
    "1h": {
     "stop": "fixed",
@@ -1540,7 +1579,10 @@
      "times": 11,
      "train_pct": 3.36,
      "test_pct": 2.38
-    }
+    },
+    "learned_stop": "fixed",
+    "learned_reversal": false,
+    "deployed": false
    },
    "1D": {
     "stop": "fixed",
@@ -1566,7 +1608,10 @@
      "times": 0,
      "train_pct": 0.0,
      "test_pct": 0.0
-    }
+    },
+    "learned_stop": "fixed",
+    "learned_reversal": false,
+    "deployed": true
    }
   }
  },
@@ -1850,10 +1895,13 @@
      "times": 104,
      "train_pct": -28.98,
      "test_pct": 19.43
-    }
+    },
+    "learned_stop": "fixed",
+    "learned_reversal": false,
+    "deployed": true
    },
    "1h": {
-    "stop": "atr",
+    "stop": "fixed",
     "reversal": false,
     "stops": {
      "fixed": {
@@ -1876,7 +1924,10 @@
      "times": 96,
      "train_pct": -19.3,
      "test_pct": 2.31
-    }
+    },
+    "learned_stop": "atr",
+    "learned_reversal": false,
+    "deployed": false
    },
    "1D": {
     "stop": "fixed",
@@ -1902,7 +1953,10 @@
      "times": 9,
      "train_pct": -6.7,
      "test_pct": -3.28
-    }
+    },
+    "learned_stop": "fixed",
+    "learned_reversal": false,
+    "deployed": true
    }
   }
  },
@@ -2052,7 +2106,10 @@
      "times": 204,
      "train_pct": -16.55,
      "test_pct": 11.33
-    }
+    },
+    "learned_stop": "fixed",
+    "learned_reversal": false,
+    "deployed": true
    },
    "1h": {
     "stop": "fixed",
@@ -2078,7 +2135,10 @@
      "times": 390,
      "train_pct": -43.81,
      "test_pct": 42.69
-    }
+    },
+    "learned_stop": "fixed",
+    "learned_reversal": false,
+    "deployed": false
    },
    "1D": {
     "stop": "fixed",
@@ -2104,7 +2164,10 @@
      "times": 13,
      "train_pct": -5.55,
      "test_pct": -2.77
-    }
+    },
+    "learned_stop": "fixed",
+    "learned_reversal": false,
+    "deployed": true
    }
   }
  },
@@ -2289,7 +2352,10 @@
      "times": 1,
      "train_pct": -1.36,
      "test_pct": 0.0
-    }
+    },
+    "learned_stop": "fixed",
+    "learned_reversal": false,
+    "deployed": true
    },
    "1h": {
     "stop": "fixed",
@@ -2315,7 +2381,10 @@
      "times": 1,
      "train_pct": 1.15,
      "test_pct": 0.0
-    }
+    },
+    "learned_stop": "fixed",
+    "learned_reversal": false,
+    "deployed": false
    },
    "1D": {
     "stop": "atr",
@@ -2341,7 +2410,10 @@
      "times": 3,
      "train_pct": -15.73,
      "test_pct": 0.77
-    }
+    },
+    "learned_stop": "atr",
+    "learned_reversal": false,
+    "deployed": true
    }
   }
  },
@@ -2500,7 +2572,10 @@
      "times": 20,
      "train_pct": 10.17,
      "test_pct": -6.24
-    }
+    },
+    "learned_stop": "fixed",
+    "learned_reversal": false,
+    "deployed": true
    },
    "1h": {
     "stop": "fixed",
@@ -2526,7 +2601,10 @@
      "times": 53,
      "train_pct": -9.82,
      "test_pct": 17.95
-    }
+    },
+    "learned_stop": "fixed",
+    "learned_reversal": false,
+    "deployed": false
    },
    "1D": {
     "stop": "fixed",
@@ -2552,7 +2630,10 @@
      "times": 2,
      "train_pct": 2.97,
      "test_pct": 1.86
-    }
+    },
+    "learned_stop": "fixed",
+    "learned_reversal": false,
+    "deployed": true
    }
   }
  },
@@ -3122,7 +3203,7 @@
   "name": "Short: Small Range with Multiple Trades",
   "direction": "short",
   "status": "retired",
-  "weight": -0.008,
+  "weight": -0.006,
   "source": "lesson",
   "stop_atr": 1.5,
   "rr": 1.5,
@@ -3149,9 +3230,9 @@
   ],
   "stats": {
    "trades": 989,
-   "avg_r": -0.075,
-   "edge": -0.008,
-   "win_rate": 37.2,
+   "avg_r": -0.073,
+   "edge": -0.006,
+   "win_rate": 37.3,
    "charts": 8,
    "charts_positive": 4
   },
@@ -3179,33 +3260,33 @@
     "win_rate": 42.4,
     "avg_r": 0.051,
     "edge": 0.044,
-    "base_r": 0.008,
+    "base_r": 0.007,
     "sum_r": 6.08,
-    "t": 0.38
+    "t": 0.39
    },
    "BTC 1h": {
     "trades": 132,
     "win_rate": 37.9,
     "avg_r": -0.067,
-    "edge": 0.06,
-    "base_r": -0.127,
+    "edge": 0.055,
+    "base_r": -0.122,
     "sum_r": -8.81,
-    "t": 0.57
+    "t": 0.53
    },
    "ETH 1h": {
     "trades": 123,
-    "win_rate": 28.5,
-    "avg_r": -0.295,
-    "edge": -0.164,
-    "base_r": -0.131,
-    "sum_r": -36.27,
-    "t": -1.64
+    "win_rate": 29.3,
+    "avg_r": -0.275,
+    "edge": -0.144,
+    "base_r": -0.13,
+    "sum_r": -33.77,
+    "t": -1.43
    },
    "SOL 1h": {
     "trades": 116,
     "win_rate": 41.4,
     "avg_r": 0.034,
-    "edge": 0.041,
+    "edge": 0.04,
     "base_r": -0.006,
     "sum_r": 4.0,
     "t": 0.35
@@ -3233,17 +3314,17 @@
    "trades": 989,
    "mfe_r": 0.92,
    "mae_r": -1.09,
-   "reached_1r_pct": 47.2,
-   "reached_target_pct": 36.5,
+   "reached_1r_pct": 47.3,
+   "reached_target_pct": 36.6,
    "bars_held": 6.06,
-   "bars_to_win": 7.45,
+   "bars_to_win": 7.52,
    "winners_heat_r": -0.38,
    "losers_best_r": 0.41,
-   "reversal_exits": 182,
-   "reversal_saved_r": -14.82
+   "reversal_exits": 181,
+   "reversal_saved_r": -15.01
   },
   "hints": [
-   "Closing losing trades on a confirmed reversal: 182 times, cost -14.8R in total (they often recovered)."
+   "Closing losing trades on a confirmed reversal: 181 times, cost -15.0R in total (they often recovered)."
   ],
   "tune": null,
   "exit_plan": {
@@ -3253,7 +3334,7 @@
     "stops": {
      "fixed": {
       "train_pct": -0.083,
-      "test_pct": -0.25,
+      "test_pct": -0.237,
       "trades": 343
      },
      "atr": {
@@ -3263,14 +3344,14 @@
      },
      "swing": {
       "train_pct": -0.298,
-      "test_pct": -0.263,
+      "test_pct": -0.248,
       "trades": 343
      }
     },
     "reversal_effect": {
      "times": 120,
      "train_pct": -50.29,
-     "test_pct": -7.57
+     "test_pct": -9.49
     },
     "learned_stop": "fixed",
     "learned_reversal": false,
@@ -3282,24 +3363,24 @@
     "stops": {
      "fixed": {
       "train_pct": -0.51,
-      "test_pct": 0.691,
+      "test_pct": 0.689,
       "trades": 371
      },
      "atr": {
       "train_pct": -0.378,
-      "test_pct": 0.016,
+      "test_pct": 0.036,
       "trades": 371
      },
      "swing": {
       "train_pct": -0.282,
-      "test_pct": -0.079,
+      "test_pct": -0.074,
       "trades": 371
      }
     },
     "reversal_effect": {
      "times": 192,
      "train_pct": 43.63,
-     "test_pct": -45.99
+     "test_pct": -45.82
     },
     "learned_stop": "fixed",
     "learned_reversal": false,
@@ -3341,7 +3422,7 @@
   "name": "Support and Resistance",
   "direction": "long",
   "status": "retired",
-  "weight": -0.042,
+  "weight": -0.043,
   "source": "lesson",
   "stop_atr": 1.5,
   "rr": 2.0,
@@ -3369,8 +3450,8 @@
   ],
   "stats": {
    "trades": 660,
-   "avg_r": 0.047,
-   "edge": -0.043,
+   "avg_r": 0.046,
+   "edge": -0.044,
    "win_rate": 36.2,
    "charts": 8,
    "charts_positive": 2
@@ -3379,11 +3460,11 @@
    "BTC 4h": {
     "trades": 71,
     "win_rate": 32.4,
-    "avg_r": -0.044,
-    "edge": -0.033,
-    "base_r": -0.012,
-    "sum_r": -3.16,
-    "t": -0.2
+    "avg_r": -0.05,
+    "edge": -0.039,
+    "base_r": -0.011,
+    "sum_r": -3.54,
+    "t": -0.23
    },
    "ETH 4h": {
     "trades": 79,
@@ -3407,25 +3488,25 @@
     "trades": 83,
     "win_rate": 38.6,
     "avg_r": 0.006,
-    "edge": -0.11,
-    "base_r": 0.116,
+    "edge": -0.112,
+    "base_r": 0.117,
     "sum_r": 0.48,
-    "t": -0.74
+    "t": -0.75
    },
    "ETH 1h": {
     "trades": 92,
     "win_rate": 33.7,
     "avg_r": -0.043,
-    "edge": -0.232,
-    "base_r": 0.189,
+    "edge": -0.234,
+    "base_r": 0.191,
     "sum_r": -3.98,
-    "t": -1.62
+    "t": -1.63
    },
    "SOL 1h": {
     "trades": 72,
     "win_rate": 29.2,
     "avg_r": -0.145,
-    "edge": -0.167,
+    "edge": -0.168,
     "base_r": 0.022,
     "sum_r": -10.47,
     "t": -1.05
@@ -3453,17 +3534,17 @@
    "trades": 660,
    "mfe_r": 1.11,
    "mae_r": -1.09,
-   "reached_1r_pct": 51.96,
+   "reached_1r_pct": 51.66,
    "reached_target_pct": 33.63,
    "bars_held": 8.04,
    "bars_to_win": 10.1,
    "winners_heat_r": -0.45,
    "losers_best_r": 0.47,
    "reversal_exits": 94,
-   "reversal_saved_r": -19.29
+   "reversal_saved_r": -20.08
   },
   "hints": [
-   "Closing losing trades on a confirmed reversal: 94 times, cost -19.3R in total (they often recovered)."
+   "Closing losing trades on a confirmed reversal: 94 times, cost -20.1R in total (they often recovered)."
   ],
   "tune": null,
   "exit_plan": {
@@ -3473,22 +3554,22 @@
     "stops": {
      "fixed": {
       "train_pct": -0.178,
-      "test_pct": -0.212,
+      "test_pct": -0.216,
       "trades": 231
      },
      "atr": {
       "train_pct": -0.204,
-      "test_pct": -0.143,
+      "test_pct": -0.149,
       "trades": 231
      },
      "swing": {
       "train_pct": -0.266,
-      "test_pct": 0.018,
+      "test_pct": 0.013,
       "trades": 231
      }
     },
     "reversal_effect": {
-     "times": 50,
+     "times": 51,
      "train_pct": -8.57,
      "test_pct": 4.94
     },
@@ -3502,24 +3583,24 @@
     "stops": {
      "fixed": {
       "train_pct": -0.215,
-      "test_pct": -1.541,
+      "test_pct": -1.568,
       "trades": 244
      },
      "atr": {
       "train_pct": -0.225,
-      "test_pct": -0.272,
+      "test_pct": -0.326,
       "trades": 247
      },
      "swing": {
       "train_pct": -0.194,
-      "test_pct": -1.08,
+      "test_pct": -1.126,
       "trades": 244
      }
     },
     "reversal_effect": {
-     "times": 58,
+     "times": 61,
      "train_pct": -5.13,
-     "test_pct": 5.88
+     "test_pct": 9.01
     },
     "learned_stop": "swing",
     "learned_reversal": false,
@@ -3561,7 +3642,7 @@
   "name": "Support and Resistance",
   "direction": "short",
   "status": "active",
-  "weight": 0.026,
+  "weight": 0.025,
   "source": "lesson",
   "stop_atr": 1.5,
   "rr": 2.0,
@@ -3590,7 +3671,7 @@
   "stats": {
    "trades": 658,
    "avg_r": -0.031,
-   "edge": 0.027,
+   "edge": 0.026,
    "win_rate": 33.4,
    "charts": 8,
    "charts_positive": 4
@@ -3600,10 +3681,10 @@
     "trades": 82,
     "win_rate": 39.0,
     "avg_r": 0.15,
-    "edge": 0.127,
+    "edge": 0.126,
     "base_r": 0.024,
     "sum_r": 12.31,
-    "t": 0.79
+    "t": 0.78
    },
    "ETH 4h": {
     "trades": 79,
@@ -3618,19 +3699,19 @@
     "trades": 98,
     "win_rate": 31.6,
     "avg_r": -0.099,
-    "edge": -0.09,
-    "base_r": -0.009,
+    "edge": -0.089,
+    "base_r": -0.01,
     "sum_r": -9.74,
-    "t": -0.66
+    "t": -0.65
    },
    "BTC 1h": {
     "trades": 87,
     "win_rate": 28.7,
     "avg_r": -0.169,
-    "edge": -0.016,
-    "base_r": -0.153,
+    "edge": -0.022,
+    "base_r": -0.147,
     "sum_r": -14.7,
-    "t": -0.11
+    "t": -0.15
    },
    "ETH 1h": {
     "trades": 85,
@@ -3645,10 +3726,10 @@
     "trades": 90,
     "win_rate": 40.0,
     "avg_r": 0.128,
-    "edge": 0.106,
-    "base_r": 0.022,
+    "edge": 0.105,
+    "base_r": 0.023,
     "sum_r": 11.52,
-    "t": 0.71
+    "t": 0.7
    },
    "BTC 1D": {
     "trades": 69,
@@ -3672,7 +3753,7 @@
   "after_entry": {
    "trades": 658,
    "mfe_r": 0.95,
-   "mae_r": -1.1,
+   "mae_r": -1.11,
    "reached_1r_pct": 47.71,
    "reached_target_pct": 30.99,
    "bars_held": 8.48,
@@ -3680,10 +3761,10 @@
    "winners_heat_r": -0.41,
    "losers_best_r": 0.42,
    "reversal_exits": 93,
-   "reversal_saved_r": 7.89
+   "reversal_saved_r": 7.74
   },
   "hints": [
-   "Closing losing trades on a confirmed reversal: 93 times, saved +7.9R in total."
+   "Closing losing trades on a confirmed reversal: 93 times, saved +7.7R in total."
   ],
   "tune": null,
   "exit_plan": {
@@ -3698,19 +3779,19 @@
      },
      "atr": {
       "train_pct": 0.174,
-      "test_pct": -0.429,
+      "test_pct": -0.427,
       "trades": 259
      },
      "swing": {
       "train_pct": -0.233,
-      "test_pct": -0.503,
+      "test_pct": -0.524,
       "trades": 258
      }
     },
     "reversal_effect": {
-     "times": 56,
+     "times": 57,
      "train_pct": 18.65,
-     "test_pct": 22.07
+     "test_pct": 18.37
     },
     "learned_stop": "fixed",
     "learned_reversal": true,
@@ -3722,24 +3803,24 @@
     "stops": {
      "fixed": {
       "train_pct": -0.881,
-      "test_pct": 0.316,
+      "test_pct": 0.32,
       "trades": 262
      },
      "atr": {
       "train_pct": -0.305,
-      "test_pct": -0.102,
+      "test_pct": -0.101,
       "trades": 262
      },
      "swing": {
       "train_pct": -0.507,
-      "test_pct": 0.08,
+      "test_pct": 0.077,
       "trades": 262
      }
     },
     "reversal_effect": {
      "times": 128,
      "train_pct": 55.15,
-     "test_pct": 4.31
+     "test_pct": 3.8
     },
     "learned_stop": "fixed",
     "learned_reversal": true,
@@ -3781,7 +3862,7 @@
   "name": "bullish_engulf",
   "direction": "long",
   "status": "retired",
-  "weight": -0.047,
+  "weight": -0.048,
   "source": "lesson",
   "stop_atr": 1.5,
   "rr": 1.5,
@@ -3806,9 +3887,9 @@
    "Bullish engulfing candle"
   ],
   "stats": {
-   "trades": 762,
-   "avg_r": 0.019,
-   "edge": -0.048,
+   "trades": 763,
+   "avg_r": 0.017,
+   "edge": -0.049,
    "win_rate": 40.9,
    "charts": 8,
    "charts_positive": 3
@@ -3819,7 +3900,7 @@
     "win_rate": 34.7,
     "avg_r": -0.133,
     "edge": -0.115,
-    "base_r": -0.017,
+    "base_r": -0.018,
     "sum_r": -13.0,
     "t": -0.95
    },
@@ -3842,31 +3923,31 @@
     "t": -0.25
    },
    "BTC 1h": {
-    "trades": 91,
-    "win_rate": 37.4,
-    "avg_r": -0.089,
-    "edge": -0.201,
-    "base_r": 0.112,
-    "sum_r": -8.09,
-    "t": -1.61
+    "trades": 92,
+    "win_rate": 37.0,
+    "avg_r": -0.099,
+    "edge": -0.209,
+    "base_r": 0.111,
+    "sum_r": -9.09,
+    "t": -1.68
    },
    "ETH 1h": {
     "trades": 99,
     "win_rate": 48.5,
     "avg_r": 0.218,
-    "edge": 0.083,
-    "base_r": 0.135,
+    "edge": 0.082,
+    "base_r": 0.137,
     "sum_r": 21.63,
-    "t": 0.66
+    "t": 0.65
    },
    "SOL 1h": {
     "trades": 81,
     "win_rate": 46.9,
     "avg_r": 0.162,
-    "edge": 0.129,
-    "base_r": 0.033,
+    "edge": 0.13,
+    "base_r": 0.032,
     "sum_r": 13.11,
-    "t": 0.93
+    "t": 0.94
    },
    "BTC 1D": {
     "trades": 139,
@@ -3888,20 +3969,20 @@
    }
   },
   "after_entry": {
-   "trades": 762,
-   "mfe_r": 1.07,
+   "trades": 763,
+   "mfe_r": 1.06,
    "mae_r": -1.06,
-   "reached_1r_pct": 51.06,
-   "reached_target_pct": 40.28,
+   "reached_1r_pct": 50.86,
+   "reached_target_pct": 40.23,
    "bars_held": 5.95,
-   "bars_to_win": 6.67,
+   "bars_to_win": 6.73,
    "winners_heat_r": -0.37,
    "losers_best_r": 0.37,
-   "reversal_exits": 114,
-   "reversal_saved_r": 9.68
+   "reversal_exits": 115,
+   "reversal_saved_r": 10.47
   },
   "hints": [
-   "Closing losing trades on a confirmed reversal: 114 times, saved +9.7R in total."
+   "Closing losing trades on a confirmed reversal: 115 times, saved +10.5R in total."
   ],
   "tune": null,
   "exit_plan": {
@@ -3911,24 +3992,24 @@
     "stops": {
      "fixed": {
       "train_pct": -0.5,
-      "test_pct": -0.571,
+      "test_pct": -0.584,
       "trades": 252
      },
      "atr": {
       "train_pct": -0.464,
-      "test_pct": -0.197,
+      "test_pct": -0.198,
       "trades": 252
      },
      "swing": {
       "train_pct": -0.272,
-      "test_pct": -0.142,
+      "test_pct": -0.153,
       "trades": 252
      }
     },
     "reversal_effect": {
      "times": 62,
      "train_pct": -36.11,
-     "test_pct": 19.06
+     "test_pct": 19.72
     },
     "learned_stop": "swing",
     "learned_reversal": false,
@@ -3940,24 +4021,24 @@
     "stops": {
      "fixed": {
       "train_pct": -0.006,
-      "test_pct": -1.199,
-      "trades": 269
+      "test_pct": -1.241,
+      "trades": 270
      },
      "atr": {
       "train_pct": -0.102,
-      "test_pct": -0.157,
-      "trades": 271
+      "test_pct": -0.198,
+      "trades": 272
      },
      "swing": {
       "train_pct": 0.038,
-      "test_pct": -0.559,
-      "trades": 269
+      "test_pct": -0.582,
+      "trades": 270
      }
     },
     "reversal_effect": {
      "times": 58,
      "train_pct": -1.87,
-     "test_pct": 3.87
+     "test_pct": 3.88
     },
     "learned_stop": "swing",
     "learned_reversal": false,
@@ -4024,8 +4105,8 @@
    "Bearish engulfing candle"
   ],
   "stats": {
-   "trades": 900,
-   "avg_r": -0.061,
+   "trades": 899,
+   "avg_r": -0.06,
    "edge": -0.008,
    "win_rate": 37.6,
    "charts": 8,
@@ -4036,7 +4117,7 @@
     "trades": 146,
     "win_rate": 37.0,
     "avg_r": -0.075,
-    "edge": -0.09,
+    "edge": -0.091,
     "base_r": 0.015,
     "sum_r": -11.0,
     "t": -0.9
@@ -4054,34 +4135,34 @@
     "trades": 132,
     "win_rate": 34.1,
     "avg_r": -0.148,
-    "edge": -0.156,
-    "base_r": 0.008,
+    "edge": -0.155,
+    "base_r": 0.007,
     "sum_r": -19.54,
-    "t": -1.52
+    "t": -1.51
    },
    "BTC 1h": {
-    "trades": 128,
-    "win_rate": 39.1,
-    "avg_r": -0.008,
-    "edge": 0.119,
-    "base_r": -0.127,
-    "sum_r": -1.03,
-    "t": 1.1
+    "trades": 127,
+    "win_rate": 39.4,
+    "avg_r": -0.0,
+    "edge": 0.122,
+    "base_r": -0.122,
+    "sum_r": -0.03,
+    "t": 1.13
    },
    "ETH 1h": {
     "trades": 100,
     "win_rate": 33.0,
     "avg_r": -0.169,
     "edge": -0.038,
-    "base_r": -0.131,
+    "base_r": -0.13,
     "sum_r": -16.86,
-    "t": -0.32
+    "t": -0.33
    },
    "SOL 1h": {
     "trades": 129,
     "win_rate": 48.1,
     "avg_r": 0.202,
-    "edge": 0.208,
+    "edge": 0.207,
     "base_r": -0.006,
     "sum_r": 26.0,
     "t": 1.88
@@ -4106,17 +4187,17 @@
    }
   },
   "after_entry": {
-   "trades": 900,
+   "trades": 899,
    "mfe_r": 0.93,
    "mae_r": -1.08,
-   "reached_1r_pct": 46.75,
-   "reached_target_pct": 37.12,
+   "reached_1r_pct": 46.81,
+   "reached_target_pct": 37.16,
    "bars_held": 6.68,
    "bars_to_win": 7.19,
    "winners_heat_r": -0.37,
    "losers_best_r": 0.4,
    "reversal_exits": 129,
-   "reversal_saved_r": 18.63
+   "reversal_saved_r": 18.64
   },
   "hints": [
    "Closing losing trades on a confirmed reversal: 129 times, saved +18.6R in total."
@@ -4134,19 +4215,19 @@
      },
      "atr": {
       "train_pct": -0.212,
-      "test_pct": -0.792,
+      "test_pct": -0.791,
       "trades": 376
      },
      "swing": {
       "train_pct": -0.052,
-      "test_pct": -0.849,
+      "test_pct": -0.86,
       "trades": 376
      }
     },
     "reversal_effect": {
-     "times": 87,
+     "times": 88,
      "train_pct": 31.17,
-     "test_pct": 12.69
+     "test_pct": 9.18
     },
     "learned_stop": "fixed",
     "learned_reversal": true,
@@ -4158,27 +4239,27 @@
     "stops": {
      "fixed": {
       "train_pct": -1.003,
-      "test_pct": 0.085,
-      "trades": 357
+      "test_pct": 0.095,
+      "trades": 356
      },
      "atr": {
       "train_pct": -0.338,
-      "test_pct": -0.051,
-      "trades": 357
+      "test_pct": -0.046,
+      "trades": 356
      },
      "swing": {
       "train_pct": -0.608,
-      "test_pct": -0.247,
-      "trades": 357
+      "test_pct": -0.241,
+      "trades": 356
      }
     },
     "reversal_effect": {
      "times": 185,
      "train_pct": 68.03,
-     "test_pct": 2.19
+     "test_pct": -0.82
     },
     "learned_stop": "fixed",
-    "learned_reversal": true,
+    "learned_reversal": false,
     "deployed": false
    },
    "1D": {
@@ -4217,7 +4298,7 @@
   "name": "Long from Support",
   "direction": "long",
   "status": "retired",
-  "weight": 0.003,
+  "weight": 0.002,
   "source": "lesson",
   "stop_atr": 1.5,
   "rr": 2.0,
@@ -4238,22 +4319,22 @@
    "Close above SMA (200)"
   ],
   "stats": {
-   "trades": 203,
-   "avg_r": 0.078,
-   "edge": 0.003,
+   "trades": 206,
+   "avg_r": 0.076,
+   "edge": 0.002,
    "win_rate": 36.4,
    "charts": 8,
    "charts_positive": 4
   },
   "charts": {
    "BTC 4h": {
-    "trades": 29,
-    "win_rate": 37.9,
-    "avg_r": 0.102,
-    "edge": 0.114,
-    "base_r": -0.012,
-    "sum_r": 2.96,
-    "t": 0.43
+    "trades": 30,
+    "win_rate": 40.0,
+    "avg_r": 0.165,
+    "edge": 0.177,
+    "base_r": -0.011,
+    "sum_r": 4.96,
+    "t": 0.67
    },
    "ETH 4h": {
     "trades": 18,
@@ -4274,31 +4355,31 @@
     "t": 0.89
    },
    "BTC 1h": {
-    "trades": 34,
-    "win_rate": 29.4,
-    "avg_r": -0.15,
-    "edge": -0.266,
-    "base_r": 0.116,
-    "sum_r": -5.09,
-    "t": -1.15
+    "trades": 35,
+    "win_rate": 28.6,
+    "avg_r": -0.174,
+    "edge": -0.291,
+    "base_r": 0.117,
+    "sum_r": -6.09,
+    "t": -1.29
    },
    "ETH 1h": {
     "trades": 28,
     "win_rate": 35.7,
     "avg_r": 0.024,
-    "edge": -0.165,
-    "base_r": 0.189,
+    "edge": -0.167,
+    "base_r": 0.191,
     "sum_r": 0.68,
-    "t": -0.61
+    "t": -0.62
    },
    "SOL 1h": {
-    "trades": 29,
-    "win_rate": 20.7,
-    "avg_r": -0.379,
-    "edge": -0.401,
+    "trades": 30,
+    "win_rate": 20.0,
+    "avg_r": -0.4,
+    "edge": -0.422,
     "base_r": 0.022,
-    "sum_r": -11.0,
-    "t": -1.75
+    "sum_r": -12.0,
+    "t": -1.9
    },
    "BTC 1D": {
     "trades": 20,
@@ -4320,20 +4401,20 @@
    }
   },
   "after_entry": {
-   "trades": 203,
-   "mfe_r": 1.22,
-   "mae_r": -1.07,
-   "reached_1r_pct": 53.21,
-   "reached_target_pct": 34.98,
-   "bars_held": 7.45,
-   "bars_to_win": 10.44,
-   "winners_heat_r": -0.47,
-   "losers_best_r": 0.48,
-   "reversal_exits": 33,
-   "reversal_saved_r": -9.19
+   "trades": 206,
+   "mfe_r": 1.17,
+   "mae_r": -1.06,
+   "reached_1r_pct": 51.94,
+   "reached_target_pct": 34.95,
+   "bars_held": 7.46,
+   "bars_to_win": 10.6,
+   "winners_heat_r": -0.48,
+   "losers_best_r": 0.46,
+   "reversal_exits": 34,
+   "reversal_saved_r": -9.15
   },
   "hints": [
-   "Closing losing trades on a confirmed reversal: 33 times, cost -9.2R in total (they often recovered)."
+   "Closing losing trades on a confirmed reversal: 34 times, cost -9.2R in total (they often recovered)."
   ],
   "tune": null,
   "exit_plan": {
@@ -4343,18 +4424,18 @@
     "stops": {
      "fixed": {
       "train_pct": -0.233,
-      "test_pct": 0.2,
-      "trades": 77
+      "test_pct": 0.182,
+      "trades": 78
      },
      "atr": {
       "train_pct": -0.233,
-      "test_pct": 0.139,
-      "trades": 77
+      "test_pct": 0.229,
+      "trades": 78
      },
      "swing": {
       "train_pct": -0.231,
-      "test_pct": 1.734,
-      "trades": 77
+      "test_pct": 1.74,
+      "trades": 78
      }
     },
     "reversal_effect": {
@@ -4372,24 +4453,24 @@
     "stops": {
      "fixed": {
       "train_pct": -0.199,
-      "test_pct": -2.121,
-      "trades": 89
+      "test_pct": -2.183,
+      "trades": 90
      },
      "atr": {
       "train_pct": -0.162,
-      "test_pct": -0.55,
-      "trades": 91
+      "test_pct": -0.689,
+      "trades": 93
      },
      "swing": {
       "train_pct": -0.058,
-      "test_pct": -1.496,
-      "trades": 89
+      "test_pct": -1.546,
+      "trades": 90
      }
     },
     "reversal_effect": {
-     "times": 30,
+     "times": 33,
      "train_pct": -3.18,
-     "test_pct": 8.41
+     "test_pct": 11.32
     },
     "learned_stop": "swing",
     "learned_reversal": false,
@@ -4431,7 +4512,7 @@
   "name": "Short from Resistance",
   "direction": "short",
   "status": "active",
-  "weight": 0.244,
+  "weight": 0.247,
   "source": "lesson",
   "stop_atr": 1.5,
   "rr": 2.0,
@@ -4452,10 +4533,10 @@
    "Close below SMA (200)"
   ],
   "stats": {
-   "trades": 208,
-   "avg_r": 0.199,
-   "edge": 0.267,
-   "win_rate": 40.9,
+   "trades": 207,
+   "avg_r": 0.205,
+   "edge": 0.271,
+   "win_rate": 41.1,
    "charts": 8,
    "charts_positive": 7
   },
@@ -4483,18 +4564,18 @@
     "win_rate": 25.8,
     "avg_r": -0.226,
     "edge": -0.216,
-    "base_r": -0.009,
+    "base_r": -0.01,
     "sum_r": -7.0,
     "t": -0.9
    },
    "BTC 1h": {
-    "trades": 34,
-    "win_rate": 55.9,
-    "avg_r": 0.676,
-    "edge": 0.829,
-    "base_r": -0.153,
-    "sum_r": 23.0,
-    "t": 3.2
+    "trades": 33,
+    "win_rate": 57.6,
+    "avg_r": 0.727,
+    "edge": 0.875,
+    "base_r": -0.147,
+    "sum_r": 24.0,
+    "t": 3.34
    },
    "ETH 1h": {
     "trades": 34,
@@ -4509,8 +4590,8 @@
     "trades": 27,
     "win_rate": 37.0,
     "avg_r": 0.047,
-    "edge": 0.025,
-    "base_r": 0.022,
+    "edge": 0.024,
+    "base_r": 0.023,
     "sum_r": 1.27,
     "t": 0.09
    },
@@ -4534,15 +4615,15 @@
    }
   },
   "after_entry": {
-   "trades": 208,
+   "trades": 207,
    "mfe_r": 1.3,
-   "mae_r": -1.01,
-   "reached_1r_pct": 54.31,
-   "reached_target_pct": 38.93,
-   "bars_held": 8.78,
-   "bars_to_win": 10.3,
+   "mae_r": -1.02,
+   "reached_1r_pct": 54.57,
+   "reached_target_pct": 39.12,
+   "bars_held": 8.88,
+   "bars_to_win": 10.31,
    "winners_heat_r": -0.32,
-   "losers_best_r": 0.5,
+   "losers_best_r": 0.52,
    "reversal_exits": 27,
    "reversal_saved_r": 7.68
   },
@@ -4562,12 +4643,12 @@
      },
      "atr": {
       "train_pct": 0.165,
-      "test_pct": -0.951,
+      "test_pct": -0.95,
       "trades": 75
      },
      "swing": {
       "train_pct": -0.429,
-      "test_pct": -0.888,
+      "test_pct": -0.937,
       "trades": 75
      }
     },
@@ -4586,27 +4667,27 @@
     "stops": {
      "fixed": {
       "train_pct": -0.263,
-      "test_pct": 0.355,
-      "trades": 95
+      "test_pct": 0.405,
+      "trades": 94
      },
      "atr": {
       "train_pct": -0.059,
-      "test_pct": -0.146,
-      "trades": 95
+      "test_pct": -0.123,
+      "trades": 94
      },
      "swing": {
       "train_pct": -0.295,
-      "test_pct": 0.235,
-      "trades": 95
+      "test_pct": 0.319,
+      "trades": 94
      }
     },
     "reversal_effect": {
      "times": 33,
      "train_pct": 14.49,
-     "test_pct": 0.03
+     "test_pct": -1.58
     },
     "learned_stop": "fixed",
-    "learned_reversal": true,
+    "learned_reversal": false,
     "deployed": false
    },
    "1D": {
@@ -4645,7 +4726,7 @@
   "name": "Bullish Divergence Setup",
   "direction": "long",
   "status": "retired",
-  "weight": -0.005,
+  "weight": -0.015,
   "source": "lesson",
   "stop_atr": 1.2,
   "rr": 1.5,
@@ -4670,10 +4751,10 @@
    "Close above EMA (50)"
   ],
   "stats": {
-   "trades": 66,
-   "avg_r": 0.061,
-   "edge": -0.006,
-   "win_rate": 42.4,
+   "trades": 67,
+   "avg_r": 0.045,
+   "edge": -0.02,
+   "win_rate": 41.8,
    "charts": 8,
    "charts_positive": 5
   },
@@ -4697,13 +4778,13 @@
     "t": -2.01
    },
    "SOL 4h": {
-    "trades": 5,
-    "win_rate": 60.0,
-    "avg_r": 0.5,
-    "edge": 0.525,
-    "base_r": -0.025,
-    "sum_r": 2.5,
-    "t": 0.86
+    "trades": 6,
+    "win_rate": 50.0,
+    "avg_r": 0.25,
+    "edge": 0.276,
+    "base_r": -0.026,
+    "sum_r": 1.5,
+    "t": 0.49
    },
    "BTC 1h": {
     "trades": 10,
@@ -4718,7 +4799,7 @@
     "trades": 9,
     "win_rate": 77.8,
     "avg_r": 0.944,
-    "edge": 0.812,
+    "edge": 0.813,
     "base_r": 0.132,
     "sum_r": 8.5,
     "t": 2.21
@@ -4727,10 +4808,10 @@
     "trades": 9,
     "win_rate": 33.3,
     "avg_r": -0.167,
-    "edge": -0.175,
-    "base_r": 0.008,
+    "edge": -0.172,
+    "base_r": 0.005,
     "sum_r": -1.5,
-    "t": -0.42
+    "t": -0.41
    },
    "BTC 1D": {
     "trades": 7,
@@ -4752,13 +4833,13 @@
    }
   },
   "after_entry": {
-   "trades": 66,
-   "mfe_r": 1.12,
-   "mae_r": -1.0,
-   "reached_1r_pct": 50.0,
-   "reached_target_pct": 42.42,
-   "bars_held": 4.29,
-   "bars_to_win": 5.03,
+   "trades": 67,
+   "mfe_r": 1.07,
+   "mae_r": -1.01,
+   "reached_1r_pct": 49.25,
+   "reached_target_pct": 41.79,
+   "bars_held": 4.25,
+   "bars_to_win": 4.97,
    "winners_heat_r": -0.42,
    "losers_best_r": 0.38,
    "reversal_exits": 2,
@@ -4780,8 +4861,8 @@
      },
      "atr": {
       "train_pct": -0.394,
-      "test_pct": -0.273,
-      "trades": 24
+      "test_pct": -0.6,
+      "trades": 25
      },
      "swing": {
       "train_pct": 0.241,
@@ -4925,7 +5006,7 @@
     "win_rate": null,
     "avg_r": null,
     "edge": null,
-    "base_r": 0.02,
+    "base_r": 0.021,
     "sum_r": 0.0
    },
    "SOL 4h": {
@@ -4933,7 +5014,7 @@
     "win_rate": null,
     "avg_r": null,
     "edge": null,
-    "base_r": -0.007,
+    "base_r": -0.004,
     "sum_r": 0.0
    },
    "BTC 1h": {
@@ -4941,7 +5022,7 @@
     "win_rate": null,
     "avg_r": null,
     "edge": null,
-    "base_r": -0.092,
+    "base_r": -0.091,
     "sum_r": 0.0
    },
    "ETH 1h": {
@@ -4949,7 +5030,7 @@
     "win_rate": null,
     "avg_r": null,
     "edge": null,
-    "base_r": -0.095,
+    "base_r": -0.09,
     "sum_r": 0.0
    },
    "SOL 1h": {
@@ -4957,7 +5038,7 @@
     "win_rate": null,
     "avg_r": null,
     "edge": null,
-    "base_r": 0.028,
+    "base_r": 0.029,
     "sum_r": 0.0
    },
    "BTC 1D": {
@@ -5041,7 +5122,7 @@
     "win_rate": null,
     "avg_r": null,
     "edge": null,
-    "base_r": -0.009,
+    "base_r": -0.008,
     "sum_r": 0.0
    },
    "ETH 4h": {
@@ -5057,7 +5138,7 @@
     "win_rate": null,
     "avg_r": null,
     "edge": null,
-    "base_r": 0.0,
+    "base_r": -0.001,
     "sum_r": 0.0
    },
    "BTC 1h": {
@@ -5073,7 +5154,7 @@
     "win_rate": null,
     "avg_r": null,
     "edge": null,
-    "base_r": 0.275,
+    "base_r": 0.274,
     "sum_r": 0.0
    },
    "SOL 1h": {
@@ -5081,7 +5162,7 @@
     "win_rate": null,
     "avg_r": null,
     "edge": null,
-    "base_r": 0.026,
+    "base_r": 0.027,
     "sum_r": 0.0
    },
    "BTC 1D": {
@@ -5165,7 +5246,7 @@
     "win_rate": null,
     "avg_r": null,
     "edge": null,
-    "base_r": -0.012,
+    "base_r": -0.011,
     "sum_r": 0.0
    },
    "ETH 4h": {
@@ -5190,15 +5271,15 @@
     "win_rate": null,
     "avg_r": null,
     "edge": null,
-    "base_r": 0.116,
+    "base_r": 0.117,
     "sum_r": 0.0
    },
    "ETH 1h": {
     "trades": 1,
     "win_rate": 0.0,
     "avg_r": -1.0,
-    "edge": -1.189,
-    "base_r": 0.189,
+    "edge": -1.191,
+    "base_r": 0.191,
     "sum_r": -1.0,
     "t": 0.0
    },
@@ -5238,7 +5319,7 @@
   "name": "Short Trade Setup",
   "direction": "short",
   "status": "active",
-  "weight": 0.176,
+  "weight": 0.251,
   "source": "lesson",
   "stop_atr": 0.5,
   "rr": 7.0,
@@ -5277,9 +5358,9 @@
   ],
   "stats": {
    "trades": 83,
-   "avg_r": 0.196,
-   "edge": 0.218,
-   "win_rate": 15.7,
+   "avg_r": 0.292,
+   "edge": 0.312,
+   "win_rate": 16.9,
    "charts": 8,
    "charts_positive": 4
   },
@@ -5288,8 +5369,8 @@
     "trades": 10,
     "win_rate": 0.0,
     "avg_r": -1.0,
-    "edge": -1.061,
-    "base_r": 0.061,
+    "edge": -1.054,
+    "base_r": 0.054,
     "sum_r": -10.0,
     "t": 0.0
    },
@@ -5306,8 +5387,8 @@
     "trades": 7,
     "win_rate": 14.3,
     "avg_r": 0.143,
-    "edge": 0.131,
-    "base_r": 0.012,
+    "edge": 0.128,
+    "base_r": 0.015,
     "sum_r": 1.0,
     "t": 0.11
    },
@@ -5315,37 +5396,37 @@
     "trades": 9,
     "win_rate": 11.1,
     "avg_r": -0.111,
-    "edge": -0.076,
-    "base_r": -0.035,
+    "edge": -0.077,
+    "base_r": -0.034,
     "sum_r": -1.0,
     "t": -0.09
    },
    "ETH 1h": {
-    "trades": 17,
-    "win_rate": 5.9,
-    "avg_r": -0.529,
-    "edge": -0.485,
-    "base_r": -0.044,
-    "sum_r": -9.0,
-    "t": -1.03
+    "trades": 18,
+    "win_rate": 11.1,
+    "avg_r": -0.111,
+    "edge": -0.07,
+    "base_r": -0.041,
+    "sum_r": -2.0,
+    "t": -0.11
    },
    "SOL 1h": {
     "trades": 16,
     "win_rate": 31.2,
     "avg_r": 1.5,
-    "edge": 1.475,
-    "base_r": 0.025,
+    "edge": 1.474,
+    "base_r": 0.026,
     "sum_r": 24.0,
     "t": 1.54
    },
    "BTC 1D": {
-    "trades": 10,
-    "win_rate": 30.0,
-    "avg_r": 1.4,
-    "edge": 1.592,
-    "base_r": -0.192,
-    "sum_r": 14.0,
-    "t": 1.3
+    "trades": 9,
+    "win_rate": 33.3,
+    "avg_r": 1.667,
+    "edge": 1.856,
+    "base_r": -0.189,
+    "sum_r": 15.0,
+    "t": 1.39
    },
    "ETH 1D": {
     "trades": 7,
@@ -5359,14 +5440,14 @@
   },
   "after_entry": {
    "trades": 83,
-   "mfe_r": 1.03,
-   "mae_r": -1.41,
+   "mfe_r": 1.06,
+   "mae_r": -1.4,
    "reached_1r_pct": 54.21,
-   "reached_target_pct": 14.45,
-   "bars_held": 3.12,
-   "bars_to_win": 6.3,
-   "winners_heat_r": -0.52,
-   "losers_best_r": 0.77,
+   "reached_target_pct": 15.65,
+   "bars_held": 3.1,
+   "bars_to_win": 7.36,
+   "winners_heat_r": -0.58,
+   "losers_best_r": 0.78,
    "reversal_exits": 0,
    "reversal_saved_r": 0.0
   },
@@ -5395,16 +5476,16 @@
      }
     ]
    },
-   "gain": 0.241,
+   "gain": 0.233,
    "train": {
     "edge": 0.442,
     "trades": 55,
     "was": 0.364
    },
    "test": {
-    "edge": 0.133,
-    "trades": 21,
-    "was": -0.03
+    "edge": 0.43,
+    "trades": 22,
+    "was": 0.275
    }
   },
   "exit_plan": {
@@ -5419,12 +5500,12 @@
      },
      "atr": {
       "train_pct": -0.318,
-      "test_pct": 0.114,
+      "test_pct": 0.12,
       "trades": 24
      },
      "swing": {
       "train_pct": -1.948,
-      "test_pct": -0.67,
+      "test_pct": -0.677,
       "trades": 24
      }
     },
@@ -5443,18 +5524,18 @@
     "stops": {
      "fixed": {
       "train_pct": -0.245,
-      "test_pct": 0.441,
-      "trades": 42
+      "test_pct": 0.792,
+      "trades": 43
      },
      "atr": {
       "train_pct": -0.231,
-      "test_pct": -0.143,
-      "trades": 42
+      "test_pct": -0.113,
+      "trades": 43
      },
      "swing": {
       "train_pct": -0.162,
-      "test_pct": -0.491,
-      "trades": 42
+      "test_pct": -0.337,
+      "trades": 43
      }
     },
     "reversal_effect": {
@@ -5477,7 +5558,7 @@
      },
      "atr": {
       "train_pct": 0.592,
-      "test_pct": 0.462,
+      "test_pct": 0.865,
       "trades": 17
      },
      "swing": {
@@ -5548,7 +5629,7 @@
     "win_rate": null,
     "avg_r": null,
     "edge": null,
-    "base_r": 0.012,
+    "base_r": 0.011,
     "sum_r": 0.0
    },
    "ETH 4h": {
@@ -5573,7 +5654,7 @@
     "win_rate": null,
     "avg_r": null,
     "edge": null,
-    "base_r": 0.056,
+    "base_r": 0.054,
     "sum_r": 0.0
    },
    "ETH 1h": {
@@ -5589,7 +5670,7 @@
     "win_rate": null,
     "avg_r": null,
     "edge": null,
-    "base_r": -0.023,
+    "base_r": -0.024,
     "sum_r": 0.0
    },
    "BTC 1D": {
@@ -5662,7 +5743,7 @@
     "win_rate": null,
     "avg_r": null,
     "edge": null,
-    "base_r": 0.012,
+    "base_r": 0.011,
     "sum_r": 0.0
    },
    "ETH 4h": {
@@ -5686,7 +5767,7 @@
     "win_rate": null,
     "avg_r": null,
     "edge": null,
-    "base_r": 0.056,
+    "base_r": 0.054,
     "sum_r": 0.0
    },
    "ETH 1h": {
@@ -5702,7 +5783,7 @@
     "win_rate": null,
     "avg_r": null,
     "edge": null,
-    "base_r": -0.023,
+    "base_r": -0.024,
     "sum_r": 0.0
    },
    "BTC 1D": {
@@ -5784,7 +5865,7 @@
     "trades": 2,
     "win_rate": 50.0,
     "avg_r": -0.404,
-    "edge": -0.558,
+    "edge": -0.559,
     "base_r": 0.155,
     "sum_r": -0.81,
     "t": -0.94
@@ -5802,8 +5883,8 @@
     "trades": 3,
     "win_rate": 33.3,
     "avg_r": 0.667,
-    "edge": 0.613,
-    "base_r": 0.053,
+    "edge": 0.612,
+    "base_r": 0.054,
     "sum_r": 2.0,
     "t": 0.37
    },
@@ -5811,8 +5892,8 @@
     "trades": 3,
     "win_rate": 100.0,
     "avg_r": 2.965,
-    "edge": 2.76,
-    "base_r": 0.205,
+    "edge": 2.762,
+    "base_r": 0.203,
     "sum_r": 8.89,
     "t": 2.67
    },
@@ -5957,7 +6038,7 @@
   "name": "trend_line_respect",
   "direction": "long",
   "status": "retired",
-  "weight": -0.133,
+  "weight": -0.135,
   "source": "lesson",
   "stop_atr": 1.5,
   "rr": 7.0,
@@ -5984,29 +6065,29 @@
    "Close below EMA (50)"
   ],
   "stats": {
-   "trades": 343,
-   "avg_r": 0.072,
-   "edge": -0.141,
-   "win_rate": 22.5,
+   "trades": 344,
+   "avg_r": 0.069,
+   "edge": -0.143,
+   "win_rate": 22.4,
    "charts": 8,
    "charts_positive": 2
   },
   "charts": {
    "BTC 4h": {
-    "trades": 47,
-    "win_rate": 12.8,
-    "avg_r": -0.546,
-    "edge": -0.505,
+    "trades": 48,
+    "win_rate": 12.5,
+    "avg_r": -0.555,
+    "edge": -0.515,
     "base_r": -0.041,
-    "sum_r": -25.65,
-    "t": -2.73
+    "sum_r": -26.65,
+    "t": -2.84
    },
    "ETH 4h": {
     "trades": 45,
     "win_rate": 17.8,
     "avg_r": -0.108,
-    "edge": -0.287,
-    "base_r": 0.179,
+    "edge": -0.288,
+    "base_r": 0.18,
     "sum_r": -4.86,
     "t": -0.95
    },
@@ -6023,17 +6104,17 @@
     "trades": 36,
     "win_rate": 30.6,
     "avg_r": 0.191,
-    "edge": 0.138,
-    "base_r": 0.053,
+    "edge": 0.142,
+    "base_r": 0.049,
     "sum_r": 6.89,
-    "t": 0.39
+    "t": 0.4
    },
    "ETH 1h": {
     "trades": 50,
     "win_rate": 24.0,
     "avg_r": 0.15,
-    "edge": -0.038,
-    "base_r": 0.188,
+    "edge": -0.036,
+    "base_r": 0.187,
     "sum_r": 7.52,
     "t": -0.11
    },
@@ -6066,20 +6147,20 @@
    }
   },
   "after_entry": {
-   "trades": 343,
+   "trades": 344,
    "mfe_r": 1.04,
    "mae_r": -1.16,
-   "reached_1r_pct": 48.97,
-   "reached_target_pct": 5.82,
-   "bars_held": 13.13,
+   "reached_1r_pct": 49.11,
+   "reached_target_pct": 5.8,
+   "bars_held": 13.11,
    "bars_to_win": 36.01,
    "winners_heat_r": -0.51,
    "losers_best_r": 0.63,
    "reversal_exits": 72,
-   "reversal_saved_r": -17.18
+   "reversal_saved_r": -17.11
   },
   "hints": [
-   "Closing losing trades on a confirmed reversal: 72 times, cost -17.2R in total (they often recovered)."
+   "Closing losing trades on a confirmed reversal: 72 times, cost -17.1R in total (they often recovered)."
   ],
   "tune": null,
   "exit_plan": {
@@ -6089,18 +6170,18 @@
     "stops": {
      "fixed": {
       "train_pct": -0.952,
-      "test_pct": -0.4,
-      "trades": 145
+      "test_pct": -0.397,
+      "trades": 146
      },
      "atr": {
       "train_pct": -0.301,
-      "test_pct": -0.504,
-      "trades": 145
+      "test_pct": -0.462,
+      "trades": 146
      },
      "swing": {
       "train_pct": -0.452,
-      "test_pct": -0.487,
-      "trades": 145
+      "test_pct": -0.446,
+      "trades": 146
      }
     },
     "reversal_effect": {
@@ -6118,17 +6199,17 @@
     "stops": {
      "fixed": {
       "train_pct": -0.198,
-      "test_pct": -1.496,
+      "test_pct": -1.589,
       "trades": 119
      },
      "atr": {
       "train_pct": 0.085,
-      "test_pct": -0.751,
+      "test_pct": -0.756,
       "trades": 119
      },
      "swing": {
       "train_pct": -0.111,
-      "test_pct": -0.404,
+      "test_pct": -0.407,
       "trades": 119
      }
     },
@@ -6202,10 +6283,10 @@
    "Heikin Ashi candle is red"
   ],
   "stats": {
-   "trades": 936,
-   "avg_r": -0.072,
+   "trades": 935,
+   "avg_r": -0.071,
    "edge": -0.013,
-   "win_rate": 37.4,
+   "win_rate": 37.5,
    "charts": 8,
    "charts_positive": 4
   },
@@ -6233,27 +6314,27 @@
     "win_rate": 33.9,
     "avg_r": -0.154,
     "edge": -0.161,
-    "base_r": 0.008,
+    "base_r": 0.007,
     "sum_r": -19.5,
     "t": -1.53
    },
    "BTC 1h": {
-    "trades": 134,
-    "win_rate": 37.3,
-    "avg_r": -0.079,
-    "edge": 0.047,
-    "base_r": -0.127,
-    "sum_r": -10.63,
-    "t": 0.46
+    "trades": 133,
+    "win_rate": 37.6,
+    "avg_r": -0.072,
+    "edge": 0.05,
+    "base_r": -0.122,
+    "sum_r": -9.63,
+    "t": 0.48
    },
    "ETH 1h": {
     "trades": 117,
     "win_rate": 38.5,
     "avg_r": -0.038,
     "edge": 0.092,
-    "base_r": -0.131,
+    "base_r": -0.13,
     "sum_r": -4.5,
-    "t": 0.82
+    "t": 0.81
    },
    "SOL 1h": {
     "trades": 129,
@@ -6284,17 +6365,17 @@
    }
   },
   "after_entry": {
-   "trades": 936,
+   "trades": 935,
    "mfe_r": 0.9,
    "mae_r": -1.08,
-   "reached_1r_pct": 47.23,
-   "reached_target_pct": 36.55,
-   "bars_held": 7.12,
-   "bars_to_win": 7.31,
+   "reached_1r_pct": 47.28,
+   "reached_target_pct": 36.59,
+   "bars_held": 6.99,
+   "bars_to_win": 7.32,
    "winners_heat_r": -0.34,
    "losers_best_r": 0.43,
    "reversal_exits": 118,
-   "reversal_saved_r": 27.67
+   "reversal_saved_r": 27.68
   },
   "hints": [
    "Closing losing trades on a confirmed reversal: 118 times, saved +27.7R in total."
@@ -6317,14 +6398,14 @@
      },
      "swing": {
       "train_pct": -0.251,
-      "test_pct": -0.914,
+      "test_pct": -0.926,
       "trades": 362
      }
     },
     "reversal_effect": {
-     "times": 84,
+     "times": 85,
      "train_pct": 34.28,
-     "test_pct": 40.05
+     "test_pct": 36.53
     },
     "learned_stop": "fixed",
     "learned_reversal": true,
@@ -6336,24 +6417,24 @@
     "stops": {
      "fixed": {
       "train_pct": -0.973,
-      "test_pct": 0.464,
-      "trades": 380
+      "test_pct": 0.476,
+      "trades": 379
      },
      "atr": {
       "train_pct": -0.329,
-      "test_pct": -0.047,
-      "trades": 380
+      "test_pct": -0.042,
+      "trades": 379
      },
      "swing": {
       "train_pct": -0.438,
-      "test_pct": -0.005,
-      "trades": 380
+      "test_pct": 0.017,
+      "trades": 379
      }
     },
     "reversal_effect": {
      "times": 191,
      "train_pct": 78.26,
-     "test_pct": -4.63
+     "test_pct": -6.93
     },
     "learned_stop": "fixed",
     "learned_reversal": false,
@@ -6395,7 +6476,7 @@
   "name": "Long Trade from Key Level",
   "direction": "long",
   "status": "retired",
-  "weight": -0.037,
+  "weight": -0.041,
   "source": "lesson",
   "stop_atr": 0.7,
   "rr": 2.0,
@@ -6423,9 +6504,9 @@
   ],
   "stats": {
    "trades": 660,
-   "avg_r": 0.005,
-   "edge": -0.038,
-   "win_rate": 33.5,
+   "avg_r": 0.0,
+   "edge": -0.042,
+   "win_rate": 33.3,
    "charts": 8,
    "charts_positive": 3
   },
@@ -6434,10 +6515,10 @@
     "trades": 71,
     "win_rate": 36.6,
     "avg_r": 0.099,
-    "edge": 0.087,
-    "base_r": 0.012,
+    "edge": 0.088,
+    "base_r": 0.011,
     "sum_r": 7.0,
-    "t": 0.5
+    "t": 0.51
    },
    "ETH 4h": {
     "trades": 79,
@@ -6459,12 +6540,12 @@
    },
    "BTC 1h": {
     "trades": 83,
-    "win_rate": 31.3,
-    "avg_r": -0.06,
-    "edge": -0.116,
-    "base_r": 0.056,
-    "sum_r": -5.0,
-    "t": -0.76
+    "win_rate": 30.1,
+    "avg_r": -0.096,
+    "edge": -0.151,
+    "base_r": 0.054,
+    "sum_r": -8.0,
+    "t": -0.99
    },
    "ETH 1h": {
     "trades": 92,
@@ -6479,8 +6560,8 @@
     "trades": 72,
     "win_rate": 23.6,
     "avg_r": -0.292,
-    "edge": -0.268,
-    "base_r": -0.023,
+    "edge": -0.267,
+    "base_r": -0.024,
     "sum_r": -21.0,
     "t": -1.77
    },
@@ -6507,8 +6588,8 @@
    "trades": 660,
    "mfe_r": 0.88,
    "mae_r": -1.19,
-   "reached_1r_pct": 46.82,
-   "reached_target_pct": 33.46,
+   "reached_1r_pct": 46.38,
+   "reached_target_pct": 33.31,
    "bars_held": 2.14,
    "bars_to_win": 2.81,
    "winners_heat_r": -0.34,
@@ -6527,7 +6608,7 @@
     "stops": {
      "fixed": {
       "train_pct": -0.178,
-      "test_pct": -0.212,
+      "test_pct": -0.216,
       "trades": 231
      },
      "atr": {
@@ -6537,12 +6618,12 @@
      },
      "swing": {
       "train_pct": -0.266,
-      "test_pct": 0.018,
+      "test_pct": 0.013,
       "trades": 231
      }
     },
     "reversal_effect": {
-     "times": 50,
+     "times": 51,
      "train_pct": -8.57,
      "test_pct": 4.94
     },
@@ -6556,24 +6637,24 @@
     "stops": {
      "fixed": {
       "train_pct": -0.215,
-      "test_pct": -1.541,
+      "test_pct": -1.568,
       "trades": 244
      },
      "atr": {
       "train_pct": -0.233,
-      "test_pct": -0.31,
+      "test_pct": -0.354,
       "trades": 247
      },
      "swing": {
       "train_pct": -0.194,
-      "test_pct": -1.08,
+      "test_pct": -1.126,
       "trades": 244
      }
     },
     "reversal_effect": {
-     "times": 58,
+     "times": 61,
      "train_pct": -5.13,
-     "test_pct": 5.88
+     "test_pct": 9.01
     },
     "learned_stop": "swing",
     "learned_reversal": false,
@@ -6760,7 +6841,7 @@
     "win_rate": null,
     "avg_r": null,
     "edge": null,
-    "base_r": -0.012,
+    "base_r": -0.011,
     "sum_r": 0.0
    },
    "ETH 4h": {
@@ -6784,7 +6865,7 @@
     "win_rate": null,
     "avg_r": null,
     "edge": null,
-    "base_r": 0.116,
+    "base_r": 0.117,
     "sum_r": 0.0
    },
    "ETH 1h": {
@@ -6792,7 +6873,7 @@
     "win_rate": null,
     "avg_r": null,
     "edge": null,
-    "base_r": 0.189,
+    "base_r": 0.191,
     "sum_r": 0.0
    },
    "SOL 1h": {
@@ -6886,7 +6967,7 @@
     "win_rate": null,
     "avg_r": null,
     "edge": null,
-    "base_r": -0.017,
+    "base_r": -0.018,
     "sum_r": 0.0
    },
    "ETH 4h": {
@@ -6910,7 +6991,7 @@
     "win_rate": null,
     "avg_r": null,
     "edge": null,
-    "base_r": 0.112,
+    "base_r": 0.111,
     "sum_r": 0.0
    },
    "ETH 1h": {
@@ -6918,7 +6999,7 @@
     "win_rate": null,
     "avg_r": null,
     "edge": null,
-    "base_r": 0.135,
+    "base_r": 0.137,
     "sum_r": 0.0
    },
    "SOL 1h": {
@@ -6926,7 +7007,7 @@
     "win_rate": null,
     "avg_r": null,
     "edge": null,
-    "base_r": 0.033,
+    "base_r": 0.032,
     "sum_r": 0.0
    },
    "BTC 1D": {
@@ -6956,7 +7037,7 @@
   "name": "value_area_trade",
   "direction": "long",
   "status": "retired",
-  "weight": 0.012,
+  "weight": 0.014,
   "source": "lesson",
   "stop_atr": 1.5,
   "rr": 3.0,
@@ -6981,9 +7062,9 @@
    "Volume above 1.5 \u00d7 its 20-candle average"
   ],
   "stats": {
-   "trades": 911,
-   "avg_r": 0.102,
-   "edge": 0.012,
+   "trades": 909,
+   "avg_r": 0.104,
+   "edge": 0.014,
    "win_rate": 30.1,
    "charts": 8,
    "charts_positive": 4
@@ -7002,7 +7083,7 @@
     "trades": 131,
     "win_rate": 26.0,
     "avg_r": -0.04,
-    "edge": -0.188,
+    "edge": -0.189,
     "base_r": 0.148,
     "sum_r": -5.27,
     "t": -1.29
@@ -7017,31 +7098,31 @@
     "t": 1.14
    },
    "BTC 1h": {
-    "trades": 111,
-    "win_rate": 31.5,
-    "avg_r": 0.178,
-    "edge": 0.056,
-    "base_r": 0.121,
-    "sum_r": 19.73,
-    "t": 0.33
+    "trades": 109,
+    "win_rate": 32.1,
+    "avg_r": 0.199,
+    "edge": 0.077,
+    "base_r": 0.123,
+    "sum_r": 21.73,
+    "t": 0.45
    },
    "ETH 1h": {
     "trades": 108,
     "win_rate": 37.0,
-    "avg_r": 0.357,
-    "edge": 0.142,
+    "avg_r": 0.359,
+    "edge": 0.144,
     "base_r": 0.215,
-    "sum_r": 38.58,
-    "t": 0.81
+    "sum_r": 38.74,
+    "t": 0.82
    },
    "SOL 1h": {
     "trades": 124,
     "win_rate": 29.0,
-    "avg_r": 0.018,
-    "edge": -0.003,
+    "avg_r": 0.016,
+    "edge": -0.005,
     "base_r": 0.021,
-    "sum_r": 2.19,
-    "t": -0.02
+    "sum_r": 1.99,
+    "t": -0.03
    },
    "BTC 1D": {
     "trades": 77,
@@ -7063,20 +7144,20 @@
    }
   },
   "after_entry": {
-   "trades": 911,
+   "trades": 909,
    "mfe_r": 1.05,
    "mae_r": -1.14,
    "reached_1r_pct": 50.37,
-   "reached_target_pct": 23.38,
-   "bars_held": 9.92,
-   "bars_to_win": 18.22,
+   "reached_target_pct": 23.44,
+   "bars_held": 9.93,
+   "bars_to_win": 18.23,
    "winners_heat_r": -0.42,
    "losers_best_r": 0.52,
    "reversal_exits": 193,
-   "reversal_saved_r": -0.88
+   "reversal_saved_r": -1.75
   },
   "hints": [
-   "Closing losing trades on a confirmed reversal: 193 times, cost -0.9R in total (they often recovered)."
+   "Closing losing trades on a confirmed reversal: 193 times, cost -1.8R in total (they often recovered)."
   ],
   "tune": null,
   "exit_plan": {
@@ -7115,24 +7196,24 @@
     "stops": {
      "fixed": {
       "train_pct": 0.451,
-      "test_pct": -0.794,
-      "trades": 341
+      "test_pct": -0.762,
+      "trades": 339
      },
      "atr": {
       "train_pct": 0.126,
-      "test_pct": -0.335,
-      "trades": 343
+      "test_pct": -0.336,
+      "trades": 341
      },
      "swing": {
       "train_pct": 0.127,
-      "test_pct": -0.418,
-      "trades": 343
+      "test_pct": -0.417,
+      "trades": 341
      }
     },
     "reversal_effect": {
      "times": 225,
      "train_pct": -40.23,
-     "test_pct": 24.1
+     "test_pct": 21.39
     },
     "learned_stop": "fixed",
     "learned_reversal": false,
@@ -7174,7 +7255,7 @@
   "name": "value_area_trade",
   "direction": "short",
   "status": "active",
-  "weight": 0.038,
+  "weight": 0.042,
   "source": "lesson",
   "stop_atr": 1.5,
   "rr": 3.0,
@@ -7200,21 +7281,21 @@
   ],
   "stats": {
    "trades": 957,
-   "avg_r": 0.004,
-   "edge": 0.039,
-   "win_rate": 27.8,
+   "avg_r": 0.009,
+   "edge": 0.043,
+   "win_rate": 27.9,
    "charts": 8,
-   "charts_positive": 5
+   "charts_positive": 6
   },
   "charts": {
    "BTC 4h": {
     "trades": 130,
     "win_rate": 30.8,
     "avg_r": 0.133,
-    "edge": 0.051,
-    "base_r": 0.082,
+    "edge": 0.05,
+    "base_r": 0.083,
     "sum_r": 17.25,
-    "t": 0.34
+    "t": 0.33
    },
    "ETH 4h": {
     "trades": 133,
@@ -7229,37 +7310,37 @@
     "trades": 121,
     "win_rate": 29.8,
     "avg_r": 0.002,
-    "edge": -0.037,
-    "base_r": 0.039,
+    "edge": -0.036,
+    "base_r": 0.038,
     "sum_r": 0.24,
-    "t": -0.25
+    "t": -0.24
    },
    "BTC 1h": {
     "trades": 109,
     "win_rate": 28.4,
     "avg_r": 0.056,
-    "edge": 0.219,
-    "base_r": -0.162,
+    "edge": 0.212,
+    "base_r": -0.156,
     "sum_r": 6.11,
-    "t": 1.33
+    "t": 1.29
    },
    "ETH 1h": {
     "trades": 128,
-    "win_rate": 23.4,
-    "avg_r": -0.134,
-    "edge": -0.001,
-    "base_r": -0.133,
-    "sum_r": -17.18,
-    "t": -0.01
+    "win_rate": 24.2,
+    "avg_r": -0.106,
+    "edge": 0.028,
+    "base_r": -0.134,
+    "sum_r": -13.57,
+    "t": 0.2
    },
    "SOL 1h": {
     "trades": 105,
     "win_rate": 33.3,
-    "avg_r": 0.152,
-    "edge": 0.133,
+    "avg_r": 0.158,
+    "edge": 0.138,
     "base_r": 0.02,
-    "sum_r": 15.99,
-    "t": 0.8
+    "sum_r": 16.63,
+    "t": 0.83
    },
    "BTC 1D": {
     "trades": 112,
@@ -7282,19 +7363,19 @@
   },
   "after_entry": {
    "trades": 957,
-   "mfe_r": 0.9,
+   "mfe_r": 0.91,
    "mae_r": -1.13,
-   "reached_1r_pct": 47.24,
-   "reached_target_pct": 21.53,
-   "bars_held": 9.32,
-   "bars_to_win": 19.19,
-   "winners_heat_r": -0.49,
+   "reached_1r_pct": 47.33,
+   "reached_target_pct": 21.64,
+   "bars_held": 9.38,
+   "bars_to_win": 19.37,
+   "winners_heat_r": -0.5,
    "losers_best_r": 0.54,
    "reversal_exits": 218,
-   "reversal_saved_r": -5.12
+   "reversal_saved_r": -2.06
   },
   "hints": [
-   "Closing losing trades on a confirmed reversal: 218 times, cost -5.1R in total (they often recovered)."
+   "Closing losing trades on a confirmed reversal: 218 times, cost -2.1R in total (they often recovered)."
   ],
   "tune": null,
   "exit_plan": {
@@ -7304,24 +7385,24 @@
     "stops": {
      "fixed": {
       "train_pct": -0.23,
-      "test_pct": -0.621,
+      "test_pct": -0.626,
       "trades": 384
      },
      "atr": {
       "train_pct": -0.202,
-      "test_pct": -0.468,
+      "test_pct": -0.463,
       "trades": 384
      },
      "swing": {
       "train_pct": 0.019,
-      "test_pct": -0.85,
+      "test_pct": -0.83,
       "trades": 384
      }
     },
     "reversal_effect": {
-     "times": 137,
+     "times": 136,
      "train_pct": 8.91,
-     "test_pct": 26.07
+     "test_pct": 26.3
     },
     "learned_stop": "fixed",
     "learned_reversal": true,
@@ -7333,24 +7414,24 @@
     "stops": {
      "fixed": {
       "train_pct": -0.152,
-      "test_pct": 1.003,
+      "test_pct": 1.006,
       "trades": 340
      },
      "atr": {
       "train_pct": -0.229,
-      "test_pct": 0.02,
+      "test_pct": 0.049,
       "trades": 342
      },
      "swing": {
       "train_pct": -0.22,
-      "test_pct": -0.282,
+      "test_pct": -0.268,
       "trades": 342
      }
     },
     "reversal_effect": {
-     "times": 169,
+     "times": 168,
      "train_pct": 12.75,
-     "test_pct": -49.64
+     "test_pct": -46.83
     },
     "learned_stop": "fixed",
     "learned_reversal": false,
@@ -7392,7 +7473,7 @@
   "name": "Higher High and Higher Low Setup",
   "direction": "long",
   "status": "retired",
-  "weight": -0.006,
+  "weight": -0.009,
   "source": "lesson",
   "stop_atr": 1.5,
   "rr": 1.25,
@@ -7418,9 +7499,9 @@
   ],
   "stats": {
    "trades": 660,
-   "avg_r": 0.053,
-   "edge": -0.006,
-   "win_rate": 46.8,
+   "avg_r": 0.05,
+   "edge": -0.009,
+   "win_rate": 46.7,
    "charts": 8,
    "charts_positive": 3
   },
@@ -7430,9 +7511,9 @@
     "win_rate": 45.1,
     "avg_r": 0.014,
     "edge": 0.014,
-    "base_r": 0.0,
+    "base_r": -0.0,
     "sum_r": 1.0,
-    "t": 0.1
+    "t": 0.11
    },
    "ETH 4h": {
     "trades": 79,
@@ -7454,12 +7535,12 @@
    },
    "BTC 1h": {
     "trades": 83,
-    "win_rate": 49.4,
-    "avg_r": 0.097,
-    "edge": -0.003,
+    "win_rate": 48.2,
+    "avg_r": 0.07,
+    "edge": -0.03,
     "base_r": 0.099,
-    "sum_r": 8.03,
-    "t": -0.02
+    "sum_r": 5.78,
+    "t": -0.24
    },
    "ETH 1h": {
     "trades": 92,
@@ -7474,10 +7555,10 @@
     "trades": 72,
     "win_rate": 41.7,
     "avg_r": -0.062,
-    "edge": -0.087,
-    "base_r": 0.025,
+    "edge": -0.083,
+    "base_r": 0.021,
     "sum_r": -4.5,
-    "t": -0.66
+    "t": -0.63
    },
    "BTC 1D": {
     "trades": 96,
@@ -7501,18 +7582,18 @@
   "after_entry": {
    "trades": 660,
    "mfe_r": 1.07,
-   "mae_r": -1.0,
-   "reached_1r_pct": 51.96,
-   "reached_target_pct": 46.68,
+   "mae_r": -1.01,
+   "reached_1r_pct": 51.66,
+   "reached_target_pct": 46.53,
    "bars_held": 5.49,
-   "bars_to_win": 5.69,
-   "winners_heat_r": -0.36,
-   "losers_best_r": 0.36,
-   "reversal_exits": 82,
-   "reversal_saved_r": -11.06
+   "bars_to_win": 5.63,
+   "winners_heat_r": -0.35,
+   "losers_best_r": 0.35,
+   "reversal_exits": 81,
+   "reversal_saved_r": -11.85
   },
   "hints": [
-   "Closing losing trades on a confirmed reversal: 82 times, cost -11.1R in total (they often recovered)."
+   "Closing losing trades on a confirmed reversal: 81 times, cost -11.8R in total (they often recovered)."
   ],
   "tune": null,
   "exit_plan": {
@@ -7522,22 +7603,22 @@
     "stops": {
      "fixed": {
       "train_pct": -0.178,
-      "test_pct": -0.212,
+      "test_pct": -0.216,
       "trades": 231
      },
      "atr": {
       "train_pct": -0.204,
-      "test_pct": -0.143,
+      "test_pct": -0.149,
       "trades": 231
      },
      "swing": {
       "train_pct": -0.266,
-      "test_pct": 0.018,
+      "test_pct": 0.013,
       "trades": 231
      }
     },
     "reversal_effect": {
-     "times": 50,
+     "times": 51,
      "train_pct": -8.57,
      "test_pct": 4.94
     },
@@ -7551,24 +7632,24 @@
     "stops": {
      "fixed": {
       "train_pct": -0.215,
-      "test_pct": -1.541,
+      "test_pct": -1.568,
       "trades": 244
      },
      "atr": {
       "train_pct": -0.225,
-      "test_pct": -0.272,
+      "test_pct": -0.326,
       "trades": 247
      },
      "swing": {
       "train_pct": -0.194,
-      "test_pct": -1.08,
+      "test_pct": -1.126,
       "trades": 244
      }
     },
     "reversal_effect": {
-     "times": 58,
+     "times": 61,
      "train_pct": -5.13,
-     "test_pct": 5.88
+     "test_pct": 9.01
     },
     "learned_stop": "swing",
     "learned_reversal": false,
@@ -7610,7 +7691,7 @@
   "name": "Schlonging Setup",
   "direction": "long",
   "status": "retired",
-  "weight": -0.041,
+  "weight": -0.052,
   "source": "lesson",
   "stop_atr": 1.5,
   "rr": 1.25,
@@ -7636,10 +7717,10 @@
    "Close above EMA (50)"
   ],
   "stats": {
-   "trades": 358,
-   "avg_r": 0.013,
-   "edge": -0.043,
-   "win_rate": 45.0,
+   "trades": 360,
+   "avg_r": 0.001,
+   "edge": -0.055,
+   "win_rate": 44.5,
    "charts": 8,
    "charts_positive": 5
   },
@@ -7649,9 +7730,9 @@
     "win_rate": 45.5,
     "avg_r": 0.023,
     "edge": 0.023,
-    "base_r": 0.0,
+    "base_r": -0.0,
     "sum_r": 1.0,
-    "t": 0.13
+    "t": 0.14
    },
    "ETH 4h": {
     "trades": 42,
@@ -7672,13 +7753,13 @@
     "t": -1.15
    },
    "BTC 1h": {
-    "trades": 49,
-    "win_rate": 53.1,
-    "avg_r": 0.213,
-    "edge": 0.113,
+    "trades": 50,
+    "win_rate": 50.0,
+    "avg_r": 0.143,
+    "edge": 0.044,
     "base_r": 0.099,
-    "sum_r": 10.42,
-    "t": 0.71
+    "sum_r": 7.17,
+    "t": 0.28
    },
    "ETH 1h": {
     "trades": 56,
@@ -7690,13 +7771,13 @@
     "t": 0.24
    },
    "SOL 1h": {
-    "trades": 48,
-    "win_rate": 29.2,
-    "avg_r": -0.344,
-    "edge": -0.368,
-    "base_r": 0.025,
-    "sum_r": -16.5,
-    "t": -2.47
+    "trades": 49,
+    "win_rate": 28.6,
+    "avg_r": -0.357,
+    "edge": -0.378,
+    "base_r": 0.021,
+    "sum_r": -17.5,
+    "t": -2.58
    },
    "BTC 1D": {
     "trades": 41,
@@ -7718,20 +7799,20 @@
    }
   },
   "after_entry": {
-   "trades": 358,
+   "trades": 360,
    "mfe_r": 1.06,
-   "mae_r": -0.96,
-   "reached_1r_pct": 51.95,
-   "reached_target_pct": 44.71,
+   "mae_r": -0.97,
+   "reached_1r_pct": 51.11,
+   "reached_target_pct": 44.18,
    "bars_held": 5.49,
-   "bars_to_win": 5.58,
+   "bars_to_win": 5.51,
    "winners_heat_r": -0.37,
-   "losers_best_r": 0.38,
-   "reversal_exits": 33,
-   "reversal_saved_r": -1.79
+   "losers_best_r": 0.39,
+   "reversal_exits": 34,
+   "reversal_saved_r": -1.75
   },
   "hints": [
-   "Closing losing trades on a confirmed reversal: 33 times, cost -1.8R in total (they often recovered)."
+   "Closing losing trades on a confirmed reversal: 34 times, cost -1.8R in total (they often recovered)."
   ],
   "tune": null,
   "exit_plan": {
@@ -7770,24 +7851,24 @@
     "stops": {
      "fixed": {
       "train_pct": -0.334,
-      "test_pct": -1.547,
-      "trades": 151
+      "test_pct": -1.621,
+      "trades": 152
      },
      "atr": {
       "train_pct": -0.19,
-      "test_pct": -0.388,
-      "trades": 153
+      "test_pct": -0.502,
+      "trades": 155
      },
      "swing": {
       "train_pct": -0.195,
-      "test_pct": -1.094,
-      "trades": 151
+      "test_pct": -1.152,
+      "trades": 152
      }
     },
     "reversal_effect": {
-     "times": 26,
+     "times": 27,
      "train_pct": -4.32,
-     "test_pct": 0.39
+     "test_pct": 0.48
     },
     "learned_stop": "atr",
     "learned_reversal": false,
@@ -7829,7 +7910,7 @@
   "name": "Monthly Level Marking",
   "direction": "long",
   "status": "retired",
-  "weight": -0.058,
+  "weight": -0.056,
   "source": "lesson",
   "stop_atr": 0.7,
   "rr": 1.5,
@@ -7857,7 +7938,7 @@
   "stats": {
    "trades": 127,
    "avg_r": -0.055,
-   "edge": -0.067,
+   "edge": -0.065,
    "win_rate": 37.8,
    "charts": 8,
    "charts_positive": 3
@@ -7867,7 +7948,7 @@
     "trades": 16,
     "win_rate": 37.5,
     "avg_r": -0.062,
-    "edge": -0.061,
+    "edge": -0.06,
     "base_r": -0.002,
     "sum_r": -1.0,
     "t": -0.19
@@ -7876,8 +7957,8 @@
     "trades": 13,
     "win_rate": 46.2,
     "avg_r": 0.154,
-    "edge": 0.141,
-    "base_r": 0.013,
+    "edge": 0.14,
+    "base_r": 0.014,
     "sum_r": 2.0,
     "t": 0.39
    },
@@ -7894,17 +7975,17 @@
     "trades": 15,
     "win_rate": 53.3,
     "avg_r": 0.333,
-    "edge": 0.303,
-    "base_r": 0.03,
+    "edge": 0.306,
+    "base_r": 0.028,
     "sum_r": 5.0,
-    "t": 0.91
+    "t": 0.92
    },
    "ETH 1h": {
     "trades": 14,
     "win_rate": 28.6,
     "avg_r": -0.286,
-    "edge": -0.36,
-    "base_r": 0.075,
+    "edge": -0.359,
+    "base_r": 0.074,
     "sum_r": -4.0,
     "t": -1.15
    },
@@ -7912,10 +7993,10 @@
     "trades": 16,
     "win_rate": 50.0,
     "avg_r": 0.25,
-    "edge": 0.284,
-    "base_r": -0.034,
+    "edge": 0.289,
+    "base_r": -0.039,
     "sum_r": 4.0,
-    "t": 0.88
+    "t": 0.89
    },
    "BTC 1D": {
     "trades": 19,
@@ -7958,24 +8039,24 @@
     "stops": {
      "fixed": {
       "train_pct": -0.549,
-      "test_pct": 0.665,
+      "test_pct": 0.667,
       "trades": 48
      },
      "atr": {
       "train_pct": -0.028,
-      "test_pct": -0.132,
+      "test_pct": -0.136,
       "trades": 48
      },
      "swing": {
       "train_pct": -0.686,
-      "test_pct": 0.311,
+      "test_pct": 0.31,
       "trades": 48
      }
     },
     "reversal_effect": {
      "times": 18,
      "train_pct": -3.17,
-     "test_pct": -2.69
+     "test_pct": -2.71
     },
     "learned_stop": "fixed",
     "learned_reversal": false,
@@ -7992,7 +8073,7 @@
      },
      "atr": {
       "train_pct": -0.137,
-      "test_pct": -0.074,
+      "test_pct": -0.075,
       "trades": 45
      },
      "swing": {
@@ -8085,14 +8166,14 @@
     "edge": -0.373,
     "base_r": -0.002,
     "sum_r": -6.0,
-    "t": -1.34
+    "t": -1.33
    },
    "ETH 4h": {
     "trades": 15,
     "win_rate": 60.0,
     "avg_r": 0.5,
-    "edge": 0.487,
-    "base_r": 0.013,
+    "edge": 0.486,
+    "base_r": 0.014,
     "sum_r": 7.5,
     "t": 1.49
    },
@@ -8109,8 +8190,8 @@
     "trades": 11,
     "win_rate": 63.6,
     "avg_r": 0.591,
-    "edge": 0.561,
-    "base_r": 0.03,
+    "edge": 0.563,
+    "base_r": 0.028,
     "sum_r": 6.5,
     "t": 1.48
    },
@@ -8118,8 +8199,8 @@
     "trades": 18,
     "win_rate": 50.0,
     "avg_r": 0.25,
-    "edge": 0.175,
-    "base_r": 0.075,
+    "edge": 0.176,
+    "base_r": 0.074,
     "sum_r": 4.5,
     "t": 0.58
    },
@@ -8127,10 +8208,10 @@
     "trades": 20,
     "win_rate": 40.0,
     "avg_r": 0.0,
-    "edge": 0.034,
-    "base_r": -0.034,
+    "edge": 0.039,
+    "base_r": -0.039,
     "sum_r": 0.0,
-    "t": 0.12
+    "t": 0.14
    },
    "BTC 1D": {
     "trades": 20,
@@ -8157,10 +8238,10 @@
    "mae_r": -0.91,
    "reached_1r_pct": 54.2,
    "reached_target_pct": 44.28,
-   "bars_held": 2.44,
+   "bars_held": 2.5,
    "bars_to_win": 4.08,
    "winners_heat_r": -0.45,
-   "losers_best_r": 0.36,
+   "losers_best_r": 0.38,
    "reversal_exits": 4,
    "reversal_saved_r": 0.09
   },
@@ -8172,16 +8253,16 @@
    "set": {
     "stop_atr": 1.5
    },
-   "gain": 0.111,
+   "gain": 0.108,
    "train": {
     "edge": 0.261,
     "trades": 87,
     "was": 0.19
    },
    "test": {
-    "edge": -0.043,
+    "edge": -0.042,
     "trades": 44,
-    "was": -0.083
+    "was": -0.079
    }
   },
   "exit_plan": {
@@ -8225,19 +8306,19 @@
      },
      "atr": {
       "train_pct": -0.209,
-      "test_pct": -0.069,
+      "test_pct": -0.066,
       "trades": 49
      },
      "swing": {
       "train_pct": 0.159,
-      "test_pct": -0.048,
+      "test_pct": -0.047,
       "trades": 49
      }
     },
     "reversal_effect": {
-     "times": 27,
+     "times": 28,
      "train_pct": -14.75,
-     "test_pct": 13.71
+     "test_pct": 15.0
     },
     "learned_stop": "fixed",
     "learned_reversal": false,
@@ -8279,7 +8360,7 @@
   "name": "value_area_resistance",
   "direction": "short",
   "status": "retired",
-  "weight": 0.009,
+  "weight": 0.001,
   "source": "lesson",
   "stop_atr": 0.7,
   "rr": 1.5,
@@ -8305,28 +8386,28 @@
   ],
   "stats": {
    "trades": 352,
-   "avg_r": -0.027,
-   "edge": 0.009,
-   "win_rate": 38.9,
+   "avg_r": -0.034,
+   "edge": 0.001,
+   "win_rate": 38.6,
    "charts": 8,
    "charts_positive": 4
   },
   "charts": {
    "BTC 4h": {
     "trades": 45,
-    "win_rate": 48.9,
-    "avg_r": 0.222,
-    "edge": 0.26,
-    "base_r": -0.038,
-    "sum_r": 10.0,
-    "t": 1.38
+    "win_rate": 46.7,
+    "avg_r": 0.167,
+    "edge": 0.204,
+    "base_r": -0.037,
+    "sum_r": 7.5,
+    "t": 1.09
    },
    "ETH 4h": {
     "trades": 49,
     "win_rate": 40.8,
     "avg_r": 0.02,
     "edge": 0.078,
-    "base_r": -0.058,
+    "base_r": -0.057,
     "sum_r": 1.0,
     "t": 0.44
    },
@@ -8334,16 +8415,16 @@
     "trades": 40,
     "win_rate": 42.5,
     "avg_r": 0.062,
-    "edge": 0.043,
-    "base_r": 0.02,
+    "edge": 0.041,
+    "base_r": 0.022,
     "sum_r": 2.5,
-    "t": 0.22
+    "t": 0.21
    },
    "BTC 1h": {
     "trades": 45,
     "win_rate": 26.7,
     "avg_r": -0.333,
-    "edge": -0.265,
+    "edge": -0.264,
     "base_r": -0.069,
     "sum_r": -15.0,
     "t": -1.59
@@ -8352,19 +8433,19 @@
     "trades": 41,
     "win_rate": 29.3,
     "avg_r": -0.268,
-    "edge": -0.173,
-    "base_r": -0.096,
+    "edge": -0.175,
+    "base_r": -0.093,
     "sum_r": -11.0,
-    "t": -0.96
+    "t": -0.97
    },
    "SOL 1h": {
     "trades": 54,
     "win_rate": 48.1,
     "avg_r": 0.204,
-    "edge": 0.187,
-    "base_r": 0.017,
+    "edge": 0.183,
+    "base_r": 0.021,
     "sum_r": 11.0,
-    "t": 1.09
+    "t": 1.06
    },
    "BTC 1D": {
     "trades": 41,
@@ -8390,11 +8471,11 @@
    "mfe_r": 1.03,
    "mae_r": -1.14,
    "reached_1r_pct": 49.72,
-   "reached_target_pct": 38.91,
+   "reached_target_pct": 38.63,
    "bars_held": 2.23,
    "bars_to_win": 2.26,
    "winners_heat_r": -0.29,
-   "losers_best_r": 0.32,
+   "losers_best_r": 0.33,
    "reversal_exits": 18,
    "reversal_saved_r": -4.17
   },
@@ -8414,19 +8495,19 @@
      },
      "atr": {
       "train_pct": 0.018,
-      "test_pct": -0.125,
+      "test_pct": -0.124,
       "trades": 134
      },
      "swing": {
       "train_pct": 0.003,
-      "test_pct": -0.556,
+      "test_pct": -0.563,
       "trades": 134
      }
     },
     "reversal_effect": {
      "times": 38,
      "train_pct": -6.88,
-     "test_pct": 17.97
+     "test_pct": 17.78
     },
     "learned_stop": "fixed",
     "learned_reversal": false,
@@ -8438,24 +8519,24 @@
     "stops": {
      "fixed": {
       "train_pct": -1.03,
-      "test_pct": 0.698,
+      "test_pct": 0.713,
       "trades": 140
      },
      "atr": {
       "train_pct": -0.301,
-      "test_pct": -0.177,
+      "test_pct": -0.176,
       "trades": 140
      },
      "swing": {
       "train_pct": -0.489,
-      "test_pct": 0.028,
+      "test_pct": 0.036,
       "trades": 140
      }
     },
     "reversal_effect": {
      "times": 79,
      "train_pct": -1.58,
-     "test_pct": -8.79
+     "test_pct": -9.69
     },
     "learned_stop": "fixed",
     "learned_reversal": false,
@@ -8497,7 +8578,7 @@
   "name": "Single Prints",
   "direction": "long",
   "status": "retired",
-  "weight": -0.021,
+  "weight": -0.023,
   "source": "lesson",
   "stop_atr": 1.5,
   "rr": 2.0,
@@ -8522,10 +8603,10 @@
    "Volume above 1.5 \u00d7 its 20-candle average"
   ],
   "stats": {
-   "trades": 956,
+   "trades": 957,
    "avg_r": 0.062,
-   "edge": -0.021,
-   "win_rate": 36.0,
+   "edge": -0.023,
+   "win_rate": 35.9,
    "charts": 8,
    "charts_positive": 4
   },
@@ -8533,11 +8614,11 @@
    "BTC 4h": {
     "trades": 130,
     "win_rate": 28.5,
-    "avg_r": -0.146,
-    "edge": -0.134,
-    "base_r": -0.012,
-    "sum_r": -18.96,
-    "t": -1.14
+    "avg_r": -0.142,
+    "edge": -0.131,
+    "base_r": -0.011,
+    "sum_r": -18.52,
+    "t": -1.11
    },
    "ETH 4h": {
     "trades": 133,
@@ -8545,14 +8626,14 @@
     "avg_r": 0.177,
     "edge": 0.101,
     "base_r": 0.076,
-    "sum_r": 23.49,
+    "sum_r": 23.59,
     "t": 0.81
    },
    "SOL 4h": {
     "trades": 121,
     "win_rate": 33.9,
     "avg_r": 0.017,
-    "edge": 0.051,
+    "edge": 0.05,
     "base_r": -0.034,
     "sum_r": 2.0,
     "t": 0.39
@@ -8561,28 +8642,28 @@
     "trades": 109,
     "win_rate": 37.6,
     "avg_r": 0.045,
-    "edge": -0.071,
-    "base_r": 0.116,
+    "edge": -0.072,
+    "base_r": 0.117,
     "sum_r": 4.95,
-    "t": -0.53
+    "t": -0.54
    },
    "ETH 1h": {
     "trades": 128,
     "win_rate": 38.3,
     "avg_r": 0.134,
-    "edge": -0.055,
-    "base_r": 0.189,
+    "edge": -0.057,
+    "base_r": 0.191,
     "sum_r": 17.18,
-    "t": -0.43
+    "t": -0.44
    },
    "SOL 1h": {
-    "trades": 105,
-    "win_rate": 27.6,
-    "avg_r": -0.184,
-    "edge": -0.206,
+    "trades": 106,
+    "win_rate": 27.4,
+    "avg_r": -0.192,
+    "edge": -0.214,
     "base_r": 0.022,
-    "sum_r": -19.33,
-    "t": -1.58
+    "sum_r": -20.33,
+    "t": -1.66
    },
    "BTC 1D": {
     "trades": 111,
@@ -8604,20 +8685,20 @@
    }
   },
   "after_entry": {
-   "trades": 956,
-   "mfe_r": 1.05,
+   "trades": 957,
+   "mfe_r": 1.04,
    "mae_r": -1.09,
-   "reached_1r_pct": 51.15,
-   "reached_target_pct": 34.21,
-   "bars_held": 6.77,
+   "reached_1r_pct": 50.99,
+   "reached_target_pct": 34.17,
+   "bars_held": 6.88,
    "bars_to_win": 8.68,
    "winners_heat_r": -0.42,
    "losers_best_r": 0.47,
-   "reversal_exits": 155,
-   "reversal_saved_r": -20.03
+   "reversal_exits": 159,
+   "reversal_saved_r": -18.01
   },
   "hints": [
-   "Closing losing trades on a confirmed reversal: 155 times, cost -20.0R in total (they often recovered)."
+   "Closing losing trades on a confirmed reversal: 159 times, cost -18.0R in total (they often recovered)."
   ],
   "tune": null,
   "exit_plan": {
@@ -8627,7 +8708,7 @@
     "stops": {
      "fixed": {
       "train_pct": -0.27,
-      "test_pct": -0.128,
+      "test_pct": -0.124,
       "trades": 384
      },
      "atr": {
@@ -8637,14 +8718,14 @@
      },
      "swing": {
       "train_pct": -0.34,
-      "test_pct": -0.011,
+      "test_pct": -0.021,
       "trades": 384
      }
     },
     "reversal_effect": {
-     "times": 117,
+     "times": 118,
      "train_pct": 16.71,
-     "test_pct": 3.43
+     "test_pct": 5.47
     },
     "learned_stop": "fixed",
     "learned_reversal": true,
@@ -8656,24 +8737,24 @@
     "stops": {
      "fixed": {
       "train_pct": -0.274,
-      "test_pct": -1.331,
+      "test_pct": -1.339,
       "trades": 340
      },
      "atr": {
       "train_pct": -0.159,
-      "test_pct": -0.521,
-      "trades": 342
+      "test_pct": -0.56,
+      "trades": 343
      },
      "swing": {
       "train_pct": -0.278,
-      "test_pct": -0.991,
+      "test_pct": -1.033,
       "trades": 340
      }
     },
     "reversal_effect": {
-     "times": 48,
+     "times": 51,
      "train_pct": -14.73,
-     "test_pct": 0.78
+     "test_pct": 2.26
     },
     "learned_stop": "atr",
     "learned_reversal": false,
@@ -8715,7 +8796,7 @@
   "name": "Short Setup 1",
   "direction": "short",
   "status": "retired",
-  "weight": -0.189,
+  "weight": -0.188,
   "source": "lesson",
   "stop_atr": 2.0,
   "rr": 9.0,
@@ -8740,10 +8821,10 @@
    "Volume above 1.5 \u00d7 its 20-candle average"
   ],
   "stats": {
-   "trades": 912,
-   "avg_r": -0.026,
-   "edge": 0.011,
-   "win_rate": 30.5,
+   "trades": 910,
+   "avg_r": -0.027,
+   "edge": 0.012,
+   "win_rate": 30.4,
    "charts": 8,
    "charts_positive": 4
   },
@@ -8753,7 +8834,7 @@
     "win_rate": 34.2,
     "avg_r": 0.217,
     "edge": 0.07,
-    "base_r": 0.147,
+    "base_r": 0.148,
     "sum_r": 31.7,
     "t": 0.38
    },
@@ -8761,46 +8842,46 @@
     "trades": 131,
     "win_rate": 38.9,
     "avg_r": 0.359,
-    "edge": 0.264,
-    "base_r": 0.095,
-    "sum_r": 47.03,
+    "edge": 0.265,
+    "base_r": 0.094,
+    "sum_r": 47.01,
     "t": 1.36
    },
    "SOL 4h": {
     "trades": 138,
     "win_rate": 34.8,
-    "avg_r": 0.176,
-    "edge": -0.029,
+    "avg_r": 0.182,
+    "edge": -0.023,
     "base_r": 0.205,
-    "sum_r": 24.34,
-    "t": -0.17
+    "sum_r": 25.1,
+    "t": -0.14
    },
    "BTC 1h": {
-    "trades": 111,
-    "win_rate": 18.9,
-    "avg_r": -0.555,
-    "edge": -0.231,
-    "base_r": -0.325,
-    "sum_r": -61.64,
-    "t": -2.51
+    "trades": 109,
+    "win_rate": 18.3,
+    "avg_r": -0.573,
+    "edge": -0.246,
+    "base_r": -0.326,
+    "sum_r": -62.41,
+    "t": -2.7
    },
    "ETH 1h": {
     "trades": 108,
     "win_rate": 21.3,
-    "avg_r": -0.376,
-    "edge": -0.07,
-    "base_r": -0.306,
-    "sum_r": -40.59,
-    "t": -0.58
+    "avg_r": -0.377,
+    "edge": -0.065,
+    "base_r": -0.312,
+    "sum_r": -40.73,
+    "t": -0.54
    },
    "SOL 1h": {
     "trades": 125,
     "win_rate": 28.8,
-    "avg_r": -0.246,
-    "edge": -0.096,
-    "base_r": -0.149,
-    "sum_r": -30.71,
-    "t": -0.8
+    "avg_r": -0.248,
+    "edge": -0.094,
+    "base_r": -0.154,
+    "sum_r": -31.01,
+    "t": -0.79
    },
    "BTC 1D": {
     "trades": 77,
@@ -8822,17 +8903,17 @@
    }
   },
   "after_entry": {
-   "trades": 912,
+   "trades": 910,
    "mfe_r": 0.95,
    "mae_r": -1.07,
    "reached_1r_pct": 48.59,
    "reached_target_pct": 0.66,
-   "bars_held": 22.47,
+   "bars_held": 22.49,
    "bars_to_win": 40.22,
-   "winners_heat_r": -0.45,
+   "winners_heat_r": -0.44,
    "losers_best_r": 0.44,
    "reversal_exits": 258,
-   "reversal_saved_r": 13.66
+   "reversal_saved_r": 13.69
   },
   "hints": [
    "Closing losing trades on a confirmed reversal: 258 times, saved +13.7R in total."
@@ -8850,7 +8931,7 @@
      },
      "atr": {
       "train_pct": 0.637,
-      "test_pct": -0.977,
+      "test_pct": -0.978,
       "trades": 417
      },
      "swing": {
@@ -8874,24 +8955,24 @@
     "stops": {
      "fixed": {
       "train_pct": -0.998,
-      "test_pct": 0.275,
-      "trades": 344
+      "test_pct": 0.262,
+      "trades": 342
      },
      "atr": {
       "train_pct": -0.532,
-      "test_pct": 0.005,
-      "trades": 344
+      "test_pct": 0.002,
+      "trades": 342
      },
      "swing": {
       "train_pct": -0.652,
-      "test_pct": -0.021,
-      "trades": 344
+      "test_pct": -0.017,
+      "trades": 342
      }
     },
     "reversal_effect": {
      "times": 177,
      "train_pct": 59.48,
-     "test_pct": -5.89
+     "test_pct": -6.49
     },
     "learned_stop": "fixed",
     "learned_reversal": false,
@@ -9031,7 +9112,7 @@
     "win_rate": null,
     "avg_r": null,
     "edge": null,
-    "base_r": 0.02,
+    "base_r": 0.021,
     "sum_r": 0.0
    },
    "ETH 1h": {
@@ -9039,7 +9120,7 @@
     "win_rate": null,
     "avg_r": null,
     "edge": null,
-    "base_r": 0.178,
+    "base_r": 0.177,
     "sum_r": 0.0
    },
    "SOL 1h": {
@@ -9047,7 +9128,7 @@
     "win_rate": null,
     "avg_r": null,
     "edge": null,
-    "base_r": 0.057,
+    "base_r": 0.056,
     "sum_r": 0.0
    },
    "BTC 1D": {
@@ -9234,7 +9315,7 @@
   "name": "Bearish CVD Divergence",
   "direction": "short",
   "status": "active",
-  "weight": 0.082,
+  "weight": 0.091,
   "source": "lesson",
   "stop_atr": 1.5,
   "rr": 2.0,
@@ -9258,10 +9339,10 @@
    "Bearish divergence: price higher high, Awesome Oscillator lower high - in the last 3 candles, lows/highs at most 60 candles apart"
   ],
   "stats": {
-   "trades": 178,
-   "avg_r": 0.021,
-   "edge": 0.091,
-   "win_rate": 34.3,
+   "trades": 179,
+   "avg_r": 0.032,
+   "edge": 0.101,
+   "win_rate": 34.6,
    "charts": 8,
    "charts_positive": 5
   },
@@ -9288,8 +9369,8 @@
     "trades": 13,
     "win_rate": 15.4,
     "avg_r": -0.538,
-    "edge": -0.529,
-    "base_r": -0.009,
+    "edge": -0.528,
+    "base_r": -0.01,
     "sum_r": -7.0,
     "t": -1.69
    },
@@ -9297,26 +9378,26 @@
     "trades": 23,
     "win_rate": 30.4,
     "avg_r": -0.134,
-    "edge": 0.018,
-    "base_r": -0.153,
+    "edge": 0.013,
+    "base_r": -0.147,
     "sum_r": -3.08,
-    "t": 0.07
+    "t": 0.05
    },
    "ETH 1h": {
-    "trades": 20,
-    "win_rate": 35.0,
-    "avg_r": 0.05,
-    "edge": 0.183,
+    "trades": 21,
+    "win_rate": 38.1,
+    "avg_r": 0.143,
+    "edge": 0.276,
     "base_r": -0.133,
-    "sum_r": 1.0,
-    "t": 0.56
+    "sum_r": 3.0,
+    "t": 0.85
    },
    "SOL 1h": {
     "trades": 24,
     "win_rate": 33.3,
     "avg_r": 0.0,
-    "edge": -0.022,
-    "base_r": 0.022,
+    "edge": -0.023,
+    "base_r": 0.023,
     "sum_r": 0.0,
     "t": -0.08
    },
@@ -9340,36 +9421,36 @@
    }
   },
   "after_entry": {
-   "trades": 178,
-   "mfe_r": 1.28,
+   "trades": 179,
+   "mfe_r": 1.3,
    "mae_r": -1.05,
-   "reached_1r_pct": 53.38,
-   "reached_target_pct": 33.16,
-   "bars_held": 8.76,
-   "bars_to_win": 13.04,
-   "winners_heat_r": -0.33,
+   "reached_1r_pct": 53.63,
+   "reached_target_pct": 33.53,
+   "bars_held": 8.81,
+   "bars_to_win": 13.16,
+   "winners_heat_r": -0.32,
    "losers_best_r": 0.52,
-   "reversal_exits": 19,
-   "reversal_saved_r": 5.27
+   "reversal_exits": 20,
+   "reversal_saved_r": 2.83
   },
   "hints": [
-   "Closing losing trades on a confirmed reversal: 19 times, saved +5.3R in total."
+   "Closing losing trades on a confirmed reversal: 20 times, saved +2.8R in total."
   ],
   "tune": {
-   "change": "target 2R -> 1.5R",
+   "change": "stop 1.5 ATR -> 1 ATR",
    "set": {
-    "rr": 1.5
+    "stop_atr": 1.0
    },
-   "gain": 0.309,
+   "gain": 0.301,
    "train": {
-    "edge": 0.183,
+    "edge": 0.239,
     "trades": 122,
     "was": 0.025
    },
    "test": {
-    "edge": 0.412,
-    "trades": 57,
-    "was": 0.261
+    "edge": 0.374,
+    "trades": 58,
+    "was": 0.287
    }
   },
   "exit_plan": {
@@ -9408,24 +9489,24 @@
     "stops": {
      "fixed": {
       "train_pct": -0.313,
-      "test_pct": 0.496,
-      "trades": 67
+      "test_pct": 0.678,
+      "trades": 68
      },
      "atr": {
       "train_pct": -0.166,
-      "test_pct": -0.295,
-      "trades": 67
+      "test_pct": -0.232,
+      "trades": 68
      },
      "swing": {
       "train_pct": -0.192,
-      "test_pct": -0.04,
-      "trades": 67
+      "test_pct": -0.091,
+      "trades": 68
      }
     },
     "reversal_effect": {
-     "times": 33,
+     "times": 34,
      "train_pct": 14.9,
-     "test_pct": -4.81
+     "test_pct": -9.07
     },
     "learned_stop": "fixed",
     "learned_reversal": false,
@@ -9467,7 +9548,7 @@
   "name": "CVD Divergence with Absorption",
   "direction": "long",
   "status": "retired",
-  "weight": -0.059,
+  "weight": -0.054,
   "source": "lesson",
   "stop_atr": 1.5,
   "rr": 2.0,
@@ -9492,67 +9573,67 @@
    "Close above SMA (200)"
   ],
   "stats": {
-   "trades": 701,
-   "avg_r": 0.028,
-   "edge": -0.061,
-   "win_rate": 35.5,
+   "trades": 700,
+   "avg_r": 0.034,
+   "edge": -0.056,
+   "win_rate": 35.7,
    "charts": 8,
    "charts_positive": 2
   },
   "charts": {
    "BTC 4h": {
-    "trades": 81,
-    "win_rate": 34.6,
-    "avg_r": 0.006,
-    "edge": 0.018,
-    "base_r": -0.012,
-    "sum_r": 0.51,
-    "t": 0.11
+    "trades": 82,
+    "win_rate": 35.4,
+    "avg_r": 0.03,
+    "edge": 0.041,
+    "base_r": -0.011,
+    "sum_r": 2.46,
+    "t": 0.26
    },
    "ETH 4h": {
-    "trades": 86,
-    "win_rate": 36.0,
-    "avg_r": 0.039,
-    "edge": -0.037,
+    "trades": 85,
+    "win_rate": 36.5,
+    "avg_r": 0.052,
+    "edge": -0.024,
     "base_r": 0.076,
-    "sum_r": 3.36,
-    "t": -0.24
+    "sum_r": 4.43,
+    "t": -0.16
    },
    "SOL 4h": {
-    "trades": 82,
-    "win_rate": 28.0,
-    "avg_r": -0.156,
-    "edge": -0.122,
+    "trades": 81,
+    "win_rate": 28.4,
+    "avg_r": -0.145,
+    "edge": -0.112,
     "base_r": -0.034,
-    "sum_r": -12.78,
-    "t": -0.81
+    "sum_r": -11.78,
+    "t": -0.74
    },
    "BTC 1h": {
-    "trades": 88,
-    "win_rate": 30.7,
-    "avg_r": -0.144,
-    "edge": -0.26,
-    "base_r": 0.116,
-    "sum_r": -12.68,
-    "t": -1.86
+    "trades": 89,
+    "win_rate": 30.3,
+    "avg_r": -0.154,
+    "edge": -0.271,
+    "base_r": 0.117,
+    "sum_r": -13.68,
+    "t": -1.96
    },
    "ETH 1h": {
     "trades": 97,
     "win_rate": 36.1,
     "avg_r": 0.029,
-    "edge": -0.16,
-    "base_r": 0.189,
+    "edge": -0.162,
+    "base_r": 0.191,
     "sum_r": 2.84,
-    "t": -1.13
+    "t": -1.14
    },
    "SOL 1h": {
-    "trades": 81,
-    "win_rate": 35.8,
-    "avg_r": -0.004,
-    "edge": -0.026,
+    "trades": 80,
+    "win_rate": 36.2,
+    "avg_r": 0.009,
+    "edge": -0.014,
     "base_r": 0.022,
-    "sum_r": -0.29,
-    "t": -0.17
+    "sum_r": 0.71,
+    "t": -0.09
    },
    "BTC 1D": {
     "trades": 97,
@@ -9574,17 +9655,17 @@
    }
   },
   "after_entry": {
-   "trades": 701,
-   "mfe_r": 0.99,
+   "trades": 700,
+   "mfe_r": 1.01,
    "mae_r": -1.09,
-   "reached_1r_pct": 51.06,
-   "reached_target_pct": 32.4,
+   "reached_1r_pct": 51.16,
+   "reached_target_pct": 32.57,
    "bars_held": 8.02,
-   "bars_to_win": 9.8,
-   "winners_heat_r": -0.37,
+   "bars_to_win": 9.86,
+   "winners_heat_r": -0.38,
    "losers_best_r": 0.45,
    "reversal_exits": 118,
-   "reversal_saved_r": -11.11
+   "reversal_saved_r": -11.1
   },
   "hints": [
    "Closing losing trades on a confirmed reversal: 118 times, cost -11.1R in total (they often recovered)."
@@ -9597,24 +9678,24 @@
     "stops": {
      "fixed": {
       "train_pct": -0.572,
-      "test_pct": -0.521,
-      "trades": 249
+      "test_pct": -0.463,
+      "trades": 248
      },
      "atr": {
       "train_pct": -0.304,
-      "test_pct": -0.422,
-      "trades": 249
+      "test_pct": -0.355,
+      "trades": 248
      },
      "swing": {
       "train_pct": -0.637,
-      "test_pct": -0.258,
-      "trades": 249
+      "test_pct": -0.222,
+      "trades": 248
      }
     },
     "reversal_effect": {
-     "times": 35,
+     "times": 34,
      "train_pct": -16.04,
-     "test_pct": 20.77
+     "test_pct": 18.74
     },
     "learned_stop": "atr",
     "learned_reversal": false,
@@ -9626,17 +9707,17 @@
     "stops": {
      "fixed": {
       "train_pct": -0.281,
-      "test_pct": -0.832,
+      "test_pct": -0.82,
       "trades": 266
      },
      "atr": {
       "train_pct": -0.106,
-      "test_pct": -0.101,
+      "test_pct": -0.121,
       "trades": 266
      },
      "swing": {
       "train_pct": 0.01,
-      "test_pct": -0.442,
+      "test_pct": -0.428,
       "trades": 266
      }
     },
@@ -9685,7 +9766,7 @@
   "name": "bullish_divergence",
   "direction": "long",
   "status": "active",
-  "weight": 0.069,
+  "weight": 0.07,
   "source": "lesson",
   "stop_atr": 0.7,
   "rr": 1.5,
@@ -9716,7 +9797,7 @@
   "stats": {
    "trades": 225,
    "avg_r": 0.089,
-   "edge": 0.075,
+   "edge": 0.076,
    "win_rate": 43.5,
    "charts": 8,
    "charts_positive": 5
@@ -9736,9 +9817,9 @@
     "win_rate": 39.1,
     "avg_r": -0.022,
     "edge": -0.035,
-    "base_r": 0.013,
+    "base_r": 0.014,
     "sum_r": -0.5,
-    "t": -0.13
+    "t": -0.14
    },
    "SOL 4h": {
     "trades": 31,
@@ -9753,28 +9834,28 @@
     "trades": 35,
     "win_rate": 48.6,
     "avg_r": 0.214,
-    "edge": 0.184,
-    "base_r": 0.03,
+    "edge": 0.187,
+    "base_r": 0.028,
     "sum_r": 7.5,
-    "t": 0.86
+    "t": 0.87
    },
    "ETH 1h": {
     "trades": 28,
     "win_rate": 35.7,
     "avg_r": -0.107,
-    "edge": -0.182,
-    "base_r": 0.075,
+    "edge": -0.181,
+    "base_r": 0.074,
     "sum_r": -3.0,
-    "t": -0.79
+    "t": -0.78
    },
    "SOL 1h": {
     "trades": 25,
     "win_rate": 52.0,
     "avg_r": 0.3,
-    "edge": 0.334,
-    "base_r": -0.034,
+    "edge": 0.339,
+    "base_r": -0.039,
     "sum_r": 7.5,
-    "t": 1.31
+    "t": 1.33
    },
    "BTC 1D": {
     "trades": 30,
@@ -9816,16 +9897,16 @@
    "set": {
     "stop_atr": 2.0
    },
-   "gain": 0.384,
+   "gain": 0.379,
    "train": {
     "edge": 0.276,
     "trades": 149,
     "was": 0.189
    },
    "test": {
-    "edge": 0.166,
+    "edge": 0.165,
     "trades": 76,
-    "was": -0.131
+    "was": -0.127
    }
   },
   "exit_plan": {
@@ -9864,7 +9945,7 @@
     "stops": {
      "fixed": {
       "train_pct": 1.314,
-      "test_pct": 0.417,
+      "test_pct": 0.311,
       "trades": 87
      },
      "atr": {
@@ -9881,7 +9962,7 @@
     "reversal_effect": {
      "times": 46,
      "train_pct": -27.22,
-     "test_pct": -9.91
+     "test_pct": -6.07
     },
     "learned_stop": "fixed",
     "learned_reversal": false,
@@ -9923,7 +10004,7 @@
   "name": "bearish_divergence",
   "direction": "short",
   "status": "retired",
-  "weight": -0.067,
+  "weight": -0.069,
   "source": "lesson",
   "stop_atr": 0.7,
   "rr": 1.5,
@@ -9952,9 +10033,9 @@
    "Market Cipher red dot (WaveTrend crosses down) above 0"
   ],
   "stats": {
-   "trades": 222,
-   "avg_r": -0.11,
-   "edge": -0.073,
+   "trades": 225,
+   "avg_r": -0.111,
+   "edge": -0.075,
    "win_rate": 35.6,
    "charts": 8,
    "charts_positive": 4
@@ -9965,7 +10046,7 @@
     "win_rate": 47.8,
     "avg_r": 0.196,
     "edge": 0.233,
-    "base_r": -0.038,
+    "base_r": -0.037,
     "sum_r": 4.5,
     "t": 0.88
    },
@@ -9973,8 +10054,8 @@
     "trades": 24,
     "win_rate": 45.8,
     "avg_r": 0.146,
-    "edge": 0.204,
-    "base_r": -0.058,
+    "edge": 0.203,
+    "base_r": -0.057,
     "sum_r": 3.5,
     "t": 0.78
    },
@@ -9982,37 +10063,37 @@
     "trades": 24,
     "win_rate": 16.7,
     "avg_r": -0.583,
-    "edge": -0.603,
-    "base_r": 0.02,
+    "edge": -0.605,
+    "base_r": 0.022,
     "sum_r": -14.0,
-    "t": -3.1
+    "t": -3.11
    },
    "BTC 1h": {
     "trades": 36,
-    "win_rate": 33.3,
-    "avg_r": -0.167,
-    "edge": -0.098,
+    "win_rate": 30.6,
+    "avg_r": -0.236,
+    "edge": -0.167,
     "base_r": -0.069,
-    "sum_r": -6.0,
-    "t": -0.49
+    "sum_r": -8.5,
+    "t": -0.86
    },
    "ETH 1h": {
-    "trades": 24,
-    "win_rate": 20.8,
-    "avg_r": -0.479,
-    "edge": -0.384,
-    "base_r": -0.096,
-    "sum_r": -11.5,
-    "t": -1.81
+    "trades": 26,
+    "win_rate": 23.1,
+    "avg_r": -0.423,
+    "edge": -0.33,
+    "base_r": -0.093,
+    "sum_r": -11.0,
+    "t": -1.57
    },
    "SOL 1h": {
-    "trades": 34,
-    "win_rate": 41.2,
-    "avg_r": 0.029,
-    "edge": 0.013,
-    "base_r": 0.017,
-    "sum_r": 1.0,
-    "t": 0.06
+    "trades": 35,
+    "win_rate": 42.9,
+    "avg_r": 0.071,
+    "edge": 0.05,
+    "base_r": 0.021,
+    "sum_r": 2.5,
+    "t": 0.24
    },
    "BTC 1D": {
     "trades": 33,
@@ -10034,15 +10115,15 @@
    }
   },
   "after_entry": {
-   "trades": 222,
-   "mfe_r": 0.82,
+   "trades": 225,
+   "mfe_r": 0.84,
    "mae_r": -1.19,
-   "reached_1r_pct": 42.8,
-   "reached_target_pct": 35.59,
-   "bars_held": 2.26,
-   "bars_to_win": 3.17,
-   "winners_heat_r": -0.38,
-   "losers_best_r": 0.27,
+   "reached_1r_pct": 43.55,
+   "reached_target_pct": 35.58,
+   "bars_held": 2.31,
+   "bars_to_win": 3.21,
+   "winners_heat_r": -0.37,
+   "losers_best_r": 0.29,
    "reversal_exits": 1,
    "reversal_saved_r": -1.91
   },
@@ -10062,12 +10143,12 @@
      },
      "atr": {
       "train_pct": -0.559,
-      "test_pct": -0.025,
+      "test_pct": -0.021,
       "trades": 71
      },
      "swing": {
       "train_pct": -1.745,
-      "test_pct": -0.066,
+      "test_pct": -0.064,
       "trades": 71
      }
     },
@@ -10086,24 +10167,24 @@
     "stops": {
      "fixed": {
       "train_pct": -0.571,
-      "test_pct": 0.648,
-      "trades": 94
+      "test_pct": 0.911,
+      "trades": 97
      },
      "atr": {
       "train_pct": -0.36,
-      "test_pct": -0.302,
-      "trades": 94
+      "test_pct": -0.292,
+      "trades": 97
      },
      "swing": {
       "train_pct": -0.277,
-      "test_pct": -0.096,
-      "trades": 94
+      "test_pct": -0.147,
+      "trades": 97
      }
     },
     "reversal_effect": {
-     "times": 37,
+     "times": 39,
      "train_pct": 17.87,
-     "test_pct": -9.44
+     "test_pct": -18.28
     },
     "learned_stop": "fixed",
     "learned_reversal": false,
@@ -10145,7 +10226,7 @@
   "name": "Bearish Divergence",
   "direction": "short",
   "status": "active",
-  "weight": 0.068,
+  "weight": 0.059,
   "source": "lesson",
   "stop_atr": 1.5,
   "rr": 2.0,
@@ -10165,10 +10246,10 @@
    "Bearish divergence: price higher high, RSI lower high - in the last 3 candles, lows/highs at most 60 candles apart"
   ],
   "stats": {
-   "trades": 215,
-   "avg_r": 0.002,
-   "edge": 0.074,
-   "win_rate": 33.5,
+   "trades": 214,
+   "avg_r": -0.007,
+   "edge": 0.064,
+   "win_rate": 33.2,
    "charts": 8,
    "charts_positive": 5
   },
@@ -10180,7 +10261,7 @@
     "edge": -0.059,
     "base_r": 0.024,
     "sum_r": -0.84,
-    "t": -0.2
+    "t": -0.21
    },
    "ETH 4h": {
     "trades": 21,
@@ -10196,34 +10277,34 @@
     "win_rate": 23.8,
     "avg_r": -0.286,
     "edge": -0.276,
-    "base_r": -0.009,
+    "base_r": -0.01,
     "sum_r": -6.0,
-    "t": -0.97
+    "t": -0.96
    },
    "BTC 1h": {
     "trades": 28,
     "win_rate": 42.9,
     "avg_r": 0.233,
-    "edge": 0.386,
-    "base_r": -0.153,
+    "edge": 0.381,
+    "base_r": -0.147,
     "sum_r": 6.54,
-    "t": 1.38
+    "t": 1.37
    },
    "ETH 1h": {
-    "trades": 29,
-    "win_rate": 41.4,
-    "avg_r": 0.241,
-    "edge": 0.374,
+    "trades": 28,
+    "win_rate": 39.3,
+    "avg_r": 0.179,
+    "edge": 0.311,
     "base_r": -0.133,
-    "sum_r": 7.0,
-    "t": 1.34
+    "sum_r": 5.0,
+    "t": 1.1
    },
    "SOL 1h": {
     "trades": 26,
     "win_rate": 34.6,
     "avg_r": 0.076,
-    "edge": 0.054,
-    "base_r": 0.022,
+    "edge": 0.053,
+    "base_r": 0.023,
     "sum_r": 1.97,
     "t": 0.19
    },
@@ -10247,13 +10328,13 @@
    }
   },
   "after_entry": {
-   "trades": 215,
-   "mfe_r": 0.95,
-   "mae_r": -1.11,
-   "reached_1r_pct": 46.97,
-   "reached_target_pct": 32.56,
+   "trades": 214,
+   "mfe_r": 0.91,
+   "mae_r": -1.12,
+   "reached_1r_pct": 46.73,
+   "reached_target_pct": 32.24,
    "bars_held": 7.71,
-   "bars_to_win": 9.87,
+   "bars_to_win": 9.62,
    "winners_heat_r": -0.33,
    "losers_best_r": 0.45,
    "reversal_exits": 30,
@@ -10267,16 +10348,16 @@
    "set": {
     "stop_atr": 2.5
    },
-   "gain": 0.164,
+   "gain": 0.17,
    "train": {
     "edge": 0.123,
     "trades": 156,
     "was": -0.01
    },
    "test": {
-    "edge": 0.355,
-    "trades": 59,
-    "was": 0.324
+    "edge": 0.33,
+    "trades": 58,
+    "was": 0.293
    }
   },
   "exit_plan": {
@@ -10315,18 +10396,18 @@
     "stops": {
      "fixed": {
       "train_pct": -0.343,
-      "test_pct": 1.514,
-      "trades": 83
+      "test_pct": 1.375,
+      "trades": 82
      },
      "atr": {
       "train_pct": -0.249,
-      "test_pct": 0.172,
-      "trades": 83
+      "test_pct": 0.133,
+      "trades": 82
      },
      "swing": {
       "train_pct": -0.203,
-      "test_pct": 0.263,
-      "trades": 83
+      "test_pct": 0.233,
+      "trades": 82
      }
     },
     "reversal_effect": {
@@ -10374,7 +10455,7 @@
   "name": "Hidden Bullish Divergence",
   "direction": "long",
   "status": "active",
-  "weight": 0.112,
+  "weight": 0.111,
   "source": "lesson",
   "stop_atr": 1.5,
   "rr": 2.0,
@@ -10396,7 +10477,7 @@
   "stats": {
    "trades": 205,
    "avg_r": 0.22,
-   "edge": 0.123,
+   "edge": 0.122,
    "win_rate": 41.0,
    "charts": 8,
    "charts_positive": 6
@@ -10407,9 +10488,9 @@
     "win_rate": 11.1,
     "avg_r": -0.667,
     "edge": -0.655,
-    "base_r": -0.012,
+    "base_r": -0.011,
     "sum_r": -12.0,
-    "t": -2.86
+    "t": -2.87
    },
    "ETH 4h": {
     "trades": 29,
@@ -10433,19 +10514,19 @@
     "trades": 25,
     "win_rate": 48.0,
     "avg_r": 0.44,
-    "edge": 0.324,
-    "base_r": 0.116,
+    "edge": 0.323,
+    "base_r": 0.117,
     "sum_r": 11.0,
-    "t": 1.06
+    "t": 1.05
    },
    "ETH 1h": {
     "trades": 30,
     "win_rate": 46.7,
     "avg_r": 0.4,
-    "edge": 0.211,
-    "base_r": 0.189,
+    "edge": 0.209,
+    "base_r": 0.191,
     "sum_r": 12.0,
-    "t": 0.76
+    "t": 0.75
    },
    "SOL 1h": {
     "trades": 19,
@@ -10479,12 +10560,12 @@
    "trades": 205,
    "mfe_r": 1.34,
    "mae_r": -1.08,
-   "reached_1r_pct": 57.06,
+   "reached_1r_pct": 56.58,
    "reached_target_pct": 40.5,
    "bars_held": 7.88,
    "bars_to_win": 8.31,
    "winners_heat_r": -0.42,
-   "losers_best_r": 0.59,
+   "losers_best_r": 0.57,
    "reversal_exits": 45,
    "reversal_saved_r": -10.92
   },
@@ -10496,16 +10577,16 @@
    "set": {
     "stop_atr": 1.0
    },
-   "gain": 0.298,
+   "gain": 0.252,
    "train": {
     "edge": 0.182,
     "trades": 143,
     "was": 0.074
    },
    "test": {
-    "edge": 0.415,
+    "edge": 0.367,
     "trades": 62,
-    "was": 0.225
+    "was": 0.223
    }
   },
   "exit_plan": {
@@ -10515,7 +10596,7 @@
     "stops": {
      "fixed": {
       "train_pct": -0.453,
-      "test_pct": -0.413,
+      "test_pct": -0.415,
       "trades": 69
      },
      "atr": {
@@ -10544,24 +10625,24 @@
     "stops": {
      "fixed": {
       "train_pct": 0.702,
-      "test_pct": -1.001,
+      "test_pct": -1.242,
       "trades": 74
      },
      "atr": {
       "train_pct": 0.076,
-      "test_pct": 0.045,
+      "test_pct": -0.006,
       "trades": 74
      },
      "swing": {
       "train_pct": 0.26,
-      "test_pct": -0.091,
+      "test_pct": -0.11,
       "trades": 74
      }
     },
     "reversal_effect": {
-     "times": 42,
+     "times": 43,
      "train_pct": -22.75,
-     "test_pct": 11.18
+     "test_pct": 16.2
     },
     "learned_stop": "fixed",
     "learned_reversal": false,
@@ -10647,8 +10728,8 @@
     "trades": 4,
     "win_rate": 0.0,
     "avg_r": -1.0,
-    "edge": -1.1,
-    "base_r": 0.1,
+    "edge": -1.101,
+    "base_r": 0.101,
     "sum_r": -4.0,
     "t": 0.0
    },
@@ -10665,8 +10746,8 @@
     "trades": 2,
     "win_rate": 0.0,
     "avg_r": -1.0,
-    "edge": -1.072,
-    "base_r": 0.072,
+    "edge": -1.071,
+    "base_r": 0.071,
     "sum_r": -2.0,
     "t": 0.0
    },
@@ -10674,17 +10755,17 @@
     "trades": 4,
     "win_rate": 25.0,
     "avg_r": -0.487,
-    "edge": -0.247,
-    "base_r": -0.24,
+    "edge": -0.253,
+    "base_r": -0.234,
     "sum_r": -1.95,
-    "t": -0.48
+    "t": -0.49
    },
    "ETH 1h": {
     "trades": 3,
     "win_rate": 0.0,
     "avg_r": -1.0,
-    "edge": -0.809,
-    "base_r": -0.191,
+    "edge": -0.808,
+    "base_r": -0.192,
     "sum_r": -3.0,
     "t": 0.0
    },
@@ -10693,7 +10774,7 @@
     "win_rate": 66.7,
     "avg_r": 1.385,
     "edge": 1.434,
-    "base_r": -0.048,
+    "base_r": -0.049,
     "sum_r": 4.16,
     "t": 0.99
    },
@@ -10750,16 +10831,16 @@
      }
     ]
    },
-   "gain": 0.507,
+   "gain": 0.509,
    "train": {
     "edge": 0.492,
     "trades": 18,
     "was": 0.233
    },
    "test": {
-    "edge": 0.512,
+    "edge": 0.51,
     "trades": 9,
-    "was": 0.264
+    "was": 0.26
    }
   },
   "exit_plan": {
@@ -10857,7 +10938,7 @@
   "name": "Short: Money Flow and Momentum Divergence",
   "direction": "short",
   "status": "active",
-  "weight": 0.117,
+  "weight": 0.125,
   "source": "lesson",
   "stop_atr": 1.5,
   "rr": 2.0,
@@ -10882,10 +10963,10 @@
    "Market Cipher money flow below zero (red)"
   ],
   "stats": {
-   "trades": 223,
-   "avg_r": 0.07,
-   "edge": 0.128,
-   "win_rate": 36.3,
+   "trades": 224,
+   "avg_r": 0.078,
+   "edge": 0.136,
+   "win_rate": 36.6,
    "charts": 8,
    "charts_positive": 5
   },
@@ -10897,7 +10978,7 @@
     "edge": -0.086,
     "base_r": 0.024,
     "sum_r": -2.0,
-    "t": -0.34
+    "t": -0.35
    },
    "ETH 4h": {
     "trades": 25,
@@ -10912,19 +10993,19 @@
     "trades": 30,
     "win_rate": 46.7,
     "avg_r": 0.4,
-    "edge": 0.409,
-    "base_r": -0.009,
+    "edge": 0.41,
+    "base_r": -0.01,
     "sum_r": 12.0,
-    "t": 1.47
+    "t": 1.48
    },
    "BTC 1h": {
-    "trades": 33,
-    "win_rate": 21.2,
-    "avg_r": -0.414,
-    "edge": -0.261,
-    "base_r": -0.153,
-    "sum_r": -13.65,
-    "t": -1.27
+    "trades": 34,
+    "win_rate": 23.5,
+    "avg_r": -0.343,
+    "edge": -0.195,
+    "base_r": -0.147,
+    "sum_r": -11.65,
+    "t": -0.92
    },
    "ETH 1h": {
     "trades": 24,
@@ -10939,8 +11020,8 @@
     "trades": 33,
     "win_rate": 33.3,
     "avg_r": 0.0,
-    "edge": -0.022,
-    "base_r": 0.022,
+    "edge": -0.023,
+    "base_r": 0.023,
     "sum_r": 0.0,
     "t": -0.09
    },
@@ -10964,17 +11045,17 @@
    }
   },
   "after_entry": {
-   "trades": 223,
+   "trades": 224,
    "mfe_r": 1.03,
-   "mae_r": -1.06,
-   "reached_1r_pct": 49.32,
-   "reached_target_pct": 34.97,
-   "bars_held": 6.54,
-   "bars_to_win": 8.8,
-   "winners_heat_r": -0.38,
+   "mae_r": -1.07,
+   "reached_1r_pct": 49.54,
+   "reached_target_pct": 35.26,
+   "bars_held": 6.55,
+   "bars_to_win": 8.38,
+   "winners_heat_r": -0.39,
    "losers_best_r": 0.45,
    "reversal_exits": 33,
-   "reversal_saved_r": -5.37
+   "reversal_saved_r": -5.36
   },
   "hints": [
    "Closing losing trades on a confirmed reversal: 33 times, cost -5.4R in total (they often recovered)."
@@ -10992,19 +11073,19 @@
      },
      "atr": {
       "train_pct": 0.571,
-      "test_pct": -1.238,
+      "test_pct": -1.236,
       "trades": 87
      },
      "swing": {
       "train_pct": 1.824,
-      "test_pct": -0.344,
+      "test_pct": -0.422,
       "trades": 87
      }
     },
     "reversal_effect": {
-     "times": 28,
+     "times": 29,
      "train_pct": -70.12,
-     "test_pct": 3.7
+     "test_pct": -1.25
     },
     "learned_stop": "swing",
     "learned_reversal": false,
@@ -11016,24 +11097,24 @@
     "stops": {
      "fixed": {
       "train_pct": -1.906,
-      "test_pct": -0.042,
-      "trades": 90
+      "test_pct": 0.014,
+      "trades": 91
      },
      "atr": {
       "train_pct": -0.672,
-      "test_pct": 0.041,
-      "trades": 90
+      "test_pct": 0.059,
+      "trades": 91
      },
      "swing": {
       "train_pct": -1.47,
-      "test_pct": -0.161,
-      "trades": 90
+      "test_pct": -0.129,
+      "trades": 91
      }
     },
     "reversal_effect": {
      "times": 17,
      "train_pct": 5.36,
-     "test_pct": -2.51
+     "test_pct": -2.53
     },
     "learned_stop": "atr",
     "learned_reversal": false,
@@ -11113,9 +11194,9 @@
     "win_rate": 31.2,
     "avg_r": -0.062,
     "edge": -0.051,
-    "base_r": -0.012,
+    "base_r": -0.011,
     "sum_r": -2.0,
-    "t": -0.2
+    "t": -0.21
    },
    "ETH 4h": {
     "trades": 40,
@@ -11139,8 +11220,8 @@
     "trades": 29,
     "win_rate": 20.7,
     "avg_r": -0.408,
-    "edge": -0.524,
-    "base_r": 0.116,
+    "edge": -0.526,
+    "base_r": 0.117,
     "sum_r": -11.84,
     "t": -2.45
    },
@@ -11148,10 +11229,10 @@
     "trades": 27,
     "win_rate": 33.3,
     "avg_r": -0.055,
-    "edge": -0.244,
-    "base_r": 0.189,
+    "edge": -0.245,
+    "base_r": 0.191,
     "sum_r": -1.48,
-    "t": -0.91
+    "t": -0.92
    },
    "SOL 1h": {
     "trades": 28,
@@ -11234,12 +11315,12 @@
     "stops": {
      "fixed": {
       "train_pct": 0.222,
-      "test_pct": -2.136,
+      "test_pct": -2.177,
       "trades": 84
      },
      "atr": {
       "train_pct": 0.096,
-      "test_pct": -0.685,
+      "test_pct": -0.689,
       "trades": 84
      },
      "swing": {
@@ -11249,9 +11330,9 @@
      }
     },
     "reversal_effect": {
-     "times": 33,
+     "times": 35,
      "train_pct": 1.68,
-     "test_pct": 7.05
+     "test_pct": 8.18
     },
     "learned_stop": "fixed",
     "learned_reversal": true,
@@ -11293,7 +11374,7 @@
   "name": "rsi_bear_div",
   "direction": "short",
   "status": "active",
-  "weight": 0.108,
+  "weight": 0.107,
   "source": "lesson",
   "stop_atr": 1.5,
   "rr": 2.0,
@@ -11321,7 +11402,7 @@
   "stats": {
    "trades": 213,
    "avg_r": 0.063,
-   "edge": 0.118,
+   "edge": 0.117,
    "win_rate": 36.6,
    "charts": 8,
    "charts_positive": 6
@@ -11334,7 +11415,7 @@
     "edge": -0.086,
     "base_r": 0.024,
     "sum_r": -2.0,
-    "t": -0.34
+    "t": -0.35
    },
    "ETH 4h": {
     "trades": 25,
@@ -11349,8 +11430,8 @@
     "trades": 30,
     "win_rate": 43.3,
     "avg_r": 0.3,
-    "edge": 0.309,
-    "base_r": -0.009,
+    "edge": 0.31,
+    "base_r": -0.01,
     "sum_r": 9.0,
     "t": 1.12
    },
@@ -11358,10 +11439,10 @@
     "trades": 32,
     "win_rate": 25.0,
     "avg_r": -0.301,
-    "edge": -0.149,
-    "base_r": -0.153,
+    "edge": -0.154,
+    "base_r": -0.147,
     "sum_r": -9.65,
-    "t": -0.67
+    "t": -0.69
    },
    "ETH 1h": {
     "trades": 22,
@@ -11377,7 +11458,7 @@
     "win_rate": 38.7,
     "avg_r": 0.113,
     "edge": 0.091,
-    "base_r": 0.022,
+    "base_r": 0.023,
     "sum_r": 3.51,
     "t": 0.35
    },
@@ -11411,7 +11492,7 @@
    "winners_heat_r": -0.44,
    "losers_best_r": 0.42,
    "reversal_exits": 33,
-   "reversal_saved_r": -3.46
+   "reversal_saved_r": -3.45
   },
   "hints": [
    "Closing losing trades on a confirmed reversal: 33 times, cost -3.5R in total (they often recovered)."
@@ -11429,19 +11510,19 @@
      },
      "atr": {
       "train_pct": 0.787,
-      "test_pct": -1.647,
+      "test_pct": -1.644,
       "trades": 87
      },
      "swing": {
       "train_pct": 1.971,
-      "test_pct": -0.199,
+      "test_pct": -0.28,
       "trades": 87
      }
     },
     "reversal_effect": {
-     "times": 26,
+     "times": 27,
      "train_pct": -69.13,
-     "test_pct": 6.87
+     "test_pct": 1.91
     },
     "learned_stop": "swing",
     "learned_reversal": false,
@@ -11458,12 +11539,12 @@
      },
      "atr": {
       "train_pct": -0.627,
-      "test_pct": 0.105,
+      "test_pct": 0.109,
       "trades": 85
      },
      "swing": {
       "train_pct": -1.439,
-      "test_pct": -0.079,
+      "test_pct": -0.1,
       "trades": 85
      }
     },
@@ -11550,8 +11631,8 @@
     "trades": 12,
     "win_rate": 41.7,
     "avg_r": 0.204,
-    "edge": 0.216,
-    "base_r": -0.012,
+    "edge": 0.215,
+    "base_r": -0.011,
     "sum_r": 2.45,
     "t": 0.5
    },
@@ -11577,8 +11658,8 @@
     "trades": 23,
     "win_rate": 47.8,
     "avg_r": 0.385,
-    "edge": 0.269,
-    "base_r": 0.116,
+    "edge": 0.268,
+    "base_r": 0.117,
     "sum_r": 8.85,
     "t": 0.86
    },
@@ -11586,8 +11667,8 @@
     "trades": 17,
     "win_rate": 58.8,
     "avg_r": 0.684,
-    "edge": 0.495,
-    "base_r": 0.189,
+    "edge": 0.494,
+    "base_r": 0.191,
     "sum_r": 11.63,
     "t": 1.37
    },
@@ -11595,7 +11676,7 @@
     "trades": 20,
     "win_rate": 30.0,
     "avg_r": -0.176,
-    "edge": -0.198,
+    "edge": -0.199,
     "base_r": 0.022,
     "sum_r": -3.52,
     "t": -0.67
@@ -11657,9 +11738,9 @@
     "was": 0.243
    },
    "test": {
-    "edge": 0.303,
+    "edge": 0.3,
     "trades": 15,
-    "was": 0.036
+    "was": 0.033
    }
   },
   "exit_plan": {
@@ -11703,12 +11784,12 @@
      },
      "atr": {
       "train_pct": 0.246,
-      "test_pct": -0.393,
+      "test_pct": -0.394,
       "trades": 60
      },
      "swing": {
       "train_pct": 0.397,
-      "test_pct": -0.592,
+      "test_pct": -0.593,
       "trades": 60
      }
     },
@@ -11757,7 +11838,7 @@
   "name": "short_divergence_1h",
   "direction": "short",
   "status": "active",
-  "weight": 0.041,
+  "weight": 0.04,
   "source": "lesson",
   "stop_atr": 1.5,
   "rr": 2.0,
@@ -11783,7 +11864,7 @@
   "stats": {
    "trades": 137,
    "avg_r": -0.015,
-   "edge": 0.047,
+   "edge": 0.046,
    "win_rate": 32.8,
    "charts": 8,
    "charts_positive": 5
@@ -11793,7 +11874,7 @@
     "trades": 19,
     "win_rate": 42.1,
     "avg_r": 0.263,
-    "edge": 0.24,
+    "edge": 0.239,
     "base_r": 0.024,
     "sum_r": 5.0,
     "t": 0.69
@@ -11812,18 +11893,18 @@
     "win_rate": 40.0,
     "avg_r": 0.128,
     "edge": 0.138,
-    "base_r": -0.009,
+    "base_r": -0.01,
     "sum_r": 2.57,
-    "t": 0.42
+    "t": 0.43
    },
    "BTC 1h": {
     "trades": 20,
     "win_rate": 15.0,
     "avg_r": -0.55,
-    "edge": -0.397,
-    "base_r": -0.153,
+    "edge": -0.403,
+    "base_r": -0.147,
     "sum_r": -11.0,
-    "t": -1.62
+    "t": -1.64
    },
    "ETH 1h": {
     "trades": 16,
@@ -11839,7 +11920,7 @@
     "win_rate": 38.9,
     "avg_r": 0.167,
     "edge": 0.144,
-    "base_r": 0.022,
+    "base_r": 0.023,
     "sum_r": 3.0,
     "t": 0.41
    },
@@ -11883,16 +11964,16 @@
    "set": {
     "stop_atr": 2.5
    },
-   "gain": 0.128,
+   "gain": 0.131,
    "train": {
     "edge": 0.161,
     "trades": 91,
     "was": 0.04
    },
    "test": {
-    "edge": 0.033,
+    "edge": 0.032,
     "trades": 46,
-    "was": 0.026
+    "was": 0.022
    }
   },
   "exit_plan": {
@@ -11936,7 +12017,7 @@
      },
      "atr": {
       "train_pct": -0.604,
-      "test_pct": -0.203,
+      "test_pct": -0.201,
       "trades": 54
      },
      "swing": {
@@ -11990,7 +12071,7 @@
   "name": "divergence_with_momentum_and_money_flow",
   "direction": "long",
   "status": "active",
-  "weight": 0.072,
+  "weight": 0.071,
   "source": "lesson",
   "stop_atr": 1.5,
   "rr": 2.0,
@@ -12016,7 +12097,7 @@
   "stats": {
    "trades": 124,
    "avg_r": 0.16,
-   "edge": 0.084,
+   "edge": 0.083,
    "win_rate": 40.3,
    "charts": 8,
    "charts_positive": 3
@@ -12027,9 +12108,9 @@
     "win_rate": 31.2,
     "avg_r": -0.1,
     "edge": -0.088,
-    "base_r": -0.012,
+    "base_r": -0.011,
     "sum_r": -1.6,
-    "t": -0.25
+    "t": -0.26
    },
    "ETH 4h": {
     "trades": 16,
@@ -12053,8 +12134,8 @@
     "trades": 20,
     "win_rate": 45.0,
     "avg_r": 0.293,
-    "edge": 0.177,
-    "base_r": 0.116,
+    "edge": 0.175,
+    "base_r": 0.117,
     "sum_r": 5.85,
     "t": 0.53
    },
@@ -12062,10 +12143,10 @@
     "trades": 15,
     "win_rate": 66.7,
     "avg_r": 1.0,
-    "edge": 0.811,
-    "base_r": 0.189,
+    "edge": 0.809,
+    "base_r": 0.191,
     "sum_r": 15.0,
-    "t": 2.15
+    "t": 2.14
    },
    "SOL 1h": {
     "trades": 15,
@@ -12116,16 +12197,16 @@
    "set": {
     "stop_atr": 2.0
    },
-   "gain": 0.069,
+   "gain": 0.07,
    "train": {
     "edge": 0.146,
     "trades": 82,
     "was": 0.094
    },
    "test": {
-    "edge": 0.094,
+    "edge": 0.093,
     "trades": 41,
-    "was": 0.077
+    "was": 0.075
    }
   },
   "exit_plan": {
@@ -12169,12 +12250,12 @@
      },
      "atr": {
       "train_pct": 0.239,
-      "test_pct": -0.25,
+      "test_pct": -0.251,
       "trades": 50
      },
      "swing": {
       "train_pct": 0.504,
-      "test_pct": -0.193,
+      "test_pct": -0.194,
       "trades": 50
      }
     },
@@ -12223,7 +12304,7 @@
   "name": "divergence_with_momentum_and_money_flow",
   "direction": "short",
   "status": "active",
-  "weight": 0.043,
+  "weight": 0.042,
   "source": "lesson",
   "stop_atr": 1.5,
   "rr": 2.0,
@@ -12249,7 +12330,7 @@
   "stats": {
    "trades": 143,
    "avg_r": -0.015,
-   "edge": 0.049,
+   "edge": 0.048,
    "win_rate": 32.9,
    "charts": 8,
    "charts_positive": 6
@@ -12277,8 +12358,8 @@
     "trades": 14,
     "win_rate": 21.4,
     "avg_r": -0.357,
-    "edge": -0.348,
-    "base_r": -0.009,
+    "edge": -0.347,
+    "base_r": -0.01,
     "sum_r": -5.0,
     "t": -1.02
    },
@@ -12286,10 +12367,10 @@
     "trades": 21,
     "win_rate": 33.3,
     "avg_r": -0.089,
-    "edge": 0.064,
-    "base_r": -0.153,
+    "edge": 0.059,
+    "base_r": -0.147,
     "sum_r": -1.86,
-    "t": 0.21
+    "t": 0.2
    },
    "ETH 1h": {
     "trades": 16,
@@ -12304,8 +12385,8 @@
     "trades": 18,
     "win_rate": 33.3,
     "avg_r": 0.054,
-    "edge": 0.032,
-    "base_r": 0.022,
+    "edge": 0.031,
+    "base_r": 0.023,
     "sum_r": 0.97,
     "t": 0.09
    },
@@ -12440,7 +12521,7 @@
   "name": "rsi_bull_div",
   "direction": "short",
   "status": "active",
-  "weight": 0.099,
+  "weight": 0.068,
   "source": "lesson",
   "stop_atr": 0.5,
   "rr": 1.5,
@@ -12471,10 +12552,10 @@
    "Close above SMA (200)"
   ],
   "stats": {
-   "trades": 29,
-   "avg_r": 0.121,
-   "edge": 0.168,
-   "win_rate": 44.8,
+   "trades": 28,
+   "avg_r": 0.071,
+   "edge": 0.117,
+   "win_rate": 42.9,
    "charts": 8,
    "charts_positive": 3
   },
@@ -12489,20 +12570,20 @@
     "t": -0.5
    },
    "ETH 4h": {
-    "trades": 4,
+    "trades": 3,
     "win_rate": 100.0,
     "avg_r": 1.5,
     "edge": 1.591,
     "base_r": -0.091,
-    "sum_r": 6.0,
+    "sum_r": 4.5,
     "t": 0.0
    },
    "SOL 4h": {
     "trades": 5,
     "win_rate": 80.0,
     "avg_r": 1.0,
-    "edge": 1.021,
-    "base_r": -0.021,
+    "edge": 1.02,
+    "base_r": -0.02,
     "sum_r": 5.0,
     "t": 2.04
    },
@@ -12510,8 +12591,8 @@
     "trades": 2,
     "win_rate": 0.0,
     "avg_r": -1.0,
-    "edge": -0.935,
-    "base_r": -0.065,
+    "edge": -0.938,
+    "base_r": -0.062,
     "sum_r": -2.0,
     "t": 0.0
    },
@@ -12519,8 +12600,8 @@
     "trades": 3,
     "win_rate": 33.3,
     "avg_r": -0.167,
-    "edge": -0.084,
-    "base_r": -0.083,
+    "edge": -0.085,
+    "base_r": -0.081,
     "sum_r": -0.5,
     "t": -0.1
    },
@@ -12528,8 +12609,8 @@
     "trades": 4,
     "win_rate": 0.0,
     "avg_r": -1.0,
-    "edge": -0.984,
-    "base_r": -0.016,
+    "edge": -0.986,
+    "base_r": -0.014,
     "sum_r": -4.0,
     "t": 0.0
    },
@@ -12537,8 +12618,8 @@
     "trades": 6,
     "win_rate": 50.0,
     "avg_r": 0.25,
-    "edge": 0.282,
-    "base_r": -0.032,
+    "edge": 0.281,
+    "base_r": -0.031,
     "sum_r": 1.5,
     "t": 0.5
    },
@@ -12553,14 +12634,14 @@
    }
   },
   "after_entry": {
-   "trades": 29,
-   "mfe_r": 0.87,
-   "mae_r": -1.16,
-   "reached_1r_pct": 44.82,
-   "reached_target_pct": 44.82,
-   "bars_held": 1.17,
-   "bars_to_win": 1.52,
-   "winners_heat_r": -0.57,
+   "trades": 28,
+   "mfe_r": 0.83,
+   "mae_r": -1.19,
+   "reached_1r_pct": 42.85,
+   "reached_target_pct": 42.85,
+   "bars_held": 1.18,
+   "bars_to_win": 1.55,
+   "winners_heat_r": -0.58,
    "losers_best_r": 0.0,
    "reversal_exits": 0,
    "reversal_saved_r": 0.0
@@ -12571,16 +12652,16 @@
    "set": {
     "rr": 3.0
    },
-   "gain": 0.603,
+   "gain": 0.498,
    "train": {
     "edge": 0.291,
     "trades": 19,
     "was": 0.231
    },
    "test": {
-    "edge": 0.585,
-    "trades": 10,
-    "was": 0.042
+    "edge": 0.299,
+    "trades": 9,
+    "was": -0.139
    }
   },
   "exit_plan": {
@@ -12590,18 +12671,18 @@
     "stops": {
      "fixed": {
       "train_pct": 3.094,
-      "test_pct": 0.55,
-      "trades": 13
+      "test_pct": -0.7,
+      "trades": 12
      },
      "atr": {
       "train_pct": 0.724,
-      "test_pct": 0.102,
-      "trades": 13
+      "test_pct": -0.129,
+      "trades": 12
      },
      "swing": {
       "train_pct": 1.099,
-      "test_pct": 1.601,
-      "trades": 13
+      "test_pct": 0.476,
+      "trades": 12
      }
     },
     "reversal_effect": {
@@ -12773,8 +12854,8 @@
    "RSI (14) above 30"
   ],
   "stats": {
-   "trades": 211,
-   "avg_r": 0.051,
+   "trades": 214,
+   "avg_r": 0.05,
    "edge": -0.024,
    "win_rate": 35.5,
    "charts": 8,
@@ -12782,13 +12863,13 @@
   },
   "charts": {
    "BTC 4h": {
-    "trades": 29,
-    "win_rate": 37.9,
-    "avg_r": 0.102,
-    "edge": 0.114,
-    "base_r": -0.012,
-    "sum_r": 2.96,
-    "t": 0.43
+    "trades": 30,
+    "win_rate": 40.0,
+    "avg_r": 0.165,
+    "edge": 0.177,
+    "base_r": -0.011,
+    "sum_r": 4.96,
+    "t": 0.67
    },
    "ETH 4h": {
     "trades": 19,
@@ -12803,37 +12884,37 @@
     "trades": 33,
     "win_rate": 36.4,
     "avg_r": 0.097,
-    "edge": 0.132,
+    "edge": 0.131,
     "base_r": -0.034,
     "sum_r": 3.22,
     "t": 0.52
    },
    "BTC 1h": {
-    "trades": 34,
-    "win_rate": 29.4,
-    "avg_r": -0.15,
-    "edge": -0.266,
-    "base_r": 0.116,
-    "sum_r": -5.09,
-    "t": -1.15
+    "trades": 35,
+    "win_rate": 28.6,
+    "avg_r": -0.174,
+    "edge": -0.291,
+    "base_r": 0.117,
+    "sum_r": -6.09,
+    "t": -1.29
    },
    "ETH 1h": {
     "trades": 30,
     "win_rate": 33.3,
     "avg_r": -0.044,
-    "edge": -0.233,
-    "base_r": 0.189,
+    "edge": -0.235,
+    "base_r": 0.191,
     "sum_r": -1.32,
     "t": -0.92
    },
    "SOL 1h": {
-    "trades": 29,
-    "win_rate": 20.7,
-    "avg_r": -0.379,
-    "edge": -0.401,
+    "trades": 30,
+    "win_rate": 20.0,
+    "avg_r": -0.4,
+    "edge": -0.422,
     "base_r": 0.022,
-    "sum_r": -11.0,
-    "t": -1.75
+    "sum_r": -12.0,
+    "t": -1.9
    },
    "BTC 1D": {
     "trades": 22,
@@ -12855,49 +12936,49 @@
    }
   },
   "after_entry": {
-   "trades": 211,
-   "mfe_r": 1.18,
-   "mae_r": -1.09,
-   "reached_1r_pct": 52.13,
-   "reached_target_pct": 34.14,
-   "bars_held": 7.33,
-   "bars_to_win": 10.48,
-   "winners_heat_r": -0.47,
-   "losers_best_r": 0.49,
-   "reversal_exits": 34,
-   "reversal_saved_r": -8.84
+   "trades": 214,
+   "mfe_r": 1.13,
+   "mae_r": -1.08,
+   "reached_1r_pct": 50.92,
+   "reached_target_pct": 34.12,
+   "bars_held": 7.34,
+   "bars_to_win": 10.63,
+   "winners_heat_r": -0.48,
+   "losers_best_r": 0.48,
+   "reversal_exits": 35,
+   "reversal_saved_r": -8.79
   },
   "hints": [
-   "Closing losing trades on a confirmed reversal: 34 times, cost -8.8R in total (they often recovered)."
+   "Closing losing trades on a confirmed reversal: 35 times, cost -8.8R in total (they often recovered)."
   ],
   "tune": null,
   "exit_plan": {
    "4h": {
-    "stop": "fixed",
+    "stop": "atr",
     "reversal": false,
     "stops": {
      "fixed": {
       "train_pct": -0.256,
-      "test_pct": 0.046,
-      "trades": 81
+      "test_pct": 0.035,
+      "trades": 82
      },
      "atr": {
       "train_pct": -0.239,
-      "test_pct": -0.013,
-      "trades": 81
+      "test_pct": 0.077,
+      "trades": 82
      },
      "swing": {
       "train_pct": -0.266,
-      "test_pct": 1.426,
-      "trades": 81
+      "test_pct": 1.445,
+      "trades": 82
      }
     },
     "reversal_effect": {
-     "times": 16,
-     "train_pct": -13.08,
-     "test_pct": 2.14
+     "times": 11,
+     "train_pct": -8.83,
+     "test_pct": 2.28
     },
-    "learned_stop": "fixed",
+    "learned_stop": "atr",
     "learned_reversal": false,
     "deployed": true
    },
@@ -12907,24 +12988,24 @@
     "stops": {
      "fixed": {
       "train_pct": -0.159,
-      "test_pct": -2.043,
-      "trades": 91
+      "test_pct": -2.105,
+      "trades": 92
      },
      "atr": {
       "train_pct": -0.181,
-      "test_pct": -0.579,
-      "trades": 93
+      "test_pct": -0.712,
+      "trades": 95
      },
      "swing": {
       "train_pct": -0.06,
-      "test_pct": -1.513,
-      "trades": 91
+      "test_pct": -1.561,
+      "trades": 92
      }
     },
     "reversal_effect": {
-     "times": 30,
+     "times": 33,
      "train_pct": -3.18,
-     "test_pct": 8.41
+     "test_pct": 11.32
     },
     "learned_stop": "swing",
     "learned_reversal": false,
@@ -12986,10 +13067,10 @@
    "Awesome Oscillator changed to red (TradingView's 'AO color changed to red' alert)"
   ],
   "stats": {
-   "trades": 1809,
-   "avg_r": -0.099,
+   "trades": 1810,
+   "avg_r": -0.098,
    "edge": -0.036,
-   "win_rate": 30.7,
+   "win_rate": 30.8,
    "charts": 8,
    "charts_positive": 2
   },
@@ -13006,47 +13087,47 @@
    "ETH 4h": {
     "trades": 218,
     "win_rate": 32.6,
-    "avg_r": -0.056,
-    "edge": -0.065,
+    "avg_r": -0.055,
+    "edge": -0.064,
     "base_r": 0.01,
-    "sum_r": -12.18,
-    "t": -0.7
+    "sum_r": -11.94,
+    "t": -0.69
    },
    "SOL 4h": {
     "trades": 217,
     "win_rate": 34.1,
     "avg_r": 0.003,
-    "edge": 0.012,
-    "base_r": -0.009,
+    "edge": 0.013,
+    "base_r": -0.01,
     "sum_r": 0.66,
-    "t": 0.13
+    "t": 0.14
    },
    "BTC 1h": {
     "trades": 229,
     "win_rate": 25.3,
     "avg_r": -0.256,
-    "edge": -0.104,
-    "base_r": -0.153,
+    "edge": -0.109,
+    "base_r": -0.147,
     "sum_r": -58.64,
-    "t": -1.23
+    "t": -1.29
    },
    "ETH 1h": {
     "trades": 235,
     "win_rate": 27.2,
     "avg_r": -0.197,
-    "edge": -0.064,
+    "edge": -0.065,
     "base_r": -0.133,
     "sum_r": -46.37,
     "t": -0.75
    },
    "SOL 1h": {
-    "trades": 240,
-    "win_rate": 30.4,
-    "avg_r": -0.096,
-    "edge": -0.118,
-    "base_r": 0.022,
-    "sum_r": -22.99,
-    "t": -1.34
+    "trades": 241,
+    "win_rate": 30.7,
+    "avg_r": -0.087,
+    "edge": -0.11,
+    "base_r": 0.023,
+    "sum_r": -20.99,
+    "t": -1.25
    },
    "BTC 1D": {
     "trades": 230,
@@ -13068,20 +13149,20 @@
    }
   },
   "after_entry": {
-   "trades": 1809,
+   "trades": 1810,
    "mfe_r": 0.84,
    "mae_r": -1.11,
-   "reached_1r_pct": 45.04,
-   "reached_target_pct": 28.81,
+   "reached_1r_pct": 45.01,
+   "reached_target_pct": 28.89,
    "bars_held": 8.0,
-   "bars_to_win": 10.29,
+   "bars_to_win": 10.35,
    "winners_heat_r": -0.36,
    "losers_best_r": 0.45,
-   "reversal_exits": 332,
-   "reversal_saved_r": 1.33
+   "reversal_exits": 335,
+   "reversal_saved_r": -3.99
   },
   "hints": [
-   "Closing losing trades on a confirmed reversal: 332 times, saved +1.3R in total."
+   "Closing losing trades on a confirmed reversal: 335 times, cost -4.0R in total (they often recovered)."
   ],
   "tune": null,
   "exit_plan": {
@@ -13091,24 +13172,24 @@
     "stops": {
      "fixed": {
       "train_pct": -0.188,
-      "test_pct": -0.33,
+      "test_pct": -0.329,
       "trades": 650
      },
      "atr": {
       "train_pct": -0.228,
-      "test_pct": -0.276,
+      "test_pct": -0.27,
       "trades": 652
      },
      "swing": {
       "train_pct": -0.268,
-      "test_pct": -0.653,
+      "test_pct": -0.651,
       "trades": 649
      }
     },
     "reversal_effect": {
-     "times": 183,
+     "times": 182,
      "train_pct": 6.77,
-     "test_pct": 34.14
+     "test_pct": 33.45
     },
     "learned_stop": "fixed",
     "learned_reversal": true,
@@ -13120,24 +13201,24 @@
     "stops": {
      "fixed": {
       "train_pct": -0.648,
-      "test_pct": 0.268,
-      "trades": 704
+      "test_pct": 0.302,
+      "trades": 705
      },
      "atr": {
       "train_pct": -0.424,
-      "test_pct": -0.284,
-      "trades": 704
+      "test_pct": -0.279,
+      "trades": 705
      },
      "swing": {
       "train_pct": -0.43,
-      "test_pct": -0.14,
-      "trades": 704
+      "test_pct": -0.143,
+      "trades": 705
      }
     },
     "reversal_effect": {
-     "times": 367,
+     "times": 369,
      "train_pct": 115.58,
-     "test_pct": -37.56
+     "test_pct": -50.95
     },
     "learned_stop": "fixed",
     "learned_reversal": false,
@@ -13201,7 +13282,7 @@
   "stats": {
    "trades": 207,
    "avg_r": 0.172,
-   "edge": 0.097,
+   "edge": 0.096,
    "win_rate": 40.6,
    "charts": 8,
    "charts_positive": 6
@@ -13212,7 +13293,7 @@
     "win_rate": 42.4,
     "avg_r": 0.28,
     "edge": 0.291,
-    "base_r": -0.012,
+    "base_r": -0.011,
     "sum_r": 9.23,
     "t": 1.14
    },
@@ -13238,8 +13319,8 @@
     "trades": 28,
     "win_rate": 35.7,
     "avg_r": -0.019,
-    "edge": -0.135,
-    "base_r": 0.116,
+    "edge": -0.136,
+    "base_r": 0.117,
     "sum_r": -0.53,
     "t": -0.52
    },
@@ -13247,16 +13328,16 @@
     "trades": 28,
     "win_rate": 53.6,
     "avg_r": 0.572,
-    "edge": 0.383,
-    "base_r": 0.189,
+    "edge": 0.381,
+    "base_r": 0.191,
     "sum_r": 16.01,
-    "t": 1.35
+    "t": 1.34
    },
    "SOL 1h": {
     "trades": 26,
     "win_rate": 34.6,
     "avg_r": 0.067,
-    "edge": 0.045,
+    "edge": 0.044,
     "base_r": 0.022,
     "sum_r": 1.74,
     "t": 0.16
@@ -13283,10 +13364,10 @@
   "after_entry": {
    "trades": 207,
    "mfe_r": 1.3,
-   "mae_r": -1.03,
+   "mae_r": -1.01,
    "reached_1r_pct": 56.52,
    "reached_target_pct": 35.75,
-   "bars_held": 8.99,
+   "bars_held": 8.73,
    "bars_to_win": 12.47,
    "winners_heat_r": -0.4,
    "losers_best_r": 0.46,
@@ -13301,16 +13382,16 @@
    "set": {
     "rr": 3.0
    },
-   "gain": 0.152,
+   "gain": 0.153,
    "train": {
     "edge": 0.217,
     "trades": 146,
     "was": 0.117
    },
    "test": {
-    "edge": 0.109,
+    "edge": 0.108,
     "trades": 60,
-    "was": 0.057
+    "was": 0.055
    }
   },
   "exit_plan": {
@@ -13325,12 +13406,12 @@
      },
      "atr": {
       "train_pct": -0.143,
-      "test_pct": 0.574,
+      "test_pct": 0.569,
       "trades": 87
      },
      "swing": {
       "train_pct": -0.137,
-      "test_pct": -0.522,
+      "test_pct": -0.541,
       "trades": 85
      }
     },
@@ -13354,7 +13435,7 @@
      },
      "atr": {
       "train_pct": 0.097,
-      "test_pct": -0.366,
+      "test_pct": -0.368,
       "trades": 82
      },
      "swing": {
@@ -13408,7 +13489,7 @@
   "name": "Market Cipher Divergence",
   "direction": "short",
   "status": "retired",
-  "weight": 0.017,
+  "weight": 0.016,
   "source": "lesson",
   "stop_atr": 1.5,
   "rr": 2.0,
@@ -13430,7 +13511,7 @@
   "stats": {
    "trades": 273,
    "avg_r": -0.049,
-   "edge": 0.018,
+   "edge": 0.017,
    "win_rate": 32.6,
    "charts": 8,
    "charts_positive": 4
@@ -13459,7 +13540,7 @@
     "win_rate": 27.6,
     "avg_r": -0.223,
     "edge": -0.213,
-    "base_r": -0.009,
+    "base_r": -0.01,
     "sum_r": -6.46,
     "t": -0.88
    },
@@ -13467,10 +13548,10 @@
     "trades": 32,
     "win_rate": 34.4,
     "avg_r": -0.031,
-    "edge": 0.121,
-    "base_r": -0.153,
+    "edge": 0.116,
+    "base_r": -0.147,
     "sum_r": -1.0,
-    "t": 0.51
+    "t": 0.49
    },
    "ETH 1h": {
     "trades": 34,
@@ -13486,7 +13567,7 @@
     "win_rate": 43.8,
     "avg_r": 0.271,
     "edge": 0.249,
-    "base_r": 0.022,
+    "base_r": 0.023,
     "sum_r": 8.69,
     "t": 0.96
    },
@@ -13567,7 +13648,7 @@
      },
      "atr": {
       "train_pct": -0.327,
-      "test_pct": -0.082,
+      "test_pct": -0.079,
       "trades": 98
      },
      "swing": {
@@ -13621,7 +13702,7 @@
   "name": "Short Trade with TP1",
   "direction": "short",
   "status": "active",
-  "weight": 0.111,
+  "weight": 0.112,
   "source": "lesson",
   "stop_atr": 1.5,
   "rr": 8.0,
@@ -13649,7 +13730,7 @@
   "stats": {
    "trades": 117,
    "avg_r": 0.035,
-   "edge": 0.13,
+   "edge": 0.131,
    "win_rate": 25.7,
    "charts": 8,
    "charts_positive": 5
@@ -13659,7 +13740,7 @@
     "trades": 7,
     "win_rate": 14.3,
     "avg_r": 0.209,
-    "edge": 0.047,
+    "edge": 0.046,
     "base_r": 0.163,
     "sum_r": 1.46,
     "t": 0.04
@@ -13667,45 +13748,45 @@
    "ETH 4h": {
     "trades": 17,
     "win_rate": 29.4,
-    "avg_r": 0.602,
+    "avg_r": 0.601,
     "edge": 0.448,
     "base_r": 0.154,
-    "sum_r": 10.24,
+    "sum_r": 10.22,
     "t": 0.6
    },
    "SOL 4h": {
     "trades": 9,
     "win_rate": 11.1,
     "avg_r": -0.756,
-    "edge": -0.915,
-    "base_r": 0.159,
+    "edge": -0.913,
+    "base_r": 0.157,
     "sum_r": -6.8,
-    "t": -3.75
+    "t": -3.74
    },
    "BTC 1h": {
     "trades": 16,
     "win_rate": 25.0,
     "avg_r": -0.422,
-    "edge": -0.056,
-    "base_r": -0.366,
-    "sum_r": -6.75,
-    "t": -0.21
+    "edge": -0.061,
+    "base_r": -0.362,
+    "sum_r": -6.76,
+    "t": -0.23
    },
    "ETH 1h": {
     "trades": 22,
     "win_rate": 18.2,
-    "avg_r": -0.495,
-    "edge": -0.19,
-    "base_r": -0.305,
-    "sum_r": -10.9,
-    "t": -0.74
+    "avg_r": -0.497,
+    "edge": -0.186,
+    "base_r": -0.311,
+    "sum_r": -10.92,
+    "t": -0.73
    },
    "SOL 1h": {
     "trades": 13,
     "win_rate": 23.1,
     "avg_r": 0.26,
-    "edge": 0.421,
-    "base_r": -0.161,
+    "edge": 0.422,
+    "base_r": -0.162,
     "sum_r": 3.38,
     "t": 0.56
    },
@@ -13739,7 +13820,7 @@
    "winners_heat_r": -0.43,
    "losers_best_r": 0.54,
    "reversal_exits": 14,
-   "reversal_saved_r": -5.31
+   "reversal_saved_r": -5.29
   },
   "hints": [
    "Closing losing trades on a confirmed reversal: 14 times, cost -5.3R in total (they often recovered)."
@@ -13765,9 +13846,9 @@
     "was": 0.068
    },
    "test": {
-    "edge": 0.949,
+    "edge": 0.951,
     "trades": 9,
-    "was": -0.014
+    "was": -0.012
    }
   },
   "exit_plan": {
@@ -13782,7 +13863,7 @@
      },
      "atr": {
       "train_pct": -0.918,
-      "test_pct": 1.062,
+      "test_pct": 1.066,
       "trades": 33
      },
      "swing": {
@@ -13811,7 +13892,7 @@
      },
      "atr": {
       "train_pct": -0.516,
-      "test_pct": -0.24,
+      "test_pct": -0.238,
       "trades": 51
      },
      "swing": {
@@ -13865,7 +13946,7 @@
   "name": "Long Trade from Golden Pocket 786 Zone",
   "direction": "long",
   "status": "retired",
-  "weight": -0.101,
+  "weight": -0.107,
   "source": "lesson",
   "stop_atr": 1.5,
   "rr": 2.0,
@@ -13891,9 +13972,9 @@
    "RSI (14) below 70"
   ],
   "stats": {
-   "trades": 170,
-   "avg_r": -0.025,
-   "edge": -0.113,
+   "trades": 167,
+   "avg_r": -0.03,
+   "edge": -0.12,
    "win_rate": 34.7,
    "charts": 8,
    "charts_positive": 2
@@ -13904,7 +13985,7 @@
     "win_rate": 23.8,
     "avg_r": -0.286,
     "edge": -0.274,
-    "base_r": -0.012,
+    "base_r": -0.011,
     "sum_r": -6.0,
     "t": -0.96
    },
@@ -13921,37 +14002,37 @@
     "trades": 17,
     "win_rate": 35.3,
     "avg_r": 0.027,
-    "edge": 0.062,
+    "edge": 0.061,
     "base_r": -0.034,
     "sum_r": 0.47,
     "t": 0.18
    },
    "BTC 1h": {
-    "trades": 22,
-    "win_rate": 31.8,
-    "avg_r": -0.011,
-    "edge": -0.126,
-    "base_r": 0.116,
-    "sum_r": -0.23,
-    "t": -0.42
+    "trades": 21,
+    "win_rate": 33.3,
+    "avg_r": 0.037,
+    "edge": -0.081,
+    "base_r": 0.117,
+    "sum_r": 0.77,
+    "t": -0.26
    },
    "ETH 1h": {
     "trades": 10,
     "win_rate": 40.0,
     "avg_r": 0.2,
-    "edge": 0.011,
-    "base_r": 0.189,
+    "edge": 0.009,
+    "base_r": 0.191,
     "sum_r": 2.0,
     "t": 0.02
    },
    "SOL 1h": {
-    "trades": 19,
-    "win_rate": 31.6,
-    "avg_r": -0.179,
-    "edge": -0.201,
+    "trades": 17,
+    "win_rate": 29.4,
+    "avg_r": -0.31,
+    "edge": -0.332,
     "base_r": 0.022,
-    "sum_r": -3.39,
-    "t": -0.71
+    "sum_r": -5.26,
+    "t": -1.15
    },
    "BTC 1D": {
     "trades": 23,
@@ -13973,20 +14054,20 @@
    }
   },
   "after_entry": {
-   "trades": 170,
-   "mfe_r": 1.06,
-   "mae_r": -1.13,
-   "reached_1r_pct": 52.36,
-   "reached_target_pct": 29.41,
-   "bars_held": 8.36,
-   "bars_to_win": 12.45,
-   "winners_heat_r": -0.36,
-   "losers_best_r": 0.56,
-   "reversal_exits": 35,
-   "reversal_saved_r": -19.34
+   "trades": 167,
+   "mfe_r": 1.1,
+   "mae_r": -1.14,
+   "reached_1r_pct": 52.7,
+   "reached_target_pct": 29.33,
+   "bars_held": 8.12,
+   "bars_to_win": 11.53,
+   "winners_heat_r": -0.34,
+   "losers_best_r": 0.55,
+   "reversal_exits": 32,
+   "reversal_saved_r": -16.4
   },
   "hints": [
-   "Closing losing trades on a confirmed reversal: 35 times, cost -19.3R in total (they often recovered)."
+   "Closing losing trades on a confirmed reversal: 32 times, cost -16.4R in total (they often recovered)."
   ],
   "tune": null,
   "exit_plan": {
@@ -14025,24 +14106,24 @@
     "stops": {
      "fixed": {
       "train_pct": 0.842,
-      "test_pct": -0.756,
-      "trades": 51
+      "test_pct": -1.024,
+      "trades": 48
      },
      "atr": {
       "train_pct": -0.103,
-      "test_pct": -0.316,
-      "trades": 51
+      "test_pct": -0.356,
+      "trades": 48
      },
      "swing": {
       "train_pct": 0.027,
-      "test_pct": -0.537,
-      "trades": 51
+      "test_pct": -0.609,
+      "trades": 48
      }
     },
     "reversal_effect": {
-     "times": 33,
+     "times": 30,
      "train_pct": -11.29,
-     "test_pct": -7.02
+     "test_pct": -1.03
     },
     "learned_stop": "fixed",
     "learned_reversal": false,
@@ -14166,7 +14247,7 @@
     "win_rate": null,
     "avg_r": null,
     "edge": null,
-    "base_r": -0.009,
+    "base_r": -0.008,
     "sum_r": 0.0
    },
    "ETH 4h": {
@@ -14174,7 +14255,7 @@
     "win_rate": null,
     "avg_r": null,
     "edge": null,
-    "base_r": 0.089,
+    "base_r": 0.09,
     "sum_r": 0.0
    },
    "SOL 4h": {
@@ -14190,7 +14271,7 @@
     "win_rate": null,
     "avg_r": null,
     "edge": null,
-    "base_r": 0.086,
+    "base_r": 0.083,
     "sum_r": 0.0
    },
    "ETH 1h": {
@@ -14198,7 +14279,7 @@
     "win_rate": null,
     "avg_r": null,
     "edge": null,
-    "base_r": 0.174,
+    "base_r": 0.172,
     "sum_r": 0.0
    },
    "SOL 1h": {
@@ -14347,7 +14428,7 @@
     "win_rate": null,
     "avg_r": null,
     "edge": null,
-    "base_r": 0.012,
+    "base_r": 0.011,
     "sum_r": 0.0
    },
    "ETH 4h": {
@@ -14371,7 +14452,7 @@
     "win_rate": null,
     "avg_r": null,
     "edge": null,
-    "base_r": 0.056,
+    "base_r": 0.054,
     "sum_r": 0.0
    },
    "ETH 1h": {
@@ -14387,7 +14468,7 @@
     "win_rate": null,
     "avg_r": null,
     "edge": null,
-    "base_r": -0.023,
+    "base_r": -0.024,
     "sum_r": 0.0
    },
    "BTC 1D": {
@@ -14455,8 +14536,8 @@
     "trades": 2,
     "win_rate": 0.0,
     "avg_r": -1.0,
-    "edge": -0.988,
-    "base_r": -0.012,
+    "edge": -0.989,
+    "base_r": -0.011,
     "sum_r": -2.0,
     "t": 0.0
    },
@@ -14482,8 +14563,8 @@
     "trades": 3,
     "win_rate": 66.7,
     "avg_r": 1.0,
-    "edge": 0.884,
-    "base_r": 0.116,
+    "edge": 0.883,
+    "base_r": 0.117,
     "sum_r": 3.0,
     "t": 0.88
    },
@@ -14491,8 +14572,8 @@
     "trades": 4,
     "win_rate": 50.0,
     "avg_r": 0.5,
-    "edge": 0.311,
-    "base_r": 0.189,
+    "edge": 0.309,
+    "base_r": 0.191,
     "sum_r": 2.0,
     "t": 0.36
    },
@@ -14636,7 +14717,7 @@
   "name": "Long: Close below the lowest low of the last 20 candles + Hammer / bullish pin b",
   "direction": "long",
   "status": "active",
-  "weight": 0.112,
+  "weight": 0.111,
   "source": "missed",
   "stop_atr": 1.5,
   "rr": 2.0,
@@ -14664,7 +14745,7 @@
   "stats": {
    "trades": 37,
    "avg_r": 0.258,
-   "edge": 0.172,
+   "edge": 0.171,
    "win_rate": 46.0,
    "charts": 8,
    "charts_positive": 6
@@ -14674,8 +14755,8 @@
     "trades": 4,
     "win_rate": 25.0,
     "avg_r": -0.25,
-    "edge": -0.238,
-    "base_r": -0.012,
+    "edge": -0.239,
+    "base_r": -0.011,
     "sum_r": -1.0,
     "t": -0.32
    },
@@ -14692,7 +14773,7 @@
     "trades": 5,
     "win_rate": 20.0,
     "avg_r": -0.565,
-    "edge": -0.53,
+    "edge": -0.531,
     "base_r": -0.034,
     "sum_r": -2.82,
     "t": -1.22
@@ -14701,8 +14782,8 @@
     "trades": 5,
     "win_rate": 40.0,
     "avg_r": 0.2,
-    "edge": 0.084,
-    "base_r": 0.116,
+    "edge": 0.083,
+    "base_r": 0.117,
     "sum_r": 1.0,
     "t": 0.11
    },
@@ -14710,8 +14791,8 @@
     "trades": 4,
     "win_rate": 50.0,
     "avg_r": 0.5,
-    "edge": 0.311,
-    "base_r": 0.189,
+    "edge": 0.309,
+    "base_r": 0.191,
     "sum_r": 2.0,
     "t": 0.36
    },
@@ -14754,7 +14835,7 @@
    "winners_heat_r": -0.43,
    "losers_best_r": 0.47,
    "reversal_exits": 3,
-   "reversal_saved_r": 0.18
+   "reversal_saved_r": 0.2
   },
   "hints": [
    "Closing losing trades on a confirmed reversal: 3 times, saved +0.2R in total."
@@ -14775,16 +14856,16 @@
      }
     ]
    },
-   "gain": 0.211,
+   "gain": 0.21,
    "train": {
     "edge": 0.421,
     "trades": 19,
     "was": 0.286
    },
    "test": {
-    "edge": 0.136,
+    "edge": 0.134,
     "trades": 13,
-    "was": 0.06
+    "was": 0.059
    }
   },
   "exit_plan": {
@@ -14799,12 +14880,12 @@
      },
      "atr": {
       "train_pct": -0.569,
-      "test_pct": -0.094,
+      "test_pct": -0.126,
       "trades": 13
      },
      "swing": {
       "train_pct": 0.112,
-      "test_pct": 0.173,
+      "test_pct": 0.168,
       "trades": 13
      }
     },
@@ -14882,7 +14963,7 @@
   "name": "Long: Close below the lowest low of the last 20 candles + Hammer / bullish pin b",
   "direction": "long",
   "status": "active",
-  "weight": 0.112,
+  "weight": 0.111,
   "source": "missed",
   "stop_atr": 1.5,
   "rr": 2.0,
@@ -14910,7 +14991,7 @@
   "stats": {
    "trades": 37,
    "avg_r": 0.258,
-   "edge": 0.172,
+   "edge": 0.171,
    "win_rate": 46.0,
    "charts": 8,
    "charts_positive": 6
@@ -14920,8 +15001,8 @@
     "trades": 4,
     "win_rate": 25.0,
     "avg_r": -0.25,
-    "edge": -0.238,
-    "base_r": -0.012,
+    "edge": -0.239,
+    "base_r": -0.011,
     "sum_r": -1.0,
     "t": -0.32
    },
@@ -14938,7 +15019,7 @@
     "trades": 5,
     "win_rate": 20.0,
     "avg_r": -0.565,
-    "edge": -0.53,
+    "edge": -0.531,
     "base_r": -0.034,
     "sum_r": -2.82,
     "t": -1.22
@@ -14947,8 +15028,8 @@
     "trades": 5,
     "win_rate": 40.0,
     "avg_r": 0.2,
-    "edge": 0.084,
-    "base_r": 0.116,
+    "edge": 0.083,
+    "base_r": 0.117,
     "sum_r": 1.0,
     "t": 0.11
    },
@@ -14956,8 +15037,8 @@
     "trades": 4,
     "win_rate": 50.0,
     "avg_r": 0.5,
-    "edge": 0.311,
-    "base_r": 0.189,
+    "edge": 0.309,
+    "base_r": 0.191,
     "sum_r": 2.0,
     "t": 0.36
    },
@@ -15000,7 +15081,7 @@
    "winners_heat_r": -0.43,
    "losers_best_r": 0.47,
    "reversal_exits": 3,
-   "reversal_saved_r": 0.18
+   "reversal_saved_r": 0.2
   },
   "hints": [
    "Closing losing trades on a confirmed reversal: 3 times, saved +0.2R in total."
@@ -15021,16 +15102,16 @@
      }
     ]
    },
-   "gain": 0.211,
+   "gain": 0.21,
    "train": {
     "edge": 0.421,
     "trades": 19,
     "was": 0.286
    },
    "test": {
-    "edge": 0.136,
+    "edge": 0.134,
     "trades": 13,
-    "was": 0.06
+    "was": 0.059
    }
   },
   "exit_plan": {
@@ -15045,12 +15126,12 @@
      },
      "atr": {
       "train_pct": -0.569,
-      "test_pct": -0.094,
+      "test_pct": -0.126,
       "trades": 13
      },
      "swing": {
       "train_pct": 0.112,
-      "test_pct": 0.173,
+      "test_pct": 0.168,
       "trades": 13
      }
     },
@@ -15128,7 +15209,7 @@
   "name": "Short: Shooting star / bearish pin bar + 3 green candles in a row + Awesome Osci",
   "direction": "short",
   "status": "active",
-  "weight": 0.168,
+  "weight": 0.167,
   "source": "missed",
   "stop_atr": 1.5,
   "rr": 2.0,
@@ -15156,7 +15237,7 @@
   "stats": {
    "trades": 35,
    "avg_r": 0.2,
-   "edge": 0.264,
+   "edge": 0.263,
    "win_rate": 40.0,
    "charts": 8,
    "charts_positive": 6
@@ -15169,7 +15250,7 @@
     "edge": -0.274,
     "base_r": 0.024,
     "sum_r": -1.0,
-    "t": -0.36
+    "t": -0.37
    },
    "ETH 4h": {
     "trades": 6,
@@ -15184,19 +15265,19 @@
     "trades": 5,
     "win_rate": 40.0,
     "avg_r": 0.2,
-    "edge": 0.209,
-    "base_r": -0.009,
+    "edge": 0.21,
+    "base_r": -0.01,
     "sum_r": 1.0,
-    "t": 0.28
+    "t": 0.29
    },
    "BTC 1h": {
     "trades": 5,
     "win_rate": 40.0,
     "avg_r": 0.2,
-    "edge": 0.353,
-    "base_r": -0.153,
+    "edge": 0.347,
+    "base_r": -0.147,
     "sum_r": 1.0,
-    "t": 0.48
+    "t": 0.47
    },
    "ETH 1h": {
     "trades": 6,
@@ -15211,8 +15292,8 @@
     "trades": 2,
     "win_rate": 0.0,
     "avg_r": -1.0,
-    "edge": -1.022,
-    "base_r": 0.022,
+    "edge": -1.023,
+    "base_r": 0.023,
     "sum_r": -2.0,
     "t": 0.0
    },
@@ -15347,7 +15428,7 @@
   "name": "Short: Shooting star / bearish pin bar + Awesome Oscillator changed to green + H",
   "direction": "short",
   "status": "active",
-  "weight": 0.147,
+  "weight": 0.173,
   "source": "missed",
   "stop_atr": 1.5,
   "rr": 2.0,
@@ -15373,10 +15454,10 @@
    "High touched the upper Bollinger band in the last 3 candles"
   ],
   "stats": {
-   "trades": 48,
-   "avg_r": 0.144,
-   "edge": 0.208,
-   "win_rate": 37.5,
+   "trades": 49,
+   "avg_r": 0.182,
+   "edge": 0.244,
+   "win_rate": 38.8,
    "charts": 8,
    "charts_positive": 5
   },
@@ -15400,22 +15481,22 @@
     "t": 0.46
    },
    "SOL 4h": {
-    "trades": 5,
-    "win_rate": 60.0,
-    "avg_r": 0.8,
-    "edge": 0.809,
-    "base_r": -0.009,
-    "sum_r": 4.0,
-    "t": 1.1
+    "trades": 6,
+    "win_rate": 66.7,
+    "avg_r": 1.0,
+    "edge": 1.01,
+    "base_r": -0.01,
+    "sum_r": 6.0,
+    "t": 1.6
    },
    "BTC 1h": {
     "trades": 9,
     "win_rate": 22.2,
     "avg_r": -0.333,
-    "edge": -0.181,
-    "base_r": -0.153,
+    "edge": -0.186,
+    "base_r": -0.147,
     "sum_r": -3.0,
-    "t": -0.41
+    "t": -0.42
    },
    "ETH 1h": {
     "trades": 10,
@@ -15430,8 +15511,8 @@
     "trades": 6,
     "win_rate": 33.3,
     "avg_r": 0.0,
-    "edge": -0.022,
-    "base_r": 0.022,
+    "edge": -0.023,
+    "base_r": 0.023,
     "sum_r": 0.0,
     "t": -0.04
    },
@@ -15455,14 +15536,14 @@
    }
   },
   "after_entry": {
-   "trades": 48,
-   "mfe_r": 1.05,
-   "mae_r": -1.1,
-   "reached_1r_pct": 50.0,
-   "reached_target_pct": 37.5,
-   "bars_held": 7.23,
-   "bars_to_win": 15.55,
-   "winners_heat_r": -0.59,
+   "trades": 49,
+   "mfe_r": 1.08,
+   "mae_r": -1.08,
+   "reached_1r_pct": 51.02,
+   "reached_target_pct": 38.78,
+   "bars_held": 7.29,
+   "bars_to_win": 15.31,
+   "winners_heat_r": -0.58,
    "losers_best_r": 0.5,
    "reversal_exits": 4,
    "reversal_saved_r": -1.02
@@ -15475,16 +15556,16 @@
    "set": {
     "stop_atr": 2.5
    },
-   "gain": 0.19,
+   "gain": 0.184,
    "train": {
     "edge": 0.329,
     "trades": 27,
     "was": 0.265
    },
    "test": {
-    "edge": 0.324,
-    "trades": 21,
-    "was": 0.198
+    "edge": 0.399,
+    "trades": 22,
+    "was": 0.279
    }
   },
   "exit_plan": {
@@ -15494,24 +15575,24 @@
     "stops": {
      "fixed": {
       "train_pct": 0.636,
-      "test_pct": 1.441,
-      "trades": 17
+      "test_pct": 1.679,
+      "trades": 18
      },
      "atr": {
       "train_pct": 0.35,
-      "test_pct": 0.217,
-      "trades": 17
+      "test_pct": 0.58,
+      "trades": 18
      },
      "swing": {
       "train_pct": 0.292,
-      "test_pct": 0.228,
-      "trades": 17
+      "test_pct": 0.553,
+      "trades": 18
      }
     },
     "reversal_effect": {
      "times": 6,
      "train_pct": -2.93,
-     "test_pct": -3.16
+     "test_pct": -3.18
     },
     "learned_stop": "fixed",
     "learned_reversal": false,
@@ -15576,5 +15657,649 @@
     "deployed": true
    }
   }
+ },
+ {
+  "id": 75,
+  "name": "short_spx_45_60",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 0.5,
+  "rr": 2.0,
+  "timeframe": "weekly",
+  "why": "Had a plan in advance, capitalized on the move, and still open trade.",
+  "quote": "we shorted the S P 500 last week in the Casper crew VIP Discord we had a specific plan that if the price came up to 45.60 and we got these specific bearish divergences on our indicator we would take the short",
+  "unchecked": [
+   "specific bearish divergences on the indicator"
+  ],
+  "lesson_id": 21,
+  "rules": [
+   {
+    "rule": "close_below_sma",
+    "a": 200
+   },
+   {
+    "rule": "ao_bear_div",
+    "a": 60,
+    "b": 60
+   }
+  ],
+  "rules_text": [
+   "Close below SMA (200)",
+   "Bearish divergence: price higher high, Awesome Oscillator lower high - in the last 60 candles, lows/highs at most 60 candles apart"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 76,
+  "name": "Long Scalp Trade from Fibonacci Golden Pocket Retracement",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 0.05,
+  "rr": 3.5,
+  "timeframe": "15m",
+  "why": "Precision in entry level and clear plan for risk and reward management.",
+  "quote": "The long trade that I'm currently in right now on the S P 500 is long from the Fibonacci golden pocket retracement so basically when we actually put in that low and then we came to put in our first high right here I pulled the Fibonacci golden pocket from this area and it landed right in this Zone.",
+  "unchecked": [
+   "specific level"
+  ],
+  "lesson_id": 22,
+  "rules": [
+   {
+    "rule": "close_above_sma",
+    "a": 200
+   },
+   {
+    "rule": "close_above_ema",
+    "a": 50
+   },
+   {
+    "rule": "ema_above_ema",
+    "a": 50,
+    "b": 200
+   },
+   {
+    "rule": "ao_green"
+   },
+   {
+    "rule": "wt_green_dot"
+   },
+   {
+    "rule": "bb_above_mid"
+   },
+   {
+    "rule": "volume_spike"
+   }
+  ],
+  "rules_text": [
+   "Close above SMA (200)",
+   "Close above EMA (50)",
+   "EMA (50) is above EMA (200) (uptrend)",
+   "Awesome Oscillator column is green (AO rising)",
+   "Market Cipher green dot (WaveTrend crosses up) below 0",
+   "Close above the Bollinger middle band",
+   "Volume above 1.5 \u00d7 its 20-candle average"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 77,
+  "name": "Long Entry with Stop Loss",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 0.015,
+  "rr": 5.0,
+  "timeframe": "daily",
+  "why": "High probability setup with multiple indicators confirming the trend and volume spike indicating potential continuation of the trend.",
+  "quote": "if you combine steps one and steps two with any kind of trading strategy and you actually have the patience and the discipline to abide by that strategy you are setting yourself up for Success.",
+  "unchecked": [
+   "Invalidation point is 1.5% of the total stack."
+  ],
+  "lesson_id": 22,
+  "rules": [
+   {
+    "rule": "close_above_sma",
+    "a": 200
+   },
+   {
+    "rule": "close_below_ema",
+    "a": 50,
+    "b": 200
+   },
+   {
+    "rule": "rsi_below",
+    "a": 30
+   },
+   {
+    "rule": "macd_cross_up"
+   },
+   {
+    "rule": "wt_below",
+    "a": -53
+   },
+   {
+    "rule": "mf_positive"
+   },
+   {
+    "rule": "bb_above_mid"
+   },
+   {
+    "rule": "volume_spike",
+    "a": 1.5,
+    "b": 20
+   }
+  ],
+  "rules_text": [
+   "Close above SMA (200)",
+   "Close below EMA (50)",
+   "RSI (14) below 30",
+   "MACD crosses above its signal line",
+   "Market Cipher wave below -53 (oversold)",
+   "Market Cipher money flow above zero (green)",
+   "Close above the Bollinger middle band",
+   "Volume above 1.5 \u00d7 its 20-candle average"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 78,
+  "name": "long_from_support",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "any",
+  "why": "Support is respected and price is above the 200 SMA, indicating a potential long setup. The rejection from resistance (if any) adds to the reliability of the setup.",
+  "quote": "we got the long from support and the short from resistance",
+  "unchecked": [
+   "exact level"
+  ],
+  "lesson_id": 23,
+  "rules": [
+   {
+    "rule": "close_above_sma",
+    "a": 200
+   },
+   {
+    "rule": "sr_reject_down"
+   }
+  ],
+  "rules_text": [
+   "Close above SMA (200)",
+   "Rejected at resistance / lost a level (closed back below it)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 79,
+  "name": "short_from_resistance",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "any",
+  "why": "Resistance is respected and price is below the 200 SMA, indicating a potential short setup. The bounce from support (if any) adds to the reliability of the setup.",
+  "quote": "we got the long from support and the short from resistance",
+  "unchecked": [
+   "exact level"
+  ],
+  "lesson_id": 23,
+  "rules": [
+   {
+    "rule": "close_below_sma",
+    "a": 200
+   },
+   {
+    "rule": "sr_bounce_up"
+   }
+  ],
+  "rules_text": [
+   "Close below SMA (200)",
+   "Bounced off support / reclaimed a level (closed back above it)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 80,
+  "name": "Support and Resistance Levels",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "daily",
+  "why": "Support and resistance levels can be used to identify potential entry points, but further analysis is needed. In this case, the price is near a key support level, and the price has rejected resistance, indicating a potential long setup. However, further analysis with indicators or order flow charts is needed to confirm the trade idea.",
+  "quote": "right in this case for me I'm actually no long from the bottom of this local range the setup that we gave in the Casper crew we did give it from the exact level we did use a little bit more of a technical tool to get this level but you can see that I have taken the trade from the exact low here I've hit a tp1 when we came back to the center of the range now I've hit a tp2 that we've come up toward the top of this local range and of course I'm holding on to a portion of the trade because I recognize the fact that yes I took along from the bottom of a local range but I also took along from the bottom of a macro range so I have more take profit set at these highs up here when we come to the top of the macro range",
+  "unchecked": [
+   "Price is near a key support level."
+  ],
+  "lesson_id": 23,
+  "rules": [
+   {
+    "rule": "close_below_sma",
+    "a": 200
+   },
+   {
+    "rule": "sr_reject_down"
+   }
+  ],
+  "rules_text": [
+   "Close below SMA (200)",
+   "Rejected at resistance / lost a level (closed back below it)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 81,
+  "name": "Support and Resistance Levels",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "daily",
+  "why": "Support and resistance levels can be used to identify potential entry points, but further analysis is needed. In this case, the price is near a key resistance level, and the price has bounced off support, indicating a potential short setup. However, further analysis with indicators or order flow charts is needed to confirm the trade idea.",
+  "quote": "right in this case for me I'm actually no long from the bottom of this local range the setup that we gave in the Casper crew we did give it from the exact level we did use a little bit more of a technical tool to get this level but you can see that I have taken the trade from the exact low here I've hit a tp1 when we came back to the center of the range now I've hit a tp2 that we've come up toward the top of this local range and of course I'm holding on to a portion of the trade because I recognize the fact that yes I took along from the bottom of a local range but I also took along from the bottom of a macro range so I have more take profit set at these highs up here when we come to the top of the macro range",
+  "unchecked": [
+   "Price is near a key resistance level."
+  ],
+  "lesson_id": 23,
+  "rules": [
+   {
+    "rule": "close_above_sma",
+    "a": 200
+   },
+   {
+    "rule": "sr_bounce_up"
+   }
+  ],
+  "rules_text": [
+   "Close above SMA (200)",
+   "Bounced off support / reclaimed a level (closed back above it)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 82,
+  "name": "Bearish CBD Divergence",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "15m",
+  "why": "Bearish divergence with more longs than shorts, and a key level of support is involved.",
+  "quote": "we saw price making a lower high right about here and we saw the CBD making a higher high and we saw the open interest also making a higher high",
+  "unchecked": [
+   "price is making a lower high"
+  ],
+  "lesson_id": 24,
+  "rules": [
+   {
+    "rule": "close_above_sma",
+    "a": 200
+   },
+   {
+    "rule": "higher_low",
+    "a": 5,
+    "b": 60
+   },
+   {
+    "rule": "ao_bear_div"
+   }
+  ],
+  "rules_text": [
+   "Close above SMA (200)",
+   "Higher low: the last 5 candles' low is above the 5 candles before",
+   "Bearish divergence: price higher high, Awesome Oscillator lower high - in the last 3 candles, lows/highs at most 60 candles apart"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 83,
+  "name": "Bullish CBD Divergence",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "15m",
+  "why": "Bullish divergence with more shorts than longs, and a key level of support is involved.",
+  "quote": "we can see that price is making a higher low but if we take a look at our CBD and our open interest we see that CBD is getting lower over time and we also see that the open interest is getting higher over time",
+  "unchecked": [
+   "price is making a higher low"
+  ],
+  "lesson_id": 24,
+  "rules": [
+   {
+    "rule": "close_below_sma",
+    "a": 200
+   },
+   {
+    "rule": "lower_high",
+    "a": 5,
+    "b": 60
+   },
+   {
+    "rule": "ao_bull_div"
+   }
+  ],
+  "rules_text": [
+   "Close below SMA (200)",
+   "Lower high: the last 5 candles' high is below the 5 candles before",
+   "Bullish divergence: price lower low, Awesome Oscillator higher low - in the last 3 candles, lows/highs at most 60 candles apart"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 84,
+  "name": "Slong",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "daily",
+  "why": "After taking a significant move in your direction, you can take half of the trade out and move your stop loss to the entry to guarantee a winning trade.",
+  "quote": "After the price gets a significant move in your direction, let's say you long from down here, you want to take half of the trade out once you take half the trade out and your stop loss is at your entry, this is now a guaranteed winning trade.",
+  "unchecked": [
+   "unchecked"
+  ],
+  "lesson_id": 25,
+  "rules": [
+   {
+    "rule": "close_above_sma",
+    "a": 200
+   },
+   {
+    "rule": "close_below_sma",
+    "a": 200
+   }
+  ],
+  "rules_text": [
+   "Close above SMA (200)",
+   "Close below SMA (200)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 85,
+  "name": "Short Trade Setup",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 4.0,
+  "timeframe": "1h",
+  "why": "Market makers will hunt stop losses, causing a reversal. The bearish divergence indicates a lack of buying interest, suggesting a potential reversal.",
+  "quote": "if the price starts to come above the high you're going to look at your oscillator now I like to use an oscillator called Market Cipher B this is by far the most accurate oscillator you can use for trading I'm going to show you some other free indicators if you don't have Market Cipher but if the price is getting higher and it's actually coming above our first high and you see over time the momentum waves are getting lower that is called a bearish Divergence.",
+  "unchecked": [
+   "Market Cipher B momentum waves are getting lower over time"
+  ],
+  "lesson_id": 26,
+  "rules": [
+   {
+    "rule": "close_above_sma",
+    "a": 200
+   },
+   {
+    "rule": "macd_bear_div"
+   }
+  ],
+  "rules_text": [
+   "Close above SMA (200)",
+   "Bearish divergence: price higher high, MACD lower high - in the last 3 candles, lows/highs at most 60 candles apart"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 86,
+  "name": "Long Trade Setup",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 4.0,
+  "timeframe": "1h",
+  "why": "Market makers will hunt stop losses, causing a reversal. The bullish divergence indicates a lack of selling interest, suggesting a potential reversal.",
+  "quote": "as the price is getting lower to the Key Sport the man boobs are getting higher right he was a bad guy he did some bad things but the man turned his life around all right the man turned his life around that we can clearly see not only his boobs getting higher his hair as well this is clearly a bullish sign and now we have a really good risk to reward ratio trade setup on the long side where we can actually get in right here stop loss under the wick and we can Target the high of the range.",
+  "unchecked": [
+   "Market Cipher B momentum waves are getting higher over time"
+  ],
+  "lesson_id": 26,
+  "rules": [
+   {
+    "rule": "close_below_sma",
+    "a": 200
+   },
+   {
+    "rule": "macd_bull_div"
+   }
+  ],
+  "rules_text": [
+   "Close below SMA (200)",
+   "Bullish divergence: price lower low, MACD higher low - in the last 3 candles, lows/highs at most 60 candles apart"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 87,
+  "name": "Bullish Divergence on Multiple Time Frames",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "1 minute, 3 minute, 6 minute",
+  "why": "Bullish divergences on multiple time frames indicate a potential reversal in the trend, making it a high-probability setup for a long trade.",
+  "quote": "I had a very clearly defined plan to take along from the price of 2 26 153 Zone and I wanted to see bullish divergences on these three time frames the six minute the three minute and the one minute time frame",
+  "unchecked": [
+   "Bullish divergences on the six minute, three minute, and one minute time frames"
+  ],
+  "lesson_id": 27,
+  "rules": [
+   {
+    "rule": "bull_engulf"
+   },
+   {
+    "rule": "higher_low"
+   }
+  ],
+  "rules_text": [
+   "Bullish engulfing candle",
+   "Higher low: the last 5 candles' low is above the 5 candles before"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 88,
+  "name": "Short: Change in Market Structure and Bearish CVD Divergence",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "1m",
+  "why": "Change in market structure and bearish CVD divergence indicate a potential reversal and short opportunity.",
+  "quote": "Spidey it's time to look for a short senses they should be tingling why because we know that this is the first sign of weakness in a massive uptrend especially after we get a big pump and price starts to consolidate like this forming what a lot of people think is going to be a bull flag.",
+  "unchecked": [
+   "price is unable to make a higher high"
+  ],
+  "lesson_id": 28,
+  "rules": [
+   {
+    "rule": "lower_high"
+   },
+   {
+    "rule": "rsi_bear_div"
+   }
+  ],
+  "rules_text": [
+   "Lower high: the last 5 candles' high is below the 5 candles before",
+   "Bearish divergence: price higher high, RSI lower high - in the last 3 candles, lows/highs at most 60 candles apart"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 89,
+  "name": "scalping_setup",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "1m",
+  "why": "Green candles and above EMA 50 suggest a bullish trend for scalping opportunities.",
+  "quote": "unchecked",
+  "unchecked": [
+   "unchecked"
+  ],
+  "lesson_id": 28,
+  "rules": [
+   {
+    "rule": "close_above_ema",
+    "a": 50
+   },
+   {
+    "rule": "green_candles",
+    "a": 3
+   }
+  ],
+  "rules_text": [
+   "Close above EMA (50)",
+   "3 green candles in a row"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 90,
+  "name": "scalping_setup",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "1m",
+  "why": "Red candles and below EMA 50 suggest a bearish trend for scalping opportunities.",
+  "quote": "unchecked",
+  "unchecked": [
+   "unchecked"
+  ],
+  "lesson_id": 28,
+  "rules": [
+   {
+    "rule": "close_below_ema",
+    "a": 50
+   },
+   {
+    "rule": "red_candles",
+    "a": 3
+   }
+  ],
+  "rules_text": [
+   "Close below EMA (50)",
+   "3 red candles in a row"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  }
 ]
