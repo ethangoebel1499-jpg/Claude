@@ -13,3 +13,6 @@ Witcher ETH 2h,witcher,ETHUSD,crypto,2h,kraken,0,10000.0,1.0,,,1,live.toml,2026-
 Witcher SOL 2h,witcher,SOLUSD,crypto,2h,kraken,0,10000.0,1.0,,,1,live.toml,2026-11-02T21:26:04+00:00
 GRIND BTC 4h,grind,XBTUSD,crypto,4h,kraken,0,10000.0,1.0,,,1,live.toml,2026-11-02T21:26:04+00:00
 S8 ETH 12h,s8,ETHUSD,crypto,12h,kraken,0,10000.0,1.0,,,1,live.toml,2026-11-02T21:26:04+00:00
+Apprentice BTC 1D,apprentice,XBTUSD,crypto,1D,,1,10000.0,1.0,0.03,"[[0.03, 0.5], [0.06, 0.5]]",1,apprentice,2026-11-04T11:28:07+00:00
+Apprentice LINK 1D,apprentice,LINKUSD,crypto,1D,,1,10000.0,1.0,0.03,"[[0.03, 0.5], [0.06, 0.5]]",1,apprentice,2026-11-04T11:28:18+00:00
+Apprentice ADA 1D,apprentice,ADAUSD,crypto,1D,,1,10000.0,1.0,0.03,"[[0.03, 0.5], [0.06, 0.5]]",1,apprentice,2026-11-04T11:28:21+00:00
