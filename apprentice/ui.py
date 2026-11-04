@@ -373,6 +373,14 @@ def claude_panel(store: Store) -> None:
     st.caption(f"Reviewed {rv.get('reviewed_at', '')[:16]} UTC · setups "
                + ", ".join(f"{review.ICON.get(v, '')} {n} {v}" for v, n in counts["setups"].items())
                + " · concepts " + ", ".join(f"{review.ICON.get(v, '')} {n} {v}" for v, n in counts["concepts"].items()))
+    if review.apply_concepts(store):                       # concepts never wait for a button
+        st.toast("Applied Claude's concept verdicts")
+    stt = review.status(store)
+    s_, c_ = stt["setups"], stt["concepts"]
+    concepts = (f"✅ all {c_['total']} rated, applied" if not c_["waiting"] else f"⏳ {len(c_['waiting'])} waiting")
+    setups_ = ("✅ all applied" if not s_["waiting"] else
+               f"⏳ {len(s_['waiting'])} of {s_['total']} verdicts waiting - press **Apply all** below")
+    st.markdown(f"**Concepts:** {concepts} ({stt['concepts_now']} left after the drops) · **Setups:** {setups_}")
     if rv.get("summary"):
         st.markdown(rv["summary"])
     lessons = {x["id"]: x for x in rv.get("lessons", []) if x.get("verdict") == "drop"}

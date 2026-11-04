@@ -119,3 +119,31 @@ def test_never_shares_from_an_unrelated_git_repo(tmp_path, monkeypatch):
     with pytest.raises(RuntimeError, match="no GitHub token yet"):
         sync.push_files({"a.csv": "1"}, "x")
     assert not (home / ".paper-trades").exists()
+
+
+def test_concepts_applied_by_themselves_with_a_clear_status(apprentice):
+    a, ids = apprentice
+    concepts = a.table("concepts")
+    good = int(concepts[concepts.text.str.contains("band touch")].id.iloc[0])
+    ad = int(concepts[concepts.text.str.contains("subscribe")].id.iloc[0])
+    review.LOCAL.write_text(json.dumps({
+        "reviewed_at": "2026-11-04T15:00:00Z",
+        "setups": [{"id": ids["junk"], "name": "Long: volume spike", "verdict": "drop", "reason": "no edge"}],
+        "concepts": [{"id": good, "text": "Wait for a band touch", "verdict": "keep", "reason": "sound"},
+                     {"id": ad, "text": "like and subscribe", "verdict": "drop", "reason": "ad"}]}))
+    assert review.status(a)["concepts"]["waiting"] == [ad]
+    assert review.apply_concepts(a) == 1
+    assert "subscribe" not in " ".join(a.table("concepts").text)
+    st = review.status(a)
+    assert st["concepts"] == {"total": 2, "applied": 2, "waiting": []}
+    assert st["setups"]["waiting"] == [ids["junk"]]                     # setups still wait for Apply
+    assert review.apply_concepts(a) == 0
+
+
+def test_concept_verdict_skipped_if_the_id_now_holds_other_text(apprentice):
+    a, _ = apprentice
+    cid = int(a.table("concepts").id.iloc[0])
+    review.LOCAL.write_text(json.dumps({"reviewed_at": "x", "concepts": [
+        {"id": cid, "text": "something else entirely", "verdict": "drop", "reason": "-"}]}))
+    review.apply_concepts(a)
+    assert cid in set(a.table("concepts").id)                           # not deleted: it's a different concept now

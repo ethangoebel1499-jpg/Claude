@@ -96,7 +96,20 @@ def apply_setup(store, setup: dict, item: dict) -> str:
     return out
 
 
+def _same_concept(store, cid: int, item: dict) -> bool:
+    """The review quotes the start of the concept it judged; only act if this id still holds that text
+    (re-learning a lesson can renumber concepts)."""
+    want = (item.get("text") or "").strip()[:60]
+    if not want:
+        return True
+    row = store.db.execute("SELECT text FROM concepts WHERE id = ?", (int(cid),)).fetchone()
+    return bool(row) and str(row[0]).strip().startswith(want)
+
+
 def apply_concept(store, cid: int, item: dict) -> str:
+    if not _same_concept(store, cid, item):
+        _mark(key("concepts", item))
+        return "skipped - that concept changed since the review"
     v = item.get("verdict")
     if v == "drop":
         store.db.execute("DELETE FROM concepts WHERE id = ?", (int(cid),))
@@ -108,6 +121,37 @@ def apply_concept(store, cid: int, item: dict) -> str:
         out = "kept"
     store.db.commit()
     _mark(key("concepts", item))
+    return out
+
+
+def apply_concepts(store) -> int:
+    """Apply every concept verdict not applied yet (drop = delete, fix = reword, keep = nothing to do).
+    Runs by itself whenever a review is downloaded - you asked for concepts to be handled automatically."""
+    have = {int(r) for r in store.table("concepts").id} if len(store.table("concepts")) else set()
+    n = 0
+    for cid, item in _items("concepts").items():
+        if is_applied("concepts", item):
+            continue
+        if cid in have and item.get("verdict") in ("drop", "fix"):
+            n += not apply_concept(store, cid, item).startswith("skipped")
+        else:
+            _mark(key("concepts", item))          # keep, or already gone: nothing to do, counts as done
+    return n
+
+
+def status(store) -> dict:
+    """How much of the latest review has been applied, for the app and for Claude (shared on sync)."""
+    rv = load()
+    out = {"reviewed_at": rv.get("reviewed_at")}
+    have_s = {s["id"]: s for s in store.setups()}
+    have_c = {int(r) for r in store.table("concepts").id} if len(store.table("concepts")) else set()
+    for kind in ("setups", "concepts"):
+        items = _items(kind)
+        done = sum(1 for x in items.values() if is_applied(kind, x))
+        out[kind] = {"total": len(items), "applied": done,
+                     "waiting": [i for i, x in items.items() if not is_applied(kind, x) and x.get("verdict") != "keep"
+                                 and (i in have_s if kind == "setups" else i in have_c)]}
+    out["concepts_now"] = len(have_c)
     return out
 
 

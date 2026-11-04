@@ -72,6 +72,11 @@ def export_all(lp: Store | None) -> dict[str, str]:
                            "after_entry": s.get("stats", {}).get("after"), "hints": s.get("stats", {}).get("hints"),
                            "tune": s.get("stats", {}).get("tune"), "exit_plan": s.get("stats", {}).get("exit_plan")})
         files["apprentice/setups.json"] = json.dumps(setups, indent=1, default=str)
+        try:
+            from apprentice import review as rv
+            files["apprentice/review_status.json"] = json.dumps(rv.status(a), indent=1)
+        except Exception:
+            pass
         lines.append(f"- Apprentice: {len(a.table('lessons'))} lessons, {len(a.table('concepts'))} concepts, "
                      f"{len(setups)} setups ({sum(s['status'] in ('active', 'pinned') for s in setups)} trading)")
     except Exception as e:
@@ -213,6 +218,16 @@ def fetch_reviews() -> dict | None:
     review = json.loads(text)
     LOCAL_REVIEW.parent.mkdir(parents=True, exist_ok=True)
     LOCAL_REVIEW.write_text(json.dumps(review, indent=1))
+    try:                                          # concepts: applied straight away (setups wait for your Apply)
+        from apprentice import review as rv
+        from apprentice.store import Store as AStore
+        from apprentice.strategy import db_path
+        if Path(db_path()).exists():
+            n = rv.apply_concepts(AStore(db_path()))
+            if n:
+                print(f"[sync] applied Claude's verdict to {n} concept(s)")
+    except Exception as e:
+        print(f"[sync] couldn't apply the concept verdicts: {e}")
     return review
 
 
