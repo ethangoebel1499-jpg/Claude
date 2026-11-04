@@ -444,3 +444,9 @@ Apprentice ETH 1h,2026-11-04T16:00:30+00:00,entry,"LONG 4.299527 @ 2,431.77"
 Witcher ETH 2h,2026-11-04T18:00:04+00:00,entry,"LONG 4.127132 @ 2,422.99"
 Apprentice SHIB 1h,2026-11-04T19:00:32+00:00,exit,closed (opposite setup) -49.29 USD
 Apprentice SHIB 1h,2026-11-04T19:00:32+00:00,entry,"SHORT 2,096,066,407.04798985 @ 0.000004727"
+Apprentice BTC 4h,2026-11-04T20:00:24+00:00,exit,closed (opposite setup) +339.44 USD
+Apprentice BTC 4h,2026-11-04T20:00:24+00:00,entry,"SHORT 0.129356 @ 79,929.80 · its own stop 1.91% away"
+Apprentice LTC 1h,2026-11-04T20:00:26+00:00,exit,closed (opposite setup) -93.41 USD
+Apprentice LTC 1h,2026-11-04T20:00:26+00:00,entry,SHORT 175.408664 @ 55.52
+Apprentice ETH 4h,2026-11-04T20:00:29+00:00,entry,"SHORT 4.347562 @ 2,405.49 · its own stop 2.50% away"
+Apprentice UNI 4h,2026-11-04T20:00:29+00:00,entry,"SHORT 1,340.10613 @ 7.54"
