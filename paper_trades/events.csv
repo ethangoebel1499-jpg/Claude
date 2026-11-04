@@ -442,3 +442,5 @@ S3 GRIND DOGE 1h,2026-11-04T15:29:38+00:00,error,"ConnectionError: ('Connection 
 Witcher ETH 2h,2026-11-04T15:29:41+00:00,error,"ConnectionError: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
 Apprentice ETH 1h,2026-11-04T16:00:30+00:00,entry,"LONG 4.299527 @ 2,431.77"
 Witcher ETH 2h,2026-11-04T18:00:04+00:00,entry,"LONG 4.127132 @ 2,422.99"
+Apprentice SHIB 1h,2026-11-04T19:00:32+00:00,exit,closed (opposite setup) -49.29 USD
+Apprentice SHIB 1h,2026-11-04T19:00:32+00:00,entry,"SHORT 2,096,066,407.04798985 @ 0.000004727"
