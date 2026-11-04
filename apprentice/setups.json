@@ -1,0 +1,6717 @@
+[
+ {
+  "id": 1,
+  "name": "Market Cipher Strategy",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 0.7,
+  "rr": 2.0,
+  "timeframe": "1h",
+  "why": "Market Cipher green dot, close above EMA (50), MACD crosses above its signal line, RSI above 70, ATR (14) below 0.7 \u00d7 its 50-candle average, Risk-reward ratio of 2:1, 1-hour time frame, and Market Cipher wave below -53 (oversold).",
+  "quote": "the reason for that is because it's so easy to miss the move and i've done it okay i've done it where i'm actually at the computer and i think i don't need to set an alert i'll just check the chart every few minutes you end up doing something you check the chart and you realize i missed my entry i missed my entry and then you have to make that decision oh should i fomo in and miss half the move or maybe the moves already over you need to set alerts because if you want to get in the trade at the time that you planned you need to do that right when your things confirm",
+  "unchecked": [
+   "unchecked"
+  ],
+  "lesson_id": 1,
+  "rules": [
+   {
+    "rule": "wt_green_dot"
+   },
+   {
+    "rule": "close_above_ema",
+    "a": 50
+   },
+   {
+    "rule": "macd_cross_up"
+   },
+   {
+    "rule": "rsi_above",
+    "a": 70
+   }
+  ],
+  "rules_text": [
+   "Market Cipher green dot (WaveTrend crosses up) below 0",
+   "Close above EMA (50)",
+   "MACD crosses above its signal line",
+   "RSI (14) above 70"
+  ],
+  "stats": {
+   "trades": 0,
+   "avg_r": null,
+   "edge": null,
+   "win_rate": null,
+   "charts": 5
+  },
+  "charts": {
+   "BTC 4h": {
+    "trades": 0,
+    "win_rate": null,
+    "avg_r": null,
+    "edge": null,
+    "base_r": 0.008,
+    "sum_r": 0.0
+   },
+   "ETH 4h": {
+    "trades": 0,
+    "win_rate": null,
+    "avg_r": null,
+    "edge": null,
+    "base_r": 0.033,
+    "sum_r": 0.0
+   },
+   "SOL 4h": {
+    "trades": 0,
+    "win_rate": null,
+    "avg_r": null,
+    "edge": null,
+    "base_r": 0.007,
+    "sum_r": 0.0
+   },
+   "BTC 1D": {
+    "trades": 0,
+    "win_rate": null,
+    "avg_r": null,
+    "edge": null,
+    "base_r": 0.054,
+    "sum_r": 0.0
+   },
+   "ETH 1D": {
+    "trades": 0,
+    "win_rate": null,
+    "avg_r": null,
+    "edge": null,
+    "base_r": 0.05,
+    "sum_r": 0.0
+   }
+  }
+ },
+ {
+  "id": 2,
+  "name": "Trade Setup at Key Level",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.579,
+  "source": "lesson",
+  "stop_atr": 0.7,
+  "rr": 4.0,
+  "timeframe": "1h",
+  "why": "The level is a key support level, and the market is oversold, indicating a potential reversal.",
+  "quote": "The reason I got this level here, the reason I was able to take the trade right from the bottom is because I did analysis on a chart.",
+  "unchecked": [
+   "The specific level is $89,99."
+  ],
+  "lesson_id": 1,
+  "rules": [
+   {
+    "rule": "close_above_ema",
+    "a": 50
+   },
+   {
+    "rule": "wt_green_dot"
+   },
+   {
+    "rule": "wt_below",
+    "a": -53
+   }
+  ],
+  "rules_text": [
+   "Close above EMA (50)",
+   "Market Cipher green dot (WaveTrend crosses up) below 0",
+   "Market Cipher wave below -53 (oversold)"
+  ],
+  "stats": {
+   "trades": 5,
+   "avg_r": 3.0,
+   "edge": 2.894,
+   "win_rate": 80.0,
+   "charts": 5,
+   "charts_positive": 3
+  },
+  "charts": {
+   "BTC 4h": {
+    "trades": 1,
+    "win_rate": 100.0,
+    "avg_r": 4.0,
+    "edge": 4.019,
+    "base_r": -0.019,
+    "sum_r": 4.0,
+    "t": 0.0
+   },
+   "ETH 4h": {
+    "trades": 0,
+    "win_rate": null,
+    "avg_r": null,
+    "edge": null,
+    "base_r": 0.04,
+    "sum_r": 0.0
+   },
+   "SOL 4h": {
+    "trades": 1,
+    "win_rate": 0.0,
+    "avg_r": -1.0,
+    "edge": -1.027,
+    "base_r": 0.027,
+    "sum_r": -1.0,
+    "t": 0.0
+   },
+   "BTC 1D": {
+    "trades": 1,
+    "win_rate": 100.0,
+    "avg_r": 4.0,
+    "edge": 3.899,
+    "base_r": 0.101,
+    "sum_r": 4.0,
+    "t": 0.0
+   },
+   "ETH 1D": {
+    "trades": 2,
+    "win_rate": 100.0,
+    "avg_r": 4.0,
+    "edge": 3.789,
+    "base_r": 0.211,
+    "sum_r": 8.0,
+    "t": 0.0
+   }
+  }
+ },
+ {
+  "id": 3,
+  "name": "Trade Setup at Key Level",
+  "direction": "short",
+  "status": "off",
+  "weight": -0.155,
+  "source": "lesson",
+  "stop_atr": 0.7,
+  "rr": 4.0,
+  "timeframe": "1h",
+  "why": "The level is a key resistance level, and the market is overbought, indicating a potential reversal.",
+  "quote": "How was I able to know that the price was going to drop from here? It has to do with doing technical analysis.",
+  "unchecked": [
+   "The specific level is the top of the chart."
+  ],
+  "lesson_id": 1,
+  "rules": [
+   {
+    "rule": "close_below_ema",
+    "a": 50
+   },
+   {
+    "rule": "wt_red_dot"
+   },
+   {
+    "rule": "wt_above",
+    "a": 53
+   }
+  ],
+  "rules_text": [
+   "Close below EMA (50)",
+   "Market Cipher red dot (WaveTrend crosses down) above 0",
+   "Market Cipher wave above 53 (overbought)"
+  ],
+  "stats": {
+   "trades": 41,
+   "avg_r": -0.268,
+   "edge": -0.23,
+   "win_rate": 14.6,
+   "charts": 9,
+   "charts_positive": 2
+  },
+  "charts": {
+   "BTC 4h": {
+    "trades": 6,
+    "win_rate": 50.0,
+    "avg_r": 1.5,
+    "edge": 1.448,
+    "base_r": 0.052,
+    "sum_r": 9.0,
+    "t": 1.3
+   },
+   "ETH 4h": {
+    "trades": 7,
+    "win_rate": 28.6,
+    "avg_r": 0.429,
+    "edge": 0.446,
+    "base_r": -0.017,
+    "sum_r": 3.0,
+    "t": 0.48
+   },
+   "SOL 4h": {
+    "trades": 2,
+    "win_rate": 0.0,
+    "avg_r": -1.0,
+    "edge": -1.0,
+    "base_r": -0.0,
+    "sum_r": -2.0,
+    "t": 0.0
+   },
+   "BTC 1D": {
+    "trades": 8,
+    "win_rate": 0.0,
+    "avg_r": -1.0,
+    "edge": -0.829,
+    "base_r": -0.171,
+    "sum_r": -8.0,
+    "t": 0.0
+   },
+   "ETH 1D": {
+    "trades": 5,
+    "win_rate": 0.0,
+    "avg_r": -1.0,
+    "edge": -0.961,
+    "base_r": -0.039,
+    "sum_r": -5.0,
+    "t": 0.0
+   },
+   "BTC 1h": {
+    "trades": 9,
+    "win_rate": 11.1,
+    "avg_r": -0.444,
+    "edge": -0.372,
+    "base_r": -0.073,
+    "sum_r": -4.0,
+    "t": -0.67
+   },
+   "XRP 4h": {
+    "trades": 3,
+    "win_rate": 0.0,
+    "avg_r": -1.0,
+    "edge": -1.208,
+    "base_r": 0.208,
+    "sum_r": -3.0,
+    "t": 0.0
+   },
+   "SPY 1D": {
+    "trades": 1,
+    "win_rate": 0.0,
+    "avg_r": -1.0,
+    "edge": -0.844,
+    "base_r": -0.156,
+    "sum_r": -1.0,
+    "t": 0.0
+   },
+   "QQQ 1D": {
+    "trades": 0,
+    "win_rate": null,
+    "avg_r": null,
+    "edge": null,
+    "base_r": -0.157,
+    "sum_r": 0.0
+   }
+  }
+ },
+ {
+  "id": 4,
+  "name": "Market Cipher Strategy Entry",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "4h and 24m",
+  "why": "The trader waits for a green trigger wave on the 24-minute timeframe and a wolf pack crossover on the 4-hour timeframe, and also checks the money flow index for a clear upward curve. The entry is made when all these conditions are met on the 24-minute timeframe.",
+  "quote": "i'm waiting for a green trigger wave so i had a red dot here it's coming down i'm just waiting i'm waiting all right playing it out playing it at boom we got a green trigger wave right here and i also got a wolf pack crossover right here so the this is my signal that okay i'm looking for an entry from my environmental time frame i'm going to move over to my execution timeframe and look for an entry and i printed that green dot right there on the four hour so right here on the 24 minute this is where i would enter my trade because i have all my confirmations i have a trigger wave on the 24 minute i have a wolf pack id crossover right here coming up into the green and then i also have my money flow index curving upwards a clear curve upwards in fact right on this dot here you can see it's pretty much crossed over so i would have entered right here or maybe a better entry would have been right here because actually the wolfpack id if you look closely i don't know if you can see it but it hadn't officially crossed over here so i would have entered right here",
+  "unchecked": [
+   "The trader mentions the importance of having a clear direction of the money flow index as a confirmation, but does not specify the exact rule."
+  ],
+  "lesson_id": 1,
+  "rules": [
+   {
+    "rule": "wt_green_dot"
+   },
+   {
+    "rule": "wt_red_dot"
+   },
+   {
+    "rule": "wt_above"
+   },
+   {
+    "rule": "mf_positive"
+   },
+   {
+    "rule": "ema_cross_up",
+    "a": 9,
+    "b": 21
+   },
+   {
+    "rule": "close_above_sma",
+    "a": 200
+   }
+  ],
+  "rules_text": [
+   "Market Cipher green dot (WaveTrend crosses up) below 0",
+   "Market Cipher red dot (WaveTrend crosses down) above 0",
+   "Market Cipher wave above 53 (overbought)",
+   "Market Cipher money flow above zero (green)",
+   "EMA (9) crosses above EMA (21)",
+   "Close above SMA (200)"
+  ],
+  "stats": {
+   "trades": 0,
+   "avg_r": null,
+   "edge": null,
+   "win_rate": null,
+   "charts": 5
+  },
+  "charts": {
+   "BTC 4h": {
+    "trades": 0,
+    "win_rate": null,
+    "avg_r": null,
+    "edge": null,
+    "base_r": -0.017,
+    "sum_r": 0.0
+   },
+   "ETH 4h": {
+    "trades": 0,
+    "win_rate": null,
+    "avg_r": null,
+    "edge": null,
+    "base_r": 0.062,
+    "sum_r": 0.0
+   },
+   "SOL 4h": {
+    "trades": 0,
+    "win_rate": null,
+    "avg_r": null,
+    "edge": null,
+    "base_r": -0.039,
+    "sum_r": 0.0
+   },
+   "BTC 1D": {
+    "trades": 0,
+    "win_rate": null,
+    "avg_r": null,
+    "edge": null,
+    "base_r": 0.118,
+    "sum_r": 0.0
+   },
+   "ETH 1D": {
+    "trades": 0,
+    "win_rate": null,
+    "avg_r": null,
+    "edge": null,
+    "base_r": 0.196,
+    "sum_r": 0.0
+   }
+  }
+ },
+ {
+  "id": 5,
+  "name": "Short: Close above the upper Bollinger band + Shooting star / bearish pin bar",
+  "direction": "short",
+  "status": "pinned",
+  "weight": 0.55,
+  "source": "missed",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "",
+  "why": "Found in missed trades: in the first 70% of history 38 trades, edge +0.29R; on the last 30% (unseen) 15 trades, edge +0.49R.",
+  "quote": "",
+  "unchecked": [],
+  "lesson_id": null,
+  "rules": [
+   {
+    "rule": "bb_above_upper"
+   },
+   {
+    "rule": "shooting_star"
+   }
+  ],
+  "rules_text": [
+   "Close above the upper Bollinger band (20 candles, 2 deviations)",
+   "Shooting star / bearish pin bar (long upper wick)"
+  ],
+  "stats": {
+   "trades": 53,
+   "avg_r": 0.302,
+   "edge": 0.345,
+   "win_rate": 43.4,
+   "charts": 5,
+   "charts_positive": 4
+  },
+  "charts": {
+   "BTC 4h": {
+    "trades": 12,
+    "win_rate": 58.3,
+    "avg_r": 0.75,
+    "edge": 0.716,
+    "base_r": 0.034,
+    "sum_r": 9.0,
+    "t": 1.61
+   },
+   "ETH 4h": {
+    "trades": 13,
+    "win_rate": 53.8,
+    "avg_r": 0.615,
+    "edge": 0.602,
+    "base_r": 0.014,
+    "sum_r": 8.0,
+    "t": 1.39
+   },
+   "SOL 4h": {
+    "trades": 5,
+    "win_rate": 0.0,
+    "avg_r": -1.0,
+    "edge": -0.998,
+    "base_r": -0.002,
+    "sum_r": -5.0,
+    "t": 0.0
+   },
+   "BTC 1D": {
+    "trades": 11,
+    "win_rate": 45.5,
+    "avg_r": 0.364,
+    "edge": 0.545,
+    "base_r": -0.182,
+    "sum_r": 4.0,
+    "t": 1.15
+   },
+   "ETH 1D": {
+    "trades": 12,
+    "win_rate": 33.3,
+    "avg_r": 0.0,
+    "edge": 0.072,
+    "base_r": -0.072,
+    "sum_r": 0.0,
+    "t": 0.17
+   }
+  }
+ },
+ {
+  "id": 6,
+  "name": "Short: Close above the highest high of the last 20 candles + Close above the upp",
+  "direction": "short",
+  "status": "off",
+  "weight": 0.04,
+  "source": "missed",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "",
+  "why": "Found in missed trades: in the first 70% of history 256 trades, edge +0.15R; on the last 30% (unseen) 88 trades, edge +0.14R.",
+  "quote": "",
+  "unchecked": [],
+  "lesson_id": null,
+  "rules": [
+   {
+    "rule": "breakout_high"
+   },
+   {
+    "rule": "bb_above_upper"
+   }
+  ],
+  "rules_text": [
+   "Close above the highest high of the last 20 candles",
+   "Close above the upper Bollinger band (20 candles, 2 deviations)"
+  ],
+  "stats": {
+   "trades": 594,
+   "avg_r": -0.023,
+   "edge": 0.041,
+   "win_rate": 33.0,
+   "charts": 9,
+   "charts_positive": 4
+  },
+  "charts": {
+   "BTC 4h": {
+    "trades": 67,
+    "win_rate": 41.8,
+    "avg_r": 0.254,
+    "edge": 0.224,
+    "base_r": 0.03,
+    "sum_r": 17.0,
+    "t": 1.23
+   },
+   "ETH 4h": {
+    "trades": 68,
+    "win_rate": 38.2,
+    "avg_r": 0.114,
+    "edge": 0.098,
+    "base_r": 0.015,
+    "sum_r": 7.73,
+    "t": 0.56
+   },
+   "SOL 4h": {
+    "trades": 61,
+    "win_rate": 37.7,
+    "avg_r": 0.086,
+    "edge": 0.091,
+    "base_r": -0.006,
+    "sum_r": 5.22,
+    "t": 0.5
+   },
+   "BTC 1D": {
+    "trades": 76,
+    "win_rate": 39.5,
+    "avg_r": 0.173,
+    "edge": 0.355,
+    "base_r": -0.182,
+    "sum_r": 13.13,
+    "t": 2.11
+   },
+   "ETH 1D": {
+    "trades": 72,
+    "win_rate": 30.6,
+    "avg_r": -0.112,
+    "edge": -0.042,
+    "base_r": -0.07,
+    "sum_r": -8.06,
+    "t": -0.26
+   },
+   "BTC 1h": {
+    "trades": 70,
+    "win_rate": 25.7,
+    "avg_r": -0.242,
+    "edge": -0.088,
+    "base_r": -0.154,
+    "sum_r": -16.95,
+    "t": -0.57
+   },
+   "XRP 4h": {
+    "trades": 53,
+    "win_rate": 37.7,
+    "avg_r": 0.143,
+    "edge": -0.079,
+    "base_r": 0.222,
+    "sum_r": 7.59,
+    "t": -0.39
+   },
+   "SPY 1D": {
+    "trades": 62,
+    "win_rate": 22.6,
+    "avg_r": -0.311,
+    "edge": -0.13,
+    "base_r": -0.181,
+    "sum_r": -19.29,
+    "t": -0.81
+   },
+   "QQQ 1D": {
+    "trades": 65,
+    "win_rate": 23.1,
+    "avg_r": -0.308,
+    "edge": -0.134,
+    "base_r": -0.174,
+    "sum_r": -20.0,
+    "t": -0.85
+   }
+  }
+ },
+ {
+  "id": 7,
+  "name": "bb_touch_lower",
+  "direction": "long",
+  "status": "retired",
+  "weight": -0.138,
+  "source": "lesson",
+  "stop_atr": 0.25,
+  "rr": 3.0,
+  "timeframe": "1m",
+  "why": "Bollinger band touch and RSI bearish divergence indicate potential trend reversal and profit opportunity.",
+  "quote": "we are going to wait for price to pierce or touch either the upper or lower Bollinger band and then look and see if we are getting a confirmation on the oscillator",
+  "unchecked": [
+   "price touches the lower Bollinger band"
+  ],
+  "lesson_id": 3,
+  "rules": [
+   {
+    "rule": "close_below_ema",
+    "a": 50,
+    "b": 21
+   },
+   {
+    "rule": "rsi_bear_div",
+    "a": 30,
+    "b": 70
+   }
+  ],
+  "rules_text": [
+   "Close below EMA (50)",
+   "Bearish divergence: price higher high, RSI lower high - in the last 30 candles, lows/highs at most 70 candles apart"
+  ],
+  "stats": {
+   "trades": 101,
+   "avg_r": -0.248,
+   "edge": -0.165,
+   "win_rate": 18.8,
+   "charts": 5,
+   "charts_positive": 1
+  },
+  "charts": {
+   "BTC 4h": {
+    "trades": 20,
+    "win_rate": 20.0,
+    "avg_r": -0.2,
+    "edge": -0.142,
+    "base_r": -0.058,
+    "sum_r": -4.0,
+    "t": -0.39
+   },
+   "ETH 4h": {
+    "trades": 17,
+    "win_rate": 23.5,
+    "avg_r": -0.059,
+    "edge": 0.004,
+    "base_r": -0.062,
+    "sum_r": -1.0,
+    "t": 0.01
+   },
+   "SOL 4h": {
+    "trades": 17,
+    "win_rate": 17.6,
+    "avg_r": -0.294,
+    "edge": -0.158,
+    "base_r": -0.136,
+    "sum_r": -5.0,
+    "t": -0.42
+   },
+   "BTC 1D": {
+    "trades": 19,
+    "win_rate": 10.5,
+    "avg_r": -0.579,
+    "edge": -0.493,
+    "base_r": -0.086,
+    "sum_r": -11.0,
+    "t": -1.7
+   },
+   "ETH 1D": {
+    "trades": 28,
+    "win_rate": 21.4,
+    "avg_r": -0.143,
+    "edge": -0.066,
+    "base_r": -0.077,
+    "sum_r": -4.0,
+    "t": -0.21
+   }
+  }
+ },
+ {
+  "id": 8,
+  "name": "bb_touch_upper",
+  "direction": "short",
+  "status": "active",
+  "weight": 0.3,
+  "source": "lesson",
+  "stop_atr": 0.25,
+  "rr": 3.0,
+  "timeframe": "1m",
+  "why": "Bollinger band touch and RSI bullish divergence indicate potential trend reversal and profit opportunity.",
+  "quote": "we are going to wait for price to pierce or touch either the upper or lower Bollinger band and then look and see if we are getting a confirmation on the oscillator",
+  "unchecked": [
+   "price touches the upper Bollinger band"
+  ],
+  "lesson_id": 3,
+  "rules": [
+   {
+    "rule": "close_above_ema",
+    "a": 50,
+    "b": 21
+   },
+   {
+    "rule": "rsi_bull_div",
+    "a": 30,
+    "b": 70
+   }
+  ],
+  "rules_text": [
+   "Close above EMA (50)",
+   "Bullish divergence: price lower low, RSI higher low - in the last 30 candles, lows/highs at most 70 candles apart"
+  ],
+  "stats": {
+   "trades": 86,
+   "avg_r": 0.302,
+   "edge": 0.37,
+   "win_rate": 32.6,
+   "charts": 5,
+   "charts_positive": 4
+  },
+  "charts": {
+   "BTC 4h": {
+    "trades": 17,
+    "win_rate": 29.4,
+    "avg_r": 0.176,
+    "edge": 0.276,
+    "base_r": -0.1,
+    "sum_r": 3.0,
+    "t": 0.61
+   },
+   "ETH 4h": {
+    "trades": 22,
+    "win_rate": 45.5,
+    "avg_r": 0.818,
+    "edge": 0.894,
+    "base_r": -0.076,
+    "sum_r": 18.0,
+    "t": 2.06
+   },
+   "SOL 4h": {
+    "trades": 19,
+    "win_rate": 26.3,
+    "avg_r": 0.053,
+    "edge": 0.098,
+    "base_r": -0.045,
+    "sum_r": 1.0,
+    "t": 0.24
+   },
+   "BTC 1D": {
+    "trades": 14,
+    "win_rate": 21.4,
+    "avg_r": -0.143,
+    "edge": -0.071,
+    "base_r": -0.072,
+    "sum_r": -2.0,
+    "t": -0.16
+   },
+   "ETH 1D": {
+    "trades": 14,
+    "win_rate": 35.7,
+    "avg_r": 0.429,
+    "edge": 0.468,
+    "base_r": -0.039,
+    "sum_r": 6.0,
+    "t": 0.88
+   }
+  }
+ },
+ {
+  "id": 9,
+  "name": "bb_touch_upper_or_lower",
+  "direction": "long",
+  "status": "retired",
+  "weight": -0.101,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 3.0,
+  "timeframe": "1m",
+  "why": "Bollinger Bands touch upper or lower range, and Awesome Oscillator shows bearish divergence, indicating a potential reversal and profit target at the Bollinger Band.",
+  "quote": "We enter the trade when we see this divergence, place the stop loss above the tail, and then target the Bollinger Band.",
+  "unchecked": [
+   "We enter the trade when we see this divergence, place the stop loss above the tail, and then target the Bollinger Band."
+  ],
+  "lesson_id": 4,
+  "rules": [
+   {
+    "rule": "close_above_ema",
+    "a": 50
+   },
+   {
+    "rule": "close_below_ema",
+    "a": 21
+   },
+   {
+    "rule": "ao_bear_div"
+   }
+  ],
+  "rules_text": [
+   "Close above EMA (50)",
+   "Close below EMA (21)",
+   "Bearish divergence: price higher high, Awesome Oscillator lower high - in the last 3 candles, lows/highs at most 60 candles apart"
+  ],
+  "stats": {
+   "trades": 31,
+   "avg_r": -0.012,
+   "edge": -0.166,
+   "win_rate": 25.8,
+   "charts": 5,
+   "charts_positive": 1
+  },
+  "charts": {
+   "BTC 4h": {
+    "trades": 3,
+    "win_rate": 0.0,
+    "avg_r": -1.0,
+    "edge": -0.944,
+    "base_r": -0.056,
+    "sum_r": -3.0,
+    "t": 0.0
+   },
+   "ETH 4h": {
+    "trades": 4,
+    "win_rate": 25.0,
+    "avg_r": 0.0,
+    "edge": -0.128,
+    "base_r": 0.128,
+    "sum_r": 0.0,
+    "t": -0.13
+   },
+   "SOL 4h": {
+    "trades": 5,
+    "win_rate": 20.0,
+    "avg_r": -0.2,
+    "edge": -0.16,
+    "base_r": -0.04,
+    "sum_r": -1.0,
+    "t": -0.2
+   },
+   "BTC 1D": {
+    "trades": 8,
+    "win_rate": 12.5,
+    "avg_r": -0.5,
+    "edge": -0.71,
+    "base_r": 0.21,
+    "sum_r": -4.0,
+    "t": -1.42
+   },
+   "ETH 1D": {
+    "trades": 11,
+    "win_rate": 45.5,
+    "avg_r": 0.694,
+    "edge": 0.424,
+    "base_r": 0.27,
+    "sum_r": 7.64,
+    "t": 0.71
+   }
+  }
+ },
+ {
+  "id": 10,
+  "name": "bb_touch_upper_or_lower",
+  "direction": "short",
+  "status": "off",
+  "weight": -0.104,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 3.0,
+  "timeframe": "1m",
+  "why": "Bollinger Bands touch upper or lower range, and Awesome Oscillator shows bullish divergence, indicating a potential reversal and profit target at the Bollinger Band.",
+  "quote": "We enter the trade when we see this divergence, place the stop loss above the tail, and then target the Bollinger Band.",
+  "unchecked": [
+   "We enter the trade when we see this divergence, place the stop loss above the tail, and then target the Bollinger Band."
+  ],
+  "lesson_id": 4,
+  "rules": [
+   {
+    "rule": "close_below_ema",
+    "a": 50
+   },
+   {
+    "rule": "close_above_ema",
+    "a": 21
+   },
+   {
+    "rule": "ao_bull_div"
+   }
+  ],
+  "rules_text": [
+   "Close below EMA (50)",
+   "Close above EMA (21)",
+   "Bullish divergence: price lower low, Awesome Oscillator higher low - in the last 3 candles, lows/highs at most 60 candles apart"
+  ],
+  "stats": {
+   "trades": 50,
+   "avg_r": -0.142,
+   "edge": -0.146,
+   "win_rate": 28.0,
+   "charts": 9,
+   "charts_positive": 4
+  },
+  "charts": {
+   "BTC 4h": {
+    "trades": 6,
+    "win_rate": 16.7,
+    "avg_r": -0.333,
+    "edge": -0.429,
+    "base_r": 0.096,
+    "sum_r": -2.0,
+    "t": -0.64
+   },
+   "ETH 4h": {
+    "trades": 7,
+    "win_rate": 42.9,
+    "avg_r": 0.368,
+    "edge": 0.308,
+    "base_r": 0.06,
+    "sum_r": 2.57,
+    "t": 0.43
+   },
+   "SOL 4h": {
+    "trades": 5,
+    "win_rate": 80.0,
+    "avg_r": 0.862,
+    "edge": 0.807,
+    "base_r": 0.055,
+    "sum_r": 4.31,
+    "t": 1.22
+   },
+   "BTC 1D": {
+    "trades": 4,
+    "win_rate": 0.0,
+    "avg_r": -1.0,
+    "edge": -0.838,
+    "base_r": -0.162,
+    "sum_r": -4.0,
+    "t": 0.0
+   },
+   "ETH 1D": {
+    "trades": 1,
+    "win_rate": 0.0,
+    "avg_r": -1.0,
+    "edge": -0.965,
+    "base_r": -0.035,
+    "sum_r": -1.0,
+    "t": 0.0
+   },
+   "BTC 1h": {
+    "trades": 10,
+    "win_rate": 10.0,
+    "avg_r": -0.842,
+    "edge": -0.679,
+    "base_r": -0.163,
+    "sum_r": -8.42,
+    "t": -4.31
+   },
+   "XRP 4h": {
+    "trades": 10,
+    "win_rate": 40.0,
+    "avg_r": 0.441,
+    "edge": 0.112,
+    "base_r": 0.329,
+    "sum_r": 4.41,
+    "t": 0.19
+   },
+   "SPY 1D": {
+    "trades": 3,
+    "win_rate": 0.0,
+    "avg_r": -1.0,
+    "edge": -0.7,
+    "base_r": -0.3,
+    "sum_r": -3.0,
+    "t": 0.0
+   },
+   "QQQ 1D": {
+    "trades": 4,
+    "win_rate": 25.0,
+    "avg_r": 0.0,
+    "edge": 0.296,
+    "base_r": -0.296,
+    "sum_r": 0.0,
+    "t": 0.3
+   }
+  }
+ },
+ {
+  "id": 11,
+  "name": "scalping_strategy",
+  "direction": "long",
+  "status": "active",
+  "weight": 0.048,
+  "source": "lesson",
+  "stop_atr": 2.0,
+  "rr": 1.5,
+  "timeframe": "1 minute",
+  "why": "Small gains can offset losses in a scalping strategy with a larger position size and volume spike for confirmation.",
+  "quote": "0.2% move on a much larger position size than if we were trading on a higher timeframe.",
+  "unchecked": [
+   "0.2% move on a much larger position size than if we were trading on a higher timeframe."
+  ],
+  "lesson_id": 4,
+  "rules": [
+   {
+    "rule": "close_above_ema",
+    "a": 50
+   },
+   {
+    "rule": "volume_spike"
+   }
+  ],
+  "rules_text": [
+   "Close above EMA (50)",
+   "Volume above 1.5 \u00d7 its 20-candle average"
+  ],
+  "stats": {
+   "trades": 673,
+   "avg_r": 0.095,
+   "edge": 0.049,
+   "win_rate": 43.9,
+   "charts": 5,
+   "charts_positive": 4
+  },
+  "charts": {
+   "BTC 4h": {
+    "trades": 146,
+    "win_rate": 37.0,
+    "avg_r": -0.07,
+    "edge": -0.059,
+    "base_r": -0.011,
+    "sum_r": -10.27,
+    "t": -0.6
+   },
+   "ETH 4h": {
+    "trades": 149,
+    "win_rate": 44.3,
+    "avg_r": 0.112,
+    "edge": 0.083,
+    "base_r": 0.029,
+    "sum_r": 16.68,
+    "t": 0.82
+   },
+   "SOL 4h": {
+    "trades": 144,
+    "win_rate": 43.1,
+    "avg_r": 0.063,
+    "edge": 0.094,
+    "base_r": -0.032,
+    "sum_r": 9.01,
+    "t": 0.93
+   },
+   "BTC 1D": {
+    "trades": 116,
+    "win_rate": 50.9,
+    "avg_r": 0.259,
+    "edge": 0.132,
+    "base_r": 0.127,
+    "sum_r": 30.02,
+    "t": 1.15
+   },
+   "ETH 1D": {
+    "trades": 118,
+    "win_rate": 45.8,
+    "avg_r": 0.153,
+    "edge": 0.006,
+    "base_r": 0.147,
+    "sum_r": 18.01,
+    "t": 0.05
+   }
+  }
+ },
+ {
+  "id": 12,
+  "name": "Long: Volume above 1.5 \u00d7 its 20-candle average",
+  "direction": "long",
+  "status": "retired",
+  "weight": -0.168,
+  "source": "missed",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "",
+  "why": "Found in missed trades: in the first 70% of history 1347 trades, edge +0.06R; on the last 30% (unseen) 541 trades, edge +0.00R.",
+  "quote": "",
+  "unchecked": [],
+  "lesson_id": null,
+  "rules": [
+   {
+    "rule": "volume_spike"
+   }
+  ],
+  "rules_text": [
+   "Volume above 1.5 \u00d7 its 20-candle average"
+  ],
+  "stats": {
+   "trades": 1182,
+   "avg_r": 0.087,
+   "edge": 0.033,
+   "win_rate": 36.6,
+   "charts": 5,
+   "charts_positive": 4
+  },
+  "charts": {
+   "BTC 4h": {
+    "trades": 271,
+    "win_rate": 29.5,
+    "avg_r": -0.105,
+    "edge": -0.087,
+    "base_r": -0.017,
+    "sum_r": -28.39,
+    "t": -1.06
+   },
+   "ETH 4h": {
+    "trades": 261,
+    "win_rate": 36.8,
+    "avg_r": 0.083,
+    "edge": 0.022,
+    "base_r": 0.062,
+    "sum_r": 21.78,
+    "t": 0.25
+   },
+   "SOL 4h": {
+    "trades": 255,
+    "win_rate": 36.9,
+    "avg_r": 0.105,
+    "edge": 0.144,
+    "base_r": -0.039,
+    "sum_r": 26.79,
+    "t": 1.59
+   },
+   "BTC 1D": {
+    "trades": 195,
+    "win_rate": 41.0,
+    "avg_r": 0.182,
+    "edge": 0.064,
+    "base_r": 0.118,
+    "sum_r": 35.41,
+    "t": 0.62
+   },
+   "ETH 1D": {
+    "trades": 200,
+    "win_rate": 41.5,
+    "avg_r": 0.237,
+    "edge": 0.041,
+    "base_r": 0.196,
+    "sum_r": 47.37,
+    "t": 0.4
+   }
+  }
+ },
+ {
+  "id": 13,
+  "name": "Short: Close above the upper Bollinger band + Shooting star / bearish pin bar + ",
+  "direction": "short",
+  "status": "active",
+  "weight": 0.144,
+  "source": "missed",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "",
+  "why": "Found in missed trades: in the first 70% of history 26 trades, edge +0.22R; on the last 30% (unseen) 11 trades, edge +0.10R.",
+  "quote": "",
+  "unchecked": [],
+  "lesson_id": null,
+  "rules": [
+   {
+    "rule": "bb_above_upper"
+   },
+   {
+    "rule": "shooting_star"
+   },
+   {
+    "rule": "up_pct"
+   }
+  ],
+  "rules_text": [
+   "Close above the upper Bollinger band (20 candles, 2 deviations)",
+   "Shooting star / bearish pin bar (long upper wick)",
+   "Price up more than 5% over the last 10 candles"
+  ],
+  "stats": {
+   "trades": 31,
+   "avg_r": 0.161,
+   "edge": 0.237,
+   "win_rate": 38.7,
+   "charts": 5,
+   "charts_positive": 4
+  },
+  "charts": {
+   "BTC 4h": {
+    "trades": 2,
+    "win_rate": 50.0,
+    "avg_r": 0.5,
+    "edge": 0.466,
+    "base_r": 0.034,
+    "sum_r": 1.0,
+    "t": 0.31
+   },
+   "ETH 4h": {
+    "trades": 6,
+    "win_rate": 50.0,
+    "avg_r": 0.5,
+    "edge": 0.486,
+    "base_r": 0.014,
+    "sum_r": 3.0,
+    "t": 0.73
+   },
+   "SOL 4h": {
+    "trades": 2,
+    "win_rate": 0.0,
+    "avg_r": -1.0,
+    "edge": -0.998,
+    "base_r": -0.002,
+    "sum_r": -2.0,
+    "t": 0.0
+   },
+   "BTC 1D": {
+    "trades": 9,
+    "win_rate": 44.4,
+    "avg_r": 0.333,
+    "edge": 0.515,
+    "base_r": -0.182,
+    "sum_r": 3.0,
+    "t": 0.98
+   },
+   "ETH 1D": {
+    "trades": 12,
+    "win_rate": 33.3,
+    "avg_r": 0.0,
+    "edge": 0.072,
+    "base_r": -0.072,
+    "sum_r": 0.0,
+    "t": 0.17
+   }
+  }
+ },
+ {
+  "id": 14,
+  "name": "long_entry",
+  "direction": "long",
+  "status": "retired",
+  "weight": -0.047,
+  "source": "lesson",
+  "stop_atr": 0.7,
+  "rr": 4.0,
+  "timeframe": "1h",
+  "why": "The trade setup was identified based on the price being below the EMA(50) and RSI showing bearish divergence, which is a potential setup for a long trade according to the teacher's strategy. The level $89,99 is where the trade was entered, but it is not a rule that can be checked on a chart, so it is recorded as unchecked. The risk-to-reward ratio is 4:1, and the stop loss is set at 0.7 ATR below the entry price.",
+  "quote": "The reason I got this level here, the reason I was able to take the trade right from the bottom is because I did analysis on a chart. All right, I have another trade open here. This trade, you can see I'm short right from the top. How was I able to know that the price was going to drop from here? It has to do with doing technical analysis.",
+  "unchecked": [
+   "The level $89,99 is where the trade was entered."
+  ],
+  "lesson_id": 5,
+  "rules": [
+   {
+    "rule": "close_below_ema",
+    "a": 50
+   },
+   {
+    "rule": "rsi_bear_div",
+    "a": 30,
+    "b": 60
+   }
+  ],
+  "rules_text": [
+   "Close below EMA (50)",
+   "Bearish divergence: price higher high, RSI lower high - in the last 30 candles, lows/highs at most 60 candles apart"
+  ],
+  "stats": {
+   "trades": 101,
+   "avg_r": 0.029,
+   "edge": -0.056,
+   "win_rate": 20.8,
+   "charts": 5,
+   "charts_positive": 3
+  },
+  "charts": {
+   "BTC 4h": {
+    "trades": 20,
+    "win_rate": 25.0,
+    "avg_r": 0.25,
+    "edge": 0.269,
+    "base_r": -0.019,
+    "sum_r": 5.0,
+    "t": 0.54
+   },
+   "ETH 4h": {
+    "trades": 17,
+    "win_rate": 23.5,
+    "avg_r": 0.176,
+    "edge": 0.136,
+    "base_r": 0.04,
+    "sum_r": 3.0,
+    "t": 0.26
+   },
+   "SOL 4h": {
+    "trades": 17,
+    "win_rate": 23.5,
+    "avg_r": 0.176,
+    "edge": 0.15,
+    "base_r": 0.027,
+    "sum_r": 3.0,
+    "t": 0.28
+   },
+   "BTC 1D": {
+    "trades": 19,
+    "win_rate": 5.3,
+    "avg_r": -0.737,
+    "edge": -0.838,
+    "base_r": 0.101,
+    "sum_r": -14.0,
+    "t": -3.18
+   },
+   "ETH 1D": {
+    "trades": 28,
+    "win_rate": 25.0,
+    "avg_r": 0.212,
+    "edge": 0.0,
+    "base_r": 0.211,
+    "sum_r": 5.92,
+    "t": 0.0
+   }
+  }
+ },
+ {
+  "id": 15,
+  "name": "Example Setup",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 0.7,
+  "rr": 4.0,
+  "timeframe": "daily",
+  "why": "RSI below 30, close above EMA(50), close below EMA(21), RSI crosses up through 30, RSI crosses down through 70, MACD crosses above its signal line, MACD crosses below its signal line, MACD above zero, MACD below zero, Market Cipher wave below -53, Market Cipher wave above 53, Market Cipher money flow above zero, Bollinger bands below 20 candles, 2 deviations, Awesome Oscillator column is green, Awesome Oscillator above zero, Awesome Oscillator crosses above zero, Awesome Oscillator crosses below zero, Bollinger bands touch lower in the last 3 candles, Bollinger bands above middle, Bollinger bands wider than 0.4% of price, Heikin Ashi candle is green, 3 green candles in a row, Close above the highest high of the last 20 candles, Volume above 1.5 \u00d7 its 20-candle average, Price up more than 5% over the last 10 candles, Price down more than 5% over the last 10 candles, Bullish engulfing candle, Shooting star / bearish pin bar (long upper wick), Bounced off support / reclaimed a level (closed back above it), Rejected at resistance / lost a level (closed back below it), Chart pattern broke out upward on this candle, Chart pattern broke down on this candle, Inside a pattern that usually breaks up (falling wedge, ascending triangle, bull flag...), Inside a pattern that usually breaks down (rising wedge, descending triangle, bear flag...), Squeezed near a triangle / wedge apex (75% of the way there or more), Volatility squeeze: ATR (14) below 0.7 \u00d7 its 50-candle average, Higher low: the last 5 candles' low is above the 5 candles before, Lower high: the last 5 candles' high is below the 5 candles before, RSI bullish divergence: price lower low, RSI higher low - in the last 3 candles, RSI bullish divergence: price higher high, RSI lower high - in the last 3 candles, RSI hidden bullish divergence: price higher low, RSI lower low (trend continuation) - in the last 3 candles, RSI hidden bearish divergence: price lower high, RSI higher high (trend continuation) - in the last 3 candles, Awesome Oscillator bullish divergence: price lower low, Awesome Oscillator higher low - in the last 3 candles, Awesome Oscillator bearish divergence: price higher high, Awesome Oscillator lower high - in the last 3 candles, Awesome Oscillator hidden bullish divergence: price higher low, Awesome Oscillator lower low (trend continuation) - in the last 3 candles, Awesome Oscillator hidden bearish divergence: price lower high, Awesome Oscillator higher high (trend continuation) - in the last 3 candles, MACD bullish divergence: price lower low, MACD higher low - in the last 3 candles, MACD bearish divergence: price higher high, MACD lower high - in the last 3 candles, MACD hidden bullish divergence: price higher low, MACD lower low (trend continuation) - in the last 3 candles, MACD hidden bearish divergence: price lower high, MACD higher high (trend continuation) - in the last 3 candles, Market Cipher bullish divergence: price lower low, Market Cipher wave higher low - in the last 3 candles, Market Cipher bearish divergence: price higher high, Market Cipher wave lower high - in the last 3 candles, Market Cipher hidden bullish divergence: price higher low, Market Cipher wave lower low (trend continuation) - in the last 3 candles, Market Cipher hidden bearish divergence: price lower high, Market Cipher wave higher high (trend continuation) - in the last 3 candles",
+  "quote": "Let's say we have $100 in our account and this is the trade that we're looking to take. All right, we're looking to take a 4 to1 riskreward and we have a 2% stop-loss. All right. So, let's say we're planning to get into our trade. We're answering our three questions. Where are we looking to enter the trade? We're looking to enter the trade right here at $90,000. If it goes below, let's say in my case here, for me, I had this plan. If it goes below $89,030, I will get out. Okay, this was my legitimate trading plan. I put this order here with my stop loss in advance, right? It almost stopped me out, but it didn't thankfully. And then I have my take profit up here at $97,200. You can see here this is a 7 to1 risk-reward ratio at that takerit. But I have answered already these three questions. I know where I'm going to get out uh if it goes for me, where I'm going to go get out if it goes against me. And I knew exactly where I was going to enter the trade from the level that I was prepared for, $89,900. Right? And so now that we have all this information, what we can do is we can calculate our position size.",
+  "unchecked": [
+   "Close above $90,000"
+  ],
+  "lesson_id": 6,
+  "rules": [
+   {
+    "rule": "rsi_below",
+    "a": 30
+   },
+   {
+    "rule": "close_above_ema",
+    "a": 50
+   },
+   {
+    "rule": "close_below_ema",
+    "a": 21
+   },
+   {
+    "rule": "rsi_cross_up",
+    "a": 30
+   },
+   {
+    "rule": "rsi_cross_down",
+    "a": 70
+   },
+   {
+    "rule": "macd_cross_up"
+   },
+   {
+    "rule": "macd_cross_down"
+   },
+   {
+    "rule": "macd_positive"
+   },
+   {
+    "rule": "macd_negative"
+   },
+   {
+    "rule": "wt_green_dot"
+   },
+   {
+    "rule": "wt_red_dot"
+   },
+   {
+    "rule": "wt_below"
+   },
+   {
+    "rule": "wt_above"
+   },
+   {
+    "rule": "mf_positive"
+   },
+   {
+    "rule": "mf_negative"
+   },
+   {
+    "rule": "bb_below_lower",
+    "a": 20,
+    "b": 2
+   },
+   {
+    "rule": "bb_above_upper"
+   },
+   {
+    "rule": "ao_green"
+   },
+   {
+    "rule": "ao_red"
+   },
+   {
+    "rule": "ao_turns_green"
+   },
+   {
+    "rule": "ao_turns_red"
+   },
+   {
+    "rule": "ao_above_zero"
+   },
+   {
+    "rule": "ao_below_zero"
+   },
+   {
+    "rule": "ao_cross_up_zero"
+   },
+   {
+    "rule": "ao_cross_down_zero"
+   },
+   {
+    "rule": "bb_touch_lower",
+    "a": 3
+   },
+   {
+    "rule": "bb_touch_upper"
+   },
+   {
+    "rule": "bb_above_mid"
+   },
+   {
+    "rule": "bb_below_mid"
+   },
+   {
+    "rule": "bb_width_above"
+   },
+   {
+    "rule": "ha_green"
+   },
+   {
+    "rule": "ha_red"
+   },
+   {
+    "rule": "green_candles",
+    "a": 3
+   },
+   {
+    "rule": "red_candles"
+   },
+   {
+    "rule": "breakout_high",
+    "a": 20
+   },
+   {
+    "rule": "breakdown_low"
+   },
+   {
+    "rule": "volume_spike",
+    "a": 20,
+    "b": 1.5
+   },
+   {
+    "rule": "up_pct",
+    "a": 10
+   },
+   {
+    "rule": "down_pct",
+    "a": 10
+   },
+   {
+    "rule": "bull_engulf"
+   },
+   {
+    "rule": "bear_engulf"
+   },
+   {
+    "rule": "hammer"
+   },
+   {
+    "rule": "shooting_star"
+   },
+   {
+    "rule": "sr_bounce_up"
+   },
+   {
+    "rule": "sr_reject_down"
+   },
+   {
+    "rule": "pattern_break_up"
+   },
+   {
+    "rule": "pattern_break_down"
+   },
+   {
+    "rule": "in_bullish_pattern"
+   },
+   {
+    "rule": "in_bearish_pattern"
+   },
+   {
+    "rule": "near_apex"
+   },
+   {
+    "rule": "squeeze",
+    "a": 50,
+    "b": 0.7
+   },
+   {
+    "rule": "higher_low",
+    "a": 5,
+    "b": 5
+   },
+   {
+    "rule": "lower_high"
+   },
+   {
+    "rule": "rsi_bull_div",
+    "a": 3,
+    "b": 60
+   },
+   {
+    "rule": "rsi_bear_div",
+    "a": 3,
+    "b": 60
+   },
+   {
+    "rule": "rsi_hidden_bull_div",
+    "a": 3,
+    "b": 60
+   },
+   {
+    "rule": "rsi_hidden_bear_div",
+    "a": 3,
+    "b": 60
+   },
+   {
+    "rule": "ao_bull_div",
+    "a": 3,
+    "b": 60
+   },
+   {
+    "rule": "ao_bear_div",
+    "a": 3,
+    "b": 60
+   },
+   {
+    "rule": "ao_hidden_bull_div",
+    "a": 3,
+    "b": 60
+   },
+   {
+    "rule": "ao_hidden_bear_div",
+    "a": 3,
+    "b": 60
+   },
+   {
+    "rule": "macd_bull_div",
+    "a": 3,
+    "b": 60
+   },
+   {
+    "rule": "macd_bear_div",
+    "a": 3,
+    "b": 60
+   },
+   {
+    "rule": "macd_hidden_bull_div",
+    "a": 3,
+    "b": 60
+   },
+   {
+    "rule": "macd_hidden_bear_div",
+    "a": 3,
+    "b": 60
+   },
+   {
+    "rule": "wt_bull_div",
+    "a": 3,
+    "b": 60
+   },
+   {
+    "rule": "wt_bear_div",
+    "a": 3,
+    "b": 60
+   },
+   {
+    "rule": "wt_hidden_bull_div",
+    "a": 3,
+    "b": 60
+   },
+   {
+    "rule": "wt_hidden_bear_div",
+    "a": 3,
+    "b": 60
+   }
+  ],
+  "rules_text": [
+   "RSI (14) below 30",
+   "Close above EMA (50)",
+   "Close below EMA (21)",
+   "RSI (14) crosses up through 30",
+   "RSI (14) crosses down through 70",
+   "MACD crosses above its signal line",
+   "MACD crosses below its signal line",
+   "MACD above zero",
+   "MACD below zero",
+   "Market Cipher green dot (WaveTrend crosses up) below 0",
+   "Market Cipher red dot (WaveTrend crosses down) above 0",
+   "Market Cipher wave below -53 (oversold)",
+   "Market Cipher wave above 53 (overbought)",
+   "Market Cipher money flow above zero (green)",
+   "Market Cipher money flow below zero (red)",
+   "Close below the lower Bollinger band (20 candles, 2 deviations)",
+   "Close above the upper Bollinger band (20 candles, 2 deviations)",
+   "Awesome Oscillator column is green (AO rising)",
+   "Awesome Oscillator column is red (AO falling)",
+   "Awesome Oscillator changed to green (TradingView's 'AO color changed to green' alert)",
+   "Awesome Oscillator changed to red (TradingView's 'AO color changed to red' alert)",
+   "Awesome Oscillator above zero",
+   "Awesome Oscillator below zero",
+   "Awesome Oscillator crosses above zero",
+   "Awesome Oscillator crosses below zero",
+   "Low touched the lower Bollinger band in the last 3 candles",
+   "High touched the upper Bollinger band in the last 3 candles",
+   "Close above the Bollinger middle band",
+   "Close below the Bollinger middle band",
+   "Bollinger bands wider than 0.4% of price (enough room to trade)",
+   "Heikin Ashi candle is green",
+   "Heikin Ashi candle is red",
+   "3 green candles in a row",
+   "3 red candles in a row",
+   "Close above the highest high of the last 20 candles",
+   "Close below the lowest low of the last 20 candles",
+   "Volume above 20 \u00d7 its 1.5-candle average",
+   "Price up more than 10% over the last 10 candles",
+   "Price down more than 10% over the last 10 candles",
+   "Bullish engulfing candle",
+   "Bearish engulfing candle",
+   "Hammer / bullish pin bar (long lower wick)",
+   "Shooting star / bearish pin bar (long upper wick)",
+   "Bounced off support / reclaimed a level (closed back above it)",
+   "Rejected at resistance / lost a level (closed back below it)",
+   "Chart pattern broke out upward on this candle",
+   "Chart pattern broke down on this candle",
+   "Inside a pattern that usually breaks up (falling wedge, ascending triangle, bull flag...)",
+   "Inside a pattern that usually breaks down (rising wedge, descending triangle, bear flag...)",
+   "Squeezed near a triangle / wedge apex (75% of the way there or more)",
+   "Volatility squeeze: ATR (14) below 50 \u00d7 its 50-candle average",
+   "Higher low: the last 5 candles' low is above the 5 candles before",
+   "Lower high: the last 5 candles' high is below the 5 candles before",
+   "Bullish divergence: price lower low, RSI higher low - in the last 3 candles, lows/highs at most 60 candles apart",
+   "Bearish divergence: price higher high, RSI lower high - in the last 3 candles, lows/highs at most 60 candles apart",
+   "Hidden bullish divergence: price higher low, RSI lower low (trend continuation) - in the last 3 candles, lows/highs at most 60 candles apart",
+   "Hidden bearish divergence: price lower high, RSI higher high (trend continuation) - in the last 3 candles, lows/highs at most 60 candles apart",
+   "Bullish divergence: price lower low, Awesome Oscillator higher low - in the last 3 candles, lows/highs at most 60 candles apart",
+   "Bearish divergence: price higher high, Awesome Oscillator lower high - in the last 3 candles, lows/highs at most 60 candles apart",
+   "Hidden bullish divergence: price higher low, Awesome Oscillator lower low (trend continuation) - in the last 3 candles, lows/highs at most 60 candles apart",
+   "Hidden bearish divergence: price lower high, Awesome Oscillator higher high (trend continuation) - in the last 3 candles, lows/highs at most 60 candles apart",
+   "Bullish divergence: price lower low, MACD higher low - in the last 3 candles, lows/highs at most 60 candles apart",
+   "Bearish divergence: price higher high, MACD lower high - in the last 3 candles, lows/highs at most 60 candles apart",
+   "Hidden bullish divergence: price higher low, MACD lower low (trend continuation) - in the last 3 candles, lows/highs at most 60 candles apart",
+   "Hidden bearish divergence: price lower high, MACD higher high (trend continuation) - in the last 3 candles, lows/highs at most 60 candles apart",
+   "Bullish divergence: price lower low, Market Cipher wave higher low - in the last 3 candles, lows/highs at most 60 candles apart",
+   "Bearish divergence: price higher high, Market Cipher wave lower high - in the last 3 candles, lows/highs at most 60 candles apart",
+   "Hidden bullish divergence: price higher low, Market Cipher wave lower low (trend continuation) - in the last 3 candles, lows/highs at most 60 candles apart",
+   "Hidden bearish divergence: price lower high, Market Cipher wave higher high (trend continuation) - in the last 3 candles, lows/highs at most 60 candles apart"
+  ],
+  "stats": {
+   "trades": 0,
+   "avg_r": null,
+   "edge": null,
+   "win_rate": null,
+   "charts": 5
+  },
+  "charts": {
+   "BTC 4h": {
+    "trades": 0,
+    "win_rate": null,
+    "avg_r": null,
+    "edge": null,
+    "base_r": -0.019,
+    "sum_r": 0.0
+   },
+   "ETH 4h": {
+    "trades": 0,
+    "win_rate": null,
+    "avg_r": null,
+    "edge": null,
+    "base_r": 0.04,
+    "sum_r": 0.0
+   },
+   "SOL 4h": {
+    "trades": 0,
+    "win_rate": null,
+    "avg_r": null,
+    "edge": null,
+    "base_r": 0.027,
+    "sum_r": 0.0
+   },
+   "BTC 1D": {
+    "trades": 0,
+    "win_rate": null,
+    "avg_r": null,
+    "edge": null,
+    "base_r": 0.101,
+    "sum_r": 0.0
+   },
+   "ETH 1D": {
+    "trades": 0,
+    "win_rate": null,
+    "avg_r": null,
+    "edge": null,
+    "base_r": 0.211,
+    "sum_r": 0.0
+   }
+  }
+ },
+ {
+  "id": 16,
+  "name": "Risk Management Trade",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 0.7,
+  "rr": 4.0,
+  "timeframe": "1h",
+  "why": "Risk management formula and good risk-to-reward ratio setup.",
+  "quote": "So, we're going to say our stop loss is going to be here at 87,000. uh $53. Okay. And then our target is going to be up here at $100,000. So what we're going to do is we have $100 in our account. We want to risk 1%. So how much are we risking? If we have $100, 1% is going to be $1. All right? So we're going to take $1, $1, and we're going to divide that by our stop-loss percent. Now, in this case, we have a 2% stop loss. So 2% becomes 0.02. 02 and that's going to equal the amount of dollars that we put on the trade. Now, if we take $1 and we divide this by 0.02, that's going to equal $50. Now, this we don't really need to do the calculation for this one because a 2% stop-loss, you know, you put half of your account on the trade and after half your account goes down 2%, that's a 1% loss. So, we would plan this trade. We say, 'Okay, I'm planning for this trade. I know I'm risking $1. So, because I have a 2% stop-loss, I'm going to put $50 on the trade. And then, of course, you know, if this trade gets stopped out here, we're risking $1. If it pumps up in this instance, this is like a six to1 riskreward. We're either going to lose $1 or we're going to make $6 and we're going to put $50 on the trade. Now, notice this. We're putting $50 on the trade while only risking $1. And while only risking $1, we're putting 50 on the trade and looking to make $6, right? See how that works?",
+  "unchecked": [
+   "Close above the upper Bollinger band (20 candles, 2 deviations)"
+  ],
+  "lesson_id": 6,
+  "rules": [
+   {
+    "rule": "close_above_ema",
+    "a": 50
+   },
+   {
+    "rule": "rsi_below",
+    "a": 30
+   },
+   {
+    "rule": "close_below_sma",
+    "a": 200
+   },
+   {
+    "rule": "rsi_cross_down",
+    "a": 70
+   },
+   {
+    "rule": "macd_cross_down"
+   },
+   {
+    "rule": "wt_below",
+    "a": -53
+   },
+   {
+    "rule": "volume_spike"
+   },
+   {
+    "rule": "up_pct",
+    "a": 5,
+    "b": 10
+   }
+  ],
+  "rules_text": [
+   "Close above EMA (50)",
+   "RSI (14) below 30",
+   "Close below SMA (200)",
+   "RSI (14) crosses down through 70",
+   "MACD crosses below its signal line",
+   "Market Cipher wave below -53 (oversold)",
+   "Volume above 1.5 \u00d7 its 20-candle average",
+   "Price up more than 5% over the last 10 candles"
+  ],
+  "stats": {
+   "trades": 0,
+   "avg_r": null,
+   "edge": null,
+   "win_rate": null,
+   "charts": 5
+  },
+  "charts": {
+   "BTC 4h": {
+    "trades": 0,
+    "win_rate": null,
+    "avg_r": null,
+    "edge": null,
+    "base_r": -0.019,
+    "sum_r": 0.0
+   },
+   "ETH 4h": {
+    "trades": 0,
+    "win_rate": null,
+    "avg_r": null,
+    "edge": null,
+    "base_r": 0.04,
+    "sum_r": 0.0
+   },
+   "SOL 4h": {
+    "trades": 0,
+    "win_rate": null,
+    "avg_r": null,
+    "edge": null,
+    "base_r": 0.027,
+    "sum_r": 0.0
+   },
+   "BTC 1D": {
+    "trades": 0,
+    "win_rate": null,
+    "avg_r": null,
+    "edge": null,
+    "base_r": 0.101,
+    "sum_r": 0.0
+   },
+   "ETH 1D": {
+    "trades": 0,
+    "win_rate": null,
+    "avg_r": null,
+    "edge": null,
+    "base_r": 0.211,
+    "sum_r": 0.0
+   }
+  }
+ },
+ {
+  "id": 17,
+  "name": "Short: Small Range with Multiple Trades",
+  "direction": "short",
+  "status": "retired",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 1.5,
+  "timeframe": "1H",
+  "why": "This setup involves taking short trades in a small price range with a good risk-to-reward ratio, as demonstrated by the teacher's example of multiple small gains leading to a larger potential gain in the future.",
+  "quote": "And eventually, guys, one of these little trades is going to turn into the big one, right? Eventually, one of the little trades is going to turn into the big one.",
+  "unchecked": [
+   "Close above the upper Bollinger band (20 candles, 2 deviations)"
+  ],
+  "lesson_id": 6,
+  "rules": [
+   {
+    "rule": "close_above_ema",
+    "a": 21,
+    "b": 50
+   },
+   {
+    "rule": "bull_engulf"
+   }
+  ],
+  "rules_text": [
+   "Close above EMA (21)",
+   "Bullish engulfing candle"
+  ],
+  "stats": {
+   "trades": 616,
+   "avg_r": -0.051,
+   "edge": -0.0,
+   "win_rate": 38.2,
+   "charts": 5,
+   "charts_positive": 2
+  },
+  "charts": {
+   "BTC 4h": {
+    "trades": 127,
+    "win_rate": 46.5,
+    "avg_r": 0.161,
+    "edge": 0.139,
+    "base_r": 0.022,
+    "sum_r": 20.5,
+    "t": 1.25
+   },
+   "ETH 4h": {
+    "trades": 96,
+    "win_rate": 32.3,
+    "avg_r": -0.204,
+    "edge": -0.19,
+    "base_r": -0.014,
+    "sum_r": -19.54,
+    "t": -1.6
+   },
+   "SOL 4h": {
+    "trades": 118,
+    "win_rate": 42.4,
+    "avg_r": 0.051,
+    "edge": 0.039,
+    "base_r": 0.013,
+    "sum_r": 6.08,
+    "t": 0.34
+   },
+   "BTC 1D": {
+    "trades": 158,
+    "win_rate": 33.5,
+    "avg_r": -0.165,
+    "edge": -0.004,
+    "base_r": -0.161,
+    "sum_r": -26.13,
+    "t": -0.05
+   },
+   "ETH 1D": {
+    "trades": 117,
+    "win_rate": 35.9,
+    "avg_r": -0.103,
+    "edge": -0.03,
+    "base_r": -0.072,
+    "sum_r": -12.0,
+    "t": -0.27
+   }
+  }
+ },
+ {
+  "id": 18,
+  "name": "Support and Resistance",
+  "direction": "long",
+  "status": "active",
+  "weight": 0.031,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "daily",
+  "why": "Higher low in the last 5 candles compared to the 5 candles before, indicating a potential support level. Close above the 200-day SMA suggests a bullish trend continuation or reversal.",
+  "quote": "Higher low in the last 5 candles compared to the 5 candles before, indicating a potential support level. Close above the 200-day SMA suggests a bullish trend continuation or reversal.",
+  "unchecked": [
+   "unchecked"
+  ],
+  "lesson_id": 7,
+  "rules": [
+   {
+    "rule": "close_above_sma",
+    "a": 200
+   },
+   {
+    "rule": "higher_low",
+    "a": 5,
+    "b": 60
+   }
+  ],
+  "rules_text": [
+   "Close above SMA (200)",
+   "Higher low: the last 5 candles' low is above the 5 candles before"
+  ],
+  "stats": {
+   "trades": 413,
+   "avg_r": 0.102,
+   "edge": 0.033,
+   "win_rate": 37.3,
+   "charts": 5,
+   "charts_positive": 2
+  },
+  "charts": {
+   "BTC 4h": {
+    "trades": 70,
+    "win_rate": 31.4,
+    "avg_r": -0.069,
+    "edge": -0.052,
+    "base_r": -0.017,
+    "sum_r": -4.86,
+    "t": -0.32
+   },
+   "ETH 4h": {
+    "trades": 79,
+    "win_rate": 34.2,
+    "avg_r": -0.014,
+    "edge": -0.076,
+    "base_r": 0.062,
+    "sum_r": -1.08,
+    "t": -0.48
+   },
+   "SOL 4h": {
+    "trades": 82,
+    "win_rate": 35.4,
+    "avg_r": 0.061,
+    "edge": 0.1,
+    "base_r": -0.039,
+    "sum_r": 5.0,
+    "t": 0.63
+   },
+   "BTC 1D": {
+    "trades": 96,
+    "win_rate": 36.5,
+    "avg_r": 0.06,
+    "edge": -0.057,
+    "base_r": 0.118,
+    "sum_r": 5.81,
+    "t": -0.4
+   },
+   "ETH 1D": {
+    "trades": 86,
+    "win_rate": 47.7,
+    "avg_r": 0.434,
+    "edge": 0.238,
+    "base_r": 0.196,
+    "sum_r": 37.31,
+    "t": 1.47
+   }
+  }
+ },
+ {
+  "id": 19,
+  "name": "Support and Resistance",
+  "direction": "short",
+  "status": "retired",
+  "weight": 0.007,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "daily",
+  "why": "Lower high in the last 5 candles compared to the 5 candles before, indicating a potential resistance level. Close below the 200-day SMA suggests a bearish trend continuation or reversal.",
+  "quote": "Lower high in the last 5 candles compared to the 5 candles before, indicating a potential resistance level. Close below the 200-day SMA suggests a bearish trend continuation or reversal.",
+  "unchecked": [
+   "unchecked"
+  ],
+  "lesson_id": 7,
+  "rules": [
+   {
+    "rule": "close_below_sma",
+    "a": 200
+   },
+   {
+    "rule": "lower_high",
+    "a": 5,
+    "b": 60
+   }
+  ],
+  "rules_text": [
+   "Close below SMA (200)",
+   "Lower high: the last 5 candles' high is below the 5 candles before"
+  ],
+  "stats": {
+   "trades": 395,
+   "avg_r": -0.028,
+   "edge": 0.007,
+   "win_rate": 33.4,
+   "charts": 5,
+   "charts_positive": 2
+  },
+  "charts": {
+   "BTC 4h": {
+    "trades": 81,
+    "win_rate": 39.5,
+    "avg_r": 0.164,
+    "edge": 0.13,
+    "base_r": 0.034,
+    "sum_r": 13.31,
+    "t": 0.8
+   },
+   "ETH 4h": {
+    "trades": 79,
+    "win_rate": 45.6,
+    "avg_r": 0.346,
+    "edge": 0.333,
+    "base_r": 0.014,
+    "sum_r": 27.36,
+    "t": 1.98
+   },
+   "SOL 4h": {
+    "trades": 98,
+    "win_rate": 31.6,
+    "avg_r": -0.099,
+    "edge": -0.097,
+    "base_r": -0.002,
+    "sum_r": -9.74,
+    "t": -0.71
+   },
+   "BTC 1D": {
+    "trades": 69,
+    "win_rate": 23.2,
+    "avg_r": -0.348,
+    "edge": -0.166,
+    "base_r": -0.182,
+    "sum_r": -24.02,
+    "t": -1.13
+   },
+   "ETH 1D": {
+    "trades": 68,
+    "win_rate": 25.0,
+    "avg_r": -0.264,
+    "edge": -0.192,
+    "base_r": -0.072,
+    "sum_r": -17.93,
+    "t": -1.24
+   }
+  }
+ },
+ {
+  "id": 20,
+  "name": "bullish_engulf",
+  "direction": "long",
+  "status": "retired",
+  "weight": -0.069,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 1.5,
+  "timeframe": "1h",
+  "why": "Bullish engulfing candle in an uptrend, indicating a potential reversal and entry point for a long trade.",
+  "quote": "An engulfing candle is also a reversal sign. If you're in a downtrend and you're printing a whole bunch of red candles and then you see a green candle that completely engulfs the body of that previous red candle, it's a big signal that the bulls are starting to gain control.",
+  "unchecked": [
+   "Higher low: the last 5 candles' low is above the 5 candles before"
+  ],
+  "lesson_id": 7,
+  "rules": [
+   {
+    "rule": "close_above_sma",
+    "a": 200
+   },
+   {
+    "rule": "bull_engulf"
+   }
+  ],
+  "rules_text": [
+   "Close above SMA (200)",
+   "Bullish engulfing candle"
+  ],
+  "stats": {
+   "trades": 491,
+   "avg_r": -0.025,
+   "edge": -0.072,
+   "win_rate": 39.1,
+   "charts": 5,
+   "charts_positive": 1
+  },
+  "charts": {
+   "BTC 4h": {
+    "trades": 98,
+    "win_rate": 34.7,
+    "avg_r": -0.133,
+    "edge": -0.11,
+    "base_r": -0.023,
+    "sum_r": -13.0,
+    "t": -0.91
+   },
+   "ETH 4h": {
+    "trades": 75,
+    "win_rate": 40.0,
+    "avg_r": -0.028,
+    "edge": -0.082,
+    "base_r": 0.054,
+    "sum_r": -2.07,
+    "t": -0.58
+   },
+   "SOL 4h": {
+    "trades": 79,
+    "win_rate": 36.7,
+    "avg_r": -0.082,
+    "edge": -0.03,
+    "base_r": -0.052,
+    "sum_r": -6.5,
+    "t": -0.22
+   },
+   "BTC 1D": {
+    "trades": 139,
+    "win_rate": 38.8,
+    "avg_r": -0.023,
+    "edge": -0.126,
+    "base_r": 0.102,
+    "sum_r": -3.24,
+    "t": -1.21
+   },
+   "ETH 1D": {
+    "trades": 100,
+    "win_rate": 45.0,
+    "avg_r": 0.125,
+    "edge": 0.014,
+    "base_r": 0.111,
+    "sum_r": 12.5,
+    "t": 0.11
+   }
+  }
+ },
+ {
+  "id": 21,
+  "name": "bearish_engulf",
+  "direction": "short",
+  "status": "retired",
+  "weight": -0.082,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 1.5,
+  "timeframe": "1h",
+  "why": "Bearish engulfing candle in a downtrend, indicating a potential reversal and entry point for a short trade.",
+  "quote": "An engulfing candle is also a reversal sign. If you're in a downtrend and you're printing a whole bunch of red candles and then you see a green candle that completely engulfs the body of that previous red candle, it's a big signal that the bulls are starting to gain control. On the contrary to that, if we're moving up and then you see a big bearish engulfing candle where the body of the red or purple candle completely engulfs the body of the green candle, that's a bearish signal, right?",
+  "unchecked": [
+   "Lower high: the last 5 candles' high is below the 5 candles before"
+  ],
+  "lesson_id": 7,
+  "rules": [
+   {
+    "rule": "close_below_sma",
+    "a": 200
+   },
+   {
+    "rule": "bear_engulf"
+   }
+  ],
+  "rules_text": [
+   "Close below SMA (200)",
+   "Bearish engulfing candle"
+  ],
+  "stats": {
+   "trades": 542,
+   "avg_r": -0.115,
+   "edge": -0.085,
+   "win_rate": 35.6,
+   "charts": 5,
+   "charts_positive": 0
+  },
+  "charts": {
+   "BTC 4h": {
+    "trades": 146,
+    "win_rate": 37.0,
+    "avg_r": -0.075,
+    "edge": -0.097,
+    "base_r": 0.022,
+    "sum_r": -11.0,
+    "t": -0.97
+   },
+   "ETH 4h": {
+    "trades": 97,
+    "win_rate": 37.1,
+    "avg_r": -0.072,
+    "edge": -0.058,
+    "base_r": -0.014,
+    "sum_r": -7.0,
+    "t": -0.47
+   },
+   "SOL 4h": {
+    "trades": 132,
+    "win_rate": 34.1,
+    "avg_r": -0.148,
+    "edge": -0.161,
+    "base_r": 0.013,
+    "sum_r": -19.54,
+    "t": -1.57
+   },
+   "BTC 1D": {
+    "trades": 86,
+    "win_rate": 33.7,
+    "avg_r": -0.181,
+    "edge": -0.02,
+    "base_r": -0.161,
+    "sum_r": -15.59,
+    "t": -0.16
+   },
+   "ETH 1D": {
+    "trades": 81,
+    "win_rate": 35.8,
+    "avg_r": -0.116,
+    "edge": -0.044,
+    "base_r": -0.072,
+    "sum_r": -9.4,
+    "t": -0.33
+   }
+  }
+ },
+ {
+  "id": 22,
+  "name": "Long from Support",
+  "direction": "long",
+  "status": "active",
+  "weight": 0.169,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "daily",
+  "why": "The support level is a key level that has been respected in the past, and the price is above the 200 SMA, indicating a bullish trend. This setup is based on the teacher's prediction that the price will bounce from support and resume the upward trend.",
+  "quote": "So yeah, we marked this level out, which is why, uhoh, what is this my album cover? Which is why I was looking for 899 for the for the long trade on Bitcoin.",
+  "unchecked": [
+   "The key support level is around 899."
+  ],
+  "lesson_id": 7,
+  "rules": [
+   {
+    "rule": "close_above_sma",
+    "a": 200
+   }
+  ],
+  "rules_text": [
+   "Close above SMA (200)"
+  ],
+  "stats": {
+   "trades": 113,
+   "avg_r": 0.241,
+   "edge": 0.199,
+   "win_rate": 41.6,
+   "charts": 5,
+   "charts_positive": 4
+  },
+  "charts": {
+   "BTC 4h": {
+    "trades": 29,
+    "win_rate": 34.5,
+    "avg_r": -0.001,
+    "edge": 0.016,
+    "base_r": -0.017,
+    "sum_r": -0.04,
+    "t": 0.06
+   },
+   "ETH 4h": {
+    "trades": 18,
+    "win_rate": 33.3,
+    "avg_r": 0.0,
+    "edge": -0.062,
+    "base_r": 0.062,
+    "sum_r": 0.0,
+    "t": -0.18
+   },
+   "SOL 4h": {
+    "trades": 31,
+    "win_rate": 38.7,
+    "avg_r": 0.168,
+    "edge": 0.208,
+    "base_r": -0.039,
+    "sum_r": 5.22,
+    "t": 0.78
+   },
+   "BTC 1D": {
+    "trades": 20,
+    "win_rate": 50.0,
+    "avg_r": 0.5,
+    "edge": 0.382,
+    "base_r": 0.118,
+    "sum_r": 10.0,
+    "t": 1.11
+   },
+   "ETH 1D": {
+    "trades": 15,
+    "win_rate": 60.0,
+    "avg_r": 0.8,
+    "edge": 0.604,
+    "base_r": 0.196,
+    "sum_r": 12.0,
+    "t": 1.54
+   }
+  }
+ },
+ {
+  "id": 23,
+  "name": "Short from Resistance",
+  "direction": "short",
+  "status": "active",
+  "weight": 0.106,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "daily",
+  "why": "The resistance level is a key level that has been respected in the past, and the price is below the 200 SMA, indicating a bearish trend. This setup is based on the teacher's prediction that the price will break down from resistance and resume the downward trend.",
+  "quote": "This is it the new all-time high is coming we are looking for the short trades why because it is resistance all right now you could be pretty profitable with good risk management simply blindly longing support and shorting resistance.",
+  "unchecked": [
+   "The key resistance level is around 1025."
+  ],
+  "lesson_id": 7,
+  "rules": [
+   {
+    "rule": "close_below_sma",
+    "a": 200
+   }
+  ],
+  "rules_text": [
+   "Close below SMA (200)"
+  ],
+  "stats": {
+   "trades": 113,
+   "avg_r": 0.087,
+   "edge": 0.125,
+   "win_rate": 37.2,
+   "charts": 5,
+   "charts_positive": 4
+  },
+  "charts": {
+   "BTC 4h": {
+    "trades": 24,
+    "win_rate": 37.5,
+    "avg_r": 0.125,
+    "edge": 0.091,
+    "base_r": 0.034,
+    "sum_r": 3.0,
+    "t": 0.3
+   },
+   "ETH 4h": {
+    "trades": 20,
+    "win_rate": 45.0,
+    "avg_r": 0.35,
+    "edge": 0.336,
+    "base_r": 0.014,
+    "sum_r": 7.0,
+    "t": 0.98
+   },
+   "SOL 4h": {
+    "trades": 31,
+    "win_rate": 25.8,
+    "avg_r": -0.226,
+    "edge": -0.224,
+    "base_r": -0.002,
+    "sum_r": -7.0,
+    "t": -0.93
+   },
+   "BTC 1D": {
+    "trades": 24,
+    "win_rate": 37.5,
+    "avg_r": 0.056,
+    "edge": 0.238,
+    "base_r": -0.182,
+    "sum_r": 1.35,
+    "t": 0.82
+   },
+   "ETH 1D": {
+    "trades": 14,
+    "win_rate": 50.0,
+    "avg_r": 0.389,
+    "edge": 0.461,
+    "base_r": -0.072,
+    "sum_r": 5.45,
+    "t": 1.15
+   }
+  }
+ },
+ {
+  "id": 24,
+  "name": "Bullish Divergence Setup",
+  "direction": "long",
+  "status": "retired",
+  "weight": -0.186,
+  "source": "lesson",
+  "stop_atr": 1.2,
+  "rr": 1.5,
+  "timeframe": "1h",
+  "why": "Bullish divergences are a sign of a potential reversal, and the price is above the EMA, which suggests a bullish trend. The RSI is below 30, indicating oversold conditions, which can lead to a bounce.",
+  "quote": "Okay, this is where things it does take a little bit of experience, but I'm going to walk you through how you can plan for what confirmations you should be looking for at certain levels.",
+  "unchecked": [
+   "Specific time frames where I'm looking for confirmations."
+  ],
+  "lesson_id": 8,
+  "rules": [
+   {
+    "rule": "rsi_bull_div"
+   },
+   {
+    "rule": "close_above_ema",
+    "a": 50
+   }
+  ],
+  "rules_text": [
+   "Bullish divergence: price lower low, RSI higher low - in the last 3 candles, lows/highs at most 60 candles apart",
+   "Close above EMA (50)"
+  ],
+  "stats": {
+   "trades": 36,
+   "avg_r": -0.236,
+   "edge": -0.289,
+   "win_rate": 30.6,
+   "charts": 5,
+   "charts_positive": 3
+  },
+  "charts": {
+   "BTC 4h": {
+    "trades": 7,
+    "win_rate": 42.9,
+    "avg_r": 0.071,
+    "edge": 0.067,
+    "base_r": 0.005,
+    "sum_r": 0.5,
+    "t": 0.13
+   },
+   "ETH 4h": {
+    "trades": 10,
+    "win_rate": 10.0,
+    "avg_r": -0.75,
+    "edge": -0.816,
+    "base_r": 0.066,
+    "sum_r": -7.5,
+    "t": -3.26
+   },
+   "SOL 4h": {
+    "trades": 5,
+    "win_rate": 60.0,
+    "avg_r": 0.5,
+    "edge": 0.528,
+    "base_r": -0.028,
+    "sum_r": 2.5,
+    "t": 0.86
+   },
+   "BTC 1D": {
+    "trades": 7,
+    "win_rate": 57.1,
+    "avg_r": 0.429,
+    "edge": 0.317,
+    "base_r": 0.112,
+    "sum_r": 3.0,
+    "t": 0.63
+   },
+   "ETH 1D": {
+    "trades": 7,
+    "win_rate": 0.0,
+    "avg_r": -1.0,
+    "edge": -1.084,
+    "base_r": 0.084,
+    "sum_r": -7.0,
+    "t": 0.0
+   }
+  }
+ },
+ {
+  "id": 25,
+  "name": "bearish_divergence_daily",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 0.7,
+  "rr": 6.0,
+  "timeframe": "daily",
+  "why": "Possible bearish divergence on the daily time frame with lower momentum and money flow.",
+  "quote": "Is it possible to get bearish divergence on the daily here? If the answer is yes, then that's one of the confirmations we want to see and we add that in here.",
+  "unchecked": [
+   "ao_bear_div",
+   "macd_bear_div",
+   "wt_bear_div"
+  ],
+  "lesson_id": 8,
+  "rules": [
+   {
+    "rule": "rsi_bear_div",
+    "a": 105,
+    "b": 105
+   },
+   {
+    "rule": "rsi_bear_div",
+    "a": 100,
+    "b": 100
+   },
+   {
+    "rule": "rsi_bear_div",
+    "a": 50,
+    "b": 50
+   },
+   {
+    "rule": "rsi_bear_div",
+    "a": 0,
+    "b": 0
+   }
+  ],
+  "rules_text": [
+   "Bearish divergence: price higher high, RSI lower high - in the last 105 candles, lows/highs at most 105 candles apart",
+   "Bearish divergence: price higher high, RSI lower high - in the last 100 candles, lows/highs at most 100 candles apart",
+   "Bearish divergence: price higher high, RSI lower high - in the last 50 candles, lows/highs at most 50 candles apart",
+   "Bearish divergence: price higher high, RSI lower high - in the last 0 candles, lows/highs at most 0 candles apart"
+  ],
+  "stats": {
+   "trades": 0,
+   "avg_r": null,
+   "edge": null,
+   "win_rate": null,
+   "charts": 5
+  },
+  "charts": {
+   "BTC 4h": {
+    "trades": 0,
+    "win_rate": null,
+    "avg_r": null,
+    "edge": null,
+    "base_r": 0.045,
+    "sum_r": 0.0
+   },
+   "ETH 4h": {
+    "trades": 0,
+    "win_rate": null,
+    "avg_r": null,
+    "edge": null,
+    "base_r": 0.026,
+    "sum_r": 0.0
+   },
+   "SOL 4h": {
+    "trades": 0,
+    "win_rate": null,
+    "avg_r": null,
+    "edge": null,
+    "base_r": 0.006,
+    "sum_r": 0.0
+   },
+   "BTC 1D": {
+    "trades": 0,
+    "win_rate": null,
+    "avg_r": null,
+    "edge": null,
+    "base_r": -0.147,
+    "sum_r": 0.0
+   },
+   "ETH 1D": {
+    "trades": 0,
+    "win_rate": null,
+    "avg_r": null,
+    "edge": null,
+    "base_r": 0.004,
+    "sum_r": 0.0
+   }
+  }
+ },
+ {
+  "id": 26,
+  "name": "bullish_divergence_4hour",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 0.7,
+  "rr": 6.0,
+  "timeframe": "4hour",
+  "why": "Possible bullish divergence on the 4 hour time frame with higher momentum and money flow.",
+  "quote": "Is there time to get a bullish dive on the 4 hour here? Absolutely. In fact, as long as the momentum doesn't come lower than this, we're golden, right?",
+  "unchecked": [
+   "ao_bull_div",
+   "macd_bull_div",
+   "wt_bull_div"
+  ],
+  "lesson_id": 8,
+  "rules": [
+   {
+    "rule": "rsi_bull_div",
+    "a": 105,
+    "b": 105
+   },
+   {
+    "rule": "rsi_bull_div",
+    "a": 100,
+    "b": 100
+   },
+   {
+    "rule": "rsi_bull_div",
+    "a": 50,
+    "b": 50
+   },
+   {
+    "rule": "rsi_bull_div",
+    "a": 0,
+    "b": 0
+   }
+  ],
+  "rules_text": [
+   "Bullish divergence: price lower low, RSI higher low - in the last 105 candles, lows/highs at most 105 candles apart",
+   "Bullish divergence: price lower low, RSI higher low - in the last 100 candles, lows/highs at most 100 candles apart",
+   "Bullish divergence: price lower low, RSI higher low - in the last 50 candles, lows/highs at most 50 candles apart",
+   "Bullish divergence: price lower low, RSI higher low - in the last 0 candles, lows/highs at most 0 candles apart"
+  ],
+  "stats": {
+   "trades": 0,
+   "avg_r": null,
+   "edge": null,
+   "win_rate": null,
+   "charts": 5
+  },
+  "charts": {
+   "BTC 4h": {
+    "trades": 0,
+    "win_rate": null,
+    "avg_r": null,
+    "edge": null,
+    "base_r": -0.012,
+    "sum_r": 0.0
+   },
+   "ETH 4h": {
+    "trades": 0,
+    "win_rate": null,
+    "avg_r": null,
+    "edge": null,
+    "base_r": 0.118,
+    "sum_r": 0.0
+   },
+   "SOL 4h": {
+    "trades": 0,
+    "win_rate": null,
+    "avg_r": null,
+    "edge": null,
+    "base_r": -0.0,
+    "sum_r": 0.0
+   },
+   "BTC 1D": {
+    "trades": 0,
+    "win_rate": null,
+    "avg_r": null,
+    "edge": null,
+    "base_r": 0.155,
+    "sum_r": 0.0
+   },
+   "ETH 1D": {
+    "trades": 0,
+    "win_rate": null,
+    "avg_r": null,
+    "edge": null,
+    "base_r": 0.334,
+    "sum_r": 0.0
+   }
+  }
+ },
+ {
+  "id": 27,
+  "name": "long_setup",
+  "direction": "long",
+  "status": "candidate",
+  "weight": -0.087,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "4h, 1h, 24m, 12m, 6m, 3m",
+  "why": "The setup involves a green Market Cipher dot, close above the 200 SMA, uptrend (EMA above EMA), RSI below 30, and Market Cipher wave below -53. These conditions are used to confirm a potential bullish divergence and entry into a long trade based on the higher time frames confirming the lower time frames.",
+  "quote": "Their plan was to get in and take profit at the high. Okay, this was their initial plan. Their trading plan is to wait until the price comes into this box. And while the price is in this box, you're going to be monitoring the chart. And as soon as you see this within that box, that tells you when to pull the trigger.",
+  "unchecked": [
+   "ao_green"
+  ],
+  "lesson_id": 8,
+  "rules": [
+   {
+    "rule": "wt_green_dot"
+   },
+   {
+    "rule": "close_above_sma",
+    "a": 200
+   },
+   {
+    "rule": "ema_above_ema",
+    "a": 50,
+    "b": 200
+   },
+   {
+    "rule": "rsi_below",
+    "a": 30
+   },
+   {
+    "rule": "wt_below",
+    "a": -53
+   }
+  ],
+  "rules_text": [
+   "Market Cipher green dot (WaveTrend crosses up) below 0",
+   "Close above SMA (200)",
+   "EMA (50) is above EMA (200) (uptrend)",
+   "RSI (14) below 30",
+   "Market Cipher wave below -53 (oversold)"
+  ],
+  "stats": {
+   "trades": 2,
+   "avg_r": -1.0,
+   "edge": -0.961,
+   "win_rate": 0.0,
+   "charts": 5,
+   "charts_positive": 0
+  },
+  "charts": {
+   "BTC 4h": {
+    "trades": 0,
+    "win_rate": null,
+    "avg_r": null,
+    "edge": null,
+    "base_r": -0.017,
+    "sum_r": 0.0
+   },
+   "ETH 4h": {
+    "trades": 0,
+    "win_rate": null,
+    "avg_r": null,
+    "edge": null,
+    "base_r": 0.062,
+    "sum_r": 0.0
+   },
+   "SOL 4h": {
+    "trades": 2,
+    "win_rate": 0.0,
+    "avg_r": -1.0,
+    "edge": -0.961,
+    "base_r": -0.039,
+    "sum_r": -2.0,
+    "t": 0.0
+   },
+   "BTC 1D": {
+    "trades": 0,
+    "win_rate": null,
+    "avg_r": null,
+    "edge": null,
+    "base_r": 0.118,
+    "sum_r": 0.0
+   },
+   "ETH 1D": {
+    "trades": 0,
+    "win_rate": null,
+    "avg_r": null,
+    "edge": null,
+    "base_r": 0.196,
+    "sum_r": 0.0
+   }
+  }
+ },
+ {
+  "id": 28,
+  "name": "Short Trade Setup",
+  "direction": "short",
+  "status": "active",
+  "weight": 0.052,
+  "source": "lesson",
+  "stop_atr": 0.5,
+  "rr": 7.0,
+  "timeframe": "1 hour, 24 minute, 12 minute, and 6 minute",
+  "why": "Bearish divergences and money flow confirmations across multiple time frames",
+  "quote": "Do I see a bearish divergence? The answer is yes. Okay, look at this. The momentum wave is lower and the price is higher.",
+  "unchecked": [
+   "Bearish divergences on 1 hour, 24 minute, 12 minute, and 6 minute time frames"
+  ],
+  "lesson_id": 8,
+  "rules": [
+   {
+    "rule": "close_below_ema",
+    "a": 21,
+    "b": 50
+   },
+   {
+    "rule": "ao_bear_div",
+    "a": 14,
+    "b": 60
+   },
+   {
+    "rule": "wt_bear_div",
+    "a": 53,
+    "b": 60
+   },
+   {
+    "rule": "mf_negative"
+   }
+  ],
+  "rules_text": [
+   "Close below EMA (21)",
+   "Bearish divergence: price higher high, Awesome Oscillator lower high - in the last 14 candles, lows/highs at most 60 candles apart",
+   "Bearish divergence: price higher high, Market Cipher wave lower high - in the last 53 candles, lows/highs at most 60 candles apart",
+   "Market Cipher money flow below zero (red)"
+  ],
+  "stats": {
+   "trades": 41,
+   "avg_r": 0.054,
+   "edge": 0.077,
+   "win_rate": 14.6,
+   "charts": 5,
+   "charts_positive": 2
+  },
+  "charts": {
+   "BTC 4h": {
+    "trades": 10,
+    "win_rate": 0.0,
+    "avg_r": -1.0,
+    "edge": -1.056,
+    "base_r": 0.056,
+    "sum_r": -10.0,
+    "t": 0.0
+   },
+   "ETH 4h": {
+    "trades": 7,
+    "win_rate": 0.0,
+    "avg_r": -1.0,
+    "edge": -0.993,
+    "base_r": -0.007,
+    "sum_r": -7.0,
+    "t": 0.0
+   },
+   "SOL 4h": {
+    "trades": 8,
+    "win_rate": 12.5,
+    "avg_r": 0.0,
+    "edge": -0.022,
+    "base_r": 0.022,
+    "sum_r": 0.0,
+    "t": -0.02
+   },
+   "BTC 1D": {
+    "trades": 9,
+    "win_rate": 33.3,
+    "avg_r": 1.667,
+    "edge": 1.858,
+    "base_r": -0.191,
+    "sum_r": 15.0,
+    "t": 1.39
+   },
+   "ETH 1D": {
+    "trades": 7,
+    "win_rate": 28.6,
+    "avg_r": 0.604,
+    "edge": 0.587,
+    "base_r": 0.017,
+    "sum_r": 4.23,
+    "t": 0.51
+   }
+  }
+ },
+ {
+  "id": 29,
+  "name": "bullish_divergence",
+  "direction": "long",
+  "status": "candidate",
+  "weight": -0.049,
+  "source": "lesson",
+  "stop_atr": 0.7,
+  "rr": 2.0,
+  "timeframe": "1h, 24m, 12m",
+  "why": "Bullish divergences on multiple time frames confirm the bottom of the market, allowing for a long entry after a retracement.",
+  "quote": "Bullish EVD divergences are something that you use to take a trade after the move has already found its bottom.",
+  "unchecked": [
+   "Price made a lower low into key support and the momentum waves made a higher low. The money flow made a higher low."
+  ],
+  "lesson_id": 8,
+  "rules": [
+   {
+    "rule": "rsi_bull_div",
+    "a": 5,
+    "b": 5
+   },
+   {
+    "rule": "wt_bull_div",
+    "a": 5,
+    "b": 5
+   },
+   {
+    "rule": "wt_above",
+    "a": 53
+   }
+  ],
+  "rules_text": [
+   "Bullish divergence: price lower low, RSI higher low - in the last 5 candles, lows/highs at most 5 candles apart",
+   "Bullish divergence: price lower low, Market Cipher wave higher low - in the last 5 candles, lows/highs at most 5 candles apart",
+   "Market Cipher wave above 53 (overbought)"
+  ],
+  "stats": {
+   "trades": 1,
+   "avg_r": -1.0,
+   "edge": -1.033,
+   "win_rate": 0.0,
+   "charts": 5,
+   "charts_positive": 0
+  },
+  "charts": {
+   "BTC 4h": {
+    "trades": 0,
+    "win_rate": null,
+    "avg_r": null,
+    "edge": null,
+    "base_r": 0.008,
+    "sum_r": 0.0
+   },
+   "ETH 4h": {
+    "trades": 1,
+    "win_rate": 0.0,
+    "avg_r": -1.0,
+    "edge": -1.033,
+    "base_r": 0.033,
+    "sum_r": -1.0,
+    "t": 0.0
+   },
+   "SOL 4h": {
+    "trades": 0,
+    "win_rate": null,
+    "avg_r": null,
+    "edge": null,
+    "base_r": 0.007,
+    "sum_r": 0.0
+   },
+   "BTC 1D": {
+    "trades": 0,
+    "win_rate": null,
+    "avg_r": null,
+    "edge": null,
+    "base_r": 0.054,
+    "sum_r": 0.0
+   },
+   "ETH 1D": {
+    "trades": 0,
+    "win_rate": null,
+    "avg_r": null,
+    "edge": null,
+    "base_r": 0.05,
+    "sum_r": 0.0
+   }
+  }
+ },
+ {
+  "id": 30,
+  "name": "orderflow_bullish_retrace",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 0.7,
+  "rr": 2.0,
+  "timeframe": "1h, 24m, 12m",
+  "why": "Orderflow confirms the bounce from the Fibonacci level, allowing for a long entry after a bullish divergence and retrace.",
+  "quote": "Once you start to see that bounce from the fib levels, the golden pocket, the 886, let's just put on, for example sake, just our 618 here. All right, we come down to our 618. We'll turn off the background, turn off the trend line here. Once you see that we're bouncing and we're reclaiming that 618, that is when you pull that trigger.",
+  "unchecked": [
+   "Whales absorbing retail shorts, looking to push the price up."
+  ],
+  "lesson_id": 8,
+  "rules": [
+   {
+    "rule": "wt_above",
+    "a": 53
+   },
+   {
+    "rule": "wt_bull_div",
+    "a": 5,
+    "b": 5
+   },
+   {
+    "rule": "wt_green_dot"
+   }
+  ],
+  "rules_text": [
+   "Market Cipher wave above 53 (overbought)",
+   "Bullish divergence: price lower low, Market Cipher wave higher low - in the last 5 candles, lows/highs at most 5 candles apart",
+   "Market Cipher green dot (WaveTrend crosses up) below 0"
+  ],
+  "stats": {
+   "trades": 0,
+   "avg_r": null,
+   "edge": null,
+   "win_rate": null,
+   "charts": 5
+  },
+  "charts": {
+   "BTC 4h": {
+    "trades": 0,
+    "win_rate": null,
+    "avg_r": null,
+    "edge": null,
+    "base_r": 0.008,
+    "sum_r": 0.0
+   },
+   "ETH 4h": {
+    "trades": 0,
+    "win_rate": null,
+    "avg_r": null,
+    "edge": null,
+    "base_r": 0.033,
+    "sum_r": 0.0
+   },
+   "SOL 4h": {
+    "trades": 0,
+    "win_rate": null,
+    "avg_r": null,
+    "edge": null,
+    "base_r": 0.007,
+    "sum_r": 0.0
+   },
+   "BTC 1D": {
+    "trades": 0,
+    "win_rate": null,
+    "avg_r": null,
+    "edge": null,
+    "base_r": 0.054,
+    "sum_r": 0.0
+   },
+   "ETH 1D": {
+    "trades": 0,
+    "win_rate": null,
+    "avg_r": null,
+    "edge": null,
+    "base_r": 0.05,
+    "sum_r": 0.0
+   }
+  }
+ },
+ {
+  "id": 31,
+  "name": "Long Trade Entry",
+  "direction": "long",
+  "status": "retired",
+  "weight": -0.021,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 4.0,
+  "timeframe": "1h",
+  "why": "Bullish CVD divergences and higher low confirmations.",
+  "quote": "Because we had the bullish CVD divergences, we're getting that bounce from the higher low. All right. And boom, pretty much off to the races.",
+  "unchecked": [
+   "Bounce from the higher low"
+  ],
+  "lesson_id": 8,
+  "rules": [
+   {
+    "rule": "rsi_bull_div"
+   },
+   {
+    "rule": "close_above_sma",
+    "a": 200
+   },
+   {
+    "rule": "higher_low",
+    "a": 5,
+    "b": 5
+   }
+  ],
+  "rules_text": [
+   "Bullish divergence: price lower low, RSI higher low - in the last 3 candles, lows/highs at most 60 candles apart",
+   "Close above SMA (200)",
+   "Higher low: the last 5 candles' low is above the 5 candles before"
+  ],
+  "stats": {
+   "trades": 10,
+   "avg_r": 0.119,
+   "edge": -0.064,
+   "win_rate": 30.0,
+   "charts": 5,
+   "charts_positive": 2
+  },
+  "charts": {
+   "BTC 4h": {
+    "trades": 2,
+    "win_rate": 50.0,
+    "avg_r": 1.5,
+    "edge": 1.572,
+    "base_r": -0.072,
+    "sum_r": 3.0,
+    "t": 0.63
+   },
+   "ETH 4h": {
+    "trades": 2,
+    "win_rate": 50.0,
+    "avg_r": -0.404,
+    "edge": -0.544,
+    "base_r": 0.141,
+    "sum_r": -0.81,
+    "t": -0.91
+   },
+   "SOL 4h": {
+    "trades": 1,
+    "win_rate": 0.0,
+    "avg_r": -1.0,
+    "edge": -1.024,
+    "base_r": 0.024,
+    "sum_r": -1.0,
+    "t": 0.0
+   },
+   "BTC 1D": {
+    "trades": 3,
+    "win_rate": 33.3,
+    "avg_r": 0.667,
+    "edge": 0.345,
+    "base_r": 0.321,
+    "sum_r": 2.0,
+    "t": 0.21
+   },
+   "ETH 1D": {
+    "trades": 2,
+    "win_rate": 0.0,
+    "avg_r": -1.0,
+    "edge": -1.352,
+    "base_r": 0.352,
+    "sum_r": -2.0,
+    "t": 0.0
+   }
+  }
+ },
+ {
+  "id": 32,
+  "name": "trend_line_respect",
+  "direction": "long",
+  "status": "retired",
+  "weight": -0.186,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 7.0,
+  "timeframe": "1h",
+  "why": "Respecting a trend line on a higher time frame can indicate a potential support level for a long trade.",
+  "quote": "We can see that right here, the price was respecting this trend line pretty well. We can put all the way back here. We can see that we got a bounce. We got a bounce and you know these are a little bit subjective too guys. I just want to bring that to your attention. These are a little bit subjective. So I I recommend using these in confluence or in conjunction with other tools.",
+  "unchecked": [
+   "unchecked"
+  ],
+  "lesson_id": 9,
+  "rules": [
+   {
+    "rule": "close_above_sma",
+    "a": 200
+   },
+   {
+    "rule": "close_below_ema",
+    "a": 50,
+    "b": 200
+   }
+  ],
+  "rules_text": [
+   "Close above SMA (200)",
+   "Close below EMA (50)"
+  ],
+  "stats": {
+   "trades": 223,
+   "avg_r": 0.062,
+   "edge": -0.203,
+   "win_rate": 21.5,
+   "charts": 5,
+   "charts_positive": 1
+  },
+  "charts": {
+   "BTC 4h": {
+    "trades": 45,
+    "win_rate": 13.3,
+    "avg_r": -0.526,
+    "edge": -0.485,
+    "base_r": -0.041,
+    "sum_r": -23.65,
+    "t": -2.51
+   },
+   "ETH 4h": {
+    "trades": 45,
+    "win_rate": 17.8,
+    "avg_r": -0.108,
+    "edge": -0.287,
+    "base_r": 0.179,
+    "sum_r": -4.86,
+    "t": -0.95
+   },
+   "SOL 4h": {
+    "trades": 54,
+    "win_rate": 27.8,
+    "avg_r": 0.287,
+    "edge": 0.236,
+    "base_r": 0.051,
+    "sum_r": 15.5,
+    "t": 0.7
+   },
+   "BTC 1D": {
+    "trades": 41,
+    "win_rate": 24.4,
+    "avg_r": 0.238,
+    "edge": -0.413,
+    "base_r": 0.651,
+    "sum_r": 9.78,
+    "t": -1.03
+   },
+   "ETH 1D": {
+    "trades": 38,
+    "win_rate": 23.7,
+    "avg_r": 0.451,
+    "edge": -0.164,
+    "base_r": 0.615,
+    "sum_r": 17.13,
+    "t": -0.35
+   }
+  }
+ },
+ {
+  "id": 33,
+  "name": "monthly_resistance",
+  "direction": "short",
+  "status": "retired",
+  "weight": -0.072,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 1.5,
+  "timeframe": "monthly",
+  "why": "Price is below the 200 SMA and the Heikin Ashi candle is red, indicating a bearish setup. The resistance level is a key level that can be tested for a potential short trade.",
+  "quote": "Monthly resistance levels can be tested and can lead to pullbacks when price hits them.",
+  "unchecked": [
+   "price touches the monthly resistance level"
+  ],
+  "lesson_id": 9,
+  "rules": [
+   {
+    "rule": "close_below_sma",
+    "a": 200
+   },
+   {
+    "rule": "ha_red"
+   }
+  ],
+  "rules_text": [
+   "Close below SMA (200)",
+   "Heikin Ashi candle is red"
+  ],
+  "stats": {
+   "trades": 552,
+   "avg_r": -0.111,
+   "edge": -0.075,
+   "win_rate": 35.8,
+   "charts": 5,
+   "charts_positive": 1
+  },
+  "charts": {
+   "BTC 4h": {
+    "trades": 122,
+    "win_rate": 35.2,
+    "avg_r": -0.119,
+    "edge": -0.141,
+    "base_r": 0.022,
+    "sum_r": -14.5,
+    "t": -1.3
+   },
+   "ETH 4h": {
+    "trades": 110,
+    "win_rate": 44.5,
+    "avg_r": 0.114,
+    "edge": 0.127,
+    "base_r": -0.014,
+    "sum_r": 12.5,
+    "t": 1.07
+   },
+   "SOL 4h": {
+    "trades": 126,
+    "win_rate": 34.1,
+    "avg_r": -0.147,
+    "edge": -0.16,
+    "base_r": 0.013,
+    "sum_r": -18.5,
+    "t": -1.51
+   },
+   "BTC 1D": {
+    "trades": 98,
+    "win_rate": 30.6,
+    "avg_r": -0.269,
+    "edge": -0.108,
+    "base_r": -0.161,
+    "sum_r": -26.4,
+    "t": -0.97
+   },
+   "ETH 1D": {
+    "trades": 96,
+    "win_rate": 34.4,
+    "avg_r": -0.149,
+    "edge": -0.077,
+    "base_r": -0.072,
+    "sum_r": -14.28,
+    "t": -0.63
+   }
+  }
+ },
+ {
+  "id": 34,
+  "name": "Long Trade from Key Level",
+  "direction": "long",
+  "status": "active",
+  "weight": 0.055,
+  "source": "lesson",
+  "stop_atr": 0.7,
+  "rr": 2.0,
+  "timeframe": "daily",
+  "why": "The level is a key level with a lot of stop-losses, and the price has made a higher low, indicating potential support and a good risk-reward ratio.",
+  "quote": "These are the next levels I am going to be taking my long trades from. And in fact, I even told everybody that I had a limit order set there at the level because it was such a key level.",
+  "unchecked": [
+   "The specific level is 899, but no exact rule for this level exists."
+  ],
+  "lesson_id": 9,
+  "rules": [
+   {
+    "rule": "close_above_sma",
+    "a": 200
+   },
+   {
+    "rule": "higher_low",
+    "a": 5,
+    "b": 5
+   }
+  ],
+  "rules_text": [
+   "Close above SMA (200)",
+   "Higher low: the last 5 candles' low is above the 5 candles before"
+  ],
+  "stats": {
+   "trades": 413,
+   "avg_r": 0.089,
+   "edge": 0.058,
+   "win_rate": 36.3,
+   "charts": 5,
+   "charts_positive": 3
+  },
+  "charts": {
+   "BTC 4h": {
+    "trades": 70,
+    "win_rate": 37.1,
+    "avg_r": 0.114,
+    "edge": 0.107,
+    "base_r": 0.008,
+    "sum_r": 8.0,
+    "t": 0.61
+   },
+   "ETH 4h": {
+    "trades": 79,
+    "win_rate": 43.0,
+    "avg_r": 0.291,
+    "edge": 0.258,
+    "base_r": 0.033,
+    "sum_r": 23.0,
+    "t": 1.54
+   },
+   "SOL 4h": {
+    "trades": 82,
+    "win_rate": 32.9,
+    "avg_r": -0.012,
+    "edge": -0.019,
+    "base_r": 0.007,
+    "sum_r": -1.0,
+    "t": -0.12
+   },
+   "BTC 1D": {
+    "trades": 96,
+    "win_rate": 33.3,
+    "avg_r": 0.0,
+    "edge": -0.054,
+    "base_r": 0.054,
+    "sum_r": 0.0,
+    "t": -0.37
+   },
+   "ETH 1D": {
+    "trades": 86,
+    "win_rate": 36.0,
+    "avg_r": 0.081,
+    "edge": 0.031,
+    "base_r": 0.05,
+    "sum_r": 7.0,
+    "t": 0.2
+   }
+  }
+ },
+ {
+  "id": 35,
+  "name": "Naked Weekly Point of Control",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "weekly",
+  "why": "Naked weekly points of control can act as strong support levels, especially when they are formed during a high volume session and the price never touches it again. They can be used to identify potential entry points for long trades, especially when combined with other technical indicators and patterns.",
+  "quote": "Naked weekly points of control are going to be big high time frame levels that you're also going to want to keep on your chart.",
+  "unchecked": [
+   "Close above the weekly high"
+  ],
+  "lesson_id": 10,
+  "rules": [
+   {
+    "rule": "close_above_ema",
+    "a": 50
+   },
+   {
+    "rule": "volume_spike"
+   },
+   {
+    "rule": "bb_above_mid"
+   },
+   {
+    "rule": "wt_below",
+    "b": -53
+   },
+   {
+    "rule": "wt_green_dot"
+   },
+   {
+    "rule": "wt_red_dot"
+   },
+   {
+    "rule": "wt_above",
+    "b": 53
+   },
+   {
+    "rule": "mf_positive"
+   },
+   {
+    "rule": "ao_green"
+   },
+   {
+    "rule": "ao_above_zero"
+   },
+   {
+    "rule": "ao_cross_up_zero"
+   },
+   {
+    "rule": "rsi_above",
+    "a": 70
+   },
+   {
+    "rule": "rsi_cross_up",
+    "a": 30
+   },
+   {
+    "rule": "macd_positive"
+   },
+   {
+    "rule": "macd_cross_up"
+   },
+   {
+    "rule": "higher_low",
+    "a": 5,
+    "b": 5
+   },
+   {
+    "rule": "sr_bounce_up"
+   },
+   {
+    "rule": "pattern_break_up"
+   },
+   {
+    "rule": "in_bullish_pattern"
+   },
+   {
+    "rule": "near_apex"
+   },
+   {
+    "rule": "squeeze",
+    "a": 14,
+    "b": 0.7
+   },
+   {
+    "rule": "rsi_bull_div",
+    "a": 60,
+    "b": 60
+   },
+   {
+    "rule": "ao_bull_div",
+    "a": 60,
+    "b": 60
+   },
+   {
+    "rule": "macd_bull_div",
+    "a": 60,
+    "b": 60
+   },
+   {
+    "rule": "wt_bull_div",
+    "a": 60,
+    "b": 60
+   }
+  ],
+  "rules_text": [
+   "Close above EMA (50)",
+   "Volume above 1.5 \u00d7 its 20-candle average",
+   "Close above the Bollinger middle band",
+   "Market Cipher wave below -53 (oversold)",
+   "Market Cipher green dot (WaveTrend crosses up) below 0",
+   "Market Cipher red dot (WaveTrend crosses down) above 0",
+   "Market Cipher wave above 53 (overbought)",
+   "Market Cipher money flow above zero (green)",
+   "Awesome Oscillator column is green (AO rising)",
+   "Awesome Oscillator above zero",
+   "Awesome Oscillator crosses above zero",
+   "RSI (14) above 70",
+   "RSI (14) crosses up through 30",
+   "MACD above zero",
+   "MACD crosses above its signal line",
+   "Higher low: the last 5 candles' low is above the 5 candles before",
+   "Bounced off support / reclaimed a level (closed back above it)",
+   "Chart pattern broke out upward on this candle",
+   "Inside a pattern that usually breaks up (falling wedge, ascending triangle, bull flag...)",
+   "Squeezed near a triangle / wedge apex (75% of the way there or more)",
+   "Volatility squeeze: ATR (14) below 14 \u00d7 its 50-candle average",
+   "Bullish divergence: price lower low, RSI higher low - in the last 60 candles, lows/highs at most 60 candles apart",
+   "Bullish divergence: price lower low, Awesome Oscillator higher low - in the last 60 candles, lows/highs at most 60 candles apart",
+   "Bullish divergence: price lower low, MACD higher low - in the last 60 candles, lows/highs at most 60 candles apart",
+   "Bullish divergence: price lower low, Market Cipher wave higher low - in the last 60 candles, lows/highs at most 60 candles apart"
+  ],
+  "stats": {
+   "trades": 0,
+   "avg_r": null,
+   "edge": null,
+   "win_rate": null,
+   "charts": 5
+  },
+  "charts": {
+   "BTC 4h": {
+    "trades": 0,
+    "win_rate": null,
+    "avg_r": null,
+    "edge": null,
+    "base_r": -0.017,
+    "sum_r": 0.0
+   },
+   "ETH 4h": {
+    "trades": 0,
+    "win_rate": null,
+    "avg_r": null,
+    "edge": null,
+    "base_r": 0.062,
+    "sum_r": 0.0
+   },
+   "SOL 4h": {
+    "trades": 0,
+    "win_rate": null,
+    "avg_r": null,
+    "edge": null,
+    "base_r": -0.039,
+    "sum_r": 0.0
+   },
+   "BTC 1D": {
+    "trades": 0,
+    "win_rate": null,
+    "avg_r": null,
+    "edge": null,
+    "base_r": 0.118,
+    "sum_r": 0.0
+   },
+   "ETH 1D": {
+    "trades": 0,
+    "win_rate": null,
+    "avg_r": null,
+    "edge": null,
+    "base_r": 0.196,
+    "sum_r": 0.0
+   }
+  }
+ },
+ {
+  "id": 36,
+  "name": "value_area_confluence",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 1.5,
+  "timeframe": "monthly",
+  "why": "Confluence of monthly level and value area low with high volume and fair value zone suggests a potential long entry.",
+  "quote": "So you can see here we have a monthly level right at the value area low. That's called confluence.",
+  "unchecked": [
+   "price touches the value area low"
+  ],
+  "lesson_id": 11,
+  "rules": [
+   {
+    "rule": "close_above_sma",
+    "a": 200
+   },
+   {
+    "rule": "volume_spike"
+   },
+   {
+    "rule": "higher_low",
+    "a": 5,
+    "b": 5
+   },
+   {
+    "rule": "close_above_ema",
+    "a": 50
+   },
+   {
+    "rule": "wt_green_dot"
+   },
+   {
+    "rule": "wt_above"
+   }
+  ],
+  "rules_text": [
+   "Close above SMA (200)",
+   "Volume above 1.5 \u00d7 its 20-candle average",
+   "Higher low: the last 5 candles' low is above the 5 candles before",
+   "Close above EMA (50)",
+   "Market Cipher green dot (WaveTrend crosses up) below 0",
+   "Market Cipher wave above 53 (overbought)"
+  ],
+  "stats": {
+   "trades": 0,
+   "avg_r": null,
+   "edge": null,
+   "win_rate": null,
+   "charts": 5
+  },
+  "charts": {
+   "BTC 4h": {
+    "trades": 0,
+    "win_rate": null,
+    "avg_r": null,
+    "edge": null,
+    "base_r": -0.023,
+    "sum_r": 0.0
+   },
+   "ETH 4h": {
+    "trades": 0,
+    "win_rate": null,
+    "avg_r": null,
+    "edge": null,
+    "base_r": 0.054,
+    "sum_r": 0.0
+   },
+   "SOL 4h": {
+    "trades": 0,
+    "win_rate": null,
+    "avg_r": null,
+    "edge": null,
+    "base_r": -0.052,
+    "sum_r": 0.0
+   },
+   "BTC 1D": {
+    "trades": 0,
+    "win_rate": null,
+    "avg_r": null,
+    "edge": null,
+    "base_r": 0.102,
+    "sum_r": 0.0
+   },
+   "ETH 1D": {
+    "trades": 0,
+    "win_rate": null,
+    "avg_r": null,
+    "edge": null,
+    "base_r": 0.111,
+    "sum_r": 0.0
+   }
+  }
+ },
+ {
+  "id": 37,
+  "name": "value_area_trade",
+  "direction": "long",
+  "status": "retired",
+  "weight": -0.023,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 3.0,
+  "timeframe": "daily",
+  "why": "Trade from the value area low and value area high of the range, where the price is objectively oversold or overbought, to achieve a 3:1 risk-reward ratio.",
+  "quote": "The best trades are going to be where we have the price objectively oversold or objectively overbought. And so you're going to put your support and resistance levels here at the highs and the lows of your range that you've determined just by looking with your eyes.",
+  "unchecked": [
+   "Look for key levels on the volume profile and see if they align with other levels from analysis."
+  ],
+  "lesson_id": 11,
+  "rules": [
+   {
+    "rule": "close_below_sma",
+    "a": 200
+   },
+   {
+    "rule": "volume_spike"
+   }
+  ],
+  "rules_text": [
+   "Close below SMA (200)",
+   "Volume above 1.5 \u00d7 its 20-candle average"
+  ],
+  "stats": {
+   "trades": 566,
+   "avg_r": 0.046,
+   "edge": -0.024,
+   "win_rate": 28.4,
+   "charts": 5,
+   "charts_positive": 2
+  },
+  "charts": {
+   "BTC 4h": {
+    "trades": 147,
+    "win_rate": 22.4,
+    "avg_r": -0.162,
+    "edge": -0.106,
+    "base_r": -0.056,
+    "sum_r": -23.85,
+    "t": -0.84
+   },
+   "ETH 4h": {
+    "trades": 129,
+    "win_rate": 24.8,
+    "avg_r": -0.087,
+    "edge": -0.215,
+    "base_r": 0.128,
+    "sum_r": -11.27,
+    "t": -1.49
+   },
+   "SOL 4h": {
+    "trades": 137,
+    "win_rate": 29.9,
+    "avg_r": 0.132,
+    "edge": 0.172,
+    "base_r": -0.04,
+    "sum_r": 18.06,
+    "t": 1.14
+   },
+   "BTC 1D": {
+    "trades": 77,
+    "win_rate": 37.7,
+    "avg_r": 0.358,
+    "edge": 0.148,
+    "base_r": 0.21,
+    "sum_r": 27.53,
+    "t": 0.71
+   },
+   "ETH 1D": {
+    "trades": 76,
+    "win_rate": 34.2,
+    "avg_r": 0.203,
+    "edge": -0.067,
+    "base_r": 0.27,
+    "sum_r": 15.4,
+    "t": -0.34
+   }
+  }
+ },
+ {
+  "id": 38,
+  "name": "value_area_trade",
+  "direction": "short",
+  "status": "retired",
+  "weight": 0.007,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 3.0,
+  "timeframe": "daily",
+  "why": "Trade from the value area low and value area high of the range, where the price is objectively oversold or overbought, to achieve a 3:1 risk-reward ratio.",
+  "quote": "The best trades are going to be where we have the price objectively oversold or objectively overbought. And so you're going to put your support and resistance levels here at the highs and the lows of your range that you've determined just by looking with your eyes.",
+  "unchecked": [
+   "Look for key levels on the volume profile and see if they align with other levels from analysis."
+  ],
+  "lesson_id": 11,
+  "rules": [
+   {
+    "rule": "close_above_sma",
+    "a": 200
+   },
+   {
+    "rule": "volume_spike"
+   }
+  ],
+  "rules_text": [
+   "Close above SMA (200)",
+   "Volume above 1.5 \u00d7 its 20-candle average"
+  ],
+  "stats": {
+   "trades": 614,
+   "avg_r": 0.014,
+   "edge": 0.007,
+   "win_rate": 28.0,
+   "charts": 5,
+   "charts_positive": 3
+  },
+  "charts": {
+   "BTC 4h": {
+    "trades": 131,
+    "win_rate": 31.3,
+    "avg_r": 0.155,
+    "edge": 0.059,
+    "base_r": 0.096,
+    "sum_r": 20.25,
+    "t": 0.39
+   },
+   "ETH 4h": {
+    "trades": 133,
+    "win_rate": 24.1,
+    "avg_r": -0.137,
+    "edge": -0.193,
+    "base_r": 0.056,
+    "sum_r": -18.25,
+    "t": -1.41
+   },
+   "SOL 4h": {
+    "trades": 121,
+    "win_rate": 30.6,
+    "avg_r": 0.035,
+    "edge": -0.014,
+    "base_r": 0.049,
+    "sum_r": 4.24,
+    "t": -0.09
+   },
+   "BTC 1D": {
+    "trades": 111,
+    "win_rate": 27.9,
+    "avg_r": 0.032,
+    "edge": 0.193,
+    "base_r": -0.162,
+    "sum_r": 3.52,
+    "t": 1.2
+   },
+   "ETH 1D": {
+    "trades": 118,
+    "win_rate": 26.3,
+    "avg_r": -0.013,
+    "edge": 0.022,
+    "base_r": -0.036,
+    "sum_r": -1.59,
+    "t": 0.14
+   }
+  }
+ },
+ {
+  "id": 39,
+  "name": "Higher High and Higher Low Setup",
+  "direction": "long",
+  "status": "retired",
+  "weight": 0.009,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 1.25,
+  "timeframe": "all",
+  "why": "Higher high and higher low indicate a potential trend reversal or continuation, and the SMA (200) confirms the uptrend.",
+  "quote": "And so this now gives us our trade setup. And the $100,000 is not just any arbitrary level, right? We go to our chart and what do we see? This is resistance, resistance, resistance.",
+  "unchecked": [
+   "Higher high and higher low are signs of a change in market structure and potential trend reversal or continuation."
+  ],
+  "lesson_id": 12,
+  "rules": [
+   {
+    "rule": "higher_low"
+   },
+   {
+    "rule": "close_above_sma",
+    "a": 200
+   }
+  ],
+  "rules_text": [
+   "Higher low: the last 5 candles' low is above the 5 candles before",
+   "Close above SMA (200)"
+  ],
+  "stats": {
+   "trades": 413,
+   "avg_r": 0.049,
+   "edge": 0.009,
+   "win_rate": 46.5,
+   "charts": 5,
+   "charts_positive": 3
+  },
+  "charts": {
+   "BTC 4h": {
+    "trades": 70,
+    "win_rate": 44.3,
+    "avg_r": -0.004,
+    "edge": 0.001,
+    "base_r": -0.004,
+    "sum_r": -0.25,
+    "t": 0.01
+   },
+   "ETH 4h": {
+    "trades": 79,
+    "win_rate": 49.4,
+    "avg_r": 0.111,
+    "edge": 0.056,
+    "base_r": 0.055,
+    "sum_r": 8.75,
+    "t": 0.44
+   },
+   "SOL 4h": {
+    "trades": 82,
+    "win_rate": 41.5,
+    "avg_r": -0.067,
+    "edge": -0.017,
+    "base_r": -0.05,
+    "sum_r": -5.5,
+    "t": -0.14
+   },
+   "BTC 1D": {
+    "trades": 96,
+    "win_rate": 44.8,
+    "avg_r": 0.016,
+    "edge": -0.084,
+    "base_r": 0.1,
+    "sum_r": 1.5,
+    "t": -0.74
+   },
+   "ETH 1D": {
+    "trades": 86,
+    "win_rate": 52.3,
+    "avg_r": 0.181,
+    "edge": 0.103,
+    "base_r": 0.078,
+    "sum_r": 15.56,
+    "t": 0.84
+   }
+  }
+ },
+ {
+  "id": 40,
+  "name": "Schlonging Setup",
+  "direction": "long",
+  "status": "retired",
+  "weight": -0.021,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 1.25,
+  "timeframe": "all",
+  "why": "Schlonging allows for simultaneous long and short positions to manage risk and profit, with the SMA (200) and EMA (50) confirming the uptrend.",
+  "quote": "So, because I've already taken the long trade, locked in $3,000 profit. Because I've already taken the short trade, locked in $9,000 profit. Worst case scenario right now, I just made 12 grand.",
+  "unchecked": [
+   "Schlonging involves holding both long and short positions simultaneously to manage risk and profit."
+  ],
+  "lesson_id": 12,
+  "rules": [
+   {
+    "rule": "close_above_sma",
+    "a": 200
+   },
+   {
+    "rule": "close_above_ema",
+    "a": 50
+   }
+  ],
+  "rules_text": [
+   "Close above SMA (200)",
+   "Close above EMA (50)"
+  ],
+  "stats": {
+   "trades": 205,
+   "avg_r": 0.01,
+   "edge": -0.023,
+   "win_rate": 44.9,
+   "charts": 5,
+   "charts_positive": 3
+  },
+  "charts": {
+   "BTC 4h": {
+    "trades": 44,
+    "win_rate": 45.5,
+    "avg_r": 0.023,
+    "edge": 0.027,
+    "base_r": -0.004,
+    "sum_r": 1.0,
+    "t": 0.16
+   },
+   "ETH 4h": {
+    "trades": 42,
+    "win_rate": 40.5,
+    "avg_r": -0.089,
+    "edge": -0.144,
+    "base_r": 0.055,
+    "sum_r": -3.75,
+    "t": -0.84
+   },
+   "SOL 4h": {
+    "trades": 44,
+    "win_rate": 34.1,
+    "avg_r": -0.233,
+    "edge": -0.183,
+    "base_r": -0.05,
+    "sum_r": -10.25,
+    "t": -1.13
+   },
+   "BTC 1D": {
+    "trades": 41,
+    "win_rate": 56.1,
+    "avg_r": 0.262,
+    "edge": 0.162,
+    "base_r": 0.1,
+    "sum_r": 10.75,
+    "t": 0.92
+   },
+   "ETH 1D": {
+    "trades": 34,
+    "win_rate": 50.0,
+    "avg_r": 0.125,
+    "edge": 0.047,
+    "base_r": 0.078,
+    "sum_r": 4.25,
+    "t": 0.24
+   }
+  }
+ },
+ {
+  "id": 41,
+  "name": "Monthly Level Marking",
+  "direction": "long",
+  "status": "retired",
+  "weight": -0.106,
+  "source": "lesson",
+  "stop_atr": 0.7,
+  "rr": 1.5,
+  "timeframe": "monthly",
+  "why": "Marking key levels and points of control helps in identifying potential support and resistance areas and setting up trades based on these levels.",
+  "quote": "We're going to start on the monthly time frame. And I always like to start on the monthly time frame. And you can do this for any asset that you are trading. I'm going to do it here with Bitcoin.",
+  "unchecked": [
+   "Mark monthly levels and significant points of control on the chart."
+  ],
+  "lesson_id": 13,
+  "rules": [
+   {
+    "rule": "close_above_sma",
+    "a": 200
+   },
+   {
+    "rule": "wt_below",
+    "a": -53
+   }
+  ],
+  "rules_text": [
+   "Close above SMA (200)",
+   "Market Cipher wave below -53 (oversold)"
+  ],
+  "stats": {
+   "trades": 83,
+   "avg_r": -0.126,
+   "edge": -0.131,
+   "win_rate": 34.9,
+   "charts": 5,
+   "charts_positive": 2
+  },
+  "charts": {
+   "BTC 4h": {
+    "trades": 16,
+    "win_rate": 37.5,
+    "avg_r": -0.062,
+    "edge": -0.059,
+    "base_r": -0.003,
+    "sum_r": -1.0,
+    "t": -0.19
+   },
+   "ETH 4h": {
+    "trades": 13,
+    "win_rate": 46.2,
+    "avg_r": 0.154,
+    "edge": 0.143,
+    "base_r": 0.011,
+    "sum_r": 2.0,
+    "t": 0.4
+   },
+   "SOL 4h": {
+    "trades": 20,
+    "win_rate": 40.0,
+    "avg_r": 0.0,
+    "edge": 0.009,
+    "base_r": -0.009,
+    "sum_r": 0.0,
+    "t": 0.03
+   },
+   "BTC 1D": {
+    "trades": 19,
+    "win_rate": 15.8,
+    "avg_r": -0.605,
+    "edge": -0.625,
+    "base_r": 0.02,
+    "sum_r": -11.5,
+    "t": -2.91
+   },
+   "ETH 1D": {
+    "trades": 15,
+    "win_rate": 40.0,
+    "avg_r": 0.0,
+    "edge": -0.005,
+    "base_r": 0.005,
+    "sum_r": 0.0,
+    "t": -0.02
+   }
+  }
+ },
+ {
+  "id": 42,
+  "name": "high_time_frame_levels",
+  "direction": "long",
+  "status": "active",
+  "weight": 0.025,
+  "source": "lesson",
+  "stop_atr": 0.7,
+  "rr": 1.5,
+  "timeframe": "daily",
+  "why": "High time frame levels and confluences are key support and resistance areas that can be used for trading. The teacher suggests looking for areas near the apex of patterns and being in bullish patterns for long trades.",
+  "quote": "Up here we have a weekly and a naked monthly point of control together. And so, we can start to mark out zones here and just kind of know, all right, if the price comes up here, this is a very, very key zone, right? Uh the daily and the naked daily right together here and then up here. Wow, look at this amazing zone of resistance from 101375 to around 1025. We have a daily, a naked daily, a monthly, and a tapped weekly. And then up here, look at this confluence. Confluence, multiple things at one level. Naked monthly, naked daily, and a daily.",
+  "unchecked": [
+   "Higher low: the last 5 candles' low is above the 5 candles before"
+  ],
+  "lesson_id": 13,
+  "rules": [
+   {
+    "rule": "near_apex"
+   },
+   {
+    "rule": "in_bullish_pattern"
+   }
+  ],
+  "rules_text": [
+   "Squeezed near a triangle / wedge apex (75% of the way there or more)",
+   "Inside a pattern that usually breaks up (falling wedge, ascending triangle, bull flag...)"
+  ],
+  "stats": {
+   "trades": 82,
+   "avg_r": 0.037,
+   "edge": 0.031,
+   "win_rate": 41.5,
+   "charts": 5,
+   "charts_positive": 2
+  },
+  "charts": {
+   "BTC 4h": {
+    "trades": 16,
+    "win_rate": 25.0,
+    "avg_r": -0.375,
+    "edge": -0.372,
+    "base_r": -0.003,
+    "sum_r": -6.0,
+    "t": -1.33
+   },
+   "ETH 4h": {
+    "trades": 15,
+    "win_rate": 60.0,
+    "avg_r": 0.5,
+    "edge": 0.489,
+    "base_r": 0.011,
+    "sum_r": 7.5,
+    "t": 1.49
+   },
+   "SOL 4h": {
+    "trades": 13,
+    "win_rate": 30.8,
+    "avg_r": -0.231,
+    "edge": -0.221,
+    "base_r": -0.009,
+    "sum_r": -3.0,
+    "t": -0.66
+   },
+   "BTC 1D": {
+    "trades": 20,
+    "win_rate": 35.0,
+    "avg_r": -0.125,
+    "edge": -0.145,
+    "base_r": 0.02,
+    "sum_r": -2.5,
+    "t": -0.53
+   },
+   "ETH 1D": {
+    "trades": 18,
+    "win_rate": 55.6,
+    "avg_r": 0.389,
+    "edge": 0.384,
+    "base_r": 0.005,
+    "sum_r": 7.0,
+    "t": 1.27
+   }
+  }
+ },
+ {
+  "id": 43,
+  "name": "value_area_resistance",
+  "direction": "short",
+  "status": "active",
+  "weight": 0.051,
+  "source": "lesson",
+  "stop_atr": 0.7,
+  "rr": 1.5,
+  "timeframe": "daily",
+  "why": "The teacher suggests looking for areas where the price has yet to touch and being in bearish patterns for short trades. The value area resistance levels can be used as key resistance areas for short trades.",
+  "quote": "Many times assets when they form a sideways range and then they break out of said range, if they come back inside this range, they will respect this old range and respect the value areas of that previous range. So, what I'm going to do now is I'm going to go ahead and put this into a folder called volume or V for short.",
+  "unchecked": [
+   "Lower high: the last 5 candles' high is below the 5 candles before"
+  ],
+  "lesson_id": 13,
+  "rules": [
+   {
+    "rule": "close_below_sma",
+    "a": 200
+   },
+   {
+    "rule": "in_bearish_pattern"
+   }
+  ],
+  "rules_text": [
+   "Close below SMA (200)",
+   "Inside a pattern that usually breaks down (rising wedge, descending triangle, bear flag...)"
+  ],
+  "stats": {
+   "trades": 212,
+   "avg_r": 0.026,
+   "edge": 0.056,
+   "win_rate": 41.0,
+   "charts": 5,
+   "charts_positive": 3
+  },
+  "charts": {
+   "BTC 4h": {
+    "trades": 45,
+    "win_rate": 48.9,
+    "avg_r": 0.222,
+    "edge": 0.259,
+    "base_r": -0.036,
+    "sum_r": 10.0,
+    "t": 1.37
+   },
+   "ETH 4h": {
+    "trades": 49,
+    "win_rate": 40.8,
+    "avg_r": 0.02,
+    "edge": 0.077,
+    "base_r": -0.056,
+    "sum_r": 1.0,
+    "t": 0.43
+   },
+   "SOL 4h": {
+    "trades": 40,
+    "win_rate": 42.5,
+    "avg_r": 0.062,
+    "edge": 0.04,
+    "base_r": 0.022,
+    "sum_r": 2.5,
+    "t": 0.2
+   },
+   "BTC 1D": {
+    "trades": 41,
+    "win_rate": 34.1,
+    "avg_r": -0.146,
+    "edge": -0.099,
+    "base_r": -0.048,
+    "sum_r": -6.0,
+    "t": -0.53
+   },
+   "ETH 1D": {
+    "trades": 37,
+    "win_rate": 37.8,
+    "avg_r": -0.054,
+    "edge": -0.03,
+    "base_r": -0.025,
+    "sum_r": -2.0,
+    "t": -0.15
+   }
+  }
+ },
+ {
+  "id": 44,
+  "name": "Single Prints",
+  "direction": "long",
+  "status": "active",
+  "weight": 0.03,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "30m",
+  "why": "To fill the single prints on the time profile like the letter B and get a bounce.",
+  "quote": "We can now make two prints in there. All right. And once we do that, boom, we filled those single prints. We filled the single prints, then we can get a bounce.",
+  "unchecked": [
+   "These are very secret levels"
+  ],
+  "lesson_id": 13,
+  "rules": [
+   {
+    "rule": "close_above_sma",
+    "a": 200
+   },
+   {
+    "rule": "volume_spike"
+   }
+  ],
+  "rules_text": [
+   "Close above SMA (200)",
+   "Volume above 1.5 \u00d7 its 20-candle average"
+  ],
+  "stats": {
+   "trades": 615,
+   "avg_r": 0.092,
+   "edge": 0.031,
+   "win_rate": 36.6,
+   "charts": 5,
+   "charts_positive": 4
+  },
+  "charts": {
+   "BTC 4h": {
+    "trades": 131,
+    "win_rate": 28.2,
+    "avg_r": -0.146,
+    "edge": -0.128,
+    "base_r": -0.017,
+    "sum_r": -19.09,
+    "t": -1.09
+   },
+   "ETH 4h": {
+    "trades": 133,
+    "win_rate": 39.8,
+    "avg_r": 0.177,
+    "edge": 0.115,
+    "base_r": 0.062,
+    "sum_r": 23.51,
+    "t": 0.92
+   },
+   "SOL 4h": {
+    "trades": 121,
+    "win_rate": 33.9,
+    "avg_r": 0.017,
+    "edge": 0.056,
+    "base_r": -0.039,
+    "sum_r": 2.0,
+    "t": 0.43
+   },
+   "BTC 1D": {
+    "trades": 111,
+    "win_rate": 39.6,
+    "avg_r": 0.162,
+    "edge": 0.044,
+    "base_r": 0.118,
+    "sum_r": 17.95,
+    "t": 0.32
+   },
+   "ETH 1D": {
+    "trades": 119,
+    "win_rate": 42.0,
+    "avg_r": 0.27,
+    "edge": 0.074,
+    "base_r": 0.196,
+    "sum_r": 32.11,
+    "t": 0.55
+   }
+  }
+ },
+ {
+  "id": 45,
+  "name": "Short Setup 1",
+  "direction": "short",
+  "status": "active",
+  "weight": 0.096,
+  "source": "lesson",
+  "stop_atr": 2.0,
+  "rr": 9.0,
+  "timeframe": "daily",
+  "why": "Plan for trades based on key levels and risk-reward ratio.",
+  "quote": "So, the two nearest trades that we would be looking for here would be a short from this zone here and a long from this zone here.",
+  "unchecked": [
+   "rejection from the macro value area low of the range"
+  ],
+  "lesson_id": 13,
+  "rules": [
+   {
+    "rule": "close_below_sma",
+    "a": 200
+   },
+   {
+    "rule": "volume_spike"
+   }
+  ],
+  "rules_text": [
+   "Close below SMA (200)",
+   "Volume above 1.5 \u00d7 its 20-candle average"
+  ],
+  "stats": {
+   "trades": 560,
+   "avg_r": 0.203,
+   "edge": 0.099,
+   "win_rate": 35.0,
+   "charts": 5,
+   "charts_positive": 4
+  },
+  "charts": {
+   "BTC 4h": {
+    "trades": 143,
+    "win_rate": 34.3,
+    "avg_r": 0.235,
+    "edge": 0.073,
+    "base_r": 0.162,
+    "sum_r": 33.54,
+    "t": 0.39
+   },
+   "ETH 4h": {
+    "trades": 128,
+    "win_rate": 39.8,
+    "avg_r": 0.391,
+    "edge": 0.281,
+    "base_r": 0.11,
+    "sum_r": 50.03,
+    "t": 1.42
+   },
+   "SOL 4h": {
+    "trades": 136,
+    "win_rate": 34.6,
+    "avg_r": 0.175,
+    "edge": -0.038,
+    "base_r": 0.213,
+    "sum_r": 23.78,
+    "t": -0.23
+   },
+   "BTC 1D": {
+    "trades": 77,
+    "win_rate": 32.5,
+    "avg_r": 0.08,
+    "edge": 0.137,
+    "base_r": -0.058,
+    "sum_r": 6.13,
+    "t": 0.71
+   },
+   "ETH 1D": {
+    "trades": 76,
+    "win_rate": 31.6,
+    "avg_r": -0.0,
+    "edge": 0.05,
+    "base_r": -0.051,
+    "sum_r": -0.03,
+    "t": 0.26
+   }
+  }
+ },
+ {
+  "id": 46,
+  "name": "long_trade_plan",
+  "direction": "long",
+  "status": "active",
+  "weight": 0.29,
+  "source": "lesson",
+  "stop_atr": 2.0,
+  "rr": 3.0,
+  "timeframe": "daily",
+  "why": "Guaranteed a 3% win before risking more, and setting up for a potential 35% pump to the next major target.",
+  "quote": "Having risked 10. But then we could say, you know what, there's a good chance if we reclaim the range, we could pump another, you know, 35%. We might even come up to like our next major target like $112,000.",
+  "unchecked": [
+   "Higher low: the last 5 candles' low is above the 5 candles before"
+  ],
+  "lesson_id": 13,
+  "rules": [
+   {
+    "rule": "close_above_ema",
+    "a": 50
+   },
+   {
+    "rule": "rsi_above",
+    "a": 30
+   },
+   {
+    "rule": "macd_positive"
+   },
+   {
+    "rule": "wt_above"
+   },
+   {
+    "rule": "mf_positive"
+   },
+   {
+    "rule": "bb_above_upper",
+    "a": 20,
+    "b": 2
+   },
+   {
+    "rule": "volume_spike"
+   },
+   {
+    "rule": "up_pct",
+    "a": 10,
+    "b": 5
+   },
+   {
+    "rule": "green_candles",
+    "b": 3
+   }
+  ],
+  "rules_text": [
+   "Close above EMA (50)",
+   "RSI (14) above 30",
+   "MACD above zero",
+   "Market Cipher wave above 53 (overbought)",
+   "Market Cipher money flow above zero (green)",
+   "Close above the upper Bollinger band (20 candles, 2 deviations)",
+   "Volume above 1.5 \u00d7 its 20-candle average",
+   "Price up more than 10% over the last 5 candles",
+   "3 green candles in a row"
+  ],
+  "stats": {
+   "trades": 39,
+   "avg_r": 0.69,
+   "edge": 0.438,
+   "win_rate": 43.6,
+   "charts": 5,
+   "charts_positive": 4
+  },
+  "charts": {
+   "BTC 4h": {
+    "trades": 0,
+    "win_rate": null,
+    "avg_r": null,
+    "edge": null,
+    "base_r": -0.069,
+    "sum_r": 0.0
+   },
+   "ETH 4h": {
+    "trades": 1,
+    "win_rate": 100.0,
+    "avg_r": 3.0,
+    "edge": 2.907,
+    "base_r": 0.093,
+    "sum_r": 3.0,
+    "t": 0.0
+   },
+   "SOL 4h": {
+    "trades": 3,
+    "win_rate": 33.3,
+    "avg_r": 0.333,
+    "edge": 0.309,
+    "base_r": 0.024,
+    "sum_r": 1.0,
+    "t": 0.23
+   },
+   "BTC 1D": {
+    "trades": 15,
+    "win_rate": 46.7,
+    "avg_r": 0.687,
+    "edge": 0.4,
+    "base_r": 0.287,
+    "sum_r": 10.31,
+    "t": 0.78
+   },
+   "ETH 1D": {
+    "trades": 20,
+    "win_rate": 40.0,
+    "avg_r": 0.63,
+    "edge": 0.362,
+    "base_r": 0.267,
+    "sum_r": 12.59,
+    "t": 0.81
+   }
+  }
+ },
+ {
+  "id": 47,
+  "name": "Bearish CVD Divergence",
+  "direction": "short",
+  "status": "active",
+  "weight": 0.092,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "1h",
+  "why": "CVD is getting higher while price is making a lower high, indicating a bearish CVD divergence. This suggests that the price should be making a higher high, but it's not, indicating a potential reversal.",
+  "quote": "This is called a CVD divergence.",
+  "unchecked": [
+   "price is making higher highs in an uptrend and CVD is getting higher and open interest is increasing"
+  ],
+  "lesson_id": 14,
+  "rules": [
+   {
+    "rule": "higher_low"
+   },
+   {
+    "rule": "ao_bear_div"
+   }
+  ],
+  "rules_text": [
+   "Higher low: the last 5 candles' low is above the 5 candles before",
+   "Bearish divergence: price higher high, Awesome Oscillator lower high - in the last 3 candles, lows/highs at most 60 candles apart"
+  ],
+  "stats": {
+   "trades": 111,
+   "avg_r": 0.052,
+   "edge": 0.109,
+   "win_rate": 35.2,
+   "charts": 5,
+   "charts_positive": 3
+  },
+  "charts": {
+   "BTC 4h": {
+    "trades": 22,
+    "win_rate": 36.4,
+    "avg_r": 0.091,
+    "edge": 0.057,
+    "base_r": 0.034,
+    "sum_r": 2.0,
+    "t": 0.18
+   },
+   "ETH 4h": {
+    "trades": 20,
+    "win_rate": 20.0,
+    "avg_r": -0.4,
+    "edge": -0.414,
+    "base_r": 0.014,
+    "sum_r": -8.0,
+    "t": -1.5
+   },
+   "SOL 4h": {
+    "trades": 13,
+    "win_rate": 15.4,
+    "avg_r": -0.538,
+    "edge": -0.536,
+    "base_r": -0.002,
+    "sum_r": -7.0,
+    "t": -1.72
+   },
+   "BTC 1D": {
+    "trades": 30,
+    "win_rate": 50.0,
+    "avg_r": 0.473,
+    "edge": 0.654,
+    "base_r": -0.182,
+    "sum_r": 14.18,
+    "t": 2.42
+   },
+   "ETH 1D": {
+    "trades": 26,
+    "win_rate": 38.5,
+    "avg_r": 0.177,
+    "edge": 0.249,
+    "base_r": -0.072,
+    "sum_r": 4.61,
+    "t": 0.86
+   }
+  }
+ },
+ {
+  "id": 48,
+  "name": "CVD Divergence with Absorption",
+  "direction": "long",
+  "status": "retired",
+  "weight": -0.002,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "daily",
+  "why": "CVD is making a lower high, indicating whale absorption to push price in the opposite direction. Open interest is increasing, confirming the trade setup.",
+  "quote": "We clearly see the CVD is making a lower low and we clearly see the open interest getting higher. So, if we know traders are opening up new trades and we know they're opening up shorts and yet the price is getting higher, what is the only explanation? The only explanation is that there's a whale down here absorbing the short orders looking to push the price in the opposite direction and we can take advantage of that price movement.",
+  "unchecked": [
+   "Open interest getting higher"
+  ],
+  "lesson_id": 14,
+  "rules": [
+   {
+    "rule": "lower_high"
+   },
+   {
+    "rule": "close_above_sma",
+    "a": 200
+   }
+  ],
+  "rules_text": [
+   "Lower high: the last 5 candles' high is below the 5 candles before",
+   "Close above SMA (200)"
+  ],
+  "stats": {
+   "trades": 433,
+   "avg_r": 0.067,
+   "edge": -0.002,
+   "win_rate": 36.3,
+   "charts": 5,
+   "charts_positive": 1
+  },
+  "charts": {
+   "BTC 4h": {
+    "trades": 80,
+    "win_rate": 33.8,
+    "avg_r": -0.019,
+    "edge": -0.002,
+    "base_r": -0.017,
+    "sum_r": -1.54,
+    "t": -0.01
+   },
+   "ETH 4h": {
+    "trades": 85,
+    "win_rate": 36.5,
+    "avg_r": 0.054,
+    "edge": -0.008,
+    "base_r": 0.062,
+    "sum_r": 4.59,
+    "t": -0.05
+   },
+   "SOL 4h": {
+    "trades": 82,
+    "win_rate": 28.0,
+    "avg_r": -0.156,
+    "edge": -0.117,
+    "base_r": -0.039,
+    "sum_r": -12.78,
+    "t": -0.78
+   },
+   "BTC 1D": {
+    "trades": 97,
+    "win_rate": 35.1,
+    "avg_r": 0.016,
+    "edge": -0.102,
+    "base_r": 0.118,
+    "sum_r": 1.51,
+    "t": -0.72
+   },
+   "ETH 1D": {
+    "trades": 89,
+    "win_rate": 47.2,
+    "avg_r": 0.416,
+    "edge": 0.22,
+    "base_r": 0.196,
+    "sum_r": 37.05,
+    "t": 1.39
+   }
+  }
+ },
+ {
+  "id": 49,
+  "name": "bullish_divergence",
+  "direction": "long",
+  "status": "active",
+  "weight": 0.046,
+  "source": "lesson",
+  "stop_atr": 0.7,
+  "rr": 1.5,
+  "timeframe": "4h",
+  "why": "Key support levels can be identified using macro value areas, Fibonacci levels, and stop hunt liquidity. The price is making lower lows, while the oscillator is making higher lows, and the money flow and momentum waves on Market Cipher are also diverging with the price action, making this a very powerful reversal signal. This setup is confirmed by the green dot on Market Cipher, which stays on the chart forever once it appears.",
+  "quote": "We have this box marked out as key support on our chart. Now, when we go to the 4hour time frame here and we zoom in, look at what we see. As the price is getting lower, making lower lows like we see right here, the oscillator is making a higher low. Very very powerful indicator.",
+  "unchecked": [
+   "mf_positive"
+  ],
+  "lesson_id": 15,
+  "rules": [
+   {
+    "rule": "close_below_ema",
+    "a": 50
+   },
+   {
+    "rule": "ao_turns_green"
+   },
+   {
+    "rule": "wt_green_dot"
+   }
+  ],
+  "rules_text": [
+   "Close below EMA (50)",
+   "Awesome Oscillator changed to green (TradingView's 'AO color changed to green' alert)",
+   "Market Cipher green dot (WaveTrend crosses up) below 0"
+  ],
+  "stats": {
+   "trades": 137,
+   "avg_r": 0.058,
+   "edge": 0.053,
+   "win_rate": 42.3,
+   "charts": 5,
+   "charts_positive": 3
+  },
+  "charts": {
+   "BTC 4h": {
+    "trades": 20,
+    "win_rate": 40.0,
+    "avg_r": 0.0,
+    "edge": 0.003,
+    "base_r": -0.003,
+    "sum_r": 0.0,
+    "t": 0.01
+   },
+   "ETH 4h": {
+    "trades": 23,
+    "win_rate": 39.1,
+    "avg_r": -0.022,
+    "edge": -0.033,
+    "base_r": 0.011,
+    "sum_r": -0.5,
+    "t": -0.13
+   },
+   "SOL 4h": {
+    "trades": 31,
+    "win_rate": 54.8,
+    "avg_r": 0.371,
+    "edge": 0.38,
+    "base_r": -0.009,
+    "sum_r": 11.5,
+    "t": 1.67
+   },
+   "BTC 1D": {
+    "trades": 30,
+    "win_rate": 43.3,
+    "avg_r": 0.083,
+    "edge": 0.063,
+    "base_r": 0.02,
+    "sum_r": 2.5,
+    "t": 0.28
+   },
+   "ETH 1D": {
+    "trades": 33,
+    "win_rate": 33.3,
+    "avg_r": -0.167,
+    "edge": -0.172,
+    "base_r": 0.005,
+    "sum_r": -5.5,
+    "t": -0.83
+   }
+  }
+ },
+ {
+  "id": 50,
+  "name": "bearish_divergence",
+  "direction": "short",
+  "status": "retired",
+  "weight": -0.035,
+  "source": "lesson",
+  "stop_atr": 0.7,
+  "rr": 1.5,
+  "timeframe": "4h",
+  "why": "Key resistance levels can be identified using macro value areas, Fibonacci levels, and stop hunt liquidity. The price is making higher highs, while the oscillator is making lower highs, and the money flow and momentum waves on Market Cipher are also diverging with the price action, making this a very powerful reversal signal. This setup is confirmed by the red dot on Market Cipher, which stays on the chart forever once it appears.",
+  "quote": "As the price is making this one last high, we are technically seeing if we take from the top of this momentum wave to the top of this one a divergence. And the money flow also getting much lower as the price is getting lower. And also we can see here this yellow oscillator is getting lower as the price is getting higher. This is a bearish divergence.",
+  "unchecked": [
+   "mf_negative"
+  ],
+  "lesson_id": 15,
+  "rules": [
+   {
+    "rule": "close_above_ema",
+    "a": 50
+   },
+   {
+    "rule": "ao_turns_red"
+   },
+   {
+    "rule": "wt_red_dot"
+   }
+  ],
+  "rules_text": [
+   "Close above EMA (50)",
+   "Awesome Oscillator changed to red (TradingView's 'AO color changed to red' alert)",
+   "Market Cipher red dot (WaveTrend crosses down) above 0"
+  ],
+  "stats": {
+   "trades": 129,
+   "avg_r": -0.07,
+   "edge": -0.04,
+   "win_rate": 37.2,
+   "charts": 5,
+   "charts_positive": 3
+  },
+  "charts": {
+   "BTC 4h": {
+    "trades": 24,
+    "win_rate": 45.8,
+    "avg_r": 0.146,
+    "edge": 0.182,
+    "base_r": -0.036,
+    "sum_r": 3.5,
+    "t": 0.7
+   },
+   "ETH 4h": {
+    "trades": 24,
+    "win_rate": 45.8,
+    "avg_r": 0.146,
+    "edge": 0.202,
+    "base_r": -0.056,
+    "sum_r": 3.5,
+    "t": 0.78
+   },
+   "SOL 4h": {
+    "trades": 24,
+    "win_rate": 16.7,
+    "avg_r": -0.583,
+    "edge": -0.605,
+    "base_r": 0.022,
+    "sum_r": -14.0,
+    "t": -3.12
+   },
+   "BTC 1D": {
+    "trades": 33,
+    "win_rate": 45.5,
+    "avg_r": 0.136,
+    "edge": 0.184,
+    "base_r": -0.048,
+    "sum_r": 4.5,
+    "t": 0.84
+   },
+   "ETH 1D": {
+    "trades": 24,
+    "win_rate": 29.2,
+    "avg_r": -0.271,
+    "edge": -0.246,
+    "base_r": -0.025,
+    "sum_r": -6.5,
+    "t": -1.04
+   }
+  }
+ },
+ {
+  "id": 51,
+  "name": "Bearish Divergence",
+  "direction": "short",
+  "status": "retired",
+  "weight": -0.051,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "4h",
+  "why": "Oscillator is getting lower as price is higher, indicating a bearish divergence, which is a reversal pattern.",
+  "quote": "higher, the oscillator is getting lower. That's giving us our bearish divergence right there.",
+  "unchecked": [
+   "Oscillator is getting lower as price is higher"
+  ],
+  "lesson_id": 15,
+  "rules": [
+   {
+    "rule": "rsi_bear_div"
+   }
+  ],
+  "rules_text": [
+   "Bearish divergence: price higher high, RSI lower high - in the last 3 candles, lows/highs at most 60 candles apart"
+  ],
+  "stats": {
+   "trades": 132,
+   "avg_r": -0.114,
+   "edge": -0.059,
+   "win_rate": 29.5,
+   "charts": 5,
+   "charts_positive": 2
+  },
+  "charts": {
+   "BTC 4h": {
+    "trades": 24,
+    "win_rate": 33.3,
+    "avg_r": -0.035,
+    "edge": -0.069,
+    "base_r": 0.034,
+    "sum_r": -0.84,
+    "t": -0.24
+   },
+   "ETH 4h": {
+    "trades": 21,
+    "win_rate": 23.8,
+    "avg_r": -0.286,
+    "edge": -0.299,
+    "base_r": 0.014,
+    "sum_r": -6.0,
+    "t": -1.05
+   },
+   "SOL 4h": {
+    "trades": 21,
+    "win_rate": 23.8,
+    "avg_r": -0.286,
+    "edge": -0.284,
+    "base_r": -0.002,
+    "sum_r": -6.0,
+    "t": -0.99
+   },
+   "BTC 1D": {
+    "trades": 33,
+    "win_rate": 33.3,
+    "avg_r": 0.0,
+    "edge": 0.182,
+    "base_r": -0.182,
+    "sum_r": 0.0,
+    "t": 0.73
+   },
+   "ETH 1D": {
+    "trades": 33,
+    "win_rate": 30.3,
+    "avg_r": -0.066,
+    "edge": 0.005,
+    "base_r": -0.072,
+    "sum_r": -2.19,
+    "t": 0.02
+   }
+  }
+ },
+ {
+  "id": 52,
+  "name": "Hidden Bullish Divergence",
+  "direction": "long",
+  "status": "active",
+  "weight": 0.065,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "4h",
+  "why": "Oscillator is making a lower low as price is making a higher low in an uptrend, indicating a hidden bullish divergence, which is a continuation pattern.",
+  "quote": "The hidden bullish divergence is telling you when that local downtrend is going to end and that next big impulse is going to happen.",
+  "unchecked": [
+   "Oscillator is making a lower low as price is making a higher low in an uptrend"
+  ],
+  "lesson_id": 15,
+  "rules": [
+   {
+    "rule": "rsi_hidden_bull_div"
+   }
+  ],
+  "rules_text": [
+   "Hidden bullish divergence: price higher low, RSI lower low (trend continuation) - in the last 3 candles, lows/highs at most 60 candles apart"
+  ],
+  "stats": {
+   "trades": 131,
+   "avg_r": 0.154,
+   "edge": 0.075,
+   "win_rate": 38.9,
+   "charts": 5,
+   "charts_positive": 4
+  },
+  "charts": {
+   "BTC 4h": {
+    "trades": 18,
+    "win_rate": 11.1,
+    "avg_r": -0.667,
+    "edge": -0.649,
+    "base_r": -0.017,
+    "sum_r": -12.0,
+    "t": -2.84
+   },
+   "ETH 4h": {
+    "trades": 29,
+    "win_rate": 37.9,
+    "avg_r": 0.075,
+    "edge": 0.014,
+    "base_r": 0.062,
+    "sum_r": 2.19,
+    "t": 0.05
+   },
+   "SOL 4h": {
+    "trades": 22,
+    "win_rate": 36.4,
+    "avg_r": 0.091,
+    "edge": 0.13,
+    "base_r": -0.039,
+    "sum_r": 2.0,
+    "t": 0.41
+   },
+   "BTC 1D": {
+    "trades": 30,
+    "win_rate": 50.0,
+    "avg_r": 0.5,
+    "edge": 0.382,
+    "base_r": 0.118,
+    "sum_r": 15.0,
+    "t": 1.37
+   },
+   "ETH 1D": {
+    "trades": 32,
+    "win_rate": 46.9,
+    "avg_r": 0.406,
+    "edge": 0.21,
+    "base_r": 0.196,
+    "sum_r": 13.0,
+    "t": 0.78
+   }
+  }
+ },
+ {
+  "id": 53,
+  "name": "hidden_bull_div",
+  "direction": "short",
+  "status": "active",
+  "weight": 0.244,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 4.0,
+  "timeframe": "12min",
+  "why": "Price is getting higher, but money flow and momentum waves are getting lower, indicating a hidden bullish divergence on the 12-minute time frame. This is a high win rate entry signal for a short trade.",
+  "quote": "We want to see as the price is getting higher, the money flow has gotten lower, and the momentum waves on the oscillator have also gotten lower on market cipher B. When we see these two things together, this is an entry signal.",
+  "unchecked": [
+   "money_flow_getting_lower",
+   "momentum_waves_getting_lower"
+  ],
+  "lesson_id": 15,
+  "rules": [
+   {
+    "rule": "close_above_ema",
+    "a": 50
+   },
+   {
+    "rule": "rsi_bull_div",
+    "a": 14,
+    "b": 30
+   },
+   {
+    "rule": "wt_bull_div"
+   }
+  ],
+  "rules_text": [
+   "Close above EMA (50)",
+   "Bullish divergence: price lower low, RSI higher low - in the last 14 candles, lows/highs at most 30 candles apart",
+   "Bullish divergence: price lower low, Market Cipher wave higher low - in the last 3 candles, lows/highs at most 60 candles apart"
+  ],
+  "stats": {
+   "trades": 19,
+   "avg_r": 0.511,
+   "edge": 0.5,
+   "win_rate": 31.6,
+   "charts": 5,
+   "charts_positive": 3
+  },
+  "charts": {
+   "BTC 4h": {
+    "trades": 3,
+    "win_rate": 0.0,
+    "avg_r": -1.0,
+    "edge": -1.112,
+    "base_r": 0.112,
+    "sum_r": -3.0,
+    "t": 0.0
+   },
+   "ETH 4h": {
+    "trades": 4,
+    "win_rate": 25.0,
+    "avg_r": 0.25,
+    "edge": 0.179,
+    "base_r": 0.071,
+    "sum_r": 1.0,
+    "t": 0.14
+   },
+   "SOL 4h": {
+    "trades": 2,
+    "win_rate": 0.0,
+    "avg_r": -1.0,
+    "edge": -1.084,
+    "base_r": 0.084,
+    "sum_r": -2.0,
+    "t": 0.0
+   },
+   "BTC 1D": {
+    "trades": 4,
+    "win_rate": 25.0,
+    "avg_r": 0.25,
+    "edge": 0.392,
+    "base_r": -0.142,
+    "sum_r": 1.0,
+    "t": 0.31
+   },
+   "ETH 1D": {
+    "trades": 6,
+    "win_rate": 66.7,
+    "avg_r": 2.118,
+    "edge": 2.119,
+    "base_r": -0.001,
+    "sum_r": 12.71,
+    "t": 2.1
+   }
+  }
+ },
+ {
+  "id": 54,
+  "name": "Short: Money Flow and Momentum Divergence",
+  "direction": "short",
+  "status": "active",
+  "weight": 0.21,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "12-minute",
+  "why": "Large players are building short positions and retail traders are FOMO long on the pump, leading to a drop in price after the pump.",
+  "quote": "Price made this massive high pump. Money flow was coming down. momentum was coming down. What this tells us is that although the price is pumping, money is actually leaving the market.",
+  "unchecked": [
+   "Price is getting higher while money flow and momentum are getting lower."
+  ],
+  "lesson_id": 15,
+  "rules": [
+   {
+    "rule": "rsi_below",
+    "a": 30
+   },
+   {
+    "rule": "mf_negative"
+   }
+  ],
+  "rules_text": [
+   "RSI (14) below 30",
+   "Market Cipher money flow below zero (red)"
+  ],
+  "stats": {
+   "trades": 132,
+   "avg_r": 0.206,
+   "edge": 0.242,
+   "win_rate": 40.9,
+   "charts": 5,
+   "charts_positive": 4
+  },
+  "charts": {
+   "BTC 4h": {
+    "trades": 32,
+    "win_rate": 31.2,
+    "avg_r": -0.062,
+    "edge": -0.097,
+    "base_r": 0.034,
+    "sum_r": -2.0,
+    "t": -0.39
+   },
+   "ETH 4h": {
+    "trades": 25,
+    "win_rate": 44.0,
+    "avg_r": 0.32,
+    "edge": 0.306,
+    "base_r": 0.014,
+    "sum_r": 8.0,
+    "t": 1.01
+   },
+   "SOL 4h": {
+    "trades": 29,
+    "win_rate": 48.3,
+    "avg_r": 0.448,
+    "edge": 0.45,
+    "base_r": -0.002,
+    "sum_r": 13.0,
+    "t": 1.59
+   },
+   "BTC 1D": {
+    "trades": 25,
+    "win_rate": 40.0,
+    "avg_r": 0.151,
+    "edge": 0.333,
+    "base_r": -0.182,
+    "sum_r": 3.78,
+    "t": 1.16
+   },
+   "ETH 1D": {
+    "trades": 21,
+    "win_rate": 42.9,
+    "avg_r": 0.212,
+    "edge": 0.284,
+    "base_r": -0.072,
+    "sum_r": 4.45,
+    "t": 0.88
+   }
+  }
+ },
+ {
+  "id": 55,
+  "name": "Long: Money Flow and Momentum Convergence",
+  "direction": "long",
+  "status": "active",
+  "weight": 0.099,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "12-minute",
+  "why": "The price is making a lower low while money flow and momentum are getting higher, indicating a potential reversal.",
+  "quote": "Look, we we've longed the bottom and shorted the top using this strategy.",
+  "unchecked": [
+   "Price is making a lower low while money flow and momentum are getting higher."
+  ],
+  "lesson_id": 15,
+  "rules": [
+   {
+    "rule": "rsi_above",
+    "a": 70
+   },
+   {
+    "rule": "mf_positive"
+   }
+  ],
+  "rules_text": [
+   "RSI (14) above 70",
+   "Market Cipher money flow above zero (green)"
+  ],
+  "stats": {
+   "trades": 185,
+   "avg_r": 0.183,
+   "edge": 0.11,
+   "win_rate": 40.0,
+   "charts": 5,
+   "charts_positive": 3
+  },
+  "charts": {
+   "BTC 4h": {
+    "trades": 32,
+    "win_rate": 31.2,
+    "avg_r": -0.062,
+    "edge": -0.045,
+    "base_r": -0.017,
+    "sum_r": -2.0,
+    "t": -0.18
+   },
+   "ETH 4h": {
+    "trades": 40,
+    "win_rate": 32.5,
+    "avg_r": -0.074,
+    "edge": -0.136,
+    "base_r": 0.062,
+    "sum_r": -2.95,
+    "t": -0.62
+   },
+   "SOL 4h": {
+    "trades": 32,
+    "win_rate": 37.5,
+    "avg_r": 0.125,
+    "edge": 0.164,
+    "base_r": -0.039,
+    "sum_r": 4.0,
+    "t": 0.63
+   },
+   "BTC 1D": {
+    "trades": 41,
+    "win_rate": 53.7,
+    "avg_r": 0.579,
+    "edge": 0.461,
+    "base_r": 0.118,
+    "sum_r": 23.73,
+    "t": 1.97
+   },
+   "ETH 1D": {
+    "trades": 40,
+    "win_rate": 42.5,
+    "avg_r": 0.275,
+    "edge": 0.079,
+    "base_r": 0.196,
+    "sum_r": 11.0,
+    "t": 0.33
+   }
+  }
+ },
+ {
+  "id": 56,
+  "name": "rsi_bear_div",
+  "direction": "short",
+  "status": "active",
+  "weight": 0.152,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "12min",
+  "why": "Price is making a lower low while RSI is making a higher low, indicating a bearish divergence. The money flow is also getting lower, but this is not a rule that can be checked on a chart.",
+  "quote": "We've got the price making a lower low. We've got the money flow making a higher low. And we've got the uh actually this is not a signal. I'm sorry I got a little ahead of myself there. No, this would not have been a signal here. Unfortunately, uh not on this time frame, but uh that was still a trade actually.",
+  "unchecked": [
+   "money flow is getting lower"
+  ],
+  "lesson_id": 15,
+  "rules": [
+   {
+    "rule": "rsi_below",
+    "a": 30
+   },
+   {
+    "rule": "close_below_sma",
+    "a": 200
+   }
+  ],
+  "rules_text": [
+   "RSI (14) below 30",
+   "Close below SMA (200)"
+  ],
+  "stats": {
+   "trades": 127,
+   "avg_r": 0.147,
+   "edge": 0.176,
+   "win_rate": 39.4,
+   "charts": 5,
+   "charts_positive": 4
+  },
+  "charts": {
+   "BTC 4h": {
+    "trades": 32,
+    "win_rate": 31.2,
+    "avg_r": -0.062,
+    "edge": -0.097,
+    "base_r": 0.034,
+    "sum_r": -2.0,
+    "t": -0.39
+   },
+   "ETH 4h": {
+    "trades": 25,
+    "win_rate": 48.0,
+    "avg_r": 0.44,
+    "edge": 0.426,
+    "base_r": 0.014,
+    "sum_r": 11.0,
+    "t": 1.39
+   },
+   "SOL 4h": {
+    "trades": 29,
+    "win_rate": 44.8,
+    "avg_r": 0.345,
+    "edge": 0.347,
+    "base_r": -0.002,
+    "sum_r": 10.0,
+    "t": 1.23
+   },
+   "BTC 1D": {
+    "trades": 20,
+    "win_rate": 35.0,
+    "avg_r": -0.093,
+    "edge": 0.089,
+    "base_r": -0.182,
+    "sum_r": -1.86,
+    "t": 0.3
+   },
+   "ETH 1D": {
+    "trades": 21,
+    "win_rate": 38.1,
+    "avg_r": 0.069,
+    "edge": 0.141,
+    "base_r": -0.072,
+    "sum_r": 1.45,
+    "t": 0.45
+   }
+  }
+ },
+ {
+  "id": 57,
+  "name": "long_divergence_1h",
+  "direction": "long",
+  "status": "active",
+  "weight": 0.094,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "1h",
+  "why": "Higher low and RSI bearish divergence on the 1 hour time frame indicate a potential long trade opportunity.",
+  "quote": "From the time that we get that uneven butt cheek on the 1 hour time frame, we come down about 2%. Okay, that's a great day trade scalp trade strategy.",
+  "unchecked": [
+   "uneven_butt_cheeks"
+  ],
+  "lesson_id": 15,
+  "rules": [
+   {
+    "rule": "higher_low"
+   },
+   {
+    "rule": "rsi_bear_div"
+   }
+  ],
+  "rules_text": [
+   "Higher low: the last 5 candles' low is above the 5 candles before",
+   "Bearish divergence: price higher high, RSI lower high - in the last 3 candles, lows/highs at most 60 candles apart"
+  ],
+  "stats": {
+   "trades": 121,
+   "avg_r": 0.19,
+   "edge": 0.11,
+   "win_rate": 39.7,
+   "charts": 5,
+   "charts_positive": 4
+  },
+  "charts": {
+   "BTC 4h": {
+    "trades": 23,
+    "win_rate": 43.5,
+    "avg_r": 0.304,
+    "edge": 0.322,
+    "base_r": -0.017,
+    "sum_r": 7.0,
+    "t": 1.01
+   },
+   "ETH 4h": {
+    "trades": 18,
+    "win_rate": 50.0,
+    "avg_r": 0.5,
+    "edge": 0.438,
+    "base_r": 0.062,
+    "sum_r": 9.0,
+    "t": 1.2
+   },
+   "SOL 4h": {
+    "trades": 19,
+    "win_rate": 42.1,
+    "avg_r": 0.263,
+    "edge": 0.302,
+    "base_r": -0.039,
+    "sum_r": 5.0,
+    "t": 0.87
+   },
+   "BTC 1D": {
+    "trades": 29,
+    "win_rate": 20.7,
+    "avg_r": -0.379,
+    "edge": -0.497,
+    "base_r": 0.118,
+    "sum_r": -11.0,
+    "t": -2.16
+   },
+   "ETH 1D": {
+    "trades": 32,
+    "win_rate": 46.9,
+    "avg_r": 0.406,
+    "edge": 0.21,
+    "base_r": 0.196,
+    "sum_r": 13.0,
+    "t": 0.78
+   }
+  }
+ },
+ {
+  "id": 58,
+  "name": "short_divergence_1h",
+  "direction": "short",
+  "status": "active",
+  "weight": 0.186,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "1h",
+  "why": "Lower high and RSI bullish divergence on the 1 hour time frame indicate a potential short trade opportunity.",
+  "quote": "And this is something you can look at in advance, right? And say, 'Okay, if we're far forming, if we're farting some uneven butt cheeks here, then I will look to take the short.' And what do you know? We come up into that same area. This is the 4 hour, but we did get the uneven butt cheeks on the 1 hour and we drop from there.",
+  "unchecked": [
+   "uneven_butt_cheeks"
+  ],
+  "lesson_id": 15,
+  "rules": [
+   {
+    "rule": "lower_high"
+   },
+   {
+    "rule": "rsi_bull_div"
+   }
+  ],
+  "rules_text": [
+   "Lower high: the last 5 candles' high is below the 5 candles before",
+   "Bullish divergence: price lower low, RSI higher low - in the last 3 candles, lows/highs at most 60 candles apart"
+  ],
+  "stats": {
+   "trades": 83,
+   "avg_r": 0.191,
+   "edge": 0.231,
+   "win_rate": 39.7,
+   "charts": 5,
+   "charts_positive": 4
+  },
+  "charts": {
+   "BTC 4h": {
+    "trades": 19,
+    "win_rate": 42.1,
+    "avg_r": 0.263,
+    "edge": 0.229,
+    "base_r": 0.034,
+    "sum_r": 5.0,
+    "t": 0.66
+   },
+   "ETH 4h": {
+    "trades": 15,
+    "win_rate": 33.3,
+    "avg_r": 0.0,
+    "edge": -0.014,
+    "base_r": 0.014,
+    "sum_r": 0.0,
+    "t": -0.04
+   },
+   "SOL 4h": {
+    "trades": 20,
+    "win_rate": 40.0,
+    "avg_r": 0.128,
+    "edge": 0.13,
+    "base_r": -0.002,
+    "sum_r": 2.57,
+    "t": 0.4
+   },
+   "BTC 1D": {
+    "trades": 18,
+    "win_rate": 33.3,
+    "avg_r": 0.035,
+    "edge": 0.217,
+    "base_r": -0.182,
+    "sum_r": 0.63,
+    "t": 0.64
+   },
+   "ETH 1D": {
+    "trades": 11,
+    "win_rate": 54.5,
+    "avg_r": 0.7,
+    "edge": 0.772,
+    "base_r": -0.072,
+    "sum_r": 7.7,
+    "t": 1.7
+   }
+  }
+ },
+ {
+  "id": 59,
+  "name": "divergence_with_momentum_and_money_flow",
+  "direction": "long",
+  "status": "retired",
+  "weight": -0.006,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "6min",
+  "why": "Price and momentum/money flow diverge, indicating a potential reversal to the upside. Entry is at the support level where price touches the lower Bollinger band or the exact low of the consolidation pattern.",
+  "quote": "We see it again when we come down to the low of this range right here. Okay. This is one of the trades that we actually took in the Casper Crew VIP Discord. In the Casper Crew VIP Discord, you know, we're looking for these levels all the time. In fact, just recently, you can see here in the Casper crew that uh you know, yesterday we were looking for a take-profit from the short we're in and a bounce from this key level right here, the golden pocket VWAP value high point of control at around 3200. And of course, that level did not disappoint, guys, because we got our bounce right from there. Not only did we get get our bounce right from there, but we also got a massive pump from there.",
+  "unchecked": [
+   "Price is making a lower low but momentum and money flow are making a higher low"
+  ],
+  "lesson_id": 15,
+  "rules": [
+   {
+    "rule": "rsi_bull_div"
+   },
+   {
+    "rule": "wt_green_dot"
+   }
+  ],
+  "rules_text": [
+   "Bullish divergence: price lower low, RSI higher low - in the last 3 candles, lows/highs at most 60 candles apart",
+   "Market Cipher green dot (WaveTrend crosses up) below 0"
+  ],
+  "stats": {
+   "trades": 73,
+   "avg_r": 0.041,
+   "edge": -0.008,
+   "win_rate": 37.0,
+   "charts": 5,
+   "charts_positive": 1
+  },
+  "charts": {
+   "BTC 4h": {
+    "trades": 15,
+    "win_rate": 26.7,
+    "avg_r": -0.24,
+    "edge": -0.222,
+    "base_r": -0.017,
+    "sum_r": -3.6,
+    "t": -0.66
+   },
+   "ETH 4h": {
+    "trades": 16,
+    "win_rate": 37.5,
+    "avg_r": 0.005,
+    "edge": -0.057,
+    "base_r": 0.062,
+    "sum_r": 0.08,
+    "t": -0.16
+   },
+   "SOL 4h": {
+    "trades": 18,
+    "win_rate": 44.4,
+    "avg_r": 0.374,
+    "edge": 0.413,
+    "base_r": -0.039,
+    "sum_r": 6.73,
+    "t": 1.16
+   },
+   "BTC 1D": {
+    "trades": 15,
+    "win_rate": 40.0,
+    "avg_r": -0.017,
+    "edge": -0.135,
+    "base_r": 0.118,
+    "sum_r": -0.25,
+    "t": -0.39
+   },
+   "ETH 1D": {
+    "trades": 9,
+    "win_rate": 33.3,
+    "avg_r": 0.0,
+    "edge": -0.196,
+    "base_r": 0.196,
+    "sum_r": 0.0,
+    "t": -0.39
+   }
+  }
+ },
+ {
+  "id": 60,
+  "name": "divergence_with_momentum_and_money_flow",
+  "direction": "short",
+  "status": "retired",
+  "weight": -0.013,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "6min",
+  "why": "Price and momentum/money flow diverge, indicating a potential reversal to the downside. Entry is at the resistance level where price touches the upper Bollinger band or the exact high of the consolidation pattern.",
+  "quote": "We could have taken one literally from the exact top of this move as well, and we could have gotten a move to the downside of about you know about 8% which is absolutely acceptable for a scalp trade.",
+  "unchecked": [
+   "Price is making a higher high but momentum and money flow are making a lower high"
+  ],
+  "lesson_id": 15,
+  "rules": [
+   {
+    "rule": "rsi_bear_div"
+   },
+   {
+    "rule": "wt_red_dot"
+   }
+  ],
+  "rules_text": [
+   "Bearish divergence: price higher high, RSI lower high - in the last 3 candles, lows/highs at most 60 candles apart",
+   "Market Cipher red dot (WaveTrend crosses down) above 0"
+  ],
+  "stats": {
+   "trades": 87,
+   "avg_r": -0.06,
+   "edge": -0.016,
+   "win_rate": 31.0,
+   "charts": 5,
+   "charts_positive": 3
+  },
+  "charts": {
+   "BTC 4h": {
+    "trades": 17,
+    "win_rate": 41.2,
+    "avg_r": 0.235,
+    "edge": 0.201,
+    "base_r": 0.034,
+    "sum_r": 4.0,
+    "t": 0.54
+   },
+   "ETH 4h": {
+    "trades": 17,
+    "win_rate": 17.6,
+    "avg_r": -0.471,
+    "edge": -0.484,
+    "base_r": 0.014,
+    "sum_r": -8.0,
+    "t": -1.69
+   },
+   "SOL 4h": {
+    "trades": 14,
+    "win_rate": 21.4,
+    "avg_r": -0.357,
+    "edge": -0.355,
+    "base_r": -0.002,
+    "sum_r": -5.0,
+    "t": -1.04
+   },
+   "BTC 1D": {
+    "trades": 16,
+    "win_rate": 43.8,
+    "avg_r": 0.312,
+    "edge": 0.494,
+    "base_r": -0.182,
+    "sum_r": 5.0,
+    "t": 1.29
+   },
+   "ETH 1D": {
+    "trades": 23,
+    "win_rate": 30.4,
+    "avg_r": -0.052,
+    "edge": 0.02,
+    "base_r": -0.072,
+    "sum_r": -1.19,
+    "t": 0.07
+   }
+  }
+ },
+ {
+  "id": 61,
+  "name": "rsi_bull_div",
+  "direction": "short",
+  "status": "active",
+  "weight": 0.273,
+  "source": "lesson",
+  "stop_atr": 0.5,
+  "rr": 1.5,
+  "timeframe": "60m",
+  "why": "Higher high with lower RSI, RSI below 30, RSI crosses down through 30, close above 200 SMA. This setup is for a short trade with a stop loss above the last high and take profit at 0.5% move, then move stop to entry and take profits along the way down to the next support if shorting, or below the low if longing.",
+  "quote": "Once we see that divergence, what we're going to do is our stop loss goes above the last high, right? So our stop loss will always go above the last high, right? For more information on position size and risk management, make sure to check out the course because we go into extreme detail.",
+  "unchecked": [
+   "Higher high with lower RSI"
+  ],
+  "lesson_id": 15,
+  "rules": [
+   {
+    "rule": "rsi_below",
+    "a": 30
+   },
+   {
+    "rule": "rsi_cross_down",
+    "a": 30
+   },
+   {
+    "rule": "close_above_sma",
+    "a": 200
+   }
+  ],
+  "rules_text": [
+   "RSI (14) below 30",
+   "RSI (14) crosses down through 30",
+   "Close above SMA (200)"
+  ],
+  "stats": {
+   "trades": 20,
+   "avg_r": 0.5,
+   "edge": 0.546,
+   "win_rate": 60.0,
+   "charts": 5,
+   "charts_positive": 3
+  },
+  "charts": {
+   "BTC 4h": {
+    "trades": 4,
+    "win_rate": 25.0,
+    "avg_r": -0.375,
+    "edge": -0.311,
+    "base_r": -0.064,
+    "sum_r": -1.5,
+    "t": -0.5
+   },
+   "ETH 4h": {
+    "trades": 4,
+    "win_rate": 100.0,
+    "avg_r": 1.5,
+    "edge": 1.59,
+    "base_r": -0.09,
+    "sum_r": 6.0,
+    "t": 0.0
+   },
+   "SOL 4h": {
+    "trades": 5,
+    "win_rate": 80.0,
+    "avg_r": 1.0,
+    "edge": 1.02,
+    "base_r": -0.02,
+    "sum_r": 5.0,
+    "t": 2.04
+   },
+   "BTC 1D": {
+    "trades": 6,
+    "win_rate": 50.0,
+    "avg_r": 0.25,
+    "edge": 0.281,
+    "base_r": -0.031,
+    "sum_r": 1.5,
+    "t": 0.5
+   },
+   "ETH 1D": {
+    "trades": 1,
+    "win_rate": 0.0,
+    "avg_r": -1.0,
+    "edge": -0.975,
+    "base_r": -0.025,
+    "sum_r": -1.0,
+    "t": 0.0
+   }
+  }
+ },
+ {
+  "id": 62,
+  "name": "long_setup",
+  "direction": "long",
+  "status": "active",
+  "weight": 0.139,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "1h",
+  "why": "The price is above the 200 SMA and the RSI is above 30, indicating a bullish trend and potential for further upside movement.",
+  "quote": "I actually use these pretty much every day when it comes to looking for a day trade or confluence. I will be using these VWOPS.",
+  "unchecked": [
+   "close_above_ema",
+   "close_below_ema",
+   "ema_cross_up",
+   "ema_cross_down",
+   "ema_above_ema",
+   "ema_below_ema",
+   "macd_cross_up",
+   "macd_cross_down",
+   "macd_positive",
+   "macd_negative",
+   "wt_green_dot",
+   "wt_red_dot",
+   "wt_below",
+   "wt_above",
+   "mf_positive",
+   "mf_negative",
+   "bb_below_lower",
+   "bb_above_upper",
+   "ao_green",
+   "ao_red",
+   "ao_turns_green",
+   "ao_turns_red",
+   "ao_above_zero",
+   "ao_below_zero",
+   "ao_cross_up_zero",
+   "ao_cross_down_zero",
+   "bb_touch_lower",
+   "bb_touch_upper",
+   "bb_above_mid",
+   "bb_below_mid",
+   "bb_width_above",
+   "ha_green",
+   "ha_red",
+   "green_candles",
+   "red_candles",
+   "breakout_high",
+   "breakdown_low",
+   "volume_spike",
+   "up_pct",
+   "down_pct",
+   "bull_engulf",
+   "bear_engulf",
+   "hammer",
+   "shooting_star",
+   "sr_bounce_up",
+   "sr_reject_down",
+   "pattern_break_up",
+   "pattern_break_down",
+   "in_bullish_pattern",
+   "in_bearish_pattern",
+   "near_apex",
+   "squeeze",
+   "higher_low",
+   "lower_high",
+   "rsi_bull_div",
+   "rsi_bear_div",
+   "rsi_hidden_bull_div",
+   "rsi_hidden_bear_div",
+   "ao_bull_div",
+   "ao_bear_div",
+   "ao_hidden_bull_div",
+   "ao_hidden_bear_div",
+   "macd_bull_div",
+   "macd_bear_div",
+   "macd_hidden_bull_div",
+   "macd_hidden_bear_div",
+   "wt_bull_div",
+   "wt_bear_div",
+   "wt_hidden_bull_div",
+   "wt_hidden_bear_div"
+  ],
+  "lesson_id": 16,
+  "rules": [
+   {
+    "rule": "close_above_sma",
+    "a": 200
+   },
+   {
+    "rule": "rsi_above",
+    "a": 30
+   }
+  ],
+  "rules_text": [
+   "Close above SMA (200)",
+   "RSI (14) above 30"
+  ],
+  "stats": {
+   "trades": 119,
+   "avg_r": 0.203,
+   "edge": 0.162,
+   "win_rate": 40.3,
+   "charts": 5,
+   "charts_positive": 5
+  },
+  "charts": {
+   "BTC 4h": {
+    "trades": 29,
+    "win_rate": 34.5,
+    "avg_r": -0.001,
+    "edge": 0.016,
+    "base_r": -0.017,
+    "sum_r": -0.04,
+    "t": 0.06
+   },
+   "ETH 4h": {
+    "trades": 19,
+    "win_rate": 36.8,
+    "avg_r": 0.105,
+    "edge": 0.043,
+    "base_r": 0.062,
+    "sum_r": 2.0,
+    "t": 0.13
+   },
+   "SOL 4h": {
+    "trades": 34,
+    "win_rate": 35.3,
+    "avg_r": 0.065,
+    "edge": 0.104,
+    "base_r": -0.039,
+    "sum_r": 2.22,
+    "t": 0.42
+   },
+   "BTC 1D": {
+    "trades": 22,
+    "win_rate": 45.5,
+    "avg_r": 0.364,
+    "edge": 0.246,
+    "base_r": 0.118,
+    "sum_r": 8.0,
+    "t": 0.75
+   },
+   "ETH 1D": {
+    "trades": 15,
+    "win_rate": 60.0,
+    "avg_r": 0.8,
+    "edge": 0.604,
+    "base_r": 0.196,
+    "sum_r": 12.0,
+    "t": 1.54
+   }
+  }
+ },
+ {
+  "id": 63,
+  "name": "ao_color_change",
+  "direction": "short",
+  "status": "retired",
+  "weight": 0.004,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "1H",
+  "why": "The Awesome Oscillator turning red is a sign of a potential trend reversal, indicating a loss of bullish momentum. This setup is short because the Awesome Oscillator is signaling a bearish move, and the price is likely to follow suit after the color change.",
+  "quote": "And if we take a look at what happened here, we can see that yeah, once it started to turn red for the next uh 12 hours, we basically traded sideways. And then once it turns green again, we continue to move to the upside. Once it turns red, we consolidate, come down a little bit. Once it turns green again, we come up more. Right?",
+  "unchecked": [
+   "price does not need to be at a key level of support or resistance"
+  ],
+  "lesson_id": 16,
+  "rules": [
+   {
+    "rule": "ao_turns_red"
+   }
+  ],
+  "rules_text": [
+   "Awesome Oscillator changed to red (TradingView's 'AO color changed to red' alert)"
+  ],
+  "stats": {
+   "trades": 1104,
+   "avg_r": -0.039,
+   "edge": 0.004,
+   "win_rate": 32.9,
+   "charts": 5,
+   "charts_positive": 2
+  },
+  "charts": {
+   "BTC 4h": {
+    "trades": 217,
+    "win_rate": 34.6,
+    "avg_r": 0.016,
+    "edge": -0.018,
+    "base_r": 0.034,
+    "sum_r": 3.41,
+    "t": -0.19
+   },
+   "ETH 4h": {
+    "trades": 219,
+    "win_rate": 32.4,
+    "avg_r": -0.055,
+    "edge": -0.068,
+    "base_r": 0.014,
+    "sum_r": -11.96,
+    "t": -0.73
+   },
+   "SOL 4h": {
+    "trades": 217,
+    "win_rate": 34.6,
+    "avg_r": 0.017,
+    "edge": 0.019,
+    "base_r": -0.002,
+    "sum_r": 3.66,
+    "t": 0.2
+   },
+   "BTC 1D": {
+    "trades": 229,
+    "win_rate": 26.6,
+    "avg_r": -0.221,
+    "edge": -0.039,
+    "base_r": -0.182,
+    "sum_r": -50.51,
+    "t": -0.45
+   },
+   "ETH 1D": {
+    "trades": 222,
+    "win_rate": 36.5,
+    "avg_r": 0.054,
+    "edge": 0.126,
+    "base_r": -0.072,
+    "sum_r": 11.96,
+    "t": 1.33
+   }
+  }
+ },
+ {
+  "id": 64,
+  "name": "Market Cipher Divergence",
+  "direction": "long",
+  "status": "active",
+  "weight": 0.053,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "N/A",
+  "why": "Market Cipher wave higher low, indicating a potential bullish divergence and setup for a long trade.",
+  "quote": "zero line, overbought, oversold, green and red dots.",
+  "unchecked": [
+   "Market Cipher wave higher low"
+  ],
+  "lesson_id": 16,
+  "rules": [
+   {
+    "rule": "wt_bull_div"
+   }
+  ],
+  "rules_text": [
+   "Bullish divergence: price lower low, Market Cipher wave higher low - in the last 3 candles, lows/highs at most 60 candles apart"
+  ],
+  "stats": {
+   "trades": 124,
+   "avg_r": 0.108,
+   "edge": 0.062,
+   "win_rate": 38.7,
+   "charts": 5,
+   "charts_positive": 3
+  },
+  "charts": {
+   "BTC 4h": {
+    "trades": 32,
+    "win_rate": 40.6,
+    "avg_r": 0.226,
+    "edge": 0.243,
+    "base_r": -0.017,
+    "sum_r": 7.23,
+    "t": 0.94
+   },
+   "ETH 4h": {
+    "trades": 27,
+    "win_rate": 40.7,
+    "avg_r": 0.055,
+    "edge": -0.007,
+    "base_r": 0.062,
+    "sum_r": 1.48,
+    "t": -0.03
+   },
+   "SOL 4h": {
+    "trades": 27,
+    "win_rate": 33.3,
+    "avg_r": 0.034,
+    "edge": 0.074,
+    "base_r": -0.039,
+    "sum_r": 0.93,
+    "t": 0.28
+   },
+   "BTC 1D": {
+    "trades": 23,
+    "win_rate": 47.8,
+    "avg_r": 0.293,
+    "edge": 0.176,
+    "base_r": 0.118,
+    "sum_r": 6.75,
+    "t": 0.58
+   },
+   "ETH 1D": {
+    "trades": 15,
+    "win_rate": 26.7,
+    "avg_r": -0.2,
+    "edge": -0.396,
+    "base_r": 0.196,
+    "sum_r": -3.0,
+    "t": -1.12
+   }
+  }
+ },
+ {
+  "id": 65,
+  "name": "Market Cipher Divergence",
+  "direction": "short",
+  "status": "retired",
+  "weight": -0.027,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "N/A",
+  "why": "Market Cipher wave lower high, indicating a potential bearish divergence and setup for a short trade.",
+  "quote": "zero line, overbought, oversold, green and red dots.",
+  "unchecked": [
+   "Market Cipher wave lower high"
+  ],
+  "lesson_id": 16,
+  "rules": [
+   {
+    "rule": "wt_bear_div"
+   }
+  ],
+  "rules_text": [
+   "Bearish divergence: price higher high, Market Cipher wave lower high - in the last 3 candles, lows/highs at most 60 candles apart"
+  ],
+  "stats": {
+   "trades": 175,
+   "avg_r": -0.08,
+   "edge": -0.03,
+   "win_rate": 31.4,
+   "charts": 5,
+   "charts_positive": 1
+  },
+  "charts": {
+   "BTC 4h": {
+    "trades": 35,
+    "win_rate": 31.4,
+    "avg_r": -0.057,
+    "edge": -0.091,
+    "base_r": 0.034,
+    "sum_r": -2.0,
+    "t": -0.38
+   },
+   "ETH 4h": {
+    "trades": 29,
+    "win_rate": 31.0,
+    "avg_r": -0.15,
+    "edge": -0.164,
+    "base_r": 0.014,
+    "sum_r": -4.35,
+    "t": -0.67
+   },
+   "SOL 4h": {
+    "trades": 29,
+    "win_rate": 27.6,
+    "avg_r": -0.223,
+    "edge": -0.221,
+    "base_r": -0.002,
+    "sum_r": -6.46,
+    "t": -0.91
+   },
+   "BTC 1D": {
+    "trades": 40,
+    "win_rate": 37.5,
+    "avg_r": 0.1,
+    "edge": 0.282,
+    "base_r": -0.182,
+    "sum_r": 4.01,
+    "t": 1.25
+   },
+   "ETH 1D": {
+    "trades": 42,
+    "win_rate": 28.6,
+    "avg_r": -0.124,
+    "edge": -0.052,
+    "base_r": -0.072,
+    "sum_r": -5.19,
+    "t": -0.25
+   }
+  }
+ },
+ {
+  "id": 66,
+  "name": "Short Trade with TP1",
+  "direction": "short",
+  "status": "active",
+  "weight": 0.168,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 8.0,
+  "timeframe": "daily",
+  "why": "Made more than 3 times the risked amount, guaranteed win",
+  "quote": "When I have made more money than I have risked over three times more money than I have risked on the trade, I consider that a win.",
+  "unchecked": [
+   "TP1 at 107344 with 8:1 risk-to-reward ratio"
+  ],
+  "lesson_id": 18,
+  "rules": [
+   {
+    "rule": "close_above_ema",
+    "a": 107344
+   },
+   {
+    "rule": "rsi_above",
+    "a": 30
+   }
+  ],
+  "rules_text": [
+   "Close above EMA (107344)",
+   "RSI (14) above 30"
+  ],
+  "stats": {
+   "trades": 66,
+   "avg_r": 0.279,
+   "edge": 0.219,
+   "win_rate": 28.8,
+   "charts": 5,
+   "charts_positive": 4
+  },
+  "charts": {
+   "BTC 4h": {
+    "trades": 7,
+    "win_rate": 14.3,
+    "avg_r": 0.209,
+    "edge": 0.034,
+    "base_r": 0.175,
+    "sum_r": 1.46,
+    "t": 0.03
+   },
+   "ETH 4h": {
+    "trades": 17,
+    "win_rate": 29.4,
+    "avg_r": 0.602,
+    "edge": 0.439,
+    "base_r": 0.164,
+    "sum_r": 10.24,
+    "t": 0.59
+   },
+   "SOL 4h": {
+    "trades": 9,
+    "win_rate": 11.1,
+    "avg_r": -0.756,
+    "edge": -0.928,
+    "base_r": 0.172,
+    "sum_r": -6.8,
+    "t": -3.81
+   },
+   "BTC 1D": {
+    "trades": 18,
+    "win_rate": 27.8,
+    "avg_r": 0.042,
+    "edge": 0.115,
+    "base_r": -0.074,
+    "sum_r": 0.75,
+    "t": 0.22
+   },
+   "ETH 1D": {
+    "trades": 15,
+    "win_rate": 46.7,
+    "avg_r": 0.851,
+    "edge": 0.867,
+    "base_r": -0.016,
+    "sum_r": 12.77,
+    "t": 1.27
+   }
+  }
+ },
+ {
+  "id": 67,
+  "name": "Long Trade from Golden Pocket 786 Zone",
+  "direction": "long",
+  "status": "retired",
+  "weight": -0.094,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "daily",
+  "why": "Locked in 2 times the risked amount, guaranteed win",
+  "quote": "You always want a TP1 where you've made more money than you initially risked.",
+  "unchecked": [
+   "Partial profit taken at major resistance level"
+  ],
+  "lesson_id": 18,
+  "rules": [
+   {
+    "rule": "close_below_ema",
+    "a": 786
+   },
+   {
+    "rule": "rsi_below",
+    "a": 70
+   }
+  ],
+  "rules_text": [
+   "Close below EMA (786)",
+   "RSI (14) below 70"
+  ],
+  "stats": {
+   "trades": 120,
+   "avg_r": -0.03,
+   "edge": -0.11,
+   "win_rate": 35.0,
+   "charts": 5,
+   "charts_positive": 1
+  },
+  "charts": {
+   "BTC 4h": {
+    "trades": 21,
+    "win_rate": 23.8,
+    "avg_r": -0.286,
+    "edge": -0.268,
+    "base_r": -0.017,
+    "sum_r": -6.0,
+    "t": -0.94
+   },
+   "ETH 4h": {
+    "trades": 26,
+    "win_rate": 30.8,
+    "avg_r": -0.077,
+    "edge": -0.139,
+    "base_r": 0.062,
+    "sum_r": -2.0,
+    "t": -0.5
+   },
+   "SOL 4h": {
+    "trades": 17,
+    "win_rate": 35.3,
+    "avg_r": 0.027,
+    "edge": 0.067,
+    "base_r": -0.039,
+    "sum_r": 0.47,
+    "t": 0.19
+   },
+   "BTC 1D": {
+    "trades": 23,
+    "win_rate": 43.5,
+    "avg_r": 0.023,
+    "edge": -0.094,
+    "base_r": 0.118,
+    "sum_r": 0.54,
+    "t": -0.35
+   },
+   "ETH 1D": {
+    "trades": 33,
+    "win_rate": 39.4,
+    "avg_r": 0.105,
+    "edge": -0.09,
+    "base_r": 0.196,
+    "sum_r": 3.47,
+    "t": -0.37
+   }
+  }
+ },
+ {
+  "id": 68,
+  "name": "Partial Profit and Stop Loss Adjustment",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 0.7,
+  "rr": 3.0,
+  "timeframe": "swingish",
+  "why": "To lock in profit and let the rest of the trade ride while managing risk and maintaining a good risk-reward ratio.",
+  "quote": "You can say, 'All right, I'm going to take a partial profit here because this is major resistance.' And you can do so and you know depending on how much of the trade you take out you could have a two to one locked in where you lock in two times more profit than you initially risked and then you can move your stop loss to your entry and you can let the rest of this thing ride.",
+  "unchecked": [
+   "Close above the upper Bollinger band (20 candles, 2 deviations)"
+  ],
+  "lesson_id": 18,
+  "rules": [
+   {
+    "rule": "close_above_sma",
+    "a": 200
+   },
+   {
+    "rule": "close_above_ema",
+    "a": 50
+   },
+   {
+    "rule": "bull_engulf"
+   },
+   {
+    "rule": "macd_cross_up"
+   },
+   {
+    "rule": "rsi_above",
+    "a": 30
+   },
+   {
+    "rule": "wt_green_dot"
+   },
+   {
+    "rule": "wt_above",
+    "a": 53
+   },
+   {
+    "rule": "volume_spike"
+   },
+   {
+    "rule": "higher_low",
+    "a": 5,
+    "b": 5
+   },
+   {
+    "rule": "macd_bull_div"
+   },
+   {
+    "rule": "wt_bull_div"
+   },
+   {
+    "rule": "rsi_bull_div"
+   }
+  ],
+  "rules_text": [
+   "Close above SMA (200)",
+   "Close above EMA (50)",
+   "Bullish engulfing candle",
+   "MACD crosses above its signal line",
+   "RSI (14) above 30",
+   "Market Cipher green dot (WaveTrend crosses up) below 0",
+   "Market Cipher wave above 53 (overbought)",
+   "Volume above 1.5 \u00d7 its 20-candle average",
+   "Higher low: the last 5 candles' low is above the 5 candles before",
+   "Bullish divergence: price lower low, MACD higher low - in the last 3 candles, lows/highs at most 60 candles apart",
+   "Bullish divergence: price lower low, Market Cipher wave higher low - in the last 3 candles, lows/highs at most 60 candles apart",
+   "Bullish divergence: price lower low, RSI higher low - in the last 3 candles, lows/highs at most 60 candles apart"
+  ],
+  "stats": {
+   "trades": 0,
+   "avg_r": null,
+   "edge": null,
+   "win_rate": null,
+   "charts": 5
+  },
+  "charts": {
+   "BTC 4h": {
+    "trades": 0,
+    "win_rate": null,
+    "avg_r": null,
+    "edge": null,
+    "base_r": -0.013,
+    "sum_r": 0.0
+   },
+   "ETH 4h": {
+    "trades": 0,
+    "win_rate": null,
+    "avg_r": null,
+    "edge": null,
+    "base_r": 0.076,
+    "sum_r": 0.0
+   },
+   "SOL 4h": {
+    "trades": 0,
+    "win_rate": null,
+    "avg_r": null,
+    "edge": null,
+    "base_r": -0.0,
+    "sum_r": 0.0
+   },
+   "BTC 1D": {
+    "trades": 0,
+    "win_rate": null,
+    "avg_r": null,
+    "edge": null,
+    "base_r": 0.098,
+    "sum_r": 0.0
+   },
+   "ETH 1D": {
+    "trades": 0,
+    "win_rate": null,
+    "avg_r": null,
+    "edge": null,
+    "base_r": 0.114,
+    "sum_r": 0.0
+   }
+  }
+ },
+ {
+  "id": 69,
+  "name": "limit_order",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 0.7,
+  "rr": 2.0,
+  "timeframe": "1h",
+  "why": "The setup combines multiple bullish indicators and patterns, suggesting a strong upward momentum. The RSI and MACD divergences, along with the Market Cipher green dot, indicate a potential reversal from a downtrend. The volume spike and bullish engulfing candle further support the bullish case. The ATR-based stop loss ensures risk management while the take profit is set at twice the risk reward ratio.",
+  "quote": "Let's say I'm looking for Bitcoin to drop down to, you know, $77,800. I could do a limit order to $77,800 and enter the amount that I want. let's say $500,000 uh US dollar and then I can set a takeprofit and a stop loss. I know let's say I want my setup to basically be like this where if we come down to let's say the price of 74910 I'm out and my target is going to be $100,000. So, I set my stop limit at uh 74, 900, and I set my takeprofit up at 100,300. And then I can go ahead and open up that long, it will set the order. When the price comes down to here, it will fill the limit order for me. And if we bounce and we hit our takeprofit, it will take that profit for me. And if we don't bounce, of course, I get stopped out, which is great for risk management.",
+  "unchecked": [
+   "Close above the upper Bollinger band (20 candles, 2 deviations)"
+  ],
+  "lesson_id": 19,
+  "rules": [
+   {
+    "rule": "close_above_ema",
+    "a": 50
+   },
+   {
+    "rule": "close_below_ema",
+    "a": 21
+   },
+   {
+    "rule": "close_above_sma",
+    "a": 200
+   },
+   {
+    "rule": "rsi_below",
+    "a": 30
+   },
+   {
+    "rule": "macd_cross_up"
+   },
+   {
+    "rule": "ao_green"
+   },
+   {
+    "rule": "wt_green_dot"
+   },
+   {
+    "rule": "volume_spike"
+   },
+   {
+    "rule": "up_pct",
+    "a": 10
+   },
+   {
+    "rule": "bull_engulf"
+   },
+   {
+    "rule": "green_candles",
+    "a": 3
+   },
+   {
+    "rule": "breakout_high",
+    "a": 20
+   },
+   {
+    "rule": "ao_turns_green"
+   },
+   {
+    "rule": "wt_bull_div"
+   },
+   {
+    "rule": "rsi_bull_div"
+   },
+   {
+    "rule": "macd_bull_div"
+   },
+   {
+    "rule": "wt_hidden_bull_div"
+   },
+   {
+    "rule": "rsi_hidden_bull_div"
+   },
+   {
+    "rule": "macd_hidden_bull_div"
+   }
+  ],
+  "rules_text": [
+   "Close above EMA (50)",
+   "Close below EMA (21)",
+   "Close above SMA (200)",
+   "RSI (14) below 30",
+   "MACD crosses above its signal line",
+   "Awesome Oscillator column is green (AO rising)",
+   "Market Cipher green dot (WaveTrend crosses up) below 0",
+   "Volume above 1.5 \u00d7 its 20-candle average",
+   "Price up more than 10% over the last 10 candles",
+   "Bullish engulfing candle",
+   "3 green candles in a row",
+   "Close above the highest high of the last 20 candles",
+   "Awesome Oscillator changed to green (TradingView's 'AO color changed to green' alert)",
+   "Bullish divergence: price lower low, Market Cipher wave higher low - in the last 3 candles, lows/highs at most 60 candles apart",
+   "Bullish divergence: price lower low, RSI higher low - in the last 3 candles, lows/highs at most 60 candles apart",
+   "Bullish divergence: price lower low, MACD higher low - in the last 3 candles, lows/highs at most 60 candles apart",
+   "Hidden bullish divergence: price higher low, Market Cipher wave lower low (trend continuation) - in the last 3 candles, lows/highs at most 60 candles apart",
+   "Hidden bullish divergence: price higher low, RSI lower low (trend continuation) - in the last 3 candles, lows/highs at most 60 candles apart",
+   "Hidden bullish divergence: price higher low, MACD lower low (trend continuation) - in the last 3 candles, lows/highs at most 60 candles apart"
+  ],
+  "stats": {
+   "trades": 0,
+   "avg_r": null,
+   "edge": null,
+   "win_rate": null,
+   "charts": 5
+  },
+  "charts": {
+   "BTC 4h": {
+    "trades": 0,
+    "win_rate": null,
+    "avg_r": null,
+    "edge": null,
+    "base_r": 0.008,
+    "sum_r": 0.0
+   },
+   "ETH 4h": {
+    "trades": 0,
+    "win_rate": null,
+    "avg_r": null,
+    "edge": null,
+    "base_r": 0.033,
+    "sum_r": 0.0
+   },
+   "SOL 4h": {
+    "trades": 0,
+    "win_rate": null,
+    "avg_r": null,
+    "edge": null,
+    "base_r": 0.007,
+    "sum_r": 0.0
+   },
+   "BTC 1D": {
+    "trades": 0,
+    "win_rate": null,
+    "avg_r": null,
+    "edge": null,
+    "base_r": 0.054,
+    "sum_r": 0.0
+   },
+   "ETH 1D": {
+    "trades": 0,
+    "win_rate": null,
+    "avg_r": null,
+    "edge": null,
+    "base_r": 0.05,
+    "sum_r": 0.0
+   }
+  }
+ }
+]
