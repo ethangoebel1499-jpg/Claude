@@ -225,8 +225,9 @@ def manual_controls(r: dict) -> None:
                      + (f" (last check {int(age // 60)} min ago)" if age else "") + " - forced trades wait until it runs. "
                      "Open Paper Trader and press **Start trading**.")
     for c in cmds.itertuples():
-        res = c.result or "⏳ waiting for the trader's next price check..."
-        bad = c.result and any(w in c.result for w in ("refused", "not sent", "couldn't", "not filled"))
+        done = isinstance(c.result, str) and c.result       # a waiting order's result is empty (NaN from the db)
+        res = c.result if done else "⏳ waiting for the trader's next price check..."
+        bad = bool(done) and any(w in c.result for w in ("refused", "not sent", "couldn't", "not filled"))
         (info.error if bad else info.caption)(f"{c.action} ({str(c.created)[11:16]} UTC): {res}")
 
 

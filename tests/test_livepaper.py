@@ -132,6 +132,7 @@ def test_dashboard_renders(tmp_path, candles, monkeypatch):
         runners[0]._last_equity_write = 0
         runners[0].step()
         feed.i += 1
+    store.command("W", "close")                  # a force-close the trader hasn't done yet (empty result = NaN)
     monkeypatch.setenv("LIVEPAPER_DB", str(tmp_path / "d.db"))
     from livepaper import settings
     monkeypatch.setattr(settings, "PATH", tmp_path / "local_settings.json")
