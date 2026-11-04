@@ -93,8 +93,8 @@ def main() -> None:
     if a.command == "run":
         run_forever(cfg, store)
     elif a.command == "sync":
-        from livepaper.sync import sync
-        print(sync(store))
+        from livepaper.sync import sync_all
+        print(sync_all(store))
     else:
         runners = build(cfg, store)
         for rn in runners:

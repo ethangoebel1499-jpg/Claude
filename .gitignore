@@ -27,3 +27,4 @@ dashboard.log
 runtime/
 !livepaper/data/
 custom_strategies.json
+.review-worktree/

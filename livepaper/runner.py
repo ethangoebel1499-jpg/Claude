@@ -350,11 +350,12 @@ def build(cfg: dict, store: Store) -> list[Runner]:
 
 
 def run_forever(cfg: dict, store: Store) -> None:
-    from .sync import sync
+    from .sync import sync_all
     seed_runs(cfg, store)
     app = App(cfg, store)
     poll = int(app.app.get("poll_seconds", 30))
-    sync_every, last_sync = app.app.get("sync_minutes", 60) * 60, time.time()
+    sync_every = app.app.get("sync_minutes", 60) * 60
+    last_sync = time.time() - sync_every + 120          # first share 2 minutes after starting, then every hour
     print(f"livepaper: broker={app.app.get('broker', 'sim')}, polling every {poll}s. Runs are managed in the "
           f"dashboard's Strategy Lab. Ctrl+C to stop.")
     while True:
@@ -362,7 +363,7 @@ def run_forever(cfg: dict, store: Store) -> None:
         app.step()
         if app.app.get("sync_git", False) and time.time() - last_sync >= sync_every:
             try:
-                sync(store)
+                sync_all(store)
             except Exception as e:
                 print(f"[sync] failed: {e}")
             last_sync = time.time()

@@ -664,8 +664,14 @@ with tab_acct:
             fee = a2.number_input("Fee % per side (for P&L)", 0.0, 1.0, float(cur["fee"]) * 100, 0.01)
             poll = a3.number_input("Check prices every (seconds)", 10, 600, int(cur["poll_seconds"]), 5)
             b1, b2 = st.columns(2)
-            sync_git = b1.checkbox("Share trades with Claude (push to the paper-trades branch)", bool(cur["sync_git"]))
+            sync_git = b1.checkbox("Share with Claude: trades, the apprentice's setups / concepts / lessons, stream "
+                                   "results (and bring Claude's reviews back)", bool(cur["sync_git"]))
             sync_min = b2.number_input("Share every (minutes)", 5, 1440, int(cur["sync_minutes"]), 5)
+            gh_token = st.text_input(
+                "GitHub token (needed to share from this ZIP install)", cur.get("github_token", ""), type="password",
+                help="github.com → Settings → Developer settings → Personal access tokens → Fine-grained tokens → "
+                     "Generate new token. Repository access: Only select repositories → Claude. Permissions → "
+                     "Contents: Read and write. It can't touch anything else in your account.")
             cap_pct = st.number_input("🛡️ Maximum stop loss % (safety cap)", 1.0, 50.0, float(cur["max_stop"]) * 100, 0.5,
                                       help="Every paper trade gets a stop, never wider than this - even if a run has "
                                            "its stop turned off or set wider. With Webull, the stop is placed as an "
@@ -715,7 +721,7 @@ with tab_acct:
             ap_db = st.text_input("Apprentice database (what the 🧠 Apprentice has learned)",
                                   cur.get("apprentice_db", "apprentice.db"))
         if st.form_submit_button("Save settings", type="primary"):
-            settings.save({"broker": broker, "fee": fee / 100, "max_stop": cap_pct / 100, "poll_seconds": int(poll), "sync_git": sync_git,
+            settings.save({"github_token": gh_token.strip(), "broker": broker, "fee": fee / 100, "max_stop": cap_pct / 100, "poll_seconds": int(poll), "sync_git": sync_git,
                            "sync_minutes": int(sync_min), "webull_app_key": key.strip(),
                            "webull_app_secret": secret.strip(), "webull_account_id": account.strip(),
                            "webull_region": region.strip() or "us", "webull_endpoint": endpoint.strip(),
@@ -729,6 +735,15 @@ with tab_acct:
     c1, c2 = st.columns([1, 3])
     if c1.button("Test Webull connection"):
         c2.write(test_webull())
+    from livepaper import sync as _sync
+    s1, s2 = st.columns([1, 3])
+    if s1.button("🔄 Sync with Claude now", help="Share everything now and download Claude's latest review"):
+        with st.spinner("Sharing..."):
+            s2.write(_sync.sync_all(store))
+    last = _sync.last_status()
+    if last:
+        s2.caption(f"Last share {last.get('at', '')[:16]} UTC: {last.get('result', '')}"
+                   + (f" · Claude's review from {last['review'][:16]}" if last.get("review") else " · no review yet"))
     c3, c4 = st.columns([1, 3])
     if c3.button("Test stop orders", help="Places and cancels a test stop far from the price - nothing fills"):
         for line in test_webull_stops():

@@ -12,7 +12,7 @@ from pathlib import Path
 import pandas as pd
 import streamlit as st
 
-from apprentice import brain, youtube
+from apprentice import review, brain, youtube
 from apprentice.job import DONE, JOBS, spawn
 from apprentice.store import Store
 from apprentice.strategy import KEY as STRATEGY_KEY, db_path
@@ -272,6 +272,39 @@ def stats_line(s: dict) -> str:
             f"{t['edge']:+.2f}R · positive on {t.get('charts_positive', 0)}/{t.get('charts', 0)} charts")
 
 
+def claude_panel(store: Store) -> None:
+    """Claude's latest review of the setups, concepts and lessons (comes back with each sync)."""
+    from livepaper import sync
+    rv = review.load()
+    st.markdown("##### 🤖 Claude's review")
+    status = sync.last_status()
+    if not rv:
+        st.caption("No review yet. Turn on **Share with Claude** in ⚙️ Account (with a GitHub token), then ask Claude "
+                   "to review the apprentice - its verdicts on every setup and concept show up here."
+                   + (f" Last share: {status.get('at', '')[:16]} - {status.get('result', '')}" if status else ""))
+        return
+    counts = {k: {} for k in ("setups", "concepts", "lessons")}
+    for k in counts:
+        for x in rv.get(k, []):
+            counts[k][x.get("verdict", "?")] = counts[k].get(x.get("verdict", "?"), 0) + 1
+    st.caption(f"Reviewed {rv.get('reviewed_at', '')[:16]} UTC · setups "
+               + ", ".join(f"{review.ICON.get(v, '')} {n} {v}" for v, n in counts["setups"].items())
+               + " · concepts " + ", ".join(f"{review.ICON.get(v, '')} {n} {v}" for v, n in counts["concepts"].items()))
+    if rv.get("summary"):
+        st.markdown(rv["summary"])
+    lessons = {x["id"]: x for x in rv.get("lessons", []) if x.get("verdict") == "drop"}
+    if lessons:
+        titles = store.table("lessons").set_index("id")["title"].to_dict() if len(store.table("lessons")) else {}
+        st.markdown("**Lessons Claude says not to learn from** (delete them in 📚 Teach if you agree):\n" +
+                    "\n".join(f"- {titles.get(i, f'lesson {i}')}: {x.get('reason', '')}" for i, x in lessons.items()))
+    c1, c2 = st.columns([1.3, 4])
+    if c1.button("Apply all of Claude's verdicts", key="ap_rv_all"):
+        n = review.apply_all(store)
+        st.success(f"Applied: {n['setups']} setups, {n['concepts']} concepts. Press 🎓 Learn now to re-test the fixed ones.")
+    c2.caption("Nothing changes until you apply: use = 📌 always use, drop = 🚫 off, fix = corrected rules (re-tested "
+               "on the next Learn). Each verdict also has its own Apply button below.")
+
+
 def knowledge_tab(store: Store) -> None:
     setups = store.setups()
     by = {k: [s for s in setups if s["status"] == k]
@@ -294,6 +327,7 @@ def knowledge_tab(store: Store) -> None:
         st.success("Learning in the background - see 📚 Teach for progress.")
     st.markdown("##### Accuracy (your ratings)")
     accuracy_panel(store)
+    claude_panel(store)
 
     st.markdown("##### Setups")
     st.caption("**Active** = tested and beat random (the apprentice trades these). **Candidate** = not enough "
@@ -329,6 +363,18 @@ def knowledge_tab(store: Store) -> None:
                     st.markdown("**What the teacher also said, that it can't check on a chart yet:**\n" +
                                 "\n".join(f"- {u}" for u in s["unchecked"]))
                 st.caption(f"Stop {s['stop_atr']:g} ATR · target {s['rr']:g}R · {stats_line(s)}")
+                rv = review.for_setup(s)
+                if rv:
+                    r1, r2 = st.columns([5, 1.3])
+                    r1.markdown(review.describe(rv))
+                    if rv.get("verdict") == "fix" and (rv.get("fix") or {}).get("rules"):
+                        r1.caption("Suggested rules: " + " AND ".join(
+                            builder.describe(r) for r in rv["fix"]["rules"] if r.get("rule") in builder.RULES))
+                    if review.is_applied("setups", rv):
+                        r2.caption("✔ applied")
+                    elif r2.button("Apply", key=f"ap_rv_{s['id']}"):
+                        st.toast(review.apply_setup(store, s, rv))
+                        st.rerun()
                 if s["why"]:
                     st.markdown(f"*Why:* {s['why']}")
                 if s["quote"]:
@@ -369,6 +415,15 @@ def knowledge_tab(store: Store) -> None:
                     f"</small>", unsafe_allow_html=True)
         with c2:
             rate(store, "concept", r.id, {"text": r.text, "category": r.category}, f"concept_{r.id}", "Rate")
+        rv = review.for_concept(r.id)
+        if rv and rv.get("verdict") != "keep":
+            d1, d2 = st.columns([5, 1.4])
+            d1.markdown(review.describe(rv) + (f"  \n*Better:* {rv['fix_text']}" if rv.get("fix_text") else ""))
+            if review.is_applied("concepts", rv):
+                d2.caption("✔ applied")
+            elif d2.button("Apply", key=f"ap_rvc_{r.id}"):
+                st.toast(review.apply_concept(store, r.id, rv))
+                st.rerun()
 
 
 def chart_tab(store: Store) -> None:
