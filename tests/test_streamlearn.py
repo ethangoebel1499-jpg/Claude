@@ -136,6 +136,8 @@ def test_push_files_to_branch(tmp_path, monkeypatch):
     run("commit", "-q", "--allow-empty", "-m", "init", cwd=work)
     run("push", "-q", "origin", "HEAD:master", cwd=work)
     monkeypatch.chdir(work)
+    from livepaper import sync
+    monkeypatch.setattr(sync, "ROOT", work)                    # this temp clone stands in for the app's own clone
     assert push_files({"a.csv": "x\n1\n"}, "stream_study") == "pushed"
     assert push_files({"a.csv": "x\n1\n"}, "stream_study") == "nothing new"
     shown = subprocess.run(["git", "show", "paper-trades:stream_study/a.csv"], cwd=tmp_path / "origin.git",

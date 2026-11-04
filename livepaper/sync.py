@@ -167,6 +167,18 @@ def _git_push(files: dict[str, str], message: str) -> str:
     return "pushed" if push.returncode == 0 else f"commit saved, push failed: {push.stderr.strip()[:200]}"
 
 
+def _own_clone() -> bool:
+    """Only share with git from a clone of this app's repo - never from some other repository the folder
+    happens to sit inside (e.g. a home folder that is a git repo)."""
+    top = git("rev-parse", "--show-toplevel", check=False)
+    if top.returncode != 0:
+        return False
+    if Path(top.stdout.strip()).resolve() == ROOT.resolve():
+        return True
+    url = git("remote", "get-url", "origin", check=False).stdout
+    return REPO.lower() in url.lower()
+
+
 def push_files(files: dict[str, str], folder: str = "") -> str:
     """Upload {path: text} (under folder/) to the paper-trades branch."""
     from . import settings
@@ -175,9 +187,10 @@ def push_files(files: dict[str, str], folder: str = "") -> str:
     msg = f"{folder or 'snapshot'} {now_utc()}"
     if token:
         return GitHub(token).push(files, msg)
-    if git("rev-parse", "--show-toplevel", check=False).returncode == 0:
+    if _own_clone():
         return _git_push(files, msg)
-    raise RuntimeError("add a GitHub token in ⚙️ Account to share (this copy isn't a git clone)")
+    raise RuntimeError("no GitHub token yet - paste one in ⚙️ Account → Paper trading → GitHub token, press Save "
+                       "settings, then Sync again")
 
 
 def fetch_reviews() -> dict | None:

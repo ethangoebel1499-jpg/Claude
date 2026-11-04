@@ -102,3 +102,20 @@ def test_github_api_push_is_one_commit_of_changed_files(monkeypatch):
     assert ("POST", "/git/refs") in calls                                     # branch created on first sync
     assert sum(1 for m, p in calls if (m, p) == ("POST", "/git/blobs")) == 1  # only the changed file uploaded
     assert gh.push({"paper_trades/trades.csv": "same\n"}, "snapshot") == "nothing new"
+
+
+def test_never_shares_from_an_unrelated_git_repo(tmp_path, monkeypatch):
+    """The user's home folder was a git repo with no commits; the app folder sat inside it."""
+    import subprocess
+    home = tmp_path / "home"
+    app = home / "Documents" / "Claude-master"
+    app.mkdir(parents=True)
+    subprocess.run(["git", "init", "-q"], cwd=home, check=True)
+    monkeypatch.chdir(app)
+    monkeypatch.setattr(sync, "ROOT", app)
+    monkeypatch.setenv("LOCAL_SETTINGS", str(tmp_path / "s.json"))
+    from livepaper import settings
+    monkeypatch.setattr(settings, "PATH", tmp_path / "s.json")
+    with pytest.raises(RuntimeError, match="no GitHub token yet"):
+        sync.push_files({"a.csv": "1"}, "x")
+    assert not (home / ".paper-trades").exists()
