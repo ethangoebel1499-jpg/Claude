@@ -50,7 +50,7 @@
     "win_rate": null,
     "avg_r": null,
     "edge": null,
-    "base_r": 0.012,
+    "base_r": 0.011,
     "sum_r": 0.0
    },
    "ETH 4h": {
@@ -74,7 +74,7 @@
     "win_rate": null,
     "avg_r": null,
     "edge": null,
-    "base_r": 0.056,
+    "base_r": 0.054,
     "sum_r": 0.0
    },
    "ETH 1h": {
@@ -90,7 +90,7 @@
     "win_rate": null,
     "avg_r": null,
     "edge": null,
-    "base_r": -0.023,
+    "base_r": -0.024,
     "sum_r": 0.0
    },
    "BTC 1D": {
@@ -152,7 +152,7 @@
   "stats": {
    "trades": 12,
    "avg_r": 1.5,
-   "edge": 1.395,
+   "edge": 1.396,
    "win_rate": 50.0,
    "charts": 8,
    "charts_positive": 5
@@ -162,8 +162,8 @@
     "trades": 1,
     "win_rate": 100.0,
     "avg_r": 4.0,
-    "edge": 4.014,
-    "base_r": -0.014,
+    "edge": 4.015,
+    "base_r": -0.015,
     "sum_r": 4.0,
     "t": 0.0
    },
@@ -172,7 +172,7 @@
     "win_rate": null,
     "avg_r": null,
     "edge": null,
-    "base_r": 0.056,
+    "base_r": 0.055,
     "sum_r": 0.0
    },
    "SOL 4h": {
@@ -188,8 +188,8 @@
     "trades": 2,
     "win_rate": 50.0,
     "avg_r": 1.5,
-    "edge": 1.407,
-    "base_r": 0.093,
+    "edge": 1.41,
+    "base_r": 0.09,
     "sum_r": 3.0,
     "t": 0.56
    },
@@ -272,10 +272,7 @@
      "times": 1,
      "train_pct": -3.54,
      "test_pct": 0.0
-    },
-    "learned_stop": "fixed",
-    "learned_reversal": false,
-    "deployed": true
+    }
    },
    "1h": {
     "stop": "fixed",
@@ -301,10 +298,7 @@
      "times": 5,
      "train_pct": 2.03,
      "test_pct": 0.0
-    },
-    "learned_stop": "fixed",
-    "learned_reversal": false,
-    "deployed": false
+    }
    },
    "1D": {
     "stop": "fixed",
@@ -330,10 +324,7 @@
      "times": 0,
      "train_pct": 0.0,
      "test_pct": 0.0
-    },
-    "learned_stop": "fixed",
-    "learned_reversal": false,
-    "deployed": true
+    }
    }
   }
  },
@@ -526,7 +517,7 @@
     "win_rate": null,
     "avg_r": null,
     "edge": null,
-    "base_r": -0.012,
+    "base_r": -0.011,
     "sum_r": 0.0
    },
    "ETH 4h": {
@@ -550,7 +541,7 @@
     "win_rate": null,
     "avg_r": null,
     "edge": null,
-    "base_r": 0.116,
+    "base_r": 0.117,
     "sum_r": 0.0
    },
    "ETH 1h": {
@@ -558,7 +549,7 @@
     "win_rate": null,
     "avg_r": null,
     "edge": null,
-    "base_r": 0.189,
+    "base_r": 0.191,
     "sum_r": 0.0
    },
    "SOL 1h": {
@@ -596,7 +587,7 @@
   "name": "Short: Close above the upper Bollinger band + Shooting star / bearish pin bar",
   "direction": "short",
   "status": "pinned",
-  "weight": 0.502,
+  "weight": 0.485,
   "source": "missed",
   "stop_atr": 1.5,
   "rr": 2.0,
@@ -618,10 +609,10 @@
    "Shooting star / bearish pin bar (long upper wick)"
   ],
   "stats": {
-   "trades": 90,
-   "avg_r": 0.18,
-   "edge": 0.247,
-   "win_rate": 40.0,
+   "trades": 89,
+   "avg_r": 0.16,
+   "edge": 0.226,
+   "win_rate": 39.3,
    "charts": 8,
    "charts_positive": 5
   },
@@ -630,7 +621,7 @@
     "trades": 13,
     "win_rate": 61.5,
     "avg_r": 0.846,
-    "edge": 0.823,
+    "edge": 0.822,
     "base_r": 0.024,
     "sum_r": 11.0,
     "t": 1.95
@@ -645,22 +636,22 @@
     "t": 1.4
    },
    "SOL 4h": {
-    "trades": 6,
-    "win_rate": 16.7,
-    "avg_r": -0.5,
-    "edge": -0.491,
-    "base_r": -0.009,
-    "sum_r": -3.0,
-    "t": -0.98
+    "trades": 5,
+    "win_rate": 0.0,
+    "avg_r": -1.0,
+    "edge": -0.99,
+    "base_r": -0.01,
+    "sum_r": -5.0,
+    "t": 0.0
    },
    "BTC 1h": {
     "trades": 9,
     "win_rate": 22.2,
     "avg_r": -0.333,
-    "edge": -0.181,
-    "base_r": -0.153,
+    "edge": -0.186,
+    "base_r": -0.147,
     "sum_r": -3.0,
-    "t": -0.41
+    "t": -0.42
    },
    "ETH 1h": {
     "trades": 17,
@@ -676,7 +667,7 @@
     "win_rate": 44.4,
     "avg_r": 0.333,
     "edge": 0.311,
-    "base_r": 0.022,
+    "base_r": 0.023,
     "sum_r": 3.0,
     "t": 0.59
    },
@@ -700,15 +691,15 @@
    }
   },
   "after_entry": {
-   "trades": 90,
-   "mfe_r": 1.25,
+   "trades": 89,
+   "mfe_r": 1.24,
    "mae_r": -1.0,
-   "reached_1r_pct": 49.98,
-   "reached_target_pct": 38.87,
-   "bars_held": 6.94,
-   "bars_to_win": 11.03,
+   "reached_1r_pct": 49.42,
+   "reached_target_pct": 38.18,
+   "bars_held": 6.93,
+   "bars_to_win": 10.74,
    "winners_heat_r": -0.38,
-   "losers_best_r": 0.47,
+   "losers_best_r": 0.46,
    "reversal_exits": 16,
    "reversal_saved_r": -6.62
   },
@@ -728,16 +719,16 @@
      }
     ]
    },
-   "gain": 0.106,
+   "gain": 0.255,
    "train": {
     "edge": 0.133,
     "trades": 47,
     "was": 0.078
    },
    "test": {
-    "edge": 0.739,
-    "trades": 13,
-    "was": 0.688
+    "edge": 0.831,
+    "trades": 14,
+    "was": 0.631
    }
   },
   "exit_plan": {
@@ -747,28 +738,25 @@
     "stops": {
      "fixed": {
       "train_pct": 0.582,
-      "test_pct": 0.938,
-      "trades": 32
+      "test_pct": 0.601,
+      "trades": 31
      },
      "atr": {
       "train_pct": 0.252,
-      "test_pct": 0.609,
-      "trades": 32
+      "test_pct": 0.277,
+      "trades": 31
      },
      "swing": {
       "train_pct": -0.15,
-      "test_pct": 0.177,
-      "trades": 32
+      "test_pct": -0.11,
+      "trades": 31
      }
     },
     "reversal_effect": {
      "times": 14,
      "train_pct": -8.58,
      "test_pct": -1.51
-    },
-    "learned_stop": "fixed",
-    "learned_reversal": false,
-    "deployed": true
+    }
    },
    "1h": {
     "stop": "fixed",
@@ -794,10 +782,7 @@
      "times": 14,
      "train_pct": -4.71,
      "test_pct": -5.08
-    },
-    "learned_stop": "fixed",
-    "learned_reversal": false,
-    "deployed": false
+    }
    },
    "1D": {
     "stop": "atr",
@@ -823,10 +808,7 @@
      "times": 4,
      "train_pct": -14.73,
      "test_pct": 0.77
-    },
-    "learned_stop": "atr",
-    "learned_reversal": false,
-    "deployed": true
+    }
    }
   }
  },
@@ -957,7 +939,7 @@
   "name": "bb_touch_lower",
   "direction": "long",
   "status": "retired",
-  "weight": -0.05,
+  "weight": -0.043,
   "source": "lesson",
   "stop_atr": 0.25,
   "rr": 3.0,
@@ -985,10 +967,10 @@
    "Bearish divergence: price higher high, RSI lower high - in the last 30 candles, lows/highs at most 70 candles apart"
   ],
   "stats": {
-   "trades": 181,
-   "avg_r": -0.138,
-   "edge": -0.056,
-   "win_rate": 21.5,
+   "trades": 180,
+   "avg_r": -0.133,
+   "edge": -0.048,
+   "win_rate": 21.6,
    "charts": 8,
    "charts_positive": 3
   },
@@ -1006,46 +988,46 @@
     "trades": 17,
     "win_rate": 23.5,
     "avg_r": -0.059,
-    "edge": 0.002,
-    "base_r": -0.061,
+    "edge": 0.003,
+    "base_r": -0.062,
     "sum_r": -1.0,
-    "t": 0.0
+    "t": 0.01
    },
    "SOL 4h": {
     "trades": 17,
     "win_rate": 17.6,
     "avg_r": -0.294,
-    "edge": -0.159,
-    "base_r": -0.135,
+    "edge": -0.157,
+    "base_r": -0.137,
     "sum_r": -5.0,
-    "t": -0.42
+    "t": -0.41
    },
    "BTC 1h": {
     "trades": 28,
     "win_rate": 25.0,
     "avg_r": 0.0,
-    "edge": 0.078,
-    "base_r": -0.078,
+    "edge": 0.082,
+    "base_r": -0.082,
     "sum_r": 0.0,
-    "t": 0.23
+    "t": 0.25
    },
    "ETH 1h": {
-    "trades": 31,
-    "win_rate": 19.4,
-    "avg_r": -0.226,
-    "edge": -0.182,
-    "base_r": -0.044,
-    "sum_r": -7.0,
-    "t": -0.63
+    "trades": 30,
+    "win_rate": 20.0,
+    "avg_r": -0.2,
+    "edge": -0.149,
+    "base_r": -0.051,
+    "sum_r": -6.0,
+    "t": -0.5
    },
    "SOL 1h": {
     "trades": 21,
     "win_rate": 33.3,
     "avg_r": 0.333,
-    "edge": 0.475,
-    "base_r": -0.142,
+    "edge": 0.483,
+    "base_r": -0.15,
     "sum_r": 7.0,
-    "t": 1.13
+    "t": 1.15
    },
    "BTC 1D": {
     "trades": 19,
@@ -1067,14 +1049,14 @@
    }
   },
   "after_entry": {
-   "trades": 181,
+   "trades": 180,
    "mfe_r": 0.0,
    "mae_r": -1.96,
-   "reached_1r_pct": 33.15,
-   "reached_target_pct": 21.54,
+   "reached_1r_pct": 32.77,
+   "reached_target_pct": 21.65,
    "bars_held": 1.0,
-   "bars_to_win": 1.55,
-   "winners_heat_r": -0.4,
+   "bars_to_win": 1.54,
+   "winners_heat_r": -0.39,
    "losers_best_r": 0.0,
    "reversal_exits": 0,
    "reversal_saved_r": 0.0
@@ -1106,10 +1088,7 @@
      "times": 20,
      "train_pct": 10.17,
      "test_pct": -6.24
-    },
-    "learned_stop": "fixed",
-    "learned_reversal": false,
-    "deployed": true
+    }
    },
    "1h": {
     "stop": "fixed",
@@ -1117,28 +1096,25 @@
     "stops": {
      "fixed": {
       "train_pct": 0.428,
-      "test_pct": -2.178,
-      "trades": 79
+      "test_pct": -2.126,
+      "trades": 78
      },
      "atr": {
       "train_pct": -0.232,
-      "test_pct": -0.269,
-      "trades": 80
+      "test_pct": -0.263,
+      "trades": 79
      },
      "swing": {
       "train_pct": -0.089,
-      "test_pct": -0.375,
-      "trades": 79
+      "test_pct": -0.371,
+      "trades": 78
      }
     },
     "reversal_effect": {
      "times": 53,
      "train_pct": -9.82,
      "test_pct": 17.95
-    },
-    "learned_stop": "fixed",
-    "learned_reversal": false,
-    "deployed": false
+    }
    },
    "1D": {
     "stop": "atr",
@@ -1164,10 +1140,7 @@
      "times": 0,
      "train_pct": 0.0,
      "test_pct": 0.0
-    },
-    "learned_stop": "atr",
-    "learned_reversal": false,
-    "deployed": true
+    }
    }
   }
  },
@@ -1176,7 +1149,7 @@
   "name": "bb_touch_upper",
   "direction": "short",
   "status": "retired",
-  "weight": -0.051,
+  "weight": -0.052,
   "source": "lesson",
   "stop_atr": 0.25,
   "rr": 3.0,
@@ -1206,7 +1179,7 @@
   "stats": {
    "trades": 160,
    "avg_r": 0.1,
-   "edge": 0.168,
+   "edge": 0.166,
    "win_rate": 27.5,
    "charts": 8,
    "charts_positive": 6
@@ -1216,10 +1189,10 @@
     "trades": 18,
     "win_rate": 27.8,
     "avg_r": 0.111,
-    "edge": 0.211,
-    "base_r": -0.1,
+    "edge": 0.208,
+    "base_r": -0.097,
     "sum_r": 2.0,
-    "t": 0.49
+    "t": 0.48
    },
    "ETH 4h": {
     "trades": 23,
@@ -1234,8 +1207,8 @@
     "trades": 20,
     "win_rate": 25.0,
     "avg_r": 0.0,
-    "edge": 0.048,
-    "base_r": -0.048,
+    "edge": 0.046,
+    "base_r": -0.046,
     "sum_r": 0.0,
     "t": 0.12
    },
@@ -1243,7 +1216,7 @@
     "trades": 30,
     "win_rate": 13.3,
     "avg_r": -0.467,
-    "edge": -0.384,
+    "edge": -0.385,
     "base_r": -0.082,
     "sum_r": -14.0,
     "t": -1.52
@@ -1252,19 +1225,19 @@
     "trades": 18,
     "win_rate": 33.3,
     "avg_r": 0.333,
-    "edge": 0.404,
-    "base_r": -0.07,
+    "edge": 0.397,
+    "base_r": -0.064,
     "sum_r": 6.0,
-    "t": 0.88
+    "t": 0.87
    },
    "SOL 1h": {
     "trades": 23,
     "win_rate": 26.1,
     "avg_r": 0.043,
-    "edge": 0.091,
-    "base_r": -0.048,
+    "edge": 0.084,
+    "base_r": -0.041,
     "sum_r": 1.0,
-    "t": 0.24
+    "t": 0.23
    },
    "BTC 1D": {
     "trades": 14,
@@ -1279,8 +1252,8 @@
     "trades": 14,
     "win_rate": 35.7,
     "avg_r": 0.429,
-    "edge": 0.468,
-    "base_r": -0.04,
+    "edge": 0.467,
+    "base_r": -0.038,
     "sum_r": 6.0,
     "t": 0.88
    }
@@ -1327,18 +1300,15 @@
      "times": 4,
      "train_pct": -5.38,
      "test_pct": -1.87
-    },
-    "learned_stop": "swing",
-    "learned_reversal": false,
-    "deployed": true
+    }
    },
    "1h": {
-    "stop": "fixed",
+    "stop": "swing",
     "reversal": false,
     "stops": {
      "fixed": {
       "train_pct": -0.43,
-      "test_pct": -0.339,
+      "test_pct": -0.305,
       "trades": 71
      },
      "atr": {
@@ -1356,10 +1326,7 @@
      "times": 6,
      "train_pct": 1.17,
      "test_pct": -0.13
-    },
-    "learned_stop": "swing",
-    "learned_reversal": false,
-    "deployed": false
+    }
    },
    "1D": {
     "stop": "fixed",
@@ -1385,10 +1352,7 @@
      "times": 2,
      "train_pct": 0.0,
      "test_pct": 2.31
-    },
-    "learned_stop": "fixed",
-    "learned_reversal": false,
-    "deployed": true
+    }
    }
   }
  },
@@ -1397,7 +1361,7 @@
   "name": "bb_touch_upper_or_lower",
   "direction": "long",
   "status": "retired",
-  "weight": -0.084,
+  "weight": -0.086,
   "source": "lesson",
   "stop_atr": 1.5,
   "rr": 3.0,
@@ -1429,7 +1393,7 @@
   "stats": {
    "trades": 46,
    "avg_r": 0.014,
-   "edge": -0.121,
+   "edge": -0.123,
    "win_rate": 26.1,
    "charts": 8,
    "charts_positive": 2
@@ -1463,22 +1427,22 @@
     "t": -0.2
    },
    "BTC 1h": {
-    "trades": 4,
-    "win_rate": 25.0,
-    "avg_r": 0.0,
-    "edge": -0.121,
-    "base_r": 0.121,
-    "sum_r": 0.0,
-    "t": -0.12
-   },
-   "ETH 1h": {
     "trades": 3,
     "win_rate": 33.3,
     "avg_r": 0.333,
-    "edge": 0.118,
-    "base_r": 0.215,
+    "edge": 0.211,
+    "base_r": 0.123,
     "sum_r": 1.0,
-    "t": 0.09
+    "t": 0.16
+   },
+   "ETH 1h": {
+    "trades": 4,
+    "win_rate": 25.0,
+    "avg_r": 0.0,
+    "edge": -0.215,
+    "base_r": 0.215,
+    "sum_r": 0.0,
+    "t": -0.21
    },
    "SOL 1h": {
     "trades": 8,
@@ -1510,14 +1474,14 @@
   },
   "after_entry": {
    "trades": 46,
-   "mfe_r": 0.9,
-   "mae_r": -1.15,
+   "mfe_r": 0.89,
+   "mae_r": -1.17,
    "reached_1r_pct": 41.29,
    "reached_target_pct": 23.92,
-   "bars_held": 10.89,
-   "bars_to_win": 26.08,
-   "winners_heat_r": -0.51,
-   "losers_best_r": 0.49,
+   "bars_held": 10.91,
+   "bars_to_win": 25.8,
+   "winners_heat_r": -0.5,
+   "losers_best_r": 0.46,
    "reversal_exits": 6,
    "reversal_saved_r": 2.85
   },
@@ -1542,7 +1506,7 @@
      },
      "swing": {
       "train_pct": 0.618,
-      "test_pct": -0.745,
+      "test_pct": -1.026,
       "trades": 12
      }
     },
@@ -1550,10 +1514,7 @@
      "times": 1,
      "train_pct": 2.14,
      "test_pct": 0.0
-    },
-    "learned_stop": "fixed",
-    "learned_reversal": false,
-    "deployed": true
+    }
    },
    "1h": {
     "stop": "fixed",
@@ -1566,23 +1527,20 @@
      },
      "atr": {
       "train_pct": -0.0,
-      "test_pct": -1.165,
+      "test_pct": -1.17,
       "trades": 15
      },
      "swing": {
       "train_pct": -0.404,
-      "test_pct": -1.114,
+      "test_pct": -1.151,
       "trades": 15
      }
     },
     "reversal_effect": {
-     "times": 10,
+     "times": 11,
      "train_pct": 3.36,
-     "test_pct": 1.05
-    },
-    "learned_stop": "fixed",
-    "learned_reversal": false,
-    "deployed": false
+     "test_pct": 2.38
+    }
    },
    "1D": {
     "stop": "fixed",
@@ -1608,10 +1566,7 @@
      "times": 0,
      "train_pct": 0.0,
      "test_pct": 0.0
-    },
-    "learned_stop": "fixed",
-    "learned_reversal": false,
-    "deployed": true
+    }
    }
   }
  },
@@ -1747,7 +1702,7 @@
   "name": "scalping_strategy",
   "direction": "long",
   "status": "retired",
-  "weight": 0.017,
+  "weight": 0.019,
   "source": "lesson",
   "stop_atr": 2.0,
   "rr": 1.5,
@@ -1772,10 +1727,10 @@
    "Volume above 1.5 \u00d7 its 20-candle average"
   ],
   "stats": {
-   "trades": 1089,
-   "avg_r": 0.081,
-   "edge": 0.017,
-   "win_rate": 43.8,
+   "trades": 1087,
+   "avg_r": 0.083,
+   "edge": 0.019,
+   "win_rate": 43.9,
    "charts": 8,
    "charts_positive": 5
   },
@@ -1783,20 +1738,20 @@
    "BTC 4h": {
     "trades": 145,
     "win_rate": 37.2,
-    "avg_r": -0.066,
-    "edge": -0.063,
-    "base_r": -0.003,
-    "sum_r": -9.57,
-    "t": -0.63
+    "avg_r": -0.065,
+    "edge": -0.062,
+    "base_r": -0.004,
+    "sum_r": -9.49,
+    "t": -0.62
    },
    "ETH 4h": {
-    "trades": 150,
-    "win_rate": 44.7,
-    "avg_r": 0.121,
-    "edge": 0.078,
+    "trades": 149,
+    "win_rate": 45.0,
+    "avg_r": 0.129,
+    "edge": 0.086,
     "base_r": 0.043,
-    "sum_r": 18.16,
-    "t": 0.77
+    "sum_r": 19.24,
+    "t": 0.85
    },
    "SOL 4h": {
     "trades": 143,
@@ -1808,28 +1763,28 @@
     "t": 0.94
    },
    "BTC 1h": {
-    "trades": 138,
-    "win_rate": 44.9,
-    "avg_r": 0.087,
-    "edge": 0.006,
-    "base_r": 0.081,
-    "sum_r": 11.96,
-    "t": 0.06
+    "trades": 137,
+    "win_rate": 45.3,
+    "avg_r": 0.095,
+    "edge": 0.013,
+    "base_r": 0.082,
+    "sum_r": 12.96,
+    "t": 0.12
    },
    "ETH 1h": {
     "trades": 149,
     "win_rate": 44.3,
-    "avg_r": 0.071,
-    "edge": -0.091,
-    "base_r": 0.162,
-    "sum_r": 10.63,
-    "t": -0.91
+    "avg_r": 0.069,
+    "edge": -0.094,
+    "base_r": 0.163,
+    "sum_r": 10.34,
+    "t": -0.94
    },
    "SOL 1h": {
     "trades": 130,
     "win_rate": 40.8,
     "avg_r": -0.005,
-    "edge": -0.009,
+    "edge": -0.008,
     "base_r": 0.003,
     "sum_r": -0.66,
     "t": -0.08
@@ -1854,20 +1809,20 @@
    }
   },
   "after_entry": {
-   "trades": 1089,
+   "trades": 1087,
    "mfe_r": 1.07,
    "mae_r": -1.02,
-   "reached_1r_pct": 51.97,
-   "reached_target_pct": 41.7,
-   "bars_held": 8.45,
+   "reached_1r_pct": 51.87,
+   "reached_target_pct": 41.78,
+   "bars_held": 8.52,
    "bars_to_win": 9.72,
    "winners_heat_r": -0.36,
    "losers_best_r": 0.41,
-   "reversal_exits": 221,
-   "reversal_saved_r": -13.6
+   "reversal_exits": 222,
+   "reversal_saved_r": -12.32
   },
   "hints": [
-   "Closing losing trades on a confirmed reversal: 221 times, cost -13.6R in total (they often recovered)."
+   "Closing losing trades on a confirmed reversal: 222 times, cost -12.3R in total (they often recovered)."
   ],
   "tune": null,
   "exit_plan": {
@@ -1877,57 +1832,51 @@
     "stops": {
      "fixed": {
       "train_pct": 0.223,
-      "test_pct": -0.635,
-      "trades": 438
+      "test_pct": -0.612,
+      "trades": 437
      },
      "atr": {
       "train_pct": -0.076,
-      "test_pct": -0.49,
-      "trades": 438
+      "test_pct": -0.475,
+      "trades": 437
      },
      "swing": {
       "train_pct": 0.13,
-      "test_pct": -0.195,
-      "trades": 437
+      "test_pct": -0.198,
+      "trades": 436
      }
     },
     "reversal_effect": {
      "times": 104,
      "train_pct": -28.98,
-     "test_pct": 19.13
-    },
-    "learned_stop": "fixed",
-    "learned_reversal": false,
-    "deployed": true
+     "test_pct": 19.43
+    }
    },
    "1h": {
-    "stop": "fixed",
+    "stop": "atr",
     "reversal": false,
     "stops": {
      "fixed": {
       "train_pct": -0.125,
-      "test_pct": -1.266,
-      "trades": 412
+      "test_pct": -1.256,
+      "trades": 411
      },
      "atr": {
       "train_pct": -0.014,
-      "test_pct": -0.566,
-      "trades": 415
+      "test_pct": -0.6,
+      "trades": 414
      },
      "swing": {
       "train_pct": -0.086,
-      "test_pct": -0.705,
-      "trades": 415
+      "test_pct": -0.735,
+      "trades": 414
      }
     },
     "reversal_effect": {
-     "times": 95,
+     "times": 96,
      "train_pct": -19.3,
-     "test_pct": 1.25
-    },
-    "learned_stop": "atr",
-    "learned_reversal": false,
-    "deployed": false
+     "test_pct": 2.31
+    }
    },
    "1D": {
     "stop": "fixed",
@@ -1953,10 +1902,7 @@
      "times": 9,
      "train_pct": -6.7,
      "test_pct": -3.28
-    },
-    "learned_stop": "fixed",
-    "learned_reversal": false,
-    "deployed": true
+    }
    }
   }
  },
@@ -1983,8 +1929,8 @@
    "Volume above 1.5 \u00d7 its 20-candle average"
   ],
   "stats": {
-   "trades": 1840,
-   "avg_r": 0.104,
+   "trades": 1839,
+   "avg_r": 0.105,
    "edge": 0.027,
    "win_rate": 37.4,
    "charts": 8,
@@ -1994,11 +1940,11 @@
    "BTC 4h": {
     "trades": 271,
     "win_rate": 29.9,
-    "avg_r": -0.097,
-    "edge": -0.085,
-    "base_r": -0.012,
-    "sum_r": -26.26,
-    "t": -1.03
+    "avg_r": -0.095,
+    "edge": -0.084,
+    "base_r": -0.011,
+    "sum_r": -25.82,
+    "t": -1.01
    },
    "ETH 4h": {
     "trades": 263,
@@ -2006,7 +1952,7 @@
     "avg_r": 0.098,
     "edge": 0.022,
     "base_r": 0.076,
-    "sum_r": 25.76,
+    "sum_r": 25.86,
     "t": 0.25
    },
    "SOL 4h": {
@@ -2019,22 +1965,22 @@
     "t": 1.66
    },
    "BTC 1h": {
-    "trades": 205,
-    "win_rate": 40.0,
-    "avg_r": 0.151,
-    "edge": 0.035,
-    "base_r": 0.116,
-    "sum_r": 30.94,
-    "t": 0.35
+    "trades": 204,
+    "win_rate": 40.2,
+    "avg_r": 0.157,
+    "edge": 0.039,
+    "base_r": 0.117,
+    "sum_r": 31.94,
+    "t": 0.39
    },
    "ETH 1h": {
     "trades": 226,
     "win_rate": 42.0,
     "avg_r": 0.233,
-    "edge": 0.044,
-    "base_r": 0.189,
+    "edge": 0.042,
+    "base_r": 0.191,
     "sum_r": 52.59,
-    "t": 0.45
+    "t": 0.43
    },
    "SOL 1h": {
     "trades": 225,
@@ -2065,20 +2011,20 @@
    }
   },
   "after_entry": {
-   "trades": 1840,
-   "mfe_r": 1.05,
+   "trades": 1839,
+   "mfe_r": 1.04,
    "mae_r": -1.08,
-   "reached_1r_pct": 51.08,
-   "reached_target_pct": 35.39,
+   "reached_1r_pct": 51.06,
+   "reached_target_pct": 35.42,
    "bars_held": 6.78,
    "bars_to_win": 9.74,
    "winners_heat_r": -0.41,
    "losers_best_r": 0.44,
-   "reversal_exits": 308,
-   "reversal_saved_r": -27.44
+   "reversal_exits": 310,
+   "reversal_saved_r": -26.34
   },
   "hints": [
-   "Closing losing trades on a confirmed reversal: 308 times, cost -27.4R in total (they often recovered)."
+   "Closing losing trades on a confirmed reversal: 310 times, cost -26.3R in total (they often recovered)."
   ],
   "tune": null,
   "exit_plan": {
@@ -2088,7 +2034,7 @@
     "stops": {
      "fixed": {
       "train_pct": -0.057,
-      "test_pct": -0.076,
+      "test_pct": -0.074,
       "trades": 787
      },
      "atr": {
@@ -2098,18 +2044,15 @@
      },
      "swing": {
       "train_pct": -0.159,
-      "test_pct": -0.032,
+      "test_pct": -0.038,
       "trades": 789
      }
     },
     "reversal_effect": {
-     "times": 203,
+     "times": 204,
      "train_pct": -16.55,
-     "test_pct": 9.29
-    },
-    "learned_stop": "fixed",
-    "learned_reversal": false,
-    "deployed": true
+     "test_pct": 11.33
+    }
    },
    "1h": {
     "stop": "fixed",
@@ -2117,28 +2060,25 @@
     "stops": {
      "fixed": {
       "train_pct": 0.202,
-      "test_pct": -0.891,
-      "trades": 652
+      "test_pct": -0.875,
+      "trades": 651
      },
      "atr": {
       "train_pct": -0.025,
-      "test_pct": -0.395,
-      "trades": 656
+      "test_pct": -0.398,
+      "trades": 655
      },
      "swing": {
       "train_pct": -0.064,
-      "test_pct": -0.544,
-      "trades": 654
+      "test_pct": -0.556,
+      "trades": 653
      }
     },
     "reversal_effect": {
-     "times": 386,
+     "times": 390,
      "train_pct": -43.81,
-     "test_pct": 34.28
-    },
-    "learned_stop": "fixed",
-    "learned_reversal": false,
-    "deployed": false
+     "test_pct": 42.69
+    }
    },
    "1D": {
     "stop": "fixed",
@@ -2164,10 +2104,7 @@
      "times": 13,
      "train_pct": -5.55,
      "test_pct": -2.77
-    },
-    "learned_stop": "fixed",
-    "learned_reversal": false,
-    "deployed": true
+    }
    }
   }
  },
@@ -2232,8 +2169,8 @@
     "trades": 2,
     "win_rate": 0.0,
     "avg_r": -1.0,
-    "edge": -0.991,
-    "base_r": -0.009,
+    "edge": -0.99,
+    "base_r": -0.01,
     "sum_r": -2.0,
     "t": 0.0
    },
@@ -2241,8 +2178,8 @@
     "trades": 1,
     "win_rate": 0.0,
     "avg_r": -1.0,
-    "edge": -0.847,
-    "base_r": -0.153,
+    "edge": -0.853,
+    "base_r": -0.147,
     "sum_r": -1.0,
     "t": 0.0
    },
@@ -2259,8 +2196,8 @@
     "trades": 1,
     "win_rate": 0.0,
     "avg_r": -1.0,
-    "edge": -1.022,
-    "base_r": 0.022,
+    "edge": -1.023,
+    "base_r": 0.023,
     "sum_r": -1.0,
     "t": 0.0
    },
@@ -2352,10 +2289,7 @@
      "times": 1,
      "train_pct": -1.36,
      "test_pct": 0.0
-    },
-    "learned_stop": "fixed",
-    "learned_reversal": false,
-    "deployed": true
+    }
    },
    "1h": {
     "stop": "fixed",
@@ -2381,10 +2315,7 @@
      "times": 1,
      "train_pct": 1.15,
      "test_pct": 0.0
-    },
-    "learned_stop": "fixed",
-    "learned_reversal": false,
-    "deployed": false
+    }
    },
    "1D": {
     "stop": "atr",
@@ -2410,10 +2341,7 @@
      "times": 3,
      "train_pct": -15.73,
      "test_pct": 0.77
-    },
-    "learned_stop": "atr",
-    "learned_reversal": false,
-    "deployed": true
+    }
    }
   }
  },
@@ -2422,7 +2350,7 @@
   "name": "long_entry",
   "direction": "long",
   "status": "retired",
-  "weight": -0.007,
+  "weight": 0.0,
   "source": "lesson",
   "stop_atr": 0.7,
   "rr": 4.0,
@@ -2449,10 +2377,10 @@
    "Bearish divergence: price higher high, RSI lower high - in the last 30 candles, lows/highs at most 60 candles apart"
   ],
   "stats": {
-   "trades": 181,
-   "avg_r": 0.099,
-   "edge": -0.008,
-   "win_rate": 22.1,
+   "trades": 180,
+   "avg_r": 0.105,
+   "edge": -0.0,
+   "win_rate": 22.2,
    "charts": 8,
    "charts_positive": 5
   },
@@ -2461,8 +2389,8 @@
     "trades": 20,
     "win_rate": 25.0,
     "avg_r": 0.25,
-    "edge": 0.264,
-    "base_r": -0.014,
+    "edge": 0.265,
+    "base_r": -0.015,
     "sum_r": 5.0,
     "t": 0.53
    },
@@ -2470,8 +2398,8 @@
     "trades": 17,
     "win_rate": 23.5,
     "avg_r": 0.176,
-    "edge": 0.12,
-    "base_r": 0.056,
+    "edge": 0.121,
+    "base_r": 0.055,
     "sum_r": 3.0,
     "t": 0.23
    },
@@ -2488,19 +2416,19 @@
     "trades": 28,
     "win_rate": 25.0,
     "avg_r": 0.25,
-    "edge": 0.157,
-    "base_r": 0.093,
+    "edge": 0.16,
+    "base_r": 0.09,
     "sum_r": 7.0,
     "t": 0.38
    },
    "ETH 1h": {
-    "trades": 31,
-    "win_rate": 16.1,
-    "avg_r": -0.194,
-    "edge": -0.423,
+    "trades": 30,
+    "win_rate": 16.7,
+    "avg_r": -0.167,
+    "edge": -0.396,
     "base_r": 0.229,
-    "sum_r": -6.0,
-    "t": -1.26
+    "sum_r": -5.0,
+    "t": -1.14
    },
    "SOL 1h": {
     "trades": 21,
@@ -2531,15 +2459,15 @@
    }
   },
   "after_entry": {
-   "trades": 181,
+   "trades": 180,
    "mfe_r": 1.13,
    "mae_r": -1.39,
-   "reached_1r_pct": 49.17,
-   "reached_target_pct": 21.53,
-   "bars_held": 4.17,
-   "bars_to_win": 12.98,
-   "winners_heat_r": -0.54,
-   "losers_best_r": 0.55,
+   "reached_1r_pct": 49.44,
+   "reached_target_pct": 21.66,
+   "bars_held": 4.18,
+   "bars_to_win": 13.02,
+   "winners_heat_r": -0.53,
+   "losers_best_r": 0.54,
    "reversal_exits": 17,
    "reversal_saved_r": 6.5
   },
@@ -2572,10 +2500,7 @@
      "times": 20,
      "train_pct": 10.17,
      "test_pct": -6.24
-    },
-    "learned_stop": "fixed",
-    "learned_reversal": false,
-    "deployed": true
+    }
    },
    "1h": {
     "stop": "fixed",
@@ -2583,28 +2508,25 @@
     "stops": {
      "fixed": {
       "train_pct": 0.428,
-      "test_pct": -2.178,
-      "trades": 79
+      "test_pct": -2.126,
+      "trades": 78
      },
      "atr": {
       "train_pct": -0.077,
-      "test_pct": -0.338,
-      "trades": 80
+      "test_pct": -0.328,
+      "trades": 79
      },
      "swing": {
       "train_pct": -0.089,
-      "test_pct": -0.375,
-      "trades": 79
+      "test_pct": -0.371,
+      "trades": 78
      }
     },
     "reversal_effect": {
      "times": 53,
      "train_pct": -9.82,
      "test_pct": 17.95
-    },
-    "learned_stop": "fixed",
-    "learned_reversal": false,
-    "deployed": false
+    }
    },
    "1D": {
     "stop": "fixed",
@@ -2630,10 +2552,7 @@
      "times": 2,
      "train_pct": 2.97,
      "test_pct": 1.86
-    },
-    "learned_stop": "fixed",
-    "learned_reversal": false,
-    "deployed": true
+    }
    }
   }
  },
@@ -2996,7 +2915,7 @@
     "win_rate": null,
     "avg_r": null,
     "edge": null,
-    "base_r": -0.014,
+    "base_r": -0.015,
     "sum_r": 0.0
    },
    "ETH 4h": {
@@ -3004,7 +2923,7 @@
     "win_rate": null,
     "avg_r": null,
     "edge": null,
-    "base_r": 0.056,
+    "base_r": 0.055,
     "sum_r": 0.0
    },
    "SOL 4h": {
@@ -3020,7 +2939,7 @@
     "win_rate": null,
     "avg_r": null,
     "edge": null,
-    "base_r": 0.093,
+    "base_r": 0.09,
     "sum_r": 0.0
    },
    "ETH 1h": {
@@ -3133,7 +3052,7 @@
     "win_rate": null,
     "avg_r": null,
     "edge": null,
-    "base_r": -0.014,
+    "base_r": -0.015,
     "sum_r": 0.0
    },
    "ETH 4h": {
@@ -3141,7 +3060,7 @@
     "win_rate": null,
     "avg_r": null,
     "edge": null,
-    "base_r": 0.056,
+    "base_r": 0.055,
     "sum_r": 0.0
    },
    "SOL 4h": {
@@ -3157,7 +3076,7 @@
     "win_rate": null,
     "avg_r": null,
     "edge": null,
-    "base_r": 0.093,
+    "base_r": 0.09,
     "sum_r": 0.0
    },
    "ETH 1h": {

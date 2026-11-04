@@ -94,5 +94,10 @@
    222
   ]
  },
+ "trades": {
+  "total": 771,
+  "applied": 0,
+  "waiting": 771
+ },
  "concepts_now": 264
 }
