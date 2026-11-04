@@ -126,7 +126,7 @@ def apply_concept(store, cid: int, item: dict) -> str:
 
 def apply_concepts(store) -> int:
     """Apply every concept verdict not applied yet (drop = delete, fix = reword, keep = nothing to do).
-    Runs by itself whenever a review is downloaded - you asked for concepts to be handled automatically."""
+    Only when you press Apply - nothing from a review changes the apprentice by itself."""
     have = {int(r) for r in store.table("concepts").id} if len(store.table("concepts")) else set()
     n = 0
     for cid, item in _items("concepts").items():
@@ -158,15 +158,11 @@ def status(store) -> dict:
 def apply_all(store) -> dict[str, int]:
     """Apply every review item not applied yet. Returns counts."""
     counts = {"setups": 0, "concepts": 0}
+    counts["concepts"] = apply_concepts(store)
     setups = {s["id"]: s for s in store.setups()}
     for sid, item in _items("setups").items():
         s = setups.get(sid)
         if s and for_setup(s) and not is_applied("setups", item) and item.get("verdict") in ("use", "drop", "fix"):
             apply_setup(store, s, item)
             counts["setups"] += 1
-    have = {int(r) for r in store.table("concepts").id} if len(store.table("concepts")) else set()
-    for cid, item in _items("concepts").items():
-        if cid in have and not is_applied("concepts", item) and item.get("verdict") in ("drop", "fix"):
-            apply_concept(store, cid, item)
-            counts["concepts"] += 1
     return counts

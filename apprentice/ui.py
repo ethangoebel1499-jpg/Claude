@@ -373,11 +373,10 @@ def claude_panel(store: Store, charts: list[str] | None = None) -> None:
     st.caption(f"Reviewed {rv.get('reviewed_at', '')[:16]} UTC · setups "
                + ", ".join(f"{review.ICON.get(v, '')} {n} {v}" for v, n in counts["setups"].items())
                + " · concepts " + ", ".join(f"{review.ICON.get(v, '')} {n} {v}" for v, n in counts["concepts"].items()))
-    if review.apply_concepts(store):                       # concepts never wait for a button
-        st.toast("Applied Claude's concept verdicts")
     stt = review.status(store)
     s_, c_ = stt["setups"], stt["concepts"]
-    concepts = (f"✅ all {c_['total']} rated, applied" if not c_["waiting"] else f"⏳ {len(c_['waiting'])} waiting")
+    concepts = (f"✅ all {c_['total']} rated, applied" if not c_["waiting"] else
+                f"⏳ {len(c_['waiting'])} changes waiting - press **Apply all** below")
     setups_ = ("✅ all applied" if not s_["waiting"] else
                f"⏳ {len(s_['waiting'])} of {s_['total']} verdicts waiting - press **Apply all** below")
     st.markdown(f"**Concepts:** {concepts} ({stt['concepts_now']} left after the drops) · **Setups:** {setups_}")
@@ -400,8 +399,9 @@ def claude_panel(store: Store, charts: list[str] | None = None) -> None:
             spawn(["learn", "--charts", *(charts or DEFAULT_CHARTS)], "Learning run (after Claude's review)")
             st.success(f"Applied: {n['setups']} setups, {n['concepts']} concepts - and started 🎓 Learn to re-test "
                        "them and learn their stops (progress in 📚 Teach).")
-    c2.caption("Applies every verdict (use = 📌 always use, drop = 🚫 off, fix = corrected rules), then starts 🎓 Learn "
-               "on the charts above by itself. Each verdict also has its own Apply button below.")
+    c2.caption("Nothing Claude suggests changes anything until you press this: it applies every verdict (setups: use = "
+               "📌 always use, drop = 🚫 off, fix = corrected rules; concepts: delete or reword), then starts 🎓 Learn "
+               "on the charts above. Each verdict also has its own Apply button below.")
 
 
 def knowledge_tab(store: Store) -> None:

@@ -218,16 +218,6 @@ def fetch_reviews() -> dict | None:
     review = json.loads(text)
     LOCAL_REVIEW.parent.mkdir(parents=True, exist_ok=True)
     LOCAL_REVIEW.write_text(json.dumps(review, indent=1))
-    try:                                          # concepts: applied straight away (setups wait for your Apply)
-        from apprentice import review as rv
-        from apprentice.store import Store as AStore
-        from apprentice.strategy import db_path
-        if Path(db_path()).exists():
-            n = rv.apply_concepts(AStore(db_path()))
-            if n:
-                print(f"[sync] applied Claude's verdict to {n} concept(s)")
-    except Exception as e:
-        print(f"[sync] couldn't apply the concept verdicts: {e}")
     return review
 
 

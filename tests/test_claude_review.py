@@ -147,3 +147,25 @@ def test_concept_verdict_skipped_if_the_id_now_holds_other_text(apprentice):
         {"id": cid, "text": "something else entirely", "verdict": "drop", "reason": "-"}]}))
     review.apply_concepts(a)
     assert cid in set(a.table("concepts").id)                           # not deleted: it's a different concept now
+
+
+def test_downloading_a_review_changes_nothing_until_apply(apprentice, tmp_path, monkeypatch):
+    a, ids = apprentice
+    concepts = a.table("concepts")
+    ad = int(concepts[concepts.text.str.contains("subscribe")].id.iloc[0])
+    body = json.dumps({"reviewed_at": "2026-11-04T16:00:00Z",
+                       "setups": [{"id": ids["junk"], "name": "Long: volume spike", "verdict": "drop", "reason": "-"}],
+                       "concepts": [{"id": ad, "text": "like and subscribe", "verdict": "drop", "reason": "ad"}]})
+
+    class R:
+        status_code, text = 200, body
+    monkeypatch.setattr(sync.requests, "get", lambda *a, **k: R())
+    monkeypatch.setattr(sync, "LOCAL_REVIEW", review.LOCAL)
+    from livepaper import settings
+    monkeypatch.setattr(settings, "PATH", tmp_path / "s.json")
+    assert sync.fetch_reviews()["reviewed_at"] == "2026-11-04T16:00:00Z"
+    assert ad in set(a.table("concepts").id)                               # still there after the sync
+    assert {s["id"]: s["status"] for s in a.setups()}[ids["junk"]] != "off"
+    assert review.status(a)["concepts"]["waiting"] == [ad]
+    assert review.apply_all(a) == {"setups": 1, "concepts": 1}             # the button does it
+    assert ad not in set(a.table("concepts").id)
