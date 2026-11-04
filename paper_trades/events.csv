@@ -422,3 +422,15 @@ Apprentice UNI 4h,2026-11-04T08:00:20+00:00,entry,"SHORT 1,398.365125 @ 7.47"
 Apprentice BTC 1D,2026-11-04T11:28:12+00:00,start,watching XBTUSD 1D
 Apprentice LINK 1D,2026-11-04T11:28:46+00:00,start,watching LINKUSD 1D
 Apprentice ADA 1D,2026-11-04T11:28:47+00:00,start,watching ADAUSD 1D
+Apprentice LTC 1h,2026-11-04T14:48:28+00:00,exit,closed (stop) -329.88 USD
+Apprentice DOGE 1h,2026-11-04T15:00:18+00:00,exit,closed (opposite setup) -280.40 USD
+Apprentice DOGE 1h,2026-11-04T15:00:18+00:00,entry,"LONG 124,728.493659 @ 0.07659"
+Apprentice BTC 1h,2026-11-04T15:00:19+00:00,exit,closed (opposite setup) -226.18 USD
+Apprentice BTC 1h,2026-11-04T15:00:19+00:00,entry,"LONG 0.123651 @ 79,238.80"
+Apprentice LTC 1h,2026-11-04T15:00:20+00:00,entry,LONG 175.761517 @ 55.94
+Apprentice SHIB 1h,2026-11-04T15:00:21+00:00,exit,closed (opposite setup) -242.65 USD
+Apprentice SHIB 1h,2026-11-04T15:00:21+00:00,entry,"LONG 2,100,273,173.79423094 @ 0.000004741"
+Apprentice ETH 1h,2026-11-04T15:00:55+00:00,exit,closed (target2) +455.46 USD
+Apprentice ETH 4h,2026-11-04T15:00:56+00:00,exit,closed (target2) +458.02 USD
+Apprentice SOL 4h,2026-11-04T15:04:19+00:00,exit,closed (stop) -368.89 USD
+Apprentice UNI 4h,2026-11-04T15:10:02+00:00,exit,closed (stop) -337.65 USD
