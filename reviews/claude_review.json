@@ -1,0 +1,933 @@
+{
+ "summary": "Use 6: #5 upper band + shooting star short, #46 aligned-momentum long, #54/#56 downtrend shorts, #62 uptrend long, #55 momentum long. Fix 2 that had a long/short divergence mix-up (#10, #57) - the corrected rules beat random in my re-test. Watch 5 (too few trades or a fragile edge, incl. #8 whose edge only exists with a 0.25 ATR stop). Drop the rest: impossible rules, checklist dumps, and setups no better than random. Honest note: the textbook 'band touch + divergence' setups from the 1-minute video tested at no edge on 4h/daily crypto when written correctly, so I didn't 'fix' them into losers. Concepts: drop 66 (ads, leverage, exchange how-tos, fragments, duplicates), reword 8.",
+ "setups": [
+  {
+   "id": 1,
+   "name": "Market Cipher Strategy",
+   "verdict": "drop",
+   "reason": "Green dot below zero AND RSI over 70 can't happen together - never fired. The sensible version (green dot oversold + money flow green) has no edge (-0.02R)."
+  },
+  {
+   "id": 2,
+   "name": "Trade Setup at Key Level",
+   "verdict": "watch",
+   "reason": "Green dot oversold above the EMA: only 5 trades (+3R each). Good idea from the course, far too few trades to judge."
+  },
+  {
+   "id": 3,
+   "name": "Trade Setup at Key Level",
+   "verdict": "drop",
+   "reason": "No edge worth trading after many trades (edge under +0.07R, i.e. about the same as entering at random)."
+  },
+  {
+   "id": 4,
+   "name": "Market Cipher Strategy Entry",
+   "verdict": "drop",
+   "reason": "Needs a green dot AND a red dot on the same candle - impossible. The workable version (green dot + money flow) has no edge (-0.08R)."
+  },
+  {
+   "id": 5,
+   "name": "Short: Close above the upper Bollinger band + Shooting star / bearish pin bar",
+   "verdict": "use",
+   "reason": "Upper band + shooting star short: 53 trades, +0.30R a trade, beats random by +0.34R, positive on 4 of 5 charts. Matches the lesson (fade a band touch on a reversal candle)."
+  },
+  {
+   "id": 6,
+   "name": "Short: Close above the highest high of the last 20 candles + Close above the upp",
+   "verdict": "drop",
+   "reason": "No edge worth trading after many trades (edge under +0.07R, i.e. about the same as entering at random)."
+  },
+  {
+   "id": 7,
+   "name": "bb_touch_lower",
+   "verdict": "drop",
+   "reason": "Long paired with a bearish divergence, lost -0.25R a trade. The corrected version (lower band + bullish RSI divergence) also lost (-0.08R over 72 trades), so there's nothing worth fixing on these charts."
+  },
+  {
+   "id": 8,
+   "name": "bb_touch_upper",
+   "verdict": "watch",
+   "reason": "Stats look great (86 trades, edge +0.36R) but they come from a 0.25 ATR stop: re-tested with a normal 1.5 ATR stop the edge falls to +0.09R. And its rules (short on a BULLISH divergence) contradict its own name and the Bollinger lesson. Real fills and fees will eat a stop that thin - don't pin it. I tested the textbook version (upper band + bearish divergence): it loses (-0.06R), so no fix to offer."
+  },
+  {
+   "id": 9,
+   "name": "bb_touch_upper_or_lower",
+   "verdict": "drop",
+   "reason": "Long on a bearish AO divergence with contradictory EMA rules. Corrected version (lower band + bullish AO divergence) loses too (-0.08R)."
+  },
+  {
+   "id": 10,
+   "name": "bb_touch_upper_or_lower",
+   "verdict": "fix",
+   "reason": "Rules were backwards (short on a BULLISH AO divergence, mixed EMAs). The lesson's version - high tags the upper band and the Awesome Oscillator makes a lower high - tested at 78 trades, +0.22R, edge +0.26R, 3 of 5 charts.",
+   "fix": {
+    "rules": [
+     {
+      "rule": "bb_touch_upper",
+      "a": 3
+     },
+     {
+      "rule": "ao_bear_div",
+      "a": 5,
+      "b": 60
+     }
+    ],
+    "direction": "short",
+    "stop_atr": 1.5,
+    "rr": 2
+   }
+  },
+  {
+   "id": 11,
+   "name": "scalping_strategy",
+   "verdict": "drop",
+   "reason": "673 trades, edge +0.05R - basically random."
+  },
+  {
+   "id": 12,
+   "name": "Long: Volume above 1.5 \u00d7 its 20-candle average",
+   "verdict": "drop",
+   "reason": "No edge worth trading after many trades (edge under +0.07R, i.e. about the same as entering at random)."
+  },
+  {
+   "id": 13,
+   "name": "Short: Close above the upper Bollinger band + Shooting star / bearish pin bar + ",
+   "verdict": "drop",
+   "reason": "Duplicate of #5 with an extra 'up 5%' filter that halves the trades and lowers the edge (+0.24 vs +0.34). Keep #5."
+  },
+  {
+   "id": 14,
+   "name": "long_entry",
+   "verdict": "drop",
+   "reason": "Long on a bearish divergence. Corrected (below EMA + bullish divergence) is roughly random (+0.03R edge)."
+  },
+  {
+   "id": 15,
+   "name": "Example Setup",
+   "verdict": "drop",
+   "reason": "70+ rules including opposites (RSI crosses up AND down) - a list of everything in the video, never fires."
+  },
+  {
+   "id": 16,
+   "name": "Risk Management Trade",
+   "verdict": "drop",
+   "reason": "A long that needs MACD and RSI crossing DOWN, oversold yet above the EMA - backwards, never fired."
+  },
+  {
+   "id": 17,
+   "name": "Short: Small Range with Multiple Trades",
+   "verdict": "drop",
+   "reason": "No edge worth trading after many trades (edge under +0.07R, i.e. about the same as entering at random)."
+  },
+  {
+   "id": 18,
+   "name": "Support and Resistance",
+   "verdict": "drop",
+   "reason": "413 trades, edge +0.03R - basically random."
+  },
+  {
+   "id": 19,
+   "name": "Support and Resistance",
+   "verdict": "drop",
+   "reason": "No edge worth trading after many trades (edge under +0.07R, i.e. about the same as entering at random)."
+  },
+  {
+   "id": 20,
+   "name": "bullish_engulf",
+   "verdict": "drop",
+   "reason": "No edge worth trading after many trades (edge under +0.07R, i.e. about the same as entering at random)."
+  },
+  {
+   "id": 21,
+   "name": "bearish_engulf",
+   "verdict": "drop",
+   "reason": "No edge worth trading after many trades (edge under +0.07R, i.e. about the same as entering at random)."
+  },
+  {
+   "id": 22,
+   "name": "Long from Support",
+   "verdict": "drop",
+   "reason": "Its only rule is 'close above the 200 SMA' - no support level at all. Adding the support bounce it's named for removed the edge (+0.01R). #62 already covers 'uptrend long' better."
+  },
+  {
+   "id": 23,
+   "name": "Short from Resistance",
+   "verdict": "drop",
+   "reason": "Its only rule is 'close below the 200 SMA' - no resistance check. With the rejection rule added it's +0.08R edge, too small. #56 covers the downtrend short better."
+  },
+  {
+   "id": 24,
+   "name": "Bullish Divergence Setup",
+   "verdict": "drop",
+   "reason": "No edge worth trading after many trades (edge under +0.07R, i.e. about the same as entering at random)."
+  },
+  {
+   "id": 25,
+   "name": "bearish_divergence_daily",
+   "verdict": "drop",
+   "reason": "Four copies of the same divergence with a 0-candle window - can't fire. A plain bearish RSI divergence short loses (-0.07R)."
+  },
+  {
+   "id": 26,
+   "name": "bullish_divergence_4hour",
+   "verdict": "drop",
+   "reason": "Same problem as #25 for longs; a plain bullish RSI divergence long loses (-0.10R)."
+  },
+  {
+   "id": 27,
+   "name": "long_setup",
+   "verdict": "drop",
+   "reason": "2 trades in years of data - too many filters to ever matter."
+  },
+  {
+   "id": 28,
+   "name": "Short Trade Setup",
+   "verdict": "drop",
+   "reason": "+0.08R edge on a 0.5 ATR stop with a 7R target - noise, and the multi-timeframe idea isn't something the rules check."
+  },
+  {
+   "id": 29,
+   "name": "bullish_divergence",
+   "verdict": "drop",
+   "reason": "Bullish divergences while the wave is overbought - contradictory. RSI + wave bullish divergence alone loses (-0.18R)."
+  },
+  {
+   "id": 30,
+   "name": "orderflow_bullish_retrace",
+   "verdict": "drop",
+   "reason": "Bullish divergence + green dot but also 'wave above 53 (overbought)' - contradicts itself, never fired. Without that rule: no edge (-0.01R)."
+  },
+  {
+   "id": 31,
+   "name": "Long Trade Entry",
+   "verdict": "drop",
+   "reason": "No edge worth trading after many trades (edge under +0.07R, i.e. about the same as entering at random)."
+  },
+  {
+   "id": 32,
+   "name": "trend_line_respect",
+   "verdict": "drop",
+   "reason": "No edge worth trading after many trades (edge under +0.07R, i.e. about the same as entering at random)."
+  },
+  {
+   "id": 33,
+   "name": "monthly_resistance",
+   "verdict": "drop",
+   "reason": "No edge worth trading after many trades (edge under +0.07R, i.e. about the same as entering at random)."
+  },
+  {
+   "id": 34,
+   "name": "Long Trade from Key Level",
+   "verdict": "drop",
+   "reason": "413 trades, edge +0.06R - basically random, and 'key level' isn't in its rules."
+  },
+  {
+   "id": 35,
+   "name": "Naked Weekly Point of Control",
+   "verdict": "drop",
+   "reason": "Green dot plus contradictory filters - never fired."
+  },
+  {
+   "id": 36,
+   "name": "value_area_confluence",
+   "verdict": "drop",
+   "reason": "Five stacked filters, never fired - over-fitted to one chart moment."
+  },
+  {
+   "id": 37,
+   "name": "value_area_trade",
+   "verdict": "drop",
+   "reason": "No edge worth trading after many trades (edge under +0.07R, i.e. about the same as entering at random)."
+  },
+  {
+   "id": 38,
+   "name": "value_area_trade",
+   "verdict": "drop",
+   "reason": "No edge worth trading after many trades (edge under +0.07R, i.e. about the same as entering at random)."
+  },
+  {
+   "id": 39,
+   "name": "Higher High and Higher Low Setup",
+   "verdict": "drop",
+   "reason": "No edge worth trading after many trades (edge under +0.07R, i.e. about the same as entering at random)."
+  },
+  {
+   "id": 40,
+   "name": "Schlonging Setup",
+   "verdict": "drop",
+   "reason": "No edge worth trading after many trades (edge under +0.07R, i.e. about the same as entering at random)."
+  },
+  {
+   "id": 41,
+   "name": "Monthly Level Marking",
+   "verdict": "drop",
+   "reason": "No edge worth trading after many trades (edge under +0.07R, i.e. about the same as entering at random)."
+  },
+  {
+   "id": 42,
+   "name": "high_time_frame_levels",
+   "verdict": "drop",
+   "reason": "No edge worth trading after many trades (edge under +0.07R, i.e. about the same as entering at random)."
+  },
+  {
+   "id": 43,
+   "name": "value_area_resistance",
+   "verdict": "drop",
+   "reason": "No edge worth trading after many trades (edge under +0.07R, i.e. about the same as entering at random)."
+  },
+  {
+   "id": 44,
+   "name": "Single Prints",
+   "verdict": "drop",
+   "reason": "No edge worth trading after many trades (edge under +0.07R, i.e. about the same as entering at random)."
+  },
+  {
+   "id": 45,
+   "name": "Short Setup 1",
+   "verdict": "watch",
+   "reason": "Below the 200 SMA + volume spike, short: 560 trades but only +0.10R edge, and its 9R target means most of the result comes from a few big winners. Keep paper-trading it."
+  },
+  {
+   "id": 46,
+   "name": "long_trade_plan",
+   "verdict": "use",
+   "reason": "Best long it has: momentum all aligned (above EMA 50, MACD up, wave up, money flow green). 39 trades, +0.69R, edge +0.44R, 4 of 5 charts. 39 trades is still modest, so keep an eye on it."
+  },
+  {
+   "id": 47,
+   "name": "Bearish CVD Divergence",
+   "verdict": "watch",
+   "reason": "Bearish AO divergence short: 111 trades, edge +0.11R. Plausible, small edge - look again later."
+  },
+  {
+   "id": 48,
+   "name": "CVD Divergence with Absorption",
+   "verdict": "drop",
+   "reason": "No edge worth trading after many trades (edge under +0.07R, i.e. about the same as entering at random)."
+  },
+  {
+   "id": 49,
+   "name": "bullish_divergence",
+   "verdict": "drop",
+   "reason": "No edge worth trading after many trades (edge under +0.07R, i.e. about the same as entering at random)."
+  },
+  {
+   "id": 50,
+   "name": "bearish_divergence",
+   "verdict": "drop",
+   "reason": "No edge worth trading after many trades (edge under +0.07R, i.e. about the same as entering at random)."
+  },
+  {
+   "id": 51,
+   "name": "Bearish Divergence",
+   "verdict": "drop",
+   "reason": "No edge worth trading after many trades (edge under +0.07R, i.e. about the same as entering at random)."
+  },
+  {
+   "id": 52,
+   "name": "Hidden Bullish Divergence",
+   "verdict": "drop",
+   "reason": "Hidden bullish divergence alone: 131 trades, edge +0.07R - too weak on its own."
+  },
+  {
+   "id": 53,
+   "name": "hidden_bull_div",
+   "verdict": "drop",
+   "reason": "Named 'hidden bull div' but it SHORTS on bullish divergences. The real thing (hidden bullish divergence above EMA 50, long) tested at no edge (-0.05R, 1 of 5 charts)."
+  },
+  {
+   "id": 54,
+   "name": "Short: Money Flow and Momentum Divergence",
+   "verdict": "use",
+   "reason": "RSI under 30 with money flow red, short: 132 trades, edge +0.24R. A trend-following short; consistent with 'big moves happen when money flow and momentum align'."
+  },
+  {
+   "id": 55,
+   "name": "Long: Money Flow and Momentum Convergence",
+   "verdict": "use",
+   "reason": "RSI over 70 with money flow green, long: 185 trades, edge +0.11R. Small but real momentum edge over a big sample."
+  },
+  {
+   "id": 56,
+   "name": "rsi_bear_div",
+   "verdict": "use",
+   "reason": "Weak RSI below the 200 SMA, short: 127 trades, edge +0.18R. Sound downtrend short."
+  },
+  {
+   "id": 57,
+   "name": "long_divergence_1h",
+   "verdict": "fix",
+   "reason": "Long paired with a BEARISH divergence - the classic mix-up. Higher low + BULLISH RSI divergence (what the divergence lesson teaches) tested at 64 trades, +0.26R, edge +0.20R, 3 of 5 charts.",
+   "fix": {
+    "rules": [
+     {
+      "rule": "higher_low"
+     },
+     {
+      "rule": "rsi_bull_div",
+      "a": 5,
+      "b": 60
+     }
+    ],
+    "direction": "long",
+    "stop_atr": 1.5,
+    "rr": 2
+   }
+  },
+  {
+   "id": 58,
+   "name": "short_divergence_1h",
+   "verdict": "drop",
+   "reason": "Short on a bullish divergence. Corrected (lower high + bearish divergence) loses -0.25R a trade - the old one only won by accident."
+  },
+  {
+   "id": 59,
+   "name": "divergence_with_momentum_and_money_flow",
+   "verdict": "drop",
+   "reason": "No edge worth trading after many trades (edge under +0.07R, i.e. about the same as entering at random)."
+  },
+  {
+   "id": 60,
+   "name": "divergence_with_momentum_and_money_flow",
+   "verdict": "drop",
+   "reason": "No edge worth trading after many trades (edge under +0.07R, i.e. about the same as entering at random)."
+  },
+  {
+   "id": 61,
+   "name": "rsi_bull_div",
+   "verdict": "watch",
+   "reason": "20 trades, edge +0.55R - too early to trust. Its 0.5 ATR stop is very tight."
+  },
+  {
+   "id": 62,
+   "name": "long_setup",
+   "verdict": "use",
+   "reason": "Above the 200 SMA with RSI over 30, long: 119 trades, edge +0.16R, positive on all 5 charts - the most consistent one."
+  },
+  {
+   "id": 63,
+   "name": "ao_color_change",
+   "verdict": "drop",
+   "reason": "No edge worth trading after many trades (edge under +0.07R, i.e. about the same as entering at random)."
+  },
+  {
+   "id": 64,
+   "name": "Market Cipher Divergence",
+   "verdict": "drop",
+   "reason": "Market Cipher bullish divergence alone: 124 trades, edge +0.06R - too weak on its own."
+  },
+  {
+   "id": 65,
+   "name": "Market Cipher Divergence",
+   "verdict": "drop",
+   "reason": "No edge worth trading after many trades (edge under +0.07R, i.e. about the same as entering at random)."
+  },
+  {
+   "id": 66,
+   "name": "Short Trade with TP1",
+   "verdict": "drop",
+   "reason": "Its rule is 'close above EMA (107344)' - a price misread as an EMA length. The +0.22R is an artifact of that, not a real setup."
+  },
+  {
+   "id": 67,
+   "name": "Long Trade from Golden Pocket 786 Zone",
+   "verdict": "drop",
+   "reason": "No edge worth trading after many trades (edge under +0.07R, i.e. about the same as entering at random)."
+  },
+  {
+   "id": 68,
+   "name": "Partial Profit and Stop Loss Adjustment",
+   "verdict": "drop",
+   "reason": "Partial-profit management idea turned into entry rules; never fired. The useful part (move stop after TP1) is a concept, not a setup."
+  },
+  {
+   "id": 69,
+   "name": "limit_order",
+   "verdict": "drop",
+   "reason": "19 rules incl. close above AND below EMAs - a checklist dump, never fires."
+  }
+ ],
+ "concepts": [
+  {
+   "id": 7,
+   "verdict": "drop",
+   "reason": "Promo / referral / community ad, not trading knowledge."
+  },
+  {
+   "id": 14,
+   "verdict": "drop",
+   "reason": "One example number, not a rule."
+  },
+  {
+   "id": 18,
+   "verdict": "drop",
+   "reason": "Filler."
+  },
+  {
+   "id": 28,
+   "verdict": "drop",
+   "reason": "Exchange fee promo."
+  },
+  {
+   "id": 35,
+   "verdict": "drop",
+   "reason": "Exchange fee promo."
+  },
+  {
+   "id": 38,
+   "verdict": "drop",
+   "reason": "A 0.05% stop on a huge position needs leverage and gets wicked out - conflicts with your no-leverage rule."
+  },
+  {
+   "id": 39,
+   "verdict": "drop",
+   "reason": "Duplicate of another concept."
+  },
+  {
+   "id": 41,
+   "verdict": "drop",
+   "reason": "Duplicate of another concept."
+  },
+  {
+   "id": 42,
+   "verdict": "drop",
+   "reason": "Duplicate of another concept."
+  },
+  {
+   "id": 43,
+   "verdict": "drop",
+   "reason": "Duplicate of another concept."
+  },
+  {
+   "id": 45,
+   "verdict": "drop",
+   "reason": "Duplicate of another concept."
+  },
+  {
+   "id": 56,
+   "verdict": "drop",
+   "reason": "About leverage - you trade without leverage, so it doesn't apply."
+  },
+  {
+   "id": 58,
+   "verdict": "drop",
+   "reason": "Exchange-website how-to (buttons, wallets, transfers), not something a chart can use."
+  },
+  {
+   "id": 65,
+   "verdict": "drop",
+   "reason": "Duplicate of another concept."
+  },
+  {
+   "id": 69,
+   "verdict": "drop",
+   "reason": "Colours of his own chart theme."
+  },
+  {
+   "id": 71,
+   "verdict": "drop",
+   "reason": "Duplicate of another concept."
+  },
+  {
+   "id": 120,
+   "verdict": "drop",
+   "reason": "Duplicate of another concept."
+  },
+  {
+   "id": 127,
+   "verdict": "drop",
+   "reason": "Promo / referral / community ad, not trading knowledge."
+  },
+  {
+   "id": 133,
+   "verdict": "drop",
+   "reason": "Promo / referral / community ad, not trading knowledge."
+  },
+  {
+   "id": 134,
+   "verdict": "drop",
+   "reason": "Promo / referral / community ad, not trading knowledge."
+  },
+  {
+   "id": 144,
+   "verdict": "drop",
+   "reason": "Promo / referral / community ad, not trading knowledge."
+  },
+  {
+   "id": 168,
+   "verdict": "drop",
+   "reason": "Promo / referral / community ad, not trading knowledge."
+  },
+  {
+   "id": 174,
+   "verdict": "drop",
+   "reason": "Promo / referral / community ad, not trading knowledge."
+  },
+  {
+   "id": 175,
+   "verdict": "drop",
+   "reason": "Filler."
+  },
+  {
+   "id": 177,
+   "verdict": "drop",
+   "reason": "A transcript fragment from the video, not a usable idea."
+  },
+  {
+   "id": 178,
+   "verdict": "drop",
+   "reason": "A transcript fragment from the video, not a usable idea."
+  },
+  {
+   "id": 179,
+   "verdict": "drop",
+   "reason": "A transcript fragment from the video, not a usable idea."
+  },
+  {
+   "id": 180,
+   "verdict": "drop",
+   "reason": "A transcript fragment from the video, not a usable idea."
+  },
+  {
+   "id": 181,
+   "verdict": "drop",
+   "reason": "A transcript fragment from the video, not a usable idea."
+  },
+  {
+   "id": 185,
+   "verdict": "drop",
+   "reason": "A transcript fragment from the video, not a usable idea."
+  },
+  {
+   "id": 186,
+   "verdict": "drop",
+   "reason": "A transcript fragment from the video, not a usable idea."
+  },
+  {
+   "id": 188,
+   "verdict": "drop",
+   "reason": "A transcript fragment from the video, not a usable idea."
+  },
+  {
+   "id": 189,
+   "verdict": "drop",
+   "reason": "A transcript fragment from the video, not a usable idea."
+  },
+  {
+   "id": 190,
+   "verdict": "drop",
+   "reason": "A transcript fragment from the video, not a usable idea."
+  },
+  {
+   "id": 192,
+   "verdict": "drop",
+   "reason": "Out of context ('this' isn't named)."
+  },
+  {
+   "id": 195,
+   "verdict": "drop",
+   "reason": "A transcript fragment from the video, not a usable idea."
+  },
+  {
+   "id": 228,
+   "verdict": "drop",
+   "reason": "Duplicate of another concept."
+  },
+  {
+   "id": 234,
+   "verdict": "drop",
+   "reason": "Promo / referral / community ad, not trading knowledge."
+  },
+  {
+   "id": 235,
+   "verdict": "drop",
+   "reason": "An anecdote, not a rule."
+  },
+  {
+   "id": 237,
+   "verdict": "drop",
+   "reason": "An anecdote, not a rule."
+  },
+  {
+   "id": 242,
+   "verdict": "drop",
+   "reason": "An anecdote, not a rule."
+  },
+  {
+   "id": 249,
+   "verdict": "drop",
+   "reason": "Promo / referral / community ad, not trading knowledge."
+  },
+  {
+   "id": 250,
+   "verdict": "drop",
+   "reason": "Vague opinion."
+  },
+  {
+   "id": 281,
+   "verdict": "drop",
+   "reason": "Filler."
+  },
+  {
+   "id": 296,
+   "verdict": "drop",
+   "reason": "Filler (aside for YouTubers)."
+  },
+  {
+   "id": 301,
+   "verdict": "drop",
+   "reason": "About leverage - you trade without leverage, so it doesn't apply."
+  },
+  {
+   "id": 302,
+   "verdict": "drop",
+   "reason": "About leverage - you trade without leverage, so it doesn't apply."
+  },
+  {
+   "id": 303,
+   "verdict": "drop",
+   "reason": "About leverage - you trade without leverage, so it doesn't apply."
+  },
+  {
+   "id": 304,
+   "verdict": "drop",
+   "reason": "About leverage - you trade without leverage, so it doesn't apply."
+  },
+  {
+   "id": 305,
+   "verdict": "drop",
+   "reason": "About leverage - you trade without leverage, so it doesn't apply."
+  },
+  {
+   "id": 306,
+   "verdict": "drop",
+   "reason": "About leverage - you trade without leverage, so it doesn't apply."
+  },
+  {
+   "id": 307,
+   "verdict": "drop",
+   "reason": "Exchange-website how-to (buttons, wallets, transfers), not something a chart can use."
+  },
+  {
+   "id": 308,
+   "verdict": "drop",
+   "reason": "Exchange-website how-to (buttons, wallets, transfers), not something a chart can use."
+  },
+  {
+   "id": 309,
+   "verdict": "drop",
+   "reason": "Exchange-website how-to (buttons, wallets, transfers), not something a chart can use."
+  },
+  {
+   "id": 310,
+   "verdict": "drop",
+   "reason": "Exchange-website how-to (buttons, wallets, transfers), not something a chart can use."
+  },
+  {
+   "id": 311,
+   "verdict": "drop",
+   "reason": "About leverage - you trade without leverage, so it doesn't apply."
+  },
+  {
+   "id": 315,
+   "verdict": "drop",
+   "reason": "Promo / referral / community ad, not trading knowledge."
+  },
+  {
+   "id": 316,
+   "verdict": "drop",
+   "reason": "Exchange-website how-to (buttons, wallets, transfers), not something a chart can use."
+  },
+  {
+   "id": 317,
+   "verdict": "drop",
+   "reason": "Exchange-website how-to (buttons, wallets, transfers), not something a chart can use."
+  },
+  {
+   "id": 318,
+   "verdict": "drop",
+   "reason": "Exchange-website how-to (buttons, wallets, transfers), not something a chart can use."
+  },
+  {
+   "id": 319,
+   "verdict": "drop",
+   "reason": "Exchange-website how-to (buttons, wallets, transfers), not something a chart can use."
+  },
+  {
+   "id": 320,
+   "verdict": "drop",
+   "reason": "Exchange-website how-to (buttons, wallets, transfers), not something a chart can use."
+  },
+  {
+   "id": 321,
+   "verdict": "drop",
+   "reason": "Exchange-website how-to (buttons, wallets, transfers), not something a chart can use."
+  },
+  {
+   "id": 322,
+   "verdict": "drop",
+   "reason": "Exchange-website how-to (buttons, wallets, transfers), not something a chart can use."
+  },
+  {
+   "id": 323,
+   "verdict": "drop",
+   "reason": "Exchange-website how-to (buttons, wallets, transfers), not something a chart can use."
+  },
+  {
+   "id": 324,
+   "verdict": "drop",
+   "reason": "Exchange-website how-to (buttons, wallets, transfers), not something a chart can use."
+  },
+  {
+   "id": 19,
+   "verdict": "fix",
+   "reason": "Garbled: you move the stop, not 'stop losses to take profits'.",
+   "fix_text": "After the first take profit hits, move the stop loss to breakeven (your entry) so the trade can't become a loss."
+  },
+  {
+   "id": 31,
+   "verdict": "fix",
+   "reason": "Run-on transcript; the point is position sizing on low timeframes.",
+   "fix_text": "On low timeframes the stop is very close, so the same 1% risk allows a bigger position - a 0.2% move then makes a meaningful profit."
+  },
+  {
+   "id": 34,
+   "verdict": "fix",
+   "reason": "The numbers don't match (3:1 but 1% vs 3.75%).",
+   "fix_text": "Use at least 3:1 reward to risk: risk 1% of the account to make 3%."
+  },
+  {
+   "id": 70,
+   "verdict": "fix",
+   "reason": "Hanging men are bearish, not bullish.",
+   "fix_text": "Hammers at a low are bullish reversal candles; hanging men and shooting stars at a high are bearish reversal candles."
+  },
+  {
+   "id": 163,
+   "verdict": "fix",
+   "reason": "Garbled: it's about moving the stop after the trade is in profit.",
+   "fix_text": "Once the trade is in profit (after TP1), move the stop to your entry or slightly past it to lock in a no-loss trade."
+  },
+  {
+   "id": 183,
+   "verdict": "fix",
+   "reason": "Fragment; the idea is value shift.",
+   "fix_text": "Extend the range volume profile so it keeps updating; when the point of control moves (value shift) the key levels have changed."
+  },
+  {
+   "id": 187,
+   "verdict": "fix",
+   "reason": "Fragment; the idea is single prints.",
+   "fix_text": "Mark single prints (fast one-candle moves on the time profile) every day; price tends to come back to fill them and they act as support/resistance."
+  },
+  {
+   "id": 222,
+   "verdict": "fix",
+   "reason": "A bearish divergence is confirmed by a RED dot, not a green one.",
+   "fix_text": "A bearish divergence is confirmed when the candle closes and a red dot prints on Market Cipher; a bullish one when a green dot prints."
+  }
+ ],
+ "lessons": [
+  {
+   "id": 1,
+   "verdict": "keep",
+   "reason": "Core course material."
+  },
+  {
+   "id": 3,
+   "verdict": "keep",
+   "reason": "Core course material."
+  },
+  {
+   "id": 4,
+   "verdict": "keep",
+   "reason": "Core course material."
+  },
+  {
+   "id": 5,
+   "verdict": "keep",
+   "reason": "Core course material."
+  },
+  {
+   "id": 6,
+   "verdict": "keep",
+   "reason": "Core course material."
+  },
+  {
+   "id": 7,
+   "verdict": "keep",
+   "reason": "Core course material."
+  },
+  {
+   "id": 8,
+   "verdict": "keep",
+   "reason": "Core course material."
+  },
+  {
+   "id": 9,
+   "verdict": "keep",
+   "reason": "Core course material."
+  },
+  {
+   "id": 10,
+   "verdict": "keep",
+   "reason": "Core course material."
+  },
+  {
+   "id": 11,
+   "verdict": "keep",
+   "reason": "Core course material."
+  },
+  {
+   "id": 12,
+   "verdict": "keep",
+   "reason": "Core course material."
+  },
+  {
+   "id": 13,
+   "verdict": "keep",
+   "reason": "Core course material."
+  },
+  {
+   "id": 14,
+   "verdict": "keep",
+   "reason": "Core course material."
+  },
+  {
+   "id": 15,
+   "verdict": "keep",
+   "reason": "Core course material."
+  },
+  {
+   "id": 16,
+   "verdict": "keep",
+   "reason": "Core course material."
+  },
+  {
+   "id": 17,
+   "verdict": "keep",
+   "reason": "Core course material."
+  },
+  {
+   "id": 18,
+   "verdict": "keep",
+   "reason": "Core course material."
+  },
+  {
+   "id": 20,
+   "verdict": "keep",
+   "reason": "Core course material."
+  },
+  {
+   "id": 2,
+   "verdict": "drop",
+   "reason": "Stopped before it learned anything; lesson 3 is the same 1-minute video."
+  },
+  {
+   "id": 19,
+   "verdict": "drop",
+   "reason": "Exchange sign-up tutorial with a referral link - nothing for the chart."
+  }
+ ],
+ "reviewed_at": "2026-11-04T11:33:45+00:00"
+}
