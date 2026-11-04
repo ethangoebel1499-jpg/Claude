@@ -175,7 +175,7 @@ class Store:
         rows = self.db.execute("SELECT kind, stars FROM ratings").fetchall()
         out = {}
         for kind in ("all", "setup", "concept", "decision", "missed"):
-            st = [r[1] for r in rows if kind == "all" or r[0] == kind]
+            st = [r[1] for r in rows if (kind == "all" and r[0] != "signal") or r[0] == kind]
             out[kind] = {"n": len(st), "avg": round(sum(st) / len(st), 2) if st else None,
                          "accurate_pct": round(100 * sum(1 for x in st if x >= 4) / len(st)) if st else None}
         return out

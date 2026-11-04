@@ -169,3 +169,27 @@ def test_downloading_a_review_changes_nothing_until_apply(apprentice, tmp_path, 
     assert review.status(a)["concepts"]["waiting"] == [ad]
     assert review.apply_all(a) == {"setups": 1, "concepts": 1}             # the button does it
     assert ad not in set(a.table("concepts").id)
+
+
+def test_claudes_chart_trade_ratings_apply_like_your_own(apprentice):
+    a, _ = apprentice
+    t = "2026-11-04 16:00:00+00:00"
+    review.LOCAL.write_text(json.dumps({"reviewed_at": "2026-11-04T18:00:00Z", "trades": [
+        {"id": 1, "kind": "missed", "chart": "BTC 4h", "time": t, "direction": "long", "verdict": "good", "stars": 5,
+         "reason": "at support, confirmed"},
+        {"id": 2, "kind": "missed", "chart": "BTC 4h", "time": "2026-11-01 00:00:00+00:00", "direction": "short",
+         "verdict": "bad", "stars": 1, "reason": "hindsight only"},
+        {"id": 3, "kind": "decision", "chart": "BTC 4h", "time": t, "direction": "TRADE SHORT", "setups": [7],
+         "stars": 2, "reason": "weak"},
+        {"id": 4, "kind": "signal", "chart": "BTC 4h", "time": t, "direction": "long", "setups": [7], "stars": 4,
+         "reason": "good"}]}))
+    assert review.for_trade("missed", "BTC 4h", t, "long")["stars"] == 5
+    assert review.status(a)["trades"] == {"total": 4, "applied": 0, "waiting": 4}
+    assert a.table("feedback").empty                                     # nothing until Apply
+    assert review.apply_all(a)["trades"] == 4
+    from apprentice.__main__ import feedback_marks
+    conf, rej = feedback_marks(a)
+    assert conf == {"BTC 4h": {t}} and rej == {"BTC 4h": {"2026-11-01 00:00:00+00:00"}}
+    assert a.votes(7) == (0, 1)                                          # the call counts, the 400 arrows don't
+    assert a.accuracy()["all"]["n"] == 3                                 # arrows kept out of your accuracy average
+    assert review.status(a)["trades"]["waiting"] == 0 and review.apply_trades(a) == 0

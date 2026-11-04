@@ -5,7 +5,10 @@ downloaded by every sync into runtime/claude_review.json).
    "setups":   [{"id": 12, "name": "...", "verdict": "use" | "watch" | "drop" | "fix", "reason": "...",
                  "fix": {"rules": [...builder rules...], "direction": "long", "stop_atr": 1.5, "rr": 2} }],
    "concepts": [{"id": 40, "verdict": "keep" | "drop" | "fix", "reason": "...", "fix_text": "..."}],
-   "lessons":  [{"id": 3, "verdict": "keep" | "drop", "reason": "..."}]}
+   "lessons":  [{"id": 3, "verdict": "keep" | "drop", "reason": "..."}],
+   "trades":   [{"id": 1, "kind": "decision" | "missed" | "signal", "chart": "BTC 4h", "time": "...",
+                 "direction": "long", "setups": [5], "stars": 1-5, "verdict": "good" | "bad" (missed only),
+                 "reason": "..."}]}       <- Claude's rating of the trades on the 📈 Chart tab
 
 Nothing changes until you press Apply: use -> 📌 always use, watch -> left as it is (too early / fragile:
 keep paper-trading it and look again), drop -> 🚫 off (setups) / deleted (concepts),
@@ -151,14 +154,62 @@ def status(store) -> dict:
         out[kind] = {"total": len(items), "applied": done,
                      "waiting": [i for i, x in items.items() if not is_applied(kind, x) and x.get("verdict") != "keep"
                                  and (i in have_s if kind == "setups" else i in have_c)]}
+    tr = [x for x in rv.get("trades", []) if "id" in x]
+    done = sum(1 for x in tr if is_applied("trades", x))
+    out["trades"] = {"total": len(tr), "applied": done, "waiting": len(tr) - done}
     out["concepts_now"] = len(have_c)
     return out
+
+
+def trade_ref(item: dict) -> str:
+    """The same ref the 📈 Chart tab rates with."""
+    if item["kind"] == "missed":
+        return f"{item['chart']}|{item['time']}|{item['direction']}"
+    if item["kind"] == "signal":
+        return f"{item['chart']}|{item['time']}|{(item.get('setups') or [''])[0]}"
+    return f"{item['chart']}|{item['time']}"
+
+
+def for_trade(kind: str, chart: str, time, extra=None) -> dict | None:
+    """Claude's rating of one trade on the chart (extra = direction for missed, setup id for signals)."""
+    want = f"{chart}|{time}" + (f"|{extra}" if extra is not None else "")
+    for x in load().get("trades", []):
+        if x.get("kind") == kind and trade_ref(x) == want:
+            return x
+    return None
+
+
+def apply_trades(store) -> int:
+    """Claude's ratings of the Chart-tab trades, saved as if you had rated them: missed trades get the
+    👍 / 👎 (what the apprentice learns from) plus stars; its calls and every arrow get stars + the reason."""
+    n = 0
+    for item in load().get("trades", []):
+        if "id" not in item or is_applied("trades", item):
+            continue
+        ctx = {"chart": item["chart"], "time": item["time"], "direction": item.get("direction"), "by": "Claude"}
+        note = f"🤖 Claude: {item.get('reason', '')}"
+        if item["kind"] == "missed":
+            store.feedback(None, item.get("verdict", "bad"), note, ctx)
+            store.rate("missed", trade_ref(item), int(item["stars"]), note, ctx)
+        elif item["kind"] == "decision":
+            store.rate("decision", trade_ref(item), int(item["stars"]), note,
+                       {**ctx, "action": item.get("direction"), "setups": item.get("setups", [])})
+        elif item["kind"] == "signal":                  # not counted as a vote on the setup (there are hundreds)
+            store.rate("signal", trade_ref(item), int(item["stars"]), note, {**ctx, "setups": item.get("setups", [])})
+        else:
+            continue
+        _mark(key("trades", item))
+        n += 1
+    return n
 
 
 def apply_all(store) -> dict[str, int]:
     """Apply every review item not applied yet. Returns counts."""
     counts = {"setups": 0, "concepts": 0}
     counts["concepts"] = apply_concepts(store)
+    trades = apply_trades(store)
+    if trades:
+        counts["trades"] = trades
     setups = {s["id"]: s for s in store.setups()}
     for sid, item in _items("setups").items():
         s = setups.get(sid)

@@ -86,6 +86,16 @@ def check(path: str) -> dict:
                 errors.append(f"{kind} id {x.get('id')}: verdict must be one of {sorted(ok)}")
             if not x.get("reason"):
                 errors.append(f"{kind} id {x.get('id')}: give a reason")
+    for x in rv.get("trades", []):
+        tag = f"trade {x.get('id')} ({x.get('chart')} {x.get('time')})"
+        if x.get("kind") not in ("decision", "missed", "signal"):
+            errors.append(f"{tag}: kind must be decision, missed or signal")
+        if not isinstance(x.get("stars"), int) or not 1 <= x["stars"] <= 5:
+            errors.append(f"{tag}: stars must be 1-5")
+        if x.get("kind") == "missed" and x.get("verdict") not in ("good", "bad"):
+            errors.append(f"{tag}: a missed trade needs verdict good or bad")
+        if not x.get("reason") or not x.get("chart") or not x.get("time"):
+            errors.append(f"{tag}: needs chart, time and a reason")
     for x in rv.get("setups", []):
         if setups and x.get("id") not in setups:
             errors.append(f"setup id {x.get('id')} isn't in the shared setups")
@@ -98,7 +108,7 @@ def check(path: str) -> dict:
         raise SystemExit("Review has problems:\n- " + "\n- ".join(errors))
     rv.setdefault("reviewed_at", datetime.now(timezone.utc).isoformat(timespec="seconds"))
     print(f"OK: {len(rv.get('setups', []))} setups, {len(rv.get('concepts', []))} concepts, "
-          f"{len(rv.get('lessons', []))} lessons")
+          f"{len(rv.get('lessons', []))} lessons, {len(rv.get('trades', []))} chart trades")
     return rv
 
 

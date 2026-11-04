@@ -26,7 +26,7 @@ LESSONS = ROOT / "runtime" / "apprentice_lessons"
 TIMEFRAMES = ["15m", "30m", "1h", "2h", "4h", "6h", "12h", "1D"]
 STARS = ["1 - way off", "2 - mostly wrong", "3 - partly right", "4 - mostly right", "5 - spot on"]
 KIND_NAMES = {"setup": "Setups it learned", "concept": "Concepts it learned", "decision": "Its chart calls",
-              "missed": "Missed trades it found"}
+              "missed": "Missed trades it found", "signal": "Past setup signals (Claude)"}
 
 
 @st.cache_resource
@@ -379,7 +379,11 @@ def claude_panel(store: Store, charts: list[str] | None = None) -> None:
                 f"⏳ {len(c_['waiting'])} changes waiting - press **Apply all** below")
     setups_ = ("✅ all applied" if not s_["waiting"] else
                f"⏳ {len(s_['waiting'])} of {s_['total']} verdicts waiting - press **Apply all** below")
-    st.markdown(f"**Concepts:** {concepts} ({stt['concepts_now']} left after the drops) · **Setups:** {setups_}")
+    tr = stt.get("trades") or {}
+    trades_ = ("" if not tr.get("total") else f" · **Chart trades rated:** " +
+               (f"✅ all {tr['total']} saved" if not tr["waiting"] else f"⏳ {tr['waiting']} of {tr['total']} waiting"))
+    st.markdown(f"**Concepts:** {concepts} ({stt['concepts_now']} left after the drops) · **Setups:** {setups_}"
+                + trades_)
     if rv.get("summary"):
         st.markdown(rv["summary"])
     lessons = {x["id"]: x for x in rv.get("lessons", []) if x.get("verdict") == "drop"}
@@ -393,11 +397,11 @@ def claude_panel(store: Store, charts: list[str] | None = None) -> None:
         from apprentice.__main__ import DEFAULT_CHARTS
         from apprentice.job import running
         if running("learn"):
-            st.success(f"Applied: {n['setups']} setups, {n['concepts']} concepts. A 🎓 Learn run is already going - "
+            st.success(f"Applied: {n['setups']} setups, {n['concepts']} concepts, {n.get('trades', 0)} chart-trade ratings. A 🎓 Learn run is already going - "
                        "press 🎓 Learn now when it finishes so it re-tests these changes.")
         else:
             spawn(["learn", "--charts", *(charts or DEFAULT_CHARTS)], "Learning run (after Claude's review)")
-            st.success(f"Applied: {n['setups']} setups, {n['concepts']} concepts - and started 🎓 Learn to re-test "
+            st.success(f"Applied: {n['setups']} setups, {n['concepts']} concepts, {n.get('trades', 0)} chart-trade ratings - and started 🎓 Learn to re-test "
                        "them and learn their stops (progress in 📚 Teach).")
     c2.caption("Nothing Claude suggests changes anything until you press this: it applies every verdict (setups: use = "
                "📌 always use, drop = 🚫 off, fix = corrected rules; concepts: delete or reword), then starts 🎓 Learn "
@@ -572,6 +576,10 @@ def chart_tab(store: Store) -> None:
     for r in d["reasons"]:
         st.markdown(f"- {r}")
     fired = [ch["setup"]["id"] for ch in d["checks"] if ch["fired"]]
+    cr = review.for_trade("decision", chart_name, d["bar_time"])
+    if cr:
+        st.info(f"🤖 Claude: {'⭐' * cr['stars']} {cr['reason']}"
+                + ("" if review.is_applied("trades", cr) else "  \n*(saved as a rating when you press Apply all)*"))
     rate(store, "decision", f"{chart_name}|{d['bar_time']}",
          {"action": d["action"], "chart": chart_name, "time": str(d["bar_time"]), "setups": fired,
           "reasons": d["reasons"]}, f"dec_{chart_name}_{d['bar_time']}", "Rate this call")
@@ -615,6 +623,26 @@ def chart_tab(store: Store) -> None:
                    "so this is Kraken's latest 720 candles. Try again in a minute, or use a 1h+ timeframe for more "
                    "history.")
 
+    # --- Claude's rating of every arrow on this chart ---
+    rated = [x for x in review.load().get("trades", []) if x.get("kind") == "signal" and x.get("chart") == chart_name]
+    if rated:
+        avg = sum(x["stars"] for x in rated) / len(rated)
+        with st.expander(f"🤖 Claude's rating of every arrow on this chart ({len(rated)} trades, average {avg:.1f}★ · "
+                         f"{sum(x['stars'] >= 4 for x in rated)} good, {sum(x['stars'] <= 2 for x in rated)} weak)"):
+            st.caption("Judged on what the lessons teach - at an earlier support/resistance zone, confirmed by a "
+                       "divergence / dot / reversal candle, with the trend, not chasing, a sane stop - never on how "
+                       "it turned out. Saved as ratings when you press Apply all.")
+            per: dict = {}
+            for x in rated:
+                per.setdefault(x.get("setup_name") or "?", []).append(x["stars"])
+            st.dataframe(pd.DataFrame([{"setup": k, "arrows": len(v), "avg ★": round(sum(v) / len(v), 1),
+                                        "good (4-5★)": sum(s >= 4 for s in v), "weak (1-2★)": sum(s <= 2 for s in v)}
+                                       for k, v in per.items()]).sort_values("avg ★", ascending=False),
+                         hide_index=True, use_container_width=True)
+            for x in sorted(rated, key=lambda x: x["time"], reverse=True):
+                st.markdown(f"- **{x['time'][:16]}** · {x['direction']} · {x.get('setup_name', '')[:40]} · "
+                            f"{'⭐' * x['stars']} - {x['reason']}")
+
     # --- missed trades ---
     st.markdown(f"##### 🟡 Good trades it missed ({len(missed)}, last 1,000 candles)")
     st.caption("Spots where a trade would have hit 3× its risk before the stop, and none of its active setups fired. "
@@ -624,6 +652,9 @@ def chart_tab(store: Store) -> None:
         with st.expander(f"{m['time']:%Y-%m-%d %H:%M} · missed {m['direction']} at {price(m['price'])} · ran "
                          f"{m['move_pct']:+.1f}% ({m['move_atr']:.0f} ATR)"):
             st.markdown("**What was on the chart:** " + (", ".join(feats) if feats else "nothing it knows yet"))
+            cr = review.for_trade("missed", chart_name, m["time"], m["direction"])
+            if cr:
+                st.markdown(f"🤖 **Claude:** {'⭐' * cr['stars']} {cr['reason']}")
             ctx = {"chart": chart_name, "time": str(m["time"]), "direction": m["direction"]}
             b1, b2, b3 = st.columns([1, 1, 2])
             if b1.button("👍 I'd take that", key=f"ap_mg_{chart_name}_{m['i']}"):
