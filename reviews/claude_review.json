@@ -1,5 +1,5 @@
 {
- "summary": "Use 6: #5 upper band + shooting star short, #46 aligned-momentum long, #54/#56 downtrend shorts, #62 uptrend long, #55 momentum long. Fix 2 that had a long/short divergence mix-up (#10, #57) - the corrected rules beat random in my re-test. Watch 5 (too few trades or a fragile edge, incl. #8 whose edge only exists with a 0.25 ATR stop). Drop the rest: impossible rules, checklist dumps, and setups no better than random. Honest note: the textbook 'band touch + divergence' setups from the 1-minute video tested at no edge on 4h/daily crypto when written correctly, so I didn't 'fix' them into losers. Concepts: drop 66 (ads, leverage, exchange how-tos, fragments, duplicates), reword 8.",
+ "summary": "Use 6: #5 upper band + shooting star short, #46 aligned-momentum long, #54/#56 downtrend shorts, #62 uptrend long, #55 momentum long. Fix 2 that had a long/short divergence mix-up (#10, #57) - the corrected rules beat random in my re-test. Watch 5 (too few trades or a fragile edge, incl. #8 whose edge only exists with a 0.25 ATR stop). Drop the rest: impossible rules, checklist dumps, and setups no better than random. Honest note: the textbook 'band touch + divergence' setups from the 1-minute video tested at no edge on 4h/daily crypto when written correctly, so I didn't 'fix' them into losers. Concepts: all 330 rated - keep 256, drop 66 (ads, leverage, exchange how-tos, fragments, duplicates), reword 8; the app applies these by itself.",
  "setups": [
   {
    "id": 1,
@@ -449,382 +449,1992 @@
  ],
  "concepts": [
   {
+   "id": 1,
+   "text": "Decide on the type of trader you want to be (scalper, day tr",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 2,
+   "text": "Decide on the time frames you want to use for entering and e",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 3,
+   "text": "Back test your strategy thoroughly.",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 4,
+   "text": "Stick to your plan and do not deviate from it.",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 5,
+   "text": "Set alerts for your trades.",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 6,
+   "text": "Keep experimenting and expanding your strategy.",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
    "id": 7,
+   "text": "Watch crypto face's live streams for insights.",
    "verdict": "drop",
    "reason": "Promo / referral / community ad, not trading knowledge."
   },
   {
+   "id": 8,
+   "text": "Identify key levels on a chart to find potential trade setup",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 9,
+   "text": "Have a strategy or set of strategies to determine when to en",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 10,
+   "text": "Risk management is crucial for making or breaking a trader's",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 11,
+   "text": "Risk 1 to 3% of your total trading account per trade.",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 12,
+   "text": "Risk management takes away fear and anxiety of losing more m",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 13,
+   "text": "Patience and discipline are essential to apply the analysis,",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
    "id": 14,
+   "text": "A 8% gain from a trade is mentioned as an example of a reaso",
    "verdict": "drop",
    "reason": "One example number, not a rule."
   },
   {
+   "id": 15,
+   "text": "The importance of using two time frames to create a basic st",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 16,
+   "text": "The importance of having a system for exiting trades is emph",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 17,
+   "text": "The trader emphasizes the importance of having a clear direc",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
    "id": 18,
+   "text": "The trader mentions that everyone has their own system for e",
    "verdict": "drop",
    "reason": "Filler."
-  },
-  {
-   "id": 28,
-   "verdict": "drop",
-   "reason": "Exchange fee promo."
-  },
-  {
-   "id": 35,
-   "verdict": "drop",
-   "reason": "Exchange fee promo."
-  },
-  {
-   "id": 38,
-   "verdict": "drop",
-   "reason": "A 0.05% stop on a huge position needs leverage and gets wicked out - conflicts with your no-leverage rule."
-  },
-  {
-   "id": 39,
-   "verdict": "drop",
-   "reason": "Duplicate of another concept."
-  },
-  {
-   "id": 41,
-   "verdict": "drop",
-   "reason": "Duplicate of another concept."
-  },
-  {
-   "id": 42,
-   "verdict": "drop",
-   "reason": "Duplicate of another concept."
-  },
-  {
-   "id": 43,
-   "verdict": "drop",
-   "reason": "Duplicate of another concept."
-  },
-  {
-   "id": 45,
-   "verdict": "drop",
-   "reason": "Duplicate of another concept."
-  },
-  {
-   "id": 56,
-   "verdict": "drop",
-   "reason": "About leverage - you trade without leverage, so it doesn't apply."
-  },
-  {
-   "id": 58,
-   "verdict": "drop",
-   "reason": "Exchange-website how-to (buttons, wallets, transfers), not something a chart can use."
-  },
-  {
-   "id": 65,
-   "verdict": "drop",
-   "reason": "Duplicate of another concept."
-  },
-  {
-   "id": 69,
-   "verdict": "drop",
-   "reason": "Colours of his own chart theme."
-  },
-  {
-   "id": 71,
-   "verdict": "drop",
-   "reason": "Duplicate of another concept."
-  },
-  {
-   "id": 120,
-   "verdict": "drop",
-   "reason": "Duplicate of another concept."
-  },
-  {
-   "id": 127,
-   "verdict": "drop",
-   "reason": "Promo / referral / community ad, not trading knowledge."
-  },
-  {
-   "id": 133,
-   "verdict": "drop",
-   "reason": "Promo / referral / community ad, not trading knowledge."
-  },
-  {
-   "id": 134,
-   "verdict": "drop",
-   "reason": "Promo / referral / community ad, not trading knowledge."
-  },
-  {
-   "id": 144,
-   "verdict": "drop",
-   "reason": "Promo / referral / community ad, not trading knowledge."
-  },
-  {
-   "id": 168,
-   "verdict": "drop",
-   "reason": "Promo / referral / community ad, not trading knowledge."
-  },
-  {
-   "id": 174,
-   "verdict": "drop",
-   "reason": "Promo / referral / community ad, not trading knowledge."
-  },
-  {
-   "id": 175,
-   "verdict": "drop",
-   "reason": "Filler."
-  },
-  {
-   "id": 177,
-   "verdict": "drop",
-   "reason": "A transcript fragment from the video, not a usable idea."
-  },
-  {
-   "id": 178,
-   "verdict": "drop",
-   "reason": "A transcript fragment from the video, not a usable idea."
-  },
-  {
-   "id": 179,
-   "verdict": "drop",
-   "reason": "A transcript fragment from the video, not a usable idea."
-  },
-  {
-   "id": 180,
-   "verdict": "drop",
-   "reason": "A transcript fragment from the video, not a usable idea."
-  },
-  {
-   "id": 181,
-   "verdict": "drop",
-   "reason": "A transcript fragment from the video, not a usable idea."
-  },
-  {
-   "id": 185,
-   "verdict": "drop",
-   "reason": "A transcript fragment from the video, not a usable idea."
-  },
-  {
-   "id": 186,
-   "verdict": "drop",
-   "reason": "A transcript fragment from the video, not a usable idea."
-  },
-  {
-   "id": 188,
-   "verdict": "drop",
-   "reason": "A transcript fragment from the video, not a usable idea."
-  },
-  {
-   "id": 189,
-   "verdict": "drop",
-   "reason": "A transcript fragment from the video, not a usable idea."
-  },
-  {
-   "id": 190,
-   "verdict": "drop",
-   "reason": "A transcript fragment from the video, not a usable idea."
-  },
-  {
-   "id": 192,
-   "verdict": "drop",
-   "reason": "Out of context ('this' isn't named)."
-  },
-  {
-   "id": 195,
-   "verdict": "drop",
-   "reason": "A transcript fragment from the video, not a usable idea."
-  },
-  {
-   "id": 228,
-   "verdict": "drop",
-   "reason": "Duplicate of another concept."
-  },
-  {
-   "id": 234,
-   "verdict": "drop",
-   "reason": "Promo / referral / community ad, not trading knowledge."
-  },
-  {
-   "id": 235,
-   "verdict": "drop",
-   "reason": "An anecdote, not a rule."
-  },
-  {
-   "id": 237,
-   "verdict": "drop",
-   "reason": "An anecdote, not a rule."
-  },
-  {
-   "id": 242,
-   "verdict": "drop",
-   "reason": "An anecdote, not a rule."
-  },
-  {
-   "id": 249,
-   "verdict": "drop",
-   "reason": "Promo / referral / community ad, not trading knowledge."
-  },
-  {
-   "id": 250,
-   "verdict": "drop",
-   "reason": "Vague opinion."
-  },
-  {
-   "id": 281,
-   "verdict": "drop",
-   "reason": "Filler."
-  },
-  {
-   "id": 296,
-   "verdict": "drop",
-   "reason": "Filler (aside for YouTubers)."
-  },
-  {
-   "id": 301,
-   "verdict": "drop",
-   "reason": "About leverage - you trade without leverage, so it doesn't apply."
-  },
-  {
-   "id": 302,
-   "verdict": "drop",
-   "reason": "About leverage - you trade without leverage, so it doesn't apply."
-  },
-  {
-   "id": 303,
-   "verdict": "drop",
-   "reason": "About leverage - you trade without leverage, so it doesn't apply."
-  },
-  {
-   "id": 304,
-   "verdict": "drop",
-   "reason": "About leverage - you trade without leverage, so it doesn't apply."
-  },
-  {
-   "id": 305,
-   "verdict": "drop",
-   "reason": "About leverage - you trade without leverage, so it doesn't apply."
-  },
-  {
-   "id": 306,
-   "verdict": "drop",
-   "reason": "About leverage - you trade without leverage, so it doesn't apply."
-  },
-  {
-   "id": 307,
-   "verdict": "drop",
-   "reason": "Exchange-website how-to (buttons, wallets, transfers), not something a chart can use."
-  },
-  {
-   "id": 308,
-   "verdict": "drop",
-   "reason": "Exchange-website how-to (buttons, wallets, transfers), not something a chart can use."
-  },
-  {
-   "id": 309,
-   "verdict": "drop",
-   "reason": "Exchange-website how-to (buttons, wallets, transfers), not something a chart can use."
-  },
-  {
-   "id": 310,
-   "verdict": "drop",
-   "reason": "Exchange-website how-to (buttons, wallets, transfers), not something a chart can use."
-  },
-  {
-   "id": 311,
-   "verdict": "drop",
-   "reason": "About leverage - you trade without leverage, so it doesn't apply."
-  },
-  {
-   "id": 315,
-   "verdict": "drop",
-   "reason": "Promo / referral / community ad, not trading knowledge."
-  },
-  {
-   "id": 316,
-   "verdict": "drop",
-   "reason": "Exchange-website how-to (buttons, wallets, transfers), not something a chart can use."
-  },
-  {
-   "id": 317,
-   "verdict": "drop",
-   "reason": "Exchange-website how-to (buttons, wallets, transfers), not something a chart can use."
-  },
-  {
-   "id": 318,
-   "verdict": "drop",
-   "reason": "Exchange-website how-to (buttons, wallets, transfers), not something a chart can use."
-  },
-  {
-   "id": 319,
-   "verdict": "drop",
-   "reason": "Exchange-website how-to (buttons, wallets, transfers), not something a chart can use."
-  },
-  {
-   "id": 320,
-   "verdict": "drop",
-   "reason": "Exchange-website how-to (buttons, wallets, transfers), not something a chart can use."
-  },
-  {
-   "id": 321,
-   "verdict": "drop",
-   "reason": "Exchange-website how-to (buttons, wallets, transfers), not something a chart can use."
-  },
-  {
-   "id": 322,
-   "verdict": "drop",
-   "reason": "Exchange-website how-to (buttons, wallets, transfers), not something a chart can use."
-  },
-  {
-   "id": 323,
-   "verdict": "drop",
-   "reason": "Exchange-website how-to (buttons, wallets, transfers), not something a chart can use."
-  },
-  {
-   "id": 324,
-   "verdict": "drop",
-   "reason": "Exchange-website how-to (buttons, wallets, transfers), not something a chart can use."
   },
   {
    "id": 19,
+   "text": "The trader explains the importance of moving stop losses to ",
    "verdict": "fix",
    "reason": "Garbled: you move the stop, not 'stop losses to take profits'.",
    "fix_text": "After the first take profit hits, move the stop loss to breakeven (your entry) so the trade can't become a loss."
   },
   {
+   "id": 20,
+   "text": "Backtesting is emphasized as a way to prove that a strategy ",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 21,
+   "text": "The trader explains the importance of backtesting during dif",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 22,
+   "text": "Wait for price to touch the upper or lower Bollinger band fo",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 23,
+   "text": "Use Divergence as a confirmation for the trade entry.",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 24,
+   "text": "Divergence is when price and the oscillator are doing the op",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 25,
+   "text": "Place the stop loss below the last low.",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 26,
+   "text": "Set the take profit at the upper Bollinger band.",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 27,
+   "text": "Utilize good risk to reward ratio.",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 28,
+   "text": "Use zero percent limit fees for low-term time frames.",
+   "verdict": "drop",
+   "reason": "Exchange fee promo."
+  },
+  {
+   "id": 29,
+   "text": "Be proactive and adjust the take profit as the Bollinger Ban",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 30,
+   "text": "Limit out of trades to avoid fees.",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
    "id": 31,
+   "text": "Be risking very very little which means we're making a 0.2 p",
    "verdict": "fix",
    "reason": "Run-on transcript; the point is position sizing on low timeframes.",
    "fix_text": "On low timeframes the stop is very close, so the same 1% risk allows a bigger position - a 0.2% move then makes a meaningful profit."
   },
   {
+   "id": 32,
+   "text": "This strategy is simple and profitable for novice traders an",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 33,
+   "text": "We enter a trade only when the price touches the upper or lo",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
    "id": 34,
+   "text": "We use a risk-to-reward ratio of 3:1, meaning we can risk 1%",
    "verdict": "fix",
    "reason": "The numbers don't match (3:1 but 1% vs 3.75%).",
    "fix_text": "Use at least 3:1 reward to risk: risk 1% of the account to make 3%."
   },
   {
+   "id": 35,
+   "text": "Using 0% fees on short timeframes like this one-minute strat",
+   "verdict": "drop",
+   "reason": "Exchange fee promo."
+  },
+  {
+   "id": 36,
+   "text": "We need to be proactive as the Bollinger Bands move with the",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 37,
+   "text": "Exiting via a limit order is better than a market order as i",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 38,
+   "text": "We can put a very large position size into the trade with ve",
+   "verdict": "drop",
+   "reason": "A 0.05% stop on a huge position needs leverage and gets wicked out - conflicts with your no-leverage rule."
+  },
+  {
+   "id": 39,
+   "text": "Small gains throughout the day can offset losses due to the ",
+   "verdict": "drop",
+   "reason": "Duplicate of another concept."
+  },
+  {
+   "id": 40,
+   "text": "Accumulate small gains throughout the day to offset losses.",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 41,
+   "text": "Identify key levels on a chart to find potential trade setup",
+   "verdict": "drop",
+   "reason": "Duplicate of another concept."
+  },
+  {
+   "id": 42,
+   "text": "Have a strategy or set of strategies to determine when to en",
+   "verdict": "drop",
+   "reason": "Duplicate of another concept."
+  },
+  {
+   "id": 43,
+   "text": "Risk management is crucial for making or breaking a trader's",
+   "verdict": "drop",
+   "reason": "Duplicate of another concept."
+  },
+  {
+   "id": 44,
+   "text": "Risk 1 to make 3, 4, 5, 6, or more per trade.",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 45,
+   "text": "Risk 1 to 3% of your total trading account per trade.",
+   "verdict": "drop",
+   "reason": "Duplicate of another concept."
+  },
+  {
+   "id": 46,
+   "text": "Take small losses and small wins, and eventually get a big w",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 47,
+   "text": "Have patience and discipline to follow your trading analysis",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 48,
+   "text": "Risk management is crucial for trading and involves setting ",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 49,
+   "text": "A risk-to-reward ratio is how much money you're risking per ",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 50,
+   "text": "Three important aspects of risk management are knowing where",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 51,
+   "text": "If you don't know where to enter, where to get out if the tr",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 52,
+   "text": "Calculate position size using the formula: risk in dollars d",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 53,
+   "text": "Risk 1% of your account for each trade.",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 54,
+   "text": "Set stop-loss at key support or resistance levels.",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 55,
+   "text": "Use a 2% stop-loss for a 4:1 risk-reward ratio.",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 56,
+   "text": "Leverage can be used to increase position size, but keep it ",
+   "verdict": "drop",
+   "reason": "About leverage - you trade without leverage, so it doesn't apply."
+  },
+  {
+   "id": 57,
+   "text": "Ask three questions for every trade: entry, stop-loss, and t",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 58,
+   "text": "Enter the order value in USDT, not in Bitcoin.",
+   "verdict": "drop",
+   "reason": "Exchange-website how-to (buttons, wallets, transfers), not something a chart can use."
+  },
+  {
+   "id": 59,
+   "text": "Risk-to-reward ratio is key for profitable trades.",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 60,
+   "text": "Avoid falling into the trap of looking for massive moves.",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 61,
+   "text": "Understand that losses are part of the game and stick to you",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 62,
+   "text": "Apply good risk management even if you have a strategy that ",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 63,
+   "text": "Avoid the mindset of the get-rich-quick scheme and focus on ",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 64,
+   "text": "Support and resistance are fundamental to technical analysis",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 65,
+   "text": "Support and resistance are the most basic and powerful thing",
+   "verdict": "drop",
+   "reason": "Duplicate of another concept."
+  },
+  {
+   "id": 66,
+   "text": "Candlesticks are a way of talking about price. They show the",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 67,
+   "text": "The candle itself opened up, came down, and then came back u",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 68,
+   "text": "Candle close refers to the closing price of a candle, which ",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 69,
+   "text": "If a candle is closing below where it opened, it will be pur",
+   "verdict": "drop",
+   "reason": "Colours of his own chart theme."
+  },
+  {
    "id": 70,
+   "text": "There are a few patterns that you should familiarize yoursel",
    "verdict": "fix",
    "reason": "Hanging men are bearish, not bullish.",
    "fix_text": "Hammers at a low are bullish reversal candles; hanging men and shooting stars at a high are bearish reversal candles."
   },
   {
+   "id": 71,
+   "text": "Candlestick patterns like hammers and hanging men are bullis",
+   "verdict": "drop",
+   "reason": "Duplicate of another concept."
+  },
+  {
+   "id": 72,
+   "text": "Engulfing candles are a reversal sign, indicating a change i",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 73,
+   "text": "Higher time frames provide a macro context, while lower time",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 74,
+   "text": "The trend is your friend until it breaks down, and you shoul",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 75,
+   "text": "Support and resistance are key levels where price bounces or",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 76,
+   "text": "Resistance and support levels can switch roles, with resista",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 77,
+   "text": "Support lost becomes resistance, and resistance broken throu",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 78,
+   "text": "Marking out key levels of support and resistance on high tim",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 79,
+   "text": "Most assets trade in a sideways range 90% of the time, and i",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 80,
+   "text": "The key to successful trading is sticking to the process of ",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 81,
+   "text": "Trading is not about predicting the future price action, but",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 82,
+   "text": "It's important to have a clearly defined entry, stop-loss, a",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 83,
+   "text": "Identify the area where you are interested in a trade and cl",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 84,
+   "text": "Risk management is crucial, and it involves having a clearly",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 85,
+   "text": "The approach of creating if-then scenarios helps in making t",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 86,
+   "text": "When looking for a trade, confirmations on the indicator are",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 87,
+   "text": "The time frame for confirmations should be determined based ",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 88,
+   "text": "Experience is needed to predict what confirmations might be ",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 89,
+   "text": "Risk-to-reward ratios should be considered when planning tra",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 90,
+   "text": "Lower time frames provide a more detailed view of the higher",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 91,
+   "text": "We need to understand that lower time frames provide a more ",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 92,
+   "text": "We should use good risk management when taking the trade.",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 93,
+   "text": "Traders should have a valid entry, stop-loss, target, and a ",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 94,
+   "text": "Traders should set alerts for their entry zones and only tak",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 95,
+   "text": "Traders should stick to their trading plan and not deviate f",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 96,
+   "text": "New traders often use too big of a position size with too ti",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 97,
+   "text": "New traders often get stopped out because they don't stick t",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 98,
+   "text": "Your position size should be based on your 1% risk tolerance",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 99,
+   "text": "Divergences are your filter to enter a trade, and you should",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 100,
+   "text": "Risk-to-reward ratios determine your take-profit levels and ",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 101,
+   "text": "Bearish divergences can be identified by a lower momentum wa",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 102,
+   "text": "The lower the confirmation on multiple time frames, the bett",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 103,
+   "text": "Experience is key in recognizing significant levels for trad",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 104,
+   "text": "Use less money on the trade if you have a small account.",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 105,
+   "text": "Stick to your plan and trade with a tight stop loss if you h",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 106,
+   "text": "Use bullish divergences to enter trades after the market has",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 107,
+   "text": "Use orderflow to enter trades during retracements after a bu",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 108,
+   "text": "Wait for a bounce or rejection before entering a trade after",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 109,
+   "text": "Set your stop below the initial low after a bullish divergen",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 110,
+   "text": "Know when to pull the trigger based on price coming to your ",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 111,
+   "text": "Plan your risk management, including your stop-loss and take",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 112,
+   "text": "Plan your risk-reward ratio and ensure it's favorable.",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 113,
+   "text": "Ensure your take-profit is at least double your risk.",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 114,
+   "text": "Plan partial profits based on your entry.",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 115,
+   "text": "Mark your areas where you're looking for a trade and set up ",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 116,
+   "text": "Support and resistance are key levels to watch for in tradin",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 117,
+   "text": "Trend lines are subjective and should be used in conjunction",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 118,
+   "text": "High time frame trend lines are super important.",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 119,
+   "text": "Channels are formed by two trend lines, one on the top and o",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 120,
+   "text": "Support lost equals resistance, and resistance claimed equal",
+   "verdict": "drop",
+   "reason": "Duplicate of another concept."
+  },
+  {
+   "id": 121,
+   "text": "Topdown analysis involves marking precise levels on the char",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 122,
+   "text": "Support and resistance levels are key in trading analysis an",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 123,
+   "text": "Top-down analysis starts with the monthly time frame and mov",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 124,
+   "text": "Support and resistance levels are identified by finding two ",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 125,
+   "text": "Monthly resistance levels can be tested and can lead to pull",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 126,
+   "text": "Levels are typically removed from the chart after they are t",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 127,
+   "text": "Joining a trading community can provide support and insights",
+   "verdict": "drop",
+   "reason": "Promo / referral / community ad, not trading knowledge."
+  },
+  {
+   "id": 128,
+   "text": "Always consider key levels where many stop-losses are placed",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 129,
+   "text": "Sticking to a process with good risk management is more impo",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 130,
+   "text": "Use support and resistance levels to identify potential trad",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 131,
+   "text": "A precise level can provide a better risk-to-reward ratio, a",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 132,
+   "text": "Support and resistance levels can be identified by drawing b",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 133,
+   "text": "Volume is important in trading and the course is free on You",
+   "verdict": "drop",
+   "reason": "Promo / referral / community ad, not trading knowledge."
+  },
+  {
+   "id": 134,
+   "text": "The Casper Crew VIP Discord is a thriving trading community ",
+   "verdict": "drop",
+   "reason": "Promo / referral / community ad, not trading knowledge."
+  },
+  {
+   "id": 135,
+   "text": "Naked points of control are high volume nodes based on diffe",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 136,
+   "text": "The periodic volume profile indicator can be used to identif",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 137,
+   "text": "A naked point of control is formed when a high volume node i",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 138,
+   "text": "Naked points of control are important for identifying key su",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 139,
+   "text": "Naked weekly and daily points of control are important level",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 140,
+   "text": "Daily points of control are levels where two candlesticks fi",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 141,
+   "text": "Marking daily points of control helps identify key areas for",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 142,
+   "text": "The row size for the indicator is typically set at 200 and t",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 143,
+   "text": "Weekly, daily, and monthly time frames are the major levels ",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 144,
+   "text": "Antarctic Exchange is a decentralized exchange that solves t",
+   "verdict": "drop",
+   "reason": "Promo / referral / community ad, not trading knowledge."
+  },
+  {
+   "id": 145,
+   "text": "Trading on lower time frames like 5-minute requires more att",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 146,
+   "text": "The point of control (PC) is the price where the most volume",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 147,
+   "text": "The value area high and low indicate overbought and oversold",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 148,
+   "text": "Key levels on the chart are determined by market participant",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 149,
+   "text": "90% of the time price trades sideways and 10% of the time it",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 150,
+   "text": "Use fixed range volume profile to identify key levels within",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 151,
+   "text": "Plan trades based on risk-reward ratios, considering the lev",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 152,
+   "text": "Plan your exit based on the target levels, such as support o",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 153,
+   "text": "Understand that the volume profile levels can change as pric",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 154,
+   "text": "Do not extend the volume profile when breaking out of a side",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 155,
+   "text": "Consider the point of control (PC) as the most important lev",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 156,
+   "text": "Identify high volume nodes in the volume profile, which are ",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 157,
+   "text": "Keep old ranges on the chart for potential breakdowns, as th",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 158,
+   "text": "Use the anchored volume profile to track volume from a speci",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 159,
+   "text": "Confluence is the idea of multiple indicators or levels poin",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 160,
+   "text": "Higher high and higher low are signs of a change in market s",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 161,
+   "text": "Risk management is important, with a 1:4 risk-reward ratio r",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 162,
+   "text": "Schlonging involves holding both long and short positions si",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
    "id": 163,
+   "text": "Stop loss should be placed at or slightly above the entry po",
    "verdict": "fix",
    "reason": "Garbled: it's about moving the stop after the trade is in profit.",
    "fix_text": "Once the trade is in profit (after TP1), move the stop to your entry or slightly past it to lock in a no-loss trade."
   },
   {
+   "id": 164,
+   "text": "Fibonacci levels are used to identify potential support and ",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 165,
+   "text": "Fibonacci levels repeat in every market cycle, providing a c",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 166,
+   "text": "Fibonacci retracement levels are percentages of the initial ",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 167,
+   "text": "Start with a blank chart and mark up the chart to create a c",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 168,
+   "text": "Join a thriving trading community with pro traders to help y",
+   "verdict": "drop",
+   "reason": "Promo / referral / community ad, not trading knowledge."
+  },
+  {
+   "id": 169,
+   "text": "Keep significant levels on the chart even after they've been",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 170,
+   "text": "Lock important levels to prevent accidental movement.",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 171,
+   "text": "Identify and mark weekly levels on the chart as points of co",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 172,
+   "text": "Identify and mark significant price levels on the chart, esp",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 173,
+   "text": "Use periodic volume profile (PVP) to identify areas of inter",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 174,
+   "text": "Use a charting platform that supports advanced features like",
+   "verdict": "drop",
+   "reason": "Promo / referral / community ad, not trading knowledge."
+  },
+  {
+   "id": 175,
+   "text": "Be aware that the course content may become outdated quickly",
+   "verdict": "drop",
+   "reason": "Filler."
+  },
+  {
+   "id": 176,
+   "text": "Mark important psychological levels on the chart for referen",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 177,
+   "text": "The more info you can put on your chart, the better, right? ",
+   "verdict": "drop",
+   "reason": "A transcript fragment from the video, not a usable idea."
+  },
+  {
+   "id": 178,
+   "text": "For example, naked weekly point of control on a daily. Beaut",
+   "verdict": "drop",
+   "reason": "A transcript fragment from the video, not a usable idea."
+  },
+  {
+   "id": 179,
+   "text": "Up here we have a weekly and a naked monthly point of contro",
+   "verdict": "drop",
+   "reason": "A transcript fragment from the video, not a usable idea."
+  },
+  {
+   "id": 180,
+   "text": "We have a daily, a naked daily, a monthly, and a tapped week",
+   "verdict": "drop",
+   "reason": "A transcript fragment from the video, not a usable idea."
+  },
+  {
+   "id": 181,
+   "text": "Okay so this is now giving me the value area low and just so",
+   "verdict": "drop",
+   "reason": "A transcript fragment from the video, not a usable idea."
+  },
+  {
+   "id": 182,
+   "text": "So, what I like to do with these big range poles is make sur",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
    "id": 183,
+   "text": "That's a major change, but you might miss it if you don't cl",
    "verdict": "fix",
    "reason": "Fragment; the idea is value shift.",
    "fix_text": "Extend the range volume profile so it keeps updating; when the point of control moves (value shift) the key levels have changed."
   },
   {
+   "id": 184,
+   "text": "Many times assets when they form a sideways range and then t",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 185,
+   "text": "So, what I'm going to do now is I'm going to go ahead and pu",
+   "verdict": "drop",
+   "reason": "A transcript fragment from the video, not a usable idea."
+  },
+  {
+   "id": 186,
+   "text": "Now, I don't know if the TPO indicator in Trading View is go",
+   "verdict": "drop",
+   "reason": "A transcript fragment from the video, not a usable idea."
+  },
+  {
    "id": 187,
+   "text": "Now, what we're going to do is we're going to mark out thing",
    "verdict": "fix",
    "reason": "Fragment; the idea is single prints.",
    "fix_text": "Mark single prints (fast one-candle moves on the time profile) every day; price tends to come back to fill them and they act as support/resistance."
   },
   {
+   "id": 188,
+   "text": "When you have a very fast move down, for instance, right her",
+   "verdict": "drop",
+   "reason": "A transcript fragment from the video, not a usable idea."
+  },
+  {
+   "id": 189,
+   "text": "Now, uh, obviously these are irrelevant because they happene",
+   "verdict": "drop",
+   "reason": "A transcript fragment from the video, not a usable idea."
+  },
+  {
+   "id": 190,
+   "text": "All right, we're just going to go ahead and call it I call i",
+   "verdict": "drop",
+   "reason": "A transcript fragment from the video, not a usable idea."
+  },
+  {
+   "id": 191,
+   "text": "You want to put the levels on the bottom of the yellow bar o",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 192,
+   "text": "This only works on the 30-minute time frame.",
+   "verdict": "drop",
+   "reason": "Out of context ('this' isn't named)."
+  },
+  {
+   "id": 193,
+   "text": "Don't forget to update your fibs every time price makes a ne",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 194,
+   "text": "Mark out these major areas of confluence on your chart.",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 195,
+   "text": "This is just beautiful. I'd say we have our golden pocket, v",
+   "verdict": "drop",
+   "reason": "A transcript fragment from the video, not a usable idea."
+  },
+  {
+   "id": 196,
+   "text": "Identify key resistance and support levels based on historic",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 197,
+   "text": "Plan trades with a risk-reward ratio in mind.",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 198,
+   "text": "Set up alerts for potential entry points based on support an",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 199,
+   "text": "Set up take-profit levels to ensure a guaranteed win and the",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 200,
+   "text": "Guarantee a winner by setting a take-profit level and then l",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 201,
+   "text": "Risk 10 and target 30 for a 3:1 risk-reward ratio.",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 202,
+   "text": "Guarantee a 3% win before risking more.",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 203,
+   "text": "Ensure take profit is at least two to three times the risk.",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 204,
+   "text": "Set alerts for specific levels to enter trades.",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 205,
+   "text": "Markets are moved by big money, the whales, the market maker",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 206,
+   "text": "The market is moved by people buying and selling. If there a",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 207,
+   "text": "This is called a CVD divergence.",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 208,
+   "text": "This information is telling us that there's the price should",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 209,
+   "text": "Orderflow should be used after technical analysis and key le",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 210,
+   "text": "Orderflow analysis should be conducted at key levels of supp",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 211,
+   "text": "Orderflow should be used to confirm existing trades, not to ",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 212,
+   "text": "Orderflow analysis should be used to confirm the direction o",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 213,
+   "text": "Orderflow should not be used for low-time frame trades like ",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 214,
+   "text": "Divergence is the bread and butter of trading and tells whet",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 215,
+   "text": "A divergence is where the oscillator is diverging from the p",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 216,
+   "text": "Bullish divergence occurs when the price is making lower low",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 217,
+   "text": "Bearish divergence occurs when the price is making higher hi",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 218,
+   "text": "Bullish divergence is a strong and powerful reversal signal.",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 219,
+   "text": "Bearish divergence is a strong and powerful reversal signal.",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 220,
+   "text": "Key support levels can be identified using macro value areas",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 221,
+   "text": "A divergence is extremely powerful when the money flow and m",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
    "id": 222,
+   "text": "Bearish divergence is confirmed when a candle closes and a g",
    "verdict": "fix",
    "reason": "A bearish divergence is confirmed by a RED dot, not a green one.",
    "fix_text": "A bearish divergence is confirmed when the candle closes and a red dot prints on Market Cipher; a bullish one when a green dot prints."
+  },
+  {
+   "id": 223,
+   "text": "A divergence is confirmed when a candle closes and a green d",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 224,
+   "text": "A hidden divergence is a continuation pattern in a trend, wh",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 225,
+   "text": "A hidden bullish divergence is confirmed when a regular bull",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 226,
+   "text": "A hidden bullish divergence is a continuation pattern, and t",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 227,
+   "text": "A regular divergence is a reversal pattern, while a hidden d",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 228,
+   "text": "Regular divergence is a reversal pattern, while hidden diver",
+   "verdict": "drop",
+   "reason": "Duplicate of another concept."
+  },
+  {
+   "id": 229,
+   "text": "When a macro time frame like the weekly and monthly give a h",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 230,
+   "text": "Only worry about divergences when price is at your key level",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 231,
+   "text": "Set up your risk management first so that you have an idea o",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 232,
+   "text": "Look for bearish divergence when price comes to your level.",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 233,
+   "text": "The 12-minute time frame is a good time frame to trade with.",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 234,
+   "text": "Use the real Market Cipher for accurate signals.",
+   "verdict": "drop",
+   "reason": "Promo / referral / community ad, not trading knowledge."
+  },
+  {
+   "id": 235,
+   "text": "This strategy has been used to short the top and long the bo",
+   "verdict": "drop",
+   "reason": "An anecdote, not a rule."
+  },
+  {
+   "id": 236,
+   "text": "You might not be convinced that price is going to move, but ",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 237,
+   "text": "Large players in the market are building short positions and",
+   "verdict": "drop",
+   "reason": "An anecdote, not a rule."
+  },
+  {
+   "id": 238,
+   "text": "This is just one strategy out of a lot of tools that every t",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 239,
+   "text": "Look at the momentum waves are getting lower and this is giv",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 240,
+   "text": "We want to see that over time, every time the money flow wav",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 241,
+   "text": "The more drastic that money flow, the better.",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 242,
+   "text": "This would have been definitely a more complicated one to en",
+   "verdict": "drop",
+   "reason": "An anecdote, not a rule."
+  },
+  {
+   "id": 243,
+   "text": "The big moves will always happen when the money flow and the",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 244,
+   "text": "The big moves will always happen when the money flow and the",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 245,
+   "text": "The trades happen at key levels, which can be identified usi",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 246,
+   "text": "It's important to set alerts for key levels and monitor the ",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 247,
+   "text": "You need to trust your indicators and use them to make decis",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 248,
+   "text": "Stick to the plan and don't deviate from it, even if the mar",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 249,
+   "text": "Consider investing in a paid Trading View account for better",
+   "verdict": "drop",
+   "reason": "Promo / referral / community ad, not trading knowledge."
+  },
+  {
+   "id": 250,
+   "text": "Market Cipher is a preferred indicator over others due to it",
+   "verdict": "drop",
+   "reason": "Vague opinion."
+  },
+  {
+   "id": 251,
+   "text": "The 1HDIV strategy provides a good risk-to-reward ratio and ",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 252,
+   "text": "A divergence is when the price makes a higher low or lower h",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 253,
+   "text": "This strategy offers a good risk-to-reward ratio, allowing f",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 254,
+   "text": "The strategy works on both the 1 hour and 12 minute time fra",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 255,
+   "text": "A divergence is when price is making a lower low and momentu",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 256,
+   "text": "The strategy can be used for both long and short trades.",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 257,
+   "text": "The 1 hour time frame is preferred for this strategy.",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 258,
+   "text": "The strategy is particularly useful for beginners who may no",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 259,
+   "text": "For lower time frame trading, risk management is crucial, es",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 260,
+   "text": "Technical analysis is like putting on glasses to drive, whil",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 261,
+   "text": "Support and resistance are key levels where price has histor",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 262,
+   "text": "Traders should not overcomplicate their trading strategies a",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 263,
+   "text": "Divergence occurs when price and the momentum oscillator mov",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 264,
+   "text": "Traders should wait for price to reach the marked support or",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 265,
+   "text": "Look for levels marked out through technical analysis for po",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 266,
+   "text": "Risk management is crucial for profitability.",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 267,
+   "text": "Look for higher highs with lower money flow and momentum wav",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 268,
+   "text": "VWOP (Volume Weighted Average Price) is a moving average tha",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 269,
+   "text": "The daily VWOP can act as resistance or support, depending o",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 270,
+   "text": "An anchored VWAP (Volume Weighted Average Price) is a dynami",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 271,
+   "text": "The RSI (Relative Strength Index) is an oscillator that meas",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 272,
+   "text": "The Awesome Oscillator (AO) is a free indicator that shows t",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 273,
+   "text": "The Awesome Oscillator's color change is a strong indicator ",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 274,
+   "text": "The Awesome Oscillator crossing the zero line is a strong in",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 275,
+   "text": "Using the Awesome Oscillator alone can lead to choppy trades",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 276,
+   "text": "Market Cipher is a paid indicator that combines multiple ind",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 277,
+   "text": "Market Cipher's momentum waves and money flow are powerful t",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 278,
+   "text": "The Market Cipher's money flow is a leading indicator that c",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 279,
+   "text": "The Market Cipher's RSIs can provide powerful indications of",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 280,
+   "text": "Market Cipher can be used with other oscillators, but it pro",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 281,
+   "text": "Market Cipher is used in both before and after having a YouT",
+   "verdict": "drop",
+   "reason": "Filler."
+  },
+  {
+   "id": 282,
+   "text": "The principles shared can be applied to other indicators lik",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 283,
+   "text": "You cannot care about making money and you cannot focus on m",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 284,
+   "text": "If you can focus on and fall in love with the process not of",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 285,
+   "text": "If you're not in a position where you can trade without focu",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 286,
+   "text": "You cannot be afraid of losses. This can keep you from takin",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 287,
+   "text": "It's hard to do the things learned in trading and it comes d",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 288,
+   "text": "You need to figure out what makes you tick as a trader, what",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 289,
+   "text": "If you can figure those things out for yourself and if you d",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 290,
+   "text": "If you know that you're the kind of person that wakes up in ",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 291,
+   "text": "The only person who can help you is you and the only person ",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 292,
+   "text": "It's really not over complicated. People like to make it mor",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 293,
+   "text": "When I have made more money than I have risked over three ti",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 294,
+   "text": "I've made money on the trade. It's a guaranteed win because ",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 295,
+   "text": "You always want a TP1 where you've made more money than you ",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 296,
+   "text": "Pro tip. All right, for y'all want to be YouTubers. Other th",
+   "verdict": "drop",
+   "reason": "Filler (aside for YouTubers)."
+  },
+  {
+   "id": 297,
+   "text": "It's easy to keep your bearish glasses on if you're in a sho",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 298,
+   "text": "If the price dumps, your long trade gets stopped out in prof",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 299,
+   "text": "This works best for swingish trades, where you're looking to",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 300,
+   "text": "The psychological benefits of holding positions can prevent ",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 301,
+   "text": "Leverage is a tool where you're using the same amount of dol",
+   "verdict": "drop",
+   "reason": "About leverage - you trade without leverage, so it doesn't apply."
+  },
+  {
+   "id": 302,
+   "text": "Risk $11 every single time with 1x leverage, $6,000 with 50x",
+   "verdict": "drop",
+   "reason": "About leverage - you trade without leverage, so it doesn't apply."
+  },
+  {
+   "id": 303,
+   "text": "Using leverage is not necessarily riskier if used correctly.",
+   "verdict": "drop",
+   "reason": "About leverage - you trade without leverage, so it doesn't apply."
+  },
+  {
+   "id": 304,
+   "text": "Using leverage can help manage capital by keeping less on th",
+   "verdict": "drop",
+   "reason": "About leverage - you trade without leverage, so it doesn't apply."
+  },
+  {
+   "id": 305,
+   "text": "Using leverage can help adhere to stop-loss rules by setting",
+   "verdict": "drop",
+   "reason": "About leverage - you trade without leverage, so it doesn't apply."
+  },
+  {
+   "id": 306,
+   "text": "Using leverage can allow trading multiple coins with limited",
+   "verdict": "drop",
+   "reason": "About leverage - you trade without leverage, so it doesn't apply."
+  },
+  {
+   "id": 307,
+   "text": "Ensure you have enough funds for gas fees before transferrin",
+   "verdict": "drop",
+   "reason": "Exchange-website how-to (buttons, wallets, transfers), not something a chart can use."
+  },
+  {
+   "id": 308,
+   "text": "Confirm the transaction details before confirming the transf",
+   "verdict": "drop",
+   "reason": "Exchange-website how-to (buttons, wallets, transfers), not something a chart can use."
+  },
+  {
+   "id": 309,
+   "text": "Select the margin type (isolated or cross) based on your tra",
+   "verdict": "drop",
+   "reason": "Exchange-website how-to (buttons, wallets, transfers), not something a chart can use."
+  },
+  {
+   "id": 310,
+   "text": "Choose between demo trading and USDTM perpetuals.",
+   "verdict": "drop",
+   "reason": "Exchange-website how-to (buttons, wallets, transfers), not something a chart can use."
+  },
+  {
+   "id": 311,
+   "text": "Isolated margin limits the risk to a specific position, whil",
+   "verdict": "drop",
+   "reason": "About leverage - you trade without leverage, so it doesn't apply."
+  },
+  {
+   "id": 312,
+   "text": "Decide whether to use a market order or a limit order based ",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 313,
+   "text": "Limit orders allow you to set a specific price for entering ",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 314,
+   "text": "Market orders execute immediately at the current market pric",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 315,
+   "text": "Signing up with the Jason Casper link can provide lower fees",
+   "verdict": "drop",
+   "reason": "Promo / referral / community ad, not trading knowledge."
+  },
+  {
+   "id": 316,
+   "text": "Close a trade by clicking the close by button and selecting ",
+   "verdict": "drop",
+   "reason": "Exchange-website how-to (buttons, wallets, transfers), not something a chart can use."
+  },
+  {
+   "id": 317,
+   "text": "Reverse a trade by clicking the reverse button and then clos",
+   "verdict": "drop",
+   "reason": "Exchange-website how-to (buttons, wallets, transfers), not something a chart can use."
+  },
+  {
+   "id": 318,
+   "text": "Set your limit orders and take-profit orders to close the tr",
+   "verdict": "drop",
+   "reason": "Exchange-website how-to (buttons, wallets, transfers), not something a chart can use."
+  },
+  {
+   "id": 319,
+   "text": "Being a liquidity provider benefits you when the exchange be",
+   "verdict": "drop",
+   "reason": "Exchange-website how-to (buttons, wallets, transfers), not something a chart can use."
+  },
+  {
+   "id": 320,
+   "text": "Add the token to your web 3 wallet to participate in liquidi",
+   "verdict": "drop",
+   "reason": "Exchange-website how-to (buttons, wallets, transfers), not something a chart can use."
+  },
+  {
+   "id": 321,
+   "text": "Use MetaMask or manually connect your wallet to add liquidit",
+   "verdict": "drop",
+   "reason": "Exchange-website how-to (buttons, wallets, transfers), not something a chart can use."
+  },
+  {
+   "id": 322,
+   "text": "Withdraw liquidity after a 7-day time window to prevent freq",
+   "verdict": "drop",
+   "reason": "Exchange-website how-to (buttons, wallets, transfers), not something a chart can use."
+  },
+  {
+   "id": 323,
+   "text": "Transfer profits from your trading account to your funding a",
+   "verdict": "drop",
+   "reason": "Exchange-website how-to (buttons, wallets, transfers), not something a chart can use."
+  },
+  {
+   "id": 324,
+   "text": "Check the transaction history on the exchange to ensure ever",
+   "verdict": "drop",
+   "reason": "Exchange-website how-to (buttons, wallets, transfers), not something a chart can use."
+  },
+  {
+   "id": 325,
+   "text": "Risk management is a fundamental part of trading and must be",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 326,
+   "text": "The principles of support and resistance, risk management, a",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 327,
+   "text": "Mastering the basics is crucial before exploring new tools a",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 328,
+   "text": "Use a small amount of money or a demo trading account when l",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 329,
+   "text": "Take your time to learn and avoid revenge trading or gamblin",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
+  },
+  {
+   "id": 330,
+   "text": "Explore new tools and strategies but build on the foundation",
+   "verdict": "keep",
+   "reason": "Sound and usable as written."
   }
  ],
  "lessons": [
@@ -929,5 +2539,5 @@
    "reason": "Exchange sign-up tutorial with a referral link - nothing for the chart."
   }
  ],
- "reviewed_at": "2026-11-04T11:33:45+00:00"
+ "reviewed_at": "2026-11-04T15:20:37+00:00"
 }
