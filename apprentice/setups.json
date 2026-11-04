@@ -16301,5 +16301,181 @@
   "hints": null,
   "tune": null,
   "exit_plan": null
+ },
+ {
+  "id": 91,
+  "name": "Short: Head and Shoulders Pattern",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1000.0,
+  "rr": 2.0,
+  "timeframe": "daily",
+  "why": "We had a plan in advance for the price to come down to this area and because we had that plan we were able to take a long trade in the Casper crew from 24925 literally from this exact bottom, so we were able to Long the bottom and short the top because we had multiple plans in advance and this puts you in an amazing position as a Trader.",
+  "quote": "if we are planning for multiple scenarios saying if price goes up then there's an amazing opportunity to take a juicy short trade right here what that means is when everybody else is freaking out not knowing what to do because price is pumping like a wild woman in distress running through the jungle with a laundry basket on her head looking like Janet yelling we are waiting and prepared to hit that Shore button because we've been waiting for months for price to come up to this level because we had a plan in advance right",
+  "unchecked": [
+   "The specific level of the head and shoulders pattern is 30,000."
+  ],
+  "lesson_id": 30,
+  "rules": [
+   {
+    "rule": "close_above_ema",
+    "a": 30000
+   },
+   {
+    "rule": "pattern_break_down"
+   }
+  ],
+  "rules_text": [
+   "Close above EMA (30000)",
+   "Chart pattern broke down on this candle"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 92,
+  "name": "Swing Failure Pattern",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "not specified",
+  "why": "Swing Failure Pattern indicates a potential reversal from a higher low to a lower low, suggesting a trend reversal in the opposite direction.",
+  "quote": "Swing Failure Pattern is a pattern that can be used in all markets, including crypto, Bitcoin, and altcoins.",
+  "unchecked": [
+   "This setup is for a long trade, but the specific conditions for a long trade are not explicitly stated."
+  ],
+  "lesson_id": 31,
+  "rules": [
+   {
+    "rule": "higher_low"
+   },
+   {
+    "rule": "pattern_break_down"
+   }
+  ],
+  "rules_text": [
+   "Higher low: the last 5 candles' low is above the 5 candles before",
+   "Chart pattern broke down on this candle"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 93,
+  "name": "Swing Failure Pattern",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "not specified",
+  "why": "Swing Failure Pattern indicates a potential reversal from a lower high to a higher high, suggesting a trend continuation in the opposite direction.",
+  "quote": "Swing Failure Pattern is a pattern that can be used in all markets, including crypto, Bitcoin, and altcoins.",
+  "unchecked": [
+   "This setup is for a short trade, but the specific conditions for a short trade are not explicitly stated."
+  ],
+  "lesson_id": 31,
+  "rules": [
+   {
+    "rule": "lower_high"
+   },
+   {
+    "rule": "pattern_break_up"
+   }
+  ],
+  "rules_text": [
+   "Lower high: the last 5 candles' high is below the 5 candles before",
+   "Chart pattern broke out upward on this candle"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 94,
+  "name": "long_trade_setup",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "5c",
+  "why": "Bullish divergences with the momentum waves and money flow indicate a potential long trade opportunity.",
+  "quote": "price came down to a key level of support and when we take a look at the momentum waves over time they are absolutely getting higher giving us the bullish Divergence the money flow also getting higher giving us that bullish Divergence here",
+  "unchecked": [
+   "price came down to a key level of support and when we take a look at the momentum waves over time they are absolutely getting higher giving us the bullish Divergence the money flow also getting higher giving us that bullish Divergence here"
+  ],
+  "lesson_id": 32,
+  "rules": [
+   {
+    "rule": "rsi_bull_div"
+   },
+   {
+    "rule": "wt_bull_div"
+   }
+  ],
+  "rules_text": [
+   "Bullish divergence: price lower low, RSI higher low - in the last 3 candles, lows/highs at most 60 candles apart",
+   "Bullish divergence: price lower low, Market Cipher wave higher low - in the last 3 candles, lows/highs at most 60 candles apart"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 95,
+  "name": "short_trade_setup",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "5c",
+  "why": "Bearish divergences with the momentum waves and money flow indicate a potential short trade opportunity.",
+  "quote": "price came up to what at the time was a Fibonacci golden pocket retest we look at our good friend Market ever be bam a bearish Divergence with the momentum waves a bearish Divergence with the money flow",
+  "unchecked": [
+   "price came up to what at the time was a Fibonacci golden pocket retest we look at our good friend Market ever be bam a bearish Divergence with the momentum waves a bearish Divergence with the money flow"
+  ],
+  "lesson_id": 32,
+  "rules": [
+   {
+    "rule": "rsi_bear_div"
+   },
+   {
+    "rule": "wt_bear_div"
+   }
+  ],
+  "rules_text": [
+   "Bearish divergence: price higher high, RSI lower high - in the last 3 candles, lows/highs at most 60 candles apart",
+   "Bearish divergence: price higher high, Market Cipher wave lower high - in the last 3 candles, lows/highs at most 60 candles apart"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  }
 ]

@@ -450,3 +450,4 @@ Apprentice LTC 1h,2026-11-04T20:00:26+00:00,exit,closed (opposite setup) -93.41 
 Apprentice LTC 1h,2026-11-04T20:00:26+00:00,entry,SHORT 175.408664 @ 55.52
 Apprentice ETH 4h,2026-11-04T20:00:29+00:00,entry,"SHORT 4.347562 @ 2,405.49 · its own stop 2.50% away"
 Apprentice UNI 4h,2026-11-04T20:00:29+00:00,entry,"SHORT 1,340.10613 @ 7.54"
+Apprentice UNI 4h,2026-11-04T22:36:49+00:00,exit,closed (stop) -332.10 USD
