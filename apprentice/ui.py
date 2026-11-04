@@ -355,7 +355,7 @@ def after_entry_panel(store: Store, setups: list[dict]) -> None:
         st.toast("Saved - the trader uses it from its next price check")
 
 
-def claude_panel(store: Store) -> None:
+def claude_panel(store: Store, charts: list[str] | None = None) -> None:
     """Claude's latest review of the setups, concepts and lessons (comes back with each sync)."""
     from livepaper import sync
     rv = review.load()
@@ -391,9 +391,17 @@ def claude_panel(store: Store) -> None:
     c1, c2 = st.columns([1.3, 4])
     if c1.button("Apply all of Claude's verdicts", key="ap_rv_all"):
         n = review.apply_all(store)
-        st.success(f"Applied: {n['setups']} setups, {n['concepts']} concepts. Press 🎓 Learn now to re-test the fixed ones.")
-    c2.caption("Nothing changes until you apply: use = 📌 always use, drop = 🚫 off, fix = corrected rules (re-tested "
-               "on the next Learn). Each verdict also has its own Apply button below.")
+        from apprentice.__main__ import DEFAULT_CHARTS
+        from apprentice.job import running
+        if running("learn"):
+            st.success(f"Applied: {n['setups']} setups, {n['concepts']} concepts. A 🎓 Learn run is already going - "
+                       "press 🎓 Learn now when it finishes so it re-tests these changes.")
+        else:
+            spawn(["learn", "--charts", *(charts or DEFAULT_CHARTS)], "Learning run (after Claude's review)")
+            st.success(f"Applied: {n['setups']} setups, {n['concepts']} concepts - and started 🎓 Learn to re-test "
+                       "them and learn their stops (progress in 📚 Teach).")
+    c2.caption("Applies every verdict (use = 📌 always use, drop = 🚫 off, fix = corrected rules), then starts 🎓 Learn "
+               "on the charts above by itself. Each verdict also has its own Apply button below.")
 
 
 def knowledge_tab(store: Store) -> None:
@@ -420,7 +428,7 @@ def knowledge_tab(store: Store) -> None:
         st.success("Learning in the background - see 📚 Teach for progress.")
     st.markdown("##### Accuracy (your ratings)")
     accuracy_panel(store)
-    claude_panel(store)
+    claude_panel(store, picks)
     after_entry_panel(store, setups)
 
     st.markdown("##### Setups")

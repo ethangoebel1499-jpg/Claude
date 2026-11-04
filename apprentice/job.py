@@ -31,6 +31,23 @@ def spawn(args: list[str], title: str) -> Path:
     return log
 
 
+def running(kind: str, max_age_h: float = 6) -> bool:
+    """Is a job of this kind (e.g. "learn") still going? (its log has no 'finished' line yet)"""
+    if not JOBS.exists():
+        return False
+    for meta in JOBS.glob("*.json"):
+        try:
+            info = json.loads(meta.read_text())
+            log = meta.with_suffix(".log")
+            if (info.get("args") or [None])[0] != kind or time.time() - meta.stat().st_mtime > max_age_h * 3600:
+                continue
+            if not log.exists() or DONE not in log.read_text(errors="ignore"):
+                return True
+        except Exception:
+            continue
+    return False
+
+
 def main() -> int:
     from streamlearn.jobctl import run_queued
     log, args = Path(sys.argv[1]), sys.argv[2:]

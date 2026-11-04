@@ -310,3 +310,15 @@ def test_apprentice_paper_trades_long_and_short_with_moderate_exits(tmp_path, mo
     assert sides == {"long", "short"}
     stopped = [t for t in m.trades if t["reason"] == "stop"]
     assert stopped and all(-0.045 < t["pnl_pct"] / (100 if abs(t["pnl_pct"]) > 1 else 1) < -0.025 for t in stopped)
+
+
+def test_knows_when_a_learning_run_is_going(tmp_path, monkeypatch):
+    import json
+    from apprentice import job
+    monkeypatch.setattr(job, "JOBS", tmp_path)
+    assert not job.running("learn")
+    (tmp_path / "1.json").write_text(json.dumps({"args": ["learn", "--charts", "BTC:4h"]}))
+    (tmp_path / "1.log").write_text("testing...\n")
+    assert job.running("learn") and not job.running("teach")
+    (tmp_path / "1.log").write_text(f"done\n{job.DONE} 0]\n")
+    assert not job.running("learn")
