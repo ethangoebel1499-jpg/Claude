@@ -85,7 +85,11 @@
     "base_r": 0.05,
     "sum_r": 0.0
    }
-  }
+  },
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  },
  {
   "id": 2,
@@ -174,7 +178,11 @@
     "sum_r": 8.0,
     "t": 0.0
    }
-  }
+  },
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  },
  {
   "id": 3,
@@ -299,7 +307,11 @@
     "base_r": -0.157,
     "sum_r": 0.0
    }
-  }
+  },
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  },
  {
   "id": 4,
@@ -396,7 +408,11 @@
     "base_r": 0.196,
     "sum_r": 0.0
    }
-  }
+  },
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  },
  {
   "id": 5,
@@ -478,7 +494,11 @@
     "sum_r": 0.0,
     "t": 0.17
    }
-  }
+  },
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  },
  {
   "id": 6,
@@ -596,7 +616,11 @@
     "sum_r": -20.0,
     "t": -0.85
    }
-  }
+  },
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  },
  {
   "id": 7,
@@ -684,7 +708,11 @@
     "sum_r": -4.0,
     "t": -0.21
    }
-  }
+  },
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  },
  {
   "id": 8,
@@ -772,7 +800,11 @@
     "sum_r": 6.0,
     "t": 0.88
    }
-  }
+  },
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  },
  {
   "id": 9,
@@ -862,7 +894,11 @@
     "sum_r": 7.64,
     "t": 0.71
    }
-  }
+  },
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  },
  {
   "id": 10,
@@ -988,7 +1024,11 @@
     "sum_r": 0.0,
     "t": 0.3
    }
-  }
+  },
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  },
  {
   "id": 11,
@@ -1073,7 +1113,11 @@
     "sum_r": 18.01,
     "t": 0.05
    }
-  }
+  },
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  },
  {
   "id": 12,
@@ -1151,7 +1195,11 @@
     "sum_r": 47.37,
     "t": 0.4
    }
-  }
+  },
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  },
  {
   "id": 13,
@@ -1237,7 +1285,11 @@
     "sum_r": 0.0,
     "t": 0.17
    }
-  }
+  },
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  },
  {
   "id": 14,
@@ -1324,7 +1376,11 @@
     "sum_r": 5.92,
     "t": 0.0
    }
-  }
+  },
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  },
  {
   "id": 15,
@@ -1720,7 +1776,11 @@
     "base_r": 0.211,
     "sum_r": 0.0
    }
-  }
+  },
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  },
  {
   "id": 16,
@@ -1829,7 +1889,11 @@
     "base_r": 0.211,
     "sum_r": 0.0
    }
-  }
+  },
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  },
  {
   "id": 17,
@@ -1915,7 +1979,11 @@
     "sum_r": -12.0,
     "t": -0.27
    }
-  }
+  },
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  },
  {
   "id": 18,
@@ -2002,7 +2070,11 @@
     "sum_r": 37.31,
     "t": 1.47
    }
-  }
+  },
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  },
  {
   "id": 19,
@@ -2089,7 +2161,11 @@
     "sum_r": -17.93,
     "t": -1.24
    }
-  }
+  },
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  },
  {
   "id": 20,
@@ -2174,7 +2250,11 @@
     "sum_r": 12.5,
     "t": 0.11
    }
-  }
+  },
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  },
  {
   "id": 21,
@@ -2259,7 +2339,11 @@
     "sum_r": -9.4,
     "t": -0.33
    }
-  }
+  },
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  },
  {
   "id": 22,
@@ -2340,7 +2424,11 @@
     "sum_r": 12.0,
     "t": 1.54
    }
-  }
+  },
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  },
  {
   "id": 23,
@@ -2421,7 +2509,11 @@
     "sum_r": 5.45,
     "t": 1.15
    }
-  }
+  },
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  },
  {
   "id": 24,
@@ -2506,7 +2598,11 @@
     "sum_r": -7.0,
     "t": 0.0
    }
-  }
+  },
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  },
  {
   "id": 25,
@@ -2602,7 +2698,11 @@
     "base_r": 0.004,
     "sum_r": 0.0
    }
-  }
+  },
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  },
  {
   "id": 26,
@@ -2698,7 +2798,11 @@
     "base_r": 0.334,
     "sum_r": 0.0
    }
-  }
+  },
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  },
  {
   "id": 27,
@@ -2795,7 +2899,11 @@
     "base_r": 0.196,
     "sum_r": 0.0
    }
-  }
+  },
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  },
  {
   "id": 28,
@@ -2893,7 +3001,11 @@
     "sum_r": 4.23,
     "t": 0.51
    }
-  }
+  },
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  },
  {
   "id": 29,
@@ -2982,7 +3094,11 @@
     "base_r": 0.05,
     "sum_r": 0.0
    }
-  }
+  },
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  },
  {
   "id": 30,
@@ -3067,7 +3183,11 @@
     "base_r": 0.05,
     "sum_r": 0.0
    }
-  }
+  },
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  },
  {
   "id": 31,
@@ -3158,7 +3278,11 @@
     "sum_r": -2.0,
     "t": 0.0
    }
-  }
+  },
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  },
  {
   "id": 32,
@@ -3245,7 +3369,11 @@
     "sum_r": 17.13,
     "t": -0.35
    }
-  }
+  },
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  },
  {
   "id": 33,
@@ -3330,7 +3458,11 @@
     "sum_r": -14.28,
     "t": -0.63
    }
-  }
+  },
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  },
  {
   "id": 34,
@@ -3417,7 +3549,11 @@
     "sum_r": 7.0,
     "t": 0.2
    }
-  }
+  },
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  },
  {
   "id": 35,
@@ -3604,7 +3740,11 @@
     "base_r": 0.196,
     "sum_r": 0.0
    }
-  }
+  },
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  },
  {
   "id": 36,
@@ -3702,7 +3842,11 @@
     "base_r": 0.111,
     "sum_r": 0.0
    }
-  }
+  },
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  },
  {
   "id": 37,
@@ -3787,7 +3931,11 @@
     "sum_r": 15.4,
     "t": -0.34
    }
-  }
+  },
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  },
  {
   "id": 38,
@@ -3872,7 +4020,11 @@
     "sum_r": -1.59,
     "t": 0.14
    }
-  }
+  },
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  },
  {
   "id": 39,
@@ -3957,7 +4109,11 @@
     "sum_r": 15.56,
     "t": 0.84
    }
-  }
+  },
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  },
  {
   "id": 40,
@@ -4043,7 +4199,11 @@
     "sum_r": 4.25,
     "t": 0.24
    }
-  }
+  },
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  },
  {
   "id": 41,
@@ -4129,7 +4289,11 @@
     "sum_r": 0.0,
     "t": -0.02
    }
-  }
+  },
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  },
  {
   "id": 42,
@@ -4213,7 +4377,11 @@
     "sum_r": 7.0,
     "t": 1.27
    }
-  }
+  },
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  },
  {
   "id": 43,
@@ -4298,7 +4466,11 @@
     "sum_r": -2.0,
     "t": -0.15
    }
-  }
+  },
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  },
  {
   "id": 44,
@@ -4383,7 +4555,11 @@
     "sum_r": 32.11,
     "t": 0.55
    }
-  }
+  },
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  },
  {
   "id": 45,
@@ -4468,7 +4644,11 @@
     "sum_r": -0.03,
     "t": 0.26
    }
-  }
+  },
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  },
  {
   "id": 46,
@@ -4586,7 +4766,11 @@
     "sum_r": 12.59,
     "t": 0.81
    }
-  }
+  },
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  },
  {
   "id": 47,
@@ -4670,7 +4854,11 @@
     "sum_r": 4.61,
     "t": 0.86
    }
-  }
+  },
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  },
  {
   "id": 48,
@@ -4755,7 +4943,11 @@
     "sum_r": 37.05,
     "t": 1.39
    }
-  }
+  },
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  },
  {
   "id": 49,
@@ -4844,7 +5036,11 @@
     "sum_r": -5.5,
     "t": -0.83
    }
-  }
+  },
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  },
  {
   "id": 50,
@@ -4933,7 +5129,11 @@
     "sum_r": -6.5,
     "t": -1.04
    }
-  }
+  },
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  },
  {
   "id": 51,
@@ -5013,7 +5213,11 @@
     "sum_r": -2.19,
     "t": 0.02
    }
-  }
+  },
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  },
  {
   "id": 52,
@@ -5093,7 +5297,11 @@
     "sum_r": 13.0,
     "t": 0.78
    }
-  }
+  },
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  },
  {
   "id": 53,
@@ -5185,7 +5393,11 @@
     "sum_r": 12.71,
     "t": 2.1
    }
-  }
+  },
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  },
  {
   "id": 54,
@@ -5270,7 +5482,11 @@
     "sum_r": 4.45,
     "t": 0.88
    }
-  }
+  },
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  },
  {
   "id": 55,
@@ -5355,7 +5571,11 @@
     "sum_r": 11.0,
     "t": 0.33
    }
-  }
+  },
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  },
  {
   "id": 56,
@@ -5441,7 +5661,11 @@
     "sum_r": 1.45,
     "t": 0.45
    }
-  }
+  },
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  },
  {
   "id": 57,
@@ -5525,7 +5749,11 @@
     "sum_r": 13.0,
     "t": 0.78
    }
-  }
+  },
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  },
  {
   "id": 58,
@@ -5609,7 +5837,11 @@
     "sum_r": 7.7,
     "t": 1.7
    }
-  }
+  },
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  },
  {
   "id": 59,
@@ -5693,7 +5925,11 @@
     "sum_r": 0.0,
     "t": -0.39
    }
-  }
+  },
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  },
  {
   "id": 60,
@@ -5777,7 +6013,11 @@
     "sum_r": -1.19,
     "t": 0.07
    }
-  }
+  },
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  },
  {
   "id": 61,
@@ -5868,7 +6108,11 @@
     "sum_r": -1.0,
     "t": 0.0
    }
-  }
+  },
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  },
  {
   "id": 62,
@@ -6023,7 +6267,11 @@
     "sum_r": 12.0,
     "t": 1.54
    }
-  }
+  },
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  },
  {
   "id": 63,
@@ -6103,7 +6351,11 @@
     "sum_r": 11.96,
     "t": 1.33
    }
-  }
+  },
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  },
  {
   "id": 64,
@@ -6183,7 +6435,11 @@
     "sum_r": -3.0,
     "t": -1.12
    }
-  }
+  },
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  },
  {
   "id": 65,
@@ -6263,7 +6519,11 @@
     "sum_r": -5.19,
     "t": -0.25
    }
-  }
+  },
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  },
  {
   "id": 66,
@@ -6349,7 +6609,11 @@
     "sum_r": 12.77,
     "t": 1.27
    }
-  }
+  },
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  },
  {
   "id": 67,
@@ -6435,7 +6699,11 @@
     "sum_r": 3.47,
     "t": -0.37
    }
-  }
+  },
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  },
  {
   "id": 68,
@@ -6559,7 +6827,11 @@
     "base_r": 0.114,
     "sum_r": 0.0
    }
-  }
+  },
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  },
  {
   "id": 69,
@@ -6712,6 +6984,10 @@
     "base_r": 0.05,
     "sum_r": 0.0
    }
-  }
+  },
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  }
 ]

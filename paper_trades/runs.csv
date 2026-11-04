@@ -1,7 +1,7 @@
 name,strategy,symbol,asset,timeframe,feed,shorts,capital,fraction,stop,take_profits,active,source,created
 S3 GRIND DOGE 1h,grind,XDGUSD,crypto,1h,,1,10000.0,1.0,0.06,"[[0.055, 0.33], [0.075, 0.66], [0.15, 0.01]]",1,dashboard,2026-11-02T21:50:14+00:00
 Apprentice BTC 4h,apprentice,XBTUSD,crypto,4h,,1,10000.0,1.0,0.03,"[[0.03, 0.5], [0.06, 0.5]]",1,apprentice,2026-11-03T00:48:12+00:00
-Apprentice DOGE 1h,apprentice,XDGUSD,crypto,1h,,1,10000.0,1.0,0.03,"[[0.03, 0.5], [0.06, 0.5]]",1,apprentice,2026-11-03T03:14:47+00:00
+Apprentice DOGE 1h,apprentice,XDGUSD,crypto,1h,,1,10000.0,1.0,0.03,"[[0.03, 0.5], [0.06, 0.5]]",0,apprentice,2026-11-03T03:14:47+00:00
 Apprentice SOL 4h,apprentice,SOLUSD,crypto,4h,,1,10000.0,1.0,0.03,"[[0.03, 0.5], [0.06, 0.5]]",1,apprentice,2026-11-03T23:59:22+00:00
 Apprentice BTC 1h,apprentice,XBTUSD,crypto,1h,,1,10000.0,1.0,0.03,"[[0.03, 0.5], [0.06, 0.5]]",1,apprentice,2026-11-03T03:14:32+00:00
 Apprentice LTC 1h,apprentice,LTCUSD,crypto,1h,,1,10000.0,1.0,0.03,"[[0.03, 0.5], [0.06, 0.5]]",1,apprentice,2026-11-04T01:04:30+00:00
