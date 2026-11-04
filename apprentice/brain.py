@@ -153,11 +153,364 @@ def learn(store, charts: dict[str, pd.DataFrame], log=print) -> list[dict]:
         total = combine(per)
         w = weight(total, store.votes(s["id"]))
         st = status_for(s, total, w)
-        store.update_setup(s["id"], stats={"total": total, "charts": per}, weight=w, status=st)
+        stats = {"total": total, "charts": per}
+        if (total.get("trades") or 0) >= MIN_TRADES:
+            try:
+                stats["after"] = combine_after({name: after_entry(df, s) for name, df in charts.items()})
+                stats["hints"] = hints(s, stats["after"])
+                stats["exit_plan"] = {tf: exit_plan(group, s) for tf, group in by_timeframe(charts).items()}
+                if st in ("active", "pinned"):
+                    stats["tune"] = tune(charts, s)
+            except Exception as e:
+                log(f"  {s['name']}: after-entry stats failed: {e}")
+        store.update_setup(s["id"], stats=stats, weight=w, status=st)
         out.append({"id": s["id"], "name": s["name"], "status": st, "weight": w, **total})
         log(f"  {s['name']} ({s['direction']}): {total['trades']} trades, edge "
             f"{total['edge'] if total['edge'] is not None else '-'}R -> {st}")
+    try:
+        deploy_check(store, charts, log)
+    except Exception as e:
+        log(f"  exit-plan check failed ({e}) - keeping the 3% stop everywhere")
+        for s in store.setups():
+            plans = (s.get("stats") or {}).get("exit_plan") or {}
+            for p in plans.values():
+                p.update(stop="fixed", reversal=False, deployed=False)
+            if plans:
+                store.update_setup(s["id"], stats=s["stats"])
     return out
+
+
+def timeframe_of(df: pd.DataFrame) -> str:
+    """'1h', '4h', '1D', ... from the candle spacing."""
+    if len(df) < 3:
+        return "?"
+    mins = int(round(pd.Series(df.index).diff().median().total_seconds() / 60))
+    return f"{mins // 1440}D" if mins >= 1440 and mins % 1440 == 0 else f"{mins // 60}h" if mins % 60 == 0 \
+        else f"{mins}m"
+
+
+def by_timeframe(charts: dict[str, pd.DataFrame]) -> dict[str, dict[str, pd.DataFrame]]:
+    out: dict[str, dict[str, pd.DataFrame]] = {}
+    for name, df in charts.items():
+        out.setdefault(timeframe_of(df), {})[name] = df
+    return out
+
+
+def deploy_check(store, charts: dict[str, pd.DataFrame], log=print, split: float = 0.7) -> dict[str, bool]:
+    """The last gate before the trader uses what it learned about exits: trade ALL the live setups together,
+    with their learned stops / early exits and with the plain 3% stop, on the last 30% of every chart of a
+    timeframe. The learned plans for that timeframe are deployed only if they made more there; otherwise
+    every setup goes back to the 3% stop and no early exit on that timeframe (what it learned stays visible)."""
+    from mcbot.backtest import run_backtest
+    from . import strategy
+    setups = [s for s in store.setups(("active", "pinned")) if s["weight"] > 0 or s["status"] == "pinned"]
+    verdict = {}
+    for tf, group in by_timeframe(charts).items():
+        learned = [{**s, "stats": {"exit_plan": {tf: {**p, "stop": p.get("learned_stop", p["stop"]),
+                                                      "reversal": p.get("learned_reversal", p["reversal"])}
+                                                 for p in [(s["stats"].get("exit_plan") or {}).get(tf, {})] if p}}}
+                   for s in setups]
+        plain = [{**s, "stats": {}} for s in setups]
+        if not any((s["stats"]["exit_plan"].get(tf) or {}).get("stop") not in (None, "fixed")
+                   or (s["stats"]["exit_plan"].get(tf) or {}).get("reversal") for s in learned):
+            verdict[tf] = False
+            continue
+        ret = {"learned": 0.0, "plain": 0.0}
+        for name, df in group.items():
+            cut = int(len(df) * split)
+            for k, ss in (("learned", learned), ("plain", plain)):
+                sig = strategy.signals(df, ss, mode="learned")
+                st = run_backtest(df.iloc[cut:], sig.iloc[cut:], allow_short=True, stop_loss=strategy.STOP,
+                                  take_profits=strategy.TAKE_PROFITS).stats
+                ret[k] += st["total_return_pct"]
+        verdict[tf] = bool(ret["learned"] > ret["plain"])
+        log(f"  exit plans on {tf}: all setups together on unseen prices {ret['learned']:+.1f}% with them vs "
+            f"{ret['plain']:+.1f}% with the 3% stop -> {'deployed' if verdict[tf] else 'NOT deployed'}")
+    for s in store.setups():
+        plans = (s.get("stats") or {}).get("exit_plan") or {}
+        for tf, p in plans.items():
+            p.setdefault("learned_stop", p["stop"])
+            p.setdefault("learned_reversal", p["reversal"])
+            ok = verdict.get(tf, False)
+            p["deployed"] = ok
+            p["stop"], p["reversal"] = (p["learned_stop"], p["learned_reversal"]) if ok else ("fixed", False)
+        if plans:
+            store.update_setup(s["id"], stats=s["stats"])
+    return verdict
+
+
+# ---- after the entry: what trades did, and can the trigger be tuned? ----------------------------
+def reversal_signals(df: pd.DataFrame) -> tuple[np.ndarray, np.ndarray]:
+    """A *confirmed* reversal, as the lessons describe it: a divergence confirmed by the dot printing on a
+    closed candle (bearish divergence + red dot / bullish + green dot), or the structure breaking with money
+    flow behind it (close below the 20-candle low with money flow red / above the high with it green).
+    Returns (against a long, against a short)."""
+    r = lambda rules: builder._all(df, rules).to_numpy(bool)
+    bear = (r([{"rule": "rsi_bear_div", "a": 10, "b": 60}]) | r([{"rule": "wt_bear_div", "a": 10, "b": 60}])) \
+        & r([{"rule": "wt_red_dot", "a": -1000}])
+    bull = (r([{"rule": "rsi_bull_div", "a": 10, "b": 60}]) | r([{"rule": "wt_bull_div", "a": 10, "b": 60}])) \
+        & r([{"rule": "wt_green_dot", "a": 1000}])
+    down = r([{"rule": "breakdown_low", "a": 20}]) & r([{"rule": "mf_negative"}])
+    up = r([{"rule": "breakout_high", "a": 20}]) & r([{"rule": "mf_positive"}])
+    return bear | down, bull | up
+
+
+def after_entry(df: pd.DataFrame, setup: dict, horizon: int = HORIZON) -> dict:
+    """Follow every past trade of a setup candle by candle (same entry / stop / target as its test):
+    how far it went for you (MFE) and against you (MAE) in R, how long it took, how often it got to 1R,
+    and what closing a losing trade on a confirmed reversal would have changed."""
+    d = setup["direction"]
+    sgn = 1 if d == "long" else -1
+    stop_atr, rr = float(setup.get("stop_atr") or 1.5), float(setup.get("rr") or 2.0)
+    res = outcomes(df, d, stop_atr, rr, horizon)
+    mask = dedupe(setup_mask(df, setup)) & np.isfinite(res)
+    o, h, l, c = (df[k].to_numpy(float) for k in ("open", "high", "low", "close"))
+    a = atr_arr(df)
+    against = reversal_signals(df)[0 if d == "long" else 1]
+    n = len(df)
+    rows = []
+    for i in np.flatnonzero(mask):
+        if i + 1 >= n or not a[i] > 0:
+            continue
+        entry, risk = o[i + 1], stop_atr * a[i]
+        mfe = mae = 0.0
+        bars, rev_r, win_bars = horizon, None, None
+        for k in range(1, horizon + 1):
+            j = i + k
+            if j >= n:
+                break
+            fav = sgn * ((h[j] if sgn > 0 else l[j]) - entry) / risk
+            adv = sgn * ((l[j] if sgn > 0 else h[j]) - entry) / risk
+            mae = min(mae, adv)
+            if adv <= -1:                                   # stopped
+                bars = k
+                break
+            mfe = max(mfe, fav)
+            if fav >= rr:
+                bars = win_bars = k
+                break
+            # confirmed reversal on this closed candle while the trade is losing: out at the next open
+            if rev_r is None and against[j] and j + 1 < n and sgn * (c[j] - entry) < 0:
+                rev_r = max(-1.0, sgn * (o[j + 1] - entry) / risk)
+        rows.append((mfe, mae, bars, win_bars, res[i], rev_r))
+    if not rows:
+        return {"trades": 0}
+    mfe, mae, bars = (np.array([r[k] for r in rows], float) for k in range(3))
+    wins = [r for r in rows if r[4] > 0]
+    rev = [(r[4], r[5]) for r in rows if r[5] is not None]
+    return {
+        "trades": len(rows),
+        "mfe_r": round(float(np.median(mfe)), 2), "mae_r": round(float(np.median(mae)), 2),
+        "reached_1r_pct": round(float((mfe >= 1).mean()) * 100, 1),
+        "reached_target_pct": round(float((mfe >= rr).mean()) * 100, 1),
+        "bars_held": round(float(np.median(bars)), 1),
+        "bars_to_win": round(float(np.median([r[3] for r in wins if r[3]])), 1) if any(r[3] for r in wins) else None,
+        "winners_heat_r": round(float(np.median([r[1] for r in wins])), 2) if wins else None,
+        "losers_best_r": round(float(np.median([r[0] for r in rows if r[4] <= 0])), 2)
+        if any(r[4] <= 0 for r in rows) else None,
+        "reversal_exits": len(rev),
+        "reversal_saved_r": round(float(sum(x - y for y, x in rev)), 2),   # + = closing early was better
+    }
+
+
+def combine_after(per: dict[str, dict]) -> dict:
+    rows = [s for s in per.values() if s.get("trades")]
+    n = sum(s["trades"] for s in rows)
+    if not n:
+        return {"trades": 0}
+    out = {"trades": n}
+    for k in ("mfe_r", "mae_r", "reached_1r_pct", "reached_target_pct", "bars_held", "bars_to_win",
+              "winners_heat_r", "losers_best_r"):
+        vals = [(s[k], s["trades"]) for s in rows if s.get(k) is not None]
+        if vals:
+            out[k] = round(sum(v * w for v, w in vals) / sum(w for _, w in vals), 2)
+    out["reversal_exits"] = sum(s.get("reversal_exits", 0) for s in rows)
+    out["reversal_saved_r"] = round(sum(s.get("reversal_saved_r", 0) for s in rows), 2)
+    return out
+
+
+def hints(setup: dict, after: dict) -> list[str]:
+    """Plain-words reading of the after-entry numbers."""
+    out = []
+    if not after.get("trades") or after["trades"] < MIN_TRADES:
+        return out
+    rr = float(setup.get("rr") or 2.0)
+    if after.get("reached_1r_pct", 0) >= 55 and after.get("reached_target_pct", 0) < 35:
+        out.append(f"{after['reached_1r_pct']:.0f}% of trades got to +1R but only {after['reached_target_pct']:.0f}% "
+                   f"reached the {rr:g}R target - take partial profit at 1R or use a closer target.")
+    if after.get("winners_heat_r") is not None and after["winners_heat_r"] <= -0.6:
+        out.append(f"Even winners usually went {abs(after['winners_heat_r']):.1f}R against you first - the entry is "
+                   "early: wait for one more confirmation candle or a better price.")
+    if after.get("losers_best_r") is not None and after["losers_best_r"] >= 0.8:
+        out.append(f"Losing trades were typically up {after['losers_best_r']:.1f}R before turning - moving the stop "
+                   "to breakeven after +1R would have saved many of them.")
+    if after.get("reversal_exits"):
+        s = after["reversal_saved_r"]
+        out.append(f"Closing losing trades on a confirmed reversal: {after['reversal_exits']} times, "
+                   + (f"saved {s:+.1f}R in total." if s > 0 else f"cost {s:+.1f}R in total (they often recovered)."))
+    return out
+
+
+def tune(charts: dict[str, pd.DataFrame], setup: dict, split: float = 0.7) -> dict | None:
+    """Try nearby trigger settings (each rule's numbers, the stop and the target) on the first 70% of every
+    chart; keep a change only if it also beats the current setting on the last 30% it never saw.
+    Returns the best change, or None."""
+    def score(s, part):
+        per = {}
+        for name, df in charts.items():
+            cut = int(len(df) * split)
+            per[name] = evaluate(df, s, *((0, cut) if part == "train" else (cut, len(df))))
+        return combine(per)
+
+    base_tr, base_te = score(setup, "train"), score(setup, "test")
+    if (base_tr.get("trades") or 0) < MIN_TRADES:
+        return None
+    variants = []
+    for i, r in enumerate(setup.get("rules", [])):
+        if r.get("rule") not in builder.RULES:
+            continue
+        _, da, db, _ = builder.RULES[r["rule"]]
+        for key, default in (("a", da), ("b", db)):
+            cur = r.get(key, default)
+            if not isinstance(cur, (int, float)) or isinstance(cur, bool) or cur == 0:
+                continue
+            for f in (0.5, 0.75, 1.25, 1.5):
+                v = cur * f
+                v = int(round(v)) if isinstance(cur, int) or float(cur).is_integer() else round(v, 2)
+                if v == cur or (isinstance(cur, int) and v < 1 and cur >= 1):
+                    continue
+                rules = [dict(x) for x in setup["rules"]]
+                rules[i][key] = v
+                variants.append((f"{builder.describe(r)} -> {builder.describe(rules[i])}", {"rules": rules}))
+    for st in (1.0, 1.5, 2.0, 2.5):
+        if st != float(setup.get("stop_atr") or 1.5):
+            variants.append((f"stop {setup.get('stop_atr') or 1.5:g} ATR -> {st:g} ATR", {"stop_atr": st}))
+    for rr in (1.5, 2.0, 3.0):
+        if rr != float(setup.get("rr") or 2.0):
+            variants.append((f"target {setup.get('rr') or 2:g}R -> {rr:g}R", {"rr": rr}))
+    best = None
+    for label, change in variants:
+        s = {**setup, **change}
+        tr = score(s, "train")
+        if (tr.get("trades") or 0) < MIN_TRADES or (tr["edge"] or 0) <= (base_tr["edge"] or 0) + 0.03:
+            continue
+        te = score(s, "test")
+        if (te.get("trades") or 0) < 8 or (te["edge"] or 0) <= (base_te.get("edge") or 0):
+            continue                                    # better in hindsight only: over-fitted
+        gain = (tr["edge"] - (base_tr["edge"] or 0)) + (te["edge"] - (base_te.get("edge") or 0))
+        if best is None or gain > best["gain"]:
+            best = {"change": label, "set": change, "gain": round(gain, 3),
+                    "train": {"edge": tr["edge"], "trades": tr["trades"], "was": base_tr["edge"]},
+                    "test": {"edge": te["edge"], "trades": te["trades"], "was": base_te.get("edge")}}
+    return best
+
+
+# ---- the exit plan it deploys: its own stop and the early exit, both learned before they're used -------
+FIXED_STOP = 0.03          # the app's default (apprentice.strategy.STOP)
+FEE = 0.001
+STOP_METHODS = ("fixed", "atr", "swing")
+SWING_LOOKBACK = 10
+
+
+def stop_pct(df: pd.DataFrame, direction: str, method: str, stop_atr: float = 1.5) -> np.ndarray:
+    """Each candle's stop distance (fraction of price) for an entry at the next open:
+      fixed - the app's 3%
+      atr   - stop_atr x ATR
+      swing - beyond the last swing low (long) / high (short) of the last 10 candles plus a quarter ATR,
+              as the lessons teach ("place the stop below the last low"); kept between 0.5 and 4 ATR."""
+    c = df["close"].to_numpy(float)
+    a = atr_arr(df)
+    if method == "fixed":
+        return np.full(len(df), FIXED_STOP)
+    if method == "atr":
+        out = stop_atr * a / c
+    else:
+        if direction == "long":
+            dist = c - df["low"].rolling(SWING_LOOKBACK, min_periods=1).min().to_numpy(float)
+        else:
+            dist = df["high"].rolling(SWING_LOOKBACK, min_periods=1).max().to_numpy(float) - c
+        out = np.clip(dist + 0.25 * a, 0.5 * a, 4 * a) / c
+    return np.clip(out, 0.002, 0.10)
+
+
+def _plan_trade(o, h, l, c, i, sgn, risk_pct, against, horizon, use_rev) -> float | None:
+    """Result (fraction of the position, after fees) of the trader's exits: half off at 1R, half at 2R,
+    stop at -1R; optionally out at the next open if a confirmed reversal prints while losing."""
+    n = len(o)
+    if i + 1 >= n:
+        return None
+    entry = o[i + 1]
+    risk = risk_pct * entry
+    left, got = [1.0, 2.0], 0.0                        # open halves, by their target in R
+    for k in range(1, horizon + 1):
+        j = i + k
+        if j >= n:
+            return None
+        adv = sgn * ((l[j] if sgn > 0 else h[j]) - entry) / risk
+        fav = sgn * ((h[j] if sgn > 0 else l[j]) - entry) / risk
+        if adv <= -1:
+            got -= 0.5 * len(left)
+            left = []
+        for tg in list(left):
+            if fav >= tg:
+                got += 0.5 * tg
+                left.remove(tg)
+        if not left:
+            break
+        if use_rev and against[j] and j + 1 < n and sgn * (c[j] - entry) < 0:
+            got += 0.5 * len(left) * max(-1.0, sgn * (o[j + 1] - entry) / risk)
+            left = []
+            break
+        if k == horizon:
+            got += 0.5 * len(left) * max(-1.0, sgn * (c[j] - entry) / risk)
+    return got * risk_pct - 2 * FEE
+
+
+def exit_plan(charts: dict[str, pd.DataFrame], setup: dict, split: float = 0.7, horizon: int = HORIZON) -> dict:
+    """Learn which stop this setup should use and whether to close losers on a confirmed reversal.
+    A change from the defaults (fixed 3% stop, no early exit) is only deployed if it made more per trade on
+    the first 70% of every chart AND on the last 30% it never saw."""
+    d = setup["direction"]
+    sgn = 1 if d == "long" else -1
+    res = {m: {"train": [], "test": []} for m in STOP_METHODS}
+    rev = {"train": [], "test": []}
+    cache = {}
+    for name, df in charts.items():
+        o, h, l, c = (df[k].to_numpy(float) for k in ("open", "high", "low", "close"))
+        mask = dedupe(setup_mask(df, setup))
+        cut = int(len(df) * split)
+        against = reversal_signals(df)[0 if d == "long" else 1]
+        cache[name] = (o, h, l, c, mask, cut, against)
+        for m in STOP_METHODS:
+            sp = stop_pct(df, d, m, float(setup.get("stop_atr") or 1.5))
+            for i in np.flatnonzero(mask):
+                r = _plan_trade(o, h, l, c, i, sgn, sp[i], against, horizon, False)
+                if r is not None:
+                    res[m]["train" if i < cut else "test"].append(r)
+    mean = lambda xs: float(np.mean(xs)) if xs else None
+    per = {m: {"train_pct": None if mean(v["train"]) is None else round(mean(v["train"]) * 100, 3),
+               "test_pct": None if mean(v["test"]) is None else round(mean(v["test"]) * 100, 3),
+               "trades": len(v["train"]) + len(v["test"])} for m, v in res.items()}
+    stop = "fixed"
+    ok = [m for m in STOP_METHODS if len(res[m]["train"]) >= MIN_TRADES and len(res[m]["test"]) >= 5]
+    if ok:
+        best = max(ok, key=lambda m: mean(res[m]["train"]))
+        if best != "fixed" and "fixed" in ok and mean(res[best]["test"]) > mean(res["fixed"]["test"]):
+            stop = best
+    # the early exit, with the stop it will actually use
+    for name, df in charts.items():
+        o, h, l, c, mask, cut, against = cache[name]
+        sp = stop_pct(df, d, stop, float(setup.get("stop_atr") or 1.5))
+        for i in np.flatnonzero(mask):
+            a = _plan_trade(o, h, l, c, i, sgn, sp[i], against, horizon, False)
+            b = _plan_trade(o, h, l, c, i, sgn, sp[i], against, horizon, True)
+            if a is not None and b is not None and a != b:
+                rev["train" if i < cut else "test"].append(b - a)
+    gain = {k: round(float(sum(v)) * 100, 2) for k, v in rev.items()}
+    use_rev = bool(len(rev["train"]) >= 5 and len(rev["test"]) >= 3 and gain["train"] > 0 and gain["test"] > 0)
+    return {"stop": stop, "reversal": use_rev, "stops": per,
+            "reversal_effect": {"times": len(rev["train"]) + len(rev["test"]), "train_pct": gain["train"],
+                                "test_pct": gain["test"]}}
 
 
 # ---- reading a chart --------------------------------------------------------------------------

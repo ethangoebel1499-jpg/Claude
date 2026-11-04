@@ -27,6 +27,8 @@ class Trade:
     remaining: float = 1.0            # fraction of the position still open
     targets_hit: int = 0
     stop_move: float | None = None    # current stop as a price move (-0.03, or 0 at breakeven)
+    scale: float = 1.0                # targets x this (a trade with its own stop keeps the reward-to-risk)
+    reversal: bool = False            # close early if losing on a confirmed reversal
     fills: list = field(default_factory=list)  # (time, price, fraction, reason)
 
 
@@ -140,18 +142,24 @@ def run_backtest(df: pd.DataFrame, signals: pd.DataFrame, *, allow_short: bool =
             return
         while pos is not None and pos.targets_hit < len(targets):
             level, size = targets[pos.targets_hit]
+            level *= pos.scale
             if best < level:
                 break
             px = fill_open if fill_open is not None else price_at(max(level, move_of(o[i])))
             pos.targets_hit += 1
             if trail_targets:
                 k = pos.targets_hit
-                pos.stop_move = 0.0 if k == 1 else targets[k - 2][0]
+                pos.stop_move = 0.0 if k == 1 else targets[k - 2][0] * pos.scale
             elif breakeven_after_tp1:
                 pos.stop_move = 0.0
             last = pos.targets_hit == len(targets) and not has_runner
             exit_part(i, px, pos.remaining if last else size, f"target{pos.targets_hit}")
 
+    reversal = {side: (sig[f"{side}_reversal"] if f"{side}_reversal" in sig else np.zeros(len(df), dtype=bool))
+                for side in ("long", "short")}
+    own_stop = sig.get("stop_pct")                      # a strategy that sets each trade's own stop
+    per_trade_rev = "use_reversal" in sig
+    use_rev = sig.get("use_reversal")
     for i in range(len(df)):
         # 1) act on the previous (confirmed) bar at this bar's open
         if i > 0:
@@ -169,13 +177,22 @@ def run_backtest(df: pd.DataFrame, signals: pd.DataFrame, *, allow_short: bool =
                     exit_part(i, o[i], pos.remaining, "opposite setup")
                 elif sig[exit_now][p] and not riding:
                     exit_part(i, o[i], pos.remaining, "signal")
+                elif reversal[pos.side][p] and (pos.reversal or not per_trade_rev) and move_of(o[i]) < 0:
+                    # a confirmed reversal against a losing trade: out before the stop (as the live trader)
+                    exit_part(i, o[i], pos.remaining, "reversal")
             if pos is None and equity > 0:
                 stop0 = -stop_loss if stop_loss else None
                 stop0_s = -stop_loss_short if stop_loss_short else stop0
+                own = float(own_stop[p]) if own_stop is not None else float("nan")
+                own = own if np.isfinite(own) and own > 0 and stop_loss else None
+                rev = bool(use_rev[p]) if per_trade_rev else False
                 if sig["long_entry"][p]:
-                    pos = Trade("long", idx[i], o[i], stop_move=stop0)
+                    pos = Trade("long", idx[i], o[i], stop_move=-own if own else stop0,
+                                scale=own / stop_loss if own else 1.0, reversal=rev)
                 elif allow_short and sig["short_entry"][p]:
-                    pos = Trade("short", idx[i], o[i], stop_move=stop0_s)
+                    base = stop_loss_short or stop_loss
+                    pos = Trade("short", idx[i], o[i], stop_move=-own if own else stop0_s,
+                                scale=own / base if own else 1.0, reversal=rev)
 
         # 2) intrabar stop-loss / take-profits / liquidation
         if pos is not None:

@@ -19,7 +19,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 BRANCH = "paper-trades"
-VERDICTS = {"setups": {"use", "drop", "fix"}, "concepts": {"keep", "drop", "fix"}, "lessons": {"keep", "drop"}}
+VERDICTS = {"setups": {"use", "watch", "drop", "fix"}, "concepts": {"keep", "drop", "fix"}, "lessons": {"keep", "drop"}}
 
 
 def git(*a, check=True) -> str:
@@ -47,6 +47,14 @@ def show() -> None:
               + (f"\n    unchecked: {s['unchecked']}" if s.get("unchecked") else "")
               + f"\n    {st.get('trades', 0)} trades, win {st.get('win_rate', 0) or 0:.0f}%, "
                 f"{st.get('avg_r', 0) or 0:+.2f}R/trade, edge {st.get('edge', 0) or 0:+.2f}R"
+              + (f"\n    after entry: {s['after_entry']}" if s.get("after_entry") else "")
+              + "".join(f"\n    hint: {h}" for h in s.get("hints") or [])
+              + (f"\n    tuning: {s['tune']['change']} (edge {s['tune']['test']['was']} -> {s['tune']['test']['edge']} "
+                 f"on unseen data)" if s.get("tune") else "")
+              + "".join(f"\n    exit plan {tf}: learned stop {p.get('learned_stop', p.get('stop'))}, reversal exit "
+                        f"{'on' if p.get('learned_reversal', p.get('reversal')) else 'off'}, "
+                        f"{'deployed' if p.get('deployed') else 'not deployed'} · {p.get('stops')}"
+                        for tf, p in (s.get("exit_plan") or {}).items() if isinstance(p, dict))
               + (f"\n    why: {str(s.get('why'))[:200]}" if s.get("why") else ""))
     import io
     import pandas as pd

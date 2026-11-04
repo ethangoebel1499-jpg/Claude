@@ -35,6 +35,8 @@ class Position:
     fees_usd: float = 0.0
     stop_order: str | None = None     # id of the stop order resting at the broker (works with the laptop off)
     broker: str = "sim"               # which broker holds it ("sim" = the built-in paper broker, "webull")
+    stop_pct: float | None = None     # this trade's own stop (the strategy set it at entry); None = the run's stop
+    reversal: bool = False            # close it early if losing and a confirmed reversal prints
 
 
 @dataclass
@@ -107,7 +109,7 @@ class PositionManager:
             self.store.event(self.name, time, kind, text)
 
     # ---- actions -------------------------------------------------------------
-    def open(self, side: str, price: float, time) -> bool:
+    def open(self, side: str, price: float, time, stop_pct: float | None = None, reversal: bool = False) -> bool:
         qty = self._round_qty(self.state.equity * self.fraction / price)
         if qty <= 0:
             self._event(time, "skip", f"{side} entry skipped: position size rounds to 0")
@@ -126,11 +128,14 @@ class PositionManager:
             self._save()
             return False
         self.state.pending_entry = None
+        ok = stop_pct is not None and math.isfinite(stop_pct) and stop_pct > 0 and self.exits.stop
         self.state.position = Position(side, str(time), fill.price, fill.qty, fill.qty, fees_usd=fill.fee_usd,
-                                       broker=getattr(self.broker, "name", "sim"))
+                                       broker=getattr(self.broker, "name", "sim"),
+                                       stop_pct=float(stop_pct) if ok else None, reversal=bool(reversal))
         if self.store:
             self.store.fill(self.name, time, side, "entry", fill)
-        self._event(time, "entry", f"{side.upper()} {fmt_qty(fill.qty)} @ {fmt_price(fill.price)}")
+        self._event(time, "entry", f"{side.upper()} {fmt_qty(fill.qty)} @ {fmt_price(fill.price)}"
+                    + (f" · its own stop {self.state.position.stop_pct * 100:.2f}% away" if ok else ""))
         self._protect(time)
         self._save()
         return True
@@ -141,7 +146,7 @@ class PositionManager:
         p = self.state.position
         if not self.broker_stops or p is None or p.remaining_qty <= 0:
             return
-        px = self._price_at(-self.exits.stop)
+        px = self._price_at(self._stop_move())
         p.stop_order = self.broker.place_stop(self.name, "sell" if p.side == "long" else "buy", p.remaining_qty, px)
         if p.stop_order:
             self._event(time, "protect", f"stop order at the broker: {fmt_qty(p.remaining_qty)} @ {fmt_price(px)}")
@@ -155,7 +160,7 @@ class PositionManager:
         p = self.state.position
         if p is None or not p.stop_order:
             return True
-        res = self.broker.cancel_stop(self.name, p.stop_order, p.remaining_qty, self._price_at(-self.exits.stop))
+        res = self.broker.cancel_stop(self.name, p.stop_order, p.remaining_qty, self._price_at(self._stop_move()))
         if isinstance(res, Fill):
             p.stop_order = None
             self._record(res, time, "stop (at broker)")
@@ -168,7 +173,7 @@ class PositionManager:
         p = self.state.position
         if p is None or not p.stop_order:
             return False
-        res = self.broker.stop_status(self.name, p.stop_order, p.remaining_qty, self._price_at(-self.exits.stop))
+        res = self.broker.stop_status(self.name, p.stop_order, p.remaining_qty, self._price_at(self._stop_move()))
         if isinstance(res, Fill):
             p.stop_order = None
             self._record(res, time, "stop (at broker)")
@@ -229,16 +234,21 @@ class PositionManager:
         if p is not None:
             riding = self.has_runner and p.targets_hit == len(self.fixed)
             exit_now, opposite = ("long_exit", "short_entry") if p.side == "long" else ("short_exit", "long_entry")
+            reversal = "long_reversal" if p.side == "long" else "short_reversal"
             if sig[opposite]:
                 self.close_all(price, time, "opposite setup")
             elif sig[exit_now] and not riding:
                 self.close_all(price, time, "signal")
+            elif bool(sig.get(reversal, False)) and (p.reversal or "use_reversal" not in sig) and self._move(price) < 0:
+                # a confirmed reversal against a losing trade: get out before the stop
+                self.close_all(price, time, "reversal")
         self.state.pending_entry = None
         if self.state.position is None and self.state.equity > 0:
+            own = dict(stop_pct=_num(sig.get("stop_pct")), reversal=bool(sig.get("use_reversal", False)))
             if sig["long_entry"]:
-                self.open("long", price, time)
+                self.open("long", price, time, **own)
             elif self.shorts and sig["short_entry"]:
-                self.open("short", price, time)
+                self.open("short", price, time, **own)
         self.state.last_bar = str(bar_time if bar_time is not None else time)
         self._save()
 
@@ -265,6 +275,7 @@ class PositionManager:
             return
         while self.state.position is not None and p.targets_hit < len(self.fixed):
             level, size = self.fixed[p.targets_hit]
+            level *= self._scale()
             if self._move(favourable) < level:
                 break
             px = self._price_at(max(level, self._move(open_)))
@@ -276,13 +287,29 @@ class PositionManager:
                 break
 
     def _stop_move(self) -> float | None:
+        p = self.state.position
+        if p is not None and p.stop_pct:
+            return -p.stop_pct
         return -self.exits.stop if self.exits.stop else None
+
+    def _scale(self) -> float:
+        """A trade with its own stop keeps the run's reward-to-risk: targets move with the stop."""
+        p = self.state.position
+        return p.stop_pct / self.exits.stop if p is not None and p.stop_pct and self.exits.stop else 1.0
 
     def unrealized(self, price: float) -> float:
         p = self.state.position
         if p is None:
             return 0.0
         return p.realized_usd - p.fees_usd + self._dir() * (price - p.entry_price) * p.remaining_qty
+
+
+def _num(v) -> float | None:
+    try:
+        v = float(v)
+    except (TypeError, ValueError):
+        return None
+    return v if math.isfinite(v) and v > 0 else None
 
 
 class SimBroker:

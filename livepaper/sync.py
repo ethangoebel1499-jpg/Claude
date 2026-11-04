@@ -68,7 +68,9 @@ def export_all(lp: Store | None) -> dict[str, str]:
                                                     "rr", "timeframe", "why", "quote", "unchecked", "lesson_id")},
                            "rules": s.get("rules", []),
                            "rules_text": [builder.describe(r) for r in s.get("rules", []) if r.get("rule") in builder.RULES],
-                           "stats": s.get("stats", {}).get("total", {}), "charts": s.get("stats", {}).get("charts", {})})
+                           "stats": s.get("stats", {}).get("total", {}), "charts": s.get("stats", {}).get("charts", {}),
+                           "after_entry": s.get("stats", {}).get("after"), "hints": s.get("stats", {}).get("hints"),
+                           "tune": s.get("stats", {}).get("tune"), "exit_plan": s.get("stats", {}).get("exit_plan")})
         files["apprentice/setups.json"] = json.dumps(setups, indent=1, default=str)
         lines.append(f"- Apprentice: {len(a.table('lessons'))} lessons, {len(a.table('concepts'))} concepts, "
                      f"{len(setups)} setups ({sum(s['status'] in ('active', 'pinned') for s in setups)} trading)")

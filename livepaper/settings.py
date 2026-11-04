@@ -25,7 +25,7 @@ DEFAULTS = {
     # can't trade crypto; "sim" = always the built-in paper broker; "webull" = always Webull
     "webull_crypto": "auto",
     # stream study agent
-    "streamlearn_db": "streamlearn.db", "apprentice_db": "apprentice.db", "stream_backend": "ollama", "ollama_model": "auto", "stream_screen": True, "ollama_vision_model": "auto",
+    "streamlearn_db": "streamlearn.db", "apprentice_db": "apprentice.db", "apprentice_reversal_exit": "learned", "stream_backend": "ollama", "ollama_model": "auto", "stream_screen": True, "ollama_vision_model": "auto",
     "ollama_url": "http://localhost:11434", "anthropic_api_key": "", "timezone": "America/New_York",
 }
 ENV = {"webull_app_key": "WEBULL_APP_KEY", "webull_app_secret": "WEBULL_APP_SECRET",

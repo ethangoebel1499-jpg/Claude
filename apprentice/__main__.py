@@ -27,7 +27,7 @@ from apprentice import brain, teach, youtube  # noqa: E402
 from apprentice.store import Store  # noqa: E402
 from apprentice.strategy import db_path  # noqa: E402
 
-DEFAULT_CHARTS = ["BTC:4h", "ETH:4h", "SOL:4h", "BTC:1D", "ETH:1D"]
+DEFAULT_CHARTS = ["BTC:4h", "ETH:4h", "SOL:4h", "BTC:1h", "ETH:1h", "SOL:1h", "BTC:1D", "ETH:1D"]
 
 
 def model(no_ai: bool):

@@ -2,12 +2,13 @@
 downloaded by every sync into runtime/claude_review.json).
 
   {"reviewed_at": "...", "summary": "...",
-   "setups":   [{"id": 12, "name": "...", "verdict": "use" | "drop" | "fix", "reason": "...",
+   "setups":   [{"id": 12, "name": "...", "verdict": "use" | "watch" | "drop" | "fix", "reason": "...",
                  "fix": {"rules": [...builder rules...], "direction": "long", "stop_atr": 1.5, "rr": 2} }],
    "concepts": [{"id": 40, "verdict": "keep" | "drop" | "fix", "reason": "...", "fix_text": "..."}],
    "lessons":  [{"id": 3, "verdict": "keep" | "drop", "reason": "..."}]}
 
-Nothing changes until you press Apply: use -> 📌 always use, drop -> 🚫 off (setups) / deleted (concepts),
+Nothing changes until you press Apply: use -> 📌 always use, watch -> left as it is (too early / fragile:
+keep paper-trading it and look again), drop -> 🚫 off (setups) / deleted (concepts),
 fix -> the corrected rules (re-tested on the next 🎓 Learn) or the corrected wording.
 """
 
@@ -19,7 +20,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 LOCAL = ROOT / "runtime" / "claude_review.json"
 APPLIED = ROOT / "runtime" / "claude_review_applied.json"
-ICON = {"use": "✅", "keep": "✅", "drop": "❌", "fix": "🔧"}
+ICON = {"use": "✅", "keep": "✅", "watch": "⏳", "drop": "❌", "fix": "🔧"}
 
 
 def load() -> dict:
@@ -87,6 +88,8 @@ def apply_setup(store, setup: dict, item: dict) -> str:
         fields = {k: fix[k] for k in ("rules", "direction", "stop_atr", "rr") if fix.get(k) is not None}
         store.update_setup(setup["id"], status="candidate", **fields)
         out = "fixed - re-tested on the next 🎓 Learn"
+    elif v == "watch":
+        out = "left as it is - Claude will look again with more trades"
     else:
         return "nothing to apply"
     _mark(key("setups", item))

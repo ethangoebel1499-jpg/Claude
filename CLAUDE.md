@@ -12,7 +12,8 @@ When the user asks how the apprentice / paper trading is doing, or to review wha
    stats; concepts; lessons). If nothing is shared, tell the user to turn on "Share with Claude" in
    ⚙️ Account and add a GitHub token (ZIP installs can't push with git).
 2. Judge each setup: **use** (sound logic, rules agree on direction, positive edge out of sample, enough
-   trades, works on several charts), **drop** (no/negative edge, contradictory rules that can never fire,
+   trades, works on several charts), **watch** (too early, < ~30 trades, or an edge that looks fragile -
+   left running, nothing changes), **drop** (no/negative edge, contradictory rules that can never fire,
    duplicates), **fix** (good idea, wrong rules - give corrected `mcbot.builder` rule ids in `fix.rules`;
    classic mistake: a lower-band long paired with a *bearish* divergence, or an upper-band short with a
    *bullish* one). Judge concepts: **keep / drop / fix** (drop ads, outros, sponsor text, vague filler;

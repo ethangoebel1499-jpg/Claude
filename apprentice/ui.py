@@ -272,6 +272,89 @@ def stats_line(s: dict) -> str:
             f"{t['edge']:+.2f}R · positive on {t.get('charts_positive', 0)}/{t.get('charts', 0)} charts")
 
 
+def after_entry_line(a: dict) -> str:
+    return (f"After entry (median over {a['trades']} past trades): went up to **{a.get('mfe_r', 0):+.2f}R** for you, "
+            f"**{a.get('mae_r', 0):+.2f}R** against you · {a.get('reached_1r_pct', 0):.0f}% reached +1R, "
+            f"{a.get('reached_target_pct', 0):.0f}% the target · held {a.get('bars_held', 0):g} candles"
+            + (f" (winners took {a['bars_to_win']:g})" if a.get("bars_to_win") else ""))
+
+
+def after_entry_lines(store: Store, s: dict) -> None:
+    """What this setup's trades did after the entry, what that says about the trigger, and a tested tweak."""
+    a = s["stats"].get("after") or {}
+    if a.get("trades"):
+        st.caption(after_entry_line(a))
+    names = {"fixed": "the 3% stop", "atr": f"{s['stop_atr']:g} ATR stop", "swing": "beyond the last swing low/high"}
+    for tf, plan in (s["stats"].get("exit_plan") or {}).items():
+        if "stop" not in plan:
+            continue
+        per = plan.get("stops", {})
+        line = " · ".join(f"{names[m]}: {v['train_pct']:+.2f}% / {v['test_pct']:+.2f}%" for m, v in per.items()
+                          if v.get("train_pct") is not None and v.get("test_pct") is not None)
+        ls, lr = plan.get("learned_stop", plan["stop"]), plan.get("learned_reversal", plan["reversal"])
+        status = ("✅ in use" if plan.get("deployed") else
+                  "⏸️ not in use - all setups together did worse with it on unseen prices, so it trades with the 3% stop"
+                  if (ls != "fixed" or lr) else "")
+        st.caption(f"🛡️ {tf}: learned stop **{names.get(ls, ls)}**, early exit on a reversal **{'on' if lr else 'off'}**"
+                   + (f" · {status}" if status else "") + f" · per trade, past / unseen prices: {line}")
+    for h in s["stats"].get("hints") or []:
+        st.caption(f"💡 {h}")
+    tn = s["stats"].get("tune")
+    if tn:
+        t1, t2 = st.columns([5, 1.3])
+        t1.markdown(f"🎯 **Tuning that held up on unseen prices:** {tn['change']} - edge "
+                    f"{tn['test']['was']:+.2f}R → {tn['test']['edge']:+.2f}R on the last 30% "
+                    f"({tn['test']['trades']} trades), {tn['train']['was']:+.2f}R → {tn['train']['edge']:+.2f}R before.")
+        if t2.button("Apply tuning", key=f"ap_tune_{s['id']}"):
+            store.update_setup(s["id"], **tn["set"], stats={**s["stats"], "tune": None})
+            st.toast("Tuned - re-tested on the next 🎓 Learn")
+            st.rerun()
+
+
+def after_entry_panel(store: Store, setups: list[dict]) -> None:
+    """Across the setups it trades: what happens after entries, and the early-exit switch."""
+    from livepaper import settings
+    live = [s for s in setups if s["status"] in ("active", "pinned") and (s["stats"].get("after") or {}).get("trades")]
+    st.markdown("##### 📈 After the entry")
+    if not live:
+        st.caption("Press 🎓 Learn now - it then follows every past trade of each setup after the entry (how far it "
+                   "went for and against you, how long it took) and tries nearby trigger settings.")
+    else:
+        n = sum(s["stats"]["after"]["trades"] for s in live)
+        w = lambda k: sum((s["stats"]["after"].get(k) or 0) * s["stats"]["after"]["trades"] for s in live) / n
+        c = st.columns(4)
+        c[0].metric("Best move for you (median)", f"{w('mfe_r'):+.2f}R")
+        c[1].metric("Worst move against (median)", f"{w('mae_r'):+.2f}R")
+        c[2].metric("Reached +1R", f"{w('reached_1r_pct'):.0f}%")
+        tuned = sum(1 for s in live if s["stats"].get("tune"))
+        c[3].metric("Setups with a tested tweak", tuned)
+        saved = sum(s["stats"]["after"].get("reversal_saved_r", 0) for s in live)
+        times = sum(s["stats"]["after"].get("reversal_exits", 0) for s in live)
+    from apprentice.strategy import reversal_mode
+    modes = {"learned": "Only for setups where 🎓 Learn showed it helps (past and unseen prices)",
+             "off": "Never - always wait for the stop or the targets", "always": "Always"}
+    cur = reversal_mode()
+    new = st.radio("Close a losing trade early when a confirmed reversal prints", list(modes), list(modes).index(cur),
+                   format_func=modes.get, horizontal=False,
+                   help="Confirmed reversal = a divergence confirmed by the dot on a closed candle (bearish divergence "
+                        "+ red dot against a long, bullish + green dot against a short), or the structure breaking "
+                        "with money flow behind it. Only ever closes a trade that is losing; winners keep their "
+                        "targets. The lessons say to stick to the planned stop, so it's only used where the data "
+                        "clearly says otherwise.")
+    if live:
+        plans = lambda s: [p for p in (s["stats"].get("exit_plan") or {}).values() if isinstance(p, dict)]
+        used = [s for s in live if any(p.get("reversal") for p in plans(s))]
+        own = [s for s in live if any(p.get("stop") in ("atr", "swing") for p in plans(s))]
+        st.caption(f"Learned so far: **{len(own)}** of {len(live)} trading setups use their own stop "
+                   f"(ATR or beyond the last swing), the rest the 3% stop · the early exit helped for **{len(used)}**"
+                   + (f" ({', '.join('#' + str(s['id']) for s in used)})" if used else "")
+                   + (f" · across all of them it would have closed {times} losers early, {saved:+.1f}R in total"
+                      if times else ""))
+    if new != cur:
+        settings.save({"apprentice_reversal_exit": new})
+        st.toast("Saved - the trader uses it from its next price check")
+
+
 def claude_panel(store: Store) -> None:
     """Claude's latest review of the setups, concepts and lessons (comes back with each sync)."""
     from livepaper import sync
@@ -317,8 +400,10 @@ def knowledge_tab(store: Store) -> None:
     m[4].metric("Retired (didn't work)", len(by["retired"]))
     c1, c2 = st.columns([3, 1])
     picks = c1.multiselect("Test on these charts", ["BTC:4h", "ETH:4h", "SOL:4h", "XRP:4h", "BTC:1D", "ETH:1D",
-                                                    "BTC:1h", "SPY:1D", "QQQ:1D"],
-                           ["BTC:4h", "ETH:4h", "SOL:4h", "BTC:1D", "ETH:1D"])
+                                                    "BTC:1h", "ETH:1h", "SOL:1h", "SPY:1D", "QQQ:1D"],
+                           ["BTC:4h", "ETH:4h", "SOL:4h", "BTC:1h", "ETH:1h", "SOL:1h", "BTC:1D", "ETH:1D"],
+                           help="Include the timeframes it paper trades: stops and early exits are learned and checked "
+                                "per timeframe, and a timeframe it never learned on trades with the plain 3% stop.")
     c2.write("")
     if c2.button("🎓 Learn now", type="primary", disabled=not picks,
                  help="Tests every setup on real prices, keeps what beats random, and learns new setups from the "
@@ -328,6 +413,7 @@ def knowledge_tab(store: Store) -> None:
     st.markdown("##### Accuracy (your ratings)")
     accuracy_panel(store)
     claude_panel(store)
+    after_entry_panel(store, setups)
 
     st.markdown("##### Setups")
     st.caption("**Active** = tested and beat random (the apprentice trades these). **Candidate** = not enough "
@@ -363,6 +449,7 @@ def knowledge_tab(store: Store) -> None:
                     st.markdown("**What the teacher also said, that it can't check on a chart yet:**\n" +
                                 "\n".join(f"- {u}" for u in s["unchecked"]))
                 st.caption(f"Stop {s['stop_atr']:g} ATR · target {s['rr']:g}R · {stats_line(s)}")
+                after_entry_lines(store, s)
                 rv = review.for_setup(s)
                 if rv:
                     r1, r2 = st.columns([5, 1.3])
