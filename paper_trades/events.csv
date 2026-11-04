@@ -436,3 +436,5 @@ Apprentice SOL 4h,2026-11-04T15:04:19+00:00,exit,closed (stop) -368.89 USD
 Apprentice UNI 4h,2026-11-04T15:10:02+00:00,exit,closed (stop) -337.65 USD
 Apprentice DOGE 1h,2026-11-04T15:14:26+00:00,exit,closed (removed from paper trading) +177.44 USD
 Apprentice DOGE 1h,2026-11-04T15:14:26+00:00,stop,removed from paper trading
+S3 GRIND DOGE 1h,2026-11-04T15:27:48+00:00,error,"ConnectionError: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+Witcher ETH 2h,2026-11-04T15:27:51+00:00,error,"ConnectionError: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
