@@ -28385,5 +28385,701 @@
   "hints": null,
   "tune": null,
   "exit_plan": null
+ },
+ {
+  "id": 209,
+  "name": "snake_eyes",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "4h",
+  "why": "Two bottoms next to each other, RSI bullish divergence, and close above 200 SMA suggest a potential reversal or continuation of the trend.",
+  "quote": "crypto phase calls this snake eyes and",
+  "unchecked": [
+   "two bottoms next to each other"
+  ],
+  "lesson_id": 57,
+  "rules": [
+   {
+    "rule": "rsi_bull_div",
+    "a": 14,
+    "b": 14
+   },
+   {
+    "rule": "close_above_sma",
+    "a": 200
+   }
+  ],
+  "rules_text": [
+   "Bullish divergence: price lower low, RSI higher low - in the last 14 candles, lows/highs at most 14 candles apart",
+   "Close above SMA (200)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 210,
+  "name": "Short: Close above the upper Bollinger band + Shooting star / bearish pin bar",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 1.5,
+  "timeframe": "24-minute chart",
+  "why": "Makes sense (a blow-off candle above the band), works on 5 of 9 charts, and held up on data it wasn\u2019t found on (+0.49R), but that\u2019s only 15 trades so far",
+  "quote": "you would have gotten stopped out if you entered on this trigger wave right here and the reason you would have gotten stopped out is because the money flow was clearly coming down into the red",
+  "unchecked": [
+   "Money flow was clearly coming down into the red"
+  ],
+  "lesson_id": 57,
+  "rules": [
+   {
+    "rule": "close_above_ema",
+    "a": 200
+   },
+   {
+    "rule": "shooting_star"
+   }
+  ],
+  "rules_text": [
+   "Close above EMA (200)",
+   "Shooting star / bearish pin bar (long upper wick)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 211,
+  "name": "short_market_cipher",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 0.7,
+  "rr": 2.0,
+  "timeframe": "4h",
+  "why": "Market Cipher shows momentum and confluence with lower highs and trigger waves, indicating a potential short entry.",
+  "quote": "so we want to wait until the price comes back down so that we can get a better entry that's why we're honing in onto the smaller time frames before we enter because we can get a better entry that way",
+  "unchecked": [
+   "Lower high: the last 5 candles' high is below the 5 candles before"
+  ],
+  "lesson_id": 57,
+  "rules": [
+   {
+    "rule": "wt_red_dot"
+   },
+   {
+    "rule": "wt_below"
+   }
+  ],
+  "rules_text": [
+   "Market Cipher red dot (WaveTrend crosses down) above 0",
+   "Market Cipher wave below -53 (oversold)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 212,
+  "name": "waves_crossing",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 0.7,
+  "rr": 2.0,
+  "timeframe": "1h",
+  "why": "The Market Cipher waves crossing each other signifies a trend change or reversal opportunity, and the blue wave crossing below the zero line indicates a bearish divergence, suggesting a potential reversal in the trend.",
+  "quote": "if you zoom in you can see that there's two waves here, there's a light blue and a dark blue, and they are crossing each other okay and the dot just signifies that there's a cross",
+  "unchecked": [
+   "waves crossing"
+  ],
+  "lesson_id": 57,
+  "rules": [
+   {
+    "rule": "wt_bull_div"
+   },
+   {
+    "rule": "wt_below"
+   }
+  ],
+  "rules_text": [
+   "Bullish divergence: price lower low, Market Cipher wave higher low - in the last 3 candles, lows/highs at most 60 candles apart",
+   "Market Cipher wave below -53 (oversold)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 213,
+  "name": "long_4h_anchor_trigger",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 2.0,
+  "rr": 2.0,
+  "timeframe": "4h",
+  "why": "Anchor and trigger waves on the 4-hour chart with green Market Cipher and positive MACD indicate a strong bullish signal for a long-term swing trade.",
+  "quote": "I am looking for a trigger wave an anchor wave on the 4H hour time frame that is going to signal to me that I am going to start looking for a long position a long position again I'm basically looking for what happened back in January if we take a look at what happened back in January in this area right here where we had that correction and period of consolidation once we got an anchor wave on the 4 Hour and then we got that trigger wave on the 4 Hour this would have been a great opportunity to enter a long position right here on this candle here and we could have gotten a nice little 14% gain on that and then once we started to form more and more trigger waves on the 4 Hour those were all really great opportunities to get in some nice Longs like right here we could have had another you know 7% move up over the course of two days and then again right here we formed an anchor wave on the 4our and whenever we form an anchor wave on the 4 Hour that has the money flow in the red right here okay that's okay we like that because it'll give us a good short-term trade once the money flow goes into the red on the 4our market Cipher B and we get this anchor wave with a Green Dot this is where we're going to be looking for a really long-term swing trade like a really long-term swing trade",
+  "unchecked": [
+   "4-hour anchor wave with green Market Cipher"
+  ],
+  "lesson_id": 58,
+  "rules": [
+   {
+    "rule": "wt_green_dot"
+   },
+   {
+    "rule": "macd_cross_up"
+   },
+   {
+    "rule": "ema_cross_up",
+    "a": 9,
+    "b": 21
+   },
+   {
+    "rule": "macd_positive"
+   },
+   {
+    "rule": "wt_above"
+   }
+  ],
+  "rules_text": [
+   "Market Cipher green dot (WaveTrend crosses up) below 0",
+   "MACD crosses above its signal line",
+   "EMA (9) crosses above EMA (21)",
+   "MACD above zero",
+   "Market Cipher wave above 53 (overbought)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 214,
+  "name": "long_setup",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "4h, 24m, 12m",
+  "why": "The teacher suggests using the 4h, 24m, and 12m timeframes for trading Bitcoin and Ethereum, and the setup includes support from the 21 EMA, positive MACD, positive money flow, and a volume spike, which are typical long entry signals.",
+  "quote": "let's see if we can draw some trend lines here and kind of see what we can see I say this this would be a valid trend line right here uh you know we had a we had a fake breakdown right here but really if we look at this more I mean these were these were bullish dois here so we I wouldn't really consider this a breakdown um and you know we also you know we man we dropped I say the ethereum drop is is worse than the",
+  "unchecked": [
+   "27:04 - The teacher mentions using the 21 EMA as support, but it is not a rule that can be checked."
+  ],
+  "lesson_id": 58,
+  "rules": [
+   {
+    "rule": "close_above_ema",
+    "a": 21,
+    "b": 50
+   },
+   {
+    "rule": "wt_green_dot"
+   },
+   {
+    "rule": "macd_positive"
+   },
+   {
+    "rule": "mf_positive"
+   },
+   {
+    "rule": "bb_above_mid"
+   },
+   {
+    "rule": "volume_spike"
+   }
+  ],
+  "rules_text": [
+   "Close above EMA (21)",
+   "Market Cipher green dot (WaveTrend crosses up) below 0",
+   "MACD above zero",
+   "Market Cipher money flow above zero (green)",
+   "Close above the Bollinger middle band",
+   "Volume above 1.5 \u00d7 its 20-candle average"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 215,
+  "name": "long_setup",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 0.7,
+  "rr": 1.5,
+  "timeframe": "4h",
+  "why": "Waiting for a bottom on the 4-hour chart, specifically an anchor wave underneath the -60 line, and a bearish divergence on Market Cipher and RSI before entering a long position.",
+  "quote": "I'm waiting for a bottom on the 4our an anchor wave that that happens underneath this 60 line this negative 60 line and then I'm waiting for a trigger wave on the 4 Hour",
+  "unchecked": [
+   "ao_turns_red"
+  ],
+  "lesson_id": 58,
+  "rules": [
+   {
+    "rule": "ema_below_ema",
+    "a": 50,
+    "b": 200
+   },
+   {
+    "rule": "wt_below",
+    "a": -53
+   },
+   {
+    "rule": "wt_red_dot"
+   },
+   {
+    "rule": "macd_negative"
+   },
+   {
+    "rule": "rsi_below",
+    "a": 30
+   },
+   {
+    "rule": "wt_bear_div"
+   }
+  ],
+  "rules_text": [
+   "EMA (50) is below EMA (200) (downtrend)",
+   "Market Cipher wave below -53 (oversold)",
+   "Market Cipher red dot (WaveTrend crosses down) above 0",
+   "MACD below zero",
+   "RSI (14) below 30",
+   "Bearish divergence: price higher high, Market Cipher wave lower high - in the last 3 candles, lows/highs at most 60 candles apart"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 216,
+  "name": "buy_now",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 2.0,
+  "rr": 2.0,
+  "timeframe": "1h",
+  "why": "This is a dip and buying now could be a good opportunity, even if it's not the absolute bottom.",
+  "quote": "kenique let's say let's say this is this is technically a bad time to buy Bitcoin let's let's just say that",
+  "unchecked": [
+   "Market Cycles and support levels"
+  ],
+  "lesson_id": 58,
+  "rules": [
+   {
+    "rule": "close_above_ema",
+    "a": 21,
+    "b": 50
+   },
+   {
+    "rule": "wt_green_dot"
+   }
+  ],
+  "rules_text": [
+   "Close above EMA (21)",
+   "Market Cipher green dot (WaveTrend crosses up) below 0"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 217,
+  "name": "Consolidation Period",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "4H",
+  "why": "The consolidation period is expected to last about a month, and the setup is looking for a breakout from the lower Bollinger band with a higher low over the last 10 candles. This setup is based on the expectation that Bitcoin will consolidate and then potentially break out to the upside, which is typical of the market behavior during such periods.",
+  "quote": "if we go back to the to the 4H hour even the 6 hour we can kind of see that um you know historically these periods of consolidation tend to last maybe about maybe about about a month so I'm I'm hoping mid-march but March tends to be bearish in general for crypto just in general tends to be bearish",
+  "unchecked": [
+   "The consolidation period is expected to last about a month."
+  ],
+  "lesson_id": 58,
+  "rules": [
+   {
+    "rule": "close_below_ema",
+    "a": 50
+   },
+   {
+    "rule": "ema_below_ema",
+    "a": 50,
+    "b": 200
+   },
+   {
+    "rule": "bb_width_above",
+    "a": 20,
+    "b": 2
+   },
+   {
+    "rule": "higher_low",
+    "a": 5,
+    "b": 10
+   }
+  ],
+  "rules_text": [
+   "Close below EMA (50)",
+   "EMA (50) is below EMA (200) (downtrend)",
+   "Bollinger bands wider than 20% of price (enough room to trade)",
+   "Higher low: the last 5 candles' low is above the 5 candles before"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 218,
+  "name": "Green Dot Short",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "1h",
+  "why": "Green Dot (WaveTrend crosses down) and close below the 200 SMA with a volume spike indicate a potential short opportunity.",
+  "quote": "I'm going to set my stop loss above the last swing High I'm going to set my takeprofit down here at the last swing low because I think we're in a downtrend and we're probably going to make a lower low and then you just click play and see what would have happened here what would have happened so you would you would have won this trade in 6 days 18 hours",
+  "unchecked": [
+   "Stop loss above the last swing high"
+  ],
+  "lesson_id": 58,
+  "rules": [
+   {
+    "rule": "wt_red_dot"
+   },
+   {
+    "rule": "close_below_sma",
+    "a": 200
+   },
+   {
+    "rule": "volume_spike"
+   }
+  ],
+  "rules_text": [
+   "Market Cipher red dot (WaveTrend crosses down) above 0",
+   "Close below SMA (200)",
+   "Volume above 1.5 \u00d7 its 20-candle average"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 219,
+  "name": "Potential Bullish Trend",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "daily",
+  "why": "Based on the teacher's comment about the potential for a repeat of Bitcoin's 2017 growth pattern, this setup looks for a higher low over the last 5 candles, which is a sign of a potential bullish trend reversal or continuation. The EMA (50) is used as a trend filter, but no specific EMA crossover was mentioned, so it's assumed the price is above the EMA (50). The Market Cipher green dot was not explicitly mentioned as a condition, so it's unchecked here. The stop loss is set at 1.5 ATR, and the risk-reward ratio is 2:1, which is a common risk management rule in trading. The timeframe is daily, as the teacher was discussing long-term trends and cycles.",
+  "quote": "I think we could see that happen this Market cycle for sure",
+  "unchecked": [
+   "No specific conditions for the Market Cipher green dot or WaveTrend crossing up were mentioned."
+  ],
+  "lesson_id": 58,
+  "rules": [
+   {
+    "rule": "close_above_ema",
+    "a": 50
+   },
+   {
+    "rule": "higher_low",
+    "a": 5,
+    "b": 5
+   }
+  ],
+  "rules_text": [
+   "Close above EMA (50)",
+   "Higher low: the last 5 candles' low is above the 5 candles before"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 220,
+  "name": "long_setup",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "24m",
+  "why": "The setup combines a green Market Cipher B dot, positive Money Flow Index, and a close below the lower Bollinger band, indicating a potential long entry in the current retracement. The teacher suggests using multiple time frames for better context and entry timing.",
+  "quote": "we had our bottom on the four hour and then we had seven or six anchors on the 24 minute and then we get ourselves a trigger wave and we can clearly see the money flow index is starting to curve like this and so we could have entered right here",
+  "unchecked": [
+   "specific time frame"
+  ],
+  "lesson_id": 59,
+  "rules": [
+   {
+    "rule": "wt_green_dot"
+   },
+   {
+    "rule": "mf_positive"
+   },
+   {
+    "rule": "bb_below_lower",
+    "a": 20,
+    "b": 2
+   }
+  ],
+  "rules_text": [
+   "Market Cipher green dot (WaveTrend crosses up) below 0",
+   "Market Cipher money flow above zero (green)",
+   "Close below the lower Bollinger band (20 candles, 2 deviations)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 221,
+  "name": "Possible Mini Dump",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "4h",
+  "why": "The price is below the EMA (50) and has touched the lower Bollinger band, indicating a potential mini dump scenario. If the price bounces off the lower Bollinger band, it could signal a reversal and a long trade opportunity.",
+  "quote": "this could be what we're experiencing we could be just experiencing a mini dump like this and then we come and continue back up even if we get just a mini dump we're still going to print that green trigger wave on the four hour time frame which will still give us our confirmation to continue upwards",
+  "unchecked": [
+   "This setup is based on the possibility of a mini dump, which is not a specific pattern or condition."
+  ],
+  "lesson_id": 59,
+  "rules": [
+   {
+    "rule": "close_below_ema",
+    "a": 50
+   },
+   {
+    "rule": "bb_touch_lower",
+    "a": 20,
+    "b": 2
+   }
+  ],
+  "rules_text": [
+   "Close below EMA (50)",
+   "Low touched the lower Bollinger band in the last 20 candles"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 222,
+  "name": "Long Entry on 24 Minutes",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "24m",
+  "why": "The price is above the EMA (50) and has broken above the upper Bollinger band, indicating a potential long entry on the 24-minute timeframe.",
+  "quote": "we're going to print a tight trigger wave right here which is a great sign and then we can look for along on the 24 minute and ride that price action up",
+  "unchecked": [
+   "This setup is based on the possibility of a mini dump, which is not a specific pattern or condition."
+  ],
+  "lesson_id": 59,
+  "rules": [
+   {
+    "rule": "close_above_ema",
+    "a": 50
+   },
+   {
+    "rule": "bb_above_upper",
+    "a": 20,
+    "b": 2
+   }
+  ],
+  "rules_text": [
+   "Close above EMA (50)",
+   "Close above the upper Bollinger band (20 candles, 2 deviations)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 223,
+  "name": "Support and Resistance Levels",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "daily",
+  "why": "Support and resistance levels around 48,000 can be used as potential entry points, with the wave below zero indicating a bullish setup.",
+  "quote": "if we take a look just by drawing this is the daily chart but if we draw a line right through here look at all the price action that happens here it's you know it's resistance resistance resistance resistance resistance then it flips to support support support support so um you know i i don't if we break below this line right here then we might see down to yeah around that 42 000 level um but i don't i don't think that's likely but we we do need to keep that in mind right",
+  "unchecked": [
+   "Look for support and resistance levels, especially around 48,000, as potential entry points."
+  ],
+  "lesson_id": 59,
+  "rules": [
+   {
+    "rule": "close_below_sma",
+    "a": 200
+   },
+   {
+    "rule": "wt_below"
+   }
+  ],
+  "rules_text": [
+   "Close below SMA (200)",
+   "Market Cipher wave below -53 (oversold)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 224,
+  "name": "Long Setup",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 2.0,
+  "rr": 2.0,
+  "timeframe": "4h",
+  "why": "We are looking for a significant bounce off a resistance level, and if confirmed, we can enter a long trade. The Market Cipher wave should show a higher low to confirm the bounce and support the long trade. However, we need to confirm the bounce with a higher high to consider a long trade. If we can't, we're still in a downtrend. This setup is for a potential long trade if the bounce is confirmed with a higher high, and the Market Cipher wave shows a higher low. The stop loss is set at 2 ATR, and the risk-reward ratio is 2:1. This setup is for the 4-hour timeframe.",
+  "quote": "Keep our eyes peeled guys, things are super volatile and we might have a bounce forming a lower high, so we're still technically in a downtrend unless we can form a high above this high right here. This does look like a significant bounce at the moment, but we need to confirm it with a higher high to consider a long trade. If we can't, we're still in a downtrend.",
+  "unchecked": [
+   "We need to confirm the bounce with a higher high to consider a long trade."
+  ],
+  "lesson_id": 59,
+  "rules": [
+   {
+    "rule": "higher_low",
+    "a": 5,
+    "b": 5
+   },
+   {
+    "rule": "wt_bull_div",
+    "a": 3,
+    "b": 60
+   }
+  ],
+  "rules_text": [
+   "Higher low: the last 5 candles' low is above the 5 candles before",
+   "Bullish divergence: price lower low, Market Cipher wave higher low - in the last 3 candles, lows/highs at most 60 candles apart"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 225,
+  "name": "Stop-Loss Movement",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "1h",
+  "why": "The teacher mentions moving the stop-loss up to new significant levels as the price moves up, but does not provide specific rules for this setup.",
+  "quote": "I'm always moving my stop-loss up whenever we come to a new significant level that way I i never end up in the red.",
+  "unchecked": [
+   "Moving stop-loss up to new significant levels"
+  ],
+  "lesson_id": 59,
+  "rules": [
+   {
+    "rule": "close_above_sma",
+    "a": 200
+   },
+   {
+    "rule": "ema_above_ema",
+    "a": 50,
+    "b": 200
+   }
+  ],
+  "rules_text": [
+   "Close above SMA (200)",
+   "EMA (50) is above EMA (200) (uptrend)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  }
 ]
