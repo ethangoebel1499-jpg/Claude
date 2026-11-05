@@ -204,8 +204,9 @@ def checklist(df: pd.DataFrame, bar: int = -1, label: str | None = None) -> str:
                      f"first 70% of history and {tfs.get('unseen_pct', 0):+.1f}% on prices they never saw - it needs to "
                      "make money on both, so it opens no new trades here (open ones keep their stop and targets). "
                      "It resumes by itself when a later Learn shows that.")
-    for side, lst in avoid_rules(tf).items():
-        for a in lst:
+    av = avoid_rules(tf)
+    for side in ("long", "short"):                     # (the entry also keeps how it was checked)
+        for a in (av.get(side) or []):
             try:
                 if bool(builder.rule_series(df, {"rule": a["rule"]}).iloc[i]):
                     lines.append(f"⛔ No new {side.upper()}: {a['text']} - learned from its losing trades")

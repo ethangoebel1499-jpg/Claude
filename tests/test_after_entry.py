@@ -1,4 +1,5 @@
 """After-entry stats, trigger tuning, and the early exit on a confirmed reversal."""
+from pathlib import Path
 import numpy as np
 import pandas as pd
 
@@ -296,3 +297,31 @@ def test_learn_picks_sides_per_timeframe(tmp_path, monkeypatch):
     assert out["long"] is False                                          # longs lose in a downtrend
     sig = strategy.signals(down, a.setups(("pinned",)))
     assert not sig["allow_long"].any() and (sig["allow_short"] == out["short"]).all()
+
+
+def test_apprentice_tab_renders_with_learned_avoid_rules(tmp_path, monkeypatch):
+    """Learn stores avoid rules with a 'checked' / 'rejected' summary next to the long / short lists."""
+    from streamlit.testing.v1 import AppTest
+    from apprentice.store import Store as AStore
+    db = tmp_path / "a.db"
+    monkeypatch.setenv("APPRENTICE_DB", str(db))
+    a = AStore(db)
+    rule = {"rule": "hammer", "text": "Hammer", "train": {"skipped": 3, "saved_r": 2.0},
+            "test": {"skipped": 2, "saved_r": 1.0}}
+    a.meta_set("avoid", {"4h": {"long": [], "short": [rule], "checked": {"with": 5.0, "without": 1.0}},
+                         "1D": {"long": [], "short": [], "rejected": {"with": 1.0, "without": 2.0}}})
+    a.meta_set("timeframes", {"4h": {"trade": True, "long": True, "short": False, "before_pct": 3.0,
+                                     "unseen_pct": 2.0, "trades": 40, "charts": 3}})
+    sid = a.add_setup({"name": "s", "direction": "long", "source": "you", "rules": [{"rule": "hammer"}]})
+    a.update_setup(sid, status="pinned", weight=1, stats={"total": {"trades": 40, "edge": 0.2, "avg_r": 0.2, "win_rate": 45.0, "charts": 3, "charts_positive": 2},
+                                                          "after": {"trades": 40, "mfe_r": 1.0, "mae_r": -0.5}})
+    script = tmp_path / "app.py"
+    script.write_text("import sys\nsys.path.insert(0, %r)\nfrom livepaper.store import Store\n"
+                      "from apprentice.ui import render\nrender(Store(%r))\n" % (str(Path(__file__).parent.parent),
+                                                                              str(tmp_path / "lp.db")))
+    at = AppTest.from_file(str(script), default_timeout=120).run()
+    assert not at.exception, [e.message for e in at.exception]
+    assert any("avoid 'Hammer'" in c.value for c in at.caption)
+    df = _df(400)
+    assert "No new SHORT: Hammer" in strategy.checklist(df, bar=int(np.flatnonzero(
+        builder_rule(df, "hammer"))[-1])) if builder_rule(df, "hammer").any() else True

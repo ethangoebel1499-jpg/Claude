@@ -331,7 +331,8 @@ def after_entry_panel(store: Store, setups: list[dict]) -> None:
         saved = sum(s["stats"]["after"].get("reversal_saved_r", 0) for s in live)
         times = sum(s["stats"]["after"].get("reversal_exits", 0) for s in live)
     avoid = store.meta_get("avoid") or {}
-    found = [(tf, d, a) for tf, v in sorted(avoid.items()) for d, lst in v.items() for a in lst]
+    found = [(tf, d, a) for tf, v in sorted(avoid.items()) for d in ("long", "short")
+             for a in (v.get(d) or []) if isinstance(a, dict)]
     st.markdown("**🚫 Learned from its losing trades** (conditions true at many losers; kept only if skipping them "
                 "also made more on unseen prices):")
     st.caption(" · ".join(f"{tf} {d}s: avoid '{a['text']}' (saved {a['train']['saved_r']:+.1f}R before, "
