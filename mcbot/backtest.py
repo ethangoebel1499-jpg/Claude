@@ -29,6 +29,7 @@ class Trade:
     stop_move: float | None = None    # current stop as a price move (-0.03, or 0 at breakeven)
     scale: float = 1.0                # targets x this (a trade with its own stop keeps the reward-to-risk)
     reversal: bool = False            # close early if losing on a confirmed reversal
+    be: float | None = None           # stop moves to the entry once the trade is this far in profit
     fills: list = field(default_factory=list)  # (time, price, fraction, reason)
 
 
@@ -154,12 +155,15 @@ def run_backtest(df: pd.DataFrame, signals: pd.DataFrame, *, allow_short: bool =
                 pos.stop_move = 0.0
             last = pos.targets_hit == len(targets) and not has_runner
             exit_part(i, px, pos.remaining if last else size, f"target{pos.targets_hit}")
+        if pos is not None and pos.be and best >= pos.be and (pos.stop_move is None or pos.stop_move < 0):
+            pos.stop_move = 0.0               # breakeven from the next bar on (as the live trader)
 
     reversal = {side: (sig[f"{side}_reversal"] if f"{side}_reversal" in sig else np.zeros(len(df), dtype=bool))
                 for side in ("long", "short")}
     own_stop = sig.get("stop_pct")                      # a strategy that sets each trade's own stop
     per_trade_rev = "use_reversal" in sig
     use_rev = sig.get("use_reversal")
+    be_col = sig.get("be_pct")                          # a strategy that sets each trade's breakeven trigger
     for i in range(len(df)):
         # 1) act on the previous (confirmed) bar at this bar's open
         if i > 0:
@@ -186,13 +190,15 @@ def run_backtest(df: pd.DataFrame, signals: pd.DataFrame, *, allow_short: bool =
                 own = float(own_stop[p]) if own_stop is not None else float("nan")
                 own = own if np.isfinite(own) and own > 0 and stop_loss else None
                 rev = bool(use_rev[p]) if per_trade_rev else False
+                be = float(be_col[p]) if be_col is not None else float("nan")
+                be = be if np.isfinite(be) and be > 0 else None
                 if sig["long_entry"][p]:
                     pos = Trade("long", idx[i], o[i], stop_move=-own if own else stop0,
-                                scale=own / stop_loss if own else 1.0, reversal=rev)
+                                scale=own / stop_loss if own else 1.0, reversal=rev, be=be)
                 elif allow_short and sig["short_entry"][p]:
                     base = stop_loss_short or stop_loss
                     pos = Trade("short", idx[i], o[i], stop_move=-own if own else stop0_s,
-                                scale=own / base if own else 1.0, reversal=rev)
+                                scale=own / base if own else 1.0, reversal=rev, be=be)
 
         # 2) intrabar stop-loss / take-profits / liquidation
         if pos is not None:

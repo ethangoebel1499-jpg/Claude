@@ -330,6 +330,17 @@ def after_entry_panel(store: Store, setups: list[dict]) -> None:
         c[3].metric("Setups with a tested tweak", tuned)
         saved = sum(s["stats"]["after"].get("reversal_saved_r", 0) for s in live)
         times = sum(s["stats"]["after"].get("reversal_exits", 0) for s in live)
+    from apprentice.strategy import SAFETY
+    learned = store.meta_get("safety") or {}
+    st.markdown("**🛡️ Safety rules** (on unless 🎓 Learn found the strategy did better without them):")
+    for rule, text in SAFETY.items():
+        per = {tf: v[rule] for tf, v in learned.items() if rule in v}
+        if not per:
+            st.caption(f"✅ {text} - on everywhere (not checked by 🎓 Learn yet)")
+            continue
+        st.caption(f"{'✅' if all(v['on'] for v in per.values()) else '⚠️'} {text} - " + " · ".join(
+            f"{tf} {'on' if v['on'] else 'OFF'} ({v['with']:+.1f}% with, {v['without']:+.1f}% without)"
+            for tf, v in sorted(per.items())))
     from apprentice.strategy import reversal_mode
     modes = {"learned": "Only for setups where 🎓 Learn showed it helps (past and unseen prices)",
              "off": "Never - always wait for the stop or the targets", "always": "Always"}

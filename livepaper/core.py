@@ -37,6 +37,8 @@ class Position:
     broker: str = "sim"               # which broker holds it ("sim" = the built-in paper broker, "webull")
     stop_pct: float | None = None     # this trade's own stop (the strategy set it at entry); None = the run's stop
     reversal: bool = False            # close it early if losing and a confirmed reversal prints
+    be_pct: float | None = None       # once this far in profit, the stop moves to the entry (breakeven)
+    be_armed: bool = False            # ... and it has been
 
 
 @dataclass
@@ -109,7 +111,8 @@ class PositionManager:
             self.store.event(self.name, time, kind, text)
 
     # ---- actions -------------------------------------------------------------
-    def open(self, side: str, price: float, time, stop_pct: float | None = None, reversal: bool = False) -> bool:
+    def open(self, side: str, price: float, time, stop_pct: float | None = None, reversal: bool = False,
+             be_pct: float | None = None) -> bool:
         qty = self._round_qty(self.state.equity * self.fraction / price)
         if qty <= 0:
             self._event(time, "skip", f"{side} entry skipped: position size rounds to 0")
@@ -131,7 +134,9 @@ class PositionManager:
         ok = stop_pct is not None and math.isfinite(stop_pct) and stop_pct > 0 and self.exits.stop
         self.state.position = Position(side, str(time), fill.price, fill.qty, fill.qty, fees_usd=fill.fee_usd,
                                        broker=getattr(self.broker, "name", "sim"),
-                                       stop_pct=float(stop_pct) if ok else None, reversal=bool(reversal))
+                                       stop_pct=float(stop_pct) if ok else None, reversal=bool(reversal),
+                                       be_pct=float(be_pct) if be_pct is not None and math.isfinite(be_pct)
+                                       and be_pct > 0 else None)
         if self.store:
             self.store.fill(self.name, time, side, "entry", fill)
         self._event(time, "entry", f"{side.upper()} {fmt_qty(fill.qty)} @ {fmt_price(fill.price)}"
@@ -244,7 +249,8 @@ class PositionManager:
                 self.close_all(price, time, "reversal")
         self.state.pending_entry = None
         if self.state.position is None and self.state.equity > 0:
-            own = dict(stop_pct=_num(sig.get("stop_pct")), reversal=bool(sig.get("use_reversal", False)))
+            own = dict(stop_pct=_num(sig.get("stop_pct")), reversal=bool(sig.get("use_reversal", False)),
+                       be_pct=_num(sig.get("be_pct")))
             if sig["long_entry"]:
                 self.open("long", price, time, **own)
             elif self.shorts and sig["short_entry"]:
@@ -285,9 +291,29 @@ class PositionManager:
             if not self.close_part(qty, px, time, f"target{p.targets_hit}"):
                 p.targets_hit -= 1
                 break
+        p = self.state.position
+        if p is not None and p.be_pct and not p.be_armed and self._move(favourable) >= p.be_pct:
+            self._arm_breakeven(time)
+
+    def _arm_breakeven(self, time) -> None:
+        """In profit by be_pct: from now on the worst case is getting out at the entry. The resting stop order
+        at the broker is moved there too (works with the laptop off)."""
+        p = self.state.position
+        if p.stop_order and not self._unprotect(time):          # it filled meanwhile: nothing left to move
+            return
+        p = self.state.position
+        if p is None:
+            return
+        p.be_armed = True
+        self._event(time, "breakeven", f"up {p.be_pct * 100:.2f}% - stop moved to the entry "
+                                       f"{fmt_price(p.entry_price)}: this trade can no longer lose")
+        self._protect(time)
+        self._save()
 
     def _stop_move(self) -> float | None:
         p = self.state.position
+        if p is not None and p.be_armed:
+            return 0.0
         if p is not None and p.stop_pct:
             return -p.stop_pct
         return -self.exits.stop if self.exits.stop else None

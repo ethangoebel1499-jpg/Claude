@@ -134,3 +134,54 @@ def test_learned_exits_only_deployed_if_the_whole_strategy_does_better(tmp_path,
             if not p["deployed"]:
                 assert p["stop"] == "fixed" and p["reversal"] is False   # not proven: back to the 3% stop
     assert brain.timeframe_of(charts["C 1h"]) == "1h" and brain.timeframe_of(charts["A 4h"]) == "4h"
+
+
+def test_breakeven_moves_the_stop_to_the_entry_live_and_in_backtests():
+    idx = pd.date_range("2026-01-01", periods=40, freq="4h", tz="UTC")
+    c = np.r_[np.full(3, 100.0), np.linspace(100, 102, 5), np.linspace(102, 95, 32)]   # up 2%, then down 5%
+    df = pd.DataFrame({"open": c, "high": c + 0.05, "low": c - 0.05, "close": c, "volume": 1.0}, index=idx)
+    sig = _sig(df, [1]).assign(be_pct=np.nan)
+    sig.loc[sig.index[1], "be_pct"] = 0.015
+    m = replay(df, sig, PositionManager("t", Exits(0.03, [(0.03, 0.5), (0.06, 0.5)]), shorts=False,
+                                        broker=SimBroker(fee=0)))
+    assert m.trades[0]["reason"] == "breakeven" and abs(m.trades[0]["exit_price"] - m.trades[0]["entry_price"]) < 0.2
+    res = run_backtest(df, sig, stop_loss=0.03, take_profits=[(0.03, 0.5), (0.06, 0.5)], fee=0)
+    assert res.trades[0].reason == "breakeven" and abs(res.trades[0].pnl_pct) < 0.002   # instead of -3%
+    plain = run_backtest(df, sig.drop(columns="be_pct"), stop_loss=0.03, take_profits=[(0.03, 0.5), (0.06, 0.5)], fee=0)
+    assert plain.trades[0].reason == "stop"
+
+
+def test_breakeven_moves_the_resting_broker_stop_too():
+    class Broker(SimBroker):
+        name = "webull"
+        def __init__(self):
+            super().__init__(fee=0); self.orders = []
+        def place_stop(self, run, side, qty, price):
+            self.orders.append(round(price, 2)); return f"o{len(self.orders)}"
+        def cancel_stop(self, run, oid, qty, price):
+            return "cancelled"
+        def stop_status(self, run, oid, qty, price):
+            return "open"
+    b = Broker()
+    pm = PositionManager("t", Exits(0.03, [(0.03, 0.5), (0.06, 0.5)]), shorts=False, broker=b)
+    pm.open("long", 100.0, "t0", be_pct=0.015)
+    pm.on_tick(100.0, 99.9, 101.6, "t1")
+    assert b.orders == [97.0, 100.0] and pm.state.position.be_armed
+
+
+def test_no_entry_against_an_opposite_dot_or_divergence(monkeypatch, tmp_path):
+    from livepaper import settings
+    monkeypatch.setattr(settings, "PATH", tmp_path / "s.json")
+    df = _df(1500)
+    always = lambda d: [{"direction": d, "weight": 1, "rules": [{"rule": "rsi_above", "a": -1}]}]
+    no_long, no_short = strategy.opposite_signals(df)
+    on, off = {"no_opposite": True, "breakeven": True}, {"no_opposite": False, "breakeven": False}
+    longs_on = strategy.signals(df, always("long"), safety=on)["long_entry"].to_numpy()
+    longs_off = strategy.signals(df, always("long"), safety=off)["long_entry"].to_numpy()
+    shorts_on = strategy.signals(df, always("short"), safety=on)["short_entry"].to_numpy()
+    assert longs_off[200:].all() and no_long.any() and no_short.any()
+    assert not (longs_on & no_long).any() and not (shorts_on & no_short).any()
+    assert (longs_on == (longs_off & ~no_long)).all()
+    on = strategy.signals(df, always("long"), safety=on)
+    off = strategy.signals(df, always("long"), safety=off)
+    assert np.allclose(on["be_pct"].dropna(), 0.015) and off["be_pct"].isna().all()

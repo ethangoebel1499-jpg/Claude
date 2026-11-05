@@ -47,8 +47,18 @@ class Store:
         self.db = sqlite3.connect(str(path), check_same_thread=False, timeout=30)
         self.db.row_factory = sqlite3.Row
         self.db.executescript(SCHEMA)
+        self.db.execute("CREATE TABLE IF NOT EXISTS meta (key TEXT PRIMARY KEY, value TEXT)")
         if "job" not in {r[1] for r in self.db.execute("PRAGMA table_info(lessons)")}:
             self.db.execute("ALTER TABLE lessons ADD COLUMN job TEXT")     # which background job added it
+        self.db.commit()
+
+    # ---- small settings it learns (e.g. which trade-safety rules held up, per timeframe) --------------
+    def meta_get(self, key: str, default=None):
+        row = self.db.execute("SELECT value FROM meta WHERE key = ?", (key,)).fetchone()
+        return json.loads(row[0]) if row else default
+
+    def meta_set(self, key: str, value) -> None:
+        self.db.execute("INSERT OR REPLACE INTO meta (key, value) VALUES (?, ?)", (key, json.dumps(value)))
         self.db.commit()
 
     # ---- lessons -----------------------------------------------------------------------

@@ -236,7 +236,39 @@ def deploy_check(store, charts: dict[str, pd.DataFrame], log=print, split: float
             p["stop"], p["reversal"] = (p["learned_stop"], p["learned_reversal"]) if ok else ("fixed", False)
         if plans:
             store.update_setup(s["id"], stats=s["stats"])
+    safety_check(store, charts, log, split)
     return verdict
+
+
+def safety_check(store, charts: dict[str, pd.DataFrame], log=print, split: float = 0.7) -> dict:
+    """The two trade-safety rules (no entry against an opposite dot / divergence; stop to the entry at +1.5%)
+    are on by default. Per timeframe, trade all the live setups together on the last 30% of every chart with
+    both rules, and with each one switched off: a rule stays on unless the strategy did better without it
+    on those unseen prices."""
+    from mcbot.backtest import run_backtest
+    from . import strategy
+    setups = [s for s in store.setups(("active", "pinned")) if s["weight"] > 0 or s["status"] == "pinned"]
+    out = {}
+    for tf, group in by_timeframe(charts).items():
+        def ret(safety):
+            total = 0.0
+            for df in group.values():
+                cut = int(len(df) * split)
+                sig = strategy.signals(df, setups, mode="learned", safety=safety)
+                total += run_backtest(df.iloc[cut:], sig.iloc[cut:], allow_short=True, stop_loss=strategy.STOP,
+                                      take_profits=strategy.TAKE_PROFITS).stats["total_return_pct"]
+            return round(total, 2)
+        both = ret({"no_opposite": True, "breakeven": True})
+        res = {}
+        for rule in strategy.SAFETY:
+            without = ret({k: k != rule for k in strategy.SAFETY})
+            res[rule] = {"on": bool(both >= without), "with": both, "without": without}
+            log(f"  safety rule '{rule}' on {tf}: {both:+.1f}% with it vs {without:+.1f}% without on unseen prices "
+                f"-> {'on' if res[rule]['on'] else 'OFF'}")
+        out[tf] = res
+    if out:
+        store.meta_set("safety", {**(store.meta_get("safety") or {}), **out})
+    return out
 
 
 # ---- after the entry: what trades did, and can the trigger be tuned? ----------------------------
