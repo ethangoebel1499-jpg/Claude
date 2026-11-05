@@ -17059,5 +17059,160 @@
   "hints": null,
   "tune": null,
   "exit_plan": null
+ },
+ {
+  "id": 108,
+  "name": "vwap_rejection",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "1h",
+  "why": "Price is expected to reject from the VWAP after a period of hanging below it, indicating a potential trend continuation or push.",
+  "quote": "hanging below the vwap for quite some time and then it comes up to reject from it this is also an indicator that I use every single day",
+  "unchecked": [
+   "Price hanging below the VWAP for a while and then coming up to reject from it is a sign of a potential trend continuation or push."
+  ],
+  "lesson_id": 39,
+  "rules": [
+   {
+    "rule": "close_below_sma",
+    "a": 200
+   },
+   {
+    "rule": "close_above_sma",
+    "a": 200
+   }
+  ],
+  "rules_text": [
+   "Close below SMA (200)",
+   "Close above SMA (200)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 109,
+  "name": "Bearish CVD Divergence",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "1h",
+  "why": "Bearish CVD Divergence indicates whale activity pushing the price down, suggesting a short opportunity.",
+  "quote": "if we see that the price is making higher highs in an uptrend and we see the CBD is getting higher and we see the open interest is increasing we can tell ourselves this uptrend is being fueled by new Traders entering into the market they're entering long and because there's more buyers than sellers the price is getting higher higher",
+  "unchecked": [
+   "price making higher highs in an uptrend"
+  ],
+  "lesson_id": 40,
+  "rules": [
+   {
+    "rule": "close_above_ema",
+    "a": 50
+   },
+   {
+    "rule": "higher_low",
+    "a": 5,
+    "b": 60
+   }
+  ],
+  "rules_text": [
+   "Close above EMA (50)",
+   "Higher low: the last 5 candles' low is above the 5 candles before"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 110,
+  "name": "Bearish CVD Divergence Setup",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "1h",
+  "why": "Whales are absorbing short orders to push the price down, confirmed by increasing open interest and a lower high with a high wick.",
+  "quote": "if price is getting higher and the open interest is increasing down here showing us that new Traders are entering into the market and we can tell that the new Traders are entering into the market shorting and yet the price is getting higher what is the only explanation we know that the price is moved by buyers versus sellers if there's more sellers than buyers price should go down the information down here is clearly telling us there are more sellers than buyers but the price is making a higher low so the only explanation again is that there's a whale here all right and this whale is eating up all right eating up what a great picture of a whale if I do say so myself this whale is eating up the retail traders who are following going short at the low looking to push the price to the upside okay",
+  "unchecked": [
+   "High wick"
+  ],
+  "lesson_id": 40,
+  "rules": [
+   {
+    "rule": "lower_high"
+   },
+   {
+    "rule": "close_above_ema",
+    "a": 200
+   },
+   {
+    "rule": "volume_spike"
+   }
+  ],
+  "rules_text": [
+   "Lower high: the last 5 candles' high is below the 5 candles before",
+   "Close above EMA (200)",
+   "Volume above 1.5 \u00d7 its 20-candle average"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 111,
+  "name": "Bullish CVD Divergence Setup",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "1h",
+  "why": "Whales are absorbing long orders to push the price up, confirmed by increasing open interest and a higher low with a high wick.",
+  "quote": "if the price is getting higher and the open interest is increasing down here showing us that new Traders are entering into the market and we can tell that the new Traders are entering into the market shorting and yet the price is getting higher what is the only explanation we know that the price is moved by buyers versus sellers if there's more sellers than buyers price should go down the information down here is clearly telling us there are more sellers than buyers but the price is making a higher low so the only explanation again is that there's a whale here all right and this whale is eating up all right eating up what a great picture of a whale if I do say so myself this whale is eating up the retail traders who are following going short at the low looking to push the price to the upside okay",
+  "unchecked": [
+   "High wick"
+  ],
+  "lesson_id": 40,
+  "rules": [
+   {
+    "rule": "higher_low"
+   },
+   {
+    "rule": "close_below_ema",
+    "a": 200
+   },
+   {
+    "rule": "volume_spike"
+   }
+  ],
+  "rules_text": [
+   "Higher low: the last 5 candles' low is above the 5 candles before",
+   "Close below EMA (200)",
+   "Volume above 1.5 \u00d7 its 20-candle average"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  }
 ]
