@@ -483,3 +483,54 @@ Apprentice BTC 1h,2026-11-05T13:00:26+00:00,exit,closed (opposite setup) +28.59 
 Apprentice BTC 1h,2026-11-05T13:00:26+00:00,entry,"SHORT 0.123405 @ 79,628.90"
 Apprentice LTC 1h,2026-11-05T13:00:27+00:00,exit,closed (opposite setup) -116.14 USD
 Apprentice LTC 1h,2026-11-05T13:00:27+00:00,entry,SHORT 170.21947 @ 55.17
+Apprentice ETH 1h,2026-11-05T14:15:07+00:00,breakeven,"up 1.50% - stop moved to the entry 2,414.90: this trade can no longer lose"
+S3 GRIND DOGE 1h,2026-11-05T14:16:15+00:00,error,"ConnectionError: ('Connection aborted.', ConnectionAbortedError(10053, 'An established connection was aborted by the software in your host machine'))"
+Apprentice BTC 4h,2026-11-05T14:16:15+00:00,error,"ConnectionError: HTTPSConnectionPool(host='api.kraken.com', port=443): Max retries exceeded with url: /0/public/OHLC?pair=XBTUSD&interval=240 (Caused by NameResolutionError(""HTTPSConnection(host='api.kraken.com', port=443): Failed to resolve 'api.kraken.com' ([Errno 11001] getaddrinfo failed)""))"
+Apprentice SOL 4h,2026-11-05T14:16:16+00:00,error,"ConnectionError: HTTPSConnectionPool(host='api.kraken.com', port=443): Max retries exceeded with url: /0/public/OHLC?pair=SOLUSD&interval=240 (Caused by NameResolutionError(""HTTPSConnection(host='api.kraken.com', port=443): Failed to resolve 'api.kraken.com' ([Errno 11001] getaddrinfo failed)""))"
+Apprentice BTC 1h,2026-11-05T14:16:16+00:00,error,"ConnectionError: HTTPSConnectionPool(host='api.kraken.com', port=443): Max retries exceeded with url: /0/public/OHLC?pair=XBTUSD&interval=60 (Caused by NameResolutionError(""HTTPSConnection(host='api.kraken.com', port=443): Failed to resolve 'api.kraken.com' ([Errno 11001] getaddrinfo failed)""))"
+Apprentice LTC 1h,2026-11-05T14:16:16+00:00,error,"ConnectionError: HTTPSConnectionPool(host='api.kraken.com', port=443): Max retries exceeded with url: /0/public/OHLC?pair=LTCUSD&interval=60 (Caused by NameResolutionError(""HTTPSConnection(host='api.kraken.com', port=443): Failed to resolve 'api.kraken.com' ([Errno 11001] getaddrinfo failed)""))"
+Apprentice ETH 1h,2026-11-05T14:16:16+00:00,error,"ConnectionError: HTTPSConnectionPool(host='api.kraken.com', port=443): Max retries exceeded with url: /0/public/OHLC?pair=ETHUSD&interval=60 (Caused by NameResolutionError(""HTTPSConnection(host='api.kraken.com', port=443): Failed to resolve 'api.kraken.com' ([Errno 11001] getaddrinfo failed)""))"
+Apprentice SHIB 1h,2026-11-05T14:16:16+00:00,error,"ConnectionError: HTTPSConnectionPool(host='api.kraken.com', port=443): Max retries exceeded with url: /0/public/OHLC?pair=SHIBUSD&interval=60 (Caused by NameResolutionError(""HTTPSConnection(host='api.kraken.com', port=443): Failed to resolve 'api.kraken.com' ([Errno 11001] getaddrinfo failed)""))"
+Apprentice ETH 4h,2026-11-05T14:16:16+00:00,error,"ConnectionError: HTTPSConnectionPool(host='api.kraken.com', port=443): Max retries exceeded with url: /0/public/OHLC?pair=ETHUSD&interval=240 (Caused by NameResolutionError(""HTTPSConnection(host='api.kraken.com', port=443): Failed to resolve 'api.kraken.com' ([Errno 11001] getaddrinfo failed)""))"
+Apprentice UNI 4h,2026-11-05T14:16:16+00:00,error,"ConnectionError: HTTPSConnectionPool(host='api.kraken.com', port=443): Max retries exceeded with url: /0/public/OHLC?pair=UNIUSD&interval=240 (Caused by NameResolutionError(""HTTPSConnection(host='api.kraken.com', port=443): Failed to resolve 'api.kraken.com' ([Errno 11001] getaddrinfo failed)""))"
+Apprentice BTC 1D,2026-11-05T14:16:16+00:00,error,"ConnectionError: HTTPSConnectionPool(host='api.kraken.com', port=443): Max retries exceeded with url: /0/public/OHLC?pair=XBTUSD&interval=1440 (Caused by NameResolutionError(""HTTPSConnection(host='api.kraken.com', port=443): Failed to resolve 'api.kraken.com' ([Errno 11001] getaddrinfo failed)""))"
+Apprentice LINK 1D,2026-11-05T14:16:16+00:00,error,"ConnectionError: HTTPSConnectionPool(host='api.kraken.com', port=443): Max retries exceeded with url: /0/public/OHLC?pair=LINKUSD&interval=1440 (Caused by NameResolutionError(""HTTPSConnection(host='api.kraken.com', port=443): Failed to resolve 'api.kraken.com' ([Errno 11001] getaddrinfo failed)""))"
+Apprentice ADA 1D,2026-11-05T14:16:16+00:00,error,"ConnectionError: HTTPSConnectionPool(host='api.kraken.com', port=443): Max retries exceeded with url: /0/public/OHLC?pair=ADAUSD&interval=1440 (Caused by NameResolutionError(""HTTPSConnection(host='api.kraken.com', port=443): Failed to resolve 'api.kraken.com' ([Errno 11001] getaddrinfo failed)""))"
+Witcher ETH 2h,2026-11-05T14:16:16+00:00,error,"ConnectionError: ('Connection aborted.', ConnectionAbortedError(10053, 'An established connection was aborted by the software in your host machine'))"
+Witcher SOL 2h,2026-11-05T14:16:16+00:00,error,"ConnectionError: HTTPSConnectionPool(host='api.kraken.com', port=443): Max retries exceeded with url: /0/public/OHLC?pair=SOLUSD&interval=60 (Caused by NameResolutionError(""HTTPSConnection(host='api.kraken.com', port=443): Failed to resolve 'api.kraken.com' ([Errno 11001] getaddrinfo failed)""))"
+GRIND BTC 4h,2026-11-05T14:16:16+00:00,error,"ConnectionError: HTTPSConnectionPool(host='api.kraken.com', port=443): Max retries exceeded with url: /0/public/OHLC?pair=XBTUSD&interval=240 (Caused by NameResolutionError(""HTTPSConnection(host='api.kraken.com', port=443): Failed to resolve 'api.kraken.com' ([Errno 11001] getaddrinfo failed)""))"
+S8 ETH 12h,2026-11-05T14:16:16+00:00,error,"ConnectionError: HTTPSConnectionPool(host='api.kraken.com', port=443): Max retries exceeded with url: /0/public/OHLC?pair=ETHUSD&interval=240 (Caused by NameResolutionError(""HTTPSConnection(host='api.kraken.com', port=443): Failed to resolve 'api.kraken.com' ([Errno 11001] getaddrinfo failed)""))"
+Apprentice BTC 4h,2026-11-05 15:00:00+00:00,exit,closed (target2) +276.51 USD
+Apprentice BTC 4h,2026-11-05T20:46:07+00:00,catch-up,trader was off 6h 30m: replayed 6 hourly candles
+Apprentice BTC 4h,2026-11-05T20:46:07+00:00,entry,"SHORT 0.13956 @ 76,066.80"
+Apprentice SOL 4h,2026-11-05 14:00:00+00:00,exit,closed (stop) -307.91 USD
+Apprentice SOL 4h,2026-11-05T20:46:09+00:00,catch-up,trader was off 6h 30m: replayed 6 hourly candles
+Apprentice SOL 4h,2026-11-05T20:46:09+00:00,entry,SHORT 103.510688 @ 90.07
+Apprentice BTC 1h,2026-11-05 14:00:00+00:00,breakeven,"up 1.50% - stop moved to the entry 79,628.90: this trade can no longer lose"
+Apprentice BTC 1h,2026-11-05T20:46:10+00:00,catch-up,trader was off 6h 30m: replayed 6 hourly candles
+Apprentice LTC 1h,2026-11-05 14:00:00+00:00,breakeven,up 1.50% - stop moved to the entry 55.17: this trade can no longer lose
+Apprentice LTC 1h,2026-11-05 15:00:00+00:00,exit,closed (target2) +404.24 USD
+Apprentice LTC 1h,2026-11-05T20:46:11+00:00,catch-up,trader was off 6h 30m: replayed 6 hourly candles
+Apprentice LTC 1h,2026-11-05T20:46:11+00:00,entry,SHORT 186.896472 @ 52.41
+Apprentice ETH 1h,2026-11-05 15:00:00+00:00,exit,closed (target2) +446.04 USD
+Apprentice ETH 1h,2026-11-05T20:46:13+00:00,catch-up,trader was off 6h 30m: replayed 6 hourly candles
+Apprentice ETH 1h,2026-11-05T20:46:13+00:00,entry,"SHORT 4.808655 @ 2,247.64"
+Apprentice SHIB 1h,2026-11-05 14:00:00+00:00,breakeven,up 1.50% - stop moved to the entry 0.000004761: this trade can no longer lose
+Apprentice SHIB 1h,2026-11-05 15:00:00+00:00,exit,closed (target2) +424.96 USD
+Apprentice SHIB 1h,2026-11-05T20:46:15+00:00,catch-up,trader was off 6h 30m: replayed 6 hourly candles
+Apprentice ETH 4h,2026-11-05 14:00:00+00:00,exit,closed (stop) -331.62 USD
+Apprentice ETH 4h,2026-11-05T20:46:16+00:00,catch-up,trader was off 6h 30m: replayed 6 hourly candles
+Apprentice ETH 4h,2026-11-05T20:46:16+00:00,entry,"SHORT 4.467386 @ 2,247.65"
+Apprentice UNI 4h,2026-11-05 14:00:00+00:00,exit,closed (target2) +423.18 USD
+Apprentice UNI 4h,2026-11-05T20:46:17+00:00,catch-up,trader was off 6h 30m: replayed 6 hourly candles
+Apprentice UNI 4h,2026-11-05T20:46:17+00:00,entry,"SHORT 1,484.757591 @ 6.87"
+Apprentice BTC 1D,2026-11-05 15:00:00+00:00,exit,closed (target2) +430.45 USD
+Apprentice BTC 1D,2026-11-05T20:46:18+00:00,catch-up,trader was off 6h 30m: replayed 6 hourly candles
+Apprentice LINK 1D,2026-11-05 15:00:00+00:00,exit,closed (target2) +430.45 USD
+Apprentice LINK 1D,2026-11-05T20:46:19+00:00,catch-up,trader was off 6h 30m: replayed 6 hourly candles
+Apprentice ADA 1D,2026-11-05 15:00:00+00:00,exit,closed (target2) +430.45 USD
+Apprentice ADA 1D,2026-11-05T20:46:20+00:00,catch-up,trader was off 6h 30m: replayed 6 hourly candles
+Witcher ETH 2h,2026-11-05 15:00:00+00:00,exit,closed (stop) -419.60 USD
+Witcher ETH 2h,2026-11-05T20:46:21+00:00,catch-up,trader was off 6h 30m: replayed 6 hourly candles
+GRIND BTC 4h,2026-11-05 15:00:00+00:00,exit,closed (stop) -618.89 USD
+GRIND BTC 4h,2026-11-05T20:46:22+00:00,catch-up,trader was off 6h 30m: replayed 6 hourly candles
