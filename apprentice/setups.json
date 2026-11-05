@@ -26407,5 +26407,82 @@
   "hints": null,
   "tune": null,
   "exit_plan": null
+ },
+ {
+  "id": 160,
+  "name": "snake_eyes",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "1-hour",
+  "why": "The snake eyes pattern and the negative Market Cipher wave indicate a potential bottom and a bullish reversal.",
+  "quote": "1-hour is looking pretty good, too, guys. We we just formed a snake eyes, which means you know, we're we're bottoming out. The money flow is in the red. So, now we should be, you know, kind of looking for things to curve back up.",
+  "unchecked": [
+   "formed a snake eyes, which means you know, we're we're bottoming out"
+  ],
+  "lesson_id": 49,
+  "rules": [
+   {
+    "rule": "close_below_ema",
+    "a": 200
+   },
+   {
+    "rule": "wt_below",
+    "a": -53
+   }
+  ],
+  "rules_text": [
+   "Close below EMA (200)",
+   "Market Cipher wave below -53 (oversold)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 161,
+  "name": "Long Swing Trade Setup",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 0.7,
+  "rr": 2.0,
+  "timeframe": "4h and daily",
+  "why": "Green Market Cipher wave and MACD above zero on daily and 4h charts indicate a strong bullish signal.",
+  "quote": "i actually entered um i entered a long position back here on january 28th primarily because of this green trigger wave and i saw some things on lower time frames and i stayed in that trade until february 23rd",
+  "unchecked": [
+   "confirmation on the daily and four-hour charts"
+  ],
+  "lesson_id": 50,
+  "rules": [
+   {
+    "rule": "close_above_sma",
+    "a": 200
+   },
+   {
+    "rule": "wt_green_dot"
+   },
+   {
+    "rule": "macd_positive"
+   }
+  ],
+  "rules_text": [
+   "Close above SMA (200)",
+   "Market Cipher green dot (WaveTrend crosses up) below 0",
+   "MACD above zero"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  }
 ]
