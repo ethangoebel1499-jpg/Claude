@@ -29703,5 +29703,275 @@
   "hints": null,
   "tune": null,
   "exit_plan": null
+ },
+ {
+  "id": 240,
+  "name": "Double Bottom on 50-minute Chart",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "50-minute",
+  "why": "Double bottom and green wave indicate a potential reversal and uptrend.",
+  "quote": "This is the first synergistic property we're looking for. Then we're going to look for the money flow starting to curve and a cluster of triggers on the 50 minute.",
+  "unchecked": [
+   "Cluster of trigger waves on the 50-minute chart"
+  ],
+  "lesson_id": 61,
+  "rules": [
+   {
+    "rule": "wt_bull_div"
+   },
+   {
+    "rule": "wt_green_dot"
+   }
+  ],
+  "rules_text": [
+   "Bullish divergence: price lower low, Market Cipher wave higher low - in the last 3 candles, lows/highs at most 60 candles apart",
+   "Market Cipher green dot (WaveTrend crosses up) below 0"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 241,
+  "name": "double_bottom",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "4h",
+  "why": "double bottom on 4h with RSI below 30 and crossing up through 30",
+  "quote": "if you guys ever see something like this you know, that's on the 4-hour where you got like a nice bottom money flow in the red, then you have this perfect stair step up man that's a good entry right there if I ever done seen one.",
+  "unchecked": [
+   "double bottom pattern"
+  ],
+  "lesson_id": 61,
+  "rules": [
+   {
+    "rule": "close_below_sma",
+    "a": 200
+   },
+   {
+    "rule": "rsi_below",
+    "a": 30
+   },
+   {
+    "rule": "rsi_cross_up",
+    "a": 30
+   }
+  ],
+  "rules_text": [
+   "Close below SMA (200)",
+   "RSI (14) below 30",
+   "RSI (14) crosses up through 30"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 242,
+  "name": "Bearish Divergence on Market Cipher B",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 0.7,
+  "rr": 2.0,
+  "timeframe": "1h",
+  "why": "Bearish divergences on Market Cipher B indicate a potential reversal in the trend, suggesting a short opportunity.",
+  "quote": "we were looking at this is the high yesterday before we came to the level and we're saying if we come up a little bit higher into our resistances and get bearish divergences on market cipher b then we are going to come down right because we were looking for the juicy uneven butt cheeks where we had the very juicy left butt cheek on the left followed by that skinny old butt cheek on the right",
+  "unchecked": [
+   "Market Cipher B bearish divergences"
+  ],
+  "lesson_id": 62,
+  "rules": [
+   {
+    "rule": "rsi_bear_div",
+    "a": 38725
+   },
+   {
+    "rule": "macd_bear_div",
+    "a": 38725
+   }
+  ],
+  "rules_text": [
+   "Bearish divergence: price higher high, RSI lower high - in the last 38725 candles, lows/highs at most 60 candles apart",
+   "Bearish divergence: price higher high, MACD lower high - in the last 38725 candles, lows/highs at most 60 candles apart"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 243,
+  "name": "Long from Top, Short from Bottom",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 0.7,
+  "rr": 2.0,
+  "timeframe": "1h",
+  "why": "Trading in a macro sideways range, with long positions from the top and short positions from the bottom until the range is broken.",
+  "quote": "i'm long from the top i'm short from the bottom until we break either up or down out of the sideways range i'm going to hold these positions with partial profit open because if we lose the range and form another lower low on the higher term time frames i am still short from up here and i am making money and if we break out and we're unable to lose this point of control and we find support here well guess what then i'm short from",
+  "unchecked": [
+   "Sideways range with support and resistance levels"
+  ],
+  "lesson_id": 62,
+  "rules": [
+   {
+    "rule": "close_above_sma",
+    "a": 38725,
+    "b": 200
+   },
+   {
+    "rule": "close_below_sma",
+    "a": 38725,
+    "b": 200
+   }
+  ],
+  "rules_text": [
+   "Close above SMA (38725)",
+   "Close below SMA (38725)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 244,
+  "name": "short_chickens_drinking_water",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 1.5,
+  "timeframe": "12-minute",
+  "why": "Previous resistance level was broken with a bearish candle, and Market Cipher B shows red dot and bearish divergence.",
+  "quote": "we had a chickens drinking water trade setup right here currently did short that from around 36.9 ish the reason why we shorted this trade is because if we go down to a lower term time frame we can see that we had this previous wick over here this previous level of resistance we came above it we closed the candle below that same level and we got a bearish divergence on market cipher b as we came up to make the higher high money flow is coming down it made for a nice scalp trade but what is going to happen now this is crucial guys this is crucial",
+  "unchecked": [
+   "Bearish divergence on Market Cipher B"
+  ],
+  "lesson_id": 62,
+  "rules": [
+   {
+    "rule": "close_below_sma",
+    "a": 200
+   },
+   {
+    "rule": "macd_cross_down"
+   },
+   {
+    "rule": "wt_red_dot"
+   }
+  ],
+  "rules_text": [
+   "Close below SMA (200)",
+   "MACD crosses below its signal line",
+   "Market Cipher red dot (WaveTrend crosses down) above 0"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 245,
+  "name": "potential_downtrend",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 1.5,
+  "timeframe": "12-minute",
+  "why": "Price is coming up to the level of resistance, and Market Cipher B shows red dot and bearish divergence, indicating a potential downtrend.",
+  "quote": "all right if we go to our chart and we go to maybe the 12-minute timeframe here right we can see that when we come up a little bit higher we have this very very important level of resistance this box right here where we have a golden pocket and we also have a point of control a very high volume note okay a very high volume note up here and this area is very very juicy why is this so juicy because after we've rejected from the value area high of the range remember we're going back in time here to talk about the um this area right here the one that we are looking for right from back from july we've rejected from it it's very very possible and also very very likely that we will then make our way back down again to the lower area of the range okay it's not necessarily going to happen it's possible and so if we're going to now start a downtrend from the high of the sideways market right because remember we came into the sideways market at the high back tested we came through back tested as resistance came back down to the support came back up to the high lost it back tested as resistance now we are in a downtrend making lower lows and lower highs it's very profitable if we are going to continue in the downtrend back down to the lows of the range that we are going to find our resistance from the good old-fashioned golden pocket just the fibonacci retracement from the high to the low we can see it's coming in very close to us right here and so what are we looking for if price comes up to that level now remember i don't make predictions here i'm not saying the price is going to come up to that level i don't know right when we're looking at areas to catch a bounce from right like the golden pocket slash v-wap confluence before price gets there we don't know that when price does get there that we're gonna get a bounce right we don't know we just say it's probable we say it's very probable and then what we do is we look at market cipher b and what do we see on market cipher b as we come down to our level well we see the coveted uneven cheeks guys right look at this look at this i mean look at it like we can't we cannot deny the juicy left followed by the not so juicy right we cannot deny all these butt cheeks it's like you know it's not even butt cheeks anymore it's like a pig with all those nipples that the piglets come to suckle on right we have all these little nipples down here and not only that but we see the money flow coming to the upside right so i'm not telling what's going to happen i don't make predictions but all i was saying is over here right if we come down to the level with the uneven butt cheeks on marcus cipher b this is where we're going to be looking for about so the same thing is true about coming up to this higher level of these assaults right if we come up to this level of resistance what are we looking for now now i'm gonna be looking for this guys gonna be looking for uneven cheeks right i'm gonna be looking for the juicy the juicy nice and the big nice and the round lots of ravioli inside with the cracker in the middle we want to measure the buttercrack we take out a measurement a tool and we take it from the one of our tiger to the other and we say wow it was four and a half hours of buttercrack oh my goodness what can we fit inside of there i don't know i don't know it's me mario i don't know right we don't know if we're going to get that right but if we do get those cheeks up at this important level of resistance it could make for a very nice lower high we wish we could take it down to some lower areas of support okay now it's very possible that we don't get the cheeks and if we don't get the cheeks then we don't take the trade right if we don't get the cheeks we don't take the trade that's what's so beautiful about trading we don't know what price is going to do we can't control what the price is going to do but what we can control right i just made a video about this don't focus on the things you can't",
+  "unchecked": [
+   "Price coming up to the level of resistance (12-minute timeframe)"
+  ],
+  "lesson_id": 62,
+  "rules": [
+   {
+    "rule": "close_below_sma",
+    "a": 200
+   },
+   {
+    "rule": "wt_red_dot"
+   },
+   {
+    "rule": "wt_bear_div"
+   }
+  ],
+  "rules_text": [
+   "Close below SMA (200)",
+   "Market Cipher red dot (WaveTrend crosses down) above 0",
+   "Bearish divergence: price higher high, Market Cipher wave lower high - in the last 3 candles, lows/highs at most 60 candles apart"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 246,
+  "name": "swing long position",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "daily",
+  "why": "if we come above this important level of 44 000 we will officially have flipped market structure on a higher term timeframe and so as far as swing trading goes if we come above 44k like this let's say that we do get a relief like this now is the time to be looking for long positions on the retest on the retracement because we have flipped market structure okay flip market structure and so most people would call this an inverse h and sp um um hang on a second that didn't look most people would call this thing an inverse head and shoulder let me see if i can find it here we go you have inverse h and s we got our triangle our left shoulder right here come down right we come up like this come down like this boom okay we got our we got our inverse head and shoulder potential right here because again if we come up a little bit higher we'll put in a higher high we want to be looking for the long position when we come back down to this area of what is currently resistance right watch what what follow me here we come back up above the resistance come back for the retest this is where we look for a long position kaboom and then we can enter a really nice low risk easy invalidation trade right there because if we are looking now for long at here after putting an h and s pattern we can go ahead and very clearly enter the long right here our stop loss is very clear if we lose that support again we need to get the heck out of the trade where can we target we can target honestly i would say at least 47 to 49 k give or take potentially even all the way up to 57k for a relief rally and the reason why i say that is because if we just take the golden pocket from the all-time high to the low of this dump right here we are coming in right around that 55-57 k with the gp and also if we're taking a look at the volume over here and we just take the range and we pull it from here all the way here and i don't know what i'm doing guys this is why this is not financial advice we can also see that we've got the the highest volume node unbound at least over here even if you're not gonna buy that people are like jason i'm not on by date i have a different point of control well let me ease your fears guys let me ease your fears let me give you a little ease of your fears all right let's go over to our our favorite exchange in the world scandance aka finance no offense anybody and you know maybe we're going to fill that 8k wick that we got on finance a while ago but um anyway if we pull out our thing here and um so we got our point of control down here right for binance which is giving us good confidence for the long run now but we still have a very high volume node up here at around 57k so we're really just looking at high volume notes we're looking at high volume notes there was much more corn volume traded on private proportionately up in this area than there was on good old finance but we're just looking for high volumes that's it guys",
+  "quote": "if we come above this important level of 44 000 we will officially have flipped market structure on a higher term timeframe and so as far as swing trading goes if we come above 44k like this let's say that we do get a relief like this now is the time to be looking for long positions on the retest on the retracement because we have flipped market structure okay flip market structure and so most people would call this an inverse h and sp um um hang on a second that didn't look most people would call this thing an inverse head and shoulder let me see if i can find it here we go you have inverse h and s we got our triangle our left shoulder right here come down right we come up like this come down like this boom okay we got our we got our inverse head and shoulder potential right here because again if we come up a little bit higher we'll put in a higher high we want to be looking for the long position when we come back down to this area of what is currently resistance right watch what what follow me here we come back up above the resistance come back for the retest this is where we look for a long position kaboom and then we can enter a really nice low risk easy invalidation trade right there because if we are looking now for long at here after putting an h and s pattern we can go ahead and very clearly enter the long right here our stop loss is very clear if we lose that support again we need to get the heck out of the trade where can we target we can target honestly i would say at least 47 to 49 k give or take potentially even all the way up to 57k for a relief rally and the reason why i say that is because if we just take the golden pocket from the all-time high to the low of this dump right here we are coming in right around that 55-57 k with the gp and also if we're taking a look at the volume over here and we just take the range and we pull it from here all the way here and i don't know what i'm doing guys this is why this is not financial advice we can also see that we've got the the highest volume node unbound at least over here even if you're not gonna buy that people are like jason i'm not on by date i have a different point of control well let me ease your fears guys let me ease your fears let me give you a little ease of your fears all right let's go over to our our favorite exchange in the world scandance aka finance no offense anybody and you know maybe we're going to fill that 8k wick that we got on finance a while ago but um anyway if we pull out our thing here and um so we got our point of control down here right for binance which is giving us good confidence for the long run now but we still have a very high volume node up here at around 57k so we're really just looking at high volume notes we're looking at high volume notes there was much more corn volume traded on private proportionately up in this area than there was on good old finance but we're just looking for high volumes that's it guys",
+  "unchecked": [
+   "swing long position from the bottom"
+  ],
+  "lesson_id": 62,
+  "rules": [
+   {
+    "rule": "close_above_sma",
+    "a": 44000
+   },
+   {
+    "rule": "close_above_ema",
+    "a": 50000
+   }
+  ],
+  "rules_text": [
+   "Close above SMA (44000)",
+   "Close above EMA (50000)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  }
 ]
