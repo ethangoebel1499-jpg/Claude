@@ -8,6 +8,8 @@ A filter = a DAILY TREND switch x a CONFIRMATION:
   confirm  none
            macd            - MACD above its signal line for longs, below for shorts
            mf_macd         - that, plus Market Cipher money flow rising (longs) / falling (shorts) over 3 candles
+           band            - touched the lower Bollinger band in the last 3 candles (longs) / the upper one (shorts)
+           band_macd       - that band touch AND MACD on the trade's side of its signal line
 
 Only yesterday's closed daily candle is used (no peeking). The daily candles come from the coin's own daily history
 (the live trader keeps only ~30 days of hourly candles - not enough for a 50 / 200-day average), cached for an hour;
@@ -15,7 +17,8 @@ without a symbol they're built from the chart itself.
 
 Measured on your setups (BTC / ETH / SOL, fees in, avg R a trade, earlier / later half): daily shorts with no filter
 -0.03R / +0.04R, with MACD below its signal +0.11R / +0.09R; 1h longs with MACD +0.08R / +0.30R; 1h and 4h shorts
-didn't pass with any filter.
+didn't pass with any filter - until the upper Bollinger band: upper-band touch + MACD below its signal made shorts
++0.04R / +0.33R overall and 1h shorts +0.36R / +0.55R (a close ABOVE the upper band did badly - tag and fade it).
 """
 
 from __future__ import annotations
@@ -26,10 +29,12 @@ import numpy as np
 import pandas as pd
 
 TRENDS = ("none", "50-day", "200-day", "structure")
-CONFIRMS = ("none", "macd", "mf_macd")
+CONFIRMS = ("none", "macd", "mf_macd", "band", "band_macd")
 NAMES = {"none": "no daily switch", "50-day": "daily 50-day average", "200-day": "daily 200-day average",
          "structure": "daily structure"}
-CONFIRM_NAMES = {"none": "no confirmation", "macd": "MACD vs its signal", "mf_macd": "money flow + MACD"}
+CONFIRM_NAMES = {"none": "no confirmation", "macd": "MACD vs its signal", "mf_macd": "money flow + MACD",
+                 "band": "touched the Bollinger band (lower for longs, upper for shorts)",
+                 "band_macd": "Bollinger band touch + MACD"}
 _DAILY: dict = {}
 
 
@@ -102,7 +107,11 @@ def confirm_masks(df: pd.DataFrame) -> dict[str, tuple[np.ndarray, np.ndarray]]:
     mf = np.asarray(money_flow(df), dtype=float)
     mf3 = np.r_[np.full(3, np.nan), mf[:-3]]
     one = np.ones(len(df), bool)
-    return {"none": (one, one), "macd": (m > s, m < s), "mf_macd": ((mf > mf3) & (m > s), (mf < mf3) & (m < s))}
+    from mcbot import builder
+    lo = builder.rule_series(df, {"rule": "bb_touch_lower", "a": 3}).to_numpy(bool)
+    up = builder.rule_series(df, {"rule": "bb_touch_upper", "a": 3}).to_numpy(bool)
+    return {"none": (one, one), "macd": (m > s, m < s), "mf_macd": ((mf > mf3) & (m > s), (mf < mf3) & (m < s)),
+            "band": (lo, up), "band_macd": (lo & (m > s), up & (m < s))}
 
 
 def masks(df: pd.DataFrame, filt: dict | None, side: str) -> np.ndarray:
