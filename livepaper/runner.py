@@ -358,9 +358,18 @@ def run_forever(cfg: dict, store: Store) -> None:
     last_sync = time.time() - sync_every + 120          # first share 2 minutes after starting, then every hour
     print(f"livepaper: broker={app.app.get('broker', 'sim')}, polling every {poll}s. Runs are managed in the "
           f"dashboard's Strategy Lab. Ctrl+C to stop.")
+    last_proving = 0.0
     while True:
         app = app.reload_if_changed()
         app.step()
+        if time.time() - last_proving >= 300:            # 🔬 Proving ground: decide / start trials, daily re-scan
+            try:
+                from apprentice.proving import scan_if_due, tick_from_runner
+                tick_from_runner(store)
+                scan_if_due()
+            except Exception as e:
+                print(f"[proving] {e}")
+            last_proving = time.time()
         if app.app.get("sync_git", False) and time.time() - last_sync >= sync_every:
             try:
                 sync_all(store)

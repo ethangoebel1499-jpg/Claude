@@ -1,0 +1,77 @@
+"""🔬 Proving ground: scan every timeframe, trial the best, decide after 100 trades."""
+import numpy as np
+import pandas as pd
+import pytest
+
+from apprentice import proving
+from apprentice.store import Store
+from livepaper.core import PositionManager, SimBroker, replay
+from livepaper.store import Store as LPStore
+from mcbot.data import synthetic
+
+
+@pytest.fixture
+def stores(tmp_path, monkeypatch):
+    monkeypatch.setenv("APPRENTICE_DB", str(tmp_path / "a.db"))
+    from livepaper import settings
+    monkeypatch.setattr(settings, "PATH", tmp_path / "s.json")
+    a = Store(tmp_path / "a.db")
+    sid = a.add_setup({"name": "rsi dip", "direction": "long", "source": "you", "stop_atr": 1.5, "rr": 2.0,
+                       "rules": [{"rule": "rsi_below", "a": 40}]})
+    a.update_setup(sid, status="pinned", weight=1)
+    return a, LPStore(tmp_path / "lp.db"), sid
+
+
+def test_fees_are_counted_and_hurt_low_timeframes():
+    s = {"direction": "long", "stop_atr": 1.5, "rr": 2.0, "rules": [{"rule": "rsi_below", "a": 40}]}
+    from apprentice import brain
+    for tf in ("1m", "4h"):
+        df = synthetic(n=3000, seed=5, timeframe=tf)
+        net, risk = proving.net_outcomes(df, s)
+        gross = brain.outcomes(df, "long", 1.5, 2.0)
+        ok = np.isfinite(net) & np.isfinite(gross)
+        assert (net[ok] < gross[ok]).all()                                   # fees always cost something
+    r = proving.scan_one(synthetic(n=3000, seed=5, timeframe="4h"), s)
+    assert r["trades"] == r["train_trades"] + r["test_trades"] > 0
+
+
+def test_scan_trial_and_decision(stores, monkeypatch):
+    a, lp, sid = stores
+    import livepaper.history as H
+    monkeypatch.setattr(H, "history", lambda sym, asset, tf: synthetic(n=2000, seed=hash(tf) % 50, timeframe=tf))
+    n = proving.scan(a, [("BTC", "crypto"), ("PEPE", "crypto")], ["1m", "4h"], log=lambda m: None)
+    assert n == 4 and len(proving.results(a)) == 4
+    assert proving.pair_for("PEPE", "crypto") == "PEPEUSD" and proving.pair_for("BTC", "crypto") == "XBTUSD"
+    # force a candidate and start a trial
+    a.db.execute("UPDATE proving_scan SET trades = 60, test_trades = 20, train_r = 0.2, test_r = 0.1, avg_r = 0.15, "
+                 "edge = 0.1 WHERE timeframe = '4h' AND symbol = 'BTC'")
+    a.db.commit()
+    out = proving.tick(a, lp, max_trials=3, log=lambda m: None)
+    assert out["started"] == 1
+    run = proving.run_name(sid, "BTC", "4h")
+    r = next(x for x in lp.runs() if x["name"] == run)
+    assert r["strategy"] == f"{proving.PREFIX}{sid}" and r["active"]
+    # the trial strategy is in the registry and trades with the setup's own ATR stop
+    reg = proving.refresh({})
+    e = reg[f"{proving.PREFIX}{sid}"]
+    df = synthetic(n=800, seed=3, timeframe="4h")
+    sig = e["signals"](df)
+    assert sig["stop_pct"].between(0.0005, 0.10).all() and sig["long_entry"].any()
+    m = replay(df, sig, PositionManager("t", e["exits"], shorts=False, broker=SimBroker(fee=0.001)))
+    assert len(m.trades) > 0
+    # not decided before 100 trades; decided after
+    assert proving.tick(a, lp, max_trials=3, log=lambda m: None) == {"kept": 0, "dropped": 0, "started": 0}
+    for i in range(100):
+        lp.trade({"run": run, "side": "long", "entry_time": f"t{i}", "entry_price": 1, "qty": 1, "exit_time": f"u{i}",
+                  "exit_price": 1, "reason": "stop", "targets_hit": 0, "pnl_usd": -5.0, "pnl_pct": -0.05})
+    out = proving.tick(a, lp, max_trials=3, log=lambda m: None)
+    assert out["dropped"] == 1
+    assert not next(x for x in lp.runs() if x["name"] == run)["active"]
+    t = proving.trials(a)
+    assert t.status.iloc[0] == "dropped"
+
+
+def test_verdict_keeps_only_profitable_trials():
+    win = pd.DataFrame({"pnl_usd": [10.0] * 60 + [-8.0] * 40, "pnl_pct": [0.1] * 60 + [-0.08] * 40})
+    lose = pd.DataFrame({"pnl_usd": [10.0] * 40 + [-8.0] * 60, "pnl_pct": [0.1] * 40 + [-0.08] * 60})
+    assert proving.verdict(win)[0] is True and proving.verdict(lose)[0] is False

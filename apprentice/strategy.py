@@ -232,6 +232,11 @@ def entry() -> dict:
 
 def refresh(registry: dict) -> dict:
     registry[KEY] = entry()
+    try:
+        from .proving import refresh as proving_refresh      # one entry per setup on trial (🔬 Proving ground)
+        proving_refresh(registry)
+    except Exception:
+        pass
     return registry
 
 

@@ -99,8 +99,9 @@ cfg = load_config(CONFIG) if Path(CONFIG).exists() else {"run": [], "app": {}}
 seed_runs(cfg, store)
 
 st.title("📈 Paper Trading")
-tab_dash, tab_lab, tab_build, tab_streams, tab_app, tab_log, tab_acct = st.tabs(
-    ["📊 Dashboard", "🧪 Strategy Lab", "🛠️ Builder", "🎙️ Streams", "🧠 Apprentice", "📜 Activity", "⚙️ Account"])
+tab_dash, tab_lab, tab_build, tab_streams, tab_app, tab_prove, tab_log, tab_acct = st.tabs(
+    ["📊 Dashboard", "🧪 Strategy Lab", "🛠️ Builder", "🎙️ Streams", "🧠 Apprentice", "🔬 Proving ground", "📜 Activity",
+     "⚙️ Account"])
 
 
 # ---- Dashboard ----------------------------------------------------------------
@@ -611,6 +612,13 @@ with tab_app:
         render_apprentice(store)
     except Exception as e:
         st.error(f"The apprentice couldn't start: {type(e).__name__}: {e}")
+
+with tab_prove:
+    try:
+        from apprentice.proving_ui import render as render_proving
+        render_proving(store)
+    except Exception as e:
+        st.error(f"The proving ground couldn't start: {type(e).__name__}: {e}")
 
 
 # ---- Account ----------------------------------------------------------------------

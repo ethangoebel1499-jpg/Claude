@@ -207,6 +207,9 @@ def main() -> None:
     le = sub.add_parser("learn")
     le.add_argument("--charts", nargs="*", default=DEFAULT_CHARTS)
     le.add_argument("--no-mine", action="store_true")
+    sc = sub.add_parser("scan", help="every live setup x every timeframe x the markets (🔬 Proving ground)")
+    sc.add_argument("--markets", nargs="*", default=None, help="SYMBOL:crypto or SYMBOL:stock")
+    sc.add_argument("--timeframes", nargs="*", default=None)
     an = sub.add_parser("analyze")
     an.add_argument("symbol")
     an.add_argument("timeframe", nargs="?", default="4h")
@@ -226,6 +229,12 @@ def main() -> None:
             learn(store, DEFAULT_CHARTS)
     elif a.cmd == "learn":
         learn(store, a.charts, not a.no_mine)
+    elif a.cmd == "scan":
+        from . import proving
+        from livepaper import settings
+        specs = a.markets or settings.get("proving_markets") or ["BTC:crypto", "ETH:crypto", "SOL:crypto", "SPY:stock"]
+        markets = [tuple(m.split(":", 1)) if ":" in m else (m, "crypto") for m in specs]
+        proving.scan(store, markets, a.timeframes or settings.get("proving_timeframes") or proving.TIMEFRAMES)
     elif a.cmd == "analyze":
         cs = charts([f"{a.symbol}:{a.timeframe}"])
         if not cs:
