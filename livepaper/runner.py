@@ -23,6 +23,14 @@ STRATEGIES = {k: (v["signals"], v["checklist"]) for k, v in REGISTRY.items()}
 PRESETS = {k: v["exits"] for k, v in REGISTRY.items()}
 
 
+def r_symbol_for_daily(r: dict) -> str:
+    """The symbol livepaper.history knows a run's market by (Kraken pair -> coin name for crypto)."""
+    if r.get("asset", "crypto") != "crypto":
+        return r["symbol"]
+    from .history import CRYPTO
+    return next((c for c, p in CRYPTO.items() if p == r["symbol"]), r["symbol"])
+
+
 def normalize_run(r: dict) -> dict:
     r = dict(r)
     if r["strategy"] not in REGISTRY:
@@ -199,6 +207,7 @@ class Runner:
         last = str(bars.index[-1])
         st = self.pm.state
         if st.last_bar is None or last > st.last_bar:
+            bars.attrs["symbol"], bars.attrs["asset"] = r_symbol_for_daily(self.r), self.r.get("asset", "crypto")
             sig = self.signals_fn(bars)
             row = sig.iloc[-1]
             self.store.signal(name, last, row["long_entry"], row["short_entry"],

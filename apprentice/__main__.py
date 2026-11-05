@@ -50,8 +50,9 @@ def charts(specs: list[str], log=print) -> dict:
         sym, tf = sym.upper(), tf or "4h"
         asset = "crypto" if sym in CRYPTO else "stock"
         try:
-            df = history(sym, asset, tf)
-            out[f"{sym} {tf}"] = df.iloc[-3000:]
+            df = history(sym, asset, tf).iloc[-3000:]
+            df.attrs["symbol"], df.attrs["asset"] = sym, asset      # the side filters fetch its daily candles
+            out[f"{sym} {tf}"] = df
             log(f"  loaded {sym} {tf}: {len(out[f'{sym} {tf}'])} candles")
         except Exception as e:
             log(f"  couldn't load {sym} {tf}: {e}")

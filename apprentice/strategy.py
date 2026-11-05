@@ -161,8 +161,14 @@ def signals(df: pd.DataFrame, setups: list[dict] | None = None, mode: str | None
     tfs = timeframe_status(tf)
     out["pause"] = (not tfs["trade"]) if paused is None else bool(paused)
     # which sides Learn found worth trading on this timeframe (used by runs set to 🧠 Auto)
-    out["allow_long"] = bool(tfs.get("long", True)) if sides else True
-    out["allow_short"] = bool(tfs.get("short", True)) if sides else True
+    out["allow_long"], out["allow_short"] = True, True
+    if sides and ("long" in tfs or "short" in tfs):
+        from . import sides as SD
+        for side in ("long", "short"):
+            if not tfs.get(side):
+                out[f"allow_{side}"] = False
+            elif tfs.get(f"{side}_filter"):
+                out[f"allow_{side}"] = SD.masks(df, tfs[f"{side}_filter"], side)
     if mode != "off":
         out["long_reversal"], out["short_reversal"] = reversal_signals(df)
         out["use_reversal"] = rev
@@ -195,10 +201,17 @@ def checklist(df: pd.DataFrame, bar: int = -1, label: str | None = None) -> str:
     tf = timeframe_of(df)
     tfs = timeframe_status(tf)
     if tfs["trade"] and ("long" in tfs or "short" in tfs):
-        sides = "longs and shorts" if tfs.get("long") and tfs.get("short") else "longs only" if tfs.get("long") \
-            else "shorts only"
-        lines.append(f"🧭 On {tf} it trades {sides} (🧠 Auto runs) - each side only if it made money before and on "
-                     "unseen prices in 🎓 Learn")
+        from . import sides as SD
+        sig = signals(df.iloc[: i + 1] if i < len(df) - 1 else df, setups)
+        for side in ("long", "short"):
+            f = tfs.get(f"{side}_filter")
+            if not tfs.get(side):
+                lines.append(f"🧭 {side.upper()}S off on {tf} (🧠 Auto): no filter made money before and on unseen "
+                             "prices in 🎓 Learn")
+            else:
+                now_ok = bool(sig[f"allow_{side}"].iloc[-1])
+                lines.append(f"🧭 {side.upper()}S on {tf} (🧠 Auto) when: {SD.describe(f)} - right now "
+                             f"{'🟢 YES' if now_ok else '🔴 NO'}")
     if not tfs["trade"]:
         lines.append(f"⏸️ {tf} is paused: in 🎓 Learn all its setups together made {tfs.get('before_pct', 0):+.1f}% on the "
                      f"first 70% of history and {tfs.get('unseen_pct', 0):+.1f}% on prices they never saw - it needs to "

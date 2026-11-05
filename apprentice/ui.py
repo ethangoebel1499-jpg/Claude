@@ -343,8 +343,9 @@ def after_entry_panel(store: Store, setups: list[dict]) -> None:
     if tfs:
         st.markdown("**⏯️ Timeframes** (🎓 Learn trades one only if all its setups together made money on the first 70% "
                     "of history AND on the unseen last 30%):")
-        side = lambda v: ("longs+shorts" if v.get("long") and v.get("short") else "longs" if v.get("long")
-                          else "shorts" if v.get("short") else "")
+        from apprentice import sides as SD
+        side = lambda v: " · ".join(f"{s}s when {SD.describe(v.get(f'{s}_filter'))}" if v.get(f"{s}_filter")
+                                    else f"{s}s" for s in ("long", "short") if v.get(s))
         st.caption(" · ".join(f"{'✅' if v['trade'] else '⏸️'} {tf} {('trading ' + side(v)).strip() if v['trade'] else 'PAUSED'} "
                               f"({v.get('before_pct', 0):+.1f}% before, {v['unseen_pct']:+.1f}% unseen, {v['trades']} trades)"
                               for tf, v in sorted(tfs.items())))

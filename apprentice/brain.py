@@ -368,30 +368,48 @@ def timeframe_check(store, charts: dict[str, pd.DataFrame], log=print, split: fl
     from . import strategy
     setups = [s for s in store.setups(("active", "pinned")) if s["weight"] > 0 or s["status"] == "pinned"]
     out = {}
+    from . import sides as SD
     for tf, group in by_timeframe(charts).items():
-        res = {}
-        for side, kw_side in (("both", {}), ("long", {"allow_short": False}), ("short", {"allow_long": False})):
-            total, before, trades = 0.0, 0.0, 0
-            for df in group.values():
-                cut = int(len(df) * split)
-                sig = strategy.signals(df, setups, mode="learned", safety=strategy.safety_rules(tf, store),
-                                       paused=False, avoid=strategy.avoid_rules(tf, store), sides=False)
-                kw = {"allow_short": True, "stop_loss": strategy.STOP, "take_profits": strategy.TAKE_PROFITS, **kw_side}
-                st = run_backtest(df.iloc[cut:], sig.iloc[cut:], **kw).stats
-                before += run_backtest(df.iloc[:cut], sig.iloc[:cut], **kw).stats["total_return_pct"]
-                total += st["total_return_pct"]
-                trades += st["trades"]
-            res[side] = (round(before, 2), round(total, 2), trades)
-        long_ok = bool(res["long"][0] > 0 and res["long"][1] > 0)       # made money before AND on unseen prices
-        short_ok = bool(res["short"][0] > 0 and res["short"][1] > 0)
-        ok = long_ok or short_ok
-        out[tf] = {"trade": ok, "long": long_ok, "short": short_ok,
-                   "before_pct": res["both"][0], "unseen_pct": res["both"][1], "trades": res["both"][2],
-                   "long_pct": res["long"][:2], "short_pct": res["short"][:2], "charts": len(group)}
-        sides = "longs and shorts" if long_ok and short_ok else "longs only" if long_ok else "shorts only" \
-            if short_ok else "nothing"
-        log(f"  {tf}: longs {res['long'][0]:+.1f}% before / {res['long'][1]:+.1f}% unseen, shorts {res['short'][0]:+.1f}% / "
-            f"{res['short'][1]:+.1f}% -> {'trading ' + sides if ok else 'PAUSED - no new trades on this timeframe'}")
+        prepared = []
+        for df in group.values():
+            sig = strategy.signals(df, setups, mode="learned", safety=strategy.safety_rules(tf, store),
+                                   paused=False, avoid=strategy.avoid_rules(tf, store), sides=False)
+            prepared.append((df, sig, SD.trend_masks(df), SD.confirm_masks(df), int(len(df) * split)))
+        chosen, tried = {}, {}
+        for side, k in (("long", 0), ("short", 1)):
+            best = None
+            for tr in SD.TRENDS:
+                for cf in SD.CONFIRMS:
+                    before = unseen = 0.0
+                    trades = 0
+                    for df, sig, tm, cm, cut in prepared:
+                        s = sig.copy()
+                        allow = tm[tr][k] & cm[cf][k]
+                        s["allow_long" if side == "long" else "allow_short"] = allow
+                        kw = {"allow_short": side == "short", "allow_long": side == "long",
+                              "stop_loss": strategy.STOP, "take_profits": strategy.TAKE_PROFITS}
+                        a = run_backtest(df.iloc[:cut], s.iloc[:cut], **kw).stats
+                        b = run_backtest(df.iloc[cut:], s.iloc[cut:], **kw).stats
+                        before += a["total_return_pct"]
+                        unseen += b["total_return_pct"]
+                        trades += a["trades"] + b["trades"]
+                    tried[(side, tr, cf)] = (round(before, 2), round(unseen, 2), trades)
+                    # chosen on the first 70%; it must also have made money on the unseen 30%
+                    if before > 0 and unseen > 0 and trades >= 10 and (best is None or before > best[1]):
+                        best = ({"trend": tr, "confirm": cf}, before, unseen, trades)
+            chosen[side] = None if best is None else {**best[0], "before_pct": round(best[1], 2),
+                                                      "unseen_pct": round(best[2], 2), "trades": best[3]}
+        long_ok, short_ok = chosen["long"] is not None, chosen["short"] is not None
+        plain = tried[("long", "none", "none")], tried[("short", "none", "none")]
+        out[tf] = {"trade": long_ok or short_ok, "long": long_ok, "short": short_ok,
+                   "long_filter": chosen["long"], "short_filter": chosen["short"],
+                   "before_pct": round(plain[0][0] + plain[1][0], 2), "unseen_pct": round(plain[0][1] + plain[1][1], 2),
+                   "trades": plain[0][2] + plain[1][2], "charts": len(group)}
+        log(f"  {tf}: longs {SD.describe(chosen['long'])}"
+            + (f" ({chosen['long']['before_pct']:+.1f}% / {chosen['long']['unseen_pct']:+.1f}%)" if long_ok else "")
+            + f", shorts {SD.describe(chosen['short'])}"
+            + (f" ({chosen['short']['before_pct']:+.1f}% / {chosen['short']['unseen_pct']:+.1f}%)" if short_ok else "")
+            + (" -> trading" if long_ok or short_ok else " -> PAUSED - no new trades on this timeframe"))
     if out:
         store.meta_set("timeframes", {**(store.meta_get("timeframes") or {}), **out})
     return out
