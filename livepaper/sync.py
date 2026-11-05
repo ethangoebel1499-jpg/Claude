@@ -218,7 +218,33 @@ def fetch_reviews() -> dict | None:
     review = json.loads(text)
     LOCAL_REVIEW.parent.mkdir(parents=True, exist_ok=True)
     LOCAL_REVIEW.write_text(json.dumps(review, indent=1))
+    auto_apply()
     return review
+
+
+def auto_apply() -> dict | None:
+    """With "Apply Claude's review automatically" on (🧠 Apprentice), apply every new verdict as soon as it
+    arrives, then re-test with 🎓 Learn - the same as pressing Apply all."""
+    from . import settings
+    if not settings.get("apprentice_auto_apply_claude", True):
+        return None
+    try:
+        from apprentice import review as rv
+        from apprentice.job import running, spawn
+        from apprentice.store import Store as AStore
+        from apprentice.strategy import db_path
+        if not Path(db_path()).exists():
+            return None
+        n = rv.apply_all(AStore(db_path()))
+        if any(n.values()):
+            print(f"[sync] applied Claude's review: {n}")
+            if n.get("setups") and not running("learn"):
+                from apprentice.__main__ import DEFAULT_CHARTS
+                spawn(["learn", "--charts", *DEFAULT_CHARTS], "Learning run (after Claude's review)")
+        return n
+    except Exception as e:
+        print(f"[sync] couldn't apply Claude's review: {e}")
+        return None
 
 
 def sync_all(lp: Store | None) -> str:

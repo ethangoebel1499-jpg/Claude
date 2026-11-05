@@ -12,7 +12,7 @@ from pathlib import Path
 import pandas as pd
 import streamlit as st
 
-from apprentice import review, brain, youtube
+from apprentice import autoreview, review, brain, youtube
 from apprentice.job import DONE, JOBS, spawn
 from apprentice.store import Store
 from apprentice.strategy import KEY as STRATEGY_KEY, db_path
@@ -371,6 +371,43 @@ def after_entry_panel(store: Store, setups: list[dict]) -> None:
         st.toast("Saved - the trader uses it from its next price check")
 
 
+def auto_panel(store: Store) -> None:
+    """The apprentice's own review (runs after every lesson and every Learn) and the automatic switches."""
+    from livepaper import settings
+    st.markdown("##### 🤖 Automatic review")
+    c1, c2 = st.columns(2)
+    a_new = c1.toggle("Review everything it learns by itself", bool(settings.get("apprentice_auto_review", True)),
+                      help="After every lesson and every 🎓 Learn: deletes junk concepts (ads, leverage talk, transcript "
+                           "fragments, dated commentary, duplicates), turns off setups that can't work or have no edge, "
+                           "deletes lessons that aren't trading material - and rates and comments on everything. Never "
+                           "touches what you pinned, made or rated 4-5★, or what Claude's review covers.")
+    c_new = c2.toggle("Apply Claude's review automatically", bool(settings.get("apprentice_auto_apply_claude", True)),
+                      help="Apply Claude's verdicts as soon as a sync brings them (then re-test with 🎓 Learn), "
+                           "instead of waiting for the Apply all button.")
+    if a_new != bool(settings.get("apprentice_auto_review", True)) or \
+            c_new != bool(settings.get("apprentice_auto_apply_claude", True)):
+        settings.save({"apprentice_auto_review": a_new, "apprentice_auto_apply_claude": c_new})
+        st.toast("Saved")
+    ar = store.meta_get("auto_review") or {}
+    if ar:
+        n = ar.get("counts", {})
+        tally = lambda k: " · ".join(f"{autoreview.STARS.get(v, 0)}★ {v} {c}" for v, c in
+                                     sorted({v: sum(1 for x in ar.get(k, {}).values() if x["verdict"] == v)
+                                             for v in ("use", "keep", "watch", "drop")}.items()) if c)
+        st.caption(f"Last run {ar.get('at', '')[:16].replace('T', ' ')} UTC: deleted {n.get('concepts_deleted', 0)} "
+                   f"concepts and {n.get('lessons_deleted', 0)} lessons, turned off {n.get('setups_off', 0)} setups. "
+                   f"Setups: {tally('setups')} · concepts: {tally('concepts')}. Each verdict and comment shows under "
+                   "its item below.")
+        dropped = [x for x in ar.get("lessons", {}).values() if x["verdict"] == "drop"]
+        if dropped:
+            st.caption("Deleted lessons: " + "; ".join(f"{x['title']} ({x['comment']})" for x in dropped))
+    if st.button("🤖 Review everything now", key="ap_auto_now"):
+        c = autoreview.run(store, log=lambda m: None)
+        st.success(f"Deleted {c['concepts_deleted']} concepts and {c['lessons_deleted']} lessons, turned off "
+                   f"{c['setups_off']} setups.")
+        st.rerun()
+
+
 def claude_panel(store: Store, charts: list[str] | None = None) -> None:
     """Claude's latest review of the setups, concepts and lessons (comes back with each sync)."""
     from livepaper import sync
@@ -449,6 +486,7 @@ def knowledge_tab(store: Store) -> None:
     st.markdown("##### Accuracy (your ratings)")
     accuracy_panel(store)
     claude_panel(store, picks)
+    auto_panel(store)
     after_entry_panel(store, setups)
 
     st.markdown("##### Setups")
@@ -486,6 +524,9 @@ def knowledge_tab(store: Store) -> None:
                                 "\n".join(f"- {u}" for u in s["unchecked"]))
                 st.caption(f"Stop {s['stop_atr']:g} ATR · target {s['rr']:g}R · {stats_line(s)}")
                 after_entry_lines(store, s)
+                av = autoreview.verdict(store, "setups", s["id"])
+                if av:
+                    st.caption(f"🤖 Auto-review: {'⭐' * av['stars']} {av['verdict']} - {av['comment']}")
                 rv = review.for_setup(s)
                 if rv:
                     r1, r2 = st.columns([5, 1.3])
@@ -539,6 +580,9 @@ def knowledge_tab(store: Store) -> None:
         with c2:
             rate(store, "concept", r.id, {"text": r.text, "category": r.category}, f"concept_{r.id}", "Rate")
         rv = review.for_concept(r.id)
+        av = autoreview.verdict(store, "concepts", r.id)
+        if av and not rv:
+            st.caption(f"🤖 Auto-review: {'⭐' * av['stars']} {av['verdict']} - {av['comment']}")
         if rv and rv.get("verdict") != "keep":
             d1, d2 = st.columns([5, 1.4])
             d1.markdown(review.describe(rv) + (f"  \n*Better:* {rv['fix_text']}" if rv.get("fix_text") else ""))

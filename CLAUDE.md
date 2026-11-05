@@ -20,7 +20,10 @@ When the user asks how the apprentice / paper trading is doing, or to review wha
    fix garbled wording with `fix_text`). Lessons: **keep / drop**.
 3. Write the review JSON (format in `apprentice/review.py`), `python tools/claude_review.py check review.json`,
    then `publish review.json`. It lands in `reviews/claude_review.json`; the app downloads it on its next
-   sync and shows each verdict with an Apply button in 🧠 Apprentice → What it knows.
+   sync and (by default) applies it automatically - setups, concepts, lessons marked drop are deleted, chart-trade
+   ratings saved - then re-tests with 🎓 Learn. The user can switch that off in 🧠 Apprentice → 🤖 Automatic review.
+   The app also runs its own rule-based review (`apprentice/autoreview.py`) after every lesson and Learn; your
+   verdicts take precedence over it.
 4. Tell the user the headline: what to keep, what's broken and why, and that they can press Apply all.
 
 Keep reviews honest: small samples (< ~30 trades) are "too early", and edge vs random matters more than

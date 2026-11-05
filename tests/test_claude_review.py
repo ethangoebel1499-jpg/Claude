@@ -163,6 +163,7 @@ def test_downloading_a_review_changes_nothing_until_apply(apprentice, tmp_path, 
     monkeypatch.setattr(sync, "LOCAL_REVIEW", review.LOCAL)
     from livepaper import settings
     monkeypatch.setattr(settings, "PATH", tmp_path / "s.json")
+    settings.save({"apprentice_auto_apply_claude": False})               # you switched automatic applying off
     assert sync.fetch_reviews()["reviewed_at"] == "2026-11-04T16:00:00Z"
     assert ad in set(a.table("concepts").id)                               # still there after the sync
     assert {s["id"]: s["status"] for s in a.setups()}[ids["junk"]] != "off"
@@ -193,3 +194,27 @@ def test_claudes_chart_trade_ratings_apply_like_your_own(apprentice):
     assert a.votes(7) == (0, 1)                                          # the call counts, the 400 arrows don't
     assert a.accuracy()["all"]["n"] == 3                                 # arrows kept out of your accuracy average
     assert review.status(a)["trades"]["waiting"] == 0 and review.apply_trades(a) == 0
+
+
+
+def test_review_applies_itself_on_sync_by_default(apprentice, tmp_path, monkeypatch):
+    a, ids = apprentice
+    lid = int(a.table("lessons").id.iloc[0])
+    body = json.dumps({"reviewed_at": "2026-11-05T16:00:00Z",
+                       "setups": [{"id": ids["junk"], "name": "Long: volume spike", "verdict": "drop", "reason": "-"}],
+                       "lessons": [{"id": lid, "verdict": "drop", "reason": "a worship service"}]})
+
+    class R:
+        status_code, text = 200, body
+    monkeypatch.setattr(sync.requests, "get", lambda *a, **k: R())
+    monkeypatch.setattr(sync, "LOCAL_REVIEW", review.LOCAL)
+    from livepaper import settings
+    from apprentice import job
+    monkeypatch.setattr(settings, "PATH", tmp_path / "s.json")
+    spawned = []
+    monkeypatch.setattr(job, "spawn", lambda args, title: spawned.append(args))
+    monkeypatch.setattr(job, "running", lambda kind: False)
+    sync.fetch_reviews()
+    assert {s["id"]: s["status"] for s in a.setups()}[ids["junk"]] == "off"
+    assert lid not in set(a.table("lessons").id)                           # Claude's "drop" deleted the lesson
+    assert spawned and spawned[0][0] == "learn"                            # and it re-tests

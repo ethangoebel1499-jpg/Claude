@@ -203,9 +203,26 @@ def apply_trades(store) -> int:
     return n
 
 
+def apply_lessons(store) -> int:
+    """Lessons Claude says to drop are deleted, with the concepts and setups learned only from them."""
+    n = 0
+    have = {int(r) for r in store.table("lessons").id} if len(store.table("lessons")) else set()
+    for lid, item in _items("lessons").items():
+        if is_applied("lessons", item):
+            continue
+        if item.get("verdict") == "drop" and lid in have:
+            store.forget_lesson(lid)
+            n += 1
+        _mark(key("lessons", item))
+    return n
+
+
 def apply_all(store) -> dict[str, int]:
     """Apply every review item not applied yet. Returns counts."""
     counts = {"setups": 0, "concepts": 0}
+    lessons = apply_lessons(store)
+    if lessons:
+        counts["lessons"] = lessons
     counts["concepts"] = apply_concepts(store)
     trades = apply_trades(store)
     if trades:

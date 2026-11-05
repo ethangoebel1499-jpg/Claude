@@ -158,8 +158,24 @@ def learn(store: Store, specs: list[str], mine: bool = True, log=print) -> None:
                 log(f"  learned a new {d} setup from missed trades: {c['name']}")
     log("Testing every setup on real prices...")
     res = brain.learn(store, cs, log)
+    from . import autoreview
+    if autoreview.enabled():
+        log("Reviewing what it knows (deletes junk, turns off broken setups)...")
+        autoreview.run(store, log)
+        res = [r for r in res if r["id"] in {s["id"] for s in store.setups()}]
+        off = {s["id"] for s in store.setups("off")}
+        res = [r for r in res if r["id"] not in off]
     active = sum(1 for r in res if r["status"] in ("active", "pinned"))
     log(f"RESULT tested={len(res)} active={active}")
+
+
+def _auto_review(store: Store) -> None:
+    from . import autoreview
+    if autoreview.enabled():
+        try:
+            autoreview.run(store)
+        except Exception as e:
+            print(f"auto-review failed: {e}")
 
 
 def feedback_marks(store: Store) -> tuple[dict, dict]:
@@ -199,11 +215,13 @@ def main() -> None:
     store = Store(a.db or db_path())
     if a.cmd == "teach":
         teach_source(store, a.source, a.title, model(a.no_ai), relearn=a.relearn)
+        _auto_review(store)
         if a.then_learn:
             learn(store, DEFAULT_CHARTS)
     elif a.cmd == "import-streams":
         from livepaper import settings
         import_streams(store, a.streams_db or settings.get("streamlearn_db", "streamlearn.db"), model(a.no_ai))
+        _auto_review(store)
         if a.then_learn:
             learn(store, DEFAULT_CHARTS)
     elif a.cmd == "learn":
