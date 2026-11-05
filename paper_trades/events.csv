@@ -466,3 +466,16 @@ Apprentice SHIB 1h,2026-11-05T09:00:05+00:00,exit,closed (opposite setup) -53.39
 Apprentice SHIB 1h,2026-11-05T09:00:05+00:00,entry,"LONG 2,077,739,636.24885798 @ 0.000004743"
 Apprentice LTC 1h,2026-11-05T11:00:27+00:00,exit,closed (opposite setup) -86.03 USD
 Apprentice LTC 1h,2026-11-05T11:00:27+00:00,entry,SHORT 171.088607 @ 55.71
+S3 GRIND DOGE 1h,2026-11-05T11:52:27+00:00,error,RuntimeError: Kraken: ['EGeneral:Internal error']
+Apprentice SOL 4h,2026-11-05T11:52:27+00:00,error,RuntimeError: Kraken: ['EGeneral:Internal error']
+Apprentice SHIB 1h,2026-11-05T11:52:28+00:00,error,RuntimeError: Kraken: ['EGeneral:Internal error']
+Apprentice UNI 4h,2026-11-05T11:52:29+00:00,error,RuntimeError: Kraken: ['EGeneral:Internal error']
+Apprentice LINK 1D,2026-11-05T11:52:29+00:00,error,RuntimeError: Kraken: ['EGeneral:Internal error']
+Witcher SOL 2h,2026-11-05T11:52:30+00:00,error,RuntimeError: Kraken: ['EGeneral:Internal error']
+Apprentice SOL 4h,2026-11-05T12:00:21+00:00,entry,LONG 100.011572 @ 96.30
+Apprentice LTC 1h,2026-11-05T12:00:23+00:00,exit,closed (opposite setup) -24.20 USD
+Apprentice LTC 1h,2026-11-05T12:00:23+00:00,entry,LONG 170.562357 @ 55.74
+Apprentice ETH 1h,2026-11-05T12:00:24+00:00,exit,closed (opposite setup) -93.37 USD
+Apprentice ETH 1h,2026-11-05T12:00:24+00:00,entry,"SHORT 4.290898 @ 2,414.90"
+Apprentice SHIB 1h,2026-11-05T12:00:25+00:00,exit,closed (opposite setup) +17.65 USD
+Apprentice SHIB 1h,2026-11-05T12:00:25+00:00,entry,"SHORT 2,073,592,012.32470202 @ 0.000004761"
