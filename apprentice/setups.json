@@ -56244,5 +56244,525 @@
   "hints": null,
   "tune": null,
   "exit_plan": null
+ },
+ {
+  "id": 341,
+  "name": "Short: Lower Low",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "daily",
+  "why": "Bearish divergence on Market Cypher B momentum and money flow as we approach the 620 Fibonacci level.",
+  "quote": "Bearish divergences okay something to be aware of right now.",
+  "unchecked": [
+   "Price should be near the 620 Fibonacci level."
+  ],
+  "lesson_id": 100,
+  "rules": [
+   {
+    "rule": "lower_high"
+   }
+  ],
+  "rules_text": [
+   "Lower high: the last 5 candles' high is below the 5 candles before"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 342,
+  "name": "rsi_bear_div",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "4h",
+  "why": "RSI is below 30 and crossing down through 30, indicating a bearish divergence and potential pullback.",
+  "quote": "if we cannot reclaim this green box and I'm talking about twenty five thousand dollars at the top of this box and we're still printing these bearish patterns I do believe we are going to see a more of a pullback than what we are getting right now",
+  "unchecked": [
+   "price higher high, RSI lower high - in the last 3 candles, lows/highs at most 60 candles apart"
+  ],
+  "lesson_id": 102,
+  "rules": [
+   {
+    "rule": "rsi_below",
+    "a": 30
+   },
+   {
+    "rule": "rsi_cross_down",
+    "a": 30
+   }
+  ],
+  "rules_text": [
+   "RSI (14) below 30",
+   "RSI (14) crosses down through 30"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 343,
+  "name": "rsi_bull_div",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "4h",
+  "why": "RSI is above 70 and crossing up through 70, indicating a bullish divergence and potential move up to 30K.",
+  "quote": "if we are able to reclaim this box right here twenty five thousand dollars and then maybe retest it as support then I believe that that potentially could give us our move up to thirty thousand dollars",
+  "unchecked": [
+   "price lower low, RSI higher low - in the last 3 candles, lows/highs at most 60 candles apart"
+  ],
+  "lesson_id": 102,
+  "rules": [
+   {
+    "rule": "rsi_above",
+    "a": 70
+   },
+   {
+    "rule": "rsi_cross_up",
+    "a": 70
+   }
+  ],
+  "rules_text": [
+   "RSI (14) above 70",
+   "RSI (14) crosses up through 70"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 344,
+  "name": "long_setup",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "1h",
+  "why": "Potential support at 22,300 and 21,200 dollars with bullish divergences, but be cautious of rejection at higher levels.",
+  "quote": "these are the zones that I am looking for support locally okay I'm gonna go ahead and put on this there's two key zones first of all we have never actually made a lower low over here at the level of twenty two thousand three hundred dollars so this would be the first Zone support where we get a pullback to this be a very bullish support at 22.3 another bullish support would be bouncing from the pre-ftx dump support resistance flip coming in right around 20 700 to around that 21.2 K level these would be more bullish scenarios these are zones that we need to be ready and waiting for if we do get a pullback because if we get to pull back to these zones well it's very likely that if we come down there and we do see some bullish divergences that is the place to actually look for and get into a long trade",
+  "unchecked": [
+   "Bounced off support / reclaimed a level (closed back above it)"
+  ],
+  "lesson_id": 102,
+  "rules": [
+   {
+    "rule": "close_above_sma",
+    "a": 22300
+   },
+   {
+    "rule": "close_above_sma",
+    "a": 21200
+   },
+   {
+    "rule": "rsi_bull_div",
+    "a": 22300,
+    "b": 22300
+   },
+   {
+    "rule": "rsi_bull_div",
+    "a": 21200,
+    "b": 21200
+   }
+  ],
+  "rules_text": [
+   "Close above SMA (22300)",
+   "Close above SMA (21200)",
+   "Bullish divergence: price lower low, RSI higher low - in the last 22300 candles, lows/highs at most 22300 candles apart",
+   "Bullish divergence: price lower low, RSI higher low - in the last 21200 candles, lows/highs at most 21200 candles apart"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 345,
+  "name": "short_setup",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "1h",
+  "why": "Potential rejection at the green box area above 30,000 dollars with bearish divergences, but be cautious of support at lower levels.",
+  "quote": "if we are going to reclaim the green box that opens up the doorway to pump City because especially if we start to reclaim thirty thousand dollars it opens up the door to a quick move up to forty seven thousand dollars if we reclaim forty seven thousand it's a quick move up to fifty thousand dollar Bitcoin is that going to happen I don't know right now we're in bullish Market structure we can look for higher lows and higher highs until we start to make lower lows and lower highs we can expect the uptrend to continue and so these are going to be some very very high targets but that is it guys for today's video",
+  "unchecked": [
+   "Bounced off support / reclaimed a level (closed back above it)"
+  ],
+  "lesson_id": 102,
+  "rules": [
+   {
+    "rule": "close_below_sma",
+    "a": 30000
+   },
+   {
+    "rule": "rsi_bear_div",
+    "a": 30000,
+    "b": 30000
+   }
+  ],
+  "rules_text": [
+   "Close below SMA (30000)",
+   "Bearish divergence: price higher high, RSI lower high - in the last 30000 candles, lows/highs at most 30000 candles apart"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 346,
+  "name": "Long: Higher Highs and Higher Lows on Weekly Time Frame",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "weekly",
+  "why": "Market structure has flipped for Bitcoin on the weekly time frame for the first time since November 2021, making higher lows and higher highs on the weekly time frame.",
+  "quote": "Market structure on the weekly time frame for the first time since November 2021 officially making higher lows and higher highs on the weekly time frame.",
+  "unchecked": [
+   "Higher highs and higher lows on the weekly time frame"
+  ],
+  "lesson_id": 103,
+  "rules": [
+   {
+    "rule": "higher_low"
+   }
+  ],
+  "rules_text": [
+   "Higher low: the last 5 candles' low is above the 5 candles before"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 347,
+  "name": "Market Cipher Green Dot and Stochastic RSI Crossover",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "monthly",
+  "why": "Bullish signals from Market Cipher and Stochastic RSI indicate a potential bottom in the market.",
+  "quote": "when we see the monthly Market Cipher be printing Green Dots when we see the stochastic RSI in the monthly the Green Line crossing over the orange line for the past two Bitcoin Cycles this has been the bottom",
+  "unchecked": [
+   "Historically, this has happened at the bottom of a bear market."
+  ],
+  "lesson_id": 103,
+  "rules": [
+   {
+    "rule": "wt_green_dot"
+   },
+   {
+    "rule": "rsi_cross_up",
+    "a": 30
+   }
+  ],
+  "rules_text": [
+   "Market Cipher green dot (WaveTrend crosses up) below 0",
+   "RSI (14) crosses up through 30"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 348,
+  "name": "Bearish Divergence and Bearish Momentum",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "4-hour",
+  "why": "Bearish divergences and bearish momentum indicate a potential pullback.",
+  "quote": "we are seeing some slightly bearish signs on Market Cypher B on the four hour time frame looking like we are getting some bearish divergences",
+  "unchecked": [
+   "Bearish divergences and bearish momentum are warning signs."
+  ],
+  "lesson_id": 103,
+  "rules": [
+   {
+    "rule": "wt_red_dot"
+   },
+   {
+    "rule": "mf_negative"
+   }
+  ],
+  "rules_text": [
+   "Market Cipher red dot (WaveTrend crosses down) above 0",
+   "Market Cipher money flow below zero (red)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 349,
+  "name": "Short Trade Setup",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "4h",
+  "why": "Bearish divergences and key resistance levels indicate a potential reversal in the market, making it a good time to take a short position.",
+  "quote": "this definitely is an area we should be looking for short trades right this is why in fact we did give the short trade over in the Casper crew VIP Discord to take a short from that exact level if we got certain confirmations we absolutely did get the confirmations and that has allowed us to enter into now short trade",
+  "unchecked": [
+   "Price is forming a bearish divergence with RSI"
+  ],
+  "lesson_id": 104,
+  "rules": [
+   {
+    "rule": "close_above_sma",
+    "a": 200
+   },
+   {
+    "rule": "rsi_bear_div",
+    "a": 60,
+    "b": 60
+   }
+  ],
+  "rules_text": [
+   "Close above SMA (200)",
+   "Bearish divergence: price higher high, RSI lower high - in the last 60 candles, lows/highs at most 60 candles apart"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 350,
+  "name": "Long Trade Setup",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "4h",
+  "why": "Bullish divergences and key support levels indicate a potential continuation of the trend, making it a good time to take a long position.",
+  "quote": "as long as we don't lose this range here I will actually maintain a little bullish Because unless we're losing support there's no real reason to get bearish right",
+  "unchecked": [
+   "Price is forming a bullish divergence with RSI"
+  ],
+  "lesson_id": 104,
+  "rules": [
+   {
+    "rule": "close_below_sma",
+    "a": 200
+   },
+   {
+    "rule": "rsi_bull_div",
+    "a": 60,
+    "b": 60
+   }
+  ],
+  "rules_text": [
+   "Close below SMA (200)",
+   "Bullish divergence: price lower low, RSI higher low - in the last 60 candles, lows/highs at most 60 candles apart"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 351,
+  "name": "Higher Low with Potential Breakout",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 0.7,
+  "rr": 2.0,
+  "timeframe": "higher_term",
+  "why": "The higher low after a higher high suggests a potential trend reversal, and the teacher maintains a bullish bias due to the weekly chart breaking out of previous highs. The setup is rare and significant, indicating a potential for a strong move in the market direction, whether it's bullish or bearish, depending on the context of the market structure and support/resistance levels involved.",
+  "quote": "right and so I would be looking for something like this to happen we have our low our high our higher low our higher high",
+  "unchecked": [
+   "Higher low forming after a higher high, indicating a potential trend change."
+  ],
+  "lesson_id": 104,
+  "rules": [
+   {
+    "rule": "higher_low"
+   },
+   {
+    "rule": "close_above_sma",
+    "a": 200
+   },
+   {
+    "rule": "ema_above_ema",
+    "a": 50,
+    "b": 200
+   },
+   {
+    "rule": "wt_above"
+   }
+  ],
+  "rules_text": [
+   "Higher low: the last 5 candles' low is above the 5 candles before",
+   "Close above SMA (200)",
+   "EMA (50) is above EMA (200) (uptrend)",
+   "Market Cipher wave above 53 (overbought)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 352,
+  "name": "green_dot_bull_div",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "monthly",
+  "why": "The green dot on Market Cipher B and the stochastic RSI confirm a significant bottom is forming, and the teacher believes this could be the start of a bull market.",
+  "quote": "at the very least showing us that a bottom is near okay now this does not mean to enter a leveraged long trade right now I would never ever recommend that but what I am just saying is you know a lot of people are getting so so dang bearish right now still on bitcoin saying the Bottom's not in the Bottom's not in we still have much more pain ahead",
+  "unchecked": [
+   "The green dot on Market Cipher B is below the zero line, and the stochastic RSI lines have crossed over each other."
+  ],
+  "lesson_id": 106,
+  "rules": [
+   {
+    "rule": "green_candles",
+    "a": 3
+   },
+   {
+    "rule": "wt_green_dot"
+   },
+   {
+    "rule": "wt_bull_div"
+   }
+  ],
+  "rules_text": [
+   "3 green candles in a row",
+   "Market Cipher green dot (WaveTrend crosses up) below 0",
+   "Bullish divergence: price lower low, Market Cipher wave higher low - in the last 3 candles, lows/highs at most 60 candles apart"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 353,
+  "name": "long_setup_1",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "1h",
+  "why": "This is a key resistance level that could act as support during a pullback, and the teacher suggests adding to long trades here if a pullback occurs.",
+  "quote": "Zone number 1 is going to be that 21.7 ish level okay right around here right around these previous highs before the FTX drop this is the zone to be looking to potentially hop into a actual trade or at least um you know this is not Financial advice and I'm not a financial advisor but this is just if you were paper trading this is what you would want to do",
+  "unchecked": [
+   "This setup is based on the previous highs before the FTX drop."
+  ],
+  "lesson_id": 106,
+  "rules": [
+   {
+    "rule": "close_above_sma",
+    "a": 21.7
+   }
+  ],
+  "rules_text": [
+   "Close above SMA (21.7)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 354,
+  "name": "long_setup_2",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "1h",
+  "why": "This is a key support level that could act as resistance during a pullback, and the teacher suggests adding to long trades here if a pullback occurs.",
+  "quote": "the second Zone would actually be down here where we have a major major support resistance flip coming in at around the 19200 level as we can see on the chart right here if we zoom in this is key support the 19200 level coming back down to retest the major support resistance flip that we have had on the chart since June so these are the two major areas we need to be aware of for a pullback even more locally and this would even catch a lot of people off guard is simply just coming down to take out the lows of this range that we've been trading now for the past two weeks",
+  "unchecked": [
+   "This setup is based on a major support resistance flip coming in at around the 19200 level."
+  ],
+  "lesson_id": 106,
+  "rules": [
+   {
+    "rule": "close_above_sma",
+    "a": 19200
+   }
+  ],
+  "rules_text": [
+   "Close above SMA (19200)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  }
 ]
