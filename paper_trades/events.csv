@@ -534,3 +534,21 @@ Witcher ETH 2h,2026-11-05 15:00:00+00:00,exit,closed (stop) -419.60 USD
 Witcher ETH 2h,2026-11-05T20:46:21+00:00,catch-up,trader was off 6h 30m: replayed 6 hourly candles
 GRIND BTC 4h,2026-11-05 15:00:00+00:00,exit,closed (stop) -618.89 USD
 GRIND BTC 4h,2026-11-05T20:46:22+00:00,catch-up,trader was off 6h 30m: replayed 6 hourly candles
+Apprentice BTC 4h,2026-11-05T20:51:22+00:00,catch-up,"trader was off 2m: replayed 0 hourly candles, stop and targets not reached"
+Apprentice SOL 4h,2026-11-05T20:51:23+00:00,catch-up,"trader was off 2m: replayed 0 hourly candles, stop and targets not reached"
+Apprentice BTC 1h,2026-11-05T20:51:23+00:00,catch-up,"trader was off 2m: replayed 0 hourly candles, stop and targets not reached"
+Apprentice LTC 1h,2026-11-05T20:51:23+00:00,catch-up,"trader was off 2m: replayed 0 hourly candles, stop and targets not reached"
+Apprentice ETH 1h,2026-11-05T20:51:24+00:00,catch-up,"trader was off 2m: replayed 0 hourly candles, stop and targets not reached"
+Apprentice ETH 4h,2026-11-05T20:51:24+00:00,catch-up,"trader was off 2m: replayed 0 hourly candles, stop and targets not reached"
+Apprentice UNI 4h,2026-11-05T20:51:24+00:00,catch-up,"trader was off 2m: replayed 0 hourly candles, stop and targets not reached"
+Trial #46 ETH 1D,2026-11-05T20:52:34+00:00,start,watching ETHUSD 1D
+Trial #56 BTC 6h,2026-11-05T20:52:34+00:00,start,watching XBTUSD 6h
+Trial #247 ETH 4h,2026-11-05T20:52:35+00:00,start,watching ETHUSD 4h
+Trial #188 ETH 6h,2026-11-05T20:52:35+00:00,start,watching ETHUSD 6h
+Trial #110 BTC 1D,2026-11-05T20:52:35+00:00,start,watching XBTUSD 1D
+Trial #197 SOL 30m,2026-11-05T20:52:35+00:00,start,watching SOLUSD 30m
+Trial #95 SOL 12h,2026-11-05T20:52:36+00:00,start,watching SOLUSD 12h
+Trial #149 ETH 1D,2026-11-05T20:52:36+00:00,start,watching ETHUSD 1D
+Trial #47 SOL 12h,2026-11-05T20:52:36+00:00,start,watching SOLUSD 12h
+Trial #197 SOL 12h,2026-11-05T20:52:36+00:00,start,watching SOLUSD 12h
+Trial #197 SOL 30m,2026-11-05T21:00:23+00:00,entry,SHORT 111.308993 @ 89.84 · its own stop 1.53% away
