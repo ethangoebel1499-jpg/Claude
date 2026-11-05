@@ -30601,5 +30601,131 @@
   "hints": null,
   "tune": null,
   "exit_plan": null
+ },
+ {
+  "id": 263,
+  "name": "Long Setup",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.3,
+  "rr": 2.0,
+  "timeframe": "1H",
+  "why": "Higher low, MACD bullish, WaveTrend green, and above the middle Bollinger band suggest a potential bullish setup.",
+  "quote": "Higher low in the last 5 candles compared to the 5 candles before.",
+  "unchecked": [
+   "Higher low in the last 5 candles compared to the 5 candles before."
+  ],
+  "lesson_id": 65,
+  "rules": [
+   {
+    "rule": "close_above_ema",
+    "a": 50
+   },
+   {
+    "rule": "macd_cross_up"
+   },
+   {
+    "rule": "wt_green_dot"
+   },
+   {
+    "rule": "bb_above_mid"
+   }
+  ],
+  "rules_text": [
+   "Close above EMA (50)",
+   "MACD crosses above its signal line",
+   "Market Cipher green dot (WaveTrend crosses up) below 0",
+   "Close above the Bollinger middle band"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 264,
+  "name": "Short Setup",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.3,
+  "rr": 2.0,
+  "timeframe": "1H",
+  "why": "Lower high, MACD bearish, WaveTrend red, and below the middle Bollinger band suggest a potential bearish setup.",
+  "quote": "Lower high in the last 5 candles compared to the 5 candles before.",
+  "unchecked": [
+   "Lower high in the last 5 candles compared to the 5 candles before."
+  ],
+  "lesson_id": 65,
+  "rules": [
+   {
+    "rule": "close_below_ema",
+    "a": 50
+   },
+   {
+    "rule": "macd_cross_down"
+   },
+   {
+    "rule": "wt_red_dot"
+   },
+   {
+    "rule": "bb_below_mid"
+   }
+  ],
+  "rules_text": [
+   "Close below EMA (50)",
+   "MACD crosses below its signal line",
+   "Market Cipher red dot (WaveTrend crosses down) above 0",
+   "Close below the Bollinger middle band"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 265,
+  "name": "Long Setup",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.0,
+  "rr": 2.0,
+  "timeframe": "1m",
+  "why": "blue candle on the one-second time frame is a ray of hope, and the low of the dump it for a weekend pump is acting as our entry.",
+  "quote": "there is a ray of Hope there is a ray of Hope on the one second time frame",
+  "unchecked": [
+   "blue candle on the one-second time frame is a ray of hope"
+  ],
+  "lesson_id": 66,
+  "rules": [
+   {
+    "rule": "close_above_ema",
+    "a": 50
+   },
+   {
+    "rule": "bb_touch_lower",
+    "a": 20,
+    "b": 2
+   }
+  ],
+  "rules_text": [
+   "Close above EMA (50)",
+   "Low touched the lower Bollinger band in the last 20 candles"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  }
 ]
