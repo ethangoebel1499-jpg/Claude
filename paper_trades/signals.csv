@@ -28019,3 +28019,822 @@ SHORT: 🔴 NO TRADE  (3/9 basic yes)
   🔴 NO   Parabolic SAR above price
   🔴 NO   Cumulative volume delta below its 5-bar average
   🔴 NO   Heikin Ashi scalp signal (counts on its own with ADX)"
+S3 GRIND DOGE 1h,2026-11-05 08:00:00+00:00,0,0,"[S3 GRIND DOGE 1h] Checklist for candle closed 2026-11-05 08:00 UTC (close 0.07697)
+
+LONG: 🔴 NO TRADE  (6/9 basic yes)
+  🟢 YES  ADX (Masanakamura, 9) above 12 and +DI over -DI
+  🟢 YES  RSI(100, opens) below 70
+  🔴 NO   Money flow index above +8
+  🔴 NO   Volume above 1.3x its 51-bar average
+  🟢 YES  Close above its 50-bar midpoint average
+  🟢 YES  MACD (3/4/7) above its signal
+  🟢 YES  55-bar average rising
+  🟢 YES  Parabolic SAR below price
+  🔴 NO   Cumulative volume delta above its 5-bar average
+  🔴 NO   Heikin Ashi scalp signal (counts on its own with ADX)
+
+SHORT: 🔴 NO TRADE  (2/9 basic yes)
+  🔴 NO   ADX (Masanakamura, 9) above 12 and -DI over +DI
+  🟢 YES  RSI(100, opens) above 30
+  🔴 NO   Money flow index below -8
+  🔴 NO   Volume above 1.3x its 51-bar average
+  🔴 NO   Close below its 50-bar midpoint average
+  🔴 NO   MACD (3/4/7) below its signal
+  🔴 NO   55-bar average falling
+  🔴 NO   Parabolic SAR above price
+  🟢 YES  Cumulative volume delta below its 5-bar average
+  🔴 NO   Heikin Ashi scalp signal (counts on its own with ADX)"
+Apprentice BTC 1h,2026-11-05 08:00:00+00:00,1,0,"[Apprentice BTC 1h] candle 2026-11-05 08:00 UTC
+🛡️ Breakeven: the stop moves to the entry once a trade is +1.5% (half way to the first target)
+
+LONG · Trade Setup at Key Level: 🔴 NO TRADE (weight +0.52)
+  🟢 YES  Close above EMA (50)
+  🔴 NO   Market Cipher green dot (WaveTrend crosses up) below 0
+  🔴 NO   Market Cipher wave below -53 (oversold)
+
+SHORT · Short: Close above the upper Bollinger band + Shooting star / bearish pin bar: 🔴 NO TRADE (weight +0.47)
+  🔴 NO   Close above the upper Bollinger band (20 candles, 2 deviations)
+  🔴 NO   Shooting star / bearish pin bar (long upper wick)
+
+SHORT · Short: Close above the upper Bollinger band + Shooting star / bearish pin bar + : 🔴 NO TRADE (weight +0.12)
+  🔴 NO   Close above the upper Bollinger band (20 candles, 2 deviations)
+  🔴 NO   Shooting star / bearish pin bar (long upper wick)
+  🔴 NO   Price up more than 5% over the last 10 candles
+
+SHORT · Support and Resistance: 🔴 NO TRADE (weight +0.03)
+  🔴 NO   Close below SMA (200)
+  🟢 YES  Lower high: the last 5 candles' high is below the 5 candles before
+
+SHORT · Short from Resistance: 🔴 NO TRADE (weight +0.25)
+  🔴 NO   Close below SMA (200)
+
+SHORT · Short Trade Setup: 🔴 NO TRADE (weight +0.17)
+  🔴 NO   Close below EMA (21)
+  🔴 NO   Bearish divergence: price higher high, Awesome Oscillator lower high - in the last 14 candles, lows/highs at most 60 candles apart
+  🟢 YES  Bearish divergence: price higher high, Market Cipher wave lower high - in the last 53 candles, lows/highs at most 60 candles apart
+  🔴 NO   Market Cipher money flow below zero (red)
+
+LONG · Long Trade Entry: 🔴 NO TRADE (weight +0.32)
+  🔴 NO   Bullish divergence: price lower low, RSI higher low - in the last 3 candles, lows/highs at most 60 candles apart
+  🟢 YES  Close above SMA (200)
+  🟢 YES  Higher low: the last 5 candles' low is above the 5 candles before
+
+SHORT · value_area_trade: 🔴 NO TRADE (weight +0.05)
+  🟢 YES  Close above SMA (200)
+  🔴 NO   Volume above 1.5 × its 20-candle average
+
+LONG · high_time_frame_levels: 🔴 NO TRADE (weight +0.07)
+  🔴 NO   Squeezed near a triangle / wedge apex (75% of the way there or more)
+  🔴 NO   Inside a pattern that usually breaks up (falling wedge, ascending triangle, bull flag...)
+
+LONG · long_trade_plan: 🔴 NO TRADE (weight +0.29)
+  🟢 YES  Close above EMA (50)
+  🟢 YES  RSI (14) above 30
+  🟢 YES  MACD above zero
+  🔴 NO   Market Cipher wave above 53 (overbought)
+  🟢 YES  Market Cipher money flow above zero (green)
+  🔴 NO   Close above the upper Bollinger band (20 candles, 2 deviations)
+  🔴 NO   Volume above 1.5 × its 20-candle average
+  🔴 NO   Price up more than 10% over the last 5 candles
+  🔴 NO   3 green candles in a row
+
+SHORT · Bearish CVD Divergence: 🔴 NO TRADE (weight +0.09)
+  🟢 YES  Higher low: the last 5 candles' low is above the 5 candles before
+  🔴 NO   Bearish divergence: price higher high, Awesome Oscillator lower high - in the last 3 candles, lows/highs at most 60 candles apart
+
+LONG · bullish_divergence: 🔴 NO TRADE (weight +0.07)
+  🔴 NO   Close below EMA (50)
+  🔴 NO   Awesome Oscillator changed to green (TradingView's 'AO color changed to green' alert)
+  🔴 NO   Market Cipher green dot (WaveTrend crosses up) below 0
+
+SHORT · Bearish Divergence: 🔴 NO TRADE (weight +0.06)
+  🔴 NO   Bearish divergence: price higher high, RSI lower high - in the last 3 candles, lows/highs at most 60 candles apart
+
+LONG · Hidden Bullish Divergence: 🔴 NO TRADE (weight +0.12)
+  🔴 NO   Hidden bullish divergence: price higher low, RSI lower low (trend continuation) - in the last 3 candles, lows/highs at most 60 candles apart
+
+SHORT · hidden_bull_div: 🔴 NO TRADE (weight +0.16)
+  🟢 YES  Close above EMA (50)
+  🔴 NO   Bullish divergence: price lower low, RSI higher low - in the last 14 candles, lows/highs at most 30 candles apart
+  🔴 NO   Bullish divergence: price lower low, Market Cipher wave higher low - in the last 3 candles, lows/highs at most 60 candles apart
+
+SHORT · Short: Money Flow and Momentum Divergence: 🔴 NO TRADE (weight +0.10)
+  🔴 NO   RSI (14) below 30
+  🔴 NO   Market Cipher money flow below zero (red)
+
+LONG · Long: Money Flow and Momentum Convergence: 🔴 NO TRADE (weight +0.03)
+  🔴 NO   RSI (14) above 70
+  🟢 YES  Market Cipher money flow above zero (green)
+
+SHORT · rsi_bear_div: 🔴 NO TRADE (weight +0.08)
+  🔴 NO   RSI (14) below 30
+  🔴 NO   Close below SMA (200)
+
+LONG · long_divergence_1h: 🔴 NO TRADE (weight +0.16)
+  🟢 YES  Higher low: the last 5 candles' low is above the 5 candles before
+  🔴 NO   Bullish divergence: price lower low, RSI higher low - in the last 5 candles, lows/highs at most 60 candles apart
+
+SHORT · short_divergence_1h: 🔴 NO TRADE (weight +0.04)
+  🟢 YES  Lower high: the last 5 candles' high is below the 5 candles before
+  🔴 NO   Bullish divergence: price lower low, RSI higher low - in the last 3 candles, lows/highs at most 60 candles apart
+
+LONG · divergence_with_momentum_and_money_flow: 🔴 NO TRADE (weight +0.07)
+  🔴 NO   Bullish divergence: price lower low, RSI higher low - in the last 3 candles, lows/highs at most 60 candles apart
+  🔴 NO   Market Cipher green dot (WaveTrend crosses up) below 0
+
+SHORT · divergence_with_momentum_and_money_flow: 🔴 NO TRADE (weight +0.04)
+  🔴 NO   Bearish divergence: price higher high, RSI lower high - in the last 3 candles, lows/highs at most 60 candles apart
+  🔴 NO   Market Cipher red dot (WaveTrend crosses down) above 0
+
+SHORT · rsi_bull_div: 🔴 NO TRADE (weight +0.07)
+  🔴 NO   RSI (14) below 30
+  🔴 NO   RSI (14) crosses down through 30
+  🟢 YES  Close above SMA (200)
+
+LONG · Market Cipher Divergence: 🔴 NO TRADE (weight +0.08)
+  🔴 NO   Bullish divergence: price lower low, Market Cipher wave higher low - in the last 3 candles, lows/highs at most 60 candles apart
+
+LONG · Long: Close below the lowest low of the last 20 candles + 3 red candles in a row: 🔴 NO TRADE (weight +0.23)
+  🔴 NO   Close below the lowest low of the last 20 candles
+  🔴 NO   3 red candles in a row
+  🔴 NO   Hammer / bullish pin bar (long lower wick)
+
+LONG · Long: Close below the lowest low of the last 20 candles + Hammer / bullish pin b: 🔴 NO TRADE (weight +0.11)
+  🔴 NO   Close below the lowest low of the last 20 candles
+  🔴 NO   Hammer / bullish pin bar (long lower wick)
+  🔴 NO   Low touched the lower Bollinger band in the last 3 candles
+
+LONG · Long: Close below the lowest low of the last 20 candles + Hammer / bullish pin b: 🔴 NO TRADE (weight +0.11)
+  🔴 NO   Close below the lowest low of the last 20 candles
+  🔴 NO   Hammer / bullish pin bar (long lower wick)
+  🟢 YES  Heikin Ashi candle is red
+
+SHORT · Short: Shooting star / bearish pin bar + 3 green candles in a row + Awesome Osci: 🔴 NO TRADE (weight +0.20)
+  🔴 NO   Shooting star / bearish pin bar (long upper wick)
+  🔴 NO   3 green candles in a row
+  🔴 NO   Awesome Oscillator changed to green (TradingView's 'AO color changed to green' alert)
+
+SHORT · Short: Shooting star / bearish pin bar + Awesome Oscillator changed to green + H: 🔴 NO TRADE (weight +0.15)
+  🔴 NO   Shooting star / bearish pin bar (long upper wick)
+  🔴 NO   Awesome Oscillator changed to green (TradingView's 'AO color changed to green' alert)
+  🔴 NO   High touched the upper Bollinger band in the last 3 candles
+
+SHORT · short_spx_45_60: 🔴 NO TRADE (weight +0.08)
+  🔴 NO   Close below SMA (200)
+  🔴 NO   Bearish divergence: price higher high, Awesome Oscillator lower high - in the last 60 candles, lows/highs at most 60 candles apart
+
+SHORT · short_from_resistance: 🔴 NO TRADE (weight +0.12)
+  🔴 NO   Close below SMA (200)
+  🔴 NO   Bounced off support / reclaimed a level (closed back above it)
+
+SHORT · Support and Resistance Levels: 🔴 NO TRADE (weight +0.04)
+  🟢 YES  Close above SMA (200)
+  🔴 NO   Bounced off support / reclaimed a level (closed back above it)
+
+SHORT · Bearish CBD Divergence: 🔴 NO TRADE (weight +0.15)
+  🟢 YES  Close above SMA (200)
+  🟢 YES  Higher low: the last 5 candles' low is above the 5 candles before
+  🔴 NO   Bearish divergence: price higher high, Awesome Oscillator lower high - in the last 3 candles, lows/highs at most 60 candles apart
+
+SHORT · Short Trade Setup: 🔴 NO TRADE (weight +0.15)
+  🟢 YES  Close above SMA (200)
+  🔴 NO   Bearish divergence: price higher high, MACD lower high - in the last 3 candles, lows/highs at most 60 candles apart
+
+LONG · Long Trade Setup: 🔴 NO TRADE (weight +0.06)
+  🔴 NO   Close below SMA (200)
+  🔴 NO   Bullish divergence: price lower low, MACD higher low - in the last 3 candles, lows/highs at most 60 candles apart
+
+SHORT · scalping_setup: 🔴 NO TRADE (weight +0.03)
+  🔴 NO   Close below EMA (50)
+  🔴 NO   3 red candles in a row
+
+LONG · Swing Failure Pattern: 🔴 NO TRADE (weight +0.15)
+  🟢 YES  Higher low: the last 5 candles' low is above the 5 candles before
+  🔴 NO   Chart pattern broke down on this candle
+
+SHORT · Swing Failure Pattern: 🔴 NO TRADE (weight +0.10)
+  🟢 YES  Lower high: the last 5 candles' high is below the 5 candles before
+  🔴 NO   Chart pattern broke out upward on this candle
+
+SHORT · short_trade_setup: 🔴 NO TRADE (weight +0.19)
+  🔴 NO   Bearish divergence: price higher high, RSI lower high - in the last 3 candles, lows/highs at most 60 candles apart
+  🔴 NO   Bearish divergence: price higher high, Market Cipher wave lower high - in the last 3 candles, lows/highs at most 60 candles apart
+
+LONG · long_bottom: 🟢 TRADE (weight +0.04)
+  🟢 YES  Lower high: the last 5 candles' high is below the 5 candles before
+  🟢 YES  Higher low: the last 5 candles' low is above the 5 candles before
+
+SHORT · Bearish CVD Divergence Setup: 🔴 NO TRADE (weight +0.07)
+  🟢 YES  Lower high: the last 5 candles' high is below the 5 candles before
+  🟢 YES  Close above EMA (200)
+  🔴 NO   Volume above 1.5 × its 20-candle average
+
+LONG · uneven_butt_cheek_pattern: 🔴 NO TRADE (weight +0.04)
+  🟢 YES  Close above SMA (200)
+  🟢 YES  RSI (14) above 30
+  🔴 NO   Market Cipher wave above 53 (overbought)
+
+LONG · Trade Setup on Antarctic Exchange: 🔴 NO TRADE (weight +0.06)
+  🟢 YES  Close above EMA (50)
+  🔴 NO   MACD crosses above its signal line
+  🔴 NO   Market Cipher green dot (WaveTrend crosses up) below 0
+  🔴 NO   Volume above 1.5 × its 20-candle average
+
+SHORT · withdraw_funds: 🔴 NO TRADE (weight +0.08)
+  🔴 NO   Close below EMA (50)"
+Apprentice LTC 1h,2026-11-05 08:00:00+00:00,1,0,"[Apprentice LTC 1h] candle 2026-11-05 08:00 UTC
+⛔ No new SHORT on this candle: a green dot or bullish divergence is printing (safety rule)
+🛡️ Breakeven: the stop moves to the entry once a trade is +1.5% (half way to the first target)
+
+LONG · Trade Setup at Key Level: 🔴 NO TRADE (weight +0.52)
+  🟢 YES  Close above EMA (50)
+  🔴 NO   Market Cipher green dot (WaveTrend crosses up) below 0
+  🔴 NO   Market Cipher wave below -53 (oversold)
+
+SHORT · Short: Close above the upper Bollinger band + Shooting star / bearish pin bar: 🔴 NO TRADE (weight +0.47)
+  🔴 NO   Close above the upper Bollinger band (20 candles, 2 deviations)
+  🔴 NO   Shooting star / bearish pin bar (long upper wick)
+
+SHORT · Short: Close above the upper Bollinger band + Shooting star / bearish pin bar + : 🔴 NO TRADE (weight +0.12)
+  🔴 NO   Close above the upper Bollinger band (20 candles, 2 deviations)
+  🔴 NO   Shooting star / bearish pin bar (long upper wick)
+  🔴 NO   Price up more than 5% over the last 10 candles
+
+SHORT · Support and Resistance: 🔴 NO TRADE (weight +0.03)
+  🔴 NO   Close below SMA (200)
+  🟢 YES  Lower high: the last 5 candles' high is below the 5 candles before
+
+SHORT · Short from Resistance: 🔴 NO TRADE (weight +0.25)
+  🔴 NO   Close below SMA (200)
+
+SHORT · Short Trade Setup: 🔴 NO TRADE (weight +0.17)
+  🔴 NO   Close below EMA (21)
+  🔴 NO   Bearish divergence: price higher high, Awesome Oscillator lower high - in the last 14 candles, lows/highs at most 60 candles apart
+  🔴 NO   Bearish divergence: price higher high, Market Cipher wave lower high - in the last 53 candles, lows/highs at most 60 candles apart
+  🔴 NO   Market Cipher money flow below zero (red)
+
+LONG · Long Trade Entry: 🔴 NO TRADE (weight +0.32)
+  🔴 NO   Bullish divergence: price lower low, RSI higher low - in the last 3 candles, lows/highs at most 60 candles apart
+  🟢 YES  Close above SMA (200)
+  🔴 NO   Higher low: the last 5 candles' low is above the 5 candles before
+
+SHORT · value_area_trade: 🟢 TRADE (weight +0.05)
+  🟢 YES  Close above SMA (200)
+  🟢 YES  Volume above 1.5 × its 20-candle average
+
+LONG · high_time_frame_levels: 🔴 NO TRADE (weight +0.07)
+  🔴 NO   Squeezed near a triangle / wedge apex (75% of the way there or more)
+  🔴 NO   Inside a pattern that usually breaks up (falling wedge, ascending triangle, bull flag...)
+
+LONG · long_trade_plan: 🔴 NO TRADE (weight +0.29)
+  🟢 YES  Close above EMA (50)
+  🟢 YES  RSI (14) above 30
+  🟢 YES  MACD above zero
+  🔴 NO   Market Cipher wave above 53 (overbought)
+  🟢 YES  Market Cipher money flow above zero (green)
+  🔴 NO   Close above the upper Bollinger band (20 candles, 2 deviations)
+  🟢 YES  Volume above 1.5 × its 20-candle average
+  🔴 NO   Price up more than 10% over the last 5 candles
+  🔴 NO   3 green candles in a row
+
+SHORT · Bearish CVD Divergence: 🔴 NO TRADE (weight +0.09)
+  🔴 NO   Higher low: the last 5 candles' low is above the 5 candles before
+  🔴 NO   Bearish divergence: price higher high, Awesome Oscillator lower high - in the last 3 candles, lows/highs at most 60 candles apart
+
+LONG · bullish_divergence: 🔴 NO TRADE (weight +0.07)
+  🔴 NO   Close below EMA (50)
+  🔴 NO   Awesome Oscillator changed to green (TradingView's 'AO color changed to green' alert)
+  🔴 NO   Market Cipher green dot (WaveTrend crosses up) below 0
+
+SHORT · Bearish Divergence: 🔴 NO TRADE (weight +0.06)
+  🔴 NO   Bearish divergence: price higher high, RSI lower high - in the last 3 candles, lows/highs at most 60 candles apart
+
+LONG · Hidden Bullish Divergence: 🟢 TRADE (weight +0.12)
+  🟢 YES  Hidden bullish divergence: price higher low, RSI lower low (trend continuation) - in the last 3 candles, lows/highs at most 60 candles apart
+
+SHORT · hidden_bull_div: 🔴 NO TRADE (weight +0.16)
+  🟢 YES  Close above EMA (50)
+  🔴 NO   Bullish divergence: price lower low, RSI higher low - in the last 14 candles, lows/highs at most 30 candles apart
+  🔴 NO   Bullish divergence: price lower low, Market Cipher wave higher low - in the last 3 candles, lows/highs at most 60 candles apart
+
+SHORT · Short: Money Flow and Momentum Divergence: 🔴 NO TRADE (weight +0.10)
+  🔴 NO   RSI (14) below 30
+  🔴 NO   Market Cipher money flow below zero (red)
+
+LONG · Long: Money Flow and Momentum Convergence: 🔴 NO TRADE (weight +0.03)
+  🔴 NO   RSI (14) above 70
+  🟢 YES  Market Cipher money flow above zero (green)
+
+SHORT · rsi_bear_div: 🔴 NO TRADE (weight +0.08)
+  🔴 NO   RSI (14) below 30
+  🔴 NO   Close below SMA (200)
+
+LONG · long_divergence_1h: 🔴 NO TRADE (weight +0.16)
+  🔴 NO   Higher low: the last 5 candles' low is above the 5 candles before
+  🔴 NO   Bullish divergence: price lower low, RSI higher low - in the last 5 candles, lows/highs at most 60 candles apart
+
+SHORT · short_divergence_1h: 🔴 NO TRADE (weight +0.04)
+  🟢 YES  Lower high: the last 5 candles' high is below the 5 candles before
+  🔴 NO   Bullish divergence: price lower low, RSI higher low - in the last 3 candles, lows/highs at most 60 candles apart
+
+LONG · divergence_with_momentum_and_money_flow: 🔴 NO TRADE (weight +0.07)
+  🔴 NO   Bullish divergence: price lower low, RSI higher low - in the last 3 candles, lows/highs at most 60 candles apart
+  🔴 NO   Market Cipher green dot (WaveTrend crosses up) below 0
+
+SHORT · divergence_with_momentum_and_money_flow: 🔴 NO TRADE (weight +0.04)
+  🔴 NO   Bearish divergence: price higher high, RSI lower high - in the last 3 candles, lows/highs at most 60 candles apart
+  🔴 NO   Market Cipher red dot (WaveTrend crosses down) above 0
+
+SHORT · rsi_bull_div: 🔴 NO TRADE (weight +0.07)
+  🔴 NO   RSI (14) below 30
+  🔴 NO   RSI (14) crosses down through 30
+  🟢 YES  Close above SMA (200)
+
+LONG · Market Cipher Divergence: 🔴 NO TRADE (weight +0.08)
+  🔴 NO   Bullish divergence: price lower low, Market Cipher wave higher low - in the last 3 candles, lows/highs at most 60 candles apart
+
+LONG · Long: Close below the lowest low of the last 20 candles + 3 red candles in a row: 🔴 NO TRADE (weight +0.23)
+  🔴 NO   Close below the lowest low of the last 20 candles
+  🔴 NO   3 red candles in a row
+  🔴 NO   Hammer / bullish pin bar (long lower wick)
+
+LONG · Long: Close below the lowest low of the last 20 candles + Hammer / bullish pin b: 🔴 NO TRADE (weight +0.11)
+  🔴 NO   Close below the lowest low of the last 20 candles
+  🔴 NO   Hammer / bullish pin bar (long lower wick)
+  🔴 NO   Low touched the lower Bollinger band in the last 3 candles
+
+LONG · Long: Close below the lowest low of the last 20 candles + Hammer / bullish pin b: 🔴 NO TRADE (weight +0.11)
+  🔴 NO   Close below the lowest low of the last 20 candles
+  🔴 NO   Hammer / bullish pin bar (long lower wick)
+  🔴 NO   Heikin Ashi candle is red
+
+SHORT · Short: Shooting star / bearish pin bar + 3 green candles in a row + Awesome Osci: 🔴 NO TRADE (weight +0.20)
+  🔴 NO   Shooting star / bearish pin bar (long upper wick)
+  🔴 NO   3 green candles in a row
+  🔴 NO   Awesome Oscillator changed to green (TradingView's 'AO color changed to green' alert)
+
+SHORT · Short: Shooting star / bearish pin bar + Awesome Oscillator changed to green + H: 🔴 NO TRADE (weight +0.15)
+  🔴 NO   Shooting star / bearish pin bar (long upper wick)
+  🔴 NO   Awesome Oscillator changed to green (TradingView's 'AO color changed to green' alert)
+  🔴 NO   High touched the upper Bollinger band in the last 3 candles
+
+SHORT · short_spx_45_60: 🔴 NO TRADE (weight +0.08)
+  🔴 NO   Close below SMA (200)
+  🔴 NO   Bearish divergence: price higher high, Awesome Oscillator lower high - in the last 60 candles, lows/highs at most 60 candles apart
+
+SHORT · short_from_resistance: 🔴 NO TRADE (weight +0.12)
+  🔴 NO   Close below SMA (200)
+  🟢 YES  Bounced off support / reclaimed a level (closed back above it)
+
+SHORT · Support and Resistance Levels: 🟢 TRADE (weight +0.04)
+  🟢 YES  Close above SMA (200)
+  🟢 YES  Bounced off support / reclaimed a level (closed back above it)
+
+SHORT · Bearish CBD Divergence: 🔴 NO TRADE (weight +0.15)
+  🟢 YES  Close above SMA (200)
+  🔴 NO   Higher low: the last 5 candles' low is above the 5 candles before
+  🔴 NO   Bearish divergence: price higher high, Awesome Oscillator lower high - in the last 3 candles, lows/highs at most 60 candles apart
+
+SHORT · Short Trade Setup: 🔴 NO TRADE (weight +0.15)
+  🟢 YES  Close above SMA (200)
+  🔴 NO   Bearish divergence: price higher high, MACD lower high - in the last 3 candles, lows/highs at most 60 candles apart
+
+LONG · Long Trade Setup: 🔴 NO TRADE (weight +0.06)
+  🔴 NO   Close below SMA (200)
+  🔴 NO   Bullish divergence: price lower low, MACD higher low - in the last 3 candles, lows/highs at most 60 candles apart
+
+SHORT · scalping_setup: 🔴 NO TRADE (weight +0.03)
+  🔴 NO   Close below EMA (50)
+  🔴 NO   3 red candles in a row
+
+LONG · Swing Failure Pattern: 🔴 NO TRADE (weight +0.15)
+  🔴 NO   Higher low: the last 5 candles' low is above the 5 candles before
+  🔴 NO   Chart pattern broke down on this candle
+
+SHORT · Swing Failure Pattern: 🔴 NO TRADE (weight +0.10)
+  🟢 YES  Lower high: the last 5 candles' high is below the 5 candles before
+  🔴 NO   Chart pattern broke out upward on this candle
+
+SHORT · short_trade_setup: 🔴 NO TRADE (weight +0.19)
+  🔴 NO   Bearish divergence: price higher high, RSI lower high - in the last 3 candles, lows/highs at most 60 candles apart
+  🔴 NO   Bearish divergence: price higher high, Market Cipher wave lower high - in the last 3 candles, lows/highs at most 60 candles apart
+
+LONG · long_bottom: 🔴 NO TRADE (weight +0.04)
+  🟢 YES  Lower high: the last 5 candles' high is below the 5 candles before
+  🔴 NO   Higher low: the last 5 candles' low is above the 5 candles before
+
+SHORT · Bearish CVD Divergence Setup: 🟢 TRADE (weight +0.07)
+  🟢 YES  Lower high: the last 5 candles' high is below the 5 candles before
+  🟢 YES  Close above EMA (200)
+  🟢 YES  Volume above 1.5 × its 20-candle average
+
+LONG · uneven_butt_cheek_pattern: 🔴 NO TRADE (weight +0.04)
+  🟢 YES  Close above SMA (200)
+  🟢 YES  RSI (14) above 30
+  🔴 NO   Market Cipher wave above 53 (overbought)
+
+LONG · Trade Setup on Antarctic Exchange: 🔴 NO TRADE (weight +0.06)
+  🟢 YES  Close above EMA (50)
+  🔴 NO   MACD crosses above its signal line
+  🔴 NO   Market Cipher green dot (WaveTrend crosses up) below 0
+  🟢 YES  Volume above 1.5 × its 20-candle average
+
+SHORT · withdraw_funds: 🔴 NO TRADE (weight +0.08)
+  🔴 NO   Close below EMA (50)"
+Apprentice ETH 1h,2026-11-05 08:00:00+00:00,0,0,"[Apprentice ETH 1h] candle 2026-11-05 08:00 UTC
+🛡️ Breakeven: the stop moves to the entry once a trade is +1.5% (half way to the first target)
+
+LONG · Trade Setup at Key Level: 🔴 NO TRADE (weight +0.52)
+  🟢 YES  Close above EMA (50)
+  🔴 NO   Market Cipher green dot (WaveTrend crosses up) below 0
+  🔴 NO   Market Cipher wave below -53 (oversold)
+
+SHORT · Short: Close above the upper Bollinger band + Shooting star / bearish pin bar: 🔴 NO TRADE (weight +0.47)
+  🔴 NO   Close above the upper Bollinger band (20 candles, 2 deviations)
+  🟢 YES  Shooting star / bearish pin bar (long upper wick)
+
+SHORT · Short: Close above the upper Bollinger band + Shooting star / bearish pin bar + : 🔴 NO TRADE (weight +0.12)
+  🔴 NO   Close above the upper Bollinger band (20 candles, 2 deviations)
+  🟢 YES  Shooting star / bearish pin bar (long upper wick)
+  🔴 NO   Price up more than 5% over the last 10 candles
+
+SHORT · Support and Resistance: 🔴 NO TRADE (weight +0.03)
+  🔴 NO   Close below SMA (200)
+  🟢 YES  Lower high: the last 5 candles' high is below the 5 candles before
+
+SHORT · Short from Resistance: 🔴 NO TRADE (weight +0.25)
+  🔴 NO   Close below SMA (200)
+
+SHORT · Short Trade Setup: 🔴 NO TRADE (weight +0.17)
+  🔴 NO   Close below EMA (21)
+  🔴 NO   Bearish divergence: price higher high, Awesome Oscillator lower high - in the last 14 candles, lows/highs at most 60 candles apart
+  🟢 YES  Bearish divergence: price higher high, Market Cipher wave lower high - in the last 53 candles, lows/highs at most 60 candles apart
+  🔴 NO   Market Cipher money flow below zero (red)
+
+LONG · Long Trade Entry: 🔴 NO TRADE (weight +0.32)
+  🔴 NO   Bullish divergence: price lower low, RSI higher low - in the last 3 candles, lows/highs at most 60 candles apart
+  🟢 YES  Close above SMA (200)
+  🟢 YES  Higher low: the last 5 candles' low is above the 5 candles before
+
+SHORT · value_area_trade: 🔴 NO TRADE (weight +0.05)
+  🟢 YES  Close above SMA (200)
+  🔴 NO   Volume above 1.5 × its 20-candle average
+
+LONG · high_time_frame_levels: 🔴 NO TRADE (weight +0.07)
+  🔴 NO   Squeezed near a triangle / wedge apex (75% of the way there or more)
+  🔴 NO   Inside a pattern that usually breaks up (falling wedge, ascending triangle, bull flag...)
+
+LONG · long_trade_plan: 🔴 NO TRADE (weight +0.29)
+  🟢 YES  Close above EMA (50)
+  🟢 YES  RSI (14) above 30
+  🟢 YES  MACD above zero
+  🔴 NO   Market Cipher wave above 53 (overbought)
+  🟢 YES  Market Cipher money flow above zero (green)
+  🔴 NO   Close above the upper Bollinger band (20 candles, 2 deviations)
+  🔴 NO   Volume above 1.5 × its 20-candle average
+  🔴 NO   Price up more than 10% over the last 5 candles
+  🔴 NO   3 green candles in a row
+
+SHORT · Bearish CVD Divergence: 🔴 NO TRADE (weight +0.09)
+  🟢 YES  Higher low: the last 5 candles' low is above the 5 candles before
+  🔴 NO   Bearish divergence: price higher high, Awesome Oscillator lower high - in the last 3 candles, lows/highs at most 60 candles apart
+
+LONG · bullish_divergence: 🔴 NO TRADE (weight +0.07)
+  🔴 NO   Close below EMA (50)
+  🔴 NO   Awesome Oscillator changed to green (TradingView's 'AO color changed to green' alert)
+  🔴 NO   Market Cipher green dot (WaveTrend crosses up) below 0
+
+SHORT · Bearish Divergence: 🔴 NO TRADE (weight +0.06)
+  🔴 NO   Bearish divergence: price higher high, RSI lower high - in the last 3 candles, lows/highs at most 60 candles apart
+
+LONG · Hidden Bullish Divergence: 🔴 NO TRADE (weight +0.12)
+  🔴 NO   Hidden bullish divergence: price higher low, RSI lower low (trend continuation) - in the last 3 candles, lows/highs at most 60 candles apart
+
+SHORT · hidden_bull_div: 🔴 NO TRADE (weight +0.16)
+  🟢 YES  Close above EMA (50)
+  🔴 NO   Bullish divergence: price lower low, RSI higher low - in the last 14 candles, lows/highs at most 30 candles apart
+  🔴 NO   Bullish divergence: price lower low, Market Cipher wave higher low - in the last 3 candles, lows/highs at most 60 candles apart
+
+SHORT · Short: Money Flow and Momentum Divergence: 🔴 NO TRADE (weight +0.10)
+  🔴 NO   RSI (14) below 30
+  🔴 NO   Market Cipher money flow below zero (red)
+
+LONG · Long: Money Flow and Momentum Convergence: 🔴 NO TRADE (weight +0.03)
+  🔴 NO   RSI (14) above 70
+  🟢 YES  Market Cipher money flow above zero (green)
+
+SHORT · rsi_bear_div: 🔴 NO TRADE (weight +0.08)
+  🔴 NO   RSI (14) below 30
+  🔴 NO   Close below SMA (200)
+
+LONG · long_divergence_1h: 🔴 NO TRADE (weight +0.16)
+  🟢 YES  Higher low: the last 5 candles' low is above the 5 candles before
+  🔴 NO   Bullish divergence: price lower low, RSI higher low - in the last 5 candles, lows/highs at most 60 candles apart
+
+SHORT · short_divergence_1h: 🔴 NO TRADE (weight +0.04)
+  🟢 YES  Lower high: the last 5 candles' high is below the 5 candles before
+  🔴 NO   Bullish divergence: price lower low, RSI higher low - in the last 3 candles, lows/highs at most 60 candles apart
+
+LONG · divergence_with_momentum_and_money_flow: 🔴 NO TRADE (weight +0.07)
+  🔴 NO   Bullish divergence: price lower low, RSI higher low - in the last 3 candles, lows/highs at most 60 candles apart
+  🔴 NO   Market Cipher green dot (WaveTrend crosses up) below 0
+
+SHORT · divergence_with_momentum_and_money_flow: 🔴 NO TRADE (weight +0.04)
+  🔴 NO   Bearish divergence: price higher high, RSI lower high - in the last 3 candles, lows/highs at most 60 candles apart
+  🔴 NO   Market Cipher red dot (WaveTrend crosses down) above 0
+
+SHORT · rsi_bull_div: 🔴 NO TRADE (weight +0.07)
+  🔴 NO   RSI (14) below 30
+  🔴 NO   RSI (14) crosses down through 30
+  🟢 YES  Close above SMA (200)
+
+LONG · Market Cipher Divergence: 🔴 NO TRADE (weight +0.08)
+  🔴 NO   Bullish divergence: price lower low, Market Cipher wave higher low - in the last 3 candles, lows/highs at most 60 candles apart
+
+LONG · Long: Close below the lowest low of the last 20 candles + 3 red candles in a row: 🔴 NO TRADE (weight +0.23)
+  🔴 NO   Close below the lowest low of the last 20 candles
+  🔴 NO   3 red candles in a row
+  🔴 NO   Hammer / bullish pin bar (long lower wick)
+
+LONG · Long: Close below the lowest low of the last 20 candles + Hammer / bullish pin b: 🔴 NO TRADE (weight +0.11)
+  🔴 NO   Close below the lowest low of the last 20 candles
+  🔴 NO   Hammer / bullish pin bar (long lower wick)
+  🔴 NO   Low touched the lower Bollinger band in the last 3 candles
+
+LONG · Long: Close below the lowest low of the last 20 candles + Hammer / bullish pin b: 🔴 NO TRADE (weight +0.11)
+  🔴 NO   Close below the lowest low of the last 20 candles
+  🔴 NO   Hammer / bullish pin bar (long lower wick)
+  🟢 YES  Heikin Ashi candle is red
+
+SHORT · Short: Shooting star / bearish pin bar + 3 green candles in a row + Awesome Osci: 🔴 NO TRADE (weight +0.20)
+  🟢 YES  Shooting star / bearish pin bar (long upper wick)
+  🔴 NO   3 green candles in a row
+  🔴 NO   Awesome Oscillator changed to green (TradingView's 'AO color changed to green' alert)
+
+SHORT · Short: Shooting star / bearish pin bar + Awesome Oscillator changed to green + H: 🔴 NO TRADE (weight +0.15)
+  🟢 YES  Shooting star / bearish pin bar (long upper wick)
+  🔴 NO   Awesome Oscillator changed to green (TradingView's 'AO color changed to green' alert)
+  🔴 NO   High touched the upper Bollinger band in the last 3 candles
+
+SHORT · short_spx_45_60: 🔴 NO TRADE (weight +0.08)
+  🔴 NO   Close below SMA (200)
+  🔴 NO   Bearish divergence: price higher high, Awesome Oscillator lower high - in the last 60 candles, lows/highs at most 60 candles apart
+
+SHORT · short_from_resistance: 🔴 NO TRADE (weight +0.12)
+  🔴 NO   Close below SMA (200)
+  🟢 YES  Bounced off support / reclaimed a level (closed back above it)
+
+SHORT · Support and Resistance Levels: 🟢 TRADE (weight +0.04)
+  🟢 YES  Close above SMA (200)
+  🟢 YES  Bounced off support / reclaimed a level (closed back above it)
+
+SHORT · Bearish CBD Divergence: 🔴 NO TRADE (weight +0.15)
+  🟢 YES  Close above SMA (200)
+  🟢 YES  Higher low: the last 5 candles' low is above the 5 candles before
+  🔴 NO   Bearish divergence: price higher high, Awesome Oscillator lower high - in the last 3 candles, lows/highs at most 60 candles apart
+
+SHORT · Short Trade Setup: 🔴 NO TRADE (weight +0.15)
+  🟢 YES  Close above SMA (200)
+  🔴 NO   Bearish divergence: price higher high, MACD lower high - in the last 3 candles, lows/highs at most 60 candles apart
+
+LONG · Long Trade Setup: 🔴 NO TRADE (weight +0.06)
+  🔴 NO   Close below SMA (200)
+  🔴 NO   Bullish divergence: price lower low, MACD higher low - in the last 3 candles, lows/highs at most 60 candles apart
+
+SHORT · scalping_setup: 🔴 NO TRADE (weight +0.03)
+  🔴 NO   Close below EMA (50)
+  🔴 NO   3 red candles in a row
+
+LONG · Swing Failure Pattern: 🔴 NO TRADE (weight +0.15)
+  🟢 YES  Higher low: the last 5 candles' low is above the 5 candles before
+  🔴 NO   Chart pattern broke down on this candle
+
+SHORT · Swing Failure Pattern: 🔴 NO TRADE (weight +0.10)
+  🟢 YES  Lower high: the last 5 candles' high is below the 5 candles before
+  🔴 NO   Chart pattern broke out upward on this candle
+
+SHORT · short_trade_setup: 🔴 NO TRADE (weight +0.19)
+  🔴 NO   Bearish divergence: price higher high, RSI lower high - in the last 3 candles, lows/highs at most 60 candles apart
+  🔴 NO   Bearish divergence: price higher high, Market Cipher wave lower high - in the last 3 candles, lows/highs at most 60 candles apart
+
+LONG · long_bottom: 🟢 TRADE (weight +0.04)
+  🟢 YES  Lower high: the last 5 candles' high is below the 5 candles before
+  🟢 YES  Higher low: the last 5 candles' low is above the 5 candles before
+
+SHORT · Bearish CVD Divergence Setup: 🔴 NO TRADE (weight +0.07)
+  🟢 YES  Lower high: the last 5 candles' high is below the 5 candles before
+  🟢 YES  Close above EMA (200)
+  🔴 NO   Volume above 1.5 × its 20-candle average
+
+LONG · uneven_butt_cheek_pattern: 🔴 NO TRADE (weight +0.04)
+  🟢 YES  Close above SMA (200)
+  🟢 YES  RSI (14) above 30
+  🔴 NO   Market Cipher wave above 53 (overbought)
+
+LONG · Trade Setup on Antarctic Exchange: 🔴 NO TRADE (weight +0.06)
+  🟢 YES  Close above EMA (50)
+  🔴 NO   MACD crosses above its signal line
+  🔴 NO   Market Cipher green dot (WaveTrend crosses up) below 0
+  🔴 NO   Volume above 1.5 × its 20-candle average
+
+SHORT · withdraw_funds: 🔴 NO TRADE (weight +0.08)
+  🔴 NO   Close below EMA (50)"
+Apprentice SHIB 1h,2026-11-05 08:00:00+00:00,1,0,"[Apprentice SHIB 1h] candle 2026-11-05 08:00 UTC
+⛔ No new SHORT on this candle: a green dot or bullish divergence is printing (safety rule)
+🛡️ Breakeven: the stop moves to the entry once a trade is +1.5% (half way to the first target)
+
+LONG · Trade Setup at Key Level: 🔴 NO TRADE (weight +0.52)
+  🟢 YES  Close above EMA (50)
+  🟢 YES  Market Cipher green dot (WaveTrend crosses up) below 0
+  🔴 NO   Market Cipher wave below -53 (oversold)
+
+SHORT · Short: Close above the upper Bollinger band + Shooting star / bearish pin bar: 🔴 NO TRADE (weight +0.47)
+  🔴 NO   Close above the upper Bollinger band (20 candles, 2 deviations)
+  🔴 NO   Shooting star / bearish pin bar (long upper wick)
+
+SHORT · Short: Close above the upper Bollinger band + Shooting star / bearish pin bar + : 🔴 NO TRADE (weight +0.12)
+  🔴 NO   Close above the upper Bollinger band (20 candles, 2 deviations)
+  🔴 NO   Shooting star / bearish pin bar (long upper wick)
+  🔴 NO   Price up more than 5% over the last 10 candles
+
+SHORT · Support and Resistance: 🔴 NO TRADE (weight +0.03)
+  🔴 NO   Close below SMA (200)
+  🟢 YES  Lower high: the last 5 candles' high is below the 5 candles before
+
+SHORT · Short from Resistance: 🔴 NO TRADE (weight +0.25)
+  🔴 NO   Close below SMA (200)
+
+SHORT · Short Trade Setup: 🔴 NO TRADE (weight +0.17)
+  🔴 NO   Close below EMA (21)
+  🔴 NO   Bearish divergence: price higher high, Awesome Oscillator lower high - in the last 14 candles, lows/highs at most 60 candles apart
+  🟢 YES  Bearish divergence: price higher high, Market Cipher wave lower high - in the last 53 candles, lows/highs at most 60 candles apart
+  🔴 NO   Market Cipher money flow below zero (red)
+
+LONG · Long Trade Entry: 🔴 NO TRADE (weight +0.32)
+  🔴 NO   Bullish divergence: price lower low, RSI higher low - in the last 3 candles, lows/highs at most 60 candles apart
+  🟢 YES  Close above SMA (200)
+  🟢 YES  Higher low: the last 5 candles' low is above the 5 candles before
+
+SHORT · value_area_trade: 🔴 NO TRADE (weight +0.05)
+  🟢 YES  Close above SMA (200)
+  🔴 NO   Volume above 1.5 × its 20-candle average
+
+LONG · high_time_frame_levels: 🔴 NO TRADE (weight +0.07)
+  🔴 NO   Squeezed near a triangle / wedge apex (75% of the way there or more)
+  🔴 NO   Inside a pattern that usually breaks up (falling wedge, ascending triangle, bull flag...)
+
+LONG · long_trade_plan: 🔴 NO TRADE (weight +0.29)
+  🟢 YES  Close above EMA (50)
+  🟢 YES  RSI (14) above 30
+  🟢 YES  MACD above zero
+  🔴 NO   Market Cipher wave above 53 (overbought)
+  🟢 YES  Market Cipher money flow above zero (green)
+  🔴 NO   Close above the upper Bollinger band (20 candles, 2 deviations)
+  🔴 NO   Volume above 1.5 × its 20-candle average
+  🔴 NO   Price up more than 10% over the last 5 candles
+  🔴 NO   3 green candles in a row
+
+SHORT · Bearish CVD Divergence: 🔴 NO TRADE (weight +0.09)
+  🟢 YES  Higher low: the last 5 candles' low is above the 5 candles before
+  🔴 NO   Bearish divergence: price higher high, Awesome Oscillator lower high - in the last 3 candles, lows/highs at most 60 candles apart
+
+LONG · bullish_divergence: 🔴 NO TRADE (weight +0.07)
+  🔴 NO   Close below EMA (50)
+  🔴 NO   Awesome Oscillator changed to green (TradingView's 'AO color changed to green' alert)
+  🟢 YES  Market Cipher green dot (WaveTrend crosses up) below 0
+
+SHORT · Bearish Divergence: 🔴 NO TRADE (weight +0.06)
+  🔴 NO   Bearish divergence: price higher high, RSI lower high - in the last 3 candles, lows/highs at most 60 candles apart
+
+LONG · Hidden Bullish Divergence: 🔴 NO TRADE (weight +0.12)
+  🔴 NO   Hidden bullish divergence: price higher low, RSI lower low (trend continuation) - in the last 3 candles, lows/highs at most 60 candles apart
+
+SHORT · hidden_bull_div: 🔴 NO TRADE (weight +0.16)
+  🟢 YES  Close above EMA (50)
+  🔴 NO   Bullish divergence: price lower low, RSI higher low - in the last 14 candles, lows/highs at most 30 candles apart
+  🔴 NO   Bullish divergence: price lower low, Market Cipher wave higher low - in the last 3 candles, lows/highs at most 60 candles apart
+
+SHORT · Short: Money Flow and Momentum Divergence: 🔴 NO TRADE (weight +0.10)
+  🔴 NO   RSI (14) below 30
+  🔴 NO   Market Cipher money flow below zero (red)
+
+LONG · Long: Money Flow and Momentum Convergence: 🔴 NO TRADE (weight +0.03)
+  🔴 NO   RSI (14) above 70
+  🟢 YES  Market Cipher money flow above zero (green)
+
+SHORT · rsi_bear_div: 🔴 NO TRADE (weight +0.08)
+  🔴 NO   RSI (14) below 30
+  🔴 NO   Close below SMA (200)
+
+LONG · long_divergence_1h: 🔴 NO TRADE (weight +0.16)
+  🟢 YES  Higher low: the last 5 candles' low is above the 5 candles before
+  🔴 NO   Bullish divergence: price lower low, RSI higher low - in the last 5 candles, lows/highs at most 60 candles apart
+
+SHORT · short_divergence_1h: 🔴 NO TRADE (weight +0.04)
+  🟢 YES  Lower high: the last 5 candles' high is below the 5 candles before
+  🔴 NO   Bullish divergence: price lower low, RSI higher low - in the last 3 candles, lows/highs at most 60 candles apart
+
+LONG · divergence_with_momentum_and_money_flow: 🔴 NO TRADE (weight +0.07)
+  🔴 NO   Bullish divergence: price lower low, RSI higher low - in the last 3 candles, lows/highs at most 60 candles apart
+  🟢 YES  Market Cipher green dot (WaveTrend crosses up) below 0
+
+SHORT · divergence_with_momentum_and_money_flow: 🔴 NO TRADE (weight +0.04)
+  🔴 NO   Bearish divergence: price higher high, RSI lower high - in the last 3 candles, lows/highs at most 60 candles apart
+  🔴 NO   Market Cipher red dot (WaveTrend crosses down) above 0
+
+SHORT · rsi_bull_div: 🔴 NO TRADE (weight +0.07)
+  🔴 NO   RSI (14) below 30
+  🔴 NO   RSI (14) crosses down through 30
+  🟢 YES  Close above SMA (200)
+
+LONG · Market Cipher Divergence: 🔴 NO TRADE (weight +0.08)
+  🔴 NO   Bullish divergence: price lower low, Market Cipher wave higher low - in the last 3 candles, lows/highs at most 60 candles apart
+
+LONG · Long: Close below the lowest low of the last 20 candles + 3 red candles in a row: 🔴 NO TRADE (weight +0.23)
+  🔴 NO   Close below the lowest low of the last 20 candles
+  🔴 NO   3 red candles in a row
+  🔴 NO   Hammer / bullish pin bar (long lower wick)
+
+LONG · Long: Close below the lowest low of the last 20 candles + Hammer / bullish pin b: 🔴 NO TRADE (weight +0.11)
+  🔴 NO   Close below the lowest low of the last 20 candles
+  🔴 NO   Hammer / bullish pin bar (long lower wick)
+  🔴 NO   Low touched the lower Bollinger band in the last 3 candles
+
+LONG · Long: Close below the lowest low of the last 20 candles + Hammer / bullish pin b: 🔴 NO TRADE (weight +0.11)
+  🔴 NO   Close below the lowest low of the last 20 candles
+  🔴 NO   Hammer / bullish pin bar (long lower wick)
+  🔴 NO   Heikin Ashi candle is red
+
+SHORT · Short: Shooting star / bearish pin bar + 3 green candles in a row + Awesome Osci: 🔴 NO TRADE (weight +0.20)
+  🔴 NO   Shooting star / bearish pin bar (long upper wick)
+  🔴 NO   3 green candles in a row
+  🔴 NO   Awesome Oscillator changed to green (TradingView's 'AO color changed to green' alert)
+
+SHORT · Short: Shooting star / bearish pin bar + Awesome Oscillator changed to green + H: 🔴 NO TRADE (weight +0.15)
+  🔴 NO   Shooting star / bearish pin bar (long upper wick)
+  🔴 NO   Awesome Oscillator changed to green (TradingView's 'AO color changed to green' alert)
+  🔴 NO   High touched the upper Bollinger band in the last 3 candles
+
+SHORT · short_spx_45_60: 🔴 NO TRADE (weight +0.08)
+  🔴 NO   Close below SMA (200)
+  🔴 NO   Bearish divergence: price higher high, Awesome Oscillator lower high - in the last 60 candles, lows/highs at most 60 candles apart
+
+SHORT · short_from_resistance: 🔴 NO TRADE (weight +0.12)
+  🔴 NO   Close below SMA (200)
+  🟢 YES  Bounced off support / reclaimed a level (closed back above it)
+
+SHORT · Support and Resistance Levels: 🟢 TRADE (weight +0.04)
+  🟢 YES  Close above SMA (200)
+  🟢 YES  Bounced off support / reclaimed a level (closed back above it)
+
+SHORT · Bearish CBD Divergence: 🔴 NO TRADE (weight +0.15)
+  🟢 YES  Close above SMA (200)
+  🟢 YES  Higher low: the last 5 candles' low is above the 5 candles before
+  🔴 NO   Bearish divergence: price higher high, Awesome Oscillator lower high - in the last 3 candles, lows/highs at most 60 candles apart
+
+SHORT · Short Trade Setup: 🔴 NO TRADE (weight +0.15)
+  🟢 YES  Close above SMA (200)
+  🔴 NO   Bearish divergence: price higher high, MACD lower high - in the last 3 candles, lows/highs at most 60 candles apart
+
+LONG · Long Trade Setup: 🔴 NO TRADE (weight +0.06)
+  🔴 NO   Close below SMA (200)
+  🔴 NO   Bullish divergence: price lower low, MACD higher low - in the last 3 candles, lows/highs at most 60 candles apart
+
+SHORT · scalping_setup: 🔴 NO TRADE (weight +0.03)
+  🔴 NO   Close below EMA (50)
+  🔴 NO   3 red candles in a row
+
+LONG · Swing Failure Pattern: 🔴 NO TRADE (weight +0.15)
+  🟢 YES  Higher low: the last 5 candles' low is above the 5 candles before
+  🔴 NO   Chart pattern broke down on this candle
+
+SHORT · Swing Failure Pattern: 🔴 NO TRADE (weight +0.10)
+  🟢 YES  Lower high: the last 5 candles' high is below the 5 candles before
+  🔴 NO   Chart pattern broke out upward on this candle
+
+SHORT · short_trade_setup: 🔴 NO TRADE (weight +0.19)
+  🔴 NO   Bearish divergence: price higher high, RSI lower high - in the last 3 candles, lows/highs at most 60 candles apart
+  🔴 NO   Bearish divergence: price higher high, Market Cipher wave lower high - in the last 3 candles, lows/highs at most 60 candles apart
+
+LONG · long_bottom: 🟢 TRADE (weight +0.04)
+  🟢 YES  Lower high: the last 5 candles' high is below the 5 candles before
+  🟢 YES  Higher low: the last 5 candles' low is above the 5 candles before
+
+SHORT · Bearish CVD Divergence Setup: 🔴 NO TRADE (weight +0.07)
+  🟢 YES  Lower high: the last 5 candles' high is below the 5 candles before
+  🟢 YES  Close above EMA (200)
+  🔴 NO   Volume above 1.5 × its 20-candle average
+
+LONG · uneven_butt_cheek_pattern: 🔴 NO TRADE (weight +0.04)
+  🟢 YES  Close above SMA (200)
+  🟢 YES  RSI (14) above 30
+  🔴 NO   Market Cipher wave above 53 (overbought)
+
+LONG · Trade Setup on Antarctic Exchange: 🔴 NO TRADE (weight +0.06)
+  🟢 YES  Close above EMA (50)
+  🔴 NO   MACD crosses above its signal line
+  🟢 YES  Market Cipher green dot (WaveTrend crosses up) below 0
+  🔴 NO   Volume above 1.5 × its 20-candle average
+
+SHORT · withdraw_funds: 🔴 NO TRADE (weight +0.08)
+  🔴 NO   Close below EMA (50)"

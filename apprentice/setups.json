@@ -30187,5 +30187,419 @@
   "hints": null,
   "tune": null,
   "exit_plan": null
+ },
+ {
+  "id": 253,
+  "name": "Lower Low",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "1m",
+  "why": "The price is forming a lower low, which is a bearish setup, and the 61.8% Fibonacci level is a key level of support, indicating a potential entry point for a short trade.",
+  "quote": "we are right now 28 in the profit beautiful absolutely beautiful with two minutes left on the clock this Bear Flag is breaking down our TP at the 61ita shout out to Newt right now entry is absolute resistance we saw our entry act as resistance it was resistance once twice three four times now we're getting the clear breakout are we gonna get an official break of Market structure right are we going to get a break of Market structure because we have our high we have our low potential lower high now potential lower load if we can come below the level of 322 that is an official lower low on the one minute time frame as we drip down blood in the streets baby red candles heart is pumping like crazy with one minute and 26 seconds left on the clock",
+  "unchecked": [
+   "61.8% Fibonacci level"
+  ],
+  "lesson_id": 64,
+  "rules": [
+   {
+    "rule": "lower_high",
+    "a": 5,
+    "b": 5
+   }
+  ],
+  "rules_text": [
+   "Lower high: the last 5 candles' high is below the 5 candles before"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 254,
+  "name": "long_setup",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 0.7,
+  "rr": 22.0,
+  "timeframe": "1m",
+  "why": "Bullish Market structure, green Market Cipher wave, bullish RSI, positive MACD, and volume spike indicate a strong long setup.",
+  "quote": "we're along pretty much the exact bottom and you know you're never going to catch the exact bottom and you're never going to get out of the exact top right at least that's what everyone always says all right it's different in the Casper crew though right we do catch the exact on but here's the thing Dr Blocks is an amazing Trader and it's very very clear that we are longing from a key area of support which is if we take a fib from the low to the high the Fibonacci golden pocket right wow look at that beautiful bounce right from the FIB here good risk to reward ratio up about 22 dollars with two minutes and 13 seconds left to go",
+  "unchecked": [
+   "close_above_sma: Close above SMA (200)"
+  ],
+  "lesson_id": 64,
+  "rules": [
+   {
+    "rule": "close_above_ema",
+    "a": 50
+   },
+   {
+    "rule": "wt_green_dot"
+   },
+   {
+    "rule": "rsi_above",
+    "a": 30
+   },
+   {
+    "rule": "macd_positive"
+   },
+   {
+    "rule": "volume_spike"
+   }
+  ],
+  "rules_text": [
+   "Close above EMA (50)",
+   "Market Cipher green dot (WaveTrend crosses up) below 0",
+   "RSI (14) above 30",
+   "MACD above zero",
+   "Volume above 1.5 \u00d7 its 20-candle average"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 255,
+  "name": "short_setup",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 0.7,
+  "rr": 22.0,
+  "timeframe": "1m",
+  "why": "Bearish Market structure, red Market Cipher wave, bearish RSI, negative MACD, and volume spike indicate a strong short setup.",
+  "quote": "it's different in the Casper crew though right we do catch the exact on but here's the thing Dr Blocks is an amazing Trader and it's very very clear that we are longing from a key area of support which is if we take a fib from the low to the high the Fibonacci golden pocket right wow look at that beautiful bounce right from the FIB here good risk to reward ratio up about 22 dollars with two minutes and 13 seconds left to go",
+  "unchecked": [
+   "close_below_sma: Close below SMA (200)"
+  ],
+  "lesson_id": 64,
+  "rules": [
+   {
+    "rule": "close_below_ema",
+    "a": 50
+   },
+   {
+    "rule": "wt_red_dot"
+   },
+   {
+    "rule": "rsi_below",
+    "a": 30
+   },
+   {
+    "rule": "macd_negative"
+   },
+   {
+    "rule": "volume_spike"
+   }
+  ],
+  "rules_text": [
+   "Close below EMA (50)",
+   "Market Cipher red dot (WaveTrend crosses down) above 0",
+   "RSI (14) below 30",
+   "MACD below zero",
+   "Volume above 1.5 \u00d7 its 20-candle average"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 256,
+  "name": "Short: Inverted Head and Shoulders with Fibonacci Resistance",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 0.7,
+  "rr": 1.5,
+  "timeframe": "1m",
+  "why": "Inverted Head and Shoulders with Fibonacci resistance, but the market is pumping against us, making the trade difficult to execute successfully.",
+  "quote": "clearly the 618 Fibonacci is giving us some kind of resistance right she's giving us the hand she's giving us the face you guys know what it is right you guys know",
+  "unchecked": [
+   "We are short 100x leverage with a tight stop loss, and we are not getting liquidated."
+  ],
+  "lesson_id": 64,
+  "rules": [
+   {
+    "rule": "in_bearish_pattern"
+   },
+   {
+    "rule": "close_below_ema",
+    "a": 50,
+    "b": 200
+   },
+   {
+    "rule": "wt_above"
+   },
+   {
+    "rule": "rsi_above",
+    "a": 30
+   },
+   {
+    "rule": "macd_negative"
+   },
+   {
+    "rule": "wt_bear_div"
+   }
+  ],
+  "rules_text": [
+   "Inside a pattern that usually breaks down (rising wedge, descending triangle, bear flag...)",
+   "Close below EMA (50)",
+   "Market Cipher wave above 53 (overbought)",
+   "RSI (14) above 30",
+   "MACD below zero",
+   "Bearish divergence: price higher high, Market Cipher wave lower high - in the last 3 candles, lows/highs at most 60 candles apart"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 257,
+  "name": "long_setup",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 0.7,
+  "rr": 2.0,
+  "timeframe": "1m",
+  "why": "Mother Nature longed Bitcoin 100x leveraged at the top of a sideways range, expecting a pump to the upside based on macro signals and a bullish environment. The setup includes a green wave, wave above -53, bullish divergence, and a close above the EMA (50). The stop is set at the liquidation price of 31.62 USD per Bitcoin, with a risk-reward ratio of 2:1.",
+  "quote": "Mother Nature just longed Bitcoin 100x leveraged 50,000 at the top literally at the top we're longing the top of the sideways range right here clearly coming up to a zone of resistance but you know what just because we're coming to the golden pocket 786 level doesn't mean this is the top I'll tell you why we have some macro bottom signals printing on the chart we've got Sam bagman Freed's man boobs getting higher as the price is getting lower over here on Market Cipher B and as you can see the six minute is printing a very juicy looking trigger wave after printing a very juicy looking uneven butt cheek pattern right here on the six minute time frame very very juicy uneven butt cheek pattern right here that's where the money is",
+  "unchecked": [
+   "We are currently 0.03 percent in the red but that's okay because we still have two minutes and 10 seconds left on the clock and things are looking super dang bullish."
+  ],
+  "lesson_id": 64,
+  "rules": [
+   {
+    "rule": "close_above_ema",
+    "a": 50
+   },
+   {
+    "rule": "wt_green_dot"
+   },
+   {
+    "rule": "wt_above",
+    "b": -53
+   },
+   {
+    "rule": "wt_bull_div"
+   }
+  ],
+  "rules_text": [
+   "Close above EMA (50)",
+   "Market Cipher green dot (WaveTrend crosses up) below 0",
+   "Market Cipher wave above 53 (overbought)",
+   "Bullish divergence: price lower low, Market Cipher wave higher low - in the last 3 candles, lows/highs at most 60 candles apart"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 258,
+  "name": "Long 100x Leverage",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "N/A",
+  "why": "The trader is long the top with 100x leverage, but no specific entry or exit points were provided. The setup is based on the trader's sentiment and the use of high leverage, which is a risk management concept.",
+  "quote": "100x leverage not going to get this another YouTube channel so make sure to like the video and let's see if this trade wins if this trade wins I'm you know who knows we might just give away the rest of the profits who knows who knows if it loses then man that would be awful",
+  "unchecked": [
+   "No specific entry or exit points were mentioned, only that the trade is long and using 100x leverage."
+  ],
+  "lesson_id": 64,
+  "rules": [
+   {
+    "rule": "close_above_sma"
+   },
+   {
+    "rule": "ema_above_ema"
+   }
+  ],
+  "rules_text": [
+   "Close above SMA (200)",
+   "EMA (50) is above EMA (200) (uptrend)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 259,
+  "name": "long_bitcoin_200x_leverage",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 0.7,
+  "rr": 2.0,
+  "timeframe": "1-minute",
+  "why": "The teacher selected a random person to go long on Bitcoin with 200x leverage, and the trade was executed based on the 1-minute chart's price action and volume spike.",
+  "quote": "We are long, guys. 100,000 contracts on the trade. 200X leverage and we need to set our timer.",
+  "unchecked": [
+   "The setup is based on a random selection and does not follow a specific pattern or rule."
+  ],
+  "lesson_id": 65,
+  "rules": [
+   {
+    "rule": "close_above_ema",
+    "a": 9,
+    "b": 21
+   },
+   {
+    "rule": "volume_spike",
+    "a": 20,
+    "b": 1.5
+   }
+  ],
+  "rules_text": [
+   "Close above EMA (9)",
+   "Volume above 20 \u00d7 its 1.5-candle average"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 260,
+  "name": "short_entry",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "1s",
+  "why": "Jay Boy Bullish shorted the exact top, and the price action formed a Fibonacci golden pocket, indicating a potential reversal or consolidation. The MACD crossed down, suggesting a bearish momentum, and the price closed above the EMA (200), indicating a bearish setup.",
+  "quote": "Jay Boy Bullish shorted the exact top. 200 X leverage, guys.",
+  "unchecked": [
+   "price touched the upper Bollinger band"
+  ],
+  "lesson_id": 65,
+  "rules": [
+   {
+    "rule": "close_above_ema",
+    "a": 200
+   },
+   {
+    "rule": "macd_cross_down"
+   }
+  ],
+  "rules_text": [
+   "Close above EMA (200)",
+   "MACD crosses below its signal line"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 261,
+  "name": "short_target",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "1s",
+  "why": "The Fibonacci golden pocket was used as a target for the short trade, which is a significant support level that the price respected. The MACD crossed up, suggesting a bullish momentum, and the price closed below the EMA (200), indicating a bearish setup.",
+  "quote": "Our target is support down to the Fibonacci golden pocket.",
+  "unchecked": [
+   "price touched the lower Bollinger band"
+  ],
+  "lesson_id": 65,
+  "rules": [
+   {
+    "rule": "close_below_ema",
+    "a": 200
+   },
+   {
+    "rule": "macd_cross_up"
+   }
+  ],
+  "rules_text": [
+   "Close below EMA (200)",
+   "MACD crosses above its signal line"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 262,
+  "name": "long_setup",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 2.0,
+  "rr": 2.0,
+  "timeframe": "1-second",
+  "why": "We're coming down to the low of the range. Uh yeah, I'm not even going to lie. This might actually be a good long trade. So, let's uh let's see what happens, Terrence. Literally longing the bottom on this 5-minute retest. Would you look at that? Terrence is $53 in the green right now. Terrence, you actually might win a massive amount of money on this one. $77 in the green, my man Terrence, raking in the dough right now. Basically, guys, we are doing challenges in the Casper Crew VIP Discord. The winners of the challenges get $500 and then they have to 200x leverage, which is actually 190x leverage, and see if they get any additional profits to their $500 prize. And right now, my man Terrence is in the green, $91. He's up right now, $600. And honestly, Terrence, that's a that's this is a legit good trade. And the reason why is because we came to the top of the range, we got a little rejection. Now, we're coming back down toward the bottom of the range, where historically we've had some lows. We just grabbed all this liquidity here that we've basically been forming, you know, pretty much all day. And this is a good place to be looking for a long, in my opinion, Terrence. So, we're up $117. We got about a minute and 30 seconds left on the clock-a-roni and cheese. The next trade that I would potentially see is honestly a CDW this low. Right? But Terrence, he didn't have time for that. There's no time when we're gambling in the Casper Crew Game Day. But he is up right now about $90 in the green, and we have about 1 minute left on the clock. And this is crazy. This is absolutely crazy because, you know, J Boy Bullish took the short, boom. And uh now Terrence took the long right from support, right? Right from support. Look at this, guys. Look at this. Would you look at this? Would you look at this? $112 in the green. Terrence, this is absolutely amazing. We are breaking out right now of a fake out of a cup and handle. We had a cup and handle that we were going to break out. We're going to long the break out over on Bybit. Make sure to sign up on Bybit. I love Bybit. And now we're getting a breakdown from here, and we're getting a fake out of the lows bouncing 37 seconds left. Man, this this this little clip needs its own open mouth thumbnail right now with a pointing finger and a clickbait title and emojis in the title with all caps and exclamation points because we are $131 in the green right now. My man Terrence absolutely crushing these charts longing the exact bottom with 17 16 seconds left on the clock. We're $124 in profit. Shout out to Terrence. Shout out to Terrence. That's legit, bro. All right, six, five, four, three, two, one. Congratulations, Terrence. $121. Congratulations, $121. And this is the first Casper Crew games in a long time that we actually made money. We literally like made money. We're up $6. Terrence, open up a ticket. We will get you your prize, my friend. We will get you your prize. Open up a ticket. All right, guys. We're going to do another challenge here. No more food challenges. No more food challenges. If anybody's joining right now, this is the Casper Crew VIP game day that we do every single month in the community. It's a lot of fun whether or not you're even playing it because what we're doing is we are doing challenges. The winner of the challenge gets 500 USDT. And then they get to take that that USDT and basically enter into a 200X leverage trade. 200X leverage trade. Did I say Bybit? I'm just joking. Yeah, I'm not really on Bybit, guys. This is MEXC. MEXC Global is my my new exchange. I'm not on Bybit anymore. I'm just I'm just I'm just trolling. Yeah, I'm just trolling. I'm just a troll, guys. My whole channel is like a green a cringey kind of trolling channel, you know. But, um",
+  "quote": "We're coming down to the low of the range. Uh yeah, I'm not even going to lie. This might actually be a good long trade. So, let's uh let's see what happens, Terrence. Literally longing the bottom on this 5-minute retest. Would you look at that? Terrence is $53 in the green right now. Terrence, you actually might win a massive amount of money on this one. $77 in the green, my man Terrence, raking in the dough right now. Basically, guys, we are doing challenges in the Casper Crew VIP Discord. The winners of the challenges get $500 and then they have to 200x leverage, which is actually 190x leverage, and see if they get any additional profits to their $500 prize. And right now, my man Terrence is in the green, $91. He's up right now, $600. And honestly, Terrence, that's a that's this is a legit good trade. And the reason why is because we came to the top of the range, we got a little rejection. Now, we're coming back down toward the bottom of the range, where historically we've had some lows. We just grabbed all this liquidity here that we've basically been forming, you know, pretty much all day. And this is a good place to be looking for a long, in my opinion, Terrence. So, we're up $117. We got about a minute and 30 seconds left on the clock-a-roni and cheese. The next trade that I would potentially see is honestly a CDW this low. Right? But Terrence, he didn't have time for that. There's no time when we're gambling in the Casper Crew Game Day. But he is up right now about $90 in the green, and we have about 1 minute left on the clock. And this is crazy. This is absolutely crazy because, you know, J Boy Bullish took the short, boom. And uh now Terrence took the long right from support, right? Right from support. Look at this, guys. Look at this. Would you look at this? Would you look at this? $112 in the green. Terrence, this is absolutely amazing. We are breaking out right now of a fake out of a cup and handle. We had a cup and handle that we were going to break out. We're going to long the break out over on Bybit. Make sure to sign up on Bybit. I love Bybit. And now we're getting a breakdown from here, and we're getting a fake out of the lows bouncing 37 seconds left. Man, this this this little clip needs its own open mouth thumbnail right now with a pointing finger and a clickbait title and emojis in the title with all caps and exclamation points because we are $131 in the green right now. My man Terrence absolutely crushing these charts longing the exact bottom with 17 16 seconds left on the clock. We're $124 in profit. Shout out to Terrence. Shout out to Terrence. That's legit, bro. All right, six, five, four, three, two, one. Congratulations, Terrence. $121. Congratulations, $121. And this is the first Casper Crew games in a long time that we actually made money. We literally like made money. We're up $6. Terrence, open up a ticket. We will get you your prize, my friend. We will get you your prize. Open up a ticket. All right, guys. We're going to do another challenge here. No more food challenges. No more food challenges. If anybody's joining right now, this is the Casper Crew VIP game day that we do every single month in the community. It's a lot of fun whether or not you're even playing it because what we're doing is we are doing challenges. The winner of the challenge gets 500 USDT. And then they get to take that that USDT and basically enter into a 200X leverage trade. 200X leverage trade. Did I say Bybit? I'm just joking. Yeah, I'm not really on Bybit, guys. This is MEXC. MEXC Global is my my new exchange. I'm not on Bybit anymore. I'm just I'm just I'm just trolling. Yeah, I'm just trolling. I'm just a troll, guys. My whole channel is like a green a cringey kind of trolling channel, you know. But, um",
+  "unchecked": [
+   "5-minute retest"
+  ],
+  "lesson_id": 65,
+  "rules": [
+   {
+    "rule": "close_above_ema",
+    "a": 50
+   },
+   {
+    "rule": "breakout_high",
+    "a": 20,
+    "b": 20
+   }
+  ],
+  "rules_text": [
+   "Close above EMA (50)",
+   "Close above the highest high of the last 20 candles"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  }
 ]
