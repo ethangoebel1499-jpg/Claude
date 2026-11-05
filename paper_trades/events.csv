@@ -479,3 +479,7 @@ Apprentice ETH 1h,2026-11-05T12:00:24+00:00,exit,closed (opposite setup) -93.37 
 Apprentice ETH 1h,2026-11-05T12:00:24+00:00,entry,"SHORT 4.290898 @ 2,414.90"
 Apprentice SHIB 1h,2026-11-05T12:00:25+00:00,exit,closed (opposite setup) +17.65 USD
 Apprentice SHIB 1h,2026-11-05T12:00:25+00:00,entry,"SHORT 2,073,592,012.32470202 @ 0.000004761"
+Apprentice BTC 1h,2026-11-05T13:00:26+00:00,exit,closed (opposite setup) +28.59 USD
+Apprentice BTC 1h,2026-11-05T13:00:26+00:00,entry,"SHORT 0.123405 @ 79,628.90"
+Apprentice LTC 1h,2026-11-05T13:00:27+00:00,exit,closed (opposite setup) -116.14 USD
+Apprentice LTC 1h,2026-11-05T13:00:27+00:00,entry,SHORT 170.21947 @ 55.17
