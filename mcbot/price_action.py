@@ -1,8 +1,9 @@
-"""S10 Price action: support / resistance, chart shapes, swing failures and market structure - no indicators.
+"""S10 Price action: support / resistance, chart shapes, swing failures and market structure, confirmed by RSI and
+money flow.
 
-Everything is read from the candles themselves (highs, lows, opens, closes) - no RSI, MACD, moving averages,
-Bollinger bands, Market Cipher or volume. Only confirmed swing points are used, so nothing looks ahead. Any
-timeframe.
+The trade ideas come from the candles themselves (highs, lows, opens, closes). Two indicators then have to agree
+before a trade is taken (see CONFIRMATION below); nothing else (no MACD, moving averages, Bollinger bands or volume).
+Only confirmed swing points are used, so nothing looks ahead. Any timeframe.
 
 ENTRIES (long; shorts are the mirror image)
   1. Support bounce   price dips into a support zone (2+ earlier turning points lined up) and closes back above it
@@ -31,6 +32,12 @@ STOPS, TARGETS, MANAGEMENT - as the lessons teach
 Structure filter: no breakout / retest long while the swings make lower highs and lower lows (bounces and swing
 failures are allowed - they're how a trend turns).
 
+CONFIRMATION (RSI + money flow): a long needs Market Cipher's money flow RISING over the last 3 candles and RSI (14)
+NOT overbought (< 70); a short needs money flow falling and RSI not oversold (> 30). Measured on S10's trades
+(BTC / ETH / SOL 1h-1D, fees in): without it -0.03R a trade on the earlier half and -0.11R on the later half; with
+it +0.16R and +0.00R, on about half as many trades. (Money flow merely being green / red made it worse - its
+direction is what helps.)
+
 WHAT IT TRADES: a statistically-backed shape-breakout retest on its own, or any CONFLUENCE of two reasons on the same
 candle (e.g. a support bounce that is also a break & retest). Single bounces, rejections and swing failures show in
 the checklist but aren't traded: measured on BTC / ETH / SOL 1h-1D (fees in, half at TP1, breakeven after), they
@@ -44,8 +51,8 @@ from __future__ import annotations
 import numpy as np
 import pandas as pd
 
-from .builder import _engulf, _hammer, pattern_frame
-from .indicators import sr_levels
+from .builder import _engulf, _hammer, _rsi, pattern_frame
+from .indicators import money_flow, sr_levels
 from .patterns import swings
 
 K = 3                      # candles each side of a swing point (same as the pattern detector)
@@ -55,6 +62,9 @@ MIN_RR = 1.0               # TP1 must be at least this many R away
 MIN_ODDS = 60.0            # a shape break is traded only if that direction won this % of the time on crypto
 MIN_TARGET = 45.0          # ... and its measured move is used as TP2 only if reached this % of the time
 CONFLUENCE = 2             # other entries need this many price-action reasons on the same candle
+CONFIRM = True             # RSI + money flow must agree (see CONFIRMATION)
+MF_LOOKBACK = 3            # money flow must be rising (falling) versus this many candles ago
+RSI_OB, RSI_OS = 70, 30
 STOP = 0.03
 TAKE_PROFITS = [(0.03, 0.5), (0.06, 0.5)]  # fallback 1R / 2R; S10 sets each trade's own targets
 WITH = {"ascending_triangle": "up", "descending_triangle": "down", "rising_wedge": "down", "falling_wedge": "up",
@@ -209,6 +219,26 @@ def frame(df: pd.DataFrame) -> pd.DataFrame:
     for i in np.flatnonzero(sfp_dn):
         plan(i, -1, h[i] + buf[i], "swing failure at resistance")
 
+    # RSI + money flow confirmation
+    rsi = _rsi(df["close"]).to_numpy(float)
+    mf = np.asarray(money_flow(df), dtype=float)
+    mf_prev = np.r_[np.full(MF_LOOKBACK, np.nan), mf[:-MF_LOOKBACK]]
+    ok_l = (mf > mf_prev) & (rsi < RSI_OB)
+    ok_s = (mf < mf_prev) & (rsi > RSI_OS)
+    if CONFIRM:
+        for i in np.flatnonzero((long_ & ~ok_l) | (short & ~ok_s)):
+            side_ok = ok_l[i] if long_[i] else ok_s[i]
+            if not side_ok:
+                bits = []
+                if long_[i]:
+                    bits += [] if mf[i] > mf_prev[i] else ["money flow not rising"]
+                    bits += [] if rsi[i] < RSI_OB else [f"RSI {rsi[i]:.0f} overbought"]
+                else:
+                    bits += [] if mf[i] < mf_prev[i] else ["money flow not falling"]
+                    bits += [] if rsi[i] > RSI_OS else [f"RSI {rsi[i]:.0f} oversold"]
+                note[i] = (note[i] + " · " if note[i] else "") + f"{why[i]} - not taken: {', '.join(bits)}"
+                long_[i] = short[i] = False
+
     # trade a shape retest on its own, anything else only with confluence
     for i in np.flatnonzero(long_ | short):
         reasons = why[i].split(" + ")
@@ -223,7 +253,8 @@ def frame(df: pd.DataFrame) -> pd.DataFrame:
         "stop_long": stop_l, "stop_short": stop_s, "tp1_long": t1l, "tp2_long": t2l, "tp1_short": t1s,
         "tp2_short": t2s, "pattern": pf.kind.to_numpy(object), "up_structure": up_struct,
         "down_structure": down_struct, "support": below, "resistance": above,
-        "last_swing_low": last_lo, "last_swing_high": last_hi,
+        "last_swing_low": last_lo, "last_swing_high": last_hi, "rsi": rsi, "money_flow": mf,
+        "mf_rising": mf > mf_prev, "mf_falling": mf < mf_prev,
     }, index=df.index)
 
 
@@ -256,6 +287,8 @@ def checklist(df: pd.DataFrame, bar: int = -1, label: str | None = None, directi
     lines = [f"[{label or 'S10 Price action'}] candle {df.index[i]:%Y-%m-%d %H:%M} UTC (close {price(c)})",
              f"Structure: {struct} · support {px(r.support)} · resistance {px(r.resistance)}"
              + (f" · shape: {str(r.pattern).replace('_', ' ')}" if r.pattern else "")]
+    lines.append(f"RSI {r.rsi:.0f} · money flow {r.money_flow:+.1f} "
+                 f"({'rising' if r.mf_rising else 'falling' if r.mf_falling else 'flat'} over {MF_LOOKBACK} candles)")
     if r.note:
         lines.append(f"📐 {r.note}")
     for side, flag, stop, t1, t2 in (("LONG", r.long, r.stop_long, r.tp1_long, r.tp2_long),
@@ -270,5 +303,7 @@ def checklist(df: pd.DataFrame, bar: int = -1, label: str | None = None, directi
         else:
             lines += ["", f"{side}: 🔴 NO TRADE"]
     lines += ["", "Looks for: support bounce / resistance rejection with a candle shape · break & retest of a swing "
-                  "high/low · statistically-backed shape breakouts, entered on the retest · swing failure at a level"]
+                  "high/low · statistically-backed shape breakouts, entered on the retest · swing failure at a level - "
+                  f"confirmed by money flow moving the trade's way and RSI not stretched (long < {RSI_OB}, short > "
+                  f"{RSI_OS})"]
     return "\n".join(lines)

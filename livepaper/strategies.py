@@ -22,9 +22,10 @@ def _topdown_checklist(df, bar=-1, label=None):
     return topdown_checklist(market_cipher(df, use_heikin_ashi=True), bar)
 
 
-_S10_NOTE = ("Pure price action, no indicators: support/resistance bounces, break-and-retest, chart-shape breakouts "
-             "(triangles, wedges, flags, double tops/bottoms, head & shoulders) and swing failures, with the market "
-             "structure as a filter. Stop just beyond the structure; half at 1R, half at 2R. Any timeframe.")
+_S10_NOTE = ("Price action confirmed by RSI and money flow: support/resistance bounces, break-and-retest, chart-shape "
+             "breakouts that the crypto breakout statistics back (entered on the retest) and swing failures; money flow "
+             "must move the trade's way and RSI must not be stretched. Stop beyond the structure, TP1 just before the "
+             "next level, TP2 the level after (half each), breakeven after TP1. Any timeframe.")
 
 REGISTRY = {
     "witcher": {"label": "S4b Witcher (wide exits)", "short": "S4b Witcher", "signals": witcher_signals,
@@ -46,7 +47,7 @@ REGISTRY = {
                 "signals": _topdown_signals, "checklist": _topdown_checklist, "exits": Exits(0.03, [(0.06, 1.0)]),
                 "note": "Fixed 3% stop / 6% target here; the video's level-based exits are backtest-only. "
                         "Failed testing: few trades and no edge."},
-    "s10": {"label": "S10 Price action (S/R + shapes, no indicators)", "short": "S10 Price action",
+    "s10": {"label": "S10 Price action (S/R + shapes, RSI & money flow)", "short": "S10 Price action",
             "signals": s10.signals, "checklist": s10.checklist, "exits": Exits(s10.STOP, s10.TAKE_PROFITS),
             "note": _S10_NOTE},
     "s10_long": {"label": "S10 Price action - longs only", "short": "S10 long",

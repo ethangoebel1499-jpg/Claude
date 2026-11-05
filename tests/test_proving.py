@@ -82,8 +82,10 @@ def test_s10_price_action_uses_no_indicators_and_is_scanned(stores, monkeypatch)
     import inspect
     from mcbot import price_action as pa
     src = inspect.getsource(pa)
-    for word in ("rsi", "macd", "ema", "sma(", "bollinger", "market_cipher", "wavetrend", "volume"):
-        assert word not in src.lower().split('"""', 2)[2], word                 # nothing but price in the code
+    code = src.lower().split('"""', 2)[2]
+    for word in ("macd", "ema", "sma(", "bollinger", "wavetrend", "volume"):
+        assert word not in code, word                    # price action + only RSI and money flow
+    assert "_rsi(" in code and "money_flow(" in code
     df = synthetic(n=1500, seed=4, timeframe="4h")
     sig = pa.signals(df)
     assert {"long_entry", "short_entry", "stop_pct"} <= set(sig.columns)
@@ -136,3 +138,19 @@ def test_live_trader_uses_each_trades_own_targets():
                                         broker=SimBroker(fee=0)))
     fills = m.trades[0]
     assert fills["reason"] == "target2" and abs(fills["exit_price"] / fills["entry_price"] - 1.04) < 0.01
+
+
+
+def test_s10_trades_only_with_rsi_and_money_flow_agreeing():
+    from mcbot import price_action as pa
+    df = synthetic(n=2500, seed=11, timeframe="4h")
+    f = pa.frame(df)
+    assert (f.mf_rising[f["long"]]).all() and (f.rsi[f["long"]] < pa.RSI_OB).all()
+    assert (f.mf_falling[f["short"]]).all() and (f.rsi[f["short"]] > pa.RSI_OS).all()
+    pa.CONFIRM = False
+    try:
+        loose = pa.frame(df)
+    finally:
+        pa.CONFIRM = True
+    assert (loose["long"] | loose["short"]).sum() > (f["long"] | f["short"]).sum()     # it does filter
+    assert "money flow" in pa.checklist(df) and "RSI" in pa.checklist(df)

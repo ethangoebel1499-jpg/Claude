@@ -28,8 +28,8 @@ FEE = 0.001                      # per side, like the paper broker
 PREFIX = "apprentice_setup:"     # strategy key of a trial run: one setup on its own
 
 # built-in strategies tested next to the setups (negative ids): pure price action, longs and shorts apart
-PSEUDO = {-10: {"id": -10, "key": "s10_long", "name": "S10 Price action (no indicators) - longs", "direction": "long"},
-          -11: {"id": -11, "key": "s10_short", "name": "S10 Price action (no indicators) - shorts", "direction": "short"}}
+PSEUDO = {-10: {"id": -10, "key": "s10_long", "name": "S10 Price action (+RSI & money flow) - longs", "direction": "long"},
+          -11: {"id": -11, "key": "s10_short", "name": "S10 Price action (+RSI & money flow) - shorts", "direction": "short"}}
 
 SCHEMA = """
 CREATE TABLE IF NOT EXISTS proving_scan (setup_id INTEGER, symbol TEXT, asset TEXT, timeframe TEXT, trades INTEGER,
