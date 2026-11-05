@@ -27,6 +27,10 @@ TRIAL_TRADES = 100
 FEE = 0.001                      # per side, like the paper broker
 PREFIX = "apprentice_setup:"     # strategy key of a trial run: one setup on its own
 
+# built-in strategies tested next to the setups (negative ids): pure price action, longs and shorts apart
+PSEUDO = {-10: {"id": -10, "key": "s10_long", "name": "S10 Price action (no indicators) - longs", "direction": "long"},
+          -11: {"id": -11, "key": "s10_short", "name": "S10 Price action (no indicators) - shorts", "direction": "short"}}
+
 SCHEMA = """
 CREATE TABLE IF NOT EXISTS proving_scan (setup_id INTEGER, symbol TEXT, asset TEXT, timeframe TEXT, trades INTEGER,
     train_trades INTEGER, test_trades INTEGER, avg_r REAL, train_r REAL, test_r REAL, edge REAL, avg_pct REAL,
@@ -63,6 +67,58 @@ def net_outcomes(df: pd.DataFrame, setup: dict) -> tuple[np.ndarray, np.ndarray]
     with np.errstate(divide="ignore", invalid="ignore"):
         fee_r = np.where(risk > 0, 2 * FEE / risk, np.nan)
     return res - fee_r, risk
+
+
+def outcomes_pct(df: pd.DataFrame, direction: str, risk: np.ndarray, rr: float, horizon: int = brain.HORIZON) -> np.ndarray:
+    """R of entering on every candle with a stop `risk` (fraction of price) away and a target rr x that."""
+    o, h, l, c = (df[k].to_numpy(float) for k in ("open", "high", "low", "close"))
+    n = len(df)
+    sgn = 1 if direction == "long" else -1
+    entry = np.full(n, np.nan)
+    entry[:-1] = o[1:]
+    dist = risk * entry
+    stop, tgt = entry - sgn * dist, entry + sgn * rr * dist
+    res = np.full(n, np.nan)
+    open_ = np.isfinite(entry) & (dist > 0)
+    for k in range(1, horizon + 1):
+        idx = np.arange(n) + k
+        ok = idx < n
+        hk = np.where(ok, h[np.minimum(idx, n - 1)], np.nan)
+        lk = np.where(ok, l[np.minimum(idx, n - 1)], np.nan)
+        hs = open_ & ok & ((lk <= stop) if sgn > 0 else (hk >= stop))
+        ht = open_ & ok & ~hs & ((hk >= tgt) if sgn > 0 else (lk <= tgt))
+        res[hs], res[ht] = -1.0, rr
+        open_ &= ~(hs | ht)
+        if k == horizon:
+            last = np.where(ok, c[np.minimum(idx, n - 1)], np.nan)
+            with np.errstate(divide="ignore", invalid="ignore"):      # candles with no trade have no stop
+                res[open_ & ok] = (sgn * (last - entry) / dist)[open_ & ok]
+    return np.clip(res, -1.0, rr)
+
+
+def scan_s10(df: pd.DataFrame, direction: str, split: float = 0.7) -> dict | None:
+    """S10 with its own structure stop on every trade, half at 1R and half at 2R, fees included."""
+    from mcbot import price_action as pa
+    if len(df) < 300:
+        return None
+    sig = pa.signals(df, direction)
+    mask = brain.dedupe(sig[f"{direction}_entry"].to_numpy(bool))
+    risk = np.nan_to_num(sig["stop_pct"].to_numpy(float), nan=0.0)
+    gross = 0.5 * outcomes_pct(df, direction, risk, 1.0) + 0.5 * outcomes_pct(df, direction, risk, 2.0)
+    with np.errstate(divide="ignore", invalid="ignore"):
+        net = gross - np.where(risk > 0, 2 * FEE / risk, np.nan)
+    mask &= np.isfinite(net)
+    idx = np.flatnonzero(mask)
+    cut = int(len(df) * split)
+    if not len(idx):
+        return {"trades": 0, "train_trades": 0, "test_trades": 0, "avg_r": None, "train_r": None, "test_r": None,
+                "edge": None, "avg_pct": None, "candles": len(df)}
+    tr, te = idx[idx < cut], idx[idx >= cut]
+    mean = lambda a: round(float(np.mean(net[a])), 3) if len(a) else None
+    # random baseline: same stop size rule is not defined off-signal, so compare with 0 (a fee-paying coin flip < 0)
+    return {"trades": int(len(idx)), "train_trades": int(len(tr)), "test_trades": int(len(te)), "avg_r": mean(idx),
+            "train_r": mean(tr), "test_r": mean(te), "edge": mean(idx),
+            "avg_pct": round(float(np.mean(net[idx] * risk[idx])) * 100, 3), "candles": len(df)}
 
 
 def scan_one(df: pd.DataFrame, setup: dict, split: float = 0.7) -> dict | None:
@@ -103,9 +159,9 @@ def scan(store, markets: list[tuple[str, str]], timeframes: list[str] | None = N
                 log(f"  {symbol} {tf}: only {len(df)} candles - skipped")
                 continue
             good = 0
-            for s in setups:
+            for s in setups + list(PSEUDO.values()):
                 try:
-                    r = scan_one(df, s)
+                    r = scan_s10(df, s["direction"]) if s["id"] in PSEUDO else scan_one(df, s)
                 except Exception as e:
                     log(f"  #{s['id']} on {symbol} {tf}: {e}")
                     continue
@@ -117,8 +173,8 @@ def scan(store, markets: list[tuple[str, str]], timeframes: list[str] | None = N
                 n += 1
                 good += bool(candidate_ok(r))
             store.db.commit()
-            log(f"  {symbol} {tf}: {len(df):,} candles, {good} of {len(setups)} setups made money after fees on "
-                "both the first 70% and the unseen 30%")
+            log(f"  {symbol} {tf}: {len(df):,} candles, {good} of {len(setups) + len(PSEUDO)} setups/strategies made "
+                "money after fees on both the first 70% and the unseen 30%")
     log(f"RESULT scanned={n}")
     return n
 
@@ -140,7 +196,7 @@ def candidates(store) -> pd.DataFrame:
         return df
     ok = df.apply(lambda r: candidate_ok(r.to_dict()), axis=1)
     df = df[ok].copy()
-    live = {s["id"] for s in store.setups(("active", "pinned"))}
+    live = {s["id"] for s in store.setups(("active", "pinned"))} | set(PSEUDO)
     df = df[df.setup_id.isin(live)]
     df["score"] = df.avg_r * df.trades.apply(math.sqrt)
     return df.sort_values("score", ascending=False)
@@ -161,6 +217,8 @@ def trials(store) -> pd.DataFrame:
 
 
 def run_name(setup_id: int, symbol: str, tf: str) -> str:
+    if setup_id in PSEUDO:
+        return f"Trial S10 {PSEUDO[setup_id]['direction']}s {symbol.upper()} {tf}"
     return f"Trial #{setup_id} {symbol.upper()} {tf}"
 
 
@@ -169,9 +227,14 @@ def start_trial(store, lp_store, setup: dict, symbol: str, asset: str, tf: str, 
     ensure(store)
     name = run_name(setup["id"], symbol, tf)
     rr = float(setup.get("rr") or 2.0)
-    lp_store.upsert_run({"name": name, "strategy": f"{PREFIX}{setup['id']}", "symbol": pair_for(symbol, asset),
+    if setup["id"] in PSEUDO:                       # a built-in strategy (S10): its own exits
+        from mcbot import price_action as pa
+        strat, tps = PSEUDO[setup["id"]]["key"], [list(x) for x in pa.TAKE_PROFITS]
+    else:
+        strat, tps = f"{PREFIX}{setup['id']}", [[STOP * rr, 1.0]]
+    lp_store.upsert_run({"name": name, "strategy": strat, "symbol": pair_for(symbol, asset),
                          "asset": asset, "timeframe": tf, "shorts": setup["direction"] == "short", "capital": capital,
-                         "fraction": 1.0, "stop": STOP, "take_profits": [[STOP * rr, 1.0]], "active": True,
+                         "fraction": 1.0, "stop": STOP, "take_profits": tps, "active": True,
                          "source": "proving"})
     store.db.execute("INSERT OR REPLACE INTO proving_trials VALUES (?,?,?,?,?,?,?,?,?)",
                      (name, setup["id"], symbol.upper(), asset, tf, now(), "running", None, None))
@@ -203,7 +266,7 @@ def tick(store, lp_store, max_trials: int = 10, auto_start: bool = True, log=pri
     """Decide trials that reached 100 trades, then fill free slots with the best untried candidates."""
     ensure(store)
     out = {"kept": 0, "dropped": 0, "started": 0}
-    setups = {s["id"]: s for s in store.setups()}
+    setups = {s["id"]: s for s in store.setups()} | dict(PSEUDO)
     for r in trials(store).itertuples():
         if r.status != "running":
             continue

@@ -33,7 +33,8 @@ def render(lp_store) -> None:
     store = Store(db_path())
     proving.ensure(store)
     st.markdown("##### 🔬 Proving ground")
-    st.caption("The apprentice tests **every setup on every timeframe from 1 minute to 1 day**, on any crypto and any "
+    st.caption("The apprentice tests **every setup - and S10, the pure price-action strategy (support/resistance and chart "
+               "shapes, no indicators) - on every timeframe from 1 minute to 1 day**, on any crypto and any "
                "stock, with fees included. The best combinations - the ones that made money on both the first 70% "
                f"of history and the last 30% they never saw - get a **paper trial**. A trial stays until it has "
                f"**{proving.TRIAL_TRADES} trades**, then it's decided: kept if it made money after fees (it keeps "
@@ -79,8 +80,9 @@ def render(lp_store) -> None:
             st.code("\n".join(text.splitlines()[-25:]) or "starting...")
 
     res = proving.results(store)
-    setups = {s["id"]: s for s in store.setups()}
-    name = lambda i: f"#{i} {setups[i]['direction'][0].upper()} · {setups[i]['name'][:38]}" if i in setups else f"#{i}"
+    setups = {s["id"]: s for s in store.setups()} | dict(proving.PSEUDO)
+    name = lambda i: (proving.PSEUDO[i]["name"] if i in proving.PSEUDO else
+                      f"#{i} {setups[i]['direction'][0].upper()} · {setups[i]['name'][:38]}" if i in setups else f"#{i}")
     if res.empty:
         st.info("No scan yet - pick markets and timeframes above and press 🔬 Scan now.")
         return

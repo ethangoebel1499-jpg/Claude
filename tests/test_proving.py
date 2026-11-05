@@ -40,9 +40,10 @@ def test_scan_trial_and_decision(stores, monkeypatch):
     import livepaper.history as H
     monkeypatch.setattr(H, "history", lambda sym, asset, tf: synthetic(n=2000, seed=hash(tf) % 50, timeframe=tf))
     n = proving.scan(a, [("BTC", "crypto"), ("PEPE", "crypto")], ["1m", "4h"], log=lambda m: None)
-    assert n == 4 and len(proving.results(a)) == 4
+    assert n == 12 and len(proving.results(a)) == 12          # 2 markets x 2 timeframes x (1 setup + S10 long/short)
     assert proving.pair_for("PEPE", "crypto") == "PEPEUSD" and proving.pair_for("BTC", "crypto") == "XBTUSD"
-    # force a candidate and start a trial
+    # force a candidate and start a trial (S10's own rows are tested separately)
+    a.db.execute("DELETE FROM proving_scan WHERE setup_id < 0")
     a.db.execute("UPDATE proving_scan SET trades = 60, test_trades = 20, train_r = 0.2, test_r = 0.1, avg_r = 0.15, "
                  "edge = 0.1 WHERE timeframe = '4h' AND symbol = 'BTC'")
     a.db.commit()
@@ -75,3 +76,30 @@ def test_verdict_keeps_only_profitable_trials():
     win = pd.DataFrame({"pnl_usd": [10.0] * 60 + [-8.0] * 40, "pnl_pct": [0.1] * 60 + [-0.08] * 40})
     lose = pd.DataFrame({"pnl_usd": [10.0] * 40 + [-8.0] * 60, "pnl_pct": [0.1] * 40 + [-0.08] * 60})
     assert proving.verdict(win)[0] is True and proving.verdict(lose)[0] is False
+
+
+def test_s10_price_action_uses_no_indicators_and_is_scanned(stores, monkeypatch):
+    import inspect
+    from mcbot import price_action as pa
+    src = inspect.getsource(pa)
+    for word in ("rsi", "macd", "ema", "sma(", "bollinger", "market_cipher", "wavetrend", "volume"):
+        assert word not in src.lower().split('"""', 2)[2], word                 # nothing but price in the code
+    df = synthetic(n=1500, seed=4, timeframe="4h")
+    sig = pa.signals(df)
+    assert {"long_entry", "short_entry", "stop_pct"} <= set(sig.columns)
+    assert sig.loc[sig.long_entry | sig.short_entry, "stop_pct"].between(0.002, 0.10).all()
+    assert "LONG:" in pa.checklist(df) and "Structure:" in pa.checklist(df)
+    from livepaper.strategies import REGISTRY
+    assert {"s10", "s10_long", "s10_short"} <= set(REGISTRY)
+    a, lp, sid = stores
+    import livepaper.history as H
+    monkeypatch.setattr(H, "history", lambda sym, asset, tf: synthetic(n=1500, seed=1, timeframe=tf))
+    proving.scan(a, [("BTC", "crypto")], ["4h"], log=lambda m: None)
+    ids = set(proving.results(a).setup_id)
+    assert {-10, -11} <= ids
+    a.db.execute("UPDATE proving_scan SET trades = 80, test_trades = 20, train_r = 0.3, test_r = 0.2, avg_r = 0.25, "
+                 "edge = 0.25 WHERE setup_id = -10")
+    a.db.commit()
+    proving.tick(a, lp, max_trials=5, log=lambda m: None)
+    run = next(r for r in lp.runs() if r["name"] == "Trial S10 longs BTC 4h")
+    assert run["strategy"] == "s10_long"

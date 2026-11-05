@@ -165,7 +165,11 @@ _PAT_CACHE: dict = {}
 
 
 def _key(d) -> tuple:
-    return (id(d), len(d), d.index[0] if len(d) else None, d.index[-1] if len(d) else None)
+    """Cache key: the chart's size, span and prices (not its memory address, which Python reuses)."""
+    if not len(d):
+        return (0,)
+    return (len(d), d.index[0], d.index[-1], float(np.nansum(d["close"].to_numpy(float))),
+            float(np.nansum(d["high"].to_numpy(float))), float(d["close"].iloc[-1]))
 
 
 def _sr(d) -> pd.DataFrame:

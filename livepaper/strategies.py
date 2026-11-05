@@ -5,7 +5,7 @@ Keys are what live.toml and the runs table use for `strategy`.
 
 from __future__ import annotations
 
-from mcbot import s8
+from mcbot import price_action as s10, s8
 from mcbot.grind import STOP as G_STOP, TAKE_PROFITS as G_TP, grind_checklist, grind_signals
 from mcbot.indicators import market_cipher
 from mcbot.strategies import build_signals, checklist as topdown_checklist
@@ -21,6 +21,10 @@ def _topdown_signals(df):
 def _topdown_checklist(df, bar=-1, label=None):
     return topdown_checklist(market_cipher(df, use_heikin_ashi=True), bar)
 
+
+_S10_NOTE = ("Pure price action, no indicators: support/resistance bounces, break-and-retest, chart-shape breakouts "
+             "(triangles, wedges, flags, double tops/bottoms, head & shoulders) and swing failures, with the market "
+             "structure as a filter. Stop just beyond the structure; half at 1R, half at 2R. Any timeframe.")
 
 REGISTRY = {
     "witcher": {"label": "S4b Witcher (wide exits)", "short": "S4b Witcher", "signals": witcher_signals,
@@ -42,6 +46,17 @@ REGISTRY = {
                 "signals": _topdown_signals, "checklist": _topdown_checklist, "exits": Exits(0.03, [(0.06, 1.0)]),
                 "note": "Fixed 3% stop / 6% target here; the video's level-based exits are backtest-only. "
                         "Failed testing: few trades and no edge."},
+    "s10": {"label": "S10 Price action (S/R + shapes, no indicators)", "short": "S10 Price action",
+            "signals": s10.signals, "checklist": s10.checklist, "exits": Exits(s10.STOP, s10.TAKE_PROFITS),
+            "note": _S10_NOTE},
+    "s10_long": {"label": "S10 Price action - longs only", "short": "S10 long",
+                 "signals": lambda df: s10.signals(df, "long"),
+                 "checklist": lambda df, bar=-1, label=None: s10.checklist(df, bar, label, "long"),
+                 "exits": Exits(s10.STOP, s10.TAKE_PROFITS), "long_only": True, "note": _S10_NOTE},
+    "s10_short": {"label": "S10 Price action - shorts only", "short": "S10 short",
+                  "signals": lambda df: s10.signals(df, "short"),
+                  "checklist": lambda df, bar=-1, label=None: s10.checklist(df, bar, label, "short"),
+                  "exits": Exits(s10.STOP, s10.TAKE_PROFITS), "note": _S10_NOTE},
 }
 
 # S10: 1-minute Bollinger bands + Awesome Oscillator divergence, built from the Builder's rules (so it can be
