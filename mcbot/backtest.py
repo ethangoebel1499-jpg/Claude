@@ -67,8 +67,11 @@ def run_backtest(df: pd.DataFrame, signals: pd.DataFrame, *, allow_short: bool =
                  leverage: float = 1.0, maintenance_margin: float = 0.005,
                  fee: float = 0.001, start_equity: float = 10_000.0,
                  stops_on_close: bool = False, breakeven_after_tp1: bool = False,
-                 trail_targets: bool = False) -> Result:
-    """stop_loss / take_profit levels are price moves (0.03 = 3%). With leverage L,
+                 trail_targets: bool = False, opposite_exit: str = "always",
+                 opposite_min_bars: int = 0) -> Result:
+    """opposite_exit: when the opposite entry setup closes an open trade - "always", "never", or "losing"
+    (only a trade that is under water); opposite_min_bars: not before the trade is this many candles old.
+    stop_loss / take_profit levels are price moves (0.03 = 3%). With leverage L,
     each 1% price move is L% on the account, and fees are charged on the
     leveraged notional. take_profits overrides take_profit with scaled exits.
     A take_profits level of None is a runner: once every fixed target has
@@ -177,7 +180,10 @@ def run_backtest(df: pd.DataFrame, signals: pd.DataFrame, *, allow_short: bool =
                 riding = has_runner and pos.targets_hit == len(targets)
                 exit_now, opposite = (("long_exit", "short_entry") if pos.side == "long"
                                       else ("short_exit", "long_entry"))
-                if sig[opposite][p]:
+                age = i - idx.get_loc(pos.entry_time) if opposite_min_bars else 10 ** 9
+                flip = sig[opposite][p] and opposite_exit != "never" and age >= opposite_min_bars and \
+                    (opposite_exit == "always" or move_of(o[i]) < 0)
+                if flip:
                     exit_part(i, o[i], pos.remaining, "opposite setup")
                 elif sig[exit_now][p] and not riding:
                     exit_part(i, o[i], pos.remaining, "signal")
