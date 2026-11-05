@@ -16477,5 +16477,587 @@
   "hints": null,
   "tune": null,
   "exit_plan": null
+ },
+ {
+  "id": 96,
+  "name": "VIP Casper Crew Trade Setup",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "daily",
+  "why": "The trade setup was from the exact bottom of the Bitcoin market, and the entry was made at a level that was above the 200 SMA and below the lower Bollinger band, indicating a potential reversal and entry point for a long trade.",
+  "quote": "this trade setup was literally from the exact bottom of the Bitcoin bar Market we were looking to take that trade at $115,450 and you know I ended up getting in that entry at about $15,500 so looking back at this now that is pretty insane.",
+  "unchecked": [
+   "specific level of support"
+  ],
+  "lesson_id": 35,
+  "rules": [
+   {
+    "rule": "close_above_sma",
+    "a": 200
+   },
+   {
+    "rule": "bb_touch_lower",
+    "a": 20,
+    "b": 2
+   }
+  ],
+  "rules_text": [
+   "Close above SMA (200)",
+   "Low touched the lower Bollinger band in the last 20 candles"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 97,
+  "name": "Bullish Divergence",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 0.7,
+  "rr": 2.5,
+  "timeframe": "1h",
+  "why": "Bullish divergence with support and potential for a bounce.",
+  "quote": "a bullish Divergence is where price is making a lower low while the oscillator marget Cipher B is making a higher low okay we can see see that the momentum is actually getting higher as price is getting lower showing us that there's an imbalance and there needs to be a move to the upside right",
+  "unchecked": [
+   "price is making a lower low while the oscillator marget Cipher B is making a higher low"
+  ],
+  "lesson_id": 35,
+  "rules": [
+   {
+    "rule": "close_below_sma",
+    "a": 200
+   },
+   {
+    "rule": "ao_bull_div",
+    "a": 60,
+    "b": 60
+   }
+  ],
+  "rules_text": [
+   "Close below SMA (200)",
+   "Bullish divergence: price lower low, Awesome Oscillator higher low - in the last 60 candles, lows/highs at most 60 candles apart"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 98,
+  "name": "Long Support, Short Resistance",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 0.7,
+  "rr": 8.0,
+  "timeframe": "any",
+  "why": "This setup involves waiting for a long support level to be confirmed by a bullish divergence, a green wave, and a squeeze, with a potential for a significant reward-to-risk ratio of 8:1 if the trade is set up correctly and the market structure aligns with the strategy of long support and short resistance.",
+  "quote": "that trade did not hit until November 22nd right 7 days I was waiting I did not take a trade unless my my plan comes to fruition right I'm not going to do it why because this is the most probable trade setup this was the only long as it says right here that I said the only long I'm interest interested in now why because as all the potential trades that I saw that I could have taken this was the one that had the best risk to reward ratio this was a setup a strategy that I am fond of taking those types of Trades and then it was waiting",
+  "unchecked": [
+   "Close above the upper Bollinger band (20 candles, 2 deviations)"
+  ],
+  "lesson_id": 35,
+  "rules": [
+   {
+    "rule": "close_above_sma",
+    "a": 200
+   },
+   {
+    "rule": "pattern_break_up"
+   },
+   {
+    "rule": "wt_green_dot"
+   },
+   {
+    "rule": "wt_below",
+    "a": -53
+   },
+   {
+    "rule": "wt_bull_div"
+   }
+  ],
+  "rules_text": [
+   "Close above SMA (200)",
+   "Chart pattern broke out upward on this candle",
+   "Market Cipher green dot (WaveTrend crosses up) below 0",
+   "Market Cipher wave below -53 (oversold)",
+   "Bullish divergence: price lower low, Market Cipher wave higher low - in the last 3 candles, lows/highs at most 60 candles apart"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 99,
+  "name": "Support and Resistance with Market Cipher B Divergences",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "daily",
+  "why": "Support and resistance levels with Market Cipher B divergences provide a simple and effective trading strategy.",
+  "quote": "my most basic strategy is support and resistance with Market Cipher B divergences",
+  "unchecked": [
+   "Support and resistance levels"
+  ],
+  "lesson_id": 35,
+  "rules": [
+   {
+    "rule": "close_above_sma",
+    "a": 200
+   },
+   {
+    "rule": "wt_green_dot"
+   }
+  ],
+  "rules_text": [
+   "Close above SMA (200)",
+   "Market Cipher green dot (WaveTrend crosses up) below 0"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 100,
+  "name": "long_setup",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 0.7,
+  "rr": 1.5,
+  "timeframe": "4h",
+  "why": "Momentum waves are making higher lows and money flow is also making a higher low, indicating a long signal.",
+  "quote": "if we come down to our box right and we see that the price is making lower lows but the momentum waves are making higher lows and the money flow is also making a higher low this is a long signal",
+  "unchecked": [
+   "wt_green_dot"
+  ],
+  "lesson_id": 36,
+  "rules": [
+   {
+    "rule": "close_below_sma",
+    "a": 200
+   },
+   {
+    "rule": "wt_green_dot"
+   },
+   {
+    "rule": "mf_positive"
+   }
+  ],
+  "rules_text": [
+   "Close below SMA (200)",
+   "Market Cipher green dot (WaveTrend crosses up) below 0",
+   "Market Cipher money flow above zero (green)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 101,
+  "name": "short_setup",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 0.7,
+  "rr": 1.5,
+  "timeframe": "4h",
+  "why": "Price is getting higher and momentum waves and money flow are getting lower, indicating a short signal.",
+  "quote": "if we see that the price is getting higher and the momentum waves are getting lower and the money flow is getting lower this is a swing short signal",
+  "unchecked": [
+   "wt_red_dot"
+  ],
+  "lesson_id": 36,
+  "rules": [
+   {
+    "rule": "close_above_sma",
+    "a": 200
+   },
+   {
+    "rule": "wt_red_dot"
+   },
+   {
+    "rule": "mf_negative"
+   }
+  ],
+  "rules_text": [
+   "Close above SMA (200)",
+   "Market Cipher red dot (WaveTrend crosses down) above 0",
+   "Market Cipher money flow below zero (red)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 102,
+  "name": "long_bottom",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "4h",
+  "why": "bullish divergences on the 4-hour time frame when the price makes a lower low, momentum waves make a higher low, and money flow gets higher over time.",
+  "quote": "we were able to long literally the exact bottom",
+  "unchecked": [
+   "money flow gets higher over time"
+  ],
+  "lesson_id": 36,
+  "rules": [
+   {
+    "rule": "lower_high"
+   },
+   {
+    "rule": "higher_low"
+   }
+  ],
+  "rules_text": [
+   "Lower high: the last 5 candles' high is below the 5 candles before",
+   "Higher low: the last 5 candles' low is above the 5 candles before"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 103,
+  "name": "Long Setup",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "not specified",
+  "why": "The teacher emphasizes the importance of the EMA crossover and MACD for this strategy, but does not provide specific rules for these indicators or the time frame to use them on.",
+  "quote": "we're using good risk management and that's absolutely insane doubling your money in a year is absolutely crazy especially if all we need to do is use one time frame with two indicators to do so",
+  "unchecked": [
+   "The strategy focuses on a specific time frame and two indicators, but the exact time frame and indicators are not specified."
+  ],
+  "lesson_id": 36,
+  "rules": [
+   {
+    "rule": "close_above_ema",
+    "a": 50
+   },
+   {
+    "rule": "macd_cross_up"
+   }
+  ],
+  "rules_text": [
+   "Close above EMA (50)",
+   "MACD crosses above its signal line"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 104,
+  "name": "long_setup",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.4,
+  "rr": 2.0,
+  "timeframe": "4H",
+  "why": "The 4-hour trigger wave is forming, and the 24-minute time frame is waiting for a green dot or money flow cross to confirm the entry. The stop loss is placed below the last swing low, and the target is support and resistance flip, with a risk-reward ratio of at least 2:1. A bearish divergence can be a powerful short signal, but it's not a requirement for this setup.",
+  "quote": "The stop loss needs to go under the last swing low so in this instance right here I would put my stop loss entering right here on this green trigger wave I would put my stop loss underneath the last swing low that's about a 1.4% stop loss and then honestly with these trades I'd like to shoot for at least a 2 to1 risk reward ratio.",
+  "unchecked": [
+   "4H_trigger_wave"
+  ],
+  "lesson_id": 37,
+  "rules": [
+   {
+    "rule": "ema_above_ema",
+    "a": 50,
+    "b": 200
+   },
+   {
+    "rule": "rsi_above",
+    "a": 14,
+    "b": 70
+   },
+   {
+    "rule": "wt_green_dot"
+   },
+   {
+    "rule": "macd_positive"
+   },
+   {
+    "rule": "ao_above_zero"
+   },
+   {
+    "rule": "bb_above_mid",
+    "a": 20,
+    "b": 2
+   },
+   {
+    "rule": "wt_below",
+    "b": -53
+   },
+   {
+    "rule": "mf_positive"
+   },
+   {
+    "rule": "higher_low",
+    "a": 5,
+    "b": 5
+   },
+   {
+    "rule": "rsi_bull_div",
+    "a": 60,
+    "b": 60
+   }
+  ],
+  "rules_text": [
+   "EMA (50) is above EMA (200) (uptrend)",
+   "RSI (14) above 14",
+   "Market Cipher green dot (WaveTrend crosses up) below 0",
+   "MACD above zero",
+   "Awesome Oscillator above zero",
+   "Close above the Bollinger middle band",
+   "Market Cipher wave below -53 (oversold)",
+   "Market Cipher money flow above zero (green)",
+   "Higher low: the last 5 candles' low is above the 5 candles before",
+   "Bullish divergence: price lower low, RSI higher low - in the last 60 candles, lows/highs at most 60 candles apart"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 105,
+  "name": "short_setup",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.4,
+  "rr": 2.0,
+  "timeframe": "4H",
+  "why": "The 4-hour trigger wave is forming, and the 24-minute time frame is waiting for a red dot or money flow cross to confirm the entry. The stop loss is placed above the last swing high, and the target is support and resistance flip, with a risk-reward ratio of at least 2:1. A bearish divergence can be a powerful short signal, but it's not a requirement for this setup.",
+  "quote": "The stop loss needs to go under the last swing low so in this instance right here I would put my stop loss entering right here on this green trigger wave I would put my stop loss underneath the last swing low that's about a 1.4% stop loss and then honestly with these trades I'd like to shoot for at least a 2 to1 risk reward ratio.",
+  "unchecked": [
+   "4H_trigger_wave"
+  ],
+  "lesson_id": 37,
+  "rules": [
+   {
+    "rule": "ema_below_ema",
+    "a": 50,
+    "b": 200
+   },
+   {
+    "rule": "rsi_below",
+    "a": 14,
+    "b": 30
+   },
+   {
+    "rule": "wt_red_dot"
+   },
+   {
+    "rule": "macd_negative"
+   },
+   {
+    "rule": "ao_below_zero"
+   },
+   {
+    "rule": "bb_below_mid",
+    "a": 20,
+    "b": 2
+   },
+   {
+    "rule": "wt_above",
+    "b": 53
+   },
+   {
+    "rule": "mf_negative"
+   },
+   {
+    "rule": "lower_high",
+    "a": 5,
+    "b": 5
+   },
+   {
+    "rule": "rsi_bear_div",
+    "a": 60,
+    "b": 60
+   }
+  ],
+  "rules_text": [
+   "EMA (50) is below EMA (200) (downtrend)",
+   "RSI (14) below 14",
+   "Market Cipher red dot (WaveTrend crosses down) above 0",
+   "MACD below zero",
+   "Awesome Oscillator below zero",
+   "Close below the Bollinger middle band",
+   "Market Cipher wave above 53 (overbought)",
+   "Market Cipher money flow below zero (red)",
+   "Lower high: the last 5 candles' high is below the 5 candles before",
+   "Bearish divergence: price higher high, RSI lower high - in the last 60 candles, lows/highs at most 60 candles apart"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 106,
+  "name": "market_cipher_4_dot_print",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 3.0,
+  "timeframe": "24m",
+  "why": "The 4 dot print and money flow crossing indicate a potential entry point. The green dot and positive money flow suggest a bullish setup. The stop loss is placed above the swing high, and the target is support, which is the low of the range. This setup has a 3:1 risk reward ratio, making it profitable if the trade goes well.",
+  "quote": "the 4our dot prints right here so we got that vertical line uh right over here it's basically when that dot starts to print all right and then the money flow cross on the 24 minute happens right here",
+  "unchecked": [
+   "money flow crossing on the 24-minute chart"
+  ],
+  "lesson_id": 37,
+  "rules": [
+   {
+    "rule": "wt_green_dot"
+   },
+   {
+    "rule": "mf_positive"
+   }
+  ],
+  "rules_text": [
+   "Market Cipher green dot (WaveTrend crosses up) below 0",
+   "Market Cipher money flow above zero (green)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 107,
+  "name": "Leverage Risk Management",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 0.7,
+  "rr": 2.0,
+  "timeframe": "1h",
+  "why": "Using leverage properly can mitigate risk and allow for better risk management, as long as the trade setup is solid and the leverage is used within the context of a well-defined strategy and risk management plan.",
+  "quote": "if I am abiding by a simple formula that I give you in the video to calculate your position size as well as abiding by good risk management using your stoploss it is irrelevant whether or not you use 1X, 50x or 100x you are risking the same amount of money no matter what leverage you use",
+  "unchecked": [
+   "specific leverage level"
+  ],
+  "lesson_id": 38,
+  "rules": [
+   {
+    "rule": "close_above_sma",
+    "a": 200
+   },
+   {
+    "rule": "close_below_ema",
+    "a": 50
+   },
+   {
+    "rule": "rsi_below",
+    "a": 30
+   },
+   {
+    "rule": "macd_cross_up"
+   },
+   {
+    "rule": "wt_below",
+    "a": -53
+   },
+   {
+    "rule": "volume_spike"
+   },
+   {
+    "rule": "close_above_ema",
+    "a": 50
+   },
+   {
+    "rule": "close_below_ema",
+    "a": 200
+   },
+   {
+    "rule": "rsi_above",
+    "a": 70
+   },
+   {
+    "rule": "macd_cross_down"
+   },
+   {
+    "rule": "wt_above",
+    "a": 53
+   }
+  ],
+  "rules_text": [
+   "Close above SMA (200)",
+   "Close below EMA (50)",
+   "RSI (14) below 30",
+   "MACD crosses above its signal line",
+   "Market Cipher wave below -53 (oversold)",
+   "Volume above 1.5 \u00d7 its 20-candle average",
+   "Close above EMA (50)",
+   "Close below EMA (200)",
+   "RSI (14) above 70",
+   "MACD crosses below its signal line",
+   "Market Cipher wave above 53 (overbought)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  }
 ]
