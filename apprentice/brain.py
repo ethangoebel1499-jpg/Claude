@@ -361,28 +361,37 @@ def avoid_check(store, charts: dict[str, pd.DataFrame], log=print, split: float 
 
 def timeframe_check(store, charts: dict[str, pd.DataFrame], log=print, split: float = 0.7) -> dict:
     """Last gate: with everything it just learned (setups, stops, safety and avoid rules), trade all the live setups
-    together on every chart of a timeframe. Unless that made money both on the first 70% and on the last 30% it never
-    saw, the timeframe is paused - no new trades there until a later Learn shows it making money on both again."""
+    on every chart of a timeframe - longs alone and shorts alone. A side is traded only if it made money both on the
+    first 70% and on the last 30% it never saw (runs set to 🧠 Auto follow this); with neither, the timeframe is
+    paused until a later Learn shows one making money on both again."""
     from mcbot.backtest import run_backtest
     from . import strategy
     setups = [s for s in store.setups(("active", "pinned")) if s["weight"] > 0 or s["status"] == "pinned"]
     out = {}
     for tf, group in by_timeframe(charts).items():
-        total, before, trades = 0.0, 0.0, 0
-        for df in group.values():
-            cut = int(len(df) * split)
-            sig = strategy.signals(df, setups, mode="learned", safety=strategy.safety_rules(tf, store), paused=False,
-                                   avoid=strategy.avoid_rules(tf, store))
-            kw = dict(allow_short=True, stop_loss=strategy.STOP, take_profits=strategy.TAKE_PROFITS)
-            st = run_backtest(df.iloc[cut:], sig.iloc[cut:], **kw).stats
-            before += run_backtest(df.iloc[:cut], sig.iloc[:cut], **kw).stats["total_return_pct"]
-            total += st["total_return_pct"]
-            trades += st["trades"]
-        ok = bool(total > 0 and before > 0)            # made money before AND on prices it never saw
-        out[tf] = {"trade": ok, "unseen_pct": round(total, 2), "before_pct": round(before, 2), "trades": trades,
-                   "charts": len(group)}
-        log(f"  {tf}: all setups together {before:+.1f}% on the first 70%, {total:+.1f}% on unseen prices "
-            f"({trades} trades on {len(group)} charts) -> " + ("trading" if ok else "PAUSED - no new trades on this timeframe"))
+        res = {}
+        for side, kw_side in (("both", {}), ("long", {"allow_short": False}), ("short", {"allow_long": False})):
+            total, before, trades = 0.0, 0.0, 0
+            for df in group.values():
+                cut = int(len(df) * split)
+                sig = strategy.signals(df, setups, mode="learned", safety=strategy.safety_rules(tf, store),
+                                       paused=False, avoid=strategy.avoid_rules(tf, store), sides=False)
+                kw = {"allow_short": True, "stop_loss": strategy.STOP, "take_profits": strategy.TAKE_PROFITS, **kw_side}
+                st = run_backtest(df.iloc[cut:], sig.iloc[cut:], **kw).stats
+                before += run_backtest(df.iloc[:cut], sig.iloc[:cut], **kw).stats["total_return_pct"]
+                total += st["total_return_pct"]
+                trades += st["trades"]
+            res[side] = (round(before, 2), round(total, 2), trades)
+        long_ok = bool(res["long"][0] > 0 and res["long"][1] > 0)       # made money before AND on unseen prices
+        short_ok = bool(res["short"][0] > 0 and res["short"][1] > 0)
+        ok = long_ok or short_ok
+        out[tf] = {"trade": ok, "long": long_ok, "short": short_ok,
+                   "before_pct": res["both"][0], "unseen_pct": res["both"][1], "trades": res["both"][2],
+                   "long_pct": res["long"][:2], "short_pct": res["short"][:2], "charts": len(group)}
+        sides = "longs and shorts" if long_ok and short_ok else "longs only" if long_ok else "shorts only" \
+            if short_ok else "nothing"
+        log(f"  {tf}: longs {res['long'][0]:+.1f}% before / {res['long'][1]:+.1f}% unseen, shorts {res['short'][0]:+.1f}% / "
+            f"{res['short'][1]:+.1f}% -> {'trading ' + sides if ok else 'PAUSED - no new trades on this timeframe'}")
     if out:
         store.meta_set("timeframes", {**(store.meta_get("timeframes") or {}), **out})
     return out

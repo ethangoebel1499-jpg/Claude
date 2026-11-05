@@ -29,6 +29,8 @@ def normalize_run(r: dict) -> dict:
         raise SystemExit(f"run {r.get('name')}: unknown strategy {r['strategy']} (use {', '.join(REGISTRY)})")
     r.setdefault("asset", "crypto")
     r["shorts"] = bool(r.get("shorts", False)) and not REGISTRY[r["strategy"]].get("long_only")
+    r["longs"] = bool(r.get("longs", True)) and not REGISTRY[r["strategy"]].get("short_only")
+    r["auto_sides"] = bool(r.get("auto_sides", False))
     r["capital"] = float(r.get("capital") or 10_000.0)
     r["fraction"] = float(r.get("fraction") or 1.0)
     if not r.get("feed"):
@@ -72,7 +74,8 @@ class Runner:
         self.r, self.feed, self.store = r, feed, store
         spec = REGISTRY[r["strategy"]]
         self.signals_fn, self.checklist_fn = spec["signals"], spec["checklist"]
-        self.pm = PositionManager(r["name"], exits_for(r), shorts=r["shorts"], broker=broker, store=store,
+        self.pm = PositionManager(r["name"], exits_for(r), shorts=r["shorts"], longs=r.get("longs", True),
+                                  auto_sides=r.get("auto_sides", False), broker=broker, store=store,
                                   fraction=r["fraction"], qty_step=r["qty_step"], state=store.load_state(r["name"]),
                                   start_equity=r["capital"])
         self.price = None
@@ -306,6 +309,10 @@ class App:
             rn = self.runners.get(name)
             if rn is not None and rn.pm.broker is not self.broker_for(r) and rn.pm.state.position is None:
                 del self.runners[name]
+        for name, r in wanted.items():                # Long / Short / Auto checkboxes apply right away
+            rn = self.runners.get(name)
+            if rn is not None:
+                rn.pm.longs, rn.pm.shorts, rn.pm.auto_sides = r["longs"], r["shorts"], r["auto_sides"]
         for name, r in wanted.items():
             if name not in self.runners:
                 if hasattr(self.broker, "assets"):

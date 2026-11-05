@@ -264,7 +264,8 @@ def start_trial(store, lp_store, setup: dict, symbol: str, asset: str, tf: str, 
     else:
         strat, tps = f"{PREFIX}{setup['id']}", [[STOP * rr, 1.0]]
     lp_store.upsert_run({"name": name, "strategy": strat, "symbol": pair_for(symbol, asset),
-                         "asset": asset, "timeframe": tf, "shorts": setup["direction"] == "short", "capital": capital,
+                         "asset": asset, "timeframe": tf, "shorts": setup["direction"] == "short",
+                         "longs": setup["direction"] == "long", "capital": capital,
                          "fraction": 1.0, "stop": STOP, "take_profits": tps, "active": True,
                          "source": "proving"})
     store.db.execute("INSERT OR REPLACE INTO proving_trials VALUES (?,?,?,?,?,?,?,?,?)",

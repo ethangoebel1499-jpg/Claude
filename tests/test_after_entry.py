@@ -239,3 +239,60 @@ def test_avoid_rules_block_entries_and_are_learned_out_of_sample(tmp_path, monke
 def builder_rule(df, rule):
     from mcbot import builder
     return builder.rule_series(df, {"rule": rule}).to_numpy(bool)
+
+
+def test_long_short_checkboxes_and_auto_sides():
+    df = _falling()
+    sig = _sig(df, [1, 20]).assign(short_entry=False)
+    sig.iloc[5, 1] = True                                                 # a short signal too
+    no_long = replay(df, sig, PositionManager("t", Exits(0.05, [(0.10, 1.0)]), shorts=True, longs=False,
+                                              broker=SimBroker(fee=0)))
+    assert all(t["side"] == "short" for t in no_long.trades) and no_long.trades
+    auto = sig.assign(allow_long=False, allow_short=True)
+    m = replay(df, auto, PositionManager("t", Exits(0.05, [(0.10, 1.0)]), shorts=True, longs=True, auto_sides=True,
+                                         broker=SimBroker(fee=0)))
+    assert all(t["side"] == "short" for t in m.trades)                   # auto: the strategy said shorts only
+    manual = replay(df, auto, PositionManager("t", Exits(0.05, [(0.10, 1.0)]), shorts=True, longs=True,
+                                              broker=SimBroker(fee=0)))
+    assert manual.trades[0]["side"] == "long"                            # not auto: the allow columns are ignored
+    res = run_backtest(df, sig, allow_short=True, allow_long=False, stop_loss=0.05, take_profits=[(0.10, 1.0)], fee=0)
+    assert res.trades and all(t.side == "short" for t in res.trades)
+
+
+def test_runs_store_sides_and_old_runs_migrate(tmp_path):
+    import sqlite3
+    from livepaper.store import Store as LPStore
+    db = tmp_path / "old.db"
+    con = sqlite3.connect(db)
+    con.execute("CREATE TABLE runs (name TEXT PRIMARY KEY, strategy TEXT, symbol TEXT, asset TEXT, timeframe TEXT, "
+                "feed TEXT, shorts INTEGER, capital REAL, fraction REAL, stop REAL, take_profits TEXT, active INTEGER, "
+                "source TEXT, created TEXT)")
+    con.execute("INSERT INTO runs VALUES ('Apprentice BTC 4h','apprentice','XBTUSD','crypto','4h',NULL,1,10000,1,0.03,NULL,1,"
+                "'apprentice','x')")
+    con.execute("INSERT INTO runs VALUES ('GRIND BTC 4h','grind','XBTUSD','crypto','4h',NULL,0,10000,1,0.06,NULL,1,'x','x')")
+    con.commit(); con.close()
+    s = LPStore(db)
+    runs = {r["name"]: r for r in s.runs()}
+    assert runs["Apprentice BTC 4h"]["auto_sides"] and runs["Apprentice BTC 4h"]["longs"]
+    assert not runs["GRIND BTC 4h"]["auto_sides"] and runs["GRIND BTC 4h"]["longs"] and not runs["GRIND BTC 4h"]["shorts"]
+    s.upsert_run({**runs["GRIND BTC 4h"], "longs": False, "shorts": True}, keep_active=True)
+    g = next(r for r in s.runs() if r["name"] == "GRIND BTC 4h")
+    assert not g["longs"] and g["shorts"]
+
+
+def test_learn_picks_sides_per_timeframe(tmp_path, monkeypatch):
+    from apprentice.store import Store as AStore
+    from livepaper import settings
+    monkeypatch.setattr(settings, "PATH", tmp_path / "s.json")
+    monkeypatch.setenv("APPRENTICE_DB", str(tmp_path / "a.db"))
+    a = AStore(tmp_path / "a.db")
+    for d, rule in (("long", "rsi_above"), ("short", "rsi_above")):
+        sid = a.add_setup({"name": f"always {d}", "direction": d, "source": "you", "rules": [{"rule": rule, "a": -1}]})
+        a.update_setup(sid, status="pinned", weight=1)
+    idx = pd.date_range("2026-01-01", periods=800, freq="1h", tz="UTC")
+    c = 100 * np.exp(np.cumsum(np.full(800, -0.002)) + 0.01 * np.sin(np.arange(800)))       # grinding down
+    down = pd.DataFrame({"open": c, "high": c * 1.004, "low": c * 0.996, "close": c, "volume": 1.0}, index=idx)
+    out = brain.timeframe_check(a, {"X 1h": down}, log=lambda m: None)["1h"]
+    assert out["long"] is False                                          # longs lose in a downtrend
+    sig = strategy.signals(down, a.setups(("pinned",)))
+    assert not sig["allow_long"].any() and (sig["allow_short"] == out["short"]).all()

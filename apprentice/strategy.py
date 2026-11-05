@@ -115,7 +115,7 @@ def live_setups() -> list[dict]:
 
 def signals(df: pd.DataFrame, setups: list[dict] | None = None, mode: str | None = None,
             safety: dict[str, bool] | None = None, paused: bool | None = None,
-            avoid: dict | None = None) -> pd.DataFrame:
+            avoid: dict | None = None, sides: bool = True) -> pd.DataFrame:
     """Entries from every live setup, plus what it learned about getting out (🎓 Learn decides, per setup):
     stop_pct - the trade's own stop (fixed 3% / ATR / beyond the last swing), only where that beat the 3%
                stop on prices it never saw; NaN = the run's stop
@@ -158,7 +158,11 @@ def signals(df: pd.DataFrame, setups: list[dict] | None = None, mode: str | None
     be = BREAKEVEN * np.where(np.isfinite(stop), stop, STOP) if safety.get("breakeven") else np.full(n, np.nan)
     out = pd.DataFrame({"long_entry": long_ & ~short, "short_entry": short & ~long_,
                         "long_exit": False, "short_exit": False, "stop_pct": stop, "be_pct": be}, index=df.index)
-    out["pause"] = (not timeframe_status(tf)["trade"]) if paused is None else bool(paused)
+    tfs = timeframe_status(tf)
+    out["pause"] = (not tfs["trade"]) if paused is None else bool(paused)
+    # which sides Learn found worth trading on this timeframe (used by runs set to 🧠 Auto)
+    out["allow_long"] = bool(tfs.get("long", True)) if sides else True
+    out["allow_short"] = bool(tfs.get("short", True)) if sides else True
     if mode != "off":
         out["long_reversal"], out["short_reversal"] = reversal_signals(df)
         out["use_reversal"] = rev
@@ -190,6 +194,11 @@ def checklist(df: pd.DataFrame, bar: int = -1, label: str | None = None) -> str:
     from .brain import timeframe_of
     tf = timeframe_of(df)
     tfs = timeframe_status(tf)
+    if tfs["trade"] and ("long" in tfs or "short" in tfs):
+        sides = "longs and shorts" if tfs.get("long") and tfs.get("short") else "longs only" if tfs.get("long") \
+            else "shorts only"
+        lines.append(f"🧭 On {tf} it trades {sides} (🧠 Auto runs) - each side only if it made money before and on "
+                     "unseen prices in 🎓 Learn")
     if not tfs["trade"]:
         lines.append(f"⏸️ {tf} is paused: in 🎓 Learn all its setups together made {tfs.get('before_pct', 0):+.1f}% on the "
                      f"first 70% of history and {tfs.get('unseen_pct', 0):+.1f}% on prices they never saw - it needs to "
@@ -243,5 +252,5 @@ def refresh(registry: dict) -> dict:
 def run_for(coin: str, pair: str, tf: str, capital: float = 10_000.0) -> dict:
     """The paper-trading run for one market: long and short, moderate exits."""
     return {"name": f"Apprentice {coin} {tf}", "strategy": KEY, "symbol": pair, "asset": "crypto", "timeframe": tf,
-            "shorts": True, "capital": capital, "fraction": 1.0, "stop": STOP,
+            "shorts": True, "longs": True, "auto_sides": True, "capital": capital, "fraction": 1.0, "stop": STOP,
             "take_profits": [list(t) for t in TAKE_PROFITS]}

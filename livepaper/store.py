@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS commands (id INTEGER PRIMARY KEY, run TEXT, action TE
                                      result TEXT);
 """
 RUN_FIELDS = ("name", "strategy", "symbol", "asset", "timeframe", "feed", "shorts", "capital", "fraction", "stop",
-              "take_profits", "active", "source", "created")
+              "take_profits", "active", "source", "created", "longs", "auto_sides")
 
 
 def now_utc() -> str:
@@ -42,6 +42,13 @@ class Store:
         self.path = str(path)
         self.db = sqlite3.connect(self.path, check_same_thread=False, timeout=30)
         self.db.executescript(SCHEMA)
+        cols = {r[1] for r in self.db.execute("PRAGMA table_info(runs)")}
+        for col, default in (("longs", 1), ("auto_sides", 0)):    # added later: long / short checkboxes, apprentice auto
+            if col not in cols:
+                self.db.execute(f"ALTER TABLE runs ADD COLUMN {col} INTEGER DEFAULT {default}")
+                if col == "auto_sides":                         # the apprentice picks its own sides from now on
+                    self.db.execute("UPDATE runs SET auto_sides = 1 WHERE strategy = 'apprentice'")
+        self.db.commit()
 
     def _ins(self, table: str, row: dict):
         cols = ",".join(row)
@@ -78,6 +85,8 @@ class Store:
         row = {k: r.get(k) for k in RUN_FIELDS}
         row["take_profits"] = json.dumps(r["take_profits"]) if r.get("take_profits") is not None else None
         row["shorts"], row["active"] = int(bool(r.get("shorts"))), int(r.get("active", 1))
+        row["longs"] = int(bool(r.get("longs", True)))
+        row["auto_sides"] = int(bool(r.get("auto_sides", False)))
         row["created"] = row["created"] or now_utc()
         old = self.db.execute("SELECT active, created FROM runs WHERE name = ?", (r["name"],)).fetchone()
         if old:
@@ -98,6 +107,8 @@ class Store:
         for r in df.to_dict("records"):
             r["take_profits"] = json.loads(r["take_profits"]) if isinstance(r["take_profits"], str) else None
             r["shorts"], r["active"] = bool(r["shorts"]), bool(r["active"])
+            r["longs"] = True if r.get("longs") is None or pd.isna(r.get("longs")) else bool(r["longs"])
+            r["auto_sides"] = False if r.get("auto_sides") is None or pd.isna(r.get("auto_sides")) else bool(r["auto_sides"])
             if r["stop"] is not None and pd.isna(r["stop"]):
                 r["stop"] = None
             out.append(r)

@@ -73,10 +73,13 @@ BACKSTOP = 0.01   # if the broker's stop is still open 1% past the stop price, s
 
 
 class PositionManager:
-    def __init__(self, name: str, exits: Exits, *, shorts: bool, broker, store=None,
+    def __init__(self, name: str, exits: Exits, *, shorts: bool, broker, store=None, longs: bool = True,
+                 auto_sides: bool = False,
                  fraction: float = 1.0, qty_step: float = 0.0, state: State | None = None,
                  start_equity: float = 10_000.0):
         self.name, self.exits, self.shorts = name, exits, shorts
+        self.longs = longs              # the run's Long / Short checkboxes: which NEW trades it may open
+        self.auto_sides = auto_sides    # let the strategy decide per candle (allow_long / allow_short columns)
         self.broker, self.store = broker, store
         self.fraction, self.qty_step = fraction, qty_step
         self.state = state or State(equity=start_equity)
@@ -254,9 +257,11 @@ class PositionManager:
             tps = [_num(sig.get(f"tp{k + 1}_pct")) for k in range(len(self.fixed))]
             own = dict(stop_pct=_num(sig.get("stop_pct")), reversal=bool(sig.get("use_reversal", False)),
                        be_pct=_num(sig.get("be_pct")), tp_pcts=tps if all(tps) else None)
-            if sig["long_entry"]:
+            may_long = self.longs and (not self.auto_sides or bool(sig.get("allow_long", True)))
+            may_short = self.shorts and (not self.auto_sides or bool(sig.get("allow_short", True)))
+            if may_long and sig["long_entry"]:
                 self.open("long", price, time, **own)
-            elif self.shorts and sig["short_entry"]:
+            elif may_short and sig["short_entry"]:
                 self.open("short", price, time, **own)
         self.state.last_bar = str(bar_time if bar_time is not None else time)
         self._save()

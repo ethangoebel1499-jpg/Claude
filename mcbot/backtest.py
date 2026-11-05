@@ -61,7 +61,7 @@ def parse_take_profits(spec: str) -> list[tuple[float | None, float]]:
     return fixed + [lv for lv in levels if lv[0] is None]
 
 
-def run_backtest(df: pd.DataFrame, signals: pd.DataFrame, *, allow_short: bool = False,
+def run_backtest(df: pd.DataFrame, signals: pd.DataFrame, *, allow_short: bool = False, allow_long: bool = True,
                  stop_loss: float | None = 0.03, take_profit: float | None = 0.06,
                  stop_loss_short: float | None = None,
                  take_profits: list[tuple[float, float]] | None = None,
@@ -169,6 +169,7 @@ def run_backtest(df: pd.DataFrame, signals: pd.DataFrame, *, allow_short: bool =
     use_rev = sig.get("use_reversal")
     be_col = sig.get("be_pct")                          # a strategy that sets each trade's breakeven trigger
     pause = sig.get("pause")                            # no NEW trades while set (open ones still exit normally)
+    ok_long, ok_short = sig.get("allow_long"), sig.get("allow_short")   # a strategy that picks its own sides
     tp_cols = [sig[f"tp{k + 1}_pct"] for k in range(len(targets))] if targets and all(
         f"tp{k + 1}_pct" in sig for k in range(len(targets))) else None   # per-trade targets (e.g. chart levels)
     for i in range(len(df)):
@@ -204,10 +205,10 @@ def run_backtest(df: pd.DataFrame, signals: pd.DataFrame, *, allow_short: bool =
                 be = be if np.isfinite(be) and be > 0 else None
                 tps = [float(c[p]) for c in tp_cols] if tp_cols else None
                 tps = tps if tps and all(np.isfinite(x) and x > 0 for x in tps) else None
-                if sig["long_entry"][p]:
+                if allow_long and sig["long_entry"][p] and (ok_long is None or ok_long[p]):
                     pos = Trade("long", idx[i], o[i], stop_move=-own if own else stop0,
                                 scale=own / stop_loss if own else 1.0, reversal=rev, be=be, tps=tps)
-                elif allow_short and sig["short_entry"][p]:
+                elif allow_short and sig["short_entry"][p] and (ok_short is None or ok_short[p]):
                     base = stop_loss_short or stop_loss
                     pos = Trade("short", idx[i], o[i], stop_move=-own if own else stop0_s,
                                 scale=own / base if own else 1.0, reversal=rev, be=be, tps=tps)

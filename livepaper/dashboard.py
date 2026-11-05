@@ -104,6 +104,27 @@ tab_dash, tab_lab, tab_build, tab_streams, tab_app, tab_prove, tab_log, tab_acct
      "⚙️ Account"])
 
 
+def sides_controls(r: dict) -> None:
+    """Long / Short checkboxes for every run (both ticked = both); apprentice runs can also leave it to the apprentice."""
+    raw = next((x for x in store.runs() if x["name"] == r["name"]), r)
+    long_only = bool(REGISTRY[r["strategy"]].get("long_only"))
+    k = f"sides_{r['name']}"
+    c1, c2, c3 = st.columns([1, 1, 3])
+    auto = False
+    if r["strategy"] == "apprentice":
+        auto = c3.checkbox("🧠 Auto - the apprentice picks long / short per timeframe", bool(raw.get("auto_sides")),
+                           key=f"{k}_auto", help="🎓 Learn tests longs alone and shorts alone on each timeframe and "
+                                                 "trades a side only if it made money before and on unseen prices.")
+    lg = c1.checkbox("Long", bool(raw.get("longs", True)), key=f"{k}_l", disabled=auto)
+    sh = c2.checkbox("Short", bool(raw.get("shorts")) and not long_only, key=f"{k}_s", disabled=auto or long_only,
+                     help="This strategy only goes long." if long_only else "Short trades (profit when price falls)")
+    if (lg, sh, auto) != (bool(raw.get("longs", True)), bool(raw.get("shorts")) and not long_only,
+                          bool(raw.get("auto_sides"))):
+        store.upsert_run({**raw, "longs": lg, "shorts": sh, "auto_sides": auto}, keep_active=True)
+        st.toast(f"{r['name']}: " + ("🧠 auto" if auto else "long + short" if lg and sh else "long only" if lg
+                                      else "short only" if sh else "no new trades") + " - from the next price check")
+
+
 # ---- Dashboard ----------------------------------------------------------------
 @st.fragment(run_every=30)
 def dashboard():
@@ -173,9 +194,12 @@ def dashboard():
     st.subheader("Run details")
     for r, row in zip(runs, rows):
         with st.expander(f"{r['name']} · {pct(row['Return'])} · {row['Position']}"):
+            sides = "🧠 auto (the apprentice picks)" if r.get("auto_sides") else \
+                ("long + short" if r.get("longs", True) and r["shorts"] else "long only" if r.get("longs", True)
+                 else "short only" if r["shorts"] else "no new trades")
             st.caption(f"{REGISTRY[r['strategy']]['label']} · {r['symbol']} {r['timeframe']} · "
-                       f"{exit_text(exits_for(r))} · shorts {'on' if r['shorts'] else 'off'} · "
-                       f"capital {money(r['capital'])}")
+                       f"{exit_text(exits_for(r))} · {sides} · capital {money(r['capital'])}")
+            sides_controls(r)
             run_chart(r, store.load_state(r["name"]))
             manual_controls(r)
             left, right = st.columns([3, 2])
@@ -270,13 +294,13 @@ def load_history(symbol: str, asset: str, tf: str) -> pd.DataFrame:
 
 
 @st.cache_data(ttl=3600, show_spinner=False)
-def backtest(strategy, symbol, asset, tf, days, stop, tps, shorts, fee, version=""):
+def backtest(strategy, symbol, asset, tf, days, stop, tps, shorts, fee, version="", longs=True):
     """version: a custom strategy's rules, so editing it doesn't reuse a stale cached result."""
     full = load_history(symbol, asset, tf)
     sig = REGISTRY[strategy]["signals"](full)
     start = full.index[-1] - pd.Timedelta(days=days) if days else full.index[min(200, len(full) - 1)]
     df, s = full[full.index >= start], sig[sig.index >= start]
-    res = run_backtest(df, s, allow_short=shorts, stop_loss=stop, take_profits=list(tps), fee=fee)
+    res = run_backtest(df, s, allow_short=shorts, allow_long=longs, stop_loss=stop, take_profits=list(tps), fee=fee)
     trades = pd.DataFrame([{"side": t.side, "entry": t.entry_time, "entry price": t.entry_price, "exit": t.exit_time,
                             "exit price": t.exit_price, "reason": t.reason, "return": t.pnl_pct * 100}
                            for t in res.trades])
@@ -350,10 +374,16 @@ with tab_lab:
         except ValueError as e:
             tps, tp_error = None, str(e)
             st.error(tp_error)
-        shorts = st.checkbox("Allow shorts", value=False, disabled=long_only,
-                             help="Spot crypto can't be shorted in a real account; stocks can.")
+        s1, s2 = st.columns(2)
+        longs = s1.checkbox("Long", value=True, key="lab_longs", help="Open long trades (buy, profit when price rises)")
+        shorts = s2.checkbox("Short", value=False, disabled=long_only, key="lab_shorts",
+                             help="Open short trades (profit when price falls). Spot crypto can't be shorted in a "
+                                  "real account; stocks can." + (" This strategy only goes long." if long_only else ""))
+        if not longs and not (shorts and not long_only):
+            st.warning("Tick Long, Short or both.")
     st.caption(REGISTRY[strategy]["note"])
-    go = st.button("Run backtest", type="primary", disabled=tps is None or not symbol)
+    go = st.button("Run backtest", type="primary", disabled=tps is None or not symbol or
+                   not (longs or (shorts and not long_only)))
 
     if go:
         try:
@@ -361,10 +391,11 @@ with tab_lab:
             with st.spinner("Loading candles and backtesting..."):
                 out = backtest(strategy, symbol.upper(), asset, tf, periods[period], stop_pct / 100 or None, tps,
                                shorts and not long_only, fee_pct / 100,
-                               json.dumps(REGISTRY[strategy].get("spec", ""), sort_keys=True))
+                               json.dumps(REGISTRY[strategy].get("spec", ""), sort_keys=True), longs)
             st.session_state["lab_result"] = {"strategy": strategy, "symbol": symbol.upper(), "asset": asset, "tf": tf,
                                        "period": period, "stop": stop_pct / 100, "tps": tps,
-                                       "shorts": shorts and not long_only, "capital": capital, "out": out}
+                                       "shorts": shorts and not long_only, "longs": longs, "capital": capital,
+                                       "out": out}
         except Exception as e:
             st.error(f"Backtest failed: {e}")
 
@@ -407,7 +438,7 @@ with tab_lab:
 
         run = {"name": f"{spec['short']} {lab['symbol']} {lab['tf']}", "strategy": lab["strategy"],
                "symbol": CRYPTO.get(lab["symbol"], lab["symbol"]), "asset": lab["asset"], "timeframe": lab["tf"],
-               "shorts": lab["shorts"], "capital": lab["capital"], "fraction": 1.0,
+               "shorts": lab["shorts"], "longs": lab.get("longs", True), "capital": lab["capital"], "fraction": 1.0,
                "stop": lab["stop"], "take_profits": [list(t) for t in lab["tps"]]}
         active = {r["name"] for r in store.runs(active_only=True)}
         key = f"pt::{run['name']}"

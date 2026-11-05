@@ -342,7 +342,9 @@ def after_entry_panel(store: Store, setups: list[dict]) -> None:
     if tfs:
         st.markdown("**⏯️ Timeframes** (🎓 Learn trades one only if all its setups together made money on the first 70% "
                     "of history AND on the unseen last 30%):")
-        st.caption(" · ".join(f"{'✅' if v['trade'] else '⏸️'} {tf} {'trading' if v['trade'] else 'PAUSED'} "
+        side = lambda v: ("longs+shorts" if v.get("long") and v.get("short") else "longs" if v.get("long")
+                          else "shorts" if v.get("short") else "")
+        st.caption(" · ".join(f"{'✅' if v['trade'] else '⏸️'} {tf} {('trading ' + side(v)).strip() if v['trade'] else 'PAUSED'} "
                               f"({v.get('before_pct', 0):+.1f}% before, {v['unseen_pct']:+.1f}% unseen, {v['trades']} trades)"
                               for tf, v in sorted(tfs.items())))
     from apprentice.strategy import SAFETY
@@ -786,12 +788,12 @@ def trade_bar(lp_store) -> None:
         if not live:
             st.info("It has no tested setups yet, so it won't trade. Teach it in 🧠 Apprentice → 📚 Teach, then press "
                     "🎓 Learn now - setups that beat random get traded here automatically.")
-        for r in active:                                  # runs made before: long-only, 4% stop -> today's settings
-            if not r["shorts"] or r["stop"] != STOP or [list(t) for t in r["take_profits"] or []] != \
-                    [list(t) for t in TAKE_PROFITS]:
+        for r in active:                                  # runs made before with other exits -> today's exits
+            if r["stop"] != STOP or [list(t) for t in r["take_profits"] or []] != [list(t) for t in TAKE_PROFITS]:
                 coin = {pair: c for c, pair in CRYPTO.items()}.get(r["symbol"], r["symbol"])
                 lp_store.upsert_run({**run_for(coin, r["symbol"], r["timeframe"], r["capital"]), "name": r["name"],
-                                     "active": 1, "source": "apprentice"})
+                                     "active": 1, "source": "apprentice", "longs": r.get("longs", True),
+                                     "shorts": r["shorts"], "auto_sides": r.get("auto_sides", True)})
         coins = {pair: coin for coin, pair in CRYPTO.items()}
         c1, c2, c3 = st.columns([4, 1, 1.3])
         tf = c2.selectbox("Timeframe", ["1h", "4h", "1D"], index=1, key="ap_bar_tf")
