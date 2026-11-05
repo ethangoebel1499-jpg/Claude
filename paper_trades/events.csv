@@ -464,3 +464,5 @@ S3 GRIND DOGE 1h,2026-11-05T06:49:36+00:00,error,"ConnectionError: ('Connection 
 S3 GRIND DOGE 1h,2026-11-05T06:56:46+00:00,error,"ConnectionError: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
 Apprentice SHIB 1h,2026-11-05T09:00:05+00:00,exit,closed (opposite setup) -53.39 USD
 Apprentice SHIB 1h,2026-11-05T09:00:05+00:00,entry,"LONG 2,077,739,636.24885798 @ 0.000004743"
+Apprentice LTC 1h,2026-11-05T11:00:27+00:00,exit,closed (opposite setup) -86.03 USD
+Apprentice LTC 1h,2026-11-05T11:00:27+00:00,entry,SHORT 171.088607 @ 55.71

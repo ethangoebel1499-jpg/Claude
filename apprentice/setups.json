@@ -30727,5 +30727,87 @@
   "hints": null,
   "tune": null,
   "exit_plan": null
+ },
+ {
+  "id": 266,
+  "name": "short_top_of_range",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "1m",
+  "why": "Shorting from the top of the local range when unable to make a higher high is a good setup to look for a short opportunity.",
+  "quote": "we are shorting from the top of the local range",
+  "unchecked": [
+   "price fails to make a higher high"
+  ],
+  "lesson_id": 66,
+  "rules": [
+   {
+    "rule": "close_below_sma",
+    "a": 200
+   },
+   {
+    "rule": "higher_low",
+    "a": 5,
+    "b": 5
+   }
+  ],
+  "rules_text": [
+   "Close below SMA (200)",
+   "Higher low: the last 5 candles' low is above the 5 candles before"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 267,
+  "name": "short_bounce_from_valley",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "1m",
+  "why": "Exit the short position when the price bounces from the valley area low and starts to move up.",
+  "quote": "now we're getting a little Bounce from the Valley area low having grabbed the liquidity right from this key Zone",
+  "unchecked": [
+   "price bounces from the valley area low"
+  ],
+  "lesson_id": 66,
+  "rules": [
+   {
+    "rule": "close_below_sma",
+    "a": 200
+   },
+   {
+    "rule": "higher_low",
+    "a": 5,
+    "b": 5
+   },
+   {
+    "rule": "bb_touch_lower",
+    "a": 20,
+    "b": 2
+   }
+  ],
+  "rules_text": [
+   "Close below SMA (200)",
+   "Higher low: the last 5 candles' low is above the 5 candles before",
+   "Low touched the lower Bollinger band in the last 20 candles"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  }
 ]
