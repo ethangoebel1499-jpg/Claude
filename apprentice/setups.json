@@ -26160,5 +26160,252 @@
   "hints": null,
   "tune": null,
   "exit_plan": null
+ },
+ {
+  "id": 154,
+  "name": "long_setup",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 0.7,
+  "rr": 1.5,
+  "timeframe": "1h",
+  "why": "We have a green dot on Market Cipher, a breakout above the EMA and support level, and a MACD crossover above zero, indicating a bullish signal. The ATR is below its 50-candle average, suggesting a volatility squeeze, which increases the probability of a breakout.",
+  "quote": "We had all this upward momentum. We printed a trigger wave down here on the one hour. We confirmed above the EMA and we confirmed above this support level. So, just if anyone doesn't know the EMA is this moving average. This is the 21 moving average. It's giving us the average price of the last 21 candles. It acts as a dynamic level of support and resistance. Meaning as price moves, this line will be a point where price will bounce off of. So, we have a lot of things telling us we're heading up. We have a trigger wave on market cipher B. It's printing a wave way below this zero line telling us it's time to head up. We come and we confirm a candle above this strong daily support or resistance level, very strong level. We confirm a candle above the EMA. All right, let's ride it up.",
+  "unchecked": [
+   "We had all this upward momentum. We printed a trigger wave down here on the one hour. We confirmed above the EMA and we confirmed above this support level."
+  ],
+  "lesson_id": 49,
+  "rules": [
+   {
+    "rule": "close_above_ema",
+    "a": 21
+   },
+   {
+    "rule": "macd_cross_up"
+   },
+   {
+    "rule": "wt_green_dot"
+   },
+   {
+    "rule": "breakout_high",
+    "a": 20,
+    "b": 60
+   }
+  ],
+  "rules_text": [
+   "Close above EMA (21)",
+   "MACD crosses above its signal line",
+   "Market Cipher green dot (WaveTrend crosses up) below 0",
+   "Close above the highest high of the last 20 candles"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 155,
+  "name": "short_setup",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 0.7,
+  "rr": 1.5,
+  "timeframe": "1h",
+  "why": "We have a red dot on Market Cipher, a breakdown below the EMA and support level, and a MACD crossover below zero, indicating a bearish signal. The ATR is below its 50-candle average, suggesting a volatility squeeze, which increases the probability of a breakdown.",
+  "quote": "We had a breakdown below the 21 EMA after rejecting off a resistance level. We had a red trigger wave form on the right around the zero line on Market Cipher B. And um, you know, we also came down and closed below this 21 EMA. So, we're just finding confluence with the chart and with Market Cipher.",
+  "unchecked": [
+   "We had a breakdown below the 21 EMA after rejecting off a resistance level. We had a red trigger wave form on the right around the zero line on Market Cipher B. And um, we also came down and closed below this 21 EMA."
+  ],
+  "lesson_id": 49,
+  "rules": [
+   {
+    "rule": "close_below_ema",
+    "a": 21
+   },
+   {
+    "rule": "wt_red_dot"
+   },
+   {
+    "rule": "macd_cross_down"
+   },
+   {
+    "rule": "breakdown_low",
+    "a": 20,
+    "b": 60
+   }
+  ],
+  "rules_text": [
+   "Close below EMA (21)",
+   "Market Cipher red dot (WaveTrend crosses down) above 0",
+   "MACD crosses below its signal line",
+   "Close below the lowest low of the last 20 candles"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 156,
+  "name": "trend_confirmation",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 0.7,
+  "rr": 1.5,
+  "timeframe": "4h",
+  "why": "Confirmation of key levels and trend lines can provide a more favorable entry point.",
+  "quote": "You could just say, you know, okay, last two times we bounced off the trend line we went up. So now because we're printing a green trigger wave on Market Cipher and we just bounced off this trend line, I'm going to enter.",
+  "unchecked": [
+   "Bounced off a trend line"
+  ],
+  "lesson_id": 49,
+  "rules": [
+   {
+    "rule": "close_above_ema",
+    "a": 21
+   },
+   {
+    "rule": "close_above_sma",
+    "a": 200
+   }
+  ],
+  "rules_text": [
+   "Close above EMA (21)",
+   "Close above SMA (200)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 157,
+  "name": "short",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "24-minute",
+  "why": "printed a red dot and the AO is red, indicating a bearish setup",
+  "quote": "If we if we printed like a red dot up here and confirm below this this EMA, then I would I would short, you know, down to this down to this um support right here, this last support for a little a little scalp.",
+  "unchecked": [
+   "printed a red dot up here and confirm below this EMA"
+  ],
+  "lesson_id": 49,
+  "rules": [
+   {
+    "rule": "close_above_ema",
+    "a": 21
+   },
+   {
+    "rule": "ao_red"
+   }
+  ],
+  "rules_text": [
+   "Close above EMA (21)",
+   "Awesome Oscillator column is red (AO falling)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 158,
+  "name": "long",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "4-hour",
+  "why": "daily confirming bullish, green trigger wave, and positive money flow, indicating a bullish setup",
+  "quote": "Now, there's a number of ways you could enter on the 4-hour time frame. Um let's talk about the safest entry first. The safest entry you could make on the 4-hour time frame and if you're new, the safer your entry, the less potential profit you have to make. And the reason is because you're waiting for more confirmations to happen before you enter. And the more confirmations that happen, the longer you have to wait. So, you're going to miss some of the move if you're right about it going upwards. But, what am I waiting for? The safest entry would be to wait for perhaps another green trigger wave to form right here and then come back up a little bit higher than the last time, and then come back down again and form a really tight trigger wave right here. And the money flow being crossed into the blue. That would be your safest entry. Where we would have and let me let me just change the color of this paintbrush here. Um I don't even know how to do that right now, to change the color of the paintbrush. So, I'm not going to do it. But, if we had a green dot right here and a green dot right here and the money flow curving from the purple into the blue, this would be like a very safe entry where you could pretty much be 100% positive that the price is going up.",
+  "unchecked": [
+   "daily confirming bullish again after we had this long, you know, bleed out here"
+  ],
+  "lesson_id": 49,
+  "rules": [
+   {
+    "rule": "green_candles",
+    "a": 3
+   },
+   {
+    "rule": "wt_green_dot"
+   },
+   {
+    "rule": "mf_positive"
+   }
+  ],
+  "rules_text": [
+   "3 green candles in a row",
+   "Market Cipher green dot (WaveTrend crosses up) below 0",
+   "Market Cipher money flow above zero (green)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 159,
+  "name": "Long Entry with Market Cipher",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 0.7,
+  "rr": 1.5,
+  "timeframe": "4-hour",
+  "why": "Market Cipher shows a positive wave, RSI is above 30, and the EMA (50) is above the EMA (200). This setup is for a bullish trend continuation or breakout, with a stop loss below the 21 EMA and a risk-reward ratio of 1.5:1. The strategy involves starting with low leverage and increasing it as profits are made, ensuring enough playing room to avoid getting wicked out during volatile moves like Bitcoin's, especially when trading large time frames like daily or 4-hour charts.",
+  "quote": "This would have been a good entry right here. We had this bottom, and then we kind of traded sideways for a while. And then we had this second trigger wave above the negative 60 line. If we ignore the Elon Musk thing, you know, this this this would have been an amazing time to enter and just ride this up.",
+  "unchecked": [
+   "Ignore Elon Musk's influence"
+  ],
+  "lesson_id": 49,
+  "rules": [
+   {
+    "rule": "close_above_ema",
+    "a": 50
+   },
+   {
+    "rule": "wt_below",
+    "b": -60
+   },
+   {
+    "rule": "rsi_above",
+    "a": 30
+   }
+  ],
+  "rules_text": [
+   "Close above EMA (50)",
+   "Market Cipher wave below -53 (oversold)",
+   "RSI (14) above 30"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  }
 ]
