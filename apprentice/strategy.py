@@ -63,6 +63,24 @@ def timeframe_status(tf: str, store=None) -> dict:
     return st or {"trade": True}
 
 
+def avoid_rules(tf: str, store=None) -> dict:
+    """{"long": [...], "short": [...]}: conditions 🎓 Learn found at its losing trades that also held up on unseen
+    prices - no entry while one is true."""
+    try:
+        if store is None:
+            if not Path(db_path()).exists():
+                return {}
+            from .store import Store
+            s = Store(db_path())
+            try:
+                return (s.meta_get("avoid") or {}).get(tf, {})
+            finally:
+                s.db.close()
+        return (store.meta_get("avoid") or {}).get(tf, {})
+    except Exception:
+        return {}
+
+
 def opposite_signals(df: pd.DataFrame) -> tuple[np.ndarray, np.ndarray]:
     """(blocks a long, blocks a short) on each closed candle: a red dot or a bearish divergence (RSI, wave or
     AO, in the last 10 candles) blocks longs; a green dot or a bullish divergence blocks shorts."""
@@ -96,7 +114,8 @@ def live_setups() -> list[dict]:
 
 
 def signals(df: pd.DataFrame, setups: list[dict] | None = None, mode: str | None = None,
-            safety: dict[str, bool] | None = None, paused: bool | None = None) -> pd.DataFrame:
+            safety: dict[str, bool] | None = None, paused: bool | None = None,
+            avoid: dict | None = None) -> pd.DataFrame:
     """Entries from every live setup, plus what it learned about getting out (🎓 Learn decides, per setup):
     stop_pct - the trade's own stop (fixed 3% / ATR / beyond the last swing), only where that beat the 3%
                stop on prices it never saw; NaN = the run's stop
@@ -125,6 +144,13 @@ def signals(df: pd.DataFrame, setups: list[dict] | None = None, mode: str | None
         stop[take] = sp[take]
         rev[take] = mode == "always" or (mode == "learned" and bool(plan.get("reversal")))
     safety = safety_rules(tf) if safety is None else safety
+    avoid = avoid_rules(tf) if avoid is None else avoid
+    for side, arr in (("long", long_), ("short", short)):
+        for a in avoid.get(side, []):
+            try:
+                arr &= ~builder.rule_series(df, {"rule": a["rule"]}).to_numpy(bool)
+            except Exception:
+                pass
     if safety.get("no_opposite"):
         no_long, no_short = opposite_signals(df)
         long_ &= ~no_long
@@ -165,9 +191,17 @@ def checklist(df: pd.DataFrame, bar: int = -1, label: str | None = None) -> str:
     tf = timeframe_of(df)
     tfs = timeframe_status(tf)
     if not tfs["trade"]:
-        lines.append(f"⏸️ {tf} is paused: in 🎓 Learn all its setups together lost {tfs.get('unseen_pct', 0):+.1f}% on prices "
-                     "they never saw, so it opens no new trades here (open ones keep their stop and targets). It "
-                     "resumes by itself if a later Learn shows it making money.")
+        lines.append(f"⏸️ {tf} is paused: in 🎓 Learn all its setups together made {tfs.get('before_pct', 0):+.1f}% on the "
+                     f"first 70% of history and {tfs.get('unseen_pct', 0):+.1f}% on prices they never saw - it needs to "
+                     "make money on both, so it opens no new trades here (open ones keep their stop and targets). "
+                     "It resumes by itself when a later Learn shows that.")
+    for side, lst in avoid_rules(tf).items():
+        for a in lst:
+            try:
+                if bool(builder.rule_series(df, {"rule": a["rule"]}).iloc[i]):
+                    lines.append(f"⛔ No new {side.upper()}: {a['text']} - learned from its losing trades")
+            except Exception:
+                pass
     rules = safety_rules(tf)
     if rules["no_opposite"]:
         no_long, no_short = opposite_signals(df)

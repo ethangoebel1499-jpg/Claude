@@ -330,11 +330,21 @@ def after_entry_panel(store: Store, setups: list[dict]) -> None:
         c[3].metric("Setups with a tested tweak", tuned)
         saved = sum(s["stats"]["after"].get("reversal_saved_r", 0) for s in live)
         times = sum(s["stats"]["after"].get("reversal_exits", 0) for s in live)
+    avoid = store.meta_get("avoid") or {}
+    found = [(tf, d, a) for tf, v in sorted(avoid.items()) for d, lst in v.items() for a in lst]
+    st.markdown("**🚫 Learned from its losing trades** (conditions true at many losers; kept only if skipping them "
+                "also made more on unseen prices):")
+    st.caption(" · ".join(f"{tf} {d}s: avoid '{a['text']}' (saved {a['train']['saved_r']:+.1f}R before, "
+                          f"{a['test']['saved_r']:+.1f}R unseen)" for tf, d, a in found)
+               if found else ("Nothing held up yet - press 🎓 Learn now." if not avoid else
+                              "Checked: nothing common to its losers held up on unseen prices, so no avoid rules."))
     tfs = store.meta_get("timeframes") or {}
     if tfs:
-        st.markdown("**⏯️ Timeframes** (🎓 Learn pauses one where all its setups together lost money on unseen prices):")
+        st.markdown("**⏯️ Timeframes** (🎓 Learn trades one only if all its setups together made money on the first 70% "
+                    "of history AND on the unseen last 30%):")
         st.caption(" · ".join(f"{'✅' if v['trade'] else '⏸️'} {tf} {'trading' if v['trade'] else 'PAUSED'} "
-                              f"({v['unseen_pct']:+.1f}%, {v['trades']} trades)" for tf, v in sorted(tfs.items())))
+                              f"({v.get('before_pct', 0):+.1f}% before, {v['unseen_pct']:+.1f}% unseen, {v['trades']} trades)"
+                              for tf, v in sorted(tfs.items())))
     from apprentice.strategy import SAFETY
     learned = store.meta_get("safety") or {}
     st.markdown("**🛡️ Safety rules** (on unless 🎓 Learn found the strategy did better without them):")
@@ -447,15 +457,21 @@ def claude_panel(store: Store, charts: list[str] | None = None) -> None:
     c1, c2 = st.columns([1.3, 4])
     if c1.button("Apply all of Claude's verdicts", key="ap_rv_all"):
         n = review.apply_all(store)
+        if autoreview.enabled():                       # the button does the whole routine too
+            a = autoreview.run(store, log=lambda m: None)
+            n = {**n, "auto": a}
         from apprentice.__main__ import DEFAULT_CHARTS
         from apprentice.job import running
+        au = n.get("auto")
+        extra = (f" 🤖 Its own review: deleted {au['concepts_deleted']} concepts and {au['lessons_deleted']} lessons, "
+                 f"turned off {au['setups_off']} setups." if au else "")
         if running("learn"):
             st.success(f"Applied: {n['setups']} setups, {n['concepts']} concepts, {n.get('trades', 0)} chart-trade ratings. A 🎓 Learn run is already going - "
-                       "press 🎓 Learn now when it finishes so it re-tests these changes.")
+                       "press 🎓 Learn now when it finishes so it re-tests these changes." + extra)
         else:
             spawn(["learn", "--charts", *(charts or DEFAULT_CHARTS)], "Learning run (after Claude's review)")
             st.success(f"Applied: {n['setups']} setups, {n['concepts']} concepts, {n.get('trades', 0)} chart-trade ratings - and started 🎓 Learn to re-test "
-                       "them and learn their stops (progress in 📚 Teach).")
+                       "them and learn their stops (progress in 📚 Teach)." + extra)
     c2.caption("Nothing Claude suggests changes anything until you press this: it applies every verdict (setups: use = "
                "📌 always use, drop = 🚫 off, fix = corrected rules; concepts: delete or reword), then starts 🎓 Learn "
                "on the charts above. Each verdict also has its own Apply button below.")

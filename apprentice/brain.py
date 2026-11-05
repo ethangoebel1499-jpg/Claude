@@ -32,10 +32,17 @@ COOLDOWN = 3          # signals closer than this many candles to the previous on
 _OUT: dict = {}
 
 
+def _fingerprint(df: pd.DataFrame) -> tuple:
+    """Cache key for a chart: its size, time span and prices (not its memory address, which Python reuses)."""
+    c = df["close"].to_numpy(float)
+    return (len(df), df.index[0], df.index[-1], float(np.nansum(c)), float(c[-1]) if len(c) else 0.0,
+            float(np.nansum(df["high"].to_numpy(float))))
+
+
 def outcomes(df: pd.DataFrame, direction: str, stop_atr: float = 1.5, rr: float = 2.0,
              horizon: int = HORIZON) -> np.ndarray:
     """R result of entering on every candle (NaN where there isn't enough future)."""
-    key = (id(df), len(df), df.index[-1], direction, float(stop_atr), float(rr), horizon)
+    key = (_fingerprint(df), direction, float(stop_atr), float(rr), horizon)
     if key in _OUT:
         return _OUT[key]
     o, h, l, c = (df[k].to_numpy(float) for k in ("open", "high", "low", "close"))
@@ -219,7 +226,7 @@ def deploy_check(store, charts: dict[str, pd.DataFrame], log=print, split: float
         for name, df in group.items():
             cut = int(len(df) * split)
             for k, ss in (("learned", learned), ("plain", plain)):
-                sig = strategy.signals(df, ss, mode="learned")
+                sig = strategy.signals(df, ss, mode="learned", avoid={}, paused=False)
                 st = run_backtest(df.iloc[cut:], sig.iloc[cut:], allow_short=True, stop_loss=strategy.STOP,
                                   take_profits=strategy.TAKE_PROFITS).stats
                 ret[k] += st["total_return_pct"]
@@ -254,7 +261,7 @@ def safety_check(store, charts: dict[str, pd.DataFrame], log=print, split: float
             total = 0.0
             for df in group.values():
                 cut = int(len(df) * split)
-                sig = strategy.signals(df, setups, mode="learned", safety=safety)
+                sig = strategy.signals(df, setups, mode="learned", safety=safety, avoid={}, paused=False)
                 total += run_backtest(df.iloc[cut:], sig.iloc[cut:], allow_short=True, stop_loss=strategy.STOP,
                                       take_profits=strategy.TAKE_PROFITS).stats["total_return_pct"]
             return round(total, 2)
@@ -268,31 +275,114 @@ def safety_check(store, charts: dict[str, pd.DataFrame], log=print, split: float
         out[tf] = res
     if out:
         store.meta_set("safety", {**(store.meta_get("safety") or {}), **out})
+    avoid_check(store, charts, log, split)
     timeframe_check(store, charts, log, split)
     return out
 
 
+def avoid_check(store, charts: dict[str, pd.DataFrame], log=print, split: float = 0.7, max_rules: int = 3,
+                min_share: float = 0.1) -> dict:
+    """Learning from its losing trades: take every entry the live setups made (per timeframe and direction),
+    and look for a condition that was true much more often at the losers - e.g. 'after 3 green candles in a row'
+    for longs. Found on the first 70% of every chart; kept as an AVOID rule (no entry while it's true) only if
+    skipping those trades also made more on the last 30% it never saw. Losing trades are noisy, so most
+    candidates don't survive that test - which is the point."""
+    from . import strategy
+    setups = [s for s in store.setups(("active", "pinned")) if s["weight"] > 0 or s["status"] == "pinned"]
+    out: dict = {}
+    for tf, group in by_timeframe(charts).items():
+        out[tf] = {}
+        for d in ("long", "short"):
+            rows = {"train": [], "test": []}
+            for df in group.values():
+                sig = strategy.signals(df, setups, mode="learned", safety=strategy.safety_rules(tf, store),
+                                       paused=False, avoid={})
+                entries = np.flatnonzero(dedupe(sig[f"{d}_entry"].to_numpy(bool)))
+                res = outcomes(df, d)
+                ff = feature_frame(df)
+                cut = int(len(df) * split)
+                for i in entries:
+                    if np.isfinite(res[i]):
+                        rows["train" if i < cut else "test"].append((ff.iloc[i], float(res[i])))
+            tr, te = rows["train"], rows["test"]
+            picked = []
+            if len(tr) >= 30 and len(te) >= 10:
+                r_tr = np.array([r for _, r in tr]); r_te = np.array([r for _, r in te])
+                cands = []
+                for f in tr[0][0].index:
+                    m = np.array([bool(row[f]) for row, _ in tr])
+                    n = int(m.sum())
+                    if n < max(10, min_share * len(tr)) or n > 0.6 * len(tr):
+                        continue
+                    if r_tr[m].mean() < r_tr.mean() - 0.15 and (r_tr[m] < 0).mean() > (r_tr < 0).mean() + 0.08:
+                        cands.append((-float(r_tr[m].sum()), f))           # R saved on the train part by skipping
+                cands.sort(reverse=True)
+                keep_tr = np.ones(len(tr), bool); keep_te = np.ones(len(te), bool)
+                for saved, f in cands:
+                    if len(picked) >= max_rules or saved <= 0:
+                        break
+                    m_te = np.array([bool(row[f]) for row, _ in te]) & keep_te
+                    m_tr = np.array([bool(row[f]) for row, _ in tr]) & keep_tr
+                    if m_te.sum() < 3 or r_te[m_te].sum() >= 0:
+                        continue                                          # didn't help on unseen prices: not real
+                    keep_tr &= ~m_tr; keep_te &= ~m_te
+                    picked.append({"rule": f, "text": builder.describe({"rule": f}),
+                                   "train": {"skipped": int(m_tr.sum()), "saved_r": round(-float(r_tr[m_tr].sum()), 1)},
+                                   "test": {"skipped": int(m_te.sum()), "saved_r": round(-float(r_te[m_te].sum()), 1)}})
+            out[tf][d] = picked
+        # each rule helped on its own; together they must also help the whole strategy on unseen prices
+        if any(out[tf].values()):
+            from mcbot.backtest import run_backtest
+
+            def unseen(av):
+                total = 0.0
+                for df in group.values():
+                    cut = int(len(df) * split)
+                    sig = strategy.signals(df, setups, mode="learned", safety=strategy.safety_rules(tf, store),
+                                           paused=False, avoid=av)
+                    total += run_backtest(df.iloc[cut:], sig.iloc[cut:], allow_short=True, stop_loss=strategy.STOP,
+                                          take_profits=strategy.TAKE_PROFITS).stats["total_return_pct"]
+                return round(total, 2)
+            with_, without = unseen(out[tf]), unseen({})
+            if with_ <= without:
+                log(f"  avoid rules on {tf}: whole strategy {with_:+.1f}% with them vs {without:+.1f}% without on unseen "
+                    "prices -> not used")
+                out[tf] = {"long": [], "short": [], "rejected": {"with": with_, "without": without}}
+            else:
+                out[tf]["checked"] = {"with": with_, "without": without}
+        for d in ("long", "short"):
+            for p in out[tf].get(d, []):
+                log(f"  avoid on {tf} {d}s: {p['text']} - skipping those saved {p['train']['saved_r']:+.1f}R before and "
+                    f"{p['test']['saved_r']:+.1f}R on unseen prices")
+    if out:
+        store.meta_set("avoid", {**(store.meta_get("avoid") or {}), **out})
+    return out
+
+
 def timeframe_check(store, charts: dict[str, pd.DataFrame], log=print, split: float = 0.7) -> dict:
-    """Last gate: with everything it just learned (setups, stops, safety rules), trade all the live setups together
-    on the last 30% of every chart of a timeframe. If that lost money, the timeframe is paused - no new trades
-    there until a later Learn shows it making money again."""
+    """Last gate: with everything it just learned (setups, stops, safety and avoid rules), trade all the live setups
+    together on every chart of a timeframe. Unless that made money both on the first 70% and on the last 30% it never
+    saw, the timeframe is paused - no new trades there until a later Learn shows it making money on both again."""
     from mcbot.backtest import run_backtest
     from . import strategy
     setups = [s for s in store.setups(("active", "pinned")) if s["weight"] > 0 or s["status"] == "pinned"]
     out = {}
     for tf, group in by_timeframe(charts).items():
-        total, trades = 0.0, 0
+        total, before, trades = 0.0, 0.0, 0
         for df in group.values():
             cut = int(len(df) * split)
-            sig = strategy.signals(df, setups, mode="learned", safety=strategy.safety_rules(tf, store), paused=False)
-            st = run_backtest(df.iloc[cut:], sig.iloc[cut:], allow_short=True, stop_loss=strategy.STOP,
-                              take_profits=strategy.TAKE_PROFITS).stats
+            sig = strategy.signals(df, setups, mode="learned", safety=strategy.safety_rules(tf, store), paused=False,
+                                   avoid=strategy.avoid_rules(tf, store))
+            kw = dict(allow_short=True, stop_loss=strategy.STOP, take_profits=strategy.TAKE_PROFITS)
+            st = run_backtest(df.iloc[cut:], sig.iloc[cut:], **kw).stats
+            before += run_backtest(df.iloc[:cut], sig.iloc[:cut], **kw).stats["total_return_pct"]
             total += st["total_return_pct"]
             trades += st["trades"]
-        ok = bool(total > 0)
-        out[tf] = {"trade": ok, "unseen_pct": round(total, 2), "trades": trades, "charts": len(group)}
-        log(f"  {tf}: all setups together {total:+.1f}% on unseen prices ({trades} trades on {len(group)} charts) -> "
-            + ("trading" if ok else "PAUSED - no new trades on this timeframe"))
+        ok = bool(total > 0 and before > 0)            # made money before AND on prices it never saw
+        out[tf] = {"trade": ok, "unseen_pct": round(total, 2), "before_pct": round(before, 2), "trades": trades,
+                   "charts": len(group)}
+        log(f"  {tf}: all setups together {before:+.1f}% on the first 70%, {total:+.1f}% on unseen prices "
+            f"({trades} trades on {len(group)} charts) -> " + ("trading" if ok else "PAUSED - no new trades on this timeframe"))
     if out:
         store.meta_set("timeframes", {**(store.meta_get("timeframes") or {}), **out})
     return out
@@ -607,7 +697,7 @@ _FEAT: dict = {}
 
 def feature_frame(df: pd.DataFrame) -> pd.DataFrame:
     """Every rule at its default numbers, on every candle (True/False)."""
-    key = (id(df), len(df), df.index[-1])
+    key = _fingerprint(df)
     if key not in _FEAT:
         _FEAT.clear()
         cols = {}

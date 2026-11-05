@@ -212,3 +212,30 @@ def test_learn_pauses_a_losing_timeframe(tmp_path, monkeypatch):
     assert out["1h"]["trade"] is False and out["1h"]["unseen_pct"] < 0
     assert strategy.timeframe_status("1h", a)["trade"] is False and strategy.timeframe_status("4h", a)["trade"] is True
     assert strategy.signals(down, a.setups(("pinned",)))["pause"].all()   # live: reads the decision from the store
+
+
+def test_avoid_rules_block_entries_and_are_learned_out_of_sample(tmp_path, monkeypatch):
+    from apprentice.store import Store as AStore
+    from livepaper import settings
+    monkeypatch.setattr(settings, "PATH", tmp_path / "s.json")
+    monkeypatch.setenv("APPRENTICE_DB", str(tmp_path / "a.db"))
+    df = _df(1500)
+    always = [{"direction": "long", "weight": 1, "rules": [{"rule": "rsi_above", "a": -1}]}]
+    off = {"no_opposite": False, "breakeven": False}
+    plain = strategy.signals(df, always, safety=off, avoid={})["long_entry"].to_numpy()
+    blocked = strategy.signals(df, always, safety=off, avoid={"long": [{"rule": "green_candles", "text": "x"}]})
+    g = builder_rule(df, "green_candles")
+    assert not (blocked["long_entry"].to_numpy() & g).any() and (plain & g).any()
+    a = AStore(tmp_path / "a.db")
+    sid = a.add_setup({"name": "always", "direction": "long", "source": "you", "rules": always[0]["rules"]})
+    a.update_setup(sid, status="pinned", weight=1)
+    out = brain.avoid_check(a, {"X 4h": df}, log=lambda m: None)
+    for d in ("long", "short"):
+        for r in out["4h"][d]:
+            assert r["test"]["saved_r"] > 0 and r["train"]["saved_r"] > 0   # only kept if it helped on unseen prices
+    assert strategy.avoid_rules("4h", a) == out["4h"]
+
+
+def builder_rule(df, rule):
+    from mcbot import builder
+    return builder.rule_series(df, {"rule": rule}).to_numpy(bool)
