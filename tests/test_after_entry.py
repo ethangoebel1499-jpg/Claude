@@ -185,3 +185,30 @@ def test_no_entry_against_an_opposite_dot_or_divergence(monkeypatch, tmp_path):
     on = strategy.signals(df, always("long"), safety=on)
     off = strategy.signals(df, always("long"), safety=off)
     assert np.allclose(on["be_pct"].dropna(), 0.015) and off["be_pct"].isna().all()
+
+
+def test_a_paused_timeframe_opens_nothing_new_but_still_exits():
+    df = _falling()
+    sig = _sig(df, [1, 20], [10]).assign(pause=False)
+    sig.loc[sig.index[15:], "pause"] = True                              # paused after candle 15
+    m = replay(df, sig, PositionManager("t", Exits(0.05, [(0.10, 1.0)]), shorts=False, broker=SimBroker(fee=0)))
+    assert len(m.trades) == 1 and m.trades[0]["reason"] == "reversal"   # the open trade still closed; no new one
+    res = run_backtest(df, sig, stop_loss=0.05, take_profits=[(0.10, 1.0)], fee=0)
+    assert len(res.trades) == 1
+
+
+def test_learn_pauses_a_losing_timeframe(tmp_path, monkeypatch):
+    from apprentice.store import Store as AStore
+    from livepaper import settings
+    monkeypatch.setattr(settings, "PATH", tmp_path / "s.json")
+    monkeypatch.setenv("APPRENTICE_DB", str(tmp_path / "a.db"))
+    a = AStore(tmp_path / "a.db")
+    sid = a.add_setup({"name": "always long", "direction": "long", "source": "you", "rules": [{"rule": "rsi_above", "a": -1}]})
+    a.update_setup(sid, status="pinned", weight=1)
+    idx = pd.date_range("2026-01-01", periods=600, freq="1h", tz="UTC")
+    c = 100 * np.exp(np.cumsum(np.r_[0, np.full(599, -0.002)]) + 0.01 * np.sin(np.arange(600)))   # grinding down
+    down = pd.DataFrame({"open": c, "high": c * 1.004, "low": c * 0.996, "close": c, "volume": 1.0}, index=idx)
+    out = brain.timeframe_check(a, {"X 1h": down}, log=lambda m: None)
+    assert out["1h"]["trade"] is False and out["1h"]["unseen_pct"] < 0
+    assert strategy.timeframe_status("1h", a)["trade"] is False and strategy.timeframe_status("4h", a)["trade"] is True
+    assert strategy.signals(down, a.setups(("pinned",)))["pause"].all()   # live: reads the decision from the store

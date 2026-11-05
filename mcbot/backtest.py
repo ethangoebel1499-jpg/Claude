@@ -167,6 +167,7 @@ def run_backtest(df: pd.DataFrame, signals: pd.DataFrame, *, allow_short: bool =
     per_trade_rev = "use_reversal" in sig
     use_rev = sig.get("use_reversal")
     be_col = sig.get("be_pct")                          # a strategy that sets each trade's breakeven trigger
+    pause = sig.get("pause")                            # no NEW trades while set (open ones still exit normally)
     for i in range(len(df)):
         # 1) act on the previous (confirmed) bar at this bar's open
         if i > 0:
@@ -190,7 +191,7 @@ def run_backtest(df: pd.DataFrame, signals: pd.DataFrame, *, allow_short: bool =
                 elif reversal[pos.side][p] and (pos.reversal or not per_trade_rev) and move_of(o[i]) < 0:
                     # a confirmed reversal against a losing trade: out before the stop (as the live trader)
                     exit_part(i, o[i], pos.remaining, "reversal")
-            if pos is None and equity > 0:
+            if pos is None and equity > 0 and not (pause is not None and pause[p]):
                 stop0 = -stop_loss if stop_loss else None
                 stop0_s = -stop_loss_short if stop_loss_short else stop0
                 own = float(own_stop[p]) if own_stop is not None else float("nan")

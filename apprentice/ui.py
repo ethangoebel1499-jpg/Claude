@@ -330,6 +330,11 @@ def after_entry_panel(store: Store, setups: list[dict]) -> None:
         c[3].metric("Setups with a tested tweak", tuned)
         saved = sum(s["stats"]["after"].get("reversal_saved_r", 0) for s in live)
         times = sum(s["stats"]["after"].get("reversal_exits", 0) for s in live)
+    tfs = store.meta_get("timeframes") or {}
+    if tfs:
+        st.markdown("**⏯️ Timeframes** (🎓 Learn pauses one where all its setups together lost money on unseen prices):")
+        st.caption(" · ".join(f"{'✅' if v['trade'] else '⏸️'} {tf} {'trading' if v['trade'] else 'PAUSED'} "
+                              f"({v['unseen_pct']:+.1f}%, {v['trades']} trades)" for tf, v in sorted(tfs.items())))
     from apprentice.strategy import SAFETY
     learned = store.meta_get("safety") or {}
     st.markdown("**🛡️ Safety rules** (on unless 🎓 Learn found the strategy did better without them):")

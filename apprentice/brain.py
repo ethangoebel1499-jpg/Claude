@@ -268,6 +268,33 @@ def safety_check(store, charts: dict[str, pd.DataFrame], log=print, split: float
         out[tf] = res
     if out:
         store.meta_set("safety", {**(store.meta_get("safety") or {}), **out})
+    timeframe_check(store, charts, log, split)
+    return out
+
+
+def timeframe_check(store, charts: dict[str, pd.DataFrame], log=print, split: float = 0.7) -> dict:
+    """Last gate: with everything it just learned (setups, stops, safety rules), trade all the live setups together
+    on the last 30% of every chart of a timeframe. If that lost money, the timeframe is paused - no new trades
+    there until a later Learn shows it making money again."""
+    from mcbot.backtest import run_backtest
+    from . import strategy
+    setups = [s for s in store.setups(("active", "pinned")) if s["weight"] > 0 or s["status"] == "pinned"]
+    out = {}
+    for tf, group in by_timeframe(charts).items():
+        total, trades = 0.0, 0
+        for df in group.values():
+            cut = int(len(df) * split)
+            sig = strategy.signals(df, setups, mode="learned", safety=strategy.safety_rules(tf, store), paused=False)
+            st = run_backtest(df.iloc[cut:], sig.iloc[cut:], allow_short=True, stop_loss=strategy.STOP,
+                              take_profits=strategy.TAKE_PROFITS).stats
+            total += st["total_return_pct"]
+            trades += st["trades"]
+        ok = bool(total > 0)
+        out[tf] = {"trade": ok, "unseen_pct": round(total, 2), "trades": trades, "charts": len(group)}
+        log(f"  {tf}: all setups together {total:+.1f}% on unseen prices ({trades} trades on {len(group)} charts) -> "
+            + ("trading" if ok else "PAUSED - no new trades on this timeframe"))
+    if out:
+        store.meta_set("timeframes", {**(store.meta_get("timeframes") or {}), **out})
     return out
 
 

@@ -43,6 +43,26 @@ def safety_rules(tf: str, store=None) -> dict[str, bool]:
     return {k: bool(learned.get(k, {}).get("on", True)) for k in SAFETY}
 
 
+def timeframe_status(tf: str, store=None) -> dict:
+    """{"trade": bool, ...} for a timeframe: 🎓 Learn pauses one where all the live setups together lost money on
+    prices they never saw. A timeframe it hasn't checked yet trades as before."""
+    try:
+        if store is None:
+            if not Path(db_path()).exists():
+                return {"trade": True}
+            from .store import Store
+            s = Store(db_path())
+            try:
+                st = (s.meta_get("timeframes") or {}).get(tf)
+            finally:
+                s.db.close()
+        else:
+            st = (store.meta_get("timeframes") or {}).get(tf)
+    except Exception:
+        st = None
+    return st or {"trade": True}
+
+
 def opposite_signals(df: pd.DataFrame) -> tuple[np.ndarray, np.ndarray]:
     """(blocks a long, blocks a short) on each closed candle: a red dot or a bearish divergence (RSI, wave or
     AO, in the last 10 candles) blocks longs; a green dot or a bullish divergence blocks shorts."""
@@ -76,7 +96,7 @@ def live_setups() -> list[dict]:
 
 
 def signals(df: pd.DataFrame, setups: list[dict] | None = None, mode: str | None = None,
-            safety: dict[str, bool] | None = None) -> pd.DataFrame:
+            safety: dict[str, bool] | None = None, paused: bool | None = None) -> pd.DataFrame:
     """Entries from every live setup, plus what it learned about getting out (🎓 Learn decides, per setup):
     stop_pct - the trade's own stop (fixed 3% / ATR / beyond the last swing), only where that beat the 3%
                stop on prices it never saw; NaN = the run's stop
@@ -112,6 +132,7 @@ def signals(df: pd.DataFrame, setups: list[dict] | None = None, mode: str | None
     be = BREAKEVEN * np.where(np.isfinite(stop), stop, STOP) if safety.get("breakeven") else np.full(n, np.nan)
     out = pd.DataFrame({"long_entry": long_ & ~short, "short_entry": short & ~long_,
                         "long_exit": False, "short_exit": False, "stop_pct": stop, "be_pct": be}, index=df.index)
+    out["pause"] = (not timeframe_status(tf)["trade"]) if paused is None else bool(paused)
     if mode != "off":
         out["long_reversal"], out["short_reversal"] = reversal_signals(df)
         out["use_reversal"] = rev
@@ -141,7 +162,13 @@ def checklist(df: pd.DataFrame, bar: int = -1, label: str | None = None) -> str:
     if not setups:
         return lines[0] + "\nNo active setups yet - teach it in 🧠 Apprentice and press Learn."
     from .brain import timeframe_of
-    rules = safety_rules(timeframe_of(df))
+    tf = timeframe_of(df)
+    tfs = timeframe_status(tf)
+    if not tfs["trade"]:
+        lines.append(f"⏸️ {tf} is paused: in 🎓 Learn all its setups together lost {tfs.get('unseen_pct', 0):+.1f}% on prices "
+                     "they never saw, so it opens no new trades here (open ones keep their stop and targets). It "
+                     "resumes by itself if a later Learn shows it making money.")
+    rules = safety_rules(tf)
     if rules["no_opposite"]:
         no_long, no_short = opposite_signals(df)
         if no_long[i]:

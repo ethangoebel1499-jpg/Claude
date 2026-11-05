@@ -248,7 +248,7 @@ class PositionManager:
                 # a confirmed reversal against a losing trade: get out before the stop
                 self.close_all(price, time, "reversal")
         self.state.pending_entry = None
-        if self.state.position is None and self.state.equity > 0:
+        if self.state.position is None and self.state.equity > 0 and not bool(sig.get("pause", False)):
             own = dict(stop_pct=_num(sig.get("stop_pct")), reversal=bool(sig.get("use_reversal", False)),
                        be_pct=_num(sig.get("be_pct")))
             if sig["long_entry"]:
