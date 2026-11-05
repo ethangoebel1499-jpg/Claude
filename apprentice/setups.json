@@ -29081,5 +29081,627 @@
   "hints": null,
   "tune": null,
   "exit_plan": null
+ },
+ {
+  "id": 226,
+  "name": "Support Bounce with Market Cipher Confirmation",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 0.5,
+  "rr": 2.0,
+  "timeframe": "1h, 2h, 4h, 10m, 15m, 20m, 30m, 1h, 4h, 1d, 1w, 1m, 3m, 6m, 1y",
+  "why": "Support bounce with market cipher green dot and clear upward direction on lower time frames.",
+  "quote": "If we're coming to a support and we're getting a clear bounce, let's look and see what market cipher is saying.",
+  "unchecked": [
+   "Need to confirm on lower time frames before entering"
+  ],
+  "lesson_id": 60,
+  "rules": [
+   {
+    "rule": "close_above_sma",
+    "a": 200
+   },
+   {
+    "rule": "sr_bounce_up"
+   },
+   {
+    "rule": "wt_green_dot"
+   }
+  ],
+  "rules_text": [
+   "Close above SMA (200)",
+   "Bounced off support / reclaimed a level (closed back above it)",
+   "Market Cipher green dot (WaveTrend crosses up) below 0"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 227,
+  "name": "Support and Resistance Re-test",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 0.7,
+  "rr": 1.5,
+  "timeframe": "daily",
+  "why": "Support and resistance levels can act as buy zones when price retests them after a significant move higher, especially if the market is oversold and showing positive divergence indicators like Market Cipher's wave and green dot. This setup is particularly useful for higher cap altcoins with more liquidity and less volatility compared to lower cap altcoins. The stop loss is placed below the liquidity zone, and take profit levels are set at historic resistance levels. The strategy allows for partial profits to be taken without constant monitoring, using alerts to sell a portion of the portfolio when price reaches these levels. The strategy is adapted to the specific asset being traded, as the same strategies used for Bitcoin may not be directly applicable to other altcoins. The strategy is also cautious of FOMO and avoids jumping into trades without proper analysis and due diligence, especially when large institutions like Tesla are involved.",
+  "quote": "patterns basic support and this is the second thing we're going to look for\nso let's say you see a coin like soul and you're trading the bitcoin pair and\nyou're like okay well we just tested the all-time high this might not be a\ngood place to buy right now what you're going to do now if you still\nthink that there's more upward potential here is you're going to look and mark out some important support and resistance\nzones and the way you're going to do that is\nyou're just going to again see where price has historically found\na sticking point so right here this line that i have marked out\nthis is a great support okay\nit was a resistance and then it got flipped to support right here\nit was a support right here it was a support that got flipped to resistance right here\nand then when we came up to this level we had a lot of indecision before we came up and tested\nthe new all-time high so i would wait for price to come back\nand test this level and i would create a little box here and say okay this is a liquidity zone\nthis is an area where there was a lot of buying and selling historically\nso if price comes back down to this level i will be looking for a buy\nbefore we continue on with this with this uptrend here",
+  "unchecked": [
+   "Price retests a support level that was previously a resistance level."
+  ],
+  "lesson_id": 60,
+  "rules": [
+   {
+    "rule": "close_above_sma",
+    "a": 200
+   },
+   {
+    "rule": "higher_low",
+    "a": 5,
+    "b": 10
+   },
+   {
+    "rule": "wt_below",
+    "a": -53
+   },
+   {
+    "rule": "wt_green_dot"
+   }
+  ],
+  "rules_text": [
+   "Close above SMA (200)",
+   "Higher low: the last 5 candles' low is above the 5 candles before",
+   "Market Cipher wave below -53 (oversold)",
+   "Market Cipher green dot (WaveTrend crosses up) below 0"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 228,
+  "name": "daily_levels",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 0.7,
+  "rr": 2.0,
+  "timeframe": "daily",
+  "why": "We are looking for a reaction off of resistance levels, and the coin is below the 200 SMA and above the Market Cipher wave, indicating a potential bearish setup.",
+  "quote": "we are going to have some kind of reaction are we going to get a rejection off of a resistance",
+  "unchecked": [
+   "price touches the upper Bollinger band"
+  ],
+  "lesson_id": 60,
+  "rules": [
+   {
+    "rule": "close_below_sma",
+    "a": 200
+   },
+   {
+    "rule": "wt_above",
+    "a": 53
+   }
+  ],
+  "rules_text": [
+   "Close below SMA (200)",
+   "Market Cipher wave above 53 (overbought)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 229,
+  "name": "Anchor, Triggers, and Wolf Pack ID Crossover on Higher Timeframe, Double Bottom ",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 0.7,
+  "rr": 2.0,
+  "timeframe": "2h",
+  "why": "Anchor, Triggers, and Wolf Pack ID Crossover on Higher Timeframe, Double Bottom and Trigger Wave on Lower Timeframe",
+  "quote": "if we get an anchor and triggers on the two hour time frame where we see wolf pack id cross over the zero line and turn blue and we see the money flows crossing up then we are going to look on the 30 minute time frame and if we see a double bottom and then we print a green trigger wave we are going to enter that trade",
+  "unchecked": [
+   "Anchor, Triggers, and Wolf Pack ID Crossover on Higher Timeframe, Double Bottom and Trigger Wave on Lower Timeframe"
+  ],
+  "lesson_id": 60,
+  "rules": [
+   {
+    "rule": "close_above_ema",
+    "a": 50
+   },
+   {
+    "rule": "wt_green_dot"
+   },
+   {
+    "rule": "rsi_above",
+    "a": 30
+   },
+   {
+    "rule": "bb_above_mid"
+   },
+   {
+    "rule": "green_candles",
+    "a": 3
+   },
+   {
+    "rule": "wt_above",
+    "a": 53
+   },
+   {
+    "rule": "pattern_break_up"
+   },
+   {
+    "rule": "in_bullish_pattern"
+   }
+  ],
+  "rules_text": [
+   "Close above EMA (50)",
+   "Market Cipher green dot (WaveTrend crosses up) below 0",
+   "RSI (14) above 30",
+   "Close above the Bollinger middle band",
+   "3 green candles in a row",
+   "Market Cipher wave above 53 (overbought)",
+   "Chart pattern broke out upward on this candle",
+   "Inside a pattern that usually breaks up (falling wedge, ascending triangle, bull flag...)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 230,
+  "name": "double_bottom_trigger_wave",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "30-minute",
+  "why": "double bottom and trigger wave confirmations are key for entry",
+  "quote": "we're looking for a double bottom on the 30 minute sorry about that and then a trigger wave right here",
+  "unchecked": [
+   "double bottom on the 30-minute chart"
+  ],
+  "lesson_id": 60,
+  "rules": [
+   {
+    "rule": "higher_low"
+   },
+   {
+    "rule": "wt_green_dot"
+   },
+   {
+    "rule": "mf_positive"
+   }
+  ],
+  "rules_text": [
+   "Higher low: the last 5 candles' low is above the 5 candles before",
+   "Market Cipher green dot (WaveTrend crosses up) below 0",
+   "Market Cipher money flow above zero (green)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 231,
+  "name": "Buy Setup",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "2h, 30m, 12m",
+  "why": "Support and resistance levels with high liquidity and Market Cipher confirmations, setting up for a potential buy opportunity.",
+  "quote": "We have our confirmations and we we saw historically that this was a area of high liquidity right where a lot of buying and selling is happening so if trade if price comes back down to this zone here this zone is it's good guys when when you're drawing your support and resistance levels unless they're fibonacci levels and even if they are fibonacci levels don't think of them as as lines think of them as zones okay.",
+  "unchecked": [
+   "Historical resistance levels for take profits"
+  ],
+  "lesson_id": 60,
+  "rules": [
+   {
+    "rule": "close_above_sma",
+    "a": 200
+   },
+   {
+    "rule": "wt_below",
+    "a": -53
+   },
+   {
+    "rule": "wt_green_dot"
+   },
+   {
+    "rule": "bb_above_mid"
+   }
+  ],
+  "rules_text": [
+   "Close above SMA (200)",
+   "Market Cipher wave below -53 (oversold)",
+   "Market Cipher green dot (WaveTrend crosses up) below 0",
+   "Close above the Bollinger middle band"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 232,
+  "name": "Buy Setup: Quadruple Bottom and Support/Resistance Levels",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 0.7,
+  "rr": 2.0,
+  "timeframe": "2h",
+  "why": "The quadruple bottom formation and support/resistance levels indicate a potential reversal and buying opportunity. The red Market Cipher dot and wave below -53 confirm the bearish trend is weakening, making it a good time to enter a long position.",
+  "quote": "i would totally be looking for a buy in this zone here if i didn't already have a huge bag of ada that i'm just holding hopefully until the summer or fall i would say man this looks like a great place to buy and if i can confirm upward momentum i would totally buy and if not then the next place i would be looking to buy is right down here because again this is another area of liquidity where we have a resistance and then it's a support and then it's just a gain",
+  "unchecked": [
+   "quadruple bottom formation"
+  ],
+  "lesson_id": 60,
+  "rules": [
+   {
+    "rule": "close_above_sma",
+    "a": 200
+   },
+   {
+    "rule": "wt_red_dot"
+   },
+   {
+    "rule": "wt_below",
+    "a": -53
+   }
+  ],
+  "rules_text": [
+   "Close above SMA (200)",
+   "Market Cipher red dot (WaveTrend crosses down) above 0",
+   "Market Cipher wave below -53 (oversold)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 233,
+  "name": "Short Setup: Divergence and Rejection",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 0.7,
+  "rr": 2.0,
+  "timeframe": "2h",
+  "why": "The divergence between price and the Market Cipher indicator, along with a rejection off resistance, indicates a potential shorting opportunity. The red Market Cipher dot and wave above 53 confirm the bullish trend is weakening, making it a good time to enter a short position.",
+  "quote": "we have a clear divergence that was printing right here right what we would do if you wanted to short this divergence is you would wait until we were getting a clear rejection off of this resistance and then you would know okay i'm going to short here right we're getting this divergence we're getting a rejection off of the resistance you could enter here first take profit would be down here at this support the problem is with divergences is we never know how far price is going to drop so just keep that in mind right you never know exactly how far it's going to drop but you can know it's going to have some kind of drop but i always wait for confluence right wait for market cipher and the chart to tell you the same thing right like right here right just looking at the two hour chart for bitcoin as soon as we print this red dot we're simultaneously getting a rejection off of this off of this resistance right we come up here um as soon as we're printing we're printing a red dot and getting a rejection at the same time okay right here we're printing a green dot and coming up and confirming over the support at the same time right we are bouncing off this trend line and confirming over support at the same time that's really it's just about watching price as it comes down to these levels and then confirming it with market cipher that's that's really how you're going to do this",
+  "unchecked": [
+   "divergence between price and market indicator"
+  ],
+  "lesson_id": 60,
+  "rules": [
+   {
+    "rule": "wt_red_dot"
+   },
+   {
+    "rule": "wt_above",
+    "a": 53
+   },
+   {
+    "rule": "close_above_ema",
+    "a": 21,
+    "b": 9
+   }
+  ],
+  "rules_text": [
+   "Market Cipher red dot (WaveTrend crosses down) above 0",
+   "Market Cipher wave above 53 (overbought)",
+   "Close above EMA (21)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 234,
+  "name": "green_trigger_wave_and_money_flow_crossover",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "4h and 24m",
+  "why": "The green trigger wave and money flow crossover indicate a potential bullish trend continuation or reversal, and the teacher suggests entering on the next candle after the crossover for a large pump up.",
+  "quote": "So as soon as this thing starts printing, we're already having a money flow crossover. Okay, so we just got the money flow crossover. If we had entered on the next candle after that money flow crossover, right here, we get in for this huge pump.",
+  "unchecked": [
+   "The setup requires the 4-hour time frame to show a green trigger wave and the 24-minute time frame to show a money flow crossover."
+  ],
+  "lesson_id": 61,
+  "rules": [
+   {
+    "rule": "close_above_ema",
+    "a": 50
+   },
+   {
+    "rule": "wt_green_dot"
+   },
+   {
+    "rule": "mf_positive"
+   }
+  ],
+  "rules_text": [
+   "Close above EMA (50)",
+   "Market Cipher green dot (WaveTrend crosses up) below 0",
+   "Market Cipher money flow above zero (green)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 235,
+  "name": "green_trigger_wave_and_money_flow_crossover",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "4h and 24m",
+  "why": "Green trigger wave on 4-hour and money flow crossover on 24-minute, which historically leads to a pump. This setup is a confirmation of the trade idea based on the teacher's observations and experience. The conditions are not explicitly stated, but the teacher's comments suggest that the price movement and pump are part of the setup, even though they cannot be expressed as a rule.",
+  "quote": "I'm looking for things that just seem to always happen between the 4-hour and the 24-minute. So far, it seems that if we are printing a green trigger wave on the 4-hour time frame and right around the same vicinity, we're having a money flow crossover, it seems that we get a nice big pump.",
+  "unchecked": [
+   "price movement and pump"
+  ],
+  "lesson_id": 61,
+  "rules": [
+   {
+    "rule": "green_candles",
+    "a": 3
+   },
+   {
+    "rule": "macd_cross_up"
+   }
+  ],
+  "rules_text": [
+   "3 green candles in a row",
+   "MACD crosses above its signal line"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 236,
+  "name": "long",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 0.7,
+  "rr": 2.0,
+  "timeframe": "4h",
+  "why": "Market Cipher green dot, wave above 53, MACD positive, Awesome Oscillator green, and a trigger wave on the 4-hour time frame and a Wolf Pack ID crossover on the 24-minute or a money flow crossover on the 24-minute, whichever comes first, are the conditions for entering a long trade. The teacher uses these conditions to identify a bullish setup and enter a trade when all of these conditions are met, indicating a strong bullish signal. The setup is based on multiple confirmations from different indicators and a trigger wave, ensuring a high probability of a successful trade.",
+  "quote": "First, I am looking for a green Well, a trigger wave on the 4-hour Market Cipher B. Okay? Then I am looking for the Wolf Pack ID indicator has crossed over the zero line and changed color, then I will enter a trade. Then I am looking to see if I have a trigger wave on the 24-minute. And this is just for this one strategy. I have many strategies, but this is just an example. Then I am looking to see that the Wolf Pack ID has crossed the zero line um on the 24-minute. And then I am looking to see if we have a money flow crossover on the 24-minute. And you know, typically the way I trade is, you know, whatever comes first, whether it be a trigger wave on the 24-minute or a money flow crossover, whichever one of these comes first is the one I would enter on. So, really, we could consider we could consider these two as one, right? These two right here we can consider as one because if these three conditions are true, then if one of these conditions are true, I will enter a trade, okay? And so, this is the algorithm I used to trade my strategy using the 4-hour and the 24-minute time frame.",
+  "unchecked": [
+   "trigger_wave_4h",
+   "wolf_pack_id_24m_cross",
+   "money_flow_24m_cross"
+  ],
+  "lesson_id": 61,
+  "rules": [
+   {
+    "rule": "close_above_ema",
+    "a": 50
+   },
+   {
+    "rule": "wt_green_dot"
+   },
+   {
+    "rule": "wt_above",
+    "b": 53
+   },
+   {
+    "rule": "macd_positive"
+   },
+   {
+    "rule": "ao_green"
+   }
+  ],
+  "rules_text": [
+   "Close above EMA (50)",
+   "Market Cipher green dot (WaveTrend crosses up) below 0",
+   "Market Cipher wave above 53 (overbought)",
+   "MACD above zero",
+   "Awesome Oscillator column is green (AO rising)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 237,
+  "name": "short",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 0.7,
+  "rr": 2.0,
+  "timeframe": "4h",
+  "why": "Market Cipher red dot, wave below -53, MACD negative, Awesome Oscillator red, and a trigger wave on the 4-hour time frame and a Wolf Pack ID crossover on the 24-minute or a money flow crossover on the 24-minute, whichever comes first, are the conditions for entering a short trade. The teacher uses these conditions to identify a bearish setup and enter a trade when all of these conditions are met, indicating a strong bearish signal. The setup is based on multiple confirmations from different indicators and a trigger wave, ensuring a high probability of a successful trade.",
+  "quote": "First, I am looking for a green Well, a trigger wave on the 4-hour Market Cipher B. Okay? Then I am looking for the Wolf Pack ID indicator has crossed over the zero line and changed color, then I will enter a trade. Then I am looking to see if I have a trigger wave on the 24-minute. And this is just for this one strategy. I have many strategies, but this is just an example. Then I am looking to see that the Wolf Pack ID has crossed the zero line um on the 24-minute. And then I am looking to see if we have a money flow crossover on the 24-minute. And you know, typically the way I trade is, you know, whatever comes first, whether it be a trigger wave on the 24-minute or a money flow crossover, whichever one of these comes first is the one I would enter on. So, really, we could consider we could consider these two as one, right? These two right here we can consider as one because if these three conditions are true, then if one of these conditions are true, I will enter a trade, okay? And so, this is the algorithm I used to trade my strategy using the 4-hour and the 24-minute time frame.",
+  "unchecked": [
+   "trigger_wave_4h",
+   "wolf_pack_id_24m_cross",
+   "money_flow_24m_cross"
+  ],
+  "lesson_id": 61,
+  "rules": [
+   {
+    "rule": "close_below_ema",
+    "a": 50
+   },
+   {
+    "rule": "wt_red_dot"
+   },
+   {
+    "rule": "wt_below",
+    "b": -53
+   },
+   {
+    "rule": "macd_negative"
+   },
+   {
+    "rule": "ao_red"
+   }
+  ],
+  "rules_text": [
+   "Close below EMA (50)",
+   "Market Cipher red dot (WaveTrend crosses down) above 0",
+   "Market Cipher wave below -53 (oversold)",
+   "MACD below zero",
+   "Awesome Oscillator column is red (AO falling)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 238,
+  "name": "Long Setup",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "4h",
+  "why": "Wolf Pack ID and Market Cipher wave are in the green and above 53, and MACD is positive, indicating a bullish trend. Money flow crossover is a secondary confirmation that can be added for better accuracy.",
+  "quote": "We are printing a trigger wave on the 4-hour. Money flow um Wolf Pack ID has has crossed over that zero line. As soon as well, money Wolf Pack ID is also crossing on the 24 as soon as we get this this money flow crossover. Boom, off to the races.",
+  "unchecked": [
+   "money_flow_crossover"
+  ],
+  "lesson_id": 61,
+  "rules": [
+   {
+    "rule": "close_above_ema",
+    "a": 50
+   },
+   {
+    "rule": "wt_green_dot"
+   },
+   {
+    "rule": "wt_above",
+    "b": 53
+   },
+   {
+    "rule": "macd_positive"
+   }
+  ],
+  "rules_text": [
+   "Close above EMA (50)",
+   "Market Cipher green dot (WaveTrend crosses up) below 0",
+   "Market Cipher wave above 53 (overbought)",
+   "MACD above zero"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 239,
+  "name": "Short Setup",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "4h",
+  "why": "Wolf Pack ID and Market Cipher wave are in the red and below -53, and MACD is negative, indicating a bearish trend. Money flow crossover is a secondary confirmation that can be added for better accuracy.",
+  "quote": "On March 16th we printed a green wave whether or not this is an anchor or a trigger was still up for debate cuz we couldn't really see a clear direction. We printed a trigger wave right here or a wave, but notice Wolfpack ID was in the red on the 4-hour.",
+  "unchecked": [
+   "money_flow_crossover"
+  ],
+  "lesson_id": 61,
+  "rules": [
+   {
+    "rule": "close_below_ema",
+    "a": 50
+   },
+   {
+    "rule": "wt_red_dot"
+   },
+   {
+    "rule": "wt_below",
+    "b": -53
+   },
+   {
+    "rule": "macd_negative"
+   }
+  ],
+  "rules_text": [
+   "Close below EMA (50)",
+   "Market Cipher red dot (WaveTrend crosses down) above 0",
+   "Market Cipher wave below -53 (oversold)",
+   "MACD below zero"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  }
 ]
