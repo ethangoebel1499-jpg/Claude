@@ -96,29 +96,60 @@ def outcomes_pct(df: pd.DataFrame, direction: str, risk: np.ndarray, rr: float, 
     return np.clip(res, -1.0, rr)
 
 
+def simulate(df: pd.DataFrame, i: int, sgn: int, stop: float, tp1: float, tp2: float, max_bars: int = 300) -> float | None:
+    """One trade signalled on candle i (entry at the next open): half at TP1, then the stop moves to breakeven, the
+    rest at TP2. Moves are fractions of the entry. Returns R after fees, or None if there isn't enough future."""
+    o, h, l, c = (df[k].to_numpy(float) for k in ("open", "high", "low", "close"))
+    n = len(df)
+    if i + 1 >= n or not (stop > 0 and tp1 > 0):
+        return None
+    e = o[i + 1]
+    stop_px, t1, t2 = e * (1 - sgn * stop), e * (1 + sgn * tp1), e * (1 + sgn * max(tp2, tp1))
+    left, got, be = 1.0, 0.0, False
+    for j in range(i + 1, min(n, i + 1 + max_bars)):
+        adv, fav = (l[j], h[j]) if sgn > 0 else (h[j], l[j])
+        s_px = e if be else stop_px
+        if sgn * (adv - s_px) <= 0:                         # stop (or breakeven) first - the cautious order
+            got += left * sgn * (s_px - e) / e
+            left = 0.0
+            break
+        if left == 1.0 and sgn * (fav - t1) >= 0:
+            got += 0.5 * tp1
+            left, be = 0.5, True
+        if left == 0.5 and sgn * (fav - t2) >= 0:
+            got += 0.5 * max(tp2, tp1)
+            left = 0.0
+            break
+    if left > 0:
+        if j >= n - 1:
+            return None
+        got += left * sgn * (c[j] - e) / e
+    return (got - 2 * FEE) / stop
+
+
 def scan_s10(df: pd.DataFrame, direction: str, split: float = 0.7) -> dict | None:
-    """S10 with its own structure stop on every trade, half at 1R and half at 2R, fees included."""
+    """S10 as it trades: its own stop and chart-level targets on every trade, breakeven after TP1, fees included."""
     from mcbot import price_action as pa
     if len(df) < 300:
         return None
     sig = pa.signals(df, direction)
-    mask = brain.dedupe(sig[f"{direction}_entry"].to_numpy(bool))
-    risk = np.nan_to_num(sig["stop_pct"].to_numpy(float), nan=0.0)
-    gross = 0.5 * outcomes_pct(df, direction, risk, 1.0) + 0.5 * outcomes_pct(df, direction, risk, 2.0)
-    with np.errstate(divide="ignore", invalid="ignore"):
-        net = gross - np.where(risk > 0, 2 * FEE / risk, np.nan)
-    mask &= np.isfinite(net)
-    idx = np.flatnonzero(mask)
+    sgn = 1 if direction == "long" else -1
+    idx = np.flatnonzero(brain.dedupe(sig[f"{direction}_entry"].to_numpy(bool)))
+    st, t1, t2 = (sig[k].to_numpy(float) for k in ("stop_pct", "tp1_pct", "tp2_pct"))
+    rows = [(i, simulate(df, i, sgn, st[i], t1[i], t2[i])) for i in idx]
+    rows = [(i, r) for i, r in rows if r is not None and np.isfinite(r)]
     cut = int(len(df) * split)
-    if not len(idx):
+    if not rows:
         return {"trades": 0, "train_trades": 0, "test_trades": 0, "avg_r": None, "train_r": None, "test_r": None,
                 "edge": None, "avg_pct": None, "candles": len(df)}
-    tr, te = idx[idx < cut], idx[idx >= cut]
-    mean = lambda a: round(float(np.mean(net[a])), 3) if len(a) else None
-    # random baseline: same stop size rule is not defined off-signal, so compare with 0 (a fee-paying coin flip < 0)
-    return {"trades": int(len(idx)), "train_trades": int(len(tr)), "test_trades": int(len(te)), "avg_r": mean(idx),
-            "train_r": mean(tr), "test_r": mean(te), "edge": mean(idx),
-            "avg_pct": round(float(np.mean(net[idx] * risk[idx])) * 100, 3), "candles": len(df)}
+    r_all = np.array([r for _, r in rows])
+    tr = np.array([r for i, r in rows if i < cut])
+    te = np.array([r for i, r in rows if i >= cut])
+    mean = lambda a: round(float(a.mean()), 3) if len(a) else None
+    pct = np.array([r * st[i] for i, r in rows])
+    return {"trades": len(rows), "train_trades": len(tr), "test_trades": len(te), "avg_r": mean(r_all),
+            "train_r": mean(tr), "test_r": mean(te), "edge": mean(r_all),
+            "avg_pct": round(float(pct.mean()) * 100, 3), "candles": len(df)}
 
 
 def scan_one(df: pd.DataFrame, setup: dict, split: float = 0.7) -> dict | None:

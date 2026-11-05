@@ -39,6 +39,7 @@ class Position:
     reversal: bool = False            # close it early if losing and a confirmed reversal prints
     be_pct: float | None = None       # once this far in profit, the stop moves to the entry (breakeven)
     be_armed: bool = False            # ... and it has been
+    tp_pcts: list | None = None       # this trade's own targets (moves, e.g. [0.021, 0.048]); None = the run's
 
 
 @dataclass
@@ -112,7 +113,7 @@ class PositionManager:
 
     # ---- actions -------------------------------------------------------------
     def open(self, side: str, price: float, time, stop_pct: float | None = None, reversal: bool = False,
-             be_pct: float | None = None) -> bool:
+             be_pct: float | None = None, tp_pcts: list | None = None) -> bool:
         qty = self._round_qty(self.state.equity * self.fraction / price)
         if qty <= 0:
             self._event(time, "skip", f"{side} entry skipped: position size rounds to 0")
@@ -136,7 +137,8 @@ class PositionManager:
                                        broker=getattr(self.broker, "name", "sim"),
                                        stop_pct=float(stop_pct) if ok else None, reversal=bool(reversal),
                                        be_pct=float(be_pct) if be_pct is not None and math.isfinite(be_pct)
-                                       and be_pct > 0 else None)
+                                       and be_pct > 0 else None,
+                                       tp_pcts=tp_pcts if tp_pcts and len(tp_pcts) == len(self.fixed) else None)
         if self.store:
             self.store.fill(self.name, time, side, "entry", fill)
         self._event(time, "entry", f"{side.upper()} {fmt_qty(fill.qty)} @ {fmt_price(fill.price)}"
@@ -249,8 +251,9 @@ class PositionManager:
                 self.close_all(price, time, "reversal")
         self.state.pending_entry = None
         if self.state.position is None and self.state.equity > 0 and not bool(sig.get("pause", False)):
+            tps = [_num(sig.get(f"tp{k + 1}_pct")) for k in range(len(self.fixed))]
             own = dict(stop_pct=_num(sig.get("stop_pct")), reversal=bool(sig.get("use_reversal", False)),
-                       be_pct=_num(sig.get("be_pct")))
+                       be_pct=_num(sig.get("be_pct")), tp_pcts=tps if all(tps) else None)
             if sig["long_entry"]:
                 self.open("long", price, time, **own)
             elif self.shorts and sig["short_entry"]:
@@ -281,7 +284,7 @@ class PositionManager:
             return
         while self.state.position is not None and p.targets_hit < len(self.fixed):
             level, size = self.fixed[p.targets_hit]
-            level *= self._scale()
+            level = p.tp_pcts[p.targets_hit] if p.tp_pcts else level * self._scale()
             if self._move(favourable) < level:
                 break
             px = self._price_at(max(level, self._move(open_)))

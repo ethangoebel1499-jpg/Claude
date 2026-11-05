@@ -103,3 +103,36 @@ def test_s10_price_action_uses_no_indicators_and_is_scanned(stores, monkeypatch)
     proving.tick(a, lp, max_trials=5, log=lambda m: None)
     run = next(r for r in lp.runs() if r["name"] == "Trial S10 longs BTC 4h")
     assert run["strategy"] == "s10_long"
+
+
+def test_s10_follows_the_breakout_statistics_and_sets_its_own_targets():
+    from mcbot import price_action as pa
+    p_up, _ = pa.odds("ascending_triangle", "up", None)
+    p_dn, _ = pa.odds("ascending_triangle", "down", None)
+    assert p_up < pa.MIN_ODDS <= p_dn                      # crypto: ascending triangles broke DOWN most of the time
+    assert pa.odds("falling_wedge", "up", "up")[0] >= 80
+    df = synthetic(n=2500, seed=11, timeframe="4h")
+    sig = pa.signals(df)
+    trade = sig.long_entry | sig.short_entry
+    assert trade.any()
+    t = sig[trade]
+    assert (t.tp1_pct > 0).all() and (t.tp2_pct >= t.tp1_pct).all() and (t.tp1_pct >= pa.MIN_RR * t.stop_pct - 1e-9).all()
+    assert (t.be_pct == t.tp1_pct).all()                   # breakeven after TP1
+    f = pa.frame(df)
+    for w in f.why[trade]:                                  # a shape retest, or two reasons at once
+        assert "breakout retest" in w or len(w.split(" + ")) >= pa.CONFLUENCE
+
+
+def test_live_trader_uses_each_trades_own_targets():
+    idx = pd.date_range("2026-01-01", periods=30, freq="4h", tz="UTC")
+    c = np.linspace(100, 106, 30)
+    df = pd.DataFrame({"open": c, "high": c + 0.05, "low": c - 0.05, "close": c, "volume": 1.0}, index=idx)
+    sig = pd.DataFrame(False, index=idx, columns=["long_entry", "short_entry", "long_exit", "short_exit"])
+    sig["stop_pct"], sig["tp1_pct"], sig["tp2_pct"] = np.nan, np.nan, np.nan
+    sig.iloc[1, 0] = True
+    sig.loc[idx[1], ["stop_pct", "tp1_pct", "tp2_pct"]] = [0.02, 0.01, 0.04]
+    from livepaper.core import Exits
+    m = replay(df, sig, PositionManager("t", Exits(0.03, [(0.03, 0.5), (0.06, 0.5)]), shorts=False,
+                                        broker=SimBroker(fee=0)))
+    fills = m.trades[0]
+    assert fills["reason"] == "target2" and abs(fills["exit_price"] / fills["entry_price"] - 1.04) < 0.01

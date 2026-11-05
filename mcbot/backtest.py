@@ -30,6 +30,7 @@ class Trade:
     scale: float = 1.0                # targets x this (a trade with its own stop keeps the reward-to-risk)
     reversal: bool = False            # close early if losing on a confirmed reversal
     be: float | None = None           # stop moves to the entry once the trade is this far in profit
+    tps: list | None = None           # this trade's own target moves (overrides targets x scale)
     fills: list = field(default_factory=list)  # (time, price, fraction, reason)
 
 
@@ -146,14 +147,14 @@ def run_backtest(df: pd.DataFrame, signals: pd.DataFrame, *, allow_short: bool =
             return
         while pos is not None and pos.targets_hit < len(targets):
             level, size = targets[pos.targets_hit]
-            level *= pos.scale
+            level = pos.tps[pos.targets_hit] if pos.tps else level * pos.scale
             if best < level:
                 break
             px = fill_open if fill_open is not None else price_at(max(level, move_of(o[i])))
             pos.targets_hit += 1
             if trail_targets:
                 k = pos.targets_hit
-                pos.stop_move = 0.0 if k == 1 else targets[k - 2][0] * pos.scale
+                pos.stop_move = 0.0 if k == 1 else (pos.tps[k - 2] if pos.tps else targets[k - 2][0] * pos.scale)
             elif breakeven_after_tp1:
                 pos.stop_move = 0.0
             last = pos.targets_hit == len(targets) and not has_runner
@@ -168,6 +169,8 @@ def run_backtest(df: pd.DataFrame, signals: pd.DataFrame, *, allow_short: bool =
     use_rev = sig.get("use_reversal")
     be_col = sig.get("be_pct")                          # a strategy that sets each trade's breakeven trigger
     pause = sig.get("pause")                            # no NEW trades while set (open ones still exit normally)
+    tp_cols = [sig[f"tp{k + 1}_pct"] for k in range(len(targets))] if targets and all(
+        f"tp{k + 1}_pct" in sig for k in range(len(targets))) else None   # per-trade targets (e.g. chart levels)
     for i in range(len(df)):
         # 1) act on the previous (confirmed) bar at this bar's open
         if i > 0:
@@ -199,13 +202,15 @@ def run_backtest(df: pd.DataFrame, signals: pd.DataFrame, *, allow_short: bool =
                 rev = bool(use_rev[p]) if per_trade_rev else False
                 be = float(be_col[p]) if be_col is not None else float("nan")
                 be = be if np.isfinite(be) and be > 0 else None
+                tps = [float(c[p]) for c in tp_cols] if tp_cols else None
+                tps = tps if tps and all(np.isfinite(x) and x > 0 for x in tps) else None
                 if sig["long_entry"][p]:
                     pos = Trade("long", idx[i], o[i], stop_move=-own if own else stop0,
-                                scale=own / stop_loss if own else 1.0, reversal=rev, be=be)
+                                scale=own / stop_loss if own else 1.0, reversal=rev, be=be, tps=tps)
                 elif allow_short and sig["short_entry"][p]:
                     base = stop_loss_short or stop_loss
                     pos = Trade("short", idx[i], o[i], stop_move=-own if own else stop0_s,
-                                scale=own / base if own else 1.0, reversal=rev, be=be)
+                                scale=own / base if own else 1.0, reversal=rev, be=be, tps=tps)
 
         # 2) intrabar stop-loss / take-profits / liquidation
         if pos is not None:

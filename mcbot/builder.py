@@ -194,6 +194,7 @@ def pattern_frame(d: pd.DataFrame) -> pd.DataFrame:
     bias = np.array([""] * n, dtype=object)
     brk = np.array([""] * n, dtype=object)
     prog = np.full(n, np.nan)
+    line, other, target = np.full(n, np.nan), np.full(n, np.nan), np.full(n, np.nan)
     prev = None
     for i in range(n):
         p = det.find(i) if i >= 30 else None
@@ -201,12 +202,20 @@ def pattern_frame(d: pd.DataFrame) -> pd.DataFrame:
             brk[i] = det.broke(prev, i) or ""
             if brk[i]:                              # the break candle still belongs to the pattern that broke
                 kind[i], bias[i] = prev.kind, prev.bias or ""
+                up = brk[i] == "up"
+                line[i] = prev.up(i) if up else prev.lo(i)          # the line it broke
+                other[i] = prev.lo(i) if up else prev.up(i)         # the far side of the shape
+                try:
+                    target[i] = prev.target(brk[i], i)              # measured move
+                except Exception:
+                    pass
         if p is not None:
             kind[i], bias[i] = p.kind, p.bias or ""
             pr = p.progress(i)
             prog[i] = np.nan if pr is None else pr
         prev = p
-    out = pd.DataFrame({"kind": kind, "bias": bias, "broke": brk, "progress": prog}, index=d.index)
+    out = pd.DataFrame({"kind": kind, "bias": bias, "broke": brk, "progress": prog, "line": line, "other": other,
+                        "target": target}, index=d.index)
     if len(_PAT_CACHE) > 8:
         _PAT_CACHE.clear()
     _PAT_CACHE[k] = out
