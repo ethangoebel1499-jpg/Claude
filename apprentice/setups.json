@@ -56764,5 +56764,112 @@
   "hints": null,
   "tune": null,
   "exit_plan": null
+ },
+ {
+  "id": 355,
+  "name": "Support Breakdown",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "short-term",
+  "why": "If the dollar index and S&P 500 are rejecting support, it suggests a potential move to the downside for Bitcoin, as the teacher is bullish on a higher term time frame but cautious of a short-term breakdown.",
+  "quote": "if the dollar is coming up to get resistance in this Zone and rejecting and if the S P 500 is coming down to get support within this Zone and getting a bounce well then it becomes much more probable that Bitcoin if it's at one of these levels that we just looked at we'll be getting the bounce and of course I still remain bullish on a higher term time frame because Market structure is bullish I'm still holding my swing Longs from uh 16 300",
+  "unchecked": [
+   "Support at 103 to 104 Zone is being rejected by the S&P 500 and the dollar index."
+  ],
+  "lesson_id": 107,
+  "rules": [
+   {
+    "rule": "breakdown_low"
+   }
+  ],
+  "rules_text": [
+   "Close below the lowest low of the last 20 candles"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 356,
+  "name": "Short: Support Holding with Bullish Divergence",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "4h",
+  "why": "Support holding for a long time with bullish divergence on RSI, indicating potential continuation of the trend.",
+  "quote": "as long as we are holding this support right down here I will be looking for continued bullish divergences on the chart",
+  "unchecked": [
+   "Support holding for a long time"
+  ],
+  "lesson_id": 109,
+  "rules": [
+   {
+    "rule": "close_below_sma",
+    "a": 200
+   },
+   {
+    "rule": "rsi_bull_div",
+    "a": 30,
+    "b": 70
+   }
+  ],
+  "rules_text": [
+   "Close below SMA (200)",
+   "Bullish divergence: price lower low, RSI higher low - in the last 30 candles, lows/highs at most 70 candles apart"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 357,
+  "name": "Short: Breakdown from Support with Higher Low",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "4h",
+  "why": "Breakdown from support with a lower high, indicating a potential change in market structure and a short opportunity.",
+  "quote": "if we lose that level then I will say okay we've officially changed Market structure we will look to basically then uh find a bounce and then look to Short from a higher low potentially something like a Fibonacci golden pocket retracement like this right here this is what we would look to do",
+  "unchecked": [
+   "Support breakdown"
+  ],
+  "lesson_id": 109,
+  "rules": [
+   {
+    "rule": "close_below_sma",
+    "a": 200
+   },
+   {
+    "rule": "lower_high",
+    "a": 5,
+    "b": 10
+   }
+  ],
+  "rules_text": [
+   "Close below SMA (200)",
+   "Lower high: the last 5 candles' high is below the 5 candles before"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  }
 ]
