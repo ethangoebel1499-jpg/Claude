@@ -63085,5 +63085,201 @@
   "hints": null,
   "tune": null,
   "exit_plan": null
+ },
+ {
+  "id": 512,
+  "name": "short_setup",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "daily",
+  "why": "The price is above the upper Bollinger band, and a shooting star or bearish pin bar could indicate a potential reversal.",
+  "quote": "if the Bitcoin price continues to pump there are some very important levels that we have so the upside that I'm currently going to be looking for trades at and the first one is going to be simply the golden pocket and the value area high coming in right around 29 000 the reason why this is such a key zone is because it's simply the value area high of the range right we have seen this act as resistance once twice three times then we saw it acting as support right here and so if we come back to the area we could be looking for a potential rejection however there's a level that's much juicier than that that I currently have my sites set on and this is the thirty thousand dollar level",
+  "unchecked": [
+   "shooting_star"
+  ],
+  "lesson_id": 210,
+  "rules": [
+   {
+    "rule": "close_above_ema",
+    "a": 30000
+   },
+   {
+    "rule": "bb_above_upper",
+    "a": 20,
+    "b": 2
+   }
+  ],
+  "rules_text": [
+   "Close above EMA (30000)",
+   "Close above the upper Bollinger band (20 candles, 2 deviations)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 513,
+  "name": "long_setup",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "daily",
+  "why": "The price is below the lower Bollinger band, and a hammer or bullish pin bar could indicate a potential reversal.",
+  "quote": "the first one is going to be that 24 to 25 000 level where we have massive amounts of liquidity as well as a major support resistance flip as well as the 382 Fibonacci coming in from the low we made in November all the way to the high that we just made right here and so if we come up and we come to that thirty thousand dollar zone or even if we don't do it and we just reject from here this is the major zone of support I am currently looking to fill my next major what could be a swing long position",
+  "unchecked": [
+   "hammer"
+  ],
+  "lesson_id": 210,
+  "rules": [
+   {
+    "rule": "close_below_ema",
+    "a": 24000
+   },
+   {
+    "rule": "bb_below_lower",
+    "a": 20,
+    "b": 2
+   }
+  ],
+  "rules_text": [
+   "Close below EMA (24000)",
+   "Close below the lower Bollinger band (20 candles, 2 deviations)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 514,
+  "name": "Long Setup",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "4h",
+  "why": "Bullish Market structure, hidden bullish divergence, and bullish pattern on lower timeframes",
+  "quote": "we are seeing the very bullish pattern as the price is getting lower and lower to our key level we are seeing the momentum wage and the money flow on the one hour time frame start to get higher",
+  "unchecked": [
+   "price touches the lower Bollinger band"
+  ],
+  "lesson_id": 211,
+  "rules": [
+   {
+    "rule": "close_above_sma",
+    "a": 200
+   },
+   {
+    "rule": "rsi_above",
+    "a": 30
+   },
+   {
+    "rule": "wt_above",
+    "a": 53
+   },
+   {
+    "rule": "wt_green_dot"
+   },
+   {
+    "rule": "macd_positive"
+   },
+   {
+    "rule": "ao_above_zero"
+   },
+   {
+    "rule": "higher_low",
+    "a": 5,
+    "b": 5
+   }
+  ],
+  "rules_text": [
+   "Close above SMA (200)",
+   "RSI (14) above 30",
+   "Market Cipher wave above 53 (overbought)",
+   "Market Cipher green dot (WaveTrend crosses up) below 0",
+   "MACD above zero",
+   "Awesome Oscillator above zero",
+   "Higher low: the last 5 candles' low is above the 5 candles before"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 515,
+  "name": "Short Setup",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "4h",
+  "why": "Bearish Market structure, hidden bearish divergence, and bearish pattern on lower timeframes",
+  "quote": "if we are not able to reclaim that 27358 I'm going to close out the long trades when we come back down to my entry after taking a small uh take profit one",
+  "unchecked": [
+   "price touches the upper Bollinger band"
+  ],
+  "lesson_id": 211,
+  "rules": [
+   {
+    "rule": "close_below_sma",
+    "a": 200
+   },
+   {
+    "rule": "rsi_below",
+    "a": 30
+   },
+   {
+    "rule": "wt_below",
+    "a": -53
+   },
+   {
+    "rule": "wt_red_dot"
+   },
+   {
+    "rule": "macd_negative"
+   },
+   {
+    "rule": "ao_below_zero"
+   },
+   {
+    "rule": "lower_high",
+    "a": 5,
+    "b": 5
+   }
+  ],
+  "rules_text": [
+   "Close below SMA (200)",
+   "RSI (14) below 30",
+   "Market Cipher wave below -53 (oversold)",
+   "Market Cipher red dot (WaveTrend crosses down) above 0",
+   "MACD below zero",
+   "Awesome Oscillator below zero",
+   "Lower high: the last 5 candles' high is below the 5 candles before"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  }
 ]
