@@ -63281,5 +63281,366 @@
   "hints": null,
   "tune": null,
   "exit_plan": null
+ },
+ {
+  "id": 516,
+  "name": "Bearish Breakdown",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 0.7,
+  "rr": 1.5,
+  "timeframe": "daily",
+  "why": "If the green box is lost, it becomes very bearish, and the take profits are set to 16,500.",
+  "quote": "if we are going to not only lose the 200 week moving average but the green box now we are back in inside this old range and it actually becomes more probable than not that we will make our way back down to the low of the range where we have a very very very important zone of support",
+  "unchecked": [
+   "if we are unable to hold the green box then it becomes very very bearish"
+  ],
+  "lesson_id": 214,
+  "rules": [
+   {
+    "rule": "close_below_ema",
+    "a": 200
+   },
+   {
+    "rule": "breakdown_low"
+   }
+  ],
+  "rules_text": [
+   "Close below EMA (200)",
+   "Close below the lowest low of the last 20 candles"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 517,
+  "name": "No specific setup",
+  "direction": "long",
+  "status": "needs rules",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "N/A",
+  "why": "The video content is not related to trading and does not provide any specific setup or trade idea.",
+  "quote": "I still pray you and your family are very blessed multiple ways and obviously everybody in the next video peace",
+  "unchecked": [
+   "No specific setup was provided in the video."
+  ],
+  "lesson_id": 217,
+  "rules": [],
+  "rules_text": [],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 518,
+  "name": "Chicken's Drinking Water Bullish Pattern",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 100.0,
+  "rr": 1.5,
+  "timeframe": "1h",
+  "why": "This pattern indicates a potential bottom and a change in market structure, which is a sign of strength in the uptrend.",
+  "quote": "The fact right now that the price is holding above 25 300 is actually a sign of strength and the fact that we are bouncing literally from the exact 24 820 level that we gave right here uh is also in my opinion a sign that potentially a real bottom is in.",
+  "unchecked": [
+   "Price makes a slightly lower low to grab liquidity from the initial low, stopping out everybody who had been long and it does so with bullish diverse emergencies and the price dips down below the line and then quickly lapses the price back up."
+  ],
+  "lesson_id": 218,
+  "rules": [
+   {
+    "rule": "close_above_sma",
+    "a": 25300
+   },
+   {
+    "rule": "bull_engulf"
+   }
+  ],
+  "rules_text": [
+   "Close above SMA (25300)",
+   "Bullish engulfing candle"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 519,
+  "name": "Change in Market Structure",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 100.0,
+  "rr": 1.5,
+  "timeframe": "4h",
+  "why": "A change in market structure, such as coming above what used to be important support and holding it as resistance, is a sign of strength and a potential bottom in the uptrend.",
+  "quote": "What is a sign of strength a sign of strength is in my opinion changing Market structure at least on the four hour time frame what that means is I would like to come above what used to be very important support and now hold that as our resistance so it's pretty clear that the 26 400 level this was our last lower high this is our last higher low that we put in in the uptrend and so if the Bitcoin price can actually come above this level boom and put in a higher high changing Market structure locally then I will say that yes this very probable the bottom could be in and we could look then to long a higher low and continue to the upside.",
+  "unchecked": [
+   "Price comes above what used to be important support and now holds it as resistance."
+  ],
+  "lesson_id": 218,
+  "rules": [
+   {
+    "rule": "close_above_sma",
+    "a": 26400
+   },
+   {
+    "rule": "higher_low"
+   }
+  ],
+  "rules_text": [
+   "Close above SMA (26400)",
+   "Higher low: the last 5 candles' low is above the 5 candles before"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 520,
+  "name": "long_setup",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "1h",
+  "why": "The setup is based on the formation of a bullish Market structure, higher low, and positive momentum indicators. The target is the high of the local range and the Fibonacci golden pocket.",
+  "quote": "the target of this potential trade is going to be right around the 29,000 level where we have have the high of our local range as well as the Fibonacci golden pocket from the top to the bottom",
+  "unchecked": [
+   "target_level: 29,000"
+  ],
+  "lesson_id": 219,
+  "rules": [
+   {
+    "rule": "close_above_sma",
+    "a": 200
+   },
+   {
+    "rule": "higher_low",
+    "a": 5,
+    "b": 5
+   },
+   {
+    "rule": "close_above_ema",
+    "a": 50
+   },
+   {
+    "rule": "wt_above",
+    "a": 53
+   },
+   {
+    "rule": "mf_positive"
+   },
+   {
+    "rule": "bb_above_mid"
+   },
+   {
+    "rule": "ao_above_zero"
+   },
+   {
+    "rule": "macd_positive"
+   },
+   {
+    "rule": "wt_green_dot"
+   }
+  ],
+  "rules_text": [
+   "Close above SMA (200)",
+   "Higher low: the last 5 candles' low is above the 5 candles before",
+   "Close above EMA (50)",
+   "Market Cipher wave above 53 (overbought)",
+   "Market Cipher money flow above zero (green)",
+   "Close above the Bollinger middle band",
+   "Awesome Oscillator above zero",
+   "MACD above zero",
+   "Market Cipher green dot (WaveTrend crosses up) below 0"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 521,
+  "name": "long_setup",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "24m",
+  "why": "The setup is based on the formation of a higher low, positive momentum indicators, and the Market Cipher green dot. The target is the high of the local range and the Fibonacci golden pocket.",
+  "quote": "as the price came down to make that final low the 24 minute time frame making a higher low showing us that we were going to get a significant Bounce from that level",
+  "unchecked": [
+   "target_level: 29,000"
+  ],
+  "lesson_id": 219,
+  "rules": [
+   {
+    "rule": "higher_low",
+    "a": 5,
+    "b": 5
+   },
+   {
+    "rule": "wt_green_dot"
+   },
+   {
+    "rule": "mf_positive"
+   },
+   {
+    "rule": "ao_above_zero"
+   },
+   {
+    "rule": "macd_positive"
+   }
+  ],
+  "rules_text": [
+   "Higher low: the last 5 candles' low is above the 5 candles before",
+   "Market Cipher green dot (WaveTrend crosses up) below 0",
+   "Market Cipher money flow above zero (green)",
+   "Awesome Oscillator above zero",
+   "MACD above zero"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 522,
+  "name": "hidden_bull_div",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "4h",
+  "why": "Hidden bullish divergence on higher time frames with a regular bullish divergence on lower time frames, indicating a continuation pattern and a bullish signal.",
+  "quote": "This is a continuation pattern and it becomes very very powerful when we actually see the hidden bullish Divergence in Confluence with a regular bullish Divergence on Lower time frames such as the four hour",
+  "unchecked": [
+   "Higher low: the last 5 candles' low is above the 5 candles before"
+  ],
+  "lesson_id": 220,
+  "rules": [
+   {
+    "rule": "rsi_bull_div"
+   },
+   {
+    "rule": "higher_low"
+   }
+  ],
+  "rules_text": [
+   "Bullish divergence: price lower low, RSI higher low - in the last 3 candles, lows/highs at most 60 candles apart",
+   "Higher low: the last 5 candles' low is above the 5 candles before"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 523,
+  "name": "fibonacci_golden_pocket",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "4h",
+  "why": "The bottom is likely in if the area between the Fibonacci golden pocket and the 786 level holds, and the price is making a higher low.",
+  "quote": "we cannot lose the area between the Fibonacci golden pocket and the 786 this is coming in between twenty five thousand three hundred dollars and about twenty five thousand seven hundred dollars so we have a two hundred dollar range right here that needs to hold in order for me to say the bottom is likely in",
+  "unchecked": [
+   "Higher low: the last 5 candles' low is above the 5 candles before"
+  ],
+  "lesson_id": 220,
+  "rules": [
+   {
+    "rule": "close_above_sma",
+    "a": 200
+   },
+   {
+    "rule": "rsi_above",
+    "a": 30
+   },
+   {
+    "rule": "higher_low"
+   }
+  ],
+  "rules_text": [
+   "Close above SMA (200)",
+   "RSI (14) above 30",
+   "Higher low: the last 5 candles' low is above the 5 candles before"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 524,
+  "name": "nines_indicator",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "4h",
+  "why": "The nines indicator is printing pink diamonds, which indicate a potential swing short trade. Once the pink diamonds stop printing and a higher high is formed, a short trade can be considered.",
+  "quote": "first of all we want to look at the nines indicator which is right now printing a potential swing short trade setup the way it works when we start printing these pink diamonds on the top of the charts telling us look for a swing trade and what we want to see is we want to see once these pink diamonds Stop Printing when we actually put in another higher high that's a week high and we can look for a short",
+  "unchecked": [
+   "pink diamonds printing"
+  ],
+  "lesson_id": 221,
+  "rules": [
+   {
+    "rule": "near_apex"
+   },
+   {
+    "rule": "higher_low"
+   }
+  ],
+  "rules_text": [
+   "Squeezed near a triangle / wedge apex (75% of the way there or more)",
+   "Higher low: the last 5 candles' low is above the 5 candles before"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  }
 ]
