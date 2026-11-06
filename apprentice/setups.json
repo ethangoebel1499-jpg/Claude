@@ -124598,5 +124598,282 @@
   "hints": null,
   "tune": null,
   "exit_plan": null
+ },
+ {
+  "id": 746,
+  "name": "Potential Big Push to the Upside",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "daily",
+  "why": "The teacher expects a big push to the upside based on the current support level and the potential for the CME gap to be filled, creating a bullish divergence on the Market Cipher wave indicator.",
+  "quote": "I'm leaning still more bullish that we're going to get that big push to the upside. The question is where are we going to find the bottom and I'd say it's most probable that it happens at this support resistance flip uh from this previous range right here.",
+  "unchecked": [
+   "weekly bearish divergences"
+  ],
+  "lesson_id": 351,
+  "rules": [
+   {
+    "rule": "close_above_sma",
+    "a": 200
+   },
+   {
+    "rule": "wt_below",
+    "a": -53
+   },
+   {
+    "rule": "rsi_below",
+    "a": 30
+   },
+   {
+    "rule": "wt_bull_div"
+   }
+  ],
+  "rules_text": [
+   "Close above SMA (200)",
+   "Market Cipher wave below -53 (oversold)",
+   "RSI (14) below 30",
+   "Bullish divergence: price lower low, Market Cipher wave higher low - in the last 3 candles, lows/highs at most 60 candles apart"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 747,
+  "name": "Bearish Pattern",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 2.0,
+  "rr": 1.5,
+  "timeframe": "daily",
+  "why": "The pattern of higher highs in price and lower highs in momentum (Market Cipher B and Money Flow) suggests a bearish divergence, which could lead to a significant drop in price if it breaks below a key level of resistance ($109,000). The teacher advises traders to be prepared for a move back down to 97,000 if the key support level is broken. He emphasizes the importance of planning trades to lock in profits rather than predicting market movements.",
+  "quote": "The Bitcoin price right now is in danger of confirming a very bearish looking pattern on the chart, which as the price is making higher highs, we're seeing the weekly market cipher B make lower highs and we're seeing this money flow get lower. This is known as the bearish Sam Bankman Freed man boob pattern where as the price is getting higher into a key area of resistance, Sam Bankman Freed, well everything's getting lower, the man boobs getting lower, the money flow on his chest getting lower, the red pepperoni nipples getting lower, the upside down smile getting lower, the eyes getting lower, even the hair getting lower. Some people call this a bearish divergence.",
+  "unchecked": [
+   "Higher highs in price, lower highs in momentum (Market Cipher B and Money Flow)"
+  ],
+  "lesson_id": 352,
+  "rules": [
+   {
+    "rule": "close_below_ema",
+    "a": 21,
+    "b": 50
+   },
+   {
+    "rule": "macd_bear_div",
+    "a": 30,
+    "b": 60
+   }
+  ],
+  "rules_text": [
+   "Close below EMA (21)",
+   "Bearish divergence: price higher high, MACD lower high - in the last 30 candles, lows/highs at most 60 candles apart"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 748,
+  "name": "Hidden Bullish Divergence",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 2.0,
+  "rr": 1.5,
+  "timeframe": "daily",
+  "why": "The hidden bullish divergence occurs when the price is making higher lows and the momentum is making lower lows, which can signal a continuation of the uptrend. The teacher advises traders to be prepared for a move back down to 97,000 if the key support level is broken. He emphasizes the importance of planning trades to lock in profits rather than predicting market movements.",
+  "quote": "All right, this is how we were able to take long trades most specifically at our $84,000 level setup given in the Casper Kroovy Discord. And if we go to a lower term time frame here, you can see that this hidden bullish divergence in April, the bottom was marked with the regular bullish divergence and then this trend line right here connected to $100,000. That's how we were able to take the trade from $100,000 in the Casper Crew VIP Discord pretty much perfectly.",
+  "unchecked": [
+   "Higher lows in price, lower lows in momentum (Market Cipher B and Money Flow)"
+  ],
+  "lesson_id": 352,
+  "rules": [
+   {
+    "rule": "close_above_ema",
+    "a": 21,
+    "b": 50
+   },
+   {
+    "rule": "macd_hidden_bull_div",
+    "a": 30,
+    "b": 60
+   }
+  ],
+  "rules_text": [
+   "Close above EMA (21)",
+   "Hidden bullish divergence: price higher low, MACD lower low (trend continuation) - in the last 30 candles, lows/highs at most 60 candles apart"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 749,
+  "name": "Long Trade Setup",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "daily",
+  "why": "If the price comes down to a certain area on the chart and I see my confirmations, then I can take a trade. Focus on what you can control. You can control where you take a trade when and if you take a trade. Don't try and predict. So, when I'm talking about the price coming down potentially to $97,000, people immediately hit the thumbs down button. But here's the thing, you're missing out on really how to trade properly. It's possible that it could happen if we lose this box. So, why would we want to be prepared for it? Well, because let's say we do get a catastrophic move below $100,000 again. Well, we're coming back down towards very very very very key zones of support like the macro Fibonacci golden pocket, the point of control of the entire range and basically a massive liquidity grab of our June lows. And this could then be the opportunity to get into a juicy long trade, right? So, if we're not prepared for that level, how are we ever going to take advantage of it when most people are going to be selling the bottom here? We can be prepared and looking at our indicator say, you know what, I think I have a good opportunity here to make a little bit of mu laa if you know what I'm saying. So guys, that is the Bitcoin update for today. May God bless everybody in the name of Jesus Yeshua, the Messiah. I pray you and your family are blessed in many, many ways. And I will see everybody in the next video. Peace.",
+  "quote": "Good traders don't predict they plan. We cannot control what the price is going to do. But we can identify key areas and plan and say look if the price comes here and I see certain confirmations on market cipher then I can go ahead and take a trade.",
+  "unchecked": [
+   "Price should be above the 200 SMA and below -53 on the Market Cipher wave, and the Market Cipher should have a green dot (WaveTrend crosses up) below 0."
+  ],
+  "lesson_id": 352,
+  "rules": [
+   {
+    "rule": "close_above_sma",
+    "a": 200
+   },
+   {
+    "rule": "wt_below",
+    "a": -53
+   },
+   {
+    "rule": "wt_green_dot"
+   }
+  ],
+  "rules_text": [
+   "Close above SMA (200)",
+   "Market Cipher wave below -53 (oversold)",
+   "Market Cipher green dot (WaveTrend crosses up) below 0"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 750,
+  "name": "bullish_divergence",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.0,
+  "rr": 4.0,
+  "timeframe": "1h",
+  "why": "Bullish divergences on lower timeframes can signal a potential reversal in the trend, especially when the price is dipping down and forming these divergences, and then a retest of the support level leads to a long entry. The risk-reward ratio is favorable with a potential upside of 4 to 1 or 5 to 1 depending on the target price level.",
+  "quote": "And if you see the price is dipping down and forming these bullish divergences that we're looking for. If you then see a bounce, you actually see a bounce like something like this. Let's say we dip down a little bit lower and then we get start to see a bounce and we change market structure in the sense that we're actually making a higher high. Then when we start to get a retest, you can enter into a long trade.",
+  "unchecked": [
+   "price is dipping down and forming these bullish divergences that we're looking for"
+  ],
+  "lesson_id": 353,
+  "rules": [
+   {
+    "rule": "close_below_ema",
+    "a": 50
+   },
+   {
+    "rule": "rsi_bull_div",
+    "a": 30,
+    "b": 60
+   }
+  ],
+  "rules_text": [
+   "Close below EMA (50)",
+   "Bullish divergence: price lower low, RSI higher low - in the last 30 candles, lows/highs at most 60 candles apart"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 751,
+  "name": "hidden_bull_div",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "4h",
+  "why": "Reclaiming key resistance as support gives us a valid reason to take a trade. If we confirm this bullish divergence, it could be the bottom of this retracement and we could look for a move up to the highs. If all this trading stuff is new for you, I highly recommend you check out my course. It only costs $3.99. That's right. It's totally free on YouTube. An 18-part course for free. All right. As the title says, life-changing. Wow. Who wouldn't click on that title? All right. We even come down here. You can see 18 sessions. Absolutely amazing. Sometimes we even pull on the dang wig. >> Let's see. Here we go. >> Yeah. Sometimes we even put on the dang wig. All right. Now, you could tell this is a real trading guru right here because all internet trading gurus and all gurus on the internet for some reason they all grow out their hair, right? I don't know what it is, but you ever notice that you have these gurus the first few years of their YouTube channel, they keep their hair short, but then eventually they grow long. Well, that's how you know this is a legit course for free.99, baby. All right, so go check it out. Also, if you want to trade cryptocurrency, altcoins, bitcoins, I'm currently trading on KSEX, blowfin in, and weeks. Now, blowfin in some reasons, I guess you need a VPN, but you do not need to KYC on these exchanges, which is why I like them. Also, if you sign up using my link, you are eligible for $100 giveaways that we do every single week. You don't need to deposit anything to be eligible for the giveaways. Also, if you want to join the Casper VIP discord where we gave the long trade setup in advance where we regularly every single day have three instructors giving you their setups, telling you what they are doing. You can go to Jason Casperrading.com, click the link to join the best dang trading community in the world. Now, coming back to the chart talking about flipping uh resistance into support, we know that that is bullish. If we reject from here and we get another move to the downside, all right, then this is still very bullish to me. Why? Because if we take our Fibonacci from the last low in April to the current high, you can see that we be coming right into this Fibonacci 618 level, this is a major major area of support. Not only that, we can just clearly see by going back in time that this level here, let's let's use a a trend line. This level was our resistance, our resistance, our consolidation, consolidation, we flip it into support. It's a very, very key level in this zone. And if we get another move down to that very key support, what would that do to our 4hour time frame, that would actually give us what's known as the bullish Sam Bankman Freedman boob pattern. All right, let's check it out. This is Sam Bankman Freedman.",
+  "quote": "If we can come above this area and we confirm that hidden bullish divergence, then I would say this is very bullish. And then what we could do is we could look for a move up. We could look for now a back test of this fair value zone. And then we could take a trade up to the highs. Right? Again, we're not getting bullish because there's a big pump. We're getting bullish because we're reclaiming what used to be resistance. We're retesting it. The market participants are saying, 'Hey, you know, this is resistance historically where people were looking to sell, but are we now willing to buy and we see that bounce?' And so we say we have hidden bullish divergences. We're changing market structure from bearish back into bullish. We're reclaiming key resistance as support. That gives us a valid reason to take a trade. And if all this trading stuff is new for you, I highly recommend you check out my course. It only costs $3.99. That's right. It's totally free on YouTube. An 18-part course for free. All right. As the title says, life-changing. Wow. Who wouldn't click on that title? All right. We even come down here. You can see 18 sessions. Absolutely amazing. Sometimes we even pull on the dang wig. >> Let's see. Here we go. >> Yeah. Sometimes we even put on the dang wig. All right. Now, you could tell this is a real trading guru right here because all internet trading gurus and all gurus on the internet for some reason they all grow out their hair, right? I don't know what it is, but you ever notice that you have these gurus the first few years of their YouTube channel, they keep their hair short, but then eventually they grow long. Well, that's how you know this is a legit course for free.99, baby. All right, so go check it out. Also, if you want to trade cryptocurrency, altcoins, bitcoins, I'm currently trading on KSEX, blowfin in, and weeks. Now, blowfin in some reasons, I guess you need a VPN, but you do not need to KYC on these exchanges, which is why I like them. Also, if you sign up using my link, you are eligible for $100 giveaways that we do every single week. You don't need to deposit anything to be eligible for the giveaways. Also, if you want to join the Casper VIP discord where we gave the long trade setup in advance where we regularly every single day have three instructors giving you their setups, telling you what they are doing. You can go to Jason Casperrading.com, click the link to join the best dang trading community in the world. Now, coming back to the chart talking about flipping uh resistance into support, we know that that is bullish. If we reject from here and we get another move to the downside, all right, then this is still very bullish to me. Why? Because if we take our Fibonacci from the last low in April to the current high, you can see that we be coming right into this Fibonacci 618 level, this is a major major area of support. Not only that, we can just clearly see by going back in time that this level here, let's let's use a a trend line. This level was our resistance, our resistance, our consolidation, consolidation, we flip it into support. It's a very, very key level in this zone. And if we get another move down to that very key support, what would that do to our 4hour time frame, that would actually give us what's known as the bullish Sam Bankman Freedman boob pattern. All right, let's check it out. This is Sam Bankman Freedman.",
+  "unchecked": [
+   "price makes a higher high and then retraces a little bit and makes a higher low and you see that lower momentum wave"
+  ],
+  "lesson_id": 354,
+  "rules": [
+   {
+    "rule": "higher_low",
+    "a": 5,
+    "b": 5
+   },
+   {
+    "rule": "wt_bull_div",
+    "a": 3,
+    "b": 3
+   }
+  ],
+  "rules_text": [
+   "Higher low: the last 5 candles' low is above the 5 candles before",
+   "Bullish divergence: price lower low, Market Cipher wave higher low - in the last 3 candles, lows/highs at most 3 candles apart"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 752,
+  "name": "hidden_bull_div",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "4h",
+  "why": "The price is approaching a key support level, and momentum indicators are showing higher lows, indicating a hidden bullish divergence. The 4-hour chart shows a bullish Sam Bankman-Fried boob pattern, which is a continuation pattern. The money flow on Market Cipher B is getting higher over time, and the wave is below 53, confirming the hidden bullish divergence on the daily chart.",
+  "quote": "If we get another move down to that very key support, what would that do to our 4hour time frame, that would actually give us what's known as the bullish Sam Bankman Freed man boob pattern. All right, let's check it out. This is Sam Bankman Freed hanging upside down. If we flip them right side up, we can see that for some reason as the price is getting lower to key support, the man boobs are getting higher over time. The money flow on market cipher B is getting higher over time. Even the smile, the smirk is getting higher over time. Even the eyes angled upward. Even the hair, look at that angle. All right. In fact, you know what? Just if we even just take these memory glamorouses and we post them onto the chart, we can see the resemblance is striking. How if we just extrapolate into the future what could happen on another dip, we would easily see the former FTX exchange owner and CEO clearly on the chart. The money flow on the 4 hour would be getting higher, right? And the momentum waves would be getting higher. This would be happening in the context of a hidden bullish divergence printing on the chart.",
+  "unchecked": [
+   "price is approaching a key support level (Fibonacci 618 level)"
+  ],
+  "lesson_id": 354,
+  "rules": [
+   {
+    "rule": "rsi_bull_div"
+   },
+   {
+    "rule": "wt_below"
+   }
+  ],
+  "rules_text": [
+   "Bullish divergence: price lower low, RSI higher low - in the last 3 candles, lows/highs at most 60 candles apart",
+   "Market Cipher wave below -53 (oversold)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  }
 ]
