@@ -65952,5 +65952,358 @@
   "hints": null,
   "tune": null,
   "exit_plan": null
+ },
+ {
+  "id": 582,
+  "name": "200-day MA above 20-month MA",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 0.7,
+  "rr": 2.0,
+  "timeframe": "monthly",
+  "why": "Historically, this signal has preceded major bull markets in Bitcoin and other cryptocurrencies.",
+  "quote": "once the green 2002 day moving average crossed above that 20-month moving average it happened right leading up into the having Boom the bull market was official",
+  "unchecked": [
+   "This setup is a long-term signal and may take months to confirm."
+  ],
+  "lesson_id": 257,
+  "rules": [
+   {
+    "rule": "close_above_sma",
+    "a": 200
+   },
+   {
+    "rule": "close_above_sma",
+    "a": 20
+   }
+  ],
+  "rules_text": [
+   "Close above SMA (200)",
+   "Close above SMA (20)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 583,
+  "name": "lower_low",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "weekly",
+  "why": "The weekly chart shows a potential lower low, which could signal a change in market structure from uptrend to downtrend.",
+  "quote": "if we close that candle below 24 602 on the coinbase chart this is officially now a lower low officially flipping a local uptrend into a downtrend on the weekly time frame in which case we can look for price to eventually get a move back down to here in the next year or so leading up until that time when the Bitcoin having occurs",
+  "unchecked": [
+   "if we close that candle below 24 602 on the coinbase chart this is officially now a lower low officially flipping a local uptrend into a downtrend on the weekly time frame in which case we can look for price to eventually get a move back down to here in the next year or so leading up until that time when the Bitcoin having occurs"
+  ],
+  "lesson_id": 258,
+  "rules": [
+   {
+    "rule": "close_below_ema",
+    "a": 24602
+   }
+  ],
+  "rules_text": [
+   "Close below EMA (24602)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 584,
+  "name": "Support Breakdown",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "daily",
+  "why": "The price is closing below the 50 EMA and 200 SMA, indicating a potential bearish move.",
+  "quote": "if we close a daily candle below 23 500 that then opens the door for a large move all the way back down to the low of our range around that sixteen thousand dollar level",
+  "unchecked": [
+   "close below 23.5K"
+  ],
+  "lesson_id": 259,
+  "rules": [
+   {
+    "rule": "close_below_ema",
+    "a": 50,
+    "b": 200
+   },
+   {
+    "rule": "close_below_sma",
+    "a": 200
+   }
+  ],
+  "rules_text": [
+   "Close below EMA (50)",
+   "Close below SMA (200)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 585,
+  "name": "Long: Reclaim Key Support Level",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 0.7,
+  "rr": 2.0,
+  "timeframe": "daily",
+  "why": "Reclaiming key support levels can signal a potential trend reversal and a long opportunity.",
+  "quote": "if we start to reclaim very key areas of resistance as support I will actually look then to continue to build these long trades that I actually began to open down here at these lows",
+  "unchecked": [
+   "specific criteria for long trade"
+  ],
+  "lesson_id": 260,
+  "rules": [
+   {
+    "rule": "close_above_sma",
+    "a": 24925
+   },
+   {
+    "rule": "higher_low",
+    "a": 24925,
+    "b": 26400
+   }
+  ],
+  "rules_text": [
+   "Close above SMA (24925)",
+   "Higher low: the last 24925 candles' low is above the 24925 candles before"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 586,
+  "name": "Short: Rejection at Key Resistance",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 0.7,
+  "rr": 2.0,
+  "timeframe": "daily",
+  "why": "A rejection at key resistance can signal a potential trend continuation and a short opportunity.",
+  "quote": "if this pump continues the way I plan to trade this right now is to actually look for a short trade of rejection right around the retests of this trend line the Fibonacci golden pocket and the value area high of this range linked to basically short now a lower high in a continued downtrend as long as we're still seeing the Elizabeth Warren eyebrow pattern rear her ugly smile across those lower time frames",
+  "unchecked": [
+   "specific criteria for short trade"
+  ],
+  "lesson_id": 260,
+  "rules": [
+   {
+    "rule": "close_below_sma",
+    "a": 29000
+   },
+   {
+    "rule": "lower_high",
+    "a": 29000,
+    "b": 26400
+   }
+  ],
+  "rules_text": [
+   "Close below SMA (29000)",
+   "Lower high: the last 29000 candles' high is below the 29000 candles before"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 587,
+  "name": "short_setup",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "weekly",
+  "why": "The price is retracing to the downside, and the volume base is at 25000.",
+  "quote": "we are coming down to a key area of support to 25000 support resistance flip but look at this if we take a look at all the volume that traded for Bitcoin this is on coinbase most people were buying and selling Bitcoin at the price right around that yearly open right around 167-ish hundred dollars this means if the price actually comes now below 25000 it becomes more probable than not that we make our way back down to this key zone between the high volume node and the value area low of the range which brings us perfectly to our yearly open and so we need to be prepared for a move to the downside like this we can't let our emotions get to the best of us if Bitcoin gets this move to the downside we need to zoom out and realize this is perfectly normal there's a technical reason why we're getting moved to the downside we're coming back down to test our volume base right here and showing that indeed this is the low and then we can enter into that euphoric bull market.",
+  "unchecked": [
+   "coming down to a key area of support to 25000 support resistance flip"
+  ],
+  "lesson_id": 261,
+  "rules": [
+   {
+    "rule": "close_below_ema",
+    "a": 50
+   },
+   {
+    "rule": "bb_touch_lower",
+    "a": 20,
+    "b": 2
+   }
+  ],
+  "rules_text": [
+   "Close below EMA (50)",
+   "Low touched the lower Bollinger band in the last 20 candles"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 588,
+  "name": "buy_setup",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 7.0,
+  "timeframe": "long-term",
+  "why": "The setup is based on the technicals indicating a high probability of the bottom being in and a potential bullish move in the next few years. The risk-reward ratio is seven to one, making it a valid investment strategy.",
+  "quote": "let's say the Bitcoin all-time high doesn't even hit 100K let's say we only hit 80k which is going to be coming in right about here from where we're at right now that is about a 100 a 200 game if we can DCA if we get that that next move down and our average entry is let's say around twenty one thousand dollars in my opinion even if we come down and take the lows this is still as a trade setup a seven to one risk reward ratio meaning if we're accumulating in this area right here starting where we're at right now and we get a dip down and we're buying along the way down and Bitcoin Only Hits 81k this is still seven times more reward than risk of course this is hypothetical as if you're buying on spot there really is no risk of liquidation but in my opinion this is a very valid investment strategy because we have the technicals behind us on the high term time frame saying look there's a very high probability that the bottom is in there's a very high probability that any accumulation that we do within the next few months especially if we get another drop to the downside is going to be very bullish in the next few years and even if we do conservative targets here lower than 100K because everyone's got that 100K Target so for me I'm taking profits before 100K and of course letting some ride this in my opinion is a sound investment strategy we have a very clearly defined plan to get in a very clearly defined plan to take profits along the way out and honestly in my opinion it's a very low stress investment plan also because we don't have to be there at the chart every single day we can just set some buy orders along the way down and accumulate and then take those profits along the way up this is my overall Outlook guys on bitcoin for the next few years",
+  "unchecked": [
+   "We are accumulating in this area right here starting where we're at right now and we get a dip down and we're buying along the way down and Bitcoin Only Hits 80k right 81k this is still seven times more reward than risk of course this is hypothetical as if you're buying on spot there really is no risk of liquidation but in my opinion this is a very valid investment strategy because we have the technicals behind us on the high term time frame saying look there's a very high probability that the bottom is in there's a very high probability that any accumulation that we do within the next few months especially if we get another drop to the downside is going to be very bullish in the next few years and even if we do conservative targets here lower than 100K because everyone's got that 100K Target so for me I'm taking profits before 100K and of course letting some ride this in my opinion is a sound investment strategy we have a very clearly defined plan to get in a very clearly defined plan to take profits along the way out and honestly in my opinion it's a very low stress investment plan also because we don't have to be there at the chart every single day we can just set some buy orders along the way down and accumulate and then take those profits along the way up this is my overall Outlook guys on bitcoin for the next few years"
+  ],
+  "lesson_id": 261,
+  "rules": [
+   {
+    "rule": "close_below_sma",
+    "a": 200
+   },
+   {
+    "rule": "volume_spike"
+   },
+   {
+    "rule": "close_above_ema",
+    "a": 50
+   },
+   {
+    "rule": "macd_cross_up"
+   },
+   {
+    "rule": "wt_green_dot"
+   },
+   {
+    "rule": "wt_below"
+   },
+   {
+    "rule": "rsi_below",
+    "a": 30
+   }
+  ],
+  "rules_text": [
+   "Close below SMA (200)",
+   "Volume above 1.5 \u00d7 its 20-candle average",
+   "Close above EMA (50)",
+   "MACD crosses above its signal line",
+   "Market Cipher green dot (WaveTrend crosses up) below 0",
+   "Market Cipher wave below -53 (oversold)",
+   "RSI (14) below 30"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 589,
+  "name": "Bitcoin move to the upside",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1000.0,
+  "rr": 2.0,
+  "timeframe": "1d",
+  "why": "The dollar retraces and Bitcoin moves up, indicating a bullish trend in Bitcoin.",
+  "quote": "I do believe we could see that big move up to thirty thousand dollars within the next few days",
+  "unchecked": [
+   "The dollar retraces and Bitcoin moves up"
+  ],
+  "lesson_id": 262,
+  "rules": [
+   {
+    "rule": "close_above_sma",
+    "a": 30000
+   },
+   {
+    "rule": "wt_above",
+    "a": 53
+   }
+  ],
+  "rules_text": [
+   "Close above SMA (30000)",
+   "Market Cipher wave above 53 (overbought)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 590,
+  "name": "Bitcoin move to the downside",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1000.0,
+  "rr": 2.0,
+  "timeframe": "1d",
+  "why": "The dollar pumps and Bitcoin moves down, indicating a bearish trend in Bitcoin.",
+  "quote": "we could even see a big drop to the downside to this area of support",
+  "unchecked": [
+   "The dollar pumps and Bitcoin moves down"
+  ],
+  "lesson_id": 262,
+  "rules": [
+   {
+    "rule": "close_below_sma",
+    "a": 30000
+   },
+   {
+    "rule": "wt_below",
+    "a": -53
+   }
+  ],
+  "rules_text": [
+   "Close below SMA (30000)",
+   "Market Cipher wave below -53 (oversold)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  }
 ]
