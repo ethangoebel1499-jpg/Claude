@@ -57715,5 +57715,458 @@
   "hints": null,
   "tune": null,
   "exit_plan": null
+ },
+ {
+  "id": 378,
+  "name": "breakdown_low",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1000.0,
+  "rr": 2.0,
+  "timeframe": "daily",
+  "why": "The price broke below the 25K level, which is a key resistance level, and also rejected at this level, indicating a potential top and a short opportunity.",
+  "quote": "BITCOIN REJECTED AT 25K!!!!!! (WAS THIS PUMP A HUGE TRAP?!?!?!)",
+  "unchecked": [
+   "Price rejected at 25K, which is a significant level that could indicate a top in the market."
+  ],
+  "lesson_id": 119,
+  "rules": [
+   {
+    "rule": "close_below_sma",
+    "a": 25000
+   },
+   {
+    "rule": "sr_reject_down",
+    "a": 25000
+   }
+  ],
+  "rules_text": [
+   "Close below SMA (25000)",
+   "Rejected at resistance / lost a level (closed back below it)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 379,
+  "name": "Bearish Rejection",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 0.7,
+  "rr": 1.5,
+  "timeframe": "1d",
+  "why": "Bearish rejection from a key level, potential for a significant move down",
+  "quote": "Bitcoin is about to catch everybody off guard now we just got a 7.5 move to the downside yesterday after a hard rejection from 25,000 and people are getting bearish wondering what does this mean is the pump over we're going to be getting into this video giving you the worst case scenario and talking about why I myself am still very bullish on bitcoin so make sure to like the video make sure to subscribe to the channel make sure to click that Bell for notifications because we are bringing you the most timely updates for Bitcoin here on YouTube",
+  "unchecked": [
+   "Price is at a key level of 25,222"
+  ],
+  "lesson_id": 120,
+  "rules": [
+   {
+    "rule": "close_below_sma",
+    "a": 200
+   },
+   {
+    "rule": "breakdown_low",
+    "a": 20
+   }
+  ],
+  "rules_text": [
+   "Close below SMA (200)",
+   "Close below the lowest low of the last 20 candles"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 380,
+  "name": "massive_bearish_signal",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "not specified",
+  "why": "Teacher is warning about a worst-case scenario, indicating a potential bearish move. The setup involves a close above the upper Bollinger band and a shooting star pattern, which are bearish signals. The teacher is not providing specific risk management rules, but the setup is designed to catch a potential bearish breakout or continuation.",
+  "quote": "WARNING *MASSIVE* BITCOIN SIGNAL FLASHING NOW (WORST CASE SCENARIO?!?!?!)",
+  "unchecked": [
+   "Close above the upper Bollinger band (20 candles, 2 deviations); Shooting star / bearish pin bar (long upper wick)"
+  ],
+  "lesson_id": 120,
+  "rules": [
+   {
+    "rule": "close_above_ema"
+   },
+   {
+    "rule": "shooting_star"
+   }
+  ],
+  "rules_text": [
+   "Close above EMA (50)",
+   "Shooting star / bearish pin bar (long upper wick)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 381,
+  "name": "stochastic_rsi_bull_div",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "2 months",
+  "why": "This is a historically bullish signal that has only printed two times in the past, indicating the bottom of the bear market is in.",
+  "quote": "we are seeing a very bullish signal that historically has only printed two times in the past.",
+  "unchecked": [
+   "Historically, this signal has only printed two times in the past."
+  ],
+  "lesson_id": 121,
+  "rules": [
+   {
+    "rule": "rsi_above",
+    "a": 70
+   },
+   {
+    "rule": "rsi_cross_up",
+    "a": 30
+   }
+  ],
+  "rules_text": [
+   "RSI (14) above 70",
+   "RSI (14) crosses up through 30"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 382,
+  "name": "halving_cycle_bull_div",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "monthly",
+  "why": "The halving cycle for Bitcoin is coming up, which means the bottom of the cycle is in, and the price is coming down to the key zone of support at these FIB levels.",
+  "quote": "the bottom of the cycle is in does it mean that the bottom of the price is in in my opinion no it does not mean that we have seen the lowest price again.",
+  "unchecked": [
+   "The bottom of the cycle is in, and it happened in 2015, 2018, and currently is about to happen in 2023."
+  ],
+  "lesson_id": 121,
+  "rules": [
+   {
+    "rule": "close_below_sma",
+    "a": 200
+   },
+   {
+    "rule": "close_above_ema",
+    "a": 50,
+    "b": 200
+   }
+  ],
+  "rules_text": [
+   "Close below SMA (200)",
+   "Close above EMA (50)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 383,
+  "name": "Bear Market Over Setup",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "daily",
+  "why": "RSI above 70 suggests the market is overbought and may be due for a correction or reversal, indicating a potential long entry as the bear market is over.",
+  "quote": "100% PROOF BEAR MARKET IS OVER",
+  "unchecked": [
+   "RSI above 70 indicates overbought conditions, suggesting a potential reversal."
+  ],
+  "lesson_id": 121,
+  "rules": [
+   {
+    "rule": "rsi_above",
+    "a": 70
+   }
+  ],
+  "rules_text": [
+   "RSI (14) above 70"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 384,
+  "name": "bearish_upside_down_sandbagma_freed_manboob_pattern",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.0,
+  "rr": 2.0,
+  "timeframe": "daily",
+  "why": "The pattern resembles a bearish upside down sandbagma freed manboob pattern, with the price getting higher and Market Cipher B printing lower money flow and lower momentum waves.",
+  "quote": "The author is observing a potential bearish upside down sandbagma freed manboob pattern.",
+  "unchecked": [
+   "Market Cipher B is printing lower money flow and lower momentum waves"
+  ],
+  "lesson_id": 122,
+  "rules": [
+   {
+    "rule": "close_above_sma",
+    "a": 25222
+   },
+   {
+    "rule": "wt_bear_div"
+   }
+  ],
+  "rules_text": [
+   "Close above SMA (25222)",
+   "Bearish divergence: price higher high, Market Cipher wave lower high - in the last 3 candles, lows/highs at most 60 candles apart"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 385,
+  "name": "smooth_move_down_and_back_up",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.0,
+  "rr": 2.0,
+  "timeframe": "daily",
+  "why": "The author expects a smooth move down and back up if the price breaks above the 25,222 level, with high volume nodes indicating potential support.",
+  "quote": "If we break above the 25,222 level, the author expects a smooth move down and back up.",
+  "unchecked": [
+   "The price enters into this Zone it's like a vacuum that gets sucked up right into that next major high volume"
+  ],
+  "lesson_id": 122,
+  "rules": [
+   {
+    "rule": "close_above_sma",
+    "a": 25222
+   },
+   {
+    "rule": "volume_spike"
+   }
+  ],
+  "rules_text": [
+   "Close above SMA (25222)",
+   "Volume above 1.5 \u00d7 its 20-candle average"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 386,
+  "name": "pullback_support",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.0,
+  "rr": 2.0,
+  "timeframe": "daily",
+  "why": "The author suggests watching for a pullback in Bitcoin along with the SPX, with major support levels at 39,900, 20,000, and 18,500.",
+  "quote": "The author suggests watching for a pullback in Bitcoin along with the SPX.",
+  "unchecked": [
+   "The SPX is showing a downtrend, which can be a leading indicator for what Bitcoin is going to do."
+  ],
+  "lesson_id": 122,
+  "rules": [
+   {
+    "rule": "close_below_sma",
+    "a": 39900
+   },
+   {
+    "rule": "close_below_sma",
+    "a": 20000
+   },
+   {
+    "rule": "close_below_sma",
+    "a": 18500
+   }
+  ],
+  "rules_text": [
+   "Close below SMA (39900)",
+   "Close below SMA (20000)",
+   "Close below SMA (18500)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 387,
+  "name": "Inverted Head and Shoulders",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "daily",
+  "why": "Inverted Head and Shoulders pattern with bullish signals on indicators and volume, target is around the thirty-two thousand dollar level.",
+  "quote": "We are printing right now an inverted Head and Shoulders with the target of this Head and Shoulder being the thirty-two thousand dollar level.",
+  "unchecked": [
+   "price touches the lower Bollinger band"
+  ],
+  "lesson_id": 123,
+  "rules": [
+   {
+    "rule": "close_above_sma",
+    "a": 200
+   },
+   {
+    "rule": "wt_above",
+    "a": 53
+   },
+   {
+    "rule": "wt_green_dot"
+   },
+   {
+    "rule": "macd_positive"
+   },
+   {
+    "rule": "rsi_above",
+    "a": 70
+   }
+  ],
+  "rules_text": [
+   "Close above SMA (200)",
+   "Market Cipher wave above 53 (overbought)",
+   "Market Cipher green dot (WaveTrend crosses up) below 0",
+   "MACD above zero",
+   "RSI (14) above 70"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 388,
+  "name": "Potential Breakout",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "daily",
+  "why": "Breakout of the 30k level with potential targets in the upper range of the old value area.",
+  "quote": "If we break this thirty thousand dollar level again I would not be surprised if we see first of all probably the the high volume note of the range these would be my major targets if we break 30k.",
+  "unchecked": [
+   "Targets: 35-36k, 47k, and potentially 50k"
+  ],
+  "lesson_id": 123,
+  "rules": [
+   {
+    "rule": "close_above_sma"
+   },
+   {
+    "rule": "breakout_high",
+    "a": 30000
+   }
+  ],
+  "rules_text": [
+   "Close above SMA (200)",
+   "Close above the highest high of the last 30000 candles"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 389,
+  "name": "volatility",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "daily",
+  "why": "expecting volatility due to New York opening, so we are prepared for any movement",
+  "quote": "we are going to get volatile this week as New York opens",
+  "unchecked": [
+   "price may go up or down, so we are not sure of the exact conditions"
+  ],
+  "lesson_id": 124,
+  "rules": [
+   {
+    "rule": "close_below_sma",
+    "a": 200
+   },
+   {
+    "rule": "close_below_ema",
+    "a": 50
+   }
+  ],
+  "rules_text": [
+   "Close below SMA (200)",
+   "Close below EMA (50)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  }
 ]
