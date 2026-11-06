@@ -57486,5 +57486,234 @@
   "hints": null,
   "tune": null,
   "exit_plan": null
+ },
+ {
+  "id": 372,
+  "name": "Fibonacci Golden Pocket",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 1.5,
+  "timeframe": "1h",
+  "why": "The Fibonacci golden pocket is a key level that could stop out short positions and allow for a reversal to the downside if the news is bearish.",
+  "quote": "this would actually stop out pretty much everybody who is short in this Zone and would allow us to basically stop everybody out and then get a real reversal to the downside",
+  "unchecked": [
+   "price should be below the Fibonacci 786 level at around 21,100 dollars"
+  ],
+  "lesson_id": 115,
+  "rules": [
+   {
+    "rule": "close_below_ema",
+    "a": 50
+   },
+   {
+    "rule": "wt_red_dot"
+   }
+  ],
+  "rules_text": [
+   "Close below EMA (50)",
+   "Market Cipher red dot (WaveTrend crosses down) above 0"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 373,
+  "name": "short_setup",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 1.5,
+  "timeframe": "1h",
+  "why": "Bearish news and market structure indicate a potential short opportunity. MACD and Market Cipher wave divergence confirm the bearish signal.",
+  "quote": "If this news comes out bearish, we would be looking to short a rise.",
+  "unchecked": [
+   "Close above the upper Bollinger band (20 candles, 2 deviations)"
+  ],
+  "lesson_id": 116,
+  "rules": [
+   {
+    "rule": "close_above_sma",
+    "a": 200
+   },
+   {
+    "rule": "macd_cross_down"
+   },
+   {
+    "rule": "wt_bear_div"
+   }
+  ],
+  "rules_text": [
+   "Close above SMA (200)",
+   "MACD crosses below its signal line",
+   "Bearish divergence: price higher high, Market Cipher wave lower high - in the last 3 candles, lows/highs at most 60 candles apart"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 374,
+  "name": "long_setup",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 1.5,
+  "timeframe": "1h",
+  "why": "Bullish news and market structure indicate a potential long opportunity. MACD and Market Cipher wave divergence confirm the bullish signal.",
+  "quote": "If this news comes out bullish, we need to be prepared to potentially uh get a higher high coming in here.",
+  "unchecked": [
+   "Close above the upper Bollinger band (20 candles, 2 deviations)"
+  ],
+  "lesson_id": 116,
+  "rules": [
+   {
+    "rule": "close_below_sma",
+    "a": 200
+   },
+   {
+    "rule": "macd_cross_up"
+   },
+   {
+    "rule": "wt_bull_div"
+   }
+  ],
+  "rules_text": [
+   "Close below SMA (200)",
+   "MACD crosses above its signal line",
+   "Bullish divergence: price lower low, Market Cipher wave higher low - in the last 3 candles, lows/highs at most 60 candles apart"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 375,
+  "name": "hidden_bull_div",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 0.7,
+  "rr": 2.0,
+  "timeframe": "daily",
+  "why": "hidden bullish divergence on the daily time frame, coupled with regular bullish divergences on lower time frames, suggests a bullish continuation pattern.",
+  "quote": "we have just confirmed a hidden bullish Divergence what does a hidden bonus Divergence it is when the price makes a higher low and the momentum makes a lower low this is a continuation pattern",
+  "unchecked": [
+   "confirmed on the daily time frame"
+  ],
+  "lesson_id": 117,
+  "rules": [
+   {
+    "rule": "higher_low"
+   },
+   {
+    "rule": "ao_bull_div"
+   }
+  ],
+  "rules_text": [
+   "Higher low: the last 5 candles' low is above the 5 candles before",
+   "Bullish divergence: price lower low, Awesome Oscillator higher low - in the last 3 candles, lows/highs at most 60 candles apart"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 376,
+  "name": "short_setup",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 1.5,
+  "timeframe": "4h",
+  "why": "Bearish signals on the chart, momentum and money flow getting lower as price is getting higher at key resistance level",
+  "quote": "Bitcoin came up to a key zone of resistance at twenty four thousand dollars and this was the short setup we gave in the Casper crew VIP Discord from 24 000 and the reason was because we were printing some very bearish signals on the chart in fact if we take a look at the four hour time frame what we can see is as we came up to this Zone the momentum waves and the money flow were getting lower on Market Cypher b as the price was getting higher in two key resistance this is why we took the short trade now this is a very bearish signal it typically marks a macro top after we put in that top",
+  "unchecked": [
+   "Price is above the upper Bollinger band"
+  ],
+  "lesson_id": 118,
+  "rules": [
+   {
+    "rule": "close_above_ema",
+    "a": 24000,
+    "b": 21000
+   },
+   {
+    "rule": "ao_bear_div",
+    "a": 24000,
+    "b": 21000
+   }
+  ],
+  "rules_text": [
+   "Close above EMA (24000)",
+   "Bearish divergence: price higher high, Awesome Oscillator lower high - in the last 24000 candles, lows/highs at most 21000 candles apart"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 377,
+  "name": "long_setup",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 1.5,
+  "timeframe": "1d",
+  "why": "Bounced off a key level of support, bullish divergence on the daily time frame",
+  "quote": "we can see exactly where Bitcoin came down to a very key level of support which is the pre FTX dump zone of support now this was actually the long setup that we gave in the Casper crew VIP Discord from 21.4 thousand dollars because we are recognizing that this was a very key zone of support and if we came down there with some bullish Divergence there was a good chance we were going to get a bounce and as you can see we have bounced from this exact level which is where now we are long for guys",
+  "unchecked": [
+   "Price is below the lower Bollinger band"
+  ],
+  "lesson_id": 118,
+  "rules": [
+   {
+    "rule": "close_below_ema",
+    "a": 21400,
+    "b": 20000
+   },
+   {
+    "rule": "rsi_bull_div",
+    "a": 21400,
+    "b": 20000
+   }
+  ],
+  "rules_text": [
+   "Close below EMA (21400)",
+   "Bullish divergence: price lower low, RSI higher low - in the last 21400 candles, lows/highs at most 20000 candles apart"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  }
 ]
