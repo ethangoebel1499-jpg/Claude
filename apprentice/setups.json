@@ -56871,5 +56871,620 @@
   "hints": null,
   "tune": null,
   "exit_plan": null
+ },
+ {
+  "id": 358,
+  "name": "Long Setup",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 0.7,
+  "rr": 1.5,
+  "timeframe": "4h",
+  "why": "Bullish divergences on the 4-hour time frame, support resistance flip, and fair value levels suggest a potential move up in Bitcoin.",
+  "quote": "now we are absolutely printing a bullish Divergence on the four hour time frame okay so there is a really good chance that we could hold this support",
+  "unchecked": [
+   "price touches the lower Bollinger band"
+  ],
+  "lesson_id": 110,
+  "rules": [
+   {
+    "rule": "close_above_sma",
+    "a": 200
+   },
+   {
+    "rule": "rsi_below",
+    "a": 30
+   },
+   {
+    "rule": "wt_below",
+    "a": -53
+   },
+   {
+    "rule": "ao_green"
+   },
+   {
+    "rule": "macd_positive"
+   },
+   {
+    "rule": "higher_low",
+    "a": 5,
+    "b": 5
+   },
+   {
+    "rule": "in_bearish_pattern"
+   }
+  ],
+  "rules_text": [
+   "Close above SMA (200)",
+   "RSI (14) below 30",
+   "Market Cipher wave below -53 (oversold)",
+   "Awesome Oscillator column is green (AO rising)",
+   "MACD above zero",
+   "Higher low: the last 5 candles' low is above the 5 candles before",
+   "Inside a pattern that usually breaks down (rising wedge, descending triangle, bear flag...)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 359,
+  "name": "Short Setup",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 0.7,
+  "rr": 1.5,
+  "timeframe": "4h",
+  "why": "Bearish divergences on the 4-hour time frame, support resistance flip, and fair value levels suggest a potential move down in Bitcoin.",
+  "quote": "now we are absolutely printing a bullish Divergence on the four hour time frame okay so there is a really good chance that we could hold this support",
+  "unchecked": [
+   "price touches the upper Bollinger band"
+  ],
+  "lesson_id": 110,
+  "rules": [
+   {
+    "rule": "close_below_sma",
+    "a": 200
+   },
+   {
+    "rule": "rsi_above",
+    "a": 70
+   },
+   {
+    "rule": "wt_above",
+    "a": 53
+   },
+   {
+    "rule": "ao_red"
+   },
+   {
+    "rule": "macd_negative"
+   },
+   {
+    "rule": "lower_high",
+    "a": 5,
+    "b": 5
+   },
+   {
+    "rule": "in_bullish_pattern"
+   }
+  ],
+  "rules_text": [
+   "Close below SMA (200)",
+   "RSI (14) above 70",
+   "Market Cipher wave above 53 (overbought)",
+   "Awesome Oscillator column is red (AO falling)",
+   "MACD below zero",
+   "Lower high: the last 5 candles' high is below the 5 candles before",
+   "Inside a pattern that usually breaks up (falling wedge, ascending triangle, bull flag...)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 360,
+  "name": "Long Setup",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 0.7,
+  "rr": 2.0,
+  "timeframe": "daily",
+  "why": "The intersection of key support levels and the trend line suggests a potential bullish setup if the S P 500 shows bullish momentum.",
+  "quote": "if we see the S P 500 start to get bullish again tomorrow or over the week well it doesn't trade over the weekend or next week right then we can expect Bitcoin to actually get another move up.",
+  "unchecked": [
+   "The S P 500 is near key resistance, and if it breaks down, Bitcoin could follow suit, making a move back to a support level around 39.50."
+  ],
+  "lesson_id": 110,
+  "rules": [
+   {
+    "rule": "close_above_sma",
+    "a": 3950
+   },
+   {
+    "rule": "in_bearish_pattern"
+   }
+  ],
+  "rules_text": [
+   "Close above SMA (3950)",
+   "Inside a pattern that usually breaks down (rising wedge, descending triangle, bear flag...)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 361,
+  "name": "Short Setup",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 0.7,
+  "rr": 2.0,
+  "timeframe": "daily",
+  "why": "The intersection of key support levels and the trend line suggests a potential bearish setup if the S P 500 shows bearish momentum.",
+  "quote": "if we see this continue to make bearish market structure we can continue to expect a move to the downside.",
+  "unchecked": [
+   "The S P 500 is near key resistance, and if it breaks down, Bitcoin could follow suit, making a move back to a support level around 39.50."
+  ],
+  "lesson_id": 110,
+  "rules": [
+   {
+    "rule": "close_below_sma",
+    "a": 3950
+   },
+   {
+    "rule": "in_bearish_pattern"
+   }
+  ],
+  "rules_text": [
+   "Close below SMA (3950)",
+   "Inside a pattern that usually breaks down (rising wedge, descending triangle, bear flag...)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 362,
+  "name": "Long Setup",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 0.7,
+  "rr": 1.5,
+  "timeframe": "weekly",
+  "why": "Higher lows, green Market Cipher dot, and bullish divergence on Market Cipher wave are signs of a potential bottom and bullish market structure. Weekly time frame is used to identify key support and resistance levels and bullish market structure.",
+  "quote": "We've been making higher lows and higher highs and what that means guys is you know as long as we don't put in a lower low here we are still maintaining bullish market structure.",
+  "unchecked": [
+   "rsi_bull_div"
+  ],
+  "lesson_id": 111,
+  "rules": [
+   {
+    "rule": "close_above_sma",
+    "a": 200
+   },
+   {
+    "rule": "higher_low",
+    "a": 5,
+    "b": 5
+   },
+   {
+    "rule": "wt_green_dot"
+   },
+   {
+    "rule": "wt_bull_div"
+   }
+  ],
+  "rules_text": [
+   "Close above SMA (200)",
+   "Higher low: the last 5 candles' low is above the 5 candles before",
+   "Market Cipher green dot (WaveTrend crosses up) below 0",
+   "Bullish divergence: price lower low, Market Cipher wave higher low - in the last 3 candles, lows/highs at most 60 candles apart"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 363,
+  "name": "Short Setup",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 0.7,
+  "rr": 1.5,
+  "timeframe": "weekly",
+  "why": "Lower highs, red Market Cipher dot, and bearish divergence on Market Cipher wave are signs of a potential top and bearish market structure. Weekly time frame is used to identify key support and resistance levels and bearish market structure.",
+  "quote": "We've been making higher lows and higher highs and what that means guys is you know as long as we don't put in a lower low here we are still maintaining bullish market structure.",
+  "unchecked": [
+   "rsi_bear_div"
+  ],
+  "lesson_id": 111,
+  "rules": [
+   {
+    "rule": "close_below_sma",
+    "a": 200
+   },
+   {
+    "rule": "lower_high",
+    "a": 5,
+    "b": 5
+   },
+   {
+    "rule": "wt_red_dot"
+   },
+   {
+    "rule": "wt_bear_div"
+   }
+  ],
+  "rules_text": [
+   "Close below SMA (200)",
+   "Lower high: the last 5 candles' high is below the 5 candles before",
+   "Market Cipher red dot (WaveTrend crosses down) above 0",
+   "Bearish divergence: price higher high, Market Cipher wave lower high - in the last 3 candles, lows/highs at most 60 candles apart"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 364,
+  "name": "reclaim_and_bullish_divergence",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 0.3,
+  "rr": 3.0,
+  "timeframe": "higher_term",
+  "why": "A sign of strength is when the price can reclaim key zones of support or resistance, and a bullish divergence on Market Cipher B confirms the trend reversal.",
+  "quote": "Now that we have lost this level if we now get a reclaim and then a re-test with some kind of bullish Divergence this is actually a sign of strength where now we can look for a long trade right here.",
+  "unchecked": [
+   "reclaim_and_bullish_divergence"
+  ],
+  "lesson_id": 111,
+  "rules": [
+   {
+    "rule": "close_above_sma",
+    "a": 22.3
+   },
+   {
+    "rule": "rsi_bull_div"
+   }
+  ],
+  "rules_text": [
+   "Close above SMA (22.3)",
+   "Bullish divergence: price lower low, RSI higher low - in the last 3 candles, lows/highs at most 60 candles apart"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 365,
+  "name": "sideways_range_entry",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 0.3,
+  "rr": 3.0,
+  "timeframe": "lower_term",
+  "why": "We can look for a long entry at the low of a sideways range on lower term time frames, which is a low-risk setup.",
+  "quote": "Look we're holding support let's say we see some more bullish signs coming to the market we could simply just say okay I'm going to look for a long entry at the low of a sideways range very very low risk setup because if we're trading on these lower term time frames let's say we're looking for a long from the low we only need to be risking with our trade setup right here we only need to be risking very very small amount this is just an example I'm not saying to do this we only need to risk about 0.3 percent and then of course our support resistance flip right here we're risking point three percent to potentially make three percent right here.",
+  "unchecked": [
+   "sideways_range_entry"
+  ],
+  "lesson_id": 111,
+  "rules": [
+   {
+    "rule": "close_below_sma",
+    "a": 22.3
+   },
+   {
+    "rule": "close_above_sma",
+    "a": 22.3
+   }
+  ],
+  "rules_text": [
+   "Close below SMA (22.3)",
+   "Close above SMA (22.3)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 366,
+  "name": "long_setup",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 14.0,
+  "timeframe": "1h",
+  "why": "Short-term resistance level is tested and broken, and the Heikin Ashi candle is green, indicating a bullish trend.",
+  "quote": "if we're in this for the long game okay let's say that we do get another major drop down to 10K or even lower right assuming that there is going to be another Bull Run and this obviously is an assumption that I am basing my entire trading plan off of",
+  "unchecked": [
+   "Bullish engulfing candle"
+  ],
+  "lesson_id": 112,
+  "rules": [
+   {
+    "rule": "close_above_sma",
+    "a": 200
+   },
+   {
+    "rule": "ha_green"
+   }
+  ],
+  "rules_text": [
+   "Close above SMA (200)",
+   "Heikin Ashi candle is green"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 367,
+  "name": "support_resistance_flip",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "daily",
+  "why": "Wyckoff schematic is a bullish accumulation pattern, and the level given is a potential support level that could turn into resistance if broken.",
+  "quote": "support resistance flip and you can see I gave the level right here where's my next long support resistance flip and you can see I gave the level right here",
+  "unchecked": [
+   "Support resistance flip at 21470"
+  ],
+  "lesson_id": 112,
+  "rules": [
+   {
+    "rule": "close_above_sma",
+    "a": 21470
+   }
+  ],
+  "rules_text": [
+   "Close above SMA (21470)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 368,
+  "name": "long_setup",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 0.7,
+  "rr": 2.0,
+  "timeframe": "4h",
+  "why": "The setup is based on the Market Cipher wave and money flow indicators, RSI, MACD, and Awesome Oscillator divergences, and the price action around key support levels. The stop loss is placed below the support level, and the take profit is set at the next resistance level or the previous high. The trading bot can be used to automate the trade with good risk management.",
+  "quote": "We saw that exact thing happening on Market Cipher B which is why we gave that long in the Casper crew VIP Discord.",
+  "unchecked": [
+   "volume_spike"
+  ],
+  "lesson_id": 113,
+  "rules": [
+   {
+    "rule": "close_above_sma",
+    "a": 200
+   },
+   {
+    "rule": "wt_above",
+    "a": 53
+   },
+   {
+    "rule": "wt_green_dot"
+   },
+   {
+    "rule": "rsi_bull_div",
+    "a": 30,
+    "b": 60
+   },
+   {
+    "rule": "macd_bull_div",
+    "a": 30,
+    "b": 60
+   },
+   {
+    "rule": "ao_bull_div",
+    "a": 30,
+    "b": 60
+   }
+  ],
+  "rules_text": [
+   "Close above SMA (200)",
+   "Market Cipher wave above 53 (overbought)",
+   "Market Cipher green dot (WaveTrend crosses up) below 0",
+   "Bullish divergence: price lower low, RSI higher low - in the last 30 candles, lows/highs at most 60 candles apart",
+   "Bullish divergence: price lower low, MACD higher low - in the last 30 candles, lows/highs at most 60 candles apart",
+   "Bullish divergence: price lower low, Awesome Oscillator higher low - in the last 30 candles, lows/highs at most 60 candles apart"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 369,
+  "name": "short_setup",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 0.7,
+  "rr": 2.0,
+  "timeframe": "4h",
+  "why": "The setup is based on the Market Cipher wave and money flow indicators, RSI, MACD, and Awesome Oscillator divergences, and the price action around key support levels. The stop loss is placed above the resistance level, and the take profit is set at the next support level or the previous low. The trading bot can be used to automate the trade with good risk management.",
+  "quote": "We saw that exact thing happening on Market Cipher B which is why we gave that long in the Casper crew VIP Discord.",
+  "unchecked": [
+   "volume_spike"
+  ],
+  "lesson_id": 113,
+  "rules": [
+   {
+    "rule": "close_below_sma",
+    "a": 200
+   },
+   {
+    "rule": "wt_below",
+    "a": -53
+   },
+   {
+    "rule": "wt_red_dot"
+   },
+   {
+    "rule": "rsi_bear_div",
+    "a": 70,
+    "b": 60
+   },
+   {
+    "rule": "macd_bear_div",
+    "a": 70,
+    "b": 60
+   },
+   {
+    "rule": "ao_bear_div",
+    "a": 70,
+    "b": 60
+   }
+  ],
+  "rules_text": [
+   "Close below SMA (200)",
+   "Market Cipher wave below -53 (oversold)",
+   "Market Cipher red dot (WaveTrend crosses down) above 0",
+   "Bearish divergence: price higher high, RSI lower high - in the last 70 candles, lows/highs at most 60 candles apart",
+   "Bearish divergence: price higher high, MACD lower high - in the last 70 candles, lows/highs at most 60 candles apart",
+   "Bearish divergence: price higher high, Awesome Oscillator lower high - in the last 70 candles, lows/highs at most 60 candles apart"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 370,
+  "name": "short_setup",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 0.7,
+  "rr": 1.5,
+  "timeframe": "1h",
+  "why": "price lower low, Awesome Oscillator lower high - in the last 3 candles, lows/highs at most 60 candles apart",
+  "quote": "we did come up to this key zone of resistance right over here with a very very bearish sign historically this is a top signal where you have the money flow and the momentum waves both getting lower on the oscillator as the price comes up into the key zone of resistance",
+  "unchecked": [
+   "price touches the lower Bollinger band"
+  ],
+  "lesson_id": 114,
+  "rules": [
+   {
+    "rule": "close_below_sma",
+    "a": 200
+   },
+   {
+    "rule": "ao_bear_div"
+   }
+  ],
+  "rules_text": [
+   "Close below SMA (200)",
+   "Bearish divergence: price higher high, Awesome Oscillator lower high - in the last 3 candles, lows/highs at most 60 candles apart"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 371,
+  "name": "Bearish Divergence with Uneven Buttocks Pattern",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "4h",
+  "why": "Bearish Divergence on Market Cipher B and potential uneven butt cheek pattern on the 4h timeframe, with money flow starting to get higher.",
+  "quote": "we will also potentially see if we come down to that level the money flow on Market Cipher B on the four hour actually starting to get higher which for me is the opposite of the bearish signal that we got up here so those are definitely some key levels to be aware of whenever Bitcoin is ranging like this in a sideways range we do need to be careful this is where Traders get chopped up this is why we need to have plants in advance to take Shores to take Longs even in these sideways ranges of consolidation because there always is a lot of opportunity in these markets so be prepared guys for a fake out to the upside be prepared for a fake out to the downside make sure that no matter what you're doing in these markets you have a clearly defined plan in advance because that will allow you to get into trades with a clear risk management plan understanding how much you're willing to risk where your idea becomes invalid and also where your take profits can be and you will be on the right foot",
+  "unchecked": [
+   "price is going up, but the Market Cipher B wave momentum is going down",
+   "Market Cipher B money flow starting to get higher at the Fibonacci 786 level"
+  ],
+  "lesson_id": 114,
+  "rules": [
+   {
+    "rule": "rsi_bear_div"
+   },
+   {
+    "rule": "mf_positive"
+   }
+  ],
+  "rules_text": [
+   "Bearish divergence: price higher high, RSI lower high - in the last 3 candles, lows/highs at most 60 candles apart",
+   "Market Cipher money flow above zero (green)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  }
 ]
