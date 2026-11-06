@@ -68619,5 +68619,1608 @@
   "hints": null,
   "tune": null,
   "exit_plan": null
+ },
+ {
+  "id": 649,
+  "name": "Long Setup",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 2.0,
+  "rr": 2.0,
+  "timeframe": "4h",
+  "why": "Bullish ascending triangle pattern, higher money flow, and bullish divergences on the 4-hour chart suggest a potential move to the upside.",
+  "quote": "as we are coming down to T once again this very important trend line where we've been making higher lows throughout the entirety of this range here where we basically been trading in a bullish in my opinion I'm looking at this as a bullish ascending triangle pattern",
+  "unchecked": [
+   "Higher momentum waves and higher lows on the 4-hour chart"
+  ],
+  "lesson_id": 296,
+  "rules": [
+   {
+    "rule": "close_above_ema",
+    "a": 50
+   },
+   {
+    "rule": "higher_low",
+    "a": 5,
+    "b": 10
+   },
+   {
+    "rule": "macd_positive"
+   },
+   {
+    "rule": "wt_green_dot"
+   },
+   {
+    "rule": "rsi_above",
+    "a": 30
+   }
+  ],
+  "rules_text": [
+   "Close above EMA (50)",
+   "Higher low: the last 5 candles' low is above the 5 candles before",
+   "MACD above zero",
+   "Market Cipher green dot (WaveTrend crosses up) below 0",
+   "RSI (14) above 30"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 650,
+  "name": "Short Setup",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 2.0,
+  "rr": 2.0,
+  "timeframe": "4h",
+  "why": "The 618 Fibonacci level is a key area of resistance that could lead to a pullback, and the involvement of whales buying up short positions suggests a potential short-term pullback.",
+  "quote": "when we come up here if we see San bman freed we do need to be prepared for a pullback down to $38,000 or really fill all of these uh this massive amount of over lever Longs",
+  "unchecked": [
+   "Lower momentum waves and lower highs on the 4-hour chart"
+  ],
+  "lesson_id": 296,
+  "rules": [
+   {
+    "rule": "close_below_ema",
+    "a": 50
+   },
+   {
+    "rule": "lower_high",
+    "a": 5,
+    "b": 10
+   },
+   {
+    "rule": "macd_negative"
+   },
+   {
+    "rule": "wt_red_dot"
+   },
+   {
+    "rule": "rsi_below",
+    "a": 30
+   }
+  ],
+  "rules_text": [
+   "Close below EMA (50)",
+   "Lower high: the last 5 candles' high is below the 5 candles before",
+   "MACD below zero",
+   "Market Cipher red dot (WaveTrend crosses down) above 0",
+   "RSI (14) below 30"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 651,
+  "name": "sandman freed pattern",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1000.0,
+  "rr": 2.0,
+  "timeframe": "1h",
+  "why": "Setting up for an upside down sandman freed pattern as we hit this target.",
+  "quote": "if we kind of take a look here at Market Cipher B we can see that potentially we are setting ourselves up for the upside down sandman freed pattern as we hit this target.",
+  "unchecked": [
+   "Pattern: upside down sandman freed"
+  ],
+  "lesson_id": 296,
+  "rules": [
+   {
+    "rule": "close_above_sma",
+    "a": 49000
+   }
+  ],
+  "rules_text": [
+   "Close above SMA (49000)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 652,
+  "name": "pullback",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1000.0,
+  "rr": 2.0,
+  "timeframe": "1h",
+  "why": "Need a pullback to make this move up healthy.",
+  "quote": "I do believe we do need a pullback to make this move up healthy so when we come up here if we see San bman freed we do need to be prepared for a pullback down to $38,000.",
+  "unchecked": [
+   "Pattern: higher lows"
+  ],
+  "lesson_id": 296,
+  "rules": [
+   {
+    "rule": "close_above_sma",
+    "a": 40000
+   }
+  ],
+  "rules_text": [
+   "Close above SMA (40000)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 653,
+  "name": "short pullback",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1000.0,
+  "rr": 2.0,
+  "timeframe": "1h",
+  "why": "If we start to lose this low here we could dump which is why I have taken the short trade from this level.",
+  "quote": "the reason is because we gave that setup in advance understanding that this could be the top so the way I'm trading this right now is yes I am bullish yes I looking for Highs but I also understand that um if we start to lose this low here we could dump which is why I have taken the short trade from this level.",
+  "unchecked": [
+   "Pattern: higher highs"
+  ],
+  "lesson_id": 296,
+  "rules": [
+   {
+    "rule": "close_below_sma",
+    "a": 40000
+   }
+  ],
+  "rules_text": [
+   "Close below SMA (40000)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 654,
+  "name": "long_setup",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "1h",
+  "why": "The oscillator and money flow are bullish, suggesting a potential move to the upside. The uneven butt cheek pattern on Market CER B is also bullish, allowing us to stop out a lot of people who are already long looking for a retracement and then get a nice retracement to at least that $46,000 level which is our very important area of resistance right now after Bitcoin has rejected from $48,600 which is the macro Fibonacci golden pocket from the bull market top to the bear market bottom. If we get a move back down to these lows, this is now going to be our major area of resistance and $46,000 is a Make It or Break It level for Bitcoin in other words if we are going to continue making higher lows in this larger channel right here and continue in an uptrend for Bitcoin then this is the place where we want to get into a long trade and this is the place where we want to start taking profits because if we are going to see more of a correction to the downside this is going to be our first lower high in the downtrend but if we are going to continue to the upside this is an excellent takeprofit one because it basically allows us to break out of this range hit our major Target and then we can make a profit and then hold for higher prices so this is one of the things I am looking for",
+  "quote": "if I was looking for a trade right now understanding that things look like they want to get a move to the upside but also that there's a lot of liquidity to the downside for bigger players to stop hunt everybody I would look for a move down and then a reclaim of this Kyo with continued uneven butt cheek pattern on Market CER B to potentially get into a long trade",
+  "unchecked": [
+   "uneven butt cheek pattern on Market CER B"
+  ],
+  "lesson_id": 300,
+  "rules": [
+   {
+    "rule": "higher_low",
+    "a": 5,
+    "b": 5
+   },
+   {
+    "rule": "macd_positive"
+   },
+   {
+    "rule": "wt_green_dot"
+   },
+   {
+    "rule": "close_above_sma",
+    "a": 200
+   }
+  ],
+  "rules_text": [
+   "Higher low: the last 5 candles' low is above the 5 candles before",
+   "MACD above zero",
+   "Market Cipher green dot (WaveTrend crosses up) below 0",
+   "Close above SMA (200)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 655,
+  "name": "Long Setup",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "daily",
+  "why": "Historical data suggests that a lower low on the weekly time frame would be a significant candle close and could indicate a retest of support, leading to a potential bullish breakout.",
+  "quote": "if we can come down to this level right here this is going to be what a very important support this is going to prove to everybody that yes Bitcoin is breaking out yes Bitcoin is going into another bull market",
+  "unchecked": [
+   "The setup is based on historical patterns and divergences, which are not directly translatable into a rule."
+  ],
+  "lesson_id": 301,
+  "rules": [
+   {
+    "rule": "close_below_sma",
+    "a": 200
+   },
+   {
+    "rule": "higher_low",
+    "a": 5,
+    "b": 5
+   },
+   {
+    "rule": "macd_bear_div",
+    "a": 3,
+    "b": 60
+   }
+  ],
+  "rules_text": [
+   "Close below SMA (200)",
+   "Higher low: the last 5 candles' low is above the 5 candles before",
+   "Bearish divergence: price higher high, MACD lower high - in the last 3 candles, lows/highs at most 60 candles apart"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 656,
+  "name": "Short Setup",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "4H",
+  "why": "The bullish divergences are invalid, and the money flow is coming out, indicating lower prices.",
+  "quote": "the bullish divergences are invalid the money flow is coming out I would expect lower prices",
+  "unchecked": [
+   "The setup is based on historical patterns and divergences, which are not directly translatable into a rule."
+  ],
+  "lesson_id": 301,
+  "rules": [
+   {
+    "rule": "close_above_ema",
+    "a": 21,
+    "b": 50
+   },
+   {
+    "rule": "macd_cross_down",
+    "a": 3,
+    "b": 60
+   },
+   {
+    "rule": "wt_bear_div",
+    "a": 3,
+    "b": 60
+   }
+  ],
+  "rules_text": [
+   "Close above EMA (21)",
+   "MACD crosses below its signal line",
+   "Bearish divergence: price higher high, Market Cipher wave lower high - in the last 3 candles, lows/highs at most 60 candles apart"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 657,
+  "name": "fibonacci_retest",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 0.7,
+  "rr": 2.0,
+  "timeframe": "d",
+  "why": "the Fibonacci golden pocket retest is not just one level right it is a zone so if we go to the Daily time frame and we zoom out here and we pull that FIB once again from the high to the low we can see that yeah we hit into that 618 but we didn't hit into that 65 level so something else we could do and what Bitcoin loves to do is go ahead and just take that high one more time with continued bearish Divergence and then we can come back down to the low of the range Bitcoin loves to do this look what happened at the all-time high of Bitcoin right what do we do we basically we put in a high and then we come and we take that high again and then we get the move to the downside right we also did that right here as",
+  "quote": "the Fibonacci golden pocket retest from that high that we made right here on Thursday January 11th to the low and that's going to be around $46,000",
+  "unchecked": [
+   "Fibonacci golden pocket retest from that high that we made right here on Thursday January 11th to the low and that's going to be around $46,000"
+  ],
+  "lesson_id": 302,
+  "rules": [
+   {
+    "rule": "close_above_ema",
+    "a": 50
+   },
+   {
+    "rule": "close_above_sma",
+    "a": 200
+   },
+   {
+    "rule": "rsi_above",
+    "a": 70
+   },
+   {
+    "rule": "wt_green_dot"
+   }
+  ],
+  "rules_text": [
+   "Close above EMA (50)",
+   "Close above SMA (200)",
+   "RSI (14) above 70",
+   "Market Cipher green dot (WaveTrend crosses up) below 0"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 658,
+  "name": "retest_high_with_bearish_divergence",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1000.0,
+  "rr": 2.0,
+  "timeframe": "daily",
+  "why": "Bitcoin often retests its previous highs with continued bearish divergence before moving down, indicating a potential reversal.",
+  "quote": "Bitcoin loves to do this look what happened at the all-time high of Bitcoin right what do we do we basically we put in a high and then we come and we take that high again and then we get the move to the downside right",
+  "unchecked": [
+   "retest of previous high with bearish divergence"
+  ],
+  "lesson_id": 302,
+  "rules": [
+   {
+    "rule": "close_above_sma",
+    "a": 46000
+   },
+   {
+    "rule": "macd_bear_div"
+   }
+  ],
+  "rules_text": [
+   "Close above SMA (46000)",
+   "Bearish divergence: price higher high, MACD lower high - in the last 3 candles, lows/highs at most 60 candles apart"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 659,
+  "name": "Support at $37,000 to $38,000",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1000.0,
+  "rr": 1.5,
+  "timeframe": "daily",
+  "why": "The author expects a bounce from the support area between $37,000 and $38,000 as the market retests this level after breaking out of $31,000.",
+  "quote": "for a few days here we were finding an area of resistance Bitcoin was unable to break that key level of $38,000 and so if we come back down toward this Zone we could expect to find a bounce from this area and we're actually getting pretty close to it so if we go ahead and just draw a box around this area that's actually coming in around that $37,000 level to around $37,700 and so this is the next area where I would potentially be looking for a bounce coming down into this box getting a little bounce making another lower high and then eventually back down to test that low",
+  "unchecked": [
+   "Volume in the ascending triangle pattern between November 9th, 2023 and November 30th, 2023"
+  ],
+  "lesson_id": 303,
+  "rules": [
+   {
+    "rule": "close_below_sma",
+    "a": 38000
+   },
+   {
+    "rule": "close_above_sma",
+    "a": 37000
+   }
+  ],
+  "rules_text": [
+   "Close below SMA (38000)",
+   "Close above SMA (37000)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 660,
+  "name": "Market Cipher B Green Dot",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1000.0,
+  "rr": 1.5,
+  "timeframe": "daily",
+  "why": "The author uses Market Cipher B to identify the bottom of the pullback, with a green dot and an oversold wave indicating a bullish opportunity.",
+  "quote": "when we look at Market Cipher B on these high time frames the signals are very very accurate in an uptrend whenever we get a Big Green Dot with a big oversold wave underneath that 60 level and we get a Big Green Dot right here let's take a look this means that the bottom is in very likely in it doesn't necessarily mean the lowest price is in because we could always make a double bottom but it means if you are buying Bitcoin on spot there's a very good chance you are buying the bot or very very close to it",
+  "unchecked": [],
+  "lesson_id": 303,
+  "rules": [
+   {
+    "rule": "wt_green_dot"
+   },
+   {
+    "rule": "wt_below",
+    "a": 60
+   }
+  ],
+  "rules_text": [
+   "Market Cipher green dot (WaveTrend crosses up) below 0",
+   "Market Cipher wave below 60 (oversold)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 661,
+  "name": "Short: Rejection from 618 Fibonacci level with bearish divergences",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "1h",
+  "why": "Bearish divergences and rejection from the 618 Fibonacci level indicate a potential reversal in the market.",
+  "quote": "if we see a rejection from this level meaning we come up here and we see bearish divergences on some of these lower time frames right we're already starting to see them kind of form here on the 1 hour we come up here we start to see the momentum waves and the money flow getting lower the upside down sand bankman freed pattern we see that pattern and we clearly see Bitcoin rejecting from this level this means I will be looking to open up a new Shore trade right here and take it down to a new low.",
+  "unchecked": [
+   "Bearish divergences on lower time frames"
+  ],
+  "lesson_id": 305,
+  "rules": [
+   {
+    "rule": "close_below_ema",
+    "a": 50
+   },
+   {
+    "rule": "ao_bear_div"
+   },
+   {
+    "rule": "wt_bear_div"
+   }
+  ],
+  "rules_text": [
+   "Close below EMA (50)",
+   "Bearish divergence: price higher high, Awesome Oscillator lower high - in the last 3 candles, lows/highs at most 60 candles apart",
+   "Bearish divergence: price higher high, Market Cipher wave lower high - in the last 3 candles, lows/highs at most 60 candles apart"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 662,
+  "name": "Long: Break of 618 Fibonacci level with retest",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "1h",
+  "why": "A break of the 618 Fibonacci level with a retest can signal a potential long trade.",
+  "quote": "if we see that we ask out 61 and she's like you know what Jason my options are limited I'm going to settle for you we want to see a break of this level hold this as support with a retest and then we can actually enter into a long trade from this same exact level around that 45 $46,000 level and we can look to take it up to in my opinion a new high of at least five uh $50,000 around ,300 give or take all.",
+  "unchecked": [
+   "Bearish divergences on lower time frames"
+  ],
+  "lesson_id": 305,
+  "rules": [
+   {
+    "rule": "close_above_ema",
+    "a": 50
+   },
+   {
+    "rule": "ao_bull_div"
+   },
+   {
+    "rule": "wt_bull_div"
+   }
+  ],
+  "rules_text": [
+   "Close above EMA (50)",
+   "Bullish divergence: price lower low, Awesome Oscillator higher low - in the last 3 candles, lows/highs at most 60 candles apart",
+   "Bullish divergence: price lower low, Market Cipher wave higher low - in the last 3 candles, lows/highs at most 60 candles apart"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 663,
+  "name": "Long Setup: Breakout of Sideways Range",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "4H",
+  "why": "Breaking out of a sideways range with higher lows suggests a potential bullish continuation.",
+  "quote": "as long as we are holding above 44.3 I'm going to be bullish and I'm going to be bullishly looking for a potential double top around this golden pocket where I actually look to enter another short trade",
+  "unchecked": [
+   "Pattern: Bullish Engulfing"
+  ],
+  "lesson_id": 306,
+  "rules": [
+   {
+    "rule": "close_above_sma",
+    "a": 44500
+   },
+   {
+    "rule": "higher_low",
+    "a": 5,
+    "b": 10
+   }
+  ],
+  "rules_text": [
+   "Close above SMA (44500)",
+   "Higher low: the last 5 candles' low is above the 5 candles before"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 664,
+  "name": "Short Setup: Bearish Divergence",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "4H",
+  "why": "Bearish divergence and closing below the 44.500 SMA suggest a potential bearish reversal.",
+  "quote": "we need to be looking for bearish divergences forming on the chart what do I mean by that we want to see if price is going to take these highs if the 4-Hour time frame is starting to look like this with the money flow also getting lower over time we need to be very cautious about getting very bullish because we are at a key area of resistance on the chart",
+  "unchecked": [
+   "Pattern: Bearish Engulfing"
+  ],
+  "lesson_id": 306,
+  "rules": [
+   {
+    "rule": "rsi_bear_div",
+    "a": 60,
+    "b": 60
+   },
+   {
+    "rule": "close_below_sma",
+    "a": 44500
+   }
+  ],
+  "rules_text": [
+   "Bearish divergence: price higher high, RSI lower high - in the last 60 candles, lows/highs at most 60 candles apart",
+   "Close below SMA (44500)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 665,
+  "name": "fake_out_short",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "1h",
+  "why": "Fake out of the range with a bearish engulfing candle, indicating a potential reversal to the downside.",
+  "quote": "we cannot forget that right now the Bitcoin price is rejecting from the macro golden pocket this right here is the golden pocket Fibonacci retracement from the bull market top to the bare Market bottom and if we go back in history we can see that every single time since the Inception of Bitcoin as we come up to the golden pocket from the bull market top to the bare Market bottom going all the way back to 2012 we reject from that level we retest the key support before the having which is the white line and then the bull market ensues.",
+  "unchecked": [
+   "Close below the lower Bollinger band (20 candles, 2 deviations)"
+  ],
+  "lesson_id": 307,
+  "rules": [
+   {
+    "rule": "close_below_sma",
+    "a": 200
+   },
+   {
+    "rule": "bull_engulf"
+   }
+  ],
+  "rules_text": [
+   "Close below SMA (200)",
+   "Bullish engulfing candle"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 666,
+  "name": "long_setup",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "daily",
+  "why": "The price is holding above the key support level, indicating a bullish continuation.",
+  "quote": "as long as we are holding above 47.2 give or take right here higher prices are to be expected",
+  "unchecked": [
+   "price is holding above 47.2"
+  ],
+  "lesson_id": 308,
+  "rules": [
+   {
+    "rule": "close_above_sma",
+    "a": 47.2
+   }
+  ],
+  "rules_text": [
+   "Close above SMA (47.2)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 667,
+  "name": "short_setup",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "daily",
+  "why": "The price is breaking below the key support level, indicating a bearish reversal.",
+  "quote": "if we lose 47.2 honestly we can look for a short position to come back down because this will be a giant fake out",
+  "unchecked": [
+   "price is breaking below 47.2"
+  ],
+  "lesson_id": 308,
+  "rules": [
+   {
+    "rule": "close_below_sma",
+    "a": 47.2
+   }
+  ],
+  "rules_text": [
+   "Close below SMA (47.2)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 668,
+  "name": "long_target",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "daily",
+  "why": "The next major target for Bitcoin is between $55,000 and $56,000.",
+  "quote": "our next major Target is going to be between $554,000 and $56,000",
+  "unchecked": [
+   "price is targeting $55,000 - $56,000"
+  ],
+  "lesson_id": 308,
+  "rules": [
+   {
+    "rule": "close_above_sma",
+    "a": 55000
+   }
+  ],
+  "rules_text": [
+   "Close above SMA (55000)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 669,
+  "name": "volume_confluence",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 0.7,
+  "rr": 2.0,
+  "timeframe": "daily",
+  "why": "The volume node at $55,900 is the next major target for Bitcoin, and the close above the 200 SMA and volume spike indicate a strong bullish trend. The ATR is used to determine the stop loss, and the risk-reward ratio is set to 2:1. The timeframe is daily, and the pattern is expected to continue to the top of the range, which is currently around $65,000.",
+  "quote": "I'm holding my long trades and am I looking to short Bitcoin? I am going to be keeping this as simple as possible I'm just going to take a look at all the volume that's traded in this massive sideways range right here and to be honest with you guys for me right now as long as we are holding above this key level of $47,300 which is the the level I gave in my last video that we need to hold above for higher prices I still expect higher prices to come for Bitcoin right now because when we take a look at all of this volume that has traded here this is establishing for us the fair price of Bitcoin going all the way back to the beginning of 2020 and once you lose a fair value Zone as we did down here and then you come back inside of that fair value Zone it's more probable than not we make our way to the middle of that fair value Zone where we look for our first resistance and of course this is where we found first resistance which is why in the Casper crew we took that short trade right from there because that was one of the confluences at that key level for us to actually give this short trade uh in advance and then the next level if we can reclaim that high volume node is going to be the value area high of the range that's coming in at around $55,900 that is my next major Target for Bitcoin and if that is reclaimed we are absolutely going to see a new all-time high which will be a historic event for Bitcoin the very fact that we are breaking out of this golden pocket before the having is showing strength that we have not seen before now before we get overly bullish we need to recognize the possibility of a fake out which is one of the the trades that I'm always looking for right we need to be looking for a fake out we need to let the charts dictate the way we trade okay we cannot be stuck in a bias so much that we miss out on opportunities because we refuse to see what the charts are saying right so if we do see that the Bitcoin price actually does do something like this then we need to be prepared for a bigger move to the downside upon a bearish back test but until we see Bitcoin lose key support and back test bearishly all things right now on the chart are telling me that Bitcoin is going to see higher prices very very soon so guys that is it for today's video make sure to like subscribe click the Bell may God bless everybody in the name of Jesus Yeshua the Messiah even if you are not religious I still pray you and your family are super super blessed and I will see everybody in the next video peace",
+  "unchecked": [
+   "The volume node at $55,900 is the next major target for Bitcoin."
+  ],
+  "lesson_id": 309,
+  "rules": [
+   {
+    "rule": "close_above_sma",
+    "a": 200
+   },
+   {
+    "rule": "volume_spike",
+    "a": 20,
+    "b": 1.5
+   }
+  ],
+  "rules_text": [
+   "Close above SMA (200)",
+   "Volume above 20 \u00d7 its 1.5-candle average"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 670,
+  "name": "Bullish Breakout Target",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "higher-term time frames",
+  "why": "The breakout above the key Fibonacci level and the higher low indicate a bullish trend, suggesting the next target is the $55,000 level.",
+  "quote": "the next Target is going to be the $55,000 level now",
+  "unchecked": [
+   "The next target is the $55,000 level based on the higher-term time frames and the breaking out of the key level."
+  ],
+  "lesson_id": 310,
+  "rules": [
+   {
+    "rule": "close_above_sma",
+    "a": 50
+   },
+   {
+    "rule": "higher_low",
+    "a": 5,
+    "b": 5
+   }
+  ],
+  "rules_text": [
+   "Close above SMA (50)",
+   "Higher low: the last 5 candles' low is above the 5 candles before"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 671,
+  "name": "Potential Pullback",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "lower-term time frames",
+  "why": "The potential for a pullback if Bitcoin cannot reclaim the $52,200 level, which is a key Fibonacci level, suggests a short setup.",
+  "quote": "if the Bitcoin price cannot reclaim that $522,000 level we could be looking down to lower prices right as we all know the Fibonacci 618 level",
+  "unchecked": [
+   "if the Bitcoin price cannot reclaim that $522,000 level we could be looking down to lower prices right as we all know the Fibonacci 618 level"
+  ],
+  "lesson_id": 310,
+  "rules": [
+   {
+    "rule": "close_below_sma",
+    "a": 50
+   },
+   {
+    "rule": "lower_high",
+    "a": 5,
+    "b": 5
+   }
+  ],
+  "rules_text": [
+   "Close below SMA (50)",
+   "Lower high: the last 5 candles' high is below the 5 candles before"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 672,
+  "name": "Long: Breakout and Retest of Key Resistance Level",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 10000.0,
+  "rr": 2.0,
+  "timeframe": "daily",
+  "why": "A breakout and retest of the key resistance level could confirm a new bull market and lead to a new all-time high for Bitcoin.",
+  "quote": "If we reclaim that hold it as support we could be seeing a new Bitcoin alltime High these are very exciting times for Bitcoin.",
+  "unchecked": [
+   "Breakout and retest of the key resistance level $55,000 to $56,000"
+  ],
+  "lesson_id": 311,
+  "rules": [
+   {
+    "rule": "close_above_sma",
+    "a": 50000
+   },
+   {
+    "rule": "close_above_ema",
+    "a": 50000
+   },
+   {
+    "rule": "pattern_break_up"
+   }
+  ],
+  "rules_text": [
+   "Close above SMA (50000)",
+   "Close above EMA (50000)",
+   "Chart pattern broke out upward on this candle"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 673,
+  "name": "long_setup",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "1h",
+  "why": "The setup is based on the price action and indicators suggesting a continuation of the bullish trend, with the key support level at $56,000 being held. The RSI is above 70, indicating overbought conditions, which could lead to a pullback, but the overall trend is bullish. The MACD is positive, and the Market Cipher wave is above 53, indicating bullish momentum. The Awesome Oscillator is not explicitly mentioned, but it is unchecked, suggesting it is not a critical factor in this setup.",
+  "quote": "if we come back down to this level maintaining the uptrend allowing for a healthy retracement because let's be honest we very easily could see uh a lot of these longs flushed out here just kind of like what we saw yesterday but then we could hold this key zone of support that could make for a very nice uh potential long opportunity in my opinion",
+  "unchecked": [
+   "ao_green"
+  ],
+  "lesson_id": 312,
+  "rules": [
+   {
+    "rule": "close_above_sma",
+    "a": 200
+   },
+   {
+    "rule": "higher_low",
+    "a": 5,
+    "b": 5
+   },
+   {
+    "rule": "close_above_ema",
+    "a": 50
+   },
+   {
+    "rule": "macd_positive"
+   },
+   {
+    "rule": "wt_above",
+    "a": 53
+   },
+   {
+    "rule": "rsi_above",
+    "a": 70
+   }
+  ],
+  "rules_text": [
+   "Close above SMA (200)",
+   "Higher low: the last 5 candles' low is above the 5 candles before",
+   "Close above EMA (50)",
+   "MACD above zero",
+   "Market Cipher wave above 53 (overbought)",
+   "RSI (14) above 70"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 674,
+  "name": "Partial Exit at Previous All-Time High",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "daily",
+  "why": "Teacher suggests selling a portion of the investment at the previous all-time high, but does not provide specific rules for the setup. The rule close_above_sma is the closest match to the concept of selling at a high price level, but it is not explicitly stated as the setup condition. The setup is more of a risk management strategy rather than a specific trade setup with clear rules.",
+  "quote": "I've taken around 20% of my spot Holdings out and then as we come up another 20% another 20% another 20% and of course 20% each time gets smaller and smaller because because I've taken out 20% meanwhile I continue to stack Bitcoin through trading and stuff like that.",
+  "unchecked": [
+   "Sell a portion of the investment at the previous all-time high and continue stacking Bitcoin through trading."
+  ],
+  "lesson_id": 312,
+  "rules": [
+   {
+    "rule": "close_above_sma",
+    "a": 200
+   }
+  ],
+  "rules_text": [
+   "Close above SMA (200)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 675,
+  "name": "Pepe Coin",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 0.7,
+  "rr": 2.0,
+  "timeframe": "daily",
+  "why": "Inverted Head and Shoulders pattern, bullish divergences, and strong close above key level. Market Cipher B showing bullish momentum and money flow increasing. Daily RSI above 70, MACD positive, and Green Dot indicating bullish trend. Close above 200 SMA and higher low in the last 5 candles. Potential for a retracement before the next big push to the upside.",
+  "quote": "we are seeing money is coming into the asset the money flow is getting higher over time we seeing the daily momentum waves actually break out of this downtrend we had a downtrend here on Market Cipher B where we made a high a lower high and lower high and then boom we've just broken out of that so to me having broken out of an inverted Head and Shoulders pattern with a very strong close now topping out on momentum right here on the daily this is telling me that once we get that next Big Green Dot or that bottoming out on the daily time frame wherever that comes that that is going to be our next big push to the upside on Pepe coin.",
+  "unchecked": [
+   "inverted Head and Shoulders pattern"
+  ],
+  "lesson_id": 313,
+  "rules": [
+   {
+    "rule": "rsi_above",
+    "a": 70
+   },
+   {
+    "rule": "macd_positive"
+   },
+   {
+    "rule": "wt_green_dot"
+   },
+   {
+    "rule": "close_above_sma",
+    "a": 200
+   },
+   {
+    "rule": "higher_low",
+    "a": 5,
+    "b": 5
+   }
+  ],
+  "rules_text": [
+   "RSI (14) above 70",
+   "MACD above zero",
+   "Market Cipher green dot (WaveTrend crosses up) below 0",
+   "Close above SMA (200)",
+   "Higher low: the last 5 candles' low is above the 5 candles before"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 676,
+  "name": "bearish_engulf_daily",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "daily",
+  "why": "A bearish engulfing candle on the daily chart is a sign that more downside is likely.",
+  "quote": "if we close this daily candle in about 2 hours and the body of the candle closes below yesterday's candle that is called a bearish engulfing candle and this is actually a sign that more downside is likely",
+  "unchecked": [
+   "Close below the upper Bollinger band (20 candles, 2 deviations)"
+  ],
+  "lesson_id": 314,
+  "rules": [
+   {
+    "rule": "close_below_ema",
+    "a": 60000
+   }
+  ],
+  "rules_text": [
+   "Close below EMA (60000)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 677,
+  "name": "support_60000",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "daily",
+  "why": "The price is likely to hold above $60,000 for now, but the possibility of a retracement to $50,000 or even lower exists.",
+  "quote": "the very important thing we need to look at right now is this weekly level at 65,000 $52 the reason is because if we take our Fibonacci retracement from the high we made to the low we can see that this Fibonacci golden pocket retracement is lining up perfectly right now with this key weekly level at 65502",
+  "unchecked": [
+   "Close above the upper Bollinger band (20 candles, 2 deviations)"
+  ],
+  "lesson_id": 314,
+  "rules": [
+   {
+    "rule": "close_above_ema",
+    "a": 60000
+   }
+  ],
+  "rules_text": [
+   "Close above EMA (60000)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 678,
+  "name": "Long: Close above the upper Bollinger band + Shooting star / bearish pin bar",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "4h",
+  "why": "Close above the upper Bollinger band + Shooting star / bearish pin bar (long upper wick) makes sense (a blow-off candle above the band), works on 5 of 9 charts, and held up on data it wasn\u2019t found on (+0.49R), but that\u2019s only 15 trades so far",
+  "quote": "if we can close this candle and this is going to happen within the next 8 hours above this green line then I'd say we've actually gotten a pretty major support resistance flip and we could be looking for higher prices on bitcoin",
+  "unchecked": [
+   "Close above the upper Bollinger band (20 candles, 2 deviations)"
+  ],
+  "lesson_id": 315,
+  "rules": [
+   {
+    "rule": "close_above_sma",
+    "a": 65560
+   },
+   {
+    "rule": "shooting_star"
+   }
+  ],
+  "rules_text": [
+   "Close above SMA (65560)",
+   "Shooting star / bearish pin bar (long upper wick)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 679,
+  "name": "short_setup",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "1d",
+  "why": "The weekly time frame still has a confirmed red dot on Market Cipher B, which historically means we are going to trade in a sideways range and in general, we're going to wreck a lot of Longs and Shorts, and probably we'll get a bit more move to the downside that people are comfortable with after trading this triangle for a while and then we're going to end up with our big move to the upside.",
+  "quote": "the weekly time frame still has confirmed that red dot on Market a forb which historically means we are going to trade in a sideways range and in general we're going to wreck a lot of Longs we're going to wreck a lot of shorts and probably we'll get a bit more move to the downside that people are comfortable with after trading this triangle for a while and then we're going to end up with our big move to the upside",
+  "unchecked": [
+   "fake out to the upside and then a reversal",
+   "coming up to the top of the triangle and then continuing to trade this pattern for the next few days and or weeks"
+  ],
+  "lesson_id": 316,
+  "rules": [
+   {
+    "rule": "close_below_sma",
+    "a": 200
+   },
+   {
+    "rule": "rsi_below",
+    "a": 30
+   },
+   {
+    "rule": "wt_below",
+    "a": -53
+   },
+   {
+    "rule": "wt_red_dot"
+   }
+  ],
+  "rules_text": [
+   "Close below SMA (200)",
+   "RSI (14) below 30",
+   "Market Cipher wave below -53 (oversold)",
+   "Market Cipher red dot (WaveTrend crosses down) above 0"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 680,
+  "name": "swing_long",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "daily",
+  "why": "The teacher expects a major swing long trade to a new all-time high for Bitcoin up close to $100,000 after a period of sideways trading and a red dot on Market Cipher B indicating a potential move to the upside.",
+  "quote": "I'm expecting to move down to around this trend line where I'm going to be looking for a major swing long trade to a new all-time high for Bitcoin up close to $100,000 so guys that is my update for Bitcoin right now.",
+  "unchecked": [
+   "Respecting the trend line since the end of October"
+  ],
+  "lesson_id": 316,
+  "rules": [
+   {
+    "rule": "close_above_sma",
+    "a": 40
+   },
+   {
+    "rule": "in_bullish_pattern"
+   },
+   {
+    "rule": "wt_red_dot"
+   }
+  ],
+  "rules_text": [
+   "Close above SMA (40)",
+   "Inside a pattern that usually breaks up (falling wedge, ascending triangle, bull flag...)",
+   "Market Cipher red dot (WaveTrend crosses down) above 0"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 681,
+  "name": "Bullish Divergence on Market CER B",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "1h",
+  "why": "Bullish divergence on Market CER B, especially on the 1-hour time frame, is a very bullish pattern.",
+  "quote": "If we take a look at the price action as the price was coming lower to a very key area of support, we were watching the oscillator on Market CER B getting higher over time, giving us the coveted uneven butt cheek pattern.",
+  "unchecked": [
+   "uneven butt cheek pattern"
+  ],
+  "lesson_id": 317,
+  "rules": [
+   {
+    "rule": "rsi_bull_div",
+    "a": 61.8,
+    "b": 78.6
+   }
+  ],
+  "rules_text": [
+   "Bullish divergence: price lower low, RSI higher low - in the last 61.8 candles, lows/highs at most 78.6 candles apart"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 682,
+  "name": "Potential Breakout Above $72,000",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "1d",
+  "why": "The unfinished high in April and the presence of liquidity above the $72,000 level create a potential breakout scenario.",
+  "quote": "A perfect storm right here is to wreck all the shorts, trap a whole bunch of Longs thinking we're going to break out and then come back down into the triangle.",
+  "unchecked": [
+   "perfect storm for a liquidity grab"
+  ],
+  "lesson_id": 317,
+  "rules": [
+   {
+    "rule": "close_above_sma",
+    "a": 72000,
+    "b": 200
+   }
+  ],
+  "rules_text": [
+   "Close above SMA (72000)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 683,
+  "name": "Red Dot on Weekly Chart",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "1w",
+  "why": "The weekly chart shows a red dot, which historically means sideways or down movement for several weeks.",
+  "quote": "If we go to the weekly chart, you can see that we have printed a red dot on the weekly time frame, and if we go back to all the previous red dots that Bitcoin has printed since the beginning of the uptrend back in 2022, every single time it's meant sideways and down for a number of weeks.",
+  "unchecked": [
+   "previous red dots meant sideways and down for several weeks"
+  ],
+  "lesson_id": 317,
+  "rules": [
+   {
+    "rule": "rsi_bear_div",
+    "a": 61.8,
+    "b": 78.6
+   }
+  ],
+  "rules_text": [
+   "Bearish divergence: price higher high, RSI lower high - in the last 61.8 candles, lows/highs at most 78.6 candles apart"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 684,
+  "name": "bullish_divergence",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "4H",
+  "why": "Bullish divergence on the 4H time frame with the oscillator making higher lows while the price is making lower lows.",
+  "quote": "a bullish diver is as the price is getting lower and lower like it is here into key support our oscillator is getting higher over time in fact we can even take it from all the way back here and see that from the time of Tuesday March 19th to the day of Thursday April 24th the price was making lower lows but our oscillator Market Cipher B was in fact making higher lows over time",
+  "unchecked": [
+   "uneven butt cheek pattern"
+  ],
+  "lesson_id": 318,
+  "rules": [
+   {
+    "rule": "rsi_bull_div",
+    "a": 3,
+    "b": 60
+   }
+  ],
+  "rules_text": [
+   "Bullish divergence: price lower low, RSI higher low - in the last 3 candles, lows/highs at most 60 candles apart"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 685,
+  "name": "Bullish Divergence",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 1.5,
+  "timeframe": "4h",
+  "why": "The teacher mentions the importance of bullish divergences, which can indicate a potential reversal in the market, and the current support level is a key area to watch for a bounce.",
+  "quote": "as we are coming down to the golden pocket we are seeing some slight bullish divergences here the momentum is getting higher as the price is getting lower even the money flow is getting a little higher as the price is getting lower",
+  "unchecked": [],
+  "lesson_id": 319,
+  "rules": [
+   {
+    "rule": "rsi_bull_div",
+    "a": 60,
+    "b": 60
+   },
+   {
+    "rule": "close_above_sma",
+    "a": 200
+   }
+  ],
+  "rules_text": [
+   "Bullish divergence: price lower low, RSI higher low - in the last 60 candles, lows/highs at most 60 candles apart",
+   "Close above SMA (200)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 686,
+  "name": "long_setup",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 1.5,
+  "timeframe": "1h",
+  "why": "The teacher is looking for a bounce from the key support level, with the price above the 200 SMA, RSI above 70, positive MACD, Market Cipher wave above 53, and positive Market Cipher money flow. The Awesome Oscillator is not specified as a condition, so it is unchecked.",
+  "quote": "this is very very key support especially when we are in an uptrend as we are right now so people are getting scared people are getting bearish down at this area but this is very very key support in fact this is one of the areas that we were looking for a bounce or a long trade in the Casper crew VIP Discord",
+  "unchecked": [
+   "ao_green"
+  ],
+  "lesson_id": 320,
+  "rules": [
+   {
+    "rule": "close_above_sma",
+    "a": 200
+   },
+   {
+    "rule": "rsi_above",
+    "a": 70
+   },
+   {
+    "rule": "macd_positive"
+   },
+   {
+    "rule": "wt_above",
+    "a": 53
+   },
+   {
+    "rule": "mf_positive"
+   }
+  ],
+  "rules_text": [
+   "Close above SMA (200)",
+   "RSI (14) above 70",
+   "MACD above zero",
+   "Market Cipher wave above 53 (overbought)",
+   "Market Cipher money flow above zero (green)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 687,
+  "name": "short_setup",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 1.5,
+  "timeframe": "1h",
+  "why": "The teacher is bearish on Bitcoin and expects a significant move to the downside if the market rejects from the key areas, with the price below the 200 SMA, RSI below 30, negative MACD, Market Cipher wave below -53, and negative Market Cipher money flow. The Awesome Oscillator is not specified as a condition, so it is unchecked.",
+  "quote": "if we go to our weekly time frame what do we see we pretty much have no support all the way up back from January besides this little level at $52,000 this little weekly order block that we have right here that means if we are going to reject from around the $67,000 and make another lower low I'm expecting at least a $52,000 Bitcoin perhaps even coming down to this very key Zone where if we go to the monthly time frame or the two we time frame I should say we have this little two we area of consolidation right here at around the low 40s so these would be my two major targets if we get a major move to the downside and we see some of these bearish divergences play out",
+  "unchecked": [
+   "ao_red"
+  ],
+  "lesson_id": 320,
+  "rules": [
+   {
+    "rule": "close_below_sma",
+    "a": 200
+   },
+   {
+    "rule": "rsi_below",
+    "a": 30
+   },
+   {
+    "rule": "macd_negative"
+   },
+   {
+    "rule": "wt_below",
+    "a": -53
+   },
+   {
+    "rule": "mf_negative"
+   }
+  ],
+  "rules_text": [
+   "Close below SMA (200)",
+   "RSI (14) below 30",
+   "MACD below zero",
+   "Market Cipher wave below -53 (oversold)",
+   "Market Cipher money flow below zero (red)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 688,
+  "name": "Long Setup",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "4h",
+  "why": "Bullish divergence and higher momentum waves and money flow indicate a potential bullish turn.",
+  "quote": "as the price is getting lower to the Box we are noticing specifically on the 4-Hour time frame the momentum waves are getting higher this is called a bullish Divergence and even as we go down to the lower time frame such as the 1our time frame we're actually starting to see this purple money flow getting higher overtime",
+  "unchecked": [
+   "Bullish divergence on the 4-Hour time frame"
+  ],
+  "lesson_id": 321,
+  "rules": [
+   {
+    "rule": "close_above_sma",
+    "a": 62666
+   },
+   {
+    "rule": "rsi_above",
+    "a": 30
+   }
+  ],
+  "rules_text": [
+   "Close above SMA (62666)",
+   "RSI (14) above 30"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 689,
+  "name": "Short: Value Area Low Rejection",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "daily",
+  "why": "The value area low is being rejected, indicating a potential bearish continuation. The red dot on Market Cipher B and the lower Bollinger band touch confirm the bearish setup.",
+  "quote": "if we get a bearish back test of this continuing in the downtrend of making a high a low a lower high a lower low a lower high a lower low a lower high a lower low then maybe we can expect more downside",
+  "unchecked": [
+   "The value area low of the range is the key level to watch for potential support."
+  ],
+  "lesson_id": 322,
+  "rules": [
+   {
+    "rule": "close_below_sma",
+    "a": 200
+   },
+   {
+    "rule": "wt_red_dot"
+   },
+   {
+    "rule": "bb_touch_lower",
+    "a": 20,
+    "b": 2
+   }
+  ],
+  "rules_text": [
+   "Close below SMA (200)",
+   "Market Cipher red dot (WaveTrend crosses down) above 0",
+   "Low touched the lower Bollinger band in the last 20 candles"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  }
 ]
