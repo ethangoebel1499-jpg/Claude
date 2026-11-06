@@ -124875,5 +124875,272 @@
   "hints": null,
   "tune": null,
   "exit_plan": null
+ },
+ {
+  "id": 753,
+  "name": "Long Setup",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "4h",
+  "why": "The setup is based on the confluence of key levels, liquidity, and potential VWAP support, with a focus on the 4-hour timeframe and the potential for a bullish bounce from the support level.",
+  "quote": "We need to be watching for a 4hour candle hitting into this area dipping maybe a little below and then a 4hour candle close back above I'd say 1075. This will give us two or three confluences.",
+  "unchecked": [
+   "The VWAP confluence is not directly translatable into a rule."
+  ],
+  "lesson_id": 355,
+  "rules": [
+   {
+    "rule": "close_above_sma",
+    "a": 107.2
+   },
+   {
+    "rule": "volume_spike"
+   },
+   {
+    "rule": "bb_touch_lower",
+    "a": 107261
+   },
+   {
+    "rule": "wt_below",
+    "a": -53
+   }
+  ],
+  "rules_text": [
+   "Close above SMA (107.2)",
+   "Volume above 1.5 \u00d7 its 20-candle average",
+   "Low touched the lower Bollinger band in the last 107261 candles",
+   "Market Cipher wave below -53 (oversold)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 754,
+  "name": "Hidden Bullish Divergence",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "daily",
+  "why": "Hidden bullish divergence with price making a higher low and RSI making a lower low, indicating potential for a bullish continuation. The price is also holding key support levels and the VWAP, which adds to the bullishness of the setup.",
+  "quote": "When we come now back to the daily, we're seeing the same pattern that we saw on the weekly except now it's playing out on a lower time frame. We have our juicy uneven butt cheek pattern in April. We have our first trigger wave back here in June. And now we're having our first hidden bullish divergence right now in the first day of September.",
+  "unchecked": [
+   "Price is making a higher low while RSI is making a lower low, indicating potential for a bullish continuation."
+  ],
+  "lesson_id": 356,
+  "rules": [
+   {
+    "rule": "rsi_hidden_bull_div"
+   },
+   {
+    "rule": "close_above_sma",
+    "a": 200
+   }
+  ],
+  "rules_text": [
+   "Hidden bullish divergence: price higher low, RSI lower low (trend continuation) - in the last 3 candles, lows/highs at most 60 candles apart",
+   "Close above SMA (200)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 755,
+  "name": "hidden_bull_div",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "4h",
+  "why": "The hidden bullish divergence on the RSI and the close above the 200 SMA indicate a potential bullish reversal. The market is oversold, and the divergence suggests a coming rally. The stop is placed below the recent low, and the risk-reward ratio is favorable with a potential target of $125,000 or higher.",
+  "quote": "We are actually seeing right now an extremely bullish signal printing right now. It's called a hidden bullish divergence.",
+  "unchecked": [
+   "This setup is based on the hidden bullish divergence, which is a complex pattern that may not be fully captured by the rules."
+  ],
+  "lesson_id": 357,
+  "rules": [
+   {
+    "rule": "rsi_hidden_bull_div",
+    "a": 100,
+    "b": 100
+   },
+   {
+    "rule": "close_above_sma",
+    "a": 200
+   }
+  ],
+  "rules_text": [
+   "Hidden bullish divergence: price higher low, RSI lower low (trend continuation) - in the last 100 candles, lows/highs at most 100 candles apart",
+   "Close above SMA (200)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 756,
+  "name": "bull_div",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "4h",
+  "why": "The bullish divergence on the RSI and the close above the 200 SMA indicate a potential bullish reversal. The market is oversold, and the divergence suggests a coming rally. The stop is placed below the recent low, and the risk-reward ratio is favorable with a potential target of $125,000 or higher.",
+  "quote": "As the momentum waves and the money flow are starting to come back up, the price is consistently making lower lows. This is called again a bullish divergence and it means that the oscillator is telling us money and momentum is coming into the market and yet people are still selling pushing the price down.",
+  "unchecked": [
+   "This setup is based on the bullish divergence, which is a complex pattern that may not be fully captured by the rules."
+  ],
+  "lesson_id": 357,
+  "rules": [
+   {
+    "rule": "rsi_bull_div",
+    "a": 100,
+    "b": 100
+   },
+   {
+    "rule": "close_above_sma",
+    "a": 200
+   }
+  ],
+  "rules_text": [
+   "Bullish divergence: price lower low, RSI higher low - in the last 100 candles, lows/highs at most 100 candles apart",
+   "Close above SMA (200)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 757,
+  "name": "long_setup",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1000.0,
+  "rr": 2.0,
+  "timeframe": "3-day",
+  "why": "Bullish signs continue to print, and the 3-day green dot confirms a hidden bullish divergence, suggesting a move to the upside.",
+  "quote": "So essentially, guys, as long as we are holding $107ish,000, and these bullish signs continue to print, I have to feel like the most probable thing that's going to happen next is a move to the upside.",
+  "unchecked": [
+   "Market Cipher B showing thicker money flow and higher momentum waves"
+  ],
+  "lesson_id": 358,
+  "rules": [
+   {
+    "rule": "close_above_ema",
+    "a": 107000,
+    "b": 200
+   },
+   {
+    "rule": "wt_green_dot"
+   }
+  ],
+  "rules_text": [
+   "Close above EMA (107000)",
+   "Market Cipher green dot (WaveTrend crosses up) below 0"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 758,
+  "name": "short_setup",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1000.0,
+  "rr": 2.0,
+  "timeframe": "3-day",
+  "why": "If the CPI report comes out hot, it could lead to a bearish move, but if it comes out lower or as expected, we could see a bullish move.",
+  "quote": "Wednesday when CPI comes out is going to be a big make it or break it moment fundamentally because if inflation comes out hot then you know I don't think that's going to give us as juicy of a buy the room or sell the news leading into the interest rate decision the interest rate cut decision but if it comes out lower or as expected then I think you know we're going to get that big push leading up into next Wednesday the 17th and then that's really going to be the determining place where we decide, all right, are we really going to go for that last big blowoff top here, or are we just going to make a lower high and continue to trade like sideways forever and ever and ever and ever and ever and ever and ever and ever.",
+  "unchecked": [
+   "CPI report on Wednesday could be a big make it or break it moment for Bitcoin's price"
+  ],
+  "lesson_id": 358,
+  "rules": [
+   {
+    "rule": "close_below_ema",
+    "a": 115000,
+    "b": 200
+   },
+   {
+    "rule": "wt_red_dot"
+   }
+  ],
+  "rules_text": [
+   "Close below EMA (115000)",
+   "Market Cipher red dot (WaveTrend crosses down) above 0"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 759,
+  "name": "hidden_bull_div",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "daily",
+  "why": "hidden bullish divergence on the daily chart with increasing money flow, which should provide enough juice to reach the next level of $120,000 and potentially a new all-time high on Bitcoin.",
+  "quote": "This 4hour divergence could easily give us a daily trigger wave which would then give us this pattern here of having formed a hidden bullish divergence right here on the daily and then we form that next trigger wave with the money flow increasing which probably will be enough juice to get us at least to 120K hopefully higher so that we can hit a juicy new alltime high on Bitcoin.",
+  "unchecked": [
+   "money flow increasing"
+  ],
+  "lesson_id": 360,
+  "rules": [
+   {
+    "rule": "rsi_bull_div"
+   },
+   {
+    "rule": "macd_hidden_bull_div"
+   }
+  ],
+  "rules_text": [
+   "Bullish divergence: price lower low, RSI higher low - in the last 3 candles, lows/highs at most 60 candles apart",
+   "Hidden bullish divergence: price higher low, MACD lower low (trend continuation) - in the last 3 candles, lows/highs at most 60 candles apart"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  }
 ]

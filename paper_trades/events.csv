@@ -573,3 +573,6 @@ Trial #197 SOL 30m,2026-11-06T17:30:22+00:00,entry,SHORT 108.926282 @ 90.21 · i
 Apprentice ETH 1h,2026-11-06T19:00:13+00:00,exit,closed (opposite setup) +74.36 USD
 Apprentice ETH 1h,2026-11-06T19:00:13+00:00,entry,"LONG 4.885078 @ 2,227.70"
 Apprentice ETH 4h,2026-11-06T22:02:56+00:00,exit,closed (breakeven) -53.84 USD
+Apprentice XRP 4h,2026-11-06T23:35:06+00:00,start,watching XRPUSD 4h
+Apprentice BCH 4h,2026-11-06T23:40:26+00:00,start,watching BCHUSD 4h
+Apprentice XRP 1D,2026-11-06T23:41:03+00:00,start,watching XRPUSD 1D
