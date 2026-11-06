@@ -61667,5 +61667,486 @@
   "hints": null,
   "tune": null,
   "exit_plan": null
+ },
+ {
+  "id": 476,
+  "name": "Short: Key Resistance Level with Shooting Star",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "1h",
+  "why": "Key resistance level with bearish candle and upper Bollinger band breakout.",
+  "quote": "if we take a look at a lower term time frame we can see indeed we did short the top of this right shoulder and the technical Target that we have is actually going to be a retest of the 29 000 support resistance flip so this is going to be very very important.",
+  "unchecked": [
+   "Shooting star / bearish pin bar (long upper wick)"
+  ],
+  "lesson_id": 180,
+  "rules": [
+   {
+    "rule": "close_above_sma",
+    "a": 200
+   },
+   {
+    "rule": "close_above_ema",
+    "a": 50
+   },
+   {
+    "rule": "close_above_ema",
+    "a": 21
+   },
+   {
+    "rule": "ha_red"
+   },
+   {
+    "rule": "bb_above_upper",
+    "a": 20,
+    "b": 2
+   }
+  ],
+  "rules_text": [
+   "Close above SMA (200)",
+   "Close above EMA (50)",
+   "Close above EMA (21)",
+   "Heikin Ashi candle is red",
+   "Close above the upper Bollinger band (20 candles, 2 deviations)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 477,
+  "name": "long_entry",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "24m",
+  "why": "Market Cipher B printed a double bit boy Green Dot, and the Money Flow is curving to the upside as the momentum waves are getting higher as the price is coming down to the exact major level of support.",
+  "quote": "the 24 minute time frame has printed a double bit boy Green Dot bottom right here on Market Cipher B Money Flow is curving to the upside as the momentum waves are getting higher as the price is coming down to the exact major level of support now this is something that in my opinion is always always always a long entry here is what is happening right now",
+  "unchecked": [
+   "Market Cipher wave above 53 (overbought)"
+  ],
+  "lesson_id": 181,
+  "rules": [
+   {
+    "rule": "rsi_above",
+    "a": 70
+   },
+   {
+    "rule": "wt_green_dot"
+   }
+  ],
+  "rules_text": [
+   "RSI (14) above 70",
+   "Market Cipher green dot (WaveTrend crosses up) below 0"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 478,
+  "name": "head_and_shoulders",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 3.0,
+  "timeframe": "4h",
+  "why": "potential for a bearish continuation pattern and a retest of the neckline area",
+  "quote": "there is still a potential right here that we could print another Head and Shoulders pattern where we have our left shoulder right here we have our head and then we have a potential right shoulder which we could actually look for a short to take it down even lower which would confirm bearish Market structure on an even higher term time frame",
+  "unchecked": [
+   "left shoulder at 26.5, head at 28.8, right shoulder at 30,000"
+  ],
+  "lesson_id": 183,
+  "rules": [
+   {
+    "rule": "close_below_ema",
+    "a": 50,
+    "b": 21
+   },
+   {
+    "rule": "wt_red_dot"
+   },
+   {
+    "rule": "wt_below"
+   }
+  ],
+  "rules_text": [
+   "Close below EMA (50)",
+   "Market Cipher red dot (WaveTrend crosses down) above 0",
+   "Market Cipher wave below -53 (oversold)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 479,
+  "name": "fibonacci_retrace",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 3.0,
+  "timeframe": "4h",
+  "why": "potential for a bearish continuation pattern and a retest of the neckline area",
+  "quote": "these are the two most important zones that I am personally going to be aware of as we move into the coming week all right it's going to be the 26.5 Zone and then it's going to be that 29 000 Zone where we could potentially be looking for trades only if we get confirmations",
+  "unchecked": [
+   "Fibonacci golden pocket 78.6 zone lines up with the value area high of the range and previous highs"
+  ],
+  "lesson_id": 183,
+  "rules": [
+   {
+    "rule": "close_below_ema",
+    "a": 50,
+    "b": 21
+   },
+   {
+    "rule": "wt_red_dot"
+   },
+   {
+    "rule": "wt_below"
+   },
+   {
+    "rule": "close_below_sma",
+    "a": 200
+   }
+  ],
+  "rules_text": [
+   "Close below EMA (50)",
+   "Market Cipher red dot (WaveTrend crosses down) above 0",
+   "Market Cipher wave below -53 (oversold)",
+   "Close below SMA (200)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 480,
+  "name": "bullish_divergence",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 3.0,
+  "timeframe": "4h",
+  "why": "potential for a bullish continuation pattern and a retest of the neckline area",
+  "quote": "if we continue to see that here it could actually make for another potential long train if we take our Fib from the most recent low to the most recent High we see that that Fibonacci golden pocket is actually coming in just below where we're at right now at the low of this local range",
+  "unchecked": [
+   "Market Cipher B showing a bullish divergence with a left cheek and a right cheek"
+  ],
+  "lesson_id": 183,
+  "rules": [
+   {
+    "rule": "rsi_above",
+    "a": 30
+   },
+   {
+    "rule": "wt_green_dot"
+   },
+   {
+    "rule": "wt_above"
+   }
+  ],
+  "rules_text": [
+   "RSI (14) above 30",
+   "Market Cipher green dot (WaveTrend crosses up) below 0",
+   "Market Cipher wave above 53 (overbought)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 481,
+  "name": "bullish_divergence",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "1h",
+  "why": "If we get a drop down to the Fibonacci golden pocket 78.6, we could see a bullish divergence on Market Cipher B, which could lead to a move to the upside.",
+  "quote": "if we get another move to the downside well we have a potential pattern forming here which is a giant head and shoulders pattern okay something like this a head and shoulders pattern which by the way if we do get a bounce from here we could get a very intense move back to retest the value area high of the range right around here where we also found previous resistance back at the end of March",
+  "unchecked": [
+   "Fibonacci golden pocket 78.6 coming in just around these previous lows"
+  ],
+  "lesson_id": 184,
+  "rules": [
+   {
+    "rule": "rsi_bull_div",
+    "a": 23900,
+    "b": 30000
+   }
+  ],
+  "rules_text": [
+   "Bullish divergence: price lower low, RSI higher low - in the last 23900 candles, lows/highs at most 30000 candles apart"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 482,
+  "name": "head_and_shoulders",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "1d",
+  "why": "If the head and shoulders pattern forms and the price breaks below the key support at $25,000, we could see a move down to the macro Fibonacci golden pocket at $21,400.",
+  "quote": "if we take a look at the target of this head and shoulders we can see something also that is very very interesting it's coming below the major zone of support that we have around twenty five thousand dollars and we're actually heading down more toward the twenty one thousand dollar level that is the target of this head and shoulders",
+  "unchecked": [
+   "Macro Fibonacci golden pocket coming in at the target of this potential Head and Shoulders pattern around 21.4 thousand dollars"
+  ],
+  "lesson_id": 184,
+  "rules": [
+   {
+    "rule": "close_below_sma",
+    "a": 25000,
+    "b": 21400
+   },
+   {
+    "rule": "macd_cross_down",
+    "a": 25000,
+    "b": 21400
+   }
+  ],
+  "rules_text": [
+   "Close below SMA (25000)",
+   "MACD crosses below its signal line"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 483,
+  "name": "long_setup",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "Daily",
+  "why": "Looking for hidden bullish divergence or a clear bottom on the Daily time frame for a long position.",
+  "quote": "I would want to see this momentum wave come down very very low even lower than the previous momentum wave giving us what is called a hidden bullish Divergence or I would want to see this thing coming down and printing a pretty significant bottom right a clear bottom where we see this momentum wave curve",
+  "unchecked": [
+   "Momentum wave coming down very low or printing a significant bottom on the Daily time frame"
+  ],
+  "lesson_id": 185,
+  "rules": [
+   {
+    "rule": "rsi_bull_div"
+   },
+   {
+    "rule": "rsi_hidden_bull_div"
+   }
+  ],
+  "rules_text": [
+   "Bullish divergence: price lower low, RSI higher low - in the last 3 candles, lows/highs at most 60 candles apart",
+   "Hidden bullish divergence: price higher low, RSI lower low (trend continuation) - in the last 3 candles, lows/highs at most 60 candles apart"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 484,
+  "name": "long_setup",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "4H",
+  "why": "Looking for a bullish divergence and a positive money flow on the four-hour time frame for a long position.",
+  "quote": "I want to see two things on the four hour time frame number one I want to see a bullish Divergence a bullish Divergence is when the price is getting lower like this but the momentum is getting higher like this right where price is getting lower momentum is getting higher giving us that juicy uneven butt cheek pattern but I also want to see the money flow on the four hour start to curve to the upside right once we see that money flow curving to the upside as price is also coming down that to me is always a swing long position",
+  "unchecked": [
+   "Bullish divergence and positive money flow on the four-hour time frame"
+  ],
+  "lesson_id": 185,
+  "rules": [
+   {
+    "rule": "rsi_bull_div"
+   },
+   {
+    "rule": "macd_bull_div"
+   },
+   {
+    "rule": "mf_positive"
+   }
+  ],
+  "rules_text": [
+   "Bullish divergence: price lower low, RSI higher low - in the last 3 candles, lows/highs at most 60 candles apart",
+   "Bullish divergence: price lower low, MACD higher low - in the last 3 candles, lows/highs at most 60 candles apart",
+   "Market Cipher money flow above zero (green)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 485,
+  "name": "head_and_shoulders",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1000.0,
+  "rr": 2.0,
+  "timeframe": "1h, 24m",
+  "why": "If we confirm a red dot, we will be getting a bearish Divergence where momentum is getting lower as the price is getting higher. The 29,000 level is a key resistance level, and a head and shoulders pattern is forming, which is bearish. If we reject from this green box, we can add to the short trade. The money flow is still looking bullish, so we need to wait for good confirmation of the momentum and the money flow getting lower.",
+  "quote": "we have a potential pattern forming here which is a giant head and shoulders pattern if we get the rejection I'm going to be adding to this short trade if we get the rejection it's a great place to add",
+  "unchecked": [
+   "unchecked"
+  ],
+  "lesson_id": 186,
+  "rules": [
+   {
+    "rule": "close_above_sma",
+    "a": 29000
+   },
+   {
+    "rule": "wt_red_dot"
+   }
+  ],
+  "rules_text": [
+   "Close above SMA (29000)",
+   "Market Cipher red dot (WaveTrend crosses down) above 0"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 486,
+  "name": "short",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 2.0,
+  "rr": 2.0,
+  "timeframe": "4h",
+  "why": "Close below the golden pocket and the 76.4 of rejection, MACD crosses below its signal line, and Market Cipher wave crosses down from above 0 to below 0.",
+  "quote": "A potential short trade could be set up around this area this is exactly what has happened the Bitcoin price came up to the height we got the move to the downside we got the long trade from the Casper crew VIP Discord and now what's happening is we actually did come up to the area between the golden pocket and the 76-4 of rejection.",
+  "unchecked": [
+   "close_below_ema: Close below EMA (50) and EMA (200) (downtrend)"
+  ],
+  "lesson_id": 187,
+  "rules": [
+   {
+    "rule": "close_below_ema",
+    "a": 50,
+    "b": 200
+   },
+   {
+    "rule": "macd_cross_down",
+    "a": 0
+   },
+   {
+    "rule": "wt_red_dot"
+   }
+  ],
+  "rules_text": [
+   "Close below EMA (50)",
+   "MACD crosses below its signal line",
+   "Market Cipher red dot (WaveTrend crosses down) above 0"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 487,
+  "name": "long",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 2.0,
+  "rr": 2.0,
+  "timeframe": "4h",
+  "why": "Close above the golden pocket and the 76.4 of rejection, MACD crosses above its signal line, and Market Cipher wave crosses up from below 0 to above 0.",
+  "quote": "Bitcoin is squeezing together in this symmetrical triangle pattern we can see right here if we take these two trend lines here and let's go ahead and turn off our head and shoulders that we are squeezing together consolidating very very tightly into this symmetrical triangle pattern if we take a look at the target of our symmetrical triangle pattern to the upside it's coming in about 31.3000 dollars.",
+  "unchecked": [
+   "close_above_ema: Close above EMA (50) and EMA (200) (uptrend)"
+  ],
+  "lesson_id": 187,
+  "rules": [
+   {
+    "rule": "close_above_ema",
+    "a": 50,
+    "b": 200
+   },
+   {
+    "rule": "macd_cross_up",
+    "a": 0
+   },
+   {
+    "rule": "wt_green_dot"
+   }
+  ],
+  "rules_text": [
+   "Close above EMA (50)",
+   "MACD crosses above its signal line",
+   "Market Cipher green dot (WaveTrend crosses up) below 0"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  }
 ]
