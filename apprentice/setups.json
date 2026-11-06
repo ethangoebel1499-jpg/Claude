@@ -62186,5 +62186,126 @@
   "hints": null,
   "tune": null,
   "exit_plan": null
+ },
+ {
+  "id": 489,
+  "name": "buy_setup",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 2.0,
+  "rr": 1.5,
+  "timeframe": "daily",
+  "why": "Based on the teacher's comments about looking for a pullback and the combination of MACD, RSI, and WaveTrend signals, this setup aligns with his trading approach.",
+  "quote": "I did I did bought Bitcoin yeah nice because I tried the charts not my bias in in the end that's the way to do it",
+  "unchecked": [
+   "Close above the upper Bollinger band (20 candles, 2 deviations)"
+  ],
+  "lesson_id": 191,
+  "rules": [
+   {
+    "rule": "close_above_ema",
+    "a": 50
+   },
+   {
+    "rule": "macd_cross_up"
+   },
+   {
+    "rule": "rsi_above",
+    "a": 30
+   },
+   {
+    "rule": "wt_green_dot"
+   },
+   {
+    "rule": "bb_above_mid"
+   }
+  ],
+  "rules_text": [
+   "Close above EMA (50)",
+   "MACD crosses above its signal line",
+   "RSI (14) above 30",
+   "Market Cipher green dot (WaveTrend crosses up) below 0",
+   "Close above the Bollinger middle band"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 490,
+  "name": "Symmetrical Triangle Breakout",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 0.7,
+  "rr": 2.0,
+  "timeframe": "daily",
+  "why": "The pattern is a consolidation before a major move, and the price is currently above the EMA (50). The breakout of the symmetrical triangle is a strong signal for a long trade. The target is 33,000, which is the next major resistance level. The risk-reward ratio is 2:1, and the stop-loss is placed below the lower boundary of the triangle. This setup is based on the breakout of a symmetrical triangle pattern, which is a strong signal for a long trade. The target is 33,000, which is the next major resistance level. The risk-reward ratio is 2:1, and the stop-loss is placed below the lower boundary of the triangle.",
+  "quote": "The range we've been trading for the past 50 days and as you can see we've been respecting very nicely the highs and the lows of this range for those of us in the Casper crew VIP Discord this range has been gold mine as we took along exactly from the bottom right here with the setup given in advance in the Casper VIP Discord even just within the past few days we grabbed a long right from the bottom and a short right from the top these setups given in advance by the way y'all if you want to take advantage of this volatility and trade these markets along with me sign up for mexc link in the description and the pinned comment this is my new favorite exchange fees are absolutely unbeatable zero percent limit fees 33 off Market fees great deal especially for people who are scouting the lower time frames like we do in the Casper crew VIP disc",
+  "unchecked": [
+   "The pattern is a symmetrical triangle, which is a consolidation pattern before a major move."
+  ],
+  "lesson_id": 192,
+  "rules": [
+   {
+    "rule": "close_above_ema",
+    "a": 50
+   },
+   {
+    "rule": "pattern_break_up"
+   }
+  ],
+  "rules_text": [
+   "Close above EMA (50)",
+   "Chart pattern broke out upward on this candle"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 491,
+  "name": "Bearish Head and Shoulders Pattern",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 0.7,
+  "rr": 2.0,
+  "timeframe": "daily",
+  "why": "The pattern is a bearish head and shoulders, which is a bearish continuation pattern. The price is currently below the EMA (50). The breakdown of the bearish head and shoulders pattern is a strong signal for a short trade. The target is the low of the range, which is around 29,100. The risk-reward ratio is 2:1, and the stop-loss is placed above the neckline of the pattern.",
+  "quote": "we have been forming this potential bearish Head and Shoulders pattern and so we have been watching this for a number of weeks right now in the Casper crew saying look we're potentially forming here some bearish Market structure but we need to see is this going to become invalidated well right now there are some very key areas that we need to be aware of first of all we have gotten a bounce from this high volume node of the range right here which so far is a very key area of support that needs to hold and you can see that we are currently trying to reclaim this blue line which is the value area high of this sideways range if the Bitcoin price is able now to hold above this blue line of about 29 100 and hold there over the weekend and put in a high that is higher than what we got over here at 30k then in my opinion this bearish head and shoulders pattern will become invalidated because instead of breaking down from the right shoulder we're actually now finding support locally and then putting in a higher high establishing local bullish Market structure okay so this is very very important especially what happens over the weekend however we are also potentially forming right now a bearish rising wedge pattern and if we take a look at the target of this bearish Rising winch pattern we can see that the breakdown Target is going to be basically back down at these lows so if we break down from this area we can see that whoops we might get a move coming back down to the low of this range right here so these are the two major things that we need to be aware of over the weekend to determine which way this pattern is going to break but we have to keep in mind here that this is a very volatile time we're seeing Banks go under this is going to affect the cryptocurrency markets just as it has effect affected the stock markets but these are the two levels and patterns that we need to most be aware of to determine how are we best going to look for our next trade right if we start to see this breaking down and we start putting in lower lows that validates the bearish head and shoulders and then in my opinion we can look for that move down to these lower areas to catch a nice juicy bounce however if we over the weekend start to make a higher high and hold above 29 100 then I think we can look for the break to the upside hitting my target of 33 000 which is my next major take profit Zone on this long trade right here up at about 32 835 is my actual TP for that and I've had a lot of people ask me Jay how can you remain so bullish on bitcoin when all these banks are falling apart and we're heading into economic collapse well my reason for that guys is the charts right we are seeing bullish divergences on the weekly time frame something we have actually never seen in bitcoin's history we're seeing money flow Crossing to the upside yes we're finding resistance at resistance to be expected but when we look at some of these lower time frames like the four day we are seeing the money flow the money is continuing to come into Bitcoin here as we are consolidating under key resistance getting ready for a major move to the upside and the last time we saw major Banks go under it was actually a very bullish thing for Bitcoin and this is more of a fundamental reason but I do believe that a lot of people are looking at crypto looking at Bitcoin as a safe haven for their purchasing power because yes you could put it into physical precious metals but then you have to Lug that all around with you it's not very easy to use and send to other people and people are scared to keep their money in Fiat and Bitcoin is a great alternative for that so I'm expecting within the next two years a major bull market for cryptocurrency I have more spot Bitcoin than I've ever had before this is of course not Financial advice it's just what I am personally doing and guys I I am a huge proponent of being as self-sufficient as possible I'm a homesteader I raise my own animals I grow my own food I strive every single day to become less and less dependent on the system and here's something that I do every single day to stay sharp self-sufficient and ready to go all right y'all I'm down here in the gym just finished my workout for the day one of the best things you can do to stay free and self-sufficient is be in good physical shape why is this because not only is your body now fit to do the work that you have to do in order to take care of the things on the homestead but you are setting yourself up for longevity and health so that you don't have to be a slave to the pharmaceutical industrial complex like 90 of westerners are when they get older now this also helps your mind it will help you stay sharp throughout the day so you can focus on things you need to do like trading and other things now here's a simple routine that I do every single morning to help stay mentally and physically in shape first thing in the morning three exercises you're gonna do 30 sets of 10 equaling 300 reps chin ups push-ups and body weight squats relax",
+  "unchecked": [
+   "The pattern is a bearish head and shoulders, which is a bearish continuation pattern. The price is currently below the EMA (50). The breakdown of the bearish head and shoulders pattern is a strong signal for a short trade. The target is the low of the range, which is around 29,100. The risk-reward ratio is 2:1, and the stop-loss is placed above the neckline of the pattern. This setup is based on the breakdown of a bearish head and shoulders pattern, which is a strong signal for a short trade. The target is the low of the range, which is around 29,100. The risk-reward ratio is 2:1, and the stop-loss is placed above the neckline of the pattern."
+  ],
+  "lesson_id": 192,
+  "rules": [
+   {
+    "rule": "close_below_ema",
+    "a": 50
+   },
+   {
+    "rule": "pattern_break_down"
+   }
+  ],
+  "rules_text": [
+   "Close below EMA (50)",
+   "Chart pattern broke down on this candle"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  }
 ]
