@@ -68092,5 +68092,532 @@
   "hints": null,
   "tune": null,
   "exit_plan": null
+ },
+ {
+  "id": 635,
+  "name": "Long Setup",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "daily",
+  "why": "The teacher suggests a long trade entry around $30,500 with a potential 60% move to the upside, indicating a bullish macro market structure and a key time for Bitcoin trading. The higher low condition is based on the teacher's mention of a potential 60% move over the next 10 candles, suggesting a bullish trend continuation.",
+  "quote": "Long trade from around $30,500 for potentially about a 60% move to the upside to the top of our range",
+  "unchecked": [
+   "No specific EMA or RSI conditions were mentioned."
+  ],
+  "lesson_id": 289,
+  "rules": [
+   {
+    "rule": "close_above_sma",
+    "a": 30500
+   },
+   {
+    "rule": "higher_low",
+    "a": 5,
+    "b": 10
+   }
+  ],
+  "rules_text": [
+   "Close above SMA (30500)",
+   "Higher low: the last 5 candles' low is above the 5 candles before"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 636,
+  "name": "pullback_to_gap",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 4.0,
+  "rr": 50.0,
+  "timeframe": "daily",
+  "why": "to flush out longs and get a move up to higher prices, giving a 20-25% move to the upside with a 4% risk.",
+  "quote": "if we get a pullback just to close the gap coming down to around that 38.5 $39,000 area that could be the opportunity that we're waiting for to basically flush out a lot of those Longs from the weekend right and then get that move up to higher prices which now gives us 44% well no that's that's way too high hang on 50% it's giving us about that 20% 25% move to the upside only having to risk about 4%",
+  "unchecked": [
+   "gap_filling"
+  ],
+  "lesson_id": 290,
+  "rules": [
+   {
+    "rule": "close_below_ema",
+    "a": 50
+   },
+   {
+    "rule": "close_above_sma",
+    "a": 200
+   },
+   {
+    "rule": "breakdown_low",
+    "a": 39000,
+    "b": 39225
+   }
+  ],
+  "rules_text": [
+   "Close below EMA (50)",
+   "Close above SMA (200)",
+   "Close below the lowest low of the last 39000 candles"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 637,
+  "name": "pullback_to_support",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 4.0,
+  "rr": 75.0,
+  "timeframe": "daily",
+  "why": "to wait for price to come all the way down to this area and then take a long position, giving a 75% gain with a 4% risk.",
+  "quote": "wait for price to come all the way down to this area and then what we do is we take along from here where we have a potential 75% gain while once again we're only risking about 4%",
+  "unchecked": [
+   "gap_filling"
+  ],
+  "lesson_id": 290,
+  "rules": [
+   {
+    "rule": "close_below_ema",
+    "a": 50
+   },
+   {
+    "rule": "close_above_sma",
+    "a": 200
+   },
+   {
+    "rule": "breakdown_low",
+    "a": 32000,
+    "b": 39225
+   }
+  ],
+  "rules_text": [
+   "Close below EMA (50)",
+   "Close above SMA (200)",
+   "Close below the lowest low of the last 32000 candles"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 638,
+  "name": "low_time_frame_entry",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 2.0,
+  "rr": 2.0,
+  "timeframe": "6m",
+  "why": "to take a trade with a very clearly defined risk and reward, giving a 2% move to the upside with a 0.2% risk.",
+  "quote": "we actually hit our major Target last night right at a very very clearly defined risk we literally to take this trade we only had the risk . 2% for a potential move to the upside of about 2%",
+  "unchecked": [
+   "gap_filling"
+  ],
+  "lesson_id": 290,
+  "rules": [
+   {
+    "rule": "close_above_ema",
+    "a": 9,
+    "b": 21
+   },
+   {
+    "rule": "close_above_sma",
+    "a": 200
+   },
+   {
+    "rule": "close_above_ema",
+    "a": 50,
+    "b": 200
+   },
+   {
+    "rule": "close_above_ema",
+    "a": 21,
+    "b": 50
+   }
+  ],
+  "rules_text": [
+   "Close above EMA (9)",
+   "Close above SMA (200)",
+   "Close above EMA (50)",
+   "Close above EMA (21)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 639,
+  "name": "pullback_after_rapid_rise",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "daily",
+  "why": "After a rapid rise, the market is overextended and a pullback is expected, which can provide a good entry point for a long trade.",
+  "quote": "if we do get a very fast move up to here clearly this move will be very overextended and we can then look for a pullback from this area",
+  "unchecked": [
+   "The setup is only valid in a bull market."
+  ],
+  "lesson_id": 290,
+  "rules": [
+   {
+    "rule": "close_below_ema",
+    "a": 50
+   },
+   {
+    "rule": "bb_below_lower",
+    "a": 20,
+    "b": 2
+   }
+  ],
+  "rules_text": [
+   "Close below EMA (50)",
+   "Close below the lower Bollinger band (20 candles, 2 deviations)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 640,
+  "name": "Short: Bearish Divergence and Breakdown",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "Daily",
+  "why": "Bearish Divergence and Breakdown Low on Daily chart indicate a potential trend reversal to the downside.",
+  "quote": "Bearish Divergence: price higher high, RSI lower high - in the last 3 candles, lows/highs at most 60 candles apart.",
+  "unchecked": [
+   "Close above the upper Bollinger band (20 candles, 2 deviations)"
+  ],
+  "lesson_id": 292,
+  "rules": [
+   {
+    "rule": "rsi_bear_div"
+   },
+   {
+    "rule": "breakdown_low"
+   }
+  ],
+  "rules_text": [
+   "Bearish divergence: price higher high, RSI lower high - in the last 3 candles, lows/highs at most 60 candles apart",
+   "Close below the lowest low of the last 20 candles"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 641,
+  "name": "Short: CME Gap and Bullish Divergence",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "Daily",
+  "why": "CME Gap and Bullish Divergence on Daily chart indicate a potential trend reversal to the downside.",
+  "quote": "Bullish Divergence: price lower low, RSI higher low - in the last 3 candles, lows/highs at most 60 candles apart.",
+  "unchecked": [
+   "Close above the upper Bollinger band (20 candles, 2 deviations)"
+  ],
+  "lesson_id": 292,
+  "rules": [
+   {
+    "rule": "rsi_bull_div"
+   },
+   {
+    "rule": "breakdown_low"
+   }
+  ],
+  "rules_text": [
+   "Bullish divergence: price lower low, RSI higher low - in the last 3 candles, lows/highs at most 60 candles apart",
+   "Close below the lowest low of the last 20 candles"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 642,
+  "name": "Short: Reclaim $42,900",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.2,
+  "rr": 4.1,
+  "timeframe": "4H",
+  "why": "The $42,900 level is a support resistance flip and a 61.8% Fibonacci retracement level, and if reclaimed, it could lead to a move back down to the $39,000 level with a 4:1 risk-reward ratio.",
+  "quote": "if we are going to get another low lower high put in and let's say we do reject from the Fibonacci golden pocket retest that we have around $42,900 then the trade setup that I am looking for is going to be something like this where we look for a rejection around this level and we target down at that CME Gap a beautiful almost 4:1 risk reward ratio",
+  "unchecked": [
+   "Target: CME Gap around $39,000"
+  ],
+  "lesson_id": 293,
+  "rules": [
+   {
+    "rule": "close_below_sma",
+    "a": 42900
+   },
+   {
+    "rule": "sr_reject_down",
+    "a": 42900
+   }
+  ],
+  "rules_text": [
+   "Close below SMA (42900)",
+   "Rejected at resistance / lost a level (closed back below it)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 643,
+  "name": "Long: Breakout from $39,000",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.2,
+  "rr": 1.5,
+  "timeframe": "4H",
+  "why": "The $39,000 level is a support resistance flip and a major support level, and if broken out, it could lead to a move up to $47,000 - $48,000 with a 1.5:1 risk-reward ratio.",
+  "quote": "if we do break out of this area guys and this is just an anomaly then our next major Target is going to be 47 to 48,000 Bitcoin",
+  "unchecked": [
+   "Target: $47,000 - $48,000"
+  ],
+  "lesson_id": 293,
+  "rules": [
+   {
+    "rule": "close_above_sma",
+    "a": 39000
+   },
+   {
+    "rule": "higher_low",
+    "a": 39000
+   }
+  ],
+  "rules_text": [
+   "Close above SMA (39000)",
+   "Higher low: the last 39000 candles' low is above the 39000 candles before"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 644,
+  "name": "Short Setup",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "daily",
+  "why": "If the price rejects from the 42,900 zone, it suggests a top is in, and the price could move back down to support levels like $39,000.",
+  "quote": "if we reject from the 42900 Zone it becomes even more probable that the top is in and then we could look for a move back down toward our $39,000 level",
+  "unchecked": [
+   "Reject from the 42,900 Zone"
+  ],
+  "lesson_id": 293,
+  "rules": [
+   {
+    "rule": "close_below_sma",
+    "a": 42900
+   }
+  ],
+  "rules_text": [
+   "Close below SMA (42900)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 645,
+  "name": "long_setup",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "1h",
+  "why": "Waiting for the target of the triangle to be hit for a long trade.",
+  "quote": "wait for Longs when we come to the bottom of this triangle right",
+  "unchecked": [
+   "Targets above $46,000 and $49 to $50,000 if we do not come back down into the triangle."
+  ],
+  "lesson_id": 294,
+  "rules": [
+   {
+    "rule": "close_above_sma",
+    "a": 47000
+   }
+  ],
+  "rules_text": [
+   "Close above SMA (47000)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 646,
+  "name": "short_setup",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "1h",
+  "why": "Waiting for the bottom of the triangle to be hit for a short trade.",
+  "quote": "wait for shorts when we come up to the Target of this triangle",
+  "unchecked": [
+   "Targets above $46,000 and $49 to $50,000 if we do not come back down into the triangle."
+  ],
+  "lesson_id": 294,
+  "rules": [
+   {
+    "rule": "close_below_sma",
+    "a": 38000
+   }
+  ],
+  "rules_text": [
+   "Close below SMA (38000)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 647,
+  "name": "mfree_bearish_manbooop_pattern",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "12m",
+  "why": "The pattern is a bearish setup with the price getting higher and the money flow getting lower, indicating a potential move to the downside.",
+  "quote": "as the price gets higher and higher the man boobs the nipples the money flow all getting lower here and this will most of the time result in a move to the downside",
+  "unchecked": [
+   "price is getting higher and higher the man boobs the nipples the money flow all getting lower here"
+  ],
+  "lesson_id": 295,
+  "rules": [
+   {
+    "rule": "wt_below"
+   },
+   {
+    "rule": "close_above_sma",
+    "a": 200
+   }
+  ],
+  "rules_text": [
+   "Market Cipher wave below -53 (oversold)",
+   "Close above SMA (200)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 648,
+  "name": "Bearish Divergence",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "4h",
+  "why": "Bearish divergence is forming, but momentum waves and money float are getting higher, which is a bullish sign.",
+  "quote": "we had a 4-Hour bearish Divergence once again we came back down unable to make a lower low keeping in with this pattern and we are seeing momentum waves money float getting higher here on the 4-Hour time frame",
+  "unchecked": [
+   "Bearish divergence is forming, but momentum waves and money float are getting higher, which is a bullish sign."
+  ],
+  "lesson_id": 295,
+  "rules": [
+   {
+    "rule": "close_above_ema",
+    "a": 21,
+    "b": 9
+   },
+   {
+    "rule": "rsi_bear_div",
+    "a": 60,
+    "b": 60
+   }
+  ],
+  "rules_text": [
+   "Close above EMA (21)",
+   "Bearish divergence: price higher high, RSI lower high - in the last 60 candles, lows/highs at most 60 candles apart"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  }
 ]
