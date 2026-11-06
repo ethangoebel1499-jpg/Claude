@@ -55385,7 +55385,7 @@
   "id": 318,
   "name": "breakout_high",
   "direction": "long",
-  "status": "off",
+  "status": "candidate",
   "weight": -0.054,
   "source": "lesson",
   "stop_atr": 2.0,
