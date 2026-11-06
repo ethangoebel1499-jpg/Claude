@@ -62148,5 +62148,43 @@
   "hints": null,
   "tune": null,
   "exit_plan": null
+ },
+ {
+  "id": 488,
+  "name": "major_move",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "1h",
+  "why": "The teacher is signaling a major move, which typically involves a strong trend. A close above the EMA (50) and higher lows over the last 10 candles are common indicators of a bullish trend reversal or continuation.",
+  "quote": "This is the breaking point. Major move coming soon.",
+  "unchecked": [
+   "No specific setup conditions were given for a long trade, but the teacher emphasized a major move is coming."
+  ],
+  "lesson_id": 188,
+  "rules": [
+   {
+    "rule": "close_above_ema",
+    "a": 50
+   },
+   {
+    "rule": "higher_low",
+    "a": 5,
+    "b": 10
+   }
+  ],
+  "rules_text": [
+   "Close above EMA (50)",
+   "Higher low: the last 5 candles' low is above the 5 candles before"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  }
 ]
