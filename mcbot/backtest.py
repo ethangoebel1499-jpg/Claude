@@ -61,12 +61,23 @@ def parse_take_profits(spec: str) -> list[tuple[float | None, float]]:
     return fixed + [lv for lv in levels if lv[0] is None]
 
 
+def _fee(fee: float | None) -> float:
+    """None = the fee chosen in ⚙️ Account (Kraken spot taker 0.40% unless changed)."""
+    if fee is not None:
+        return fee
+    try:
+        from livepaper.fees import current
+        return current()
+    except Exception:
+        return 0.001
+
+
 def run_backtest(df: pd.DataFrame, signals: pd.DataFrame, *, allow_short: bool = False, allow_long: bool = True,
                  stop_loss: float | None = 0.03, take_profit: float | None = 0.06,
                  stop_loss_short: float | None = None,
                  take_profits: list[tuple[float, float]] | None = None,
                  leverage: float = 1.0, maintenance_margin: float = 0.005,
-                 fee: float = 0.001, start_equity: float = 10_000.0,
+                 fee: float | None = None, start_equity: float = 10_000.0,
                  stops_on_close: bool = False, breakeven_after_tp1: bool = False,
                  trail_targets: bool = False, opposite_exit: str = "always",
                  opposite_min_bars: int = 0) -> Result:
@@ -86,6 +97,7 @@ def run_backtest(df: pd.DataFrame, signals: pd.DataFrame, *, allow_short: bool =
     breakeven after the first, then the previous target's level after each
     later one (after target 2 the stop sits at target 1).
     """
+    fee = _fee(fee)
     o = df["open"].to_numpy()
     h = df["high"].to_numpy()
     lo = df["low"].to_numpy()
@@ -239,7 +251,7 @@ def run_backtest(df: pd.DataFrame, signals: pd.DataFrame, *, allow_short: bool =
 
 def run_level_backtest(df: pd.DataFrame, signals: pd.DataFrame, levels: pd.DataFrame, *,
                        allow_short: bool = False, leverage: float = 1.0,
-                       maintenance_margin: float = 0.005, fee: float = 0.001,
+                       maintenance_margin: float = 0.005, fee: float | None = None,
                        sizes: tuple[float, ...] = (0.5, 0.25), breakeven_after_tp1: bool = False,
                        start_equity: float = 10_000.0) -> Result:
     """Backtest with price-level exits (the top-down video's exit plan).
@@ -252,6 +264,7 @@ def run_level_backtest(df: pd.DataFrame, signals: pd.DataFrame, levels: pd.DataF
     closes the trade. Stop is assumed to fill first if a bar touches both.
     With breakeven_after_tp1 the stop moves to the entry once target 1 fills.
     """
+    fee = _fee(fee)
     o, h, lo, c = (df[k].to_numpy(dtype=float) for k in ("open", "high", "low", "close"))
     idx = df.index
     sig = {k: signals[k].to_numpy() for k in signals.columns}

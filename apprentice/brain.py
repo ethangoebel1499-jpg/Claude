@@ -103,8 +103,18 @@ def stats_of(res: np.ndarray, mask: np.ndarray, base: float) -> dict:
             "t": round((avg - base) / (sd / math.sqrt(n)), 2) if sd > 0 and n > 1 else 0.0}
 
 
+def fee_r(df: pd.DataFrame, stop_atr: float) -> np.ndarray:
+    """A round trip's fees in R on each candle (the fee in ⚙️ Account; bigger when the stop is tight)."""
+    from livepaper.fees import current
+    risk = stop_atr * atr_arr(df) / df["close"].to_numpy(float)
+    with np.errstate(divide="ignore", invalid="ignore"):
+        return np.where(risk > 0, 2 * current() / risk, np.nan)
+
+
 def evaluate(df: pd.DataFrame, setup: dict, start: int = 0, end: int | None = None) -> dict:
-    res = outcomes(df, setup["direction"], setup.get("stop_atr") or 1.5, setup.get("rr") or 2.0)
+    """A setup's track record after fees, and its edge over entering at random (also after fees)."""
+    stop_atr = setup.get("stop_atr") or 1.5
+    res = outcomes(df, setup["direction"], stop_atr, setup.get("rr") or 2.0) - fee_r(df, stop_atr)
     end = len(df) if end is None else end
     window = np.zeros(len(df), dtype=bool)
     window[start:end] = True
@@ -583,7 +593,6 @@ def tune(charts: dict[str, pd.DataFrame], setup: dict, split: float = 0.7) -> di
 
 # ---- the exit plan it deploys: its own stop and the early exit, both learned before they're used -------
 FIXED_STOP = 0.03          # the app's default (apprentice.strategy.STOP)
-FEE = 0.001
 STOP_METHODS = ("fixed", "atr", "swing")
 SWING_LOOKBACK = 10
 
@@ -639,7 +648,8 @@ def _plan_trade(o, h, l, c, i, sgn, risk_pct, against, horizon, use_rev) -> floa
             break
         if k == horizon:
             got += 0.5 * len(left) * max(-1.0, sgn * (c[j] - entry) / risk)
-    return got * risk_pct - 2 * FEE
+    from livepaper.fees import current
+    return got * risk_pct - 2 * current()
 
 
 def exit_plan(charts: dict[str, pd.DataFrame], setup: dict, split: float = 0.7, horizon: int = HORIZON) -> dict:

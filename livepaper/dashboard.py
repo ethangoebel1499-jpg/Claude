@@ -348,7 +348,9 @@ with tab_lab:
         stop_pct = e1.number_input("Stop %", 0.0, 50.0, (base.stop or 0) * 100, 0.5, key=f"stop_{strategy}",
                                    help="0 = no stop (paper trading still caps it - see Account). "
                                         "Defaults to the strategy's tested setting.")
-        fee_pct = e2.number_input("Fee % per side", 0.0, 1.0, 0.10, 0.01)
+        from livepaper.fees import current as fee_now, label as fee_label
+        fee_pct = e2.number_input("Fee % per side", 0.0, 1.0, round(fee_now() * 100, 3), 0.01,
+                                  help=f"From ⚙️ Account → Fees ({fee_label()}). A round trip pays it twice.")
         capital = e3.number_input("Paper capital $", 100.0, 1e7, 10_000.0, 1000.0)
         t1, t2 = st.columns([2, 3])
         tp_mode = t1.radio("Targets set as", ["% move", "Risk:reward (× the stop)"], horizontal=True,
@@ -601,7 +603,7 @@ with tab_build:
             df_ = full[full.index >= start]
             sig_ = builder.signals(full, new_spec)[full.index >= start]
             res = run_backtest(df_, sig_, allow_short=bool(short_rules), stop_loss=new_spec["stop"],
-                               take_profits=[tuple(t) for t in new_spec["take_profits"]], fee=0.001)
+                               take_profits=[tuple(t) for t in new_spec["take_profits"]], fee=None)
         stt = res.stats
         m = st.columns(5)
         m[0].metric("Return", pct(stt["total_return_pct"]))
@@ -701,7 +703,15 @@ with tab_acct:
             a1, a2, a3 = st.columns(3)
             broker = a1.radio("Broker", ["sim", "webull"], index=0 if cur["broker"] == "sim" else 1,
                               format_func=lambda b: "Built-in paper broker" if b == "sim" else "Webull paper account")
-            fee = a2.number_input("Fee % per side (for P&L)", 0.0, 1.0, float(cur["fee"]) * 100, 0.01)
+            from livepaper.fees import PRESETS, preset as fee_preset_now
+            keys = list(PRESETS)
+            fee_preset = a2.selectbox("Fees (used everywhere: paper trades, backtests, 🎓 Learn, 🔬 Proving ground)",
+                                      keys, keys.index(fee_preset_now()), format_func=lambda k: PRESETS[k][0],
+                                      help="Fees are charged on the whole position, so leverage multiplies them too. "
+                                           "A round trip (in and out) pays twice: at 0.40% a trade must move 0.8% "
+                                           "just to break even.")
+            fee = a2.number_input("Custom fee % per side", 0.0, 1.0, float(cur["fee"]) * 100, 0.01,
+                                  disabled=fee_preset != "custom")
             poll = a3.number_input("Check prices every (seconds)", 10, 600, int(cur["poll_seconds"]), 5)
             b1, b2 = st.columns(2)
             sync_git = b1.checkbox("Share with Claude: trades, the apprentice's setups / concepts / lessons, stream "
@@ -761,7 +771,8 @@ with tab_acct:
             ap_db = st.text_input("Apprentice database (what the 🧠 Apprentice has learned)",
                                   cur.get("apprentice_db", "apprentice.db"))
         if st.form_submit_button("Save settings", type="primary"):
-            settings.save({"github_token": gh_token.strip(), "broker": broker, "fee": fee / 100, "max_stop": cap_pct / 100, "poll_seconds": int(poll), "sync_git": sync_git,
+            settings.save({"github_token": gh_token.strip(), "broker": broker, "fee": (fee / 100 if fee_preset == "custom" else PRESETS[fee_preset][1]),
+                           "fee_preset": fee_preset, "max_stop": cap_pct / 100, "poll_seconds": int(poll), "sync_git": sync_git,
                            "sync_minutes": int(sync_min), "webull_app_key": key.strip(),
                            "webull_app_secret": secret.strip(), "webull_account_id": account.strip(),
                            "webull_region": region.strip() or "us", "webull_endpoint": endpoint.strip(),

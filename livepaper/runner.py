@@ -246,11 +246,12 @@ class App:
             from .brokers import WebullBroker
             self.broker = WebullBroker(self._webull_client(), {}, fee=self.app.get("fee", 0.0))
         else:
-            self.broker = SimBroker(fee=self.app.get("fee", 0.001), fill="market",
-                                    market_price=lambda run: self.runners[run].price)
+            from .fees import current as fee_now
+            self.broker = SimBroker(fee=fee_now(), fill="market", market_price=lambda run: self.runners[run].price)
         # built-in paper broker for crypto runs when the Webull account can't trade crypto (stocks stay at Webull)
         self.sim = self.broker if getattr(self.broker, "name", "sim") == "sim" else \
-            SimBroker(fee=self.app.get("fee", 0.001), fill="market", market_price=lambda run: self.runners[run].price)
+            SimBroker(fee=__import__("livepaper.fees", fromlist=["current"]).current(), fill="market",
+                      market_price=lambda run: self.runners[run].price)
 
     def broker_for(self, r: dict):
         if r.get("asset") == "crypto" and getattr(self.broker, "name", "sim") == "webull":
@@ -279,7 +280,7 @@ class App:
                 self.feeds[kind] = feeds.KrakenFeed()
         return self.feeds[kind]
 
-    BROKER_KEYS = ("broker", "fee", "webull_app_key", "webull_app_secret", "webull_account_id", "webull_region",
+    BROKER_KEYS = ("broker", "fee", "fee_preset", "webull_app_key", "webull_app_secret", "webull_account_id", "webull_region",
                    "webull_endpoint")
 
     def reload_if_changed(self) -> "App":

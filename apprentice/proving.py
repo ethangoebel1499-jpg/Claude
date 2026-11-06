@@ -24,7 +24,14 @@ from . import brain
 
 TIMEFRAMES = ["1m", "5m", "15m", "30m", "1h", "2h", "4h", "6h", "12h", "1D"]
 TRIAL_TRADES = 100
-FEE = 0.001                      # per side, like the paper broker
+FEE = None                       # per side; None = the fee in ⚙️ Account (livepaper.fees)
+
+
+def fee() -> float:
+    if FEE is not None:
+        return FEE
+    from livepaper.fees import current
+    return current()
 PREFIX = "apprentice_setup:"     # strategy key of a trial run: one setup on its own
 
 # built-in strategies tested next to the setups (negative ids): pure price action, longs and shorts apart
@@ -65,7 +72,7 @@ def net_outcomes(df: pd.DataFrame, setup: dict) -> tuple[np.ndarray, np.ndarray]
     res = brain.outcomes(df, setup["direction"], stop_atr, rr)
     risk = stop_atr * brain.atr_arr(df) / df["close"].to_numpy(float)
     with np.errstate(divide="ignore", invalid="ignore"):
-        fee_r = np.where(risk > 0, 2 * FEE / risk, np.nan)
+        fee_r = np.where(risk > 0, 2 * fee() / risk, np.nan)
     return res - fee_r, risk
 
 
@@ -124,7 +131,7 @@ def simulate(df: pd.DataFrame, i: int, sgn: int, stop: float, tp1: float, tp2: f
         if j >= n - 1:
             return None
         got += left * sgn * (c[j] - e) / e
-    return (got - 2 * FEE) / stop
+    return (got - 2 * fee()) / stop
 
 
 def scan_s10(df: pd.DataFrame, direction: str, split: float = 0.7) -> dict | None:
