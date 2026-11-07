@@ -1,4 +1,4 @@
-# Paper Trader snapshot · 2026-11-07T10:49:58+00:00
+# Paper Trader snapshot · 2026-11-07T11:50:36+00:00
 
 - Paper trades closed: 57 · win rate 47% · P&L 857.09 USD
 - Apprentice: 381 lessons, 2924 concepts, 775 setups (105 trading)
