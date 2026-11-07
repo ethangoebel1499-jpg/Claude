@@ -577,3 +577,4 @@ Apprentice XRP 4h,2026-11-06T23:35:06+00:00,start,watching XRPUSD 4h
 Apprentice BCH 4h,2026-11-06T23:40:26+00:00,start,watching BCHUSD 4h
 Apprentice XRP 1D,2026-11-06T23:41:03+00:00,start,watching XRPUSD 1D
 S3 GRIND DOGE 1h,2026-11-07T00:34:42+00:00,error,"ConnectionError: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+Apprentice BTC 1h,2026-11-07T05:00:20+00:00,exit,closed (opposite setup) -19.51 USD
