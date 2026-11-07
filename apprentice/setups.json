@@ -144113,5 +144113,649 @@
     "deployed": true
    }
   }
+ },
+ {
+  "id": 805,
+  "name": "long_setup",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "1h",
+  "why": "The price is rejecting from the Fibonacci golden pocket, which is a key support area.",
+  "quote": "Now, this is the way I was able to get into the trade by identifying the fact that if this downtrend was going to continue, well, the lower high was going to come in right here at the Fibonacci level.",
+  "unchecked": [],
+  "lesson_id": 391,
+  "rules": [
+   {
+    "rule": "close_above_ema",
+    "a": 0.65
+   },
+   {
+    "rule": "close_above_ema",
+    "a": 0.618
+   }
+  ],
+  "rules_text": [
+   "Close above EMA (0.65)",
+   "Close above EMA (0.618)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 806,
+  "name": "short_setup",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "1h",
+  "why": "The price is rejecting from the Fibonacci golden pocket, which is a key resistance area.",
+  "quote": "Of course, we ended up closing that long trade for a juicy $4,000 profit and the short trade was still open and uh is still actually running.",
+  "unchecked": [],
+  "lesson_id": 391,
+  "rules": [
+   {
+    "rule": "close_below_ema",
+    "a": 0.65
+   },
+   {
+    "rule": "close_below_ema",
+    "a": 0.618
+   }
+  ],
+  "rules_text": [
+   "Close below EMA (0.65)",
+   "Close below EMA (0.618)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 807,
+  "name": "Fibonacci retracement in trending market",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "daily",
+  "why": "In a trending market, look for a higher low and use Fibonacci retracement to identify key levels for short entry.",
+  "quote": "and so, if we come up to this area where we have a very key Fibonacci zone, obviously we're going to be looking for a short here because this is a trending market high, low, lower high, lower low, lower high, lower low, right?",
+  "unchecked": [
+   "Identify the market as trending and use Fibonacci retracement to find potential entry points."
+  ],
+  "lesson_id": 391,
+  "rules": [
+   {
+    "rule": "close_below_ema",
+    "a": 50
+   },
+   {
+    "rule": "higher_low",
+    "a": 5,
+    "b": 10
+   }
+  ],
+  "rules_text": [
+   "Close below EMA (50)",
+   "Higher low: the last 5 candles' low is above the 5 candles before"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 808,
+  "name": "Fibonacci retracement in ranging market",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "daily",
+  "why": "In a ranging market, look for a lower high and use Fibonacci retracement to identify key levels for long entry.",
+  "quote": "if we come back inside of this range here, we are trading a sideways range, in which case then we would look for the zone at the top of the range, which just so happens to be our Fibonacci golden pocket 786, where we could also look for a lower high, right?",
+  "unchecked": [
+   "Identify the market as ranging and use the top of the range as a potential support level."
+  ],
+  "lesson_id": 391,
+  "rules": [
+   {
+    "rule": "close_above_ema",
+    "a": 50
+   },
+   {
+    "rule": "lower_high",
+    "a": 5,
+    "b": 10
+   }
+  ],
+  "rules_text": [
+   "Close above EMA (50)",
+   "Lower high: the last 5 candles' high is below the 5 candles before"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 809,
+  "name": "short_back_test",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "4h",
+  "why": "Close above the upper Bollinger band + Shooting star / bearish pin bar + Back test + Rejection at resistance + Volume spike + Heikin Ashi red + Fair value zone above the price",
+  "quote": "We close a 4hour candle above this level. I would look for maybe a nice back test. And if we get a back test like this, very similar to what happened on the breakdown, right? We broke down, we came back up. As soon as you lose that level again with the back test, that then gives you an opportunity to sell high.",
+  "unchecked": [
+   "back_test"
+  ],
+  "lesson_id": 392,
+  "rules": [
+   {
+    "rule": "close_above_sma",
+    "a": 200
+   },
+   {
+    "rule": "volume_spike"
+   },
+   {
+    "rule": "ha_red"
+   },
+   {
+    "rule": "bb_above_upper",
+    "a": 20,
+    "b": 2
+   },
+   {
+    "rule": "sr_reject_down"
+   }
+  ],
+  "rules_text": [
+   "Close above SMA (200)",
+   "Volume above 1.5 \u00d7 its 20-candle average",
+   "Heikin Ashi candle is red",
+   "Close above the upper Bollinger band (20 candles, 2 deviations)",
+   "Rejected at resistance / lost a level (closed back below it)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 810,
+  "name": "long_back_test",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "4h",
+  "why": "Close below the lower Bollinger band + Shooting star / bearish pin bar + Back test + Rejection at support + Volume spike + Heikin Ashi green + Fair value zone below the price",
+  "quote": "And the same is true if we come back inside and we get the back test. As soon as we get that reclaim, this gives us the opportunity to buy low and target the high.",
+  "unchecked": [
+   "back_test"
+  ],
+  "lesson_id": 392,
+  "rules": [
+   {
+    "rule": "close_below_sma",
+    "a": 200
+   },
+   {
+    "rule": "volume_spike"
+   },
+   {
+    "rule": "ha_green"
+   },
+   {
+    "rule": "bb_below_lower",
+    "a": 20,
+    "b": 2
+   },
+   {
+    "rule": "sr_bounce_up"
+   }
+  ],
+  "rules_text": [
+   "Close below SMA (200)",
+   "Volume above 1.5 \u00d7 its 20-candle average",
+   "Heikin Ashi candle is green",
+   "Close below the lower Bollinger band (20 candles, 2 deviations)",
+   "Bounced off support / reclaimed a level (closed back above it)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 811,
+  "name": "Volume Profile Support and Resistance",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "1H, 4H, 1D, 1W, 1M",
+  "why": "High volume areas are likely to have a reaction, especially in an uptrend.",
+  "quote": "Now, what is volume? Volume is telling you at what price did most of the asset exchange hands. Where did most buying and selling occur? I'm going to focus on two three indicators right now. The first is going to be the fixed range volume profile. The fixed range volume profile, you click, you drag, you click. This tells you where did most of the asset exchange hands, right, in any given chunk of price action.",
+  "unchecked": [
+   "Price has exchanged hands in the past"
+  ],
+  "lesson_id": 393,
+  "rules": [
+   {
+    "rule": "volume_spike"
+   },
+   {
+    "rule": "close_above_sma",
+    "a": 200
+   },
+   {
+    "rule": "higher_low",
+    "a": 5,
+    "b": 60
+   }
+  ],
+  "rules_text": [
+   "Volume above 1.5 \u00d7 its 20-candle average",
+   "Close above SMA (200)",
+   "Higher low: the last 5 candles' low is above the 5 candles before"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 812,
+  "name": "Long Setup",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "1-hour, 24-minute, 12-minute",
+  "why": "Bullish engulfing candle, higher low, bullish divergence on multiple timeframes, and bullish wave divergence. The setup was planned for since February 11th and executed on February 23rd, resulting in a $3,000 profit in a short period of time.",
+  "quote": "What I've done here is instead of giving myself permission to FOMO into random trades, I've said, you know, I would love for the price to do this because I know, based on my technical analysis and my experience, that if the price does this, there's a really high chance that I'm going to be able to get a good trade from this level.",
+  "unchecked": [
+   "Close above the upper Bollinger band (20 candles, 2 deviations)"
+  ],
+  "lesson_id": 394,
+  "rules": [
+   {
+    "rule": "bull_engulf"
+   },
+   {
+    "rule": "higher_low"
+   },
+   {
+    "rule": "rsi_bull_div"
+   },
+   {
+    "rule": "ao_bull_div"
+   },
+   {
+    "rule": "macd_bull_div"
+   },
+   {
+    "rule": "wt_bull_div"
+   }
+  ],
+  "rules_text": [
+   "Bullish engulfing candle",
+   "Higher low: the last 5 candles' low is above the 5 candles before",
+   "Bullish divergence: price lower low, RSI higher low - in the last 3 candles, lows/highs at most 60 candles apart",
+   "Bullish divergence: price lower low, Awesome Oscillator higher low - in the last 3 candles, lows/highs at most 60 candles apart",
+   "Bullish divergence: price lower low, MACD higher low - in the last 3 candles, lows/highs at most 60 candles apart",
+   "Bullish divergence: price lower low, Market Cipher wave higher low - in the last 3 candles, lows/highs at most 60 candles apart"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 813,
+  "name": "High Probability Setup",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 2.0,
+  "rr": 2.0,
+  "timeframe": "1H",
+  "why": "In an uptrend, the price closes above the EMA(50) and EMA(50) is above EMA(200). This setup is based on the concept of sticking to high-probability setups and using good risk management to ensure that winning profits outweigh losing profits.",
+  "quote": "But if you stick to those trades you've planned for with the high probability setups, then over time, you're going to have more winners than losers. Especially if you're using the good risk management, which I've gone over in previous sessions in this course, this beginner traders guide.",
+  "unchecked": [
+   "Higher low: the last 5 candles' low is above the 5 candles before"
+  ],
+  "lesson_id": 394,
+  "rules": [
+   {
+    "rule": "close_above_ema",
+    "a": 50
+   },
+   {
+    "rule": "ema_above_ema",
+    "a": 50,
+    "b": 200
+   }
+  ],
+  "rules_text": [
+   "Close above EMA (50)",
+   "EMA (50) is above EMA (200) (uptrend)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 814,
+  "name": "Short: Use a smaller position size and a bigger stop loss near support or resist",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 3.0,
+  "rr": 2.0,
+  "timeframe": "daily",
+  "why": "To avoid getting stopped out and allow the trade to play out more effectively, especially near key support or resistance levels. This setup is designed to prevent unnecessary losses and psychological turmoil by using a bigger stop loss and a smaller position size.",
+  "quote": "Using a smaller amount of money on a trade and using a bigger stop loss when you know you are at a key area of support or resistance, being honest with yourself about the width of that zone.",
+  "unchecked": [
+   "Price should be near a key support or resistance zone"
+  ],
+  "lesson_id": 395,
+  "rules": [
+   {
+    "rule": "close_below_sma",
+    "a": 200
+   },
+   {
+    "rule": "wt_below",
+    "a": -53
+   },
+   {
+    "rule": "wt_red_dot"
+   },
+   {
+    "rule": "volume_spike",
+    "a": 1.5,
+    "b": 20
+   },
+   {
+    "rule": "macd_negative"
+   },
+   {
+    "rule": "rsi_below",
+    "a": 30
+   },
+   {
+    "rule": "wt_bear_div"
+   }
+  ],
+  "rules_text": [
+   "Close below SMA (200)",
+   "Market Cipher wave below -53 (oversold)",
+   "Market Cipher red dot (WaveTrend crosses down) above 0",
+   "Volume above 1.5 \u00d7 its 20-candle average",
+   "MACD below zero",
+   "RSI (14) below 30",
+   "Bearish divergence: price higher high, Market Cipher wave lower high - in the last 3 candles, lows/highs at most 60 candles apart"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 815,
+  "name": "Partial Profit Taking",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "1h",
+  "why": "The setup involves a long position with a tight stop loss below the lower Bollinger band, a shooting star candle, and a close below the 50 EMA, aiming for a 2:1 risk-reward ratio.",
+  "quote": "You're like, 'Man, I can make four times the money on this trade than if I use the right stop loss. I could take a partial profit halfway up, and make as much money on my first take profit one on this trade than I would if I closed the entire position on this trade.'",
+  "unchecked": [
+   "Stop loss placed below the lower Bollinger band (20 candles, 2 deviations)"
+  ],
+  "lesson_id": 395,
+  "rules": [
+   {
+    "rule": "close_above_ema",
+    "a": 50
+   },
+   {
+    "rule": "shooting_star"
+   },
+   {
+    "rule": "close_below_ema",
+    "a": 50
+   }
+  ],
+  "rules_text": [
+   "Close above EMA (50)",
+   "Shooting star / bearish pin bar (long upper wick)",
+   "Close below EMA (50)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 816,
+  "name": "long_support",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 3.0,
+  "timeframe": "weekly",
+  "why": "Support and resistance provide a favorable risk-reward ratio for long trades, with the stop-loss below the support and the take profit at the resistance level.",
+  "quote": "If we're in a long trade, we would look to long the support zone, put our stop-loss below the support zone, and take profit at the resistance zone. This is giving us a three to one risk-reward ratio, which indeed that did hit.",
+  "unchecked": [
+   "If we're in a long trade, we would look to long the support zone, put our stop-loss below the support zone, and take profit at the resistance zone."
+  ],
+  "lesson_id": 396,
+  "rules": [
+   {
+    "rule": "close_above_sma",
+    "a": 200
+   },
+   {
+    "rule": "close_below_ema",
+    "a": 50,
+    "b": 200
+   },
+   {
+    "rule": "pattern_break_up"
+   }
+  ],
+  "rules_text": [
+   "Close above SMA (200)",
+   "Close below EMA (50)",
+   "Chart pattern broke out upward on this candle"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 817,
+  "name": "short_resistance",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 4.0,
+  "timeframe": "weekly",
+  "why": "Support and resistance provide a favorable risk-reward ratio for short trades, with the stop-loss above the resistance and the take profit at the support level.",
+  "quote": "If we're looking for a short trade, well, we look to short the area of resistance, put our stop-loss above that area of resistance, and take profit at the support, giving us a beautiful four to one risk-reward ratio.",
+  "unchecked": [
+   "If we're looking for a short trade, well, we look to short the area of resistance, put our stop-loss above that area of resistance, and take profit at the support, giving us a beautiful four to one risk-reward ratio."
+  ],
+  "lesson_id": 396,
+  "rules": [
+   {
+    "rule": "close_below_sma",
+    "a": 200
+   },
+   {
+    "rule": "close_above_ema",
+    "a": 50,
+    "b": 200
+   },
+   {
+    "rule": "pattern_break_down"
+   }
+  ],
+  "rules_text": [
+   "Close below SMA (200)",
+   "Close above EMA (50)",
+   "Chart pattern broke down on this candle"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 818,
+  "name": "Support and Resistance Rejection",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "6-minute",
+  "why": "Price has been testing and rejecting at the support level multiple times, indicating a strong resistance. A breakdown below the support level is a clear signal that the resistance has been broken, and the price is likely to continue moving lower. The rejection at the support level is a strong indication that the price is likely to bounce back up, providing a potential entry point for a long trade. The confluence of support rejection and breakdown can be used to confirm the trade setup.",
+  "quote": "When you can identify these levels where you know price is likely to have a reaction, then we can start to stack confluences. We can say, 'I know we're at a support, which means we're likely to get a bounce. And then if I see X, Y, and Z on the chart, I know I have a very good trade setup on my hands.'",
+  "unchecked": [
+   "Specific confluence of indicators or patterns"
+  ],
+  "lesson_id": 396,
+  "rules": [
+   {
+    "rule": "close_below_sma",
+    "a": 200
+   },
+   {
+    "rule": "breakdown_low",
+    "a": 20
+   },
+   {
+    "rule": "sr_reject_down"
+   }
+  ],
+  "rules_text": [
+   "Close below SMA (200)",
+   "Close below the lowest low of the last 20 candles",
+   "Rejected at resistance / lost a level (closed back below it)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 819,
+  "name": "Support and Resistance Rejection",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "6-minute",
+  "why": "Price has been testing and rejecting at the resistance level multiple times, indicating a strong support. A breakout above the resistance level is a clear signal that the support has been broken, and the price is likely to continue moving higher. The rejection at the resistance level is a strong indication that the price is likely to bounce back down, providing a potential entry point for a short trade. The confluence of resistance rejection and breakout can be used to confirm the trade setup.",
+  "quote": "When you can identify these levels where you know price is likely to have a reaction, then we can start to stack confluences. We can say, 'I know we're at a support, which means we're likely to get a bounce. And then if I see X, Y, and Z on the chart, I know I have a very good trade setup on my hands.'",
+  "unchecked": [
+   "Specific confluence of indicators or patterns"
+  ],
+  "lesson_id": 396,
+  "rules": [
+   {
+    "rule": "close_above_sma",
+    "a": 200
+   },
+   {
+    "rule": "breakout_high",
+    "a": 20
+   },
+   {
+    "rule": "sr_bounce_up"
+   }
+  ],
+  "rules_text": [
+   "Close above SMA (200)",
+   "Close above the highest high of the last 20 candles",
+   "Bounced off support / reclaimed a level (closed back above it)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  }
 ]
