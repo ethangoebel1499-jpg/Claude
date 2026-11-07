@@ -125697,5 +125697,556 @@
   "hints": null,
   "tune": null,
   "exit_plan": null
+ },
+ {
+  "id": 774,
+  "name": "long_bitcoin_dovish_fomc",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "daily",
+  "why": "Bullish divergence and support at 86.3, potential for a new high towards 108-110k BTC.",
+  "quote": "Now, I do believe that what happens tomorrow will greatly affect the Bitcoin price. If Jerome Powell is dovish, we could see this level hold and Bitcoin get a rise to the upside. If not, then I wouldn't be surprised if we find ourselves back down at the bottom of the range.",
+  "unchecked": [
+   "If Jerome Powell is dovish, we could see this level hold and Bitcoin get a rise to the upside."
+  ],
+  "lesson_id": 368,
+  "rules": [
+   {
+    "rule": "close_above_ema",
+    "a": 86.3
+   },
+   {
+    "rule": "rsi_bull_div"
+   }
+  ],
+  "rules_text": [
+   "Close above EMA (86.3)",
+   "Bullish divergence: price lower low, RSI higher low - in the last 3 candles, lows/highs at most 60 candles apart"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 775,
+  "name": "short_gold_lower_high",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "daily",
+  "why": "Bearish divergence and potential for a lower high, caution on buying dips.",
+  "quote": "Obviously, we're seeing gold at a major psychological target, $5,000. And last night, we came down to fill this gap that we made over the weekend, right? We had a gap. The market closed on Friday. Last night, we come down and we get a bounce right from this gap.",
+  "unchecked": [
+   "If we fail to make a higher high, we are going to make our first lower high, which if we go to the 1 hour time frame here, this does have the potential if we can't make a higher high today."
+  ],
+  "lesson_id": 368,
+  "rules": [
+   {
+    "rule": "close_below_ema",
+    "b": 5000
+   },
+   {
+    "rule": "rsi_bear_div"
+   }
+  ],
+  "rules_text": [
+   "Close below EMA (50)",
+   "Bearish divergence: price higher high, RSI lower high - in the last 3 candles, lows/highs at most 60 candles apart"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 776,
+  "name": "short_silver_lower_high",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "daily",
+  "why": "Bearish divergence and potential for a lower high, caution on buying dips.",
+  "quote": "I do think it's very important for us to watch this key level of 101. If the silver price starts to lose 101, do not be surprised to see more downside.",
+  "unchecked": [
+   "If the silver price starts to lose 101, do not be surprised to see more downside."
+  ],
+  "lesson_id": 368,
+  "rules": [
+   {
+    "rule": "close_below_ema",
+    "b": 101.92
+   },
+   {
+    "rule": "rsi_bear_div"
+   }
+  ],
+  "rules_text": [
+   "Close below EMA (50)",
+   "Bearish divergence: price higher high, RSI lower high - in the last 3 candles, lows/highs at most 60 candles apart"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 777,
+  "name": "Bearish Structure Change",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "4h",
+  "why": "The price is near a key level (101.92) that could mark a change in trend. If the price breaks below this level, it could indicate a shift to a bearish structure, which is a potential setup for a short trade. However, the exact level and timeframe for the bearish structure change are not clearly defined in the rules, so this setup is marked as unchecked for the specific rules provided. The teacher suggests being cautious and maintaining the uptrend until the price breaks below 101.92, which would indicate a potential short setup.",
+  "quote": "If the silver price starts to lose 101, do not be surprised to see more downside. As long as we can maintain the higher highs and higher lows, we are still in a strong uptrend. Be cautious as we are looking for the silver price to make a move. The key level is 101.92 where if lost, it will change into a more bearish structure. This is the first time since the year open that silver made a lower low, which was the beginning of a big old pumperoni. Be cautious as we are currently just seeing New York open and already getting a purple candle to the downside.",
+  "unchecked": [
+   "This setup is based on the potential for a bearish structure change if the price breaks below 101.92. However, no specific rule can be applied to the exact level or the timeframe for the bearish structure change."
+  ],
+  "lesson_id": 368,
+  "rules": [
+   {
+    "rule": "close_below_sma",
+    "a": 101.92
+   }
+  ],
+  "rules_text": [
+   "Close below SMA (101.92)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 778,
+  "name": "bullish_divergence",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.0,
+  "rr": 2.0,
+  "timeframe": "4h",
+  "why": "If we can close a 4-hour candle above 85,426, it will confirm a momentum wave and give us a push to the upside.",
+  "quote": "If we can close a 4-hour candle above 85,426, I do believe we will confirm a momentum wave here which will give us a push to the upside.",
+  "unchecked": [
+   "4-hour time frame"
+  ],
+  "lesson_id": 369,
+  "rules": [
+   {
+    "rule": "close_above_ema",
+    "a": 85426
+   },
+   {
+    "rule": "rsi_bull_div"
+   }
+  ],
+  "rules_text": [
+   "Close above EMA (85426)",
+   "Bullish divergence: price lower low, RSI higher low - in the last 3 candles, lows/highs at most 60 candles apart"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 779,
+  "name": "fake_out",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.0,
+  "rr": 2.0,
+  "timeframe": "daily",
+  "why": "If we cannot print a candle coming below and then closing above 80,500, we need to be aware that this is a giant sideways range, and we should prepare for a move to the downside.",
+  "quote": "If we cannot print a candle coming below and then closing above, we need to be aware that this is a giant sideways range, clearly defined high at around 125, clearly defined low at around 74.",
+  "unchecked": [
+   "daily time frame"
+  ],
+  "lesson_id": 369,
+  "rules": [
+   {
+    "rule": "close_below_ema",
+    "a": 80500
+   },
+   {
+    "rule": "rsi_bear_div"
+   }
+  ],
+  "rules_text": [
+   "Close below EMA (80500)",
+   "Bearish divergence: price higher high, RSI lower high - in the last 3 candles, lows/highs at most 60 candles apart"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 780,
+  "name": "Chicken's Drinking Water Pattern on Silver",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "1 hour",
+  "why": "If we fail to make a new swing high right here at $87, that is known as a swing failure pattern or as we shay down south, a chicken's drinking water pattern. If we start to close a 1 hour candle now below 87.9, that is going to be our first major sign of a fake out.",
+  "quote": "If we fail to make a new swing high right here at $87, that is known as a swing failure pattern or as we shay down south, a chicken's drinking water pattern. If we start to close a 1 hour candle now below 87.9, that is going to be our first major sign of a fake out.",
+  "unchecked": [
+   "87.9 is the water. And we're going to see is the chicken going to dip her beak into the water and then quickly and come back inside giving us a failed swing high, a swing failure pattern, or are we going to break out and hold this officially making a higher high?"
+  ],
+  "lesson_id": 370,
+  "rules": [
+   {
+    "rule": "close_below_ema",
+    "a": 50
+   }
+  ],
+  "rules_text": [
+   "Close below EMA (50)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 781,
+  "name": "cme_futures_gap",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "high",
+  "why": "If we can reclaim 793, we could see a fast move back to our next very key resistance of $845 to $86,000, where we should be looking for a harsh rejection to finally take the low down here from April and back test the high we made from March 2024, where we do have some very nice confluence. This suggests a potential reversal and continuation of the trend, and the importance of key levels in determining the direction of the market.",
+  "quote": "If we can reclaim 793, we could see a fast move back to our next very key resistance of $845 to $86,000, where we should be looking for a harsh rejection to finally take the low down here from April and back test the high we made from March 2024, where we do have some very nice confluence.",
+  "unchecked": [
+   "CME futures gap"
+  ],
+  "lesson_id": 370,
+  "rules": [
+   {
+    "rule": "close_above_sma",
+    "a": 793
+   },
+   {
+    "rule": "close_above_ema",
+    "a": 84500,
+    "b": 86000
+   }
+  ],
+  "rules_text": [
+   "Close above SMA (793)",
+   "Close above EMA (84500)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 782,
+  "name": "Buy Bitcoin when weekly money flow dips into the purple",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "weekly",
+  "why": "The teacher believes this is a good time to start DCA into Bitcoin for the next bull market, as the money flow indicates a potential bottom and the start of a bull market.",
+  "quote": "Now, notice something. Historically, when the money flow dips into the purple is when you can start buying, but also it means we're going to get a larger drop, some type of capitulationish event before the actual bull run starts.",
+  "unchecked": [
+   "Historically, when the money flow dips into the purple is when you can start buying, but also it means we're going to get a larger drop, some type of capitulationish event before the actual bull run starts."
+  ],
+  "lesson_id": 371,
+  "rules": [
+   {
+    "rule": "mf_negative"
+   }
+  ],
+  "rules_text": [
+   "Market Cipher money flow below zero (red)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 783,
+  "name": "Buy Bitcoin around the summer to fall period",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "monthly",
+  "why": "The teacher suggests buying around the summer to fall period, as it aligns with the historical pattern of bearish divergences and green dots, indicating a potential bottom.",
+  "quote": "All right, so right around this zone here is where we would expect timewise for our bottom actually to come in.",
+  "unchecked": [
+   "Typically from the time that we print that bearish divergence on the two-month time frame, we have about 9 months until the bottom is in."
+  ],
+  "lesson_id": 371,
+  "rules": [
+   {
+    "rule": "wt_bear_div"
+   },
+   {
+    "rule": "wt_green_dot"
+   }
+  ],
+  "rules_text": [
+   "Bearish divergence: price higher high, Market Cipher wave lower high - in the last 3 candles, lows/highs at most 60 candles apart",
+   "Market Cipher green dot (WaveTrend crosses up) below 0"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 784,
+  "name": "fibonacci_low",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "monthly",
+  "why": "Historical lows in Bitcoin have occurred in the Fibonacci zone between 786 and 886, and the teacher expects a repeat of this pattern in the future.",
+  "quote": "And so, I'm looking to do it again. And so if we come down below $40,000 and if we do it especially between May 2026 and September 2026, this is where I'm going to be extremely interested in buying Bitcoin.",
+  "unchecked": [
+   "between May 2026 and September 2026"
+  ],
+  "lesson_id": 371,
+  "rules": [
+   {
+    "rule": "close_below_sma",
+    "a": 40000
+   },
+   {
+    "rule": "in_bullish_pattern"
+   }
+  ],
+  "rules_text": [
+   "Close below SMA (40000)",
+   "Inside a pattern that usually breaks up (falling wedge, ascending triangle, bull flag...)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 785,
+  "name": "Breakout from Falling Wedge Pattern",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "4h",
+  "why": "The oscillator has printed a big bottom signal followed by a local buy signal on the daily timeframe, and a hidden bullish divergence at the higher low on the 1-hour timeframe. The break above the trendline is a sign of strength after coming down to the undervalued territory.",
+  "quote": "If we get a confirmed break above this level, well, like I said, I expect to move to 72 to $74,000.",
+  "unchecked": [
+   "Breakout from the falling wedge pattern on the 4-hour timeframe."
+  ],
+  "lesson_id": 372,
+  "rules": [
+   {
+    "rule": "close_above_ema",
+    "a": 67153
+   },
+   {
+    "rule": "higher_low"
+   },
+   {
+    "rule": "rsi_bull_div"
+   }
+  ],
+  "rules_text": [
+   "Close above EMA (67153)",
+   "Higher low: the last 5 candles' low is above the 5 candles before",
+   "Bullish divergence: price lower low, RSI higher low - in the last 3 candles, lows/highs at most 60 candles apart"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 786,
+  "name": "Failed Breakout",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "4h",
+  "why": "The oscillator has printed a big bottom signal followed by a local buy signal on the daily timeframe, and a hidden bullish divergence at the higher low on the 1-hour timeframe. The break below the trendline is a sign of weakness after coming down to the undervalued territory.",
+  "quote": "If we close the 4-hour candle below, and we come back inside of this trendline, well, guess what? Then it's a failed breakout and in my opinion, we're probably going to attempt to fill the wick that we made here on the 6th of February.",
+  "unchecked": [
+   "Failed breakout and retest of the support level from February 6th."
+  ],
+  "lesson_id": 372,
+  "rules": [
+   {
+    "rule": "close_below_ema",
+    "a": 67153
+   },
+   {
+    "rule": "lower_high"
+   },
+   {
+    "rule": "rsi_bear_div"
+   }
+  ],
+  "rules_text": [
+   "Close below EMA (67153)",
+   "Lower high: the last 5 candles' high is below the 5 candles before",
+   "Bearish divergence: price higher high, RSI lower high - in the last 3 candles, lows/highs at most 60 candles apart"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 787,
+  "name": "long_trade_setup",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1000.0,
+  "rr": 2.0,
+  "timeframe": "1h",
+  "why": "The price is bouncing from the $66,000 level, and there are bullish divergences on the 1 hour time frame, indicating a potential move to the upside.",
+  "quote": "And from this, we've actually changed market structure for the first time since the 15th of February. You can see if we draw a trend line right here, we're breaking out. We're making our first higher high. And now, we're actually back testing the channel.",
+  "unchecked": [
+   "The setup is based on the $66,000 level, but no specific SMA is mentioned."
+  ],
+  "lesson_id": 373,
+  "rules": [
+   {
+    "rule": "close_above_sma",
+    "a": 66000
+   },
+   {
+    "rule": "higher_low",
+    "a": 5,
+    "b": 60
+   }
+  ],
+  "rules_text": [
+   "Close above SMA (66000)",
+   "Higher low: the last 5 candles' low is above the 5 candles before"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 788,
+  "name": "range_bread_and_butter",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "4h",
+  "why": "The trader identifies a range between 80,000 and 94K as the bread and butter of his scalping strategy. He looks for multiple touches on support and resistance levels within this range, and the range itself is defined by higher lows and lower highs over the last 5 candles. The trader uses a 200-period SMA and a 50-period EMA to define the range and uses a stop loss based on the break of structure. The trader also mentions the importance of finding ranges within ranges and using Fibonacci levels for support and resistance. The trader uses a 4-hour timeframe for this setup and applies a risk-reward ratio of 2:1. The trader also mentions the importance of not getting overconfident after a winning day and stopping once the daily bread is achieved.",
+  "quote": "Between 80,000 and 94K. Uh we we have a clear clear range. Obviously, we have highs, we have lows. I draw it right in here. And then we also have ranges within a range. And so this is really my bread and butter, dude. We could see that these ranges right in here. Um, we have multiple touch points for one. Again, if we're going to scalp, we need that range. Once we have our ranges, we can start defining tops and bottoms. We have tops here, multiple touches. We also have uh the bottoms. We could see here, here, here, here. And when we have a structure like this in the coliseum, I explained guys if it's it's also risk management is also key. All right, risk management. And our stop losses in the coliseum are strictly based off of break of structure. You long here, break a structure. You want to get out of these trades on these scalps.",
+  "unchecked": [
+   "bb_touch_lower"
+  ],
+  "lesson_id": 374,
+  "rules": [
+   {
+    "rule": "close_above_sma",
+    "a": 200
+   },
+   {
+    "rule": "close_below_sma",
+    "a": 50
+   },
+   {
+    "rule": "higher_low",
+    "a": 5,
+    "b": 5
+   },
+   {
+    "rule": "lower_high",
+    "a": 5,
+    "b": 5
+   }
+  ],
+  "rules_text": [
+   "Close above SMA (200)",
+   "Close below SMA (50)",
+   "Higher low: the last 5 candles' low is above the 5 candles before",
+   "Lower high: the last 5 candles' high is below the 5 candles before"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  }
 ]
