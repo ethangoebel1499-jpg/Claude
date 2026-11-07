@@ -73,3 +73,18 @@ def test_run_applies_rates_and_protects(store):
     assert v["verdict"] == "use" and v["stars"] == 5 and "Holds up" in v["comment"]
     assert autoreview.verdict(store, "setups", s_pin)["comment"].endswith("Claude's review covers it)")
     assert autoreview.verdict(store, "concepts", 1)["stars"] == 4
+
+
+def test_broken_lengths_and_same_record_duplicates(store):
+    js = lambda s, d=None: autoreview.judge_setup(s, d)[0]
+    base = {"direction": "long", "stats": _stats(100, 0.2)}
+    assert js({**base, "rules": [{"rule": "close_below_sma", "a": 17.566}, {"rule": "hammer"}]}) == "drop"
+    assert js({**base, "rules": [{"rule": "close_below_sma", "a": 200.0}, {"rule": "hammer"}]}) == "use"
+    ids = []
+    for rules in ([{"rule": "rsi_bull_div"}], [{"rule": "rsi_bull_div", "a": 3, "b": 60}]):   # same setup, written twice
+        sid = store.add_setup({"name": "div", "direction": "long", "rules": rules})
+        store.update_setup(sid, status="active", stats=_stats(53, 0.212))
+        ids.append(sid)
+    autoreview.run(store, log=lambda m: None)
+    st = {s["id"]: s["status"] for s in store.setups()}
+    assert sorted(st[i] for i in ids) == ["active", "off"]

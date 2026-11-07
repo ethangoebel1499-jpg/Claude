@@ -101,6 +101,10 @@ def rule_problems(s: dict) -> list[str]:
            and (r[k] > 1000 or (r["rule"] == "volume_spike" and ((k == "a" and r[k] >= 10) or (k == "b" and r[k] < 2))))
            for r in rules for k in ("a", "b")):
         out.append("broken: a price or a typo read as an indicator setting")
+    elif any(r["rule"] in ("close_above_sma", "close_below_sma", "close_above_ema", "close_below_ema", "ema_above_ema",
+                           "ema_below_ema", "ema_cross_up", "ema_cross_down") and isinstance(r.get(k), float)
+             and not float(r[k]).is_integer() for r in rules for k in ("a", "b")):
+        out.append("broken: a moving-average length that isn't a whole number (a price or typo read as a setting)")
     opp = (BEAR if s.get("direction") == "long" else BULL) & set(ids)
     if opp:
         out.append(f"backwards: a {s.get('direction')} on {', '.join(sorted(opp))}")
@@ -202,7 +206,11 @@ def run(store, log=print) -> dict:
             log(f"  🤖 deleted lesson '{title}': {why}")
 
     # setups
-    sig = lambda s: (s["direction"], tuple(sorted((r["rule"], r.get("a"), r.get("b")) for r in s["rules"])))
+    def sig(s):
+        t = (s.get("stats") or {}).get("total") or {}
+        if (t.get("trades") or 0) >= 10:            # the same trades and edge = the same setup written differently
+            return (s["direction"], "record", t.get("trades"), round(t.get("edge") or 0, 3), round(t.get("avg_r") or 0, 3))
+        return (s["direction"], tuple(sorted((r["rule"], r.get("a"), r.get("b")) for r in s["rules"])))
     setups = store.setups()
     best: dict = {}
     for s in setups:
