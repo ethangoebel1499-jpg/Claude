@@ -1,0 +1,13 @@
+{
+ "commands": [
+  {
+   "id": "grind-BTC-30m-short-2026-11-06 14:30",
+   "run": "Claude GRIND BTC 30m",
+   "symbol": "XBTUSD",
+   "timeframe": "30m",
+   "action": "short",
+   "reason": "following GRIND's open short (it entered 2026-11-06 14:30 at 75,531.70)",
+   "at": "2026-11-08T01:17:58+00:00"
+  }
+ ]
+}
