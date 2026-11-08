@@ -6,16 +6,16 @@ from livepaper.store import Store
 def test_claudes_trades_are_queued_once(tmp_path, monkeypatch):
     monkeypatch.setattr(claude_trades, "APPLIED", tmp_path / "applied.json")
     s = Store(tmp_path / "lp.db")
-    cmds = [{"id": "grind-BTC-30m-short-2026-11-06 14:30", "run": "Claude GRIND BTC 30m", "symbol": "XBTUSD",
+    cmds = [{"id": "grind-BTC-30m-short-2026-11-06 14:30", "run": "AUTO GRIND BTC 30m", "symbol": "XBTUSD",
              "timeframe": "30m", "action": "short", "reason": "following GRIND's open short", "at": "2026-11-08T01:20"}]
     assert claude_trades.poll(s, cmds) == 1
-    run = next(r for r in s.runs() if r["name"] == "Claude GRIND BTC 30m")
+    run = next(r for r in s.runs() if r["name"] == "AUTO GRIND BTC 30m")
     assert run["strategy"] == "claude_grind" and run["timeframe"] == "30m" and run["active"]
     assert run["stop"] == 0.09 and run["take_profits"][0] == [0.017, 0.33]       # the script's exits
-    assert [a for _, a in s.pending_commands("Claude GRIND BTC 30m")] == ["short"]
+    assert [a for _, a in s.pending_commands("AUTO GRIND BTC 30m")] == ["short"]
     assert claude_trades.poll(s, cmds) == 0                                       # never twice
     assert claude_trades.poll(s, cmds + [{**cmds[0], "id": "x2", "action": "long"}]) == 1
-    assert [a for _, a in s.pending_commands("Claude GRIND BTC 30m")] == ["short", "long"]
+    assert [a for _, a in s.pending_commands("AUTO GRIND BTC 30m")] == ["short", "long"]
 
 
 def test_the_run_trades_grind_on_every_candle():
@@ -29,3 +29,17 @@ def test_the_run_trades_grind_on_every_candle():
     from livepaper.strategies import REGISTRY, refresh
     refresh()
     assert "claude_grind" in REGISTRY
+
+
+
+def test_the_old_run_name_moves_to_auto_grind(tmp_path, monkeypatch):
+    monkeypatch.setattr(claude_trades, "APPLIED", tmp_path / "applied.json")
+    s = Store(tmp_path / "lp.db")
+    s.upsert_run({**claude_trades.run_spec("AUTO GRIND BTC 30m"), "name": "Claude GRIND BTC 30m"})
+    cmds = [{"id": "old-1", "run": "Claude GRIND BTC 30m", "action": "short", "reason": "-"}]
+    assert claude_trades.poll(s, cmds) == 1
+    runs = {r["name"]: r for r in s.runs()}
+    assert runs["AUTO GRIND BTC 30m"]["active"] and not runs["Claude GRIND BTC 30m"]["active"]
+    assert [a for _, a in s.pending_commands("AUTO GRIND BTC 30m")] == ["short"]
+    from livepaper.claude_trades import registry_entry
+    assert registry_entry()["short"] == "AUTO GRIND"

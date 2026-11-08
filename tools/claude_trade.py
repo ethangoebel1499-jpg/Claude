@@ -1,6 +1,6 @@
 """For Claude sessions: send a paper trade to the user's open app through GitHub.
 
-  python tools/claude_trade.py send --action long|short|close --id <unique id> --reason "..." [--run "Claude GRIND BTC 30m"]
+  python tools/claude_trade.py send --action long|short|close --id <unique id> --reason "..." [--run "AUTO GRIND BTC 30m"]
   python tools/claude_trade.py list
 
 Appends the trade to commands/claude.json on the paper-trades branch (the last 100 are kept). The app checks that file
@@ -64,7 +64,7 @@ def main() -> int:
     s.add_argument("--action", required=True, choices=["long", "short", "close"])
     s.add_argument("--id", required=True)
     s.add_argument("--reason", default="")
-    s.add_argument("--run", default="Claude GRIND BTC 30m")
+    s.add_argument("--run", default="AUTO GRIND BTC 30m")
     s.add_argument("--symbol", default="XBTUSD")
     s.add_argument("--timeframe", default="30m")
     sub.add_parser("list")

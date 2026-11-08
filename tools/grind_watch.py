@@ -100,7 +100,7 @@ def main() -> int:
         if a.sync_open and p and not orders:
             orders.append((p.side, f"grind-{a.symbol}-{a.tf}-{p.side}-{str(p.entry_time)[:16]}",
                            f"following GRIND's open {p.side} (it entered {p.entry_time[:16]} at {price(p.entry_price)})"))
-        run = f"Claude GRIND {a.symbol} {a.tf}"
+        run = f"AUTO GRIND {a.symbol} {a.tf}"
         sym = {"BTC": "XBTUSD"}.get(a.symbol, f"{a.symbol}USD")
         for side, cid, why in orders:
             print("TRADE:", send(side, cid, why, run, sym, a.tf))

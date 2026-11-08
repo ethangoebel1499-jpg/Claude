@@ -1,9 +1,9 @@
 """Trades Claude places for you: Claude goes over a chart on its schedule (e.g. BTC 30m with wielkieef's GRIND rules),
 and when it decides to trade it pushes the trade to the paper-trades branch (commands/claude.json). This app checks
-that file every couple of minutes while it's open and paper trades it in the run "Claude GRIND BTC 30m" - with the
+that file every couple of minutes while it's open and paper trades it in the run "AUTO GRIND BTC 30m" - with the
 script's exits (9% stop; +1.7% / +2.3% / +3.4%), which the paper trader manages between Claude's checks.
 
-  commands/claude.json = {"commands": [{"id": "...", "run": "Claude GRIND BTC 30m", "symbol": "XBTUSD",
+  commands/claude.json = {"commands": [{"id": "...", "run": "AUTO GRIND BTC 30m", "symbol": "XBTUSD",
                           "timeframe": "30m", "action": "long" | "short" | "close", "reason": "...", "at": "..."}]}
 
 Each command is applied once (its id is remembered in runtime/claude_commands_applied.json). Turn it off in
@@ -20,7 +20,8 @@ import requests
 ROOT = Path(__file__).resolve().parent.parent
 APPLIED = ROOT / "runtime" / "claude_commands_applied.json"
 PATH = "commands/claude.json"
-RUNS = {"Claude GRIND BTC 30m": {"strategy": "claude_grind", "symbol": "XBTUSD", "asset": "crypto", "timeframe": "30m"}}
+RUNS = {"AUTO GRIND BTC 30m": {"strategy": "claude_grind", "symbol": "XBTUSD", "asset": "crypto", "timeframe": "30m"}}
+RENAMED = {"Claude GRIND BTC 30m": "AUTO GRIND BTC 30m"}     # the run's earlier name
 
 
 def run_spec(name: str, cmd: dict | None = None) -> dict:
@@ -58,12 +59,24 @@ def fetch() -> list[dict]:
         return []
 
 
+def migrate(store) -> None:
+    """A run kept under its earlier name moves to the new one (the old run stops; its trades stay in the log)."""
+    have = {r["name"]: r for r in store.runs()}
+    for old, new in RENAMED.items():
+        if old in have and have[old]["active"]:
+            if new not in have or not have[new]["active"]:
+                store.upsert_run(run_spec(new))
+            store.set_active(old, False)
+
+
 def poll(store, commands: list[dict] | None = None) -> int:
     """Apply Claude's new trades: make sure its run exists, then queue the trade like a 📄 force-trade button."""
+    migrate(store)
     done = _applied()
     n = 0
     for c in (fetch() if commands is None else commands):
-        cid, action, run = str(c.get("id", "")), c.get("action"), c.get("run") or "Claude GRIND BTC 30m"
+        cid, action, run = str(c.get("id", "")), c.get("action"), c.get("run") or "AUTO GRIND BTC 30m"
+        run = RENAMED.get(run, run)
         if not cid or cid in done or action not in ("long", "short", "close"):
             continue
         have = {r["name"]: r for r in store.runs()}
@@ -96,7 +109,7 @@ def registry_entry() -> dict:
                 "script); Claude also goes over it every hour and can send trades through GitHub.\n\n"
                 + grind_checklist(df, bar, label=label or "GRIND"))
 
-    return {"label": "🤖 Claude · GRIND (every candle + Claude's checks)", "short": "Claude GRIND", "signals": signals,
+    return {"label": "AUTO GRIND (every candle + Claude's checks)", "short": "AUTO GRIND", "signals": signals,
             "checklist": checklist, "exits": Exits(STOP, TAKE_PROFITS),
             "note": "wielkieef's GRIND rules on every closed candle (so nothing is missed between Claude's hourly checks), "
                     "with the script's 9% stop and +1.7% / +2.3% / +3.4% targets; Claude can also send trades."}
