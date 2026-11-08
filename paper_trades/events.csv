@@ -583,3 +583,17 @@ Apprentice BTC 4h,2026-11-07T08:46:33+00:00,exit,closed (breakeven) -53.86 USD
 Apprentice BTC 1h,2026-11-07T23:00:06+00:00,entry,"LONG 0.13459 @ 75,676.60"
 AUTO GRIND BTC 30m,2026-11-08T01:17:58+00:00,claude,"Claude: short - following GRIND's open short (it entered 2026-11-06 14:30 at 75,531.70)"
 AUTO GRIND BTC 30m,2026-11-08T01:31:36+00:00,claude,"Claude: short - following GRIND's open short (it entered 2026-11-06 14:30 at 75,531.70) - AUTO GRIND rename"
+AUTO GRIND BTC 30m,2026-11-08T01:45:32+00:00,entry,"SHORT 0.132138 @ 75,678.10"
+AUTO GRIND BTC 30m,2026-11-08T01:45:32+00:00,manual,"you: short -> opened short at 75,678.10"
+AUTO GRIND BTC 30m,2026-11-08T01:45:32+00:00,manual,you: short -> already short
+AUTO GRIND BTC 30m,2026-11-08T01:45:32+00:00,start,watching XBTUSD 30m
+AUTO GRIND BTC 30m,2026-11-08T02:42:46+00:00,exit,closed (removed from paper trading) -68.94 USD
+AUTO GRIND BTC 30m,2026-11-08T02:42:46+00:00,stop,removed from paper trading
+Apprentice BTC 1h,2026-11-08T02:42:46+00:00,catch-up,"trader was off 57m: replayed 1 hourly candles, stop and targets not reached"
+Trial #188 ETH 6h,2026-11-08T02:42:53+00:00,catch-up,"trader was off 57m: replayed 1 hourly candles, stop and targets not reached"
+Trial #197 SOL 30m,2026-11-08T02:42:54+00:00,catch-up,"trader was off 57m: replayed 1 hourly candles, stop and targets not reached"
+Trial #197 SOL 12h,2026-11-08T02:42:54+00:00,catch-up,"trader was off 57m: replayed 1 hourly candles, stop and targets not reached"
+AUTOGRIND,2026-11-08T02:32:15+00:00,claude,"Claude: short (100% of the account) - TradingView GRIND BTC 30m short #2095 open since Nov 6 10:00 (UTC-5) at 75620.6, TV size 1.93M USD of 1.93M"
+AUTOGRIND,2026-11-08T02:43:32+00:00,entry,"SHORT 0.132284 @ 75,594.60"
+AUTOGRIND,2026-11-08T02:43:32+00:00,manual,"you: short -> opened short at 75,594.60"
+AUTOGRIND,2026-11-08T02:43:32+00:00,start,watching XBTUSD 30m
