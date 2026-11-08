@@ -1,1 +1,14 @@
-{"commands": []}
+{
+ "commands": [
+  {
+   "id": "grind-BTC-30m-short-2026-11-06T15:00",
+   "run": "AUTOGRIND",
+   "symbol": "XBTUSD",
+   "timeframe": "30m",
+   "action": "short",
+   "reason": "TradingView GRIND BTC 30m short #2095 open since Nov 6 10:00 (UTC-5) at 75620.6, TV size 1.93M USD of 1.93M",
+   "at": "2026-11-08T02:32:15+00:00",
+   "size_pct": 100.0
+  }
+ ]
+}
