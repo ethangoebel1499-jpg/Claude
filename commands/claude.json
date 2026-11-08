@@ -18,6 +18,16 @@
    "action": "close",
    "reason": "TradingView GRIND BTC 30m #2095 short took profits (exit 74370.7 at 16:56 UTC-5), closing before new entry",
    "at": "2026-11-08T22:02:40+00:00"
+  },
+  {
+   "id": "grind-BTC-30m-short-2026-11-08T22:00",
+   "run": "AUTOGRIND",
+   "symbol": "XBTUSD",
+   "timeframe": "30m",
+   "action": "short",
+   "reason": "TradingView GRIND BTC 30m short #2104 entry at 75155.2, TV size 2.06M USD of 1.93M (capped 100%)",
+   "at": "2026-11-08T22:02:44+00:00",
+   "size_pct": 100.0
   }
  ]
 }
