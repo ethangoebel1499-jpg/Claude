@@ -128,7 +128,7 @@ def sides_controls(r: dict) -> None:
 # ---- Dashboard ----------------------------------------------------------------
 @st.fragment(run_every=30)
 def dashboard():
-    runs = [normalize_run(r) for r in store.runs(active_only=True)]
+    runs = [normalize_run(r) for r in store.runs(active_only=True) if r["strategy"] in REGISTRY]
     quotes = store.table("quotes").set_index("run").to_dict("index")
     trades, eq = store.table("trades"), store.table("equity")
     states = {r["name"]: store.load_state(r["name"]) for r in runs}

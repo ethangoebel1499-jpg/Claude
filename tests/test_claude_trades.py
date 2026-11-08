@@ -54,3 +54,20 @@ def test_autogrind_has_no_signals_of_its_own():
     from livepaper.strategies import REGISTRY, refresh
     refresh()
     assert "autogrind" in REGISTRY
+
+
+def test_a_run_with_an_unknown_strategy_doesnt_stop_the_trader(tmp_path, monkeypatch):
+    import pytest
+    from livepaper import runner
+    with pytest.raises(ValueError):
+        runner.normalize_run({"name": "x", "strategy": "no_such_strategy", "symbol": "XBTUSD"})
+    cfg = tmp_path / "live.toml"
+    cfg.write_text('[[run]]\nname = "x"\nstrategy = "no_such_strategy"\nsymbol = "XBTUSD"\n')
+    assert runner.load_config(cfg)["run"] == []                                   # skipped, not a crash
+
+
+def test_the_claude_poll_doesnt_clobber_the_poll_seconds():
+    import inspect
+    from livepaper import runner
+    src = inspect.getsource(runner.run_forever)
+    assert "import poll\n" not in src and "time.sleep(poll)" in src

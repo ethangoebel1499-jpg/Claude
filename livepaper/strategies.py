@@ -104,8 +104,11 @@ def refresh() -> dict:
         from .claude_trades import autogrind_entry, registry_entry
         REGISTRY["claude_grind"] = registry_entry()
         REGISTRY["autogrind"] = autogrind_entry()
-    except Exception:
-        pass
+    except Exception as e:                           # say why, once (otherwise its runs show "unknown strategy")
+        if not getattr(refresh, "_warned", False):
+            import traceback
+            print(f"[strategies] AUTOGRIND couldn't load: {e!r}\n{traceback.format_exc()}")
+            refresh._warned = True
     try:
         from apprentice.strategy import refresh as _apprentice
         _apprentice(REGISTRY)

@@ -34,7 +34,7 @@ def r_symbol_for_daily(r: dict) -> str:
 def normalize_run(r: dict) -> dict:
     r = dict(r)
     if r["strategy"] not in REGISTRY:
-        raise SystemExit(f"run {r.get('name')}: unknown strategy {r['strategy']} (use {', '.join(REGISTRY)})")
+        raise ValueError(f"run {r.get('name')}: unknown strategy {r['strategy']} (use {', '.join(REGISTRY)})")
     r.setdefault("asset", "crypto")
     r["shorts"] = bool(r.get("shorts", False)) and not REGISTRY[r["strategy"]].get("long_only")
     r["longs"] = bool(r.get("longs", True)) and not REGISTRY[r["strategy"]].get("short_only")
@@ -52,7 +52,13 @@ def normalize_run(r: dict) -> dict:
 def load_config(path: str | Path) -> dict:
     with open(path, "rb") as f:
         cfg = tomllib.load(f)
-    cfg["run"] = [normalize_run(r) for r in cfg.get("run", [])]
+    runs = []
+    for r in cfg.get("run", []):
+        try:
+            runs.append(normalize_run(r))
+        except ValueError as e:                     # one bad run mustn't stop the others
+            print(f"[runs] skipped: {e}")
+    cfg["run"] = runs
     return cfg
 
 
@@ -313,7 +319,7 @@ class App:
         wanted = {r["name"]: normalize_run(r) for r in all_runs if r["active"] and r["strategy"] in REGISTRY}
         for r in all_runs:              # unticked while the trader was off, with a position still open
             st = self.store.load_state(r["name"]) if not r["active"] and r["name"] not in self.runners else None
-            if st is not None and st.position is not None:
+            if st is not None and st.position is not None and r["strategy"] in REGISTRY:
                 rn = Runner(normalize_run(r), self.feed(r["feed"] or "kraken"), self.broker_for(r), self.store)
                 self.runners[r["name"]] = rn
         for name in list(self.runners):
@@ -389,8 +395,8 @@ def run_forever(cfg: dict, store: Store) -> None:
         app.step()
         if time.time() - last_claude >= 120 and settings_get("claude_trades_on", True):   # trades Claude sent
             try:
-                from .claude_trades import poll
-                n = poll(store)
+                from .claude_trades import poll as claude_poll      # (not "poll": that's the seconds to wait)
+                n = claude_poll(store)
                 if n:
                     print(f"[claude] queued {n} trade(s) Claude sent")
             except Exception as e:
