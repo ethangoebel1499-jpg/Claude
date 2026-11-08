@@ -101,6 +101,11 @@ def refresh() -> dict:
     """Add your own strategies and names (livepaper/custom.py) - called at start and on every price check."""
     from .custom import refresh as _refresh
     try:
+        from .claude_trades import registry_entry
+        REGISTRY["claude_grind"] = registry_entry()
+    except Exception:
+        pass
+    try:
         from apprentice.strategy import refresh as _apprentice
         _apprentice(REGISTRY)
     except Exception:

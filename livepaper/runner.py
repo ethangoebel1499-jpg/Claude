@@ -375,10 +375,20 @@ def run_forever(cfg: dict, store: Store) -> None:
     last_sync = time.time() - sync_every + 120          # first share 2 minutes after starting, then every hour
     print(f"livepaper: broker={app.app.get('broker', 'sim')}, polling every {poll}s. Runs are managed in the "
           f"dashboard's Strategy Lab. Ctrl+C to stop.")
-    last_proving = 0.0
+    last_proving = last_claude = 0.0
+    from .settings import get as settings_get
     while True:
         app = app.reload_if_changed()
         app.step()
+        if time.time() - last_claude >= 120 and settings_get("claude_trades_on", True):   # trades Claude sent
+            try:
+                from .claude_trades import poll
+                n = poll(store)
+                if n:
+                    print(f"[claude] queued {n} trade(s) Claude sent")
+            except Exception as e:
+                print(f"[claude] {e}")
+            last_claude = time.time()
         if time.time() - last_proving >= 300:            # 🔬 Proving ground: decide / start trials, daily re-scan
             try:
                 from apprentice.proving import scan_if_due, tick_from_runner
