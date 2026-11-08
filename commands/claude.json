@@ -9,6 +9,15 @@
    "reason": "TradingView GRIND BTC 30m short #2095 open since Nov 6 10:00 (UTC-5) at 75620.6, TV size 1.93M USD of 1.93M",
    "at": "2026-11-08T02:32:15+00:00",
    "size_pct": 100.0
+  },
+  {
+   "id": "grind-BTC-30m-close-2026-11-08T21:56",
+   "run": "AUTOGRIND",
+   "symbol": "XBTUSD",
+   "timeframe": "30m",
+   "action": "close",
+   "reason": "TradingView GRIND BTC 30m #2095 short took profits (exit 74370.7 at 16:56 UTC-5), closing before new entry",
+   "at": "2026-11-08T22:02:40+00:00"
   }
  ]
 }
