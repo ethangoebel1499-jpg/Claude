@@ -18,13 +18,14 @@ def test_claudes_trades_are_queued_once(tmp_path, monkeypatch):
     assert [a for _, a in s.pending_commands("Claude GRIND BTC 30m")] == ["short", "long"]
 
 
-def test_the_run_has_no_signals_of_its_own():
+def test_the_run_trades_grind_on_every_candle():
     from mcbot.data import synthetic
+    from mcbot.grind import grind_signals
     e = claude_trades.registry_entry()
-    df = synthetic(n=400, seed=1, timeframe="30m")
+    df = synthetic(n=1500, seed=1, timeframe="30m")
     sig = e["signals"](df)
-    assert not sig.long_entry.any() and not sig.short_entry.any()
-    assert "Claude trades this run" in e["checklist"](df)
+    assert sig.equals(grind_signals(df))                       # the script itself, on every closed candle
+    assert "every closed candle" in e["checklist"](df)
     from livepaper.strategies import REGISTRY, refresh
     refresh()
     assert "claude_grind" in REGISTRY

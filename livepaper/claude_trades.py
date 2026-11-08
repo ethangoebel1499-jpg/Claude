@@ -80,22 +80,23 @@ def poll(store, commands: list[dict] | None = None) -> int:
 
 
 def registry_entry() -> dict:
-    """The run's strategy: no signals of its own (Claude sends the trades); shows GRIND's checklist."""
+    """The run's strategy: wielkieef's GRIND script itself, checked on every closed candle by the open app (so no
+    30-minute candle is missed), plus any trade Claude sends through GitHub."""
     import pandas as pd
 
-    from mcbot.grind import STOP, TAKE_PROFITS, grind_checklist
+    from mcbot.grind import STOP, TAKE_PROFITS, grind_checklist, grind_signals
 
     from .core import Exits
 
     def signals(df: pd.DataFrame) -> pd.DataFrame:
-        return pd.DataFrame({"long_entry": False, "short_entry": False, "long_exit": False, "short_exit": False},
-                            index=df.index)
+        return grind_signals(df)
 
     def checklist(df, bar=-1, label=None):
-        return ("🤖 Claude trades this run by hand: it goes over the chart with wielkieef's GRIND rules every hour "
-                "and sends each trade through GitHub.\n\n" + grind_checklist(df, bar, label=label or "GRIND"))
+        return ("🤖 GRIND, checked by this app on every closed candle (the same rules as wielkieef's TradingView "
+                "script); Claude also goes over it every hour and can send trades through GitHub.\n\n"
+                + grind_checklist(df, bar, label=label or "GRIND"))
 
-    return {"label": "🤖 Claude · GRIND (trades sent by Claude)", "short": "Claude GRIND", "signals": signals,
+    return {"label": "🤖 Claude · GRIND (every candle + Claude's checks)", "short": "Claude GRIND", "signals": signals,
             "checklist": checklist, "exits": Exits(STOP, TAKE_PROFITS),
-            "note": "Claude goes over the chart with wielkieef's GRIND rules on its schedule and sends the trades; the "
-                    "paper trader manages the script's 9% stop and +1.7% / +2.3% / +3.4% targets in between."}
+            "note": "wielkieef's GRIND rules on every closed candle (so nothing is missed between Claude's hourly checks), "
+                    "with the script's 9% stop and +1.7% / +2.3% / +3.4% targets; Claude can also send trades."}
