@@ -459,3 +459,25 @@ def test_webull_account_without_crypto_moves_crypto_runs_to_the_built_in_broker(
     app.step()
     assert app.runners["G"].pm.state.position.side == "short"
     assert app.broker_for({"asset": "stock"}) is wb            # stocks stay at Webull
+
+
+def test_a_command_can_use_a_percent_of_the_account(tmp_path, candles):
+    store = Store(tmp_path / "pct.db")
+    r = {"name": "G", "strategy": "grind", "symbol": "X", "asset": "crypto", "timeframe": "4h", "shorts": False,
+         "capital": 10_000.0, "fraction": 1.0, "feed": "kraken", "qty_step": 1e-6, "stop": None, "take_profits": None}
+    runners = []
+    broker = SimBroker(fee=0.001, fill="market", market_price=lambda run: runners[0].price)
+    runners.append(Runner(r, FakeFeed(candles, 400), broker, store))
+    rn = runners[0]
+    rn.step()
+    store.command("G", "long", 50.0)                          # half the account
+    rn.step()
+    half = rn.pm.state.position
+    assert half is not None and abs(half.qty * half.entry_price - 5_000) < 5       # about $5,000 of $10,000
+    assert rn.pm.fraction == 1.0                              # the run's normal size is untouched
+    store.command("G", "close")
+    rn.step()
+    store.command("G", "long")                                # no % sent: the run's normal size (all in)
+    rn.step()
+    full = rn.pm.state.position
+    assert full is not None and full.qty * full.entry_price > 9_000
