@@ -176,7 +176,14 @@ class Runner:
                     if self.pm.state.position is not None:
                         result = "couldn't close the open position first"
                     else:
-                        self.pm.open(action, self.price, now)
+                        size = self.store.command_size(cid)               # Claude can send a % of the account
+                        normal = self.pm.fraction
+                        if size is not None and 0 < size <= 100:
+                            self.pm.fraction = size / 100
+                        try:
+                            self.pm.open(action, self.price, now)
+                        finally:
+                            self.pm.fraction = normal
                         why = getattr(self.pm.broker, "last_error", None)
                         if self.pm.state.position:
                             result = f"opened {action} at {self.pm.state.position.entry_price:,.2f}"

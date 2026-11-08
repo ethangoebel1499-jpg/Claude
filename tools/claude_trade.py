@@ -1,6 +1,6 @@
 """For Claude sessions: send a paper trade to the user's open app through GitHub.
 
-  python tools/claude_trade.py send --action long|short|close --id <unique id> --reason "..." [--run "AUTO GRIND BTC 30m"]
+  python tools/claude_trade.py send --action long|short|close --id <unique id> --reason "..." [--size-pct 52] [--run AUTOGRIND]
   python tools/claude_trade.py list
 
 Appends the trade to commands/claude.json on the paper-trades branch (the last 100 are kept). The app checks that file
@@ -34,13 +34,16 @@ def current() -> dict:
         return {"commands": []}
 
 
-def send(action: str, cid: str, reason: str, run: str, symbol: str, timeframe: str) -> str:
+def send(action: str, cid: str, reason: str, run: str, symbol: str, timeframe: str,
+         size_pct: float | None = None) -> str:
     data = current()
     if any(c.get("id") == cid for c in data["commands"]):
         return f"already sent ({cid})"
-    data["commands"] = (data["commands"] + [{
-        "id": cid, "run": run, "symbol": symbol, "timeframe": timeframe, "action": action, "reason": reason,
-        "at": datetime.now(timezone.utc).isoformat(timespec="seconds")}])[-100:]
+    cmd = {"id": cid, "run": run, "symbol": symbol, "timeframe": timeframe, "action": action, "reason": reason,
+           "at": datetime.now(timezone.utc).isoformat(timespec="seconds")}
+    if size_pct is not None:
+        cmd["size_pct"] = size_pct
+    data["commands"] = (data["commands"] + [cmd])[-100:]
     wt = ROOT / ".review-worktree"
     if not wt.exists():
         git("worktree", "add", "-f", str(wt), f"origin/{BRANCH}")
@@ -64,13 +67,14 @@ def main() -> int:
     s.add_argument("--action", required=True, choices=["long", "short", "close"])
     s.add_argument("--id", required=True)
     s.add_argument("--reason", default="")
-    s.add_argument("--run", default="AUTO GRIND BTC 30m")
+    s.add_argument("--run", default="AUTOGRIND")
+    s.add_argument("--size-pct", type=float, default=None, help="percent of the account for this trade (0-100)")
     s.add_argument("--symbol", default="XBTUSD")
     s.add_argument("--timeframe", default="30m")
     sub.add_parser("list")
     a = ap.parse_args()
     if a.cmd == "send":
-        print(send(a.action, a.id, a.reason, a.run, a.symbol, a.timeframe))
+        print(send(a.action, a.id, a.reason, a.run, a.symbol, a.timeframe, a.size_pct))
     else:
         for c in current()["commands"][-20:]:
             print(f"{c['at'][:16]}  {c['action']:5s}  {c['run']}  {c['id']}  {c.get('reason', '')[:80]}")

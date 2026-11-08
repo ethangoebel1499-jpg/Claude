@@ -48,6 +48,9 @@ class Store:
                 self.db.execute(f"ALTER TABLE runs ADD COLUMN {col} INTEGER DEFAULT {default}")
                 if col == "auto_sides":                         # the apprentice picks its own sides from now on
                     self.db.execute("UPDATE runs SET auto_sides = 1 WHERE strategy = 'apprentice'")
+        ccols = {r[1] for r in self.db.execute("PRAGMA table_info(commands)")}
+        if "size_pct" not in ccols:                              # added later: how much of the account a command uses
+            self.db.execute("ALTER TABLE commands ADD COLUMN size_pct REAL")
         self.db.commit()
 
     def _ins(self, table: str, row: dict):
@@ -115,9 +118,15 @@ class Store:
         return out
 
     # ---- manual orders from the dashboard (the trader carries them out on its next price check)
-    def command(self, run: str, action: str) -> None:
-        self.db.execute("INSERT INTO commands (run, action, created) VALUES (?, ?, ?)", (run, action, now_utc()))
+    def command(self, run: str, action: str, size_pct: float | None = None) -> None:
+        """size_pct = percent of the run's account for this trade (None: the run's normal size)."""
+        self.db.execute("INSERT INTO commands (run, action, created, size_pct) VALUES (?, ?, ?, ?)",
+                        (run, action, now_utc(), size_pct))
         self.db.commit()
+
+    def command_size(self, cid: int) -> float | None:
+        r = self.db.execute("SELECT size_pct FROM commands WHERE id = ?", (cid,)).fetchone()
+        return float(r[0]) if r and r[0] is not None else None
 
     def pending_commands(self, run: str) -> list[tuple[int, str]]:
         return self.db.execute("SELECT id, action FROM commands WHERE run = ? AND done IS NULL ORDER BY id",

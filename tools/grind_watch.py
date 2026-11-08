@@ -9,6 +9,7 @@ recent candles, replays the script's trades with its own exits (9% stop, +1.7% /
   - the nine conditions on the last closed candle, the last few trades
 Prices are Kraken's BTC/USD; TradingView's chart may use another exchange's feed, so levels can differ slightly.
 The first line is machine-readable: "GRIND_EVENT: <none|entry|exit|...>".
+Read-only: it sends no trades (only the screenshot-based AUTOGRIND check sends trades to the app).
 """
 
 from __future__ import annotations
@@ -31,10 +32,6 @@ def main() -> int:
     ap.add_argument("--symbol", default="BTC")
     ap.add_argument("--tf", default="30m")
     ap.add_argument("--candles", type=int, default=1, help="report what happened over the last N closed candles")
-    ap.add_argument("--trade", action="store_true",
-                    help="send GRIND's new entries / reversals to the app as paper trades (tools/claude_trade.py)")
-    ap.add_argument("--sync-open", action="store_true",
-                    help="also send the position GRIND holds right now (to start following it mid-trade)")
     a = ap.parse_args()
     df = history(a.symbol, "crypto", a.tf).iloc[-1500:]
     sig = grind_signals(df)
@@ -84,28 +81,6 @@ def main() -> int:
               f"{price(stop)} · targets {', '.join(price(x) for x in tps)} ({p.targets_hit} hit)")
     else:
         print("OPEN: no position - waiting for all GRIND conditions to line up")
-    if a.trade:
-        from claude_trade import send                     # noqa: E402 (tools/ is on the path when run directly)
-        orders = []
-        for t_, k, txt in new:                            # an entry on candle i = GRIND's signal on candle i-1
-            if k == "entry":
-                side = "long" if txt.upper().startswith("LONG") else "short"
-                orders.append((side, f"grind-{a.symbol}-{a.tf}-{side}-{str(t_)[:16]}",
-                               f"GRIND {side} entry at {txt.split('@')[-1].strip()}"))
-        if pending:
-            side = "long" if "LONG" in pending else "short"
-            nxt = df.index[-1] + (df.index[-1] - df.index[-2])
-            orders.append((side, f"grind-{a.symbol}-{a.tf}-{side}-{str(nxt)[:16]}",
-                           f"GRIND {pending} on the candle that closed {last_bar:%Y-%m-%d %H:%M} UTC"))
-        if a.sync_open and p and not orders:
-            orders.append((p.side, f"grind-{a.symbol}-{a.tf}-{p.side}-{str(p.entry_time)[:16]}",
-                           f"following GRIND's open {p.side} (it entered {p.entry_time[:16]} at {price(p.entry_price)})"))
-        run = f"AUTO GRIND {a.symbol} {a.tf}"
-        sym = {"BTC": "XBTUSD"}.get(a.symbol, f"{a.symbol}USD")
-        for side, cid, why in orders:
-            print("TRADE:", send(side, cid, why, run, sym, a.tf))
-        if not orders:
-            print("TRADE: nothing to send")
     print()
     print(grind_checklist(df, -1, label=f"GRIND {a.symbol} {a.tf}"))
     if pm.trades:

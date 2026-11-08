@@ -1,10 +1,11 @@
 """Trades Claude places for you: Claude goes over a chart on its schedule (e.g. BTC 30m with wielkieef's GRIND rules),
 and when it decides to trade it pushes the trade to the paper-trades branch (commands/claude.json). This app checks
-that file every couple of minutes while it's open and paper trades it in the run "AUTO GRIND BTC 30m" - with the
+that file every couple of minutes while it's open and paper trades it in the run "AUTOGRIND" - with the
 script's exits (9% stop; +1.7% / +2.3% / +3.4%), which the paper trader manages between Claude's checks.
 
-  commands/claude.json = {"commands": [{"id": "...", "run": "AUTO GRIND BTC 30m", "symbol": "XBTUSD",
-                          "timeframe": "30m", "action": "long" | "short" | "close", "reason": "...", "at": "..."}]}
+  commands/claude.json = {"commands": [{"id": "...", "run": "AUTOGRIND", "symbol": "XBTUSD",
+                          "timeframe": "30m", "action": "long" | "short" | "close", "size_pct": 52, "reason": "...",
+                          "at": "..."}]}      (size_pct optional: percent of the run's account for this trade, 0-100)
 
 Each command is applied once (its id is remembered in runtime/claude_commands_applied.json). Turn it off in
 ⚙️ Account (claude_trades_on).
@@ -20,13 +21,15 @@ import requests
 ROOT = Path(__file__).resolve().parent.parent
 APPLIED = ROOT / "runtime" / "claude_commands_applied.json"
 PATH = "commands/claude.json"
-RUNS = {"AUTO GRIND BTC 30m": {"strategy": "claude_grind", "symbol": "XBTUSD", "asset": "crypto", "timeframe": "30m"}}
-RENAMED = {"Claude GRIND BTC 30m": "AUTO GRIND BTC 30m"}     # the run's earlier name
+RUNS = {# follows TradingView's GRIND BTC strategy only: Claude sends each open / close (with a % of the account)
+        "AUTOGRIND": {"strategy": "autogrind", "symbol": "XBTUSD", "asset": "crypto", "timeframe": "30m"}}
+# Claude's earlier runs that traded GRIND's own signals: switched off - only AUTOGRIND (screenshot-based) trades now
+RETIRED = ("Claude GRIND BTC 30m", "AUTO GRIND BTC 30m")
 
 
 def run_spec(name: str, cmd: dict | None = None) -> dict:
     from mcbot.grind import STOP, TAKE_PROFITS
-    base = RUNS.get(name, {"strategy": "claude_grind", "symbol": (cmd or {}).get("symbol", "XBTUSD"),
+    base = RUNS.get(name, {"strategy": "autogrind", "symbol": (cmd or {}).get("symbol", "XBTUSD"),
                            "asset": "crypto", "timeframe": (cmd or {}).get("timeframe", "30m")})
     return {"name": name, **base, "shorts": True, "longs": True, "capital": 10_000.0, "fraction": 1.0,
             "stop": STOP, "take_profits": [list(t) for t in TAKE_PROFITS], "active": True, "source": "claude"}
@@ -59,31 +62,28 @@ def fetch() -> list[dict]:
         return []
 
 
-def migrate(store) -> None:
-    """A run kept under its earlier name moves to the new one (the old run stops; its trades stay in the log)."""
-    have = {r["name"]: r for r in store.runs()}
-    for old, new in RENAMED.items():
-        if old in have and have[old]["active"]:
-            if new not in have or not have[new]["active"]:
-                store.upsert_run(run_spec(new))
-            store.set_active(old, False)
-
-
 def poll(store, commands: list[dict] | None = None) -> int:
     """Apply Claude's new trades: make sure its run exists, then queue the trade like a 📄 force-trade button."""
-    migrate(store)
+    retire(store)
     done = _applied()
     n = 0
     for c in (fetch() if commands is None else commands):
-        cid, action, run = str(c.get("id", "")), c.get("action"), c.get("run") or "AUTO GRIND BTC 30m"
-        run = RENAMED.get(run, run)
+        cid, action, run = str(c.get("id", "")), c.get("action"), c.get("run") or "AUTOGRIND"
+        run = "AUTOGRIND" if run in RETIRED else run
         if not cid or cid in done or action not in ("long", "short", "close"):
             continue
         have = {r["name"]: r for r in store.runs()}
         if run not in have or not have[run]["active"]:
             store.upsert_run(run_spec(run, c))
-        store.command(run, action)
-        store.event(run, c.get("at") or "", "claude", f"Claude: {action} - {c.get('reason', '')}"[:500])
+        try:
+            size = float(c["size_pct"]) if c.get("size_pct") is not None else None
+        except (TypeError, ValueError):
+            size = None
+        if size is not None and not 0 < size <= 100:
+            size = None
+        store.command(run, action, size)
+        store.event(run, c.get("at") or "", "claude", f"Claude: {action}"
+                    + (f" ({size:g}% of the account)" if size is not None else "") + f" - {c.get('reason', '')}"[:500])
         done.add(cid)
         n += 1
     if n:
@@ -92,24 +92,37 @@ def poll(store, commands: list[dict] | None = None) -> int:
     return n
 
 
-def registry_entry() -> dict:
-    """The run's strategy: wielkieef's GRIND script itself, checked on every closed candle by the open app (so no
-    30-minute candle is missed), plus any trade Claude sends through GitHub."""
+def autogrind_entry() -> dict:
+    """AUTOGRIND: no signals of its own. It only opens / closes what Claude sends from TradingView's GRIND BTC
+    strategy (with the % of the account to use), and manages the script's exits (9% stop; +1.7 / +2.3 / +3.4%)."""
     import pandas as pd
 
-    from mcbot.grind import STOP, TAKE_PROFITS, grind_checklist, grind_signals
+    from mcbot.grind import STOP, TAKE_PROFITS
 
     from .core import Exits
 
     def signals(df: pd.DataFrame) -> pd.DataFrame:
-        return grind_signals(df)
+        off = pd.Series(False, index=df.index)
+        return pd.DataFrame({"long_entry": off, "long_exit": off, "short_entry": off, "short_exit": off})
 
     def checklist(df, bar=-1, label=None):
-        return ("🤖 GRIND, checked by this app on every closed candle (the same rules as wielkieef's TradingView "
-                "script); Claude also goes over it every hour and can send trades through GitHub.\n\n"
-                + grind_checklist(df, bar, label=label or "GRIND"))
+        return ("🤖 AUTOGRIND follows TradingView's GRIND BTC [45MIN] strategy: Claude checks it every 30 minutes and "
+                "sends each open / close, with the % of the account to use. It has no signals of its own.")
 
-    return {"label": "AUTO GRIND (every candle + Claude's checks)", "short": "AUTO GRIND", "signals": signals,
+    return {"label": "🤖 AUTOGRIND (follows TradingView's GRIND BTC)", "short": "AUTOGRIND", "signals": signals,
             "checklist": checklist, "exits": Exits(STOP, TAKE_PROFITS),
-            "note": "wielkieef's GRIND rules on every closed candle (so nothing is missed between Claude's hourly checks), "
-                    "with the script's 9% stop and +1.7% / +2.3% / +3.4% targets; Claude can also send trades."}
+            "note": "opens / closes only what Claude sends from TradingView's GRIND BTC strategy, sized as a % of the "
+                    "account, with the script's 9% stop and +1.7% / +2.3% / +3.4% targets."}
+
+
+def retire(store) -> None:
+    """Claude's earlier GRIND runs traded the script's own signals; they stop (their trades stay in the log)."""
+    for r in store.runs():
+        if r["name"] in RETIRED and r["active"]:
+            store.set_active(r["name"], False)
+
+
+def registry_entry() -> dict:
+    """The retired 'claude_grind' strategy, kept so old runs still load: it no longer trades anything itself."""
+    e = autogrind_entry()
+    return {**e, "label": "Claude GRIND (retired - use AUTOGRIND)", "short": "Claude GRIND (retired)"}
