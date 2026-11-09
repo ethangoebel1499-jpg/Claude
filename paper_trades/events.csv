@@ -637,3 +637,154 @@ Witcher ETH 2h,2026-11-09T21:06:09+00:00,error,"ReadTimeout: HTTPSConnectionPool
 Witcher SOL 2h,2026-11-09T21:06:39+00:00,error,"ReadTimeout: HTTPSConnectionPool(host='api.kraken.com', port=443): Read timed out. (read timeout=30)"
 GRIND BTC 4h,2026-11-09T21:07:09+00:00,error,"ReadTimeout: HTTPSConnectionPool(host='api.kraken.com', port=443): Read timed out. (read timeout=30)"
 S8 ETH 12h,2026-11-09T21:07:39+00:00,error,"ReadTimeout: HTTPSConnectionPool(host='api.kraken.com', port=443): Read timed out. (read timeout=30)"
+S3 GRIND DOGE 1h,2026-11-09T21:09:35+00:00,error,"ReadTimeout: HTTPSConnectionPool(host='api.kraken.com', port=443): Read timed out. (read timeout=30)"
+Apprentice BTC 4h,2026-11-09T21:10:05+00:00,error,"ReadTimeout: HTTPSConnectionPool(host='api.kraken.com', port=443): Read timed out. (read timeout=30)"
+Apprentice BTC 1h,2026-11-09T21:10:35+00:00,error,"ReadTimeout: HTTPSConnectionPool(host='api.kraken.com', port=443): Read timed out. (read timeout=30)"
+Apprentice ETH 1h,2026-11-09T21:11:05+00:00,error,"ReadTimeout: HTTPSConnectionPool(host='api.kraken.com', port=443): Read timed out. (read timeout=30)"
+Apprentice SHIB 1h,2026-11-09T21:11:35+00:00,error,"ReadTimeout: HTTPSConnectionPool(host='api.kraken.com', port=443): Read timed out. (read timeout=30)"
+Apprentice ETH 4h,2026-11-09T21:12:05+00:00,error,"ReadTimeout: HTTPSConnectionPool(host='api.kraken.com', port=443): Read timed out. (read timeout=30)"
+Apprentice UNI 4h,2026-11-09T21:12:35+00:00,error,"ReadTimeout: HTTPSConnectionPool(host='api.kraken.com', port=443): Read timed out. (read timeout=30)"
+Apprentice BTC 1D,2026-11-09T21:13:05+00:00,error,"ReadTimeout: HTTPSConnectionPool(host='api.kraken.com', port=443): Read timed out. (read timeout=30)"
+Apprentice LINK 1D,2026-11-09T21:13:36+00:00,error,"ReadTimeout: HTTPSConnectionPool(host='api.kraken.com', port=443): Read timed out. (read timeout=30)"
+Apprentice ADA 1D,2026-11-09T21:14:06+00:00,error,"ReadTimeout: HTTPSConnectionPool(host='api.kraken.com', port=443): Read timed out. (read timeout=30)"
+Trial #46 ETH 1D,2026-11-09T21:14:36+00:00,error,"ReadTimeout: HTTPSConnectionPool(host='api.kraken.com', port=443): Read timed out. (read timeout=30)"
+S3 GRIND DOGE 1h,2026-11-09T21:15:13+00:00,error,RuntimeError: Kraken isn't answering - paused for 120s more
+Apprentice BTC 4h,2026-11-09T21:15:13+00:00,error,RuntimeError: Kraken isn't answering - paused for 120s more
+Apprentice BTC 1h,2026-11-09T21:15:13+00:00,error,RuntimeError: Kraken isn't answering - paused for 120s more
+Apprentice ETH 1h,2026-11-09T21:15:13+00:00,error,RuntimeError: Kraken isn't answering - paused for 120s more
+Apprentice SHIB 1h,2026-11-09T21:15:13+00:00,error,RuntimeError: Kraken isn't answering - paused for 120s more
+Apprentice ETH 4h,2026-11-09T21:15:13+00:00,error,RuntimeError: Kraken isn't answering - paused for 120s more
+Apprentice UNI 4h,2026-11-09T21:15:13+00:00,error,RuntimeError: Kraken isn't answering - paused for 120s more
+Apprentice BTC 1D,2026-11-09T21:15:13+00:00,error,RuntimeError: Kraken isn't answering - paused for 120s more
+Apprentice LINK 1D,2026-11-09T21:15:13+00:00,error,RuntimeError: Kraken isn't answering - paused for 120s more
+Apprentice ADA 1D,2026-11-09T21:15:13+00:00,error,RuntimeError: Kraken isn't answering - paused for 120s more
+Trial #46 ETH 1D,2026-11-09T21:15:13+00:00,error,RuntimeError: Kraken isn't answering - paused for 120s more
+Trial #56 BTC 6h,2026-11-09T21:15:13+00:00,error,RuntimeError: Kraken isn't answering - paused for 120s more
+Trial #247 ETH 4h,2026-11-09T21:15:13+00:00,error,RuntimeError: Kraken isn't answering - paused for 120s more
+Trial #188 ETH 6h,2026-11-09T21:15:13+00:00,error,RuntimeError: Kraken isn't answering - paused for 120s more
+Trial #110 BTC 1D,2026-11-09T21:15:13+00:00,error,RuntimeError: Kraken isn't answering - paused for 120s more
+Trial #197 SOL 30m,2026-11-09T21:15:13+00:00,error,RuntimeError: Kraken isn't answering - paused for 120s more
+Trial #95 SOL 12h,2026-11-09T21:15:13+00:00,error,RuntimeError: Kraken isn't answering - paused for 120s more
+Trial #149 ETH 1D,2026-11-09T21:15:13+00:00,error,RuntimeError: Kraken isn't answering - paused for 120s more
+Trial #47 SOL 12h,2026-11-09T21:15:13+00:00,error,RuntimeError: Kraken isn't answering - paused for 120s more
+Trial #197 SOL 12h,2026-11-09T21:15:13+00:00,error,RuntimeError: Kraken isn't answering - paused for 120s more
+Apprentice XRP 4h,2026-11-09T21:15:13+00:00,error,RuntimeError: Kraken isn't answering - paused for 120s more
+Apprentice BCH 4h,2026-11-09T21:15:13+00:00,error,RuntimeError: Kraken isn't answering - paused for 120s more
+Apprentice XRP 1D,2026-11-09T21:15:13+00:00,error,RuntimeError: Kraken isn't answering - paused for 120s more
+AUTOGRIND,2026-11-09T21:15:13+00:00,error,RuntimeError: Kraken isn't answering - paused for 120s more
+Witcher ETH 2h,2026-11-09T21:15:23+00:00,error,RuntimeError: Kraken didn't answer (ReadTimeout) - trying again in 120s
+Witcher SOL 2h,2026-11-09T21:15:23+00:00,error,RuntimeError: Kraken isn't answering - paused for 120s more
+GRIND BTC 4h,2026-11-09T21:15:23+00:00,error,RuntimeError: Kraken isn't answering - paused for 120s more
+S8 ETH 12h,2026-11-09T21:15:23+00:00,error,RuntimeError: Kraken isn't answering - paused for 120s more
+S3 GRIND DOGE 1h,2026-11-09T21:15:54+00:00,error,RuntimeError: Kraken isn't answering - paused for 79s more
+Apprentice BTC 4h,2026-11-09T21:15:54+00:00,error,RuntimeError: Kraken isn't answering - paused for 79s more
+Apprentice BTC 1h,2026-11-09T21:15:54+00:00,error,RuntimeError: Kraken isn't answering - paused for 79s more
+Apprentice ETH 1h,2026-11-09T21:15:54+00:00,error,RuntimeError: Kraken isn't answering - paused for 79s more
+Apprentice SHIB 1h,2026-11-09T21:15:54+00:00,error,RuntimeError: Kraken isn't answering - paused for 79s more
+Apprentice ETH 4h,2026-11-09T21:15:54+00:00,error,RuntimeError: Kraken isn't answering - paused for 79s more
+Apprentice UNI 4h,2026-11-09T21:15:54+00:00,error,RuntimeError: Kraken isn't answering - paused for 79s more
+Apprentice BTC 1D,2026-11-09T21:15:54+00:00,error,RuntimeError: Kraken isn't answering - paused for 79s more
+Apprentice LINK 1D,2026-11-09T21:15:54+00:00,error,RuntimeError: Kraken isn't answering - paused for 79s more
+Apprentice ADA 1D,2026-11-09T21:15:54+00:00,error,RuntimeError: Kraken isn't answering - paused for 79s more
+Trial #46 ETH 1D,2026-11-09T21:15:54+00:00,error,RuntimeError: Kraken isn't answering - paused for 79s more
+Trial #56 BTC 6h,2026-11-09T21:15:54+00:00,error,RuntimeError: Kraken isn't answering - paused for 79s more
+Trial #247 ETH 4h,2026-11-09T21:15:54+00:00,error,RuntimeError: Kraken isn't answering - paused for 79s more
+Trial #188 ETH 6h,2026-11-09T21:15:54+00:00,error,RuntimeError: Kraken isn't answering - paused for 79s more
+Trial #110 BTC 1D,2026-11-09T21:15:54+00:00,error,RuntimeError: Kraken isn't answering - paused for 79s more
+Trial #197 SOL 30m,2026-11-09T21:15:54+00:00,error,RuntimeError: Kraken isn't answering - paused for 79s more
+Trial #95 SOL 12h,2026-11-09T21:15:54+00:00,error,RuntimeError: Kraken isn't answering - paused for 79s more
+Trial #149 ETH 1D,2026-11-09T21:15:54+00:00,error,RuntimeError: Kraken isn't answering - paused for 79s more
+Trial #47 SOL 12h,2026-11-09T21:15:54+00:00,error,RuntimeError: Kraken isn't answering - paused for 79s more
+Trial #197 SOL 12h,2026-11-09T21:15:54+00:00,error,RuntimeError: Kraken isn't answering - paused for 79s more
+Apprentice XRP 4h,2026-11-09T21:15:54+00:00,error,RuntimeError: Kraken isn't answering - paused for 79s more
+Apprentice BCH 4h,2026-11-09T21:15:54+00:00,error,RuntimeError: Kraken isn't answering - paused for 79s more
+Apprentice XRP 1D,2026-11-09T21:15:54+00:00,error,RuntimeError: Kraken isn't answering - paused for 79s more
+AUTOGRIND,2026-11-09T21:15:54+00:00,error,RuntimeError: Kraken isn't answering - paused for 79s more
+Witcher ETH 2h,2026-11-09T21:15:54+00:00,error,RuntimeError: Kraken isn't answering - paused for 89s more
+Witcher SOL 2h,2026-11-09T21:15:54+00:00,error,RuntimeError: Kraken isn't answering - paused for 89s more
+GRIND BTC 4h,2026-11-09T21:15:54+00:00,error,RuntimeError: Kraken isn't answering - paused for 89s more
+S8 ETH 12h,2026-11-09T21:15:54+00:00,error,RuntimeError: Kraken isn't answering - paused for 89s more
+S3 GRIND DOGE 1h,2026-11-09T21:16:24+00:00,error,RuntimeError: Kraken isn't answering - paused for 49s more
+Apprentice BTC 4h,2026-11-09T21:16:24+00:00,error,RuntimeError: Kraken isn't answering - paused for 49s more
+Apprentice BTC 1h,2026-11-09T21:16:24+00:00,error,RuntimeError: Kraken isn't answering - paused for 49s more
+Apprentice ETH 1h,2026-11-09T21:16:24+00:00,error,RuntimeError: Kraken isn't answering - paused for 49s more
+Apprentice SHIB 1h,2026-11-09T21:16:24+00:00,error,RuntimeError: Kraken isn't answering - paused for 49s more
+Apprentice ETH 4h,2026-11-09T21:16:24+00:00,error,RuntimeError: Kraken isn't answering - paused for 49s more
+Apprentice UNI 4h,2026-11-09T21:16:24+00:00,error,RuntimeError: Kraken isn't answering - paused for 49s more
+Apprentice BTC 1D,2026-11-09T21:16:24+00:00,error,RuntimeError: Kraken isn't answering - paused for 49s more
+Apprentice LINK 1D,2026-11-09T21:16:24+00:00,error,RuntimeError: Kraken isn't answering - paused for 49s more
+Apprentice ADA 1D,2026-11-09T21:16:24+00:00,error,RuntimeError: Kraken isn't answering - paused for 49s more
+Trial #46 ETH 1D,2026-11-09T21:16:24+00:00,error,RuntimeError: Kraken isn't answering - paused for 49s more
+Trial #56 BTC 6h,2026-11-09T21:16:24+00:00,error,RuntimeError: Kraken isn't answering - paused for 49s more
+Trial #247 ETH 4h,2026-11-09T21:16:24+00:00,error,RuntimeError: Kraken isn't answering - paused for 49s more
+Trial #188 ETH 6h,2026-11-09T21:16:24+00:00,error,RuntimeError: Kraken isn't answering - paused for 49s more
+Trial #110 BTC 1D,2026-11-09T21:16:24+00:00,error,RuntimeError: Kraken isn't answering - paused for 49s more
+Trial #197 SOL 30m,2026-11-09T21:16:24+00:00,error,RuntimeError: Kraken isn't answering - paused for 49s more
+Trial #95 SOL 12h,2026-11-09T21:16:24+00:00,error,RuntimeError: Kraken isn't answering - paused for 49s more
+Trial #149 ETH 1D,2026-11-09T21:16:24+00:00,error,RuntimeError: Kraken isn't answering - paused for 49s more
+Trial #47 SOL 12h,2026-11-09T21:16:24+00:00,error,RuntimeError: Kraken isn't answering - paused for 49s more
+Trial #197 SOL 12h,2026-11-09T21:16:24+00:00,error,RuntimeError: Kraken isn't answering - paused for 49s more
+Apprentice XRP 4h,2026-11-09T21:16:24+00:00,error,RuntimeError: Kraken isn't answering - paused for 49s more
+Apprentice BCH 4h,2026-11-09T21:16:24+00:00,error,RuntimeError: Kraken isn't answering - paused for 49s more
+Apprentice XRP 1D,2026-11-09T21:16:24+00:00,error,RuntimeError: Kraken isn't answering - paused for 49s more
+AUTOGRIND,2026-11-09T21:16:24+00:00,error,RuntimeError: Kraken isn't answering - paused for 49s more
+Witcher ETH 2h,2026-11-09T21:16:24+00:00,error,RuntimeError: Kraken isn't answering - paused for 59s more
+Witcher SOL 2h,2026-11-09T21:16:24+00:00,error,RuntimeError: Kraken isn't answering - paused for 59s more
+GRIND BTC 4h,2026-11-09T21:16:24+00:00,error,RuntimeError: Kraken isn't answering - paused for 59s more
+S8 ETH 12h,2026-11-09T21:16:24+00:00,error,RuntimeError: Kraken isn't answering - paused for 59s more
+S3 GRIND DOGE 1h,2026-11-09T21:16:54+00:00,error,RuntimeError: Kraken isn't answering - paused for 19s more
+Apprentice BTC 4h,2026-11-09T21:16:54+00:00,error,RuntimeError: Kraken isn't answering - paused for 19s more
+Apprentice BTC 1h,2026-11-09T21:16:54+00:00,error,RuntimeError: Kraken isn't answering - paused for 19s more
+Apprentice ETH 1h,2026-11-09T21:16:54+00:00,error,RuntimeError: Kraken isn't answering - paused for 19s more
+Apprentice SHIB 1h,2026-11-09T21:16:54+00:00,error,RuntimeError: Kraken isn't answering - paused for 19s more
+Apprentice ETH 4h,2026-11-09T21:16:54+00:00,error,RuntimeError: Kraken isn't answering - paused for 19s more
+Apprentice UNI 4h,2026-11-09T21:16:54+00:00,error,RuntimeError: Kraken isn't answering - paused for 19s more
+Apprentice BTC 1D,2026-11-09T21:16:54+00:00,error,RuntimeError: Kraken isn't answering - paused for 19s more
+Apprentice LINK 1D,2026-11-09T21:16:54+00:00,error,RuntimeError: Kraken isn't answering - paused for 19s more
+Apprentice ADA 1D,2026-11-09T21:16:54+00:00,error,RuntimeError: Kraken isn't answering - paused for 19s more
+Trial #46 ETH 1D,2026-11-09T21:16:54+00:00,error,RuntimeError: Kraken isn't answering - paused for 19s more
+Trial #56 BTC 6h,2026-11-09T21:16:54+00:00,error,RuntimeError: Kraken isn't answering - paused for 19s more
+Trial #247 ETH 4h,2026-11-09T21:16:54+00:00,error,RuntimeError: Kraken isn't answering - paused for 19s more
+Trial #188 ETH 6h,2026-11-09T21:16:54+00:00,error,RuntimeError: Kraken isn't answering - paused for 19s more
+Trial #110 BTC 1D,2026-11-09T21:16:54+00:00,error,RuntimeError: Kraken isn't answering - paused for 19s more
+Trial #197 SOL 30m,2026-11-09T21:16:54+00:00,error,RuntimeError: Kraken isn't answering - paused for 19s more
+Trial #95 SOL 12h,2026-11-09T21:16:54+00:00,error,RuntimeError: Kraken isn't answering - paused for 19s more
+Trial #149 ETH 1D,2026-11-09T21:16:54+00:00,error,RuntimeError: Kraken isn't answering - paused for 19s more
+Trial #47 SOL 12h,2026-11-09T21:16:54+00:00,error,RuntimeError: Kraken isn't answering - paused for 19s more
+Trial #197 SOL 12h,2026-11-09T21:16:54+00:00,error,RuntimeError: Kraken isn't answering - paused for 19s more
+Apprentice XRP 4h,2026-11-09T21:16:54+00:00,error,RuntimeError: Kraken isn't answering - paused for 19s more
+Apprentice BCH 4h,2026-11-09T21:16:54+00:00,error,RuntimeError: Kraken isn't answering - paused for 19s more
+Apprentice XRP 1D,2026-11-09T21:16:54+00:00,error,RuntimeError: Kraken isn't answering - paused for 19s more
+AUTOGRIND,2026-11-09T21:16:54+00:00,error,RuntimeError: Kraken isn't answering - paused for 19s more
+Witcher ETH 2h,2026-11-09T21:16:54+00:00,error,RuntimeError: Kraken isn't answering - paused for 29s more
+Witcher SOL 2h,2026-11-09T21:16:54+00:00,error,RuntimeError: Kraken isn't answering - paused for 29s more
+GRIND BTC 4h,2026-11-09T21:16:54+00:00,error,RuntimeError: Kraken isn't answering - paused for 29s more
+S8 ETH 12h,2026-11-09T21:16:54+00:00,error,RuntimeError: Kraken isn't answering - paused for 29s more
+S3 GRIND DOGE 1h,2026-11-09T21:17:35+00:00,error,RuntimeError: Kraken isn't answering - paused for 120s more
+Apprentice BTC 4h,2026-11-09T21:17:35+00:00,error,RuntimeError: Kraken isn't answering - paused for 120s more
+Apprentice BTC 1h,2026-11-09T21:17:35+00:00,error,RuntimeError: Kraken isn't answering - paused for 120s more
+Apprentice ETH 1h,2026-11-09T21:17:35+00:00,error,RuntimeError: Kraken isn't answering - paused for 120s more
+Apprentice SHIB 1h,2026-11-09T21:17:35+00:00,error,RuntimeError: Kraken isn't answering - paused for 120s more
+Apprentice ETH 4h,2026-11-09T21:17:35+00:00,error,RuntimeError: Kraken isn't answering - paused for 120s more
+Apprentice UNI 4h,2026-11-09T21:17:35+00:00,error,RuntimeError: Kraken isn't answering - paused for 120s more
+Apprentice BTC 1D,2026-11-09T21:17:35+00:00,error,RuntimeError: Kraken isn't answering - paused for 120s more
+Apprentice LINK 1D,2026-11-09T21:17:35+00:00,error,RuntimeError: Kraken isn't answering - paused for 120s more
+Apprentice ADA 1D,2026-11-09T21:17:35+00:00,error,RuntimeError: Kraken isn't answering - paused for 120s more
+Trial #46 ETH 1D,2026-11-09T21:17:35+00:00,error,RuntimeError: Kraken isn't answering - paused for 120s more
+Trial #56 BTC 6h,2026-11-09T21:17:35+00:00,error,RuntimeError: Kraken isn't answering - paused for 120s more
+Trial #247 ETH 4h,2026-11-09T21:17:35+00:00,error,RuntimeError: Kraken isn't answering - paused for 120s more
+Trial #188 ETH 6h,2026-11-09T21:17:35+00:00,error,RuntimeError: Kraken isn't answering - paused for 120s more
+Trial #110 BTC 1D,2026-11-09T21:17:35+00:00,error,RuntimeError: Kraken isn't answering - paused for 120s more
+Trial #197 SOL 30m,2026-11-09T21:17:35+00:00,error,RuntimeError: Kraken isn't answering - paused for 120s more
+Trial #95 SOL 12h,2026-11-09T21:17:35+00:00,error,RuntimeError: Kraken isn't answering - paused for 120s more
+Trial #149 ETH 1D,2026-11-09T21:17:35+00:00,error,RuntimeError: Kraken isn't answering - paused for 120s more
+Trial #47 SOL 12h,2026-11-09T21:17:35+00:00,error,RuntimeError: Kraken isn't answering - paused for 120s more
+Trial #197 SOL 12h,2026-11-09T21:17:35+00:00,error,RuntimeError: Kraken isn't answering - paused for 120s more
+Apprentice XRP 4h,2026-11-09T21:17:35+00:00,error,RuntimeError: Kraken isn't answering - paused for 120s more
+Apprentice BCH 4h,2026-11-09T21:17:35+00:00,error,RuntimeError: Kraken isn't answering - paused for 120s more
+Apprentice XRP 1D,2026-11-09T21:17:35+00:00,error,RuntimeError: Kraken isn't answering - paused for 120s more
+AUTOGRIND,2026-11-09T21:17:35+00:00,error,RuntimeError: Kraken isn't answering - paused for 120s more
+Witcher ETH 2h,2026-11-09T21:17:45+00:00,error,RuntimeError: Kraken didn't answer (ReadTimeout) - trying again in 120s
+Witcher SOL 2h,2026-11-09T21:17:45+00:00,error,RuntimeError: Kraken isn't answering - paused for 120s more
+GRIND BTC 4h,2026-11-09T21:17:45+00:00,error,RuntimeError: Kraken isn't answering - paused for 120s more
+S8 ETH 12h,2026-11-09T21:17:45+00:00,error,RuntimeError: Kraken isn't answering - paused for 120s more
