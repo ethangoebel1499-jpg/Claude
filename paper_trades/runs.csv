@@ -27,7 +27,7 @@ Apprentice BCH 4h,apprentice,BCHUSD,crypto,4h,,1,10000.0,1.0,0.03,"[[0.03, 0.5],
 Apprentice XRP 1D,apprentice,XRPUSD,crypto,1D,,1,10000.0,1.0,0.03,"[[0.03, 0.5], [0.06, 0.5]]",1,apprentice,2026-11-06T23:40:24+00:00,1,1
 AUTO GRIND BTC 30m,claude_grind,XBTUSD,crypto,30m,,1,10000.0,1.0,0.09,"[[0.017, 0.33], [0.023, 0.66], [0.034, 0.01]]",0,claude,2026-11-08T01:37:40+00:00,1,0
 AUTOGRIND,autogrind,XBTUSD,crypto,30m,,1,10000.0,1.0,0.09,"[[0.017, 0.33], [0.023, 0.66], [0.034, 0.01]]",1,claude,2026-11-08T02:42:57+00:00,1,0
-Witcher ETH 2h,witcher,ETHUSD,crypto,2h,kraken,0,10000.0,1.0,,,1,live.toml,2026-11-02T21:26:04+00:00,1,0
+Witcher ETH 2h,witcher,ETHUSD,crypto,2h,kraken,0,10000.0,1.0,,,1,live.toml,2026-11-09T21:20:59+00:00,1,0
 Witcher SOL 2h,witcher,SOLUSD,crypto,2h,kraken,0,10000.0,1.0,,,1,live.toml,2026-11-02T21:26:04+00:00,1,0
 GRIND BTC 4h,grind,XBTUSD,crypto,4h,kraken,0,10000.0,1.0,,,1,live.toml,2026-11-02T21:26:04+00:00,1,0
 S8 ETH 12h,s8,ETHUSD,crypto,12h,kraken,0,10000.0,1.0,,,1,live.toml,2026-11-02T21:26:04+00:00,1,0
