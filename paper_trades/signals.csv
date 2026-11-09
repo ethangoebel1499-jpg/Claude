@@ -1,9 +1,4 @@
 run,bar_time,long_entry,short_entry,checklist
-Trial #247 ETH 4h,2026-11-07 00:00:00+00:00,0,0,"[Trial #247 ETH 4h] candle 2026-11-07 00:00 UTC · setup #247 LONG: 🔴 NO TRADE
-  🔴 NO   Bullish divergence: price lower low, RSI higher low - in the last 3 candles, lows/highs at most 60 candles apart
-  🔴 NO   Market Cipher money flow below zero (red)"
-Trial #197 SOL 30m,2026-11-07 03:30:00+00:00,0,1,"[Trial #197 SOL 30m] candle 2026-11-07 03:30 UTC · setup #197 SHORT: 🟢 TRADE
-  🟢 YES  Close below EMA (21)"
 Witcher ETH 2h,2026-11-07 02:00:00+00:00,0,0,"[Witcher ETH 2h] Checklist for candle closed 2026-11-07 02:00 UTC (close 2,242.28)
 
 LONG: 🔴 NO TRADE  (2/9 basic yes)
@@ -103262,3 +103257,6 @@ SHORT: 🔴 NO TRADE  (9/9 basic yes)
   🟢 YES  Range filter pointing down
   🔴 NO   Heikin Ashi scalp signal (counts on its own with ADX)"
 AUTOGRIND,2026-11-09 01:30:00+00:00,0,0,"🤖 AUTOGRIND follows TradingView's GRIND BTC [45MIN] strategy: Claude checks it every 30 minutes and sends each open / close, with the % of the account to use. It has no signals of its own."
+Trial #197 SOL 30m,2026-11-09 02:00:00+00:00,0,0,"[Trial #197 SOL 30m] candle 2026-11-09 02:00 UTC · setup #197 SHORT: 🔴 NO TRADE
+  🔴 NO   Close below EMA (21)"
+AUTOGRIND,2026-11-09 02:00:00+00:00,0,0,"🤖 AUTOGRIND follows TradingView's GRIND BTC [45MIN] strategy: Claude checks it every 30 minutes and sends each open / close, with the % of the account to use. It has no signals of its own."
