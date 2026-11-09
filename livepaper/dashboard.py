@@ -159,7 +159,7 @@ def dashboard():
         total_cap, total_eq = total_cap + r["capital"], total_eq + e
         rows.append({"Run": r["name"], "Strategy": REGISTRY[r["strategy"]]["short"], "Market": COIN.get(r["symbol"], r["symbol"]),
                      "TF": r["timeframe"], "Price": q["price"] if q else float("nan"), "Equity": e,
-                     "Return": (e / r["capital"] - 1) * 100, "Trades": len(t),
+                     "Return": (e / r["capital"] - 1) * 100, "Open P&L": unreal, "Trades": len(t),
                      "Win rate": (t.pnl_usd > 0).mean() * 100 if len(t) else float("nan"),
                      "Position": "🟢 long" if s and s.position and s.position.side == "long" else
                                  "🔴 short" if s and s.position else "⚪ flat"})
@@ -172,7 +172,8 @@ def dashboard():
               delta=pct(open_pnl / max(sum(o["Entry"] for o in opens), 1e-9) * 100) if opens else None)
     c3.metric("Closed P&L", money(closed.pnl_usd.sum()) if len(closed) else "$0")
     c4.metric("Open positions", len(opens))
-    c5.metric("Win rate", f"{(closed.pnl_usd > 0).mean() * 100:.0f}%" if len(closed) else "-")
+    c5.metric("Win rate (closed)", f"{(closed.pnl_usd > 0).mean() * 100:.0f}%" if len(closed) else "-",
+              help=f"{len(closed)} closed trades; open trades aren't counted until they close")
 
     st.subheader("Open trades")
     if opens:
@@ -187,9 +188,11 @@ def dashboard():
 
     with st.expander("All runs", expanded=True):
         table = pd.DataFrame(rows)
-        table["Win rate"] = ["-" if pd.isna(v) else f"{v:.0f}%" for v in table["Win rate"]]   # grid shows NaN as None
-        st.dataframe(table.style.format({"Price": price, "Equity": money, "Return": pct})
-                     .map(color, subset=["Return"]), hide_index=True, width="stretch")
+        table["Win rate"] = ["-" if pd.isna(v) else f"{v:.0f}% of {n} closed"            # grid shows NaN as None
+                             for v, n in zip(table["Win rate"], table["Trades"])]
+        st.dataframe(table.style.format({"Price": price, "Equity": money, "Return": pct, "Open P&L": money})
+                     .map(color, subset=["Return", "Open P&L"]), hide_index=True, width="stretch")
+        st.caption("Return includes the open trade at today's price; win rate counts closed trades only.")
 
     st.subheader("Run details")
     for r, row in zip(runs, rows):

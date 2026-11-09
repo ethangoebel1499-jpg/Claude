@@ -145,7 +145,7 @@ def test_dashboard_renders(tmp_path, candles, monkeypatch):
     at.run()
     assert not at.exception
     assert at.title[0].value.startswith("📈") and [m.label for m in at.metric][:5] == \
-        ["Total equity", "Open P&L", "Closed P&L", "Open positions", "Win rate"]
+        ["Total equity", "Open P&L", "Closed P&L", "Open positions", "Win rate (closed)"]
     # Strategy Lab: backtest, then tick "Paper trade this setup"
     next(b for b in at.button if b.label == "Run backtest").click().run()
     assert not at.exception and any(m.label == "Strategy return" for m in at.metric)
