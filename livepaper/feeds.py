@@ -24,20 +24,45 @@ def to_timeframe(df: pd.DataFrame, base: int, minutes: int) -> pd.DataFrame:
 
 
 class KrakenFeed:
-    """Kraken's public market data: no account or key needed."""
+    """Kraken's public market data: no account or key needed.
+    One feed is shared by every run, so: the same request within CACHE_S seconds is answered from memory (ten runs on
+    BTC = one download), requests are paced to stay under Kraken's public limit, and when Kraken stops answering
+    (time-outs, "too many requests") it is left alone for PAUSE_S seconds instead of every run waiting on it in turn."""
     URL = "https://api.kraken.com/0/public"
     INTERVALS = (1440, 240, 60, 30, 15, 5, 1)
+    TIMEOUT, CACHE_S, GAP_S, PAUSE_S = 10, 25, 1.0, 120
 
     def __init__(self, session: requests.Session | None = None):
         self.http = session or requests.Session()
+        self._cache: dict = {}
+        self._last_call = 0.0
+        self._paused_until = 0.0
 
     def _get(self, path: str, **params):
-        r = self.http.get(f"{self.URL}/{path}", params=params, timeout=30)
-        r.raise_for_status()
-        js = r.json()
+        key = (path, tuple(sorted(params.items())))
+        hit = self._cache.get(key)
+        if hit and time.time() - hit[0] < self.CACHE_S:
+            return hit[1]
+        if time.time() < self._paused_until:
+            raise RuntimeError(f"Kraken isn't answering - paused for {self._paused_until - time.time():.0f}s more")
+        wait = self.GAP_S - (time.time() - self._last_call)
+        if wait > 0:
+            time.sleep(wait)
+        self._last_call = time.time()
+        try:
+            r = self.http.get(f"{self.URL}/{path}", params=params, timeout=self.TIMEOUT)
+            r.raise_for_status()
+            js = r.json()
+        except (requests.Timeout, requests.ConnectionError, requests.HTTPError) as e:
+            self._paused_until = time.time() + self.PAUSE_S
+            raise RuntimeError(f"Kraken didn't answer ({type(e).__name__}) - trying again in {self.PAUSE_S}s") from None
         if js.get("error"):
+            if any("rate limit" in str(x).lower() or "too many" in str(x).lower() for x in js["error"]):
+                self._paused_until = time.time() + self.PAUSE_S
             raise RuntimeError(f"Kraken: {js['error']}")
-        return next(v for k, v in js["result"].items() if k != "last")
+        out = next(v for k, v in js["result"].items() if k != "last")
+        self._cache[key] = (time.time(), out)
+        return out
 
     def bars(self, symbol: str, timeframe: str) -> pd.DataFrame:
         minutes = TF_MINUTES[timeframe]
