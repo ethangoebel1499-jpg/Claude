@@ -607,3 +607,5 @@ AUTOGRIND,2026-11-08T22:05:22+00:00,exit,closed (manual close) +183.57 USD
 AUTOGRIND,2026-11-08T22:05:22+00:00,manual,you: close -> closed
 AUTOGRIND,2026-11-08T22:05:22+00:00,entry,"SHORT 0.136495 @ 74,607.50"
 AUTOGRIND,2026-11-08T22:05:22+00:00,manual,"you: short -> opened short at 74,607.50"
+Trial #197 SOL 30m,2026-11-08T23:11:39+00:00,exit,closed (stop) -200.08 USD
+Trial #197 SOL 30m,2026-11-08T23:30:18+00:00,entry,SHORT 112.380905 @ 87.37 · its own stop 1.33% away
