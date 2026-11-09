@@ -65,6 +65,29 @@ class KrakenFeed:
         return out
 
     def bars(self, symbol: str, timeframe: str) -> pd.DataFrame:
+        try:
+            return self._kraken_bars(symbol, timeframe)
+        except Exception as e:                          # Kraken not answering: Coinbase's public candles instead
+            try:
+                return self.backup().bars(symbol, timeframe)
+            except Exception as e2:
+                raise RuntimeError(f"{e}; Coinbase backup failed too: {e2}") from None
+
+    def price(self, symbol: str) -> float:
+        try:
+            return float(self._get("Ticker", pair=symbol)["c"][0])
+        except Exception as e:
+            try:
+                return self.backup().price(symbol)
+            except Exception as e2:
+                raise RuntimeError(f"{e}; Coinbase backup failed too: {e2}") from None
+
+    def backup(self) -> "CoinbaseFeed":
+        if not hasattr(self, "_backup"):
+            self._backup = CoinbaseFeed()
+        return self._backup
+
+    def _kraken_bars(self, symbol: str, timeframe: str) -> pd.DataFrame:
         minutes = TF_MINUTES[timeframe]
         base = next(i for i in self.INTERVALS if minutes % i == 0)
         rows = self._get("OHLC", pair=symbol, interval=base)
@@ -74,8 +97,41 @@ class KrakenFeed:
         df = closed_only(df, base)                      # drop Kraken's forming candle first
         return closed_only(to_timeframe(df, base, minutes), minutes)
 
+
+class CoinbaseFeed:
+    """Coinbase's public market data (no account or key) - the backup when Kraken doesn't answer. Candles are kept
+    on disk (runtime/candles) so after the first download only the newest ones are fetched."""
+    GRANULARITIES = (86400, 21600, 3600, 900, 300, 60)
+    CACHE_S = 25
+
+    def __init__(self):
+        self._cache: dict = {}
+
+    @staticmethod
+    def product(symbol: str) -> str:
+        from .history import CRYPTO
+        coin = next((c for c, p in CRYPTO.items() if p == symbol), symbol[:-3] if symbol.endswith("USD") else symbol)
+        return f"{coin}-USD"
+
+    def bars(self, symbol: str, timeframe: str) -> pd.DataFrame:
+        from .history import _coinbase
+        key = (symbol, timeframe)
+        hit = self._cache.get(key)
+        if hit and time.time() - hit[0] < self.CACHE_S:
+            return hit[1]
+        minutes = TF_MINUTES[timeframe]
+        gran = next(g for g in self.GRANULARITIES if (minutes * 60) % g == 0)
+        days = min(365.0, max(2.0, 720 * minutes / 1440))   # about as many candles as Kraken gives
+        df = _coinbase(self.product(symbol), gran, days)
+        out = closed_only(to_timeframe(df, gran // 60, minutes), minutes)
+        self._cache[key] = (time.time(), out)
+        return out
+
     def price(self, symbol: str) -> float:
-        return float(self._get("Ticker", pair=symbol)["c"][0])
+        r = requests.get(f"https://api.exchange.coinbase.com/products/{self.product(symbol)}/ticker", timeout=10,
+                         headers={"User-Agent": "paper-trader"})
+        r.raise_for_status()
+        return float(r.json()["price"])
 
 
 class WebullFeed:

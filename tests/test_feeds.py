@@ -37,3 +37,18 @@ def test_a_timeout_pauses_kraken_instead_of_every_run_waiting(monkeypatch):
         with pytest.raises(RuntimeError):
             f.price(sym)
     assert f.http.calls == 1                       # the other runs skip straight away
+
+
+def test_coinbase_takes_over_when_kraken_fails(monkeypatch):
+    monkeypatch.setattr(feeds.KrakenFeed, "GAP_S", 0)
+    f = feeds.KrakenFeed(FakeHTTP(fail=True))
+
+    class Backup:
+        def price(self, symbol):
+            return 74000.0
+
+        def bars(self, symbol, timeframe):
+            return "coinbase bars"
+    f._backup = Backup()
+    assert f.price("XBTUSD") == 74000.0 and f.bars("XBTUSD", "4h") == "coinbase bars"
+    assert feeds.CoinbaseFeed.product("XBTUSD") == "BTC-USD" and feeds.CoinbaseFeed.product("XDGUSD") == "DOGE-USD"
