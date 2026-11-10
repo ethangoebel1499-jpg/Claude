@@ -1,6 +1,4 @@
 run,time,kind,text
-Apprentice LTC 1h,2026-11-05T14:16:16+00:00,error,"ConnectionError: HTTPSConnectionPool(host='api.kraken.com', port=443): Max retries exceeded with url: /0/public/OHLC?pair=LTCUSD&interval=60 (Caused by NameResolutionError(""HTTPSConnection(host='api.kraken.com', port=443): Failed to resolve 'api.kraken.com' ([Errno 11001] getaddrinfo failed)""))"
-Apprentice ETH 1h,2026-11-05T14:16:16+00:00,error,"ConnectionError: HTTPSConnectionPool(host='api.kraken.com', port=443): Max retries exceeded with url: /0/public/OHLC?pair=ETHUSD&interval=60 (Caused by NameResolutionError(""HTTPSConnection(host='api.kraken.com', port=443): Failed to resolve 'api.kraken.com' ([Errno 11001] getaddrinfo failed)""))"
 Apprentice SHIB 1h,2026-11-05T14:16:16+00:00,error,"ConnectionError: HTTPSConnectionPool(host='api.kraken.com', port=443): Max retries exceeded with url: /0/public/OHLC?pair=SHIBUSD&interval=60 (Caused by NameResolutionError(""HTTPSConnection(host='api.kraken.com', port=443): Failed to resolve 'api.kraken.com' ([Errno 11001] getaddrinfo failed)""))"
 Apprentice ETH 4h,2026-11-05T14:16:16+00:00,error,"ConnectionError: HTTPSConnectionPool(host='api.kraken.com', port=443): Max retries exceeded with url: /0/public/OHLC?pair=ETHUSD&interval=240 (Caused by NameResolutionError(""HTTPSConnection(host='api.kraken.com', port=443): Failed to resolve 'api.kraken.com' ([Errno 11001] getaddrinfo failed)""))"
 Apprentice UNI 4h,2026-11-05T14:16:16+00:00,error,"ConnectionError: HTTPSConnectionPool(host='api.kraken.com', port=443): Max retries exceeded with url: /0/public/OHLC?pair=UNIUSD&interval=240 (Caused by NameResolutionError(""HTTPSConnection(host='api.kraken.com', port=443): Failed to resolve 'api.kraken.com' ([Errno 11001] getaddrinfo failed)""))"
@@ -999,3 +997,5 @@ AUTOGRIND,2026-11-09T22:46:19+00:00,error,"RuntimeError: Kraken isn't answering 
 S3 GRIND DOGE 1h,2026-11-09T22:46:56+00:00,catch-up,"trader was off 2m: replayed 0 hourly candles, stop and targets not reached"
 Trial #197 SOL 30m,2026-11-10T09:12:39+00:00,exit,closed (target1) +185.47 USD
 Trial #197 SOL 30m,2026-11-10T09:30:23+00:00,entry,SHORT 117.296202 @ 85.29 · its own stop 0.85% away
+Trial #197 SOL 30m,2026-11-10T13:30:06+00:00,exit,closed (target1) +118.99 USD
+Trial #188 ETH 6h,2026-11-10T13:31:09+00:00,exit,closed (target1) +727.14 USD
