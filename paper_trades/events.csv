@@ -1,8 +1,4 @@
 run,time,kind,text
-Apprentice BTC 1D,2026-11-05T14:16:16+00:00,error,"ConnectionError: HTTPSConnectionPool(host='api.kraken.com', port=443): Max retries exceeded with url: /0/public/OHLC?pair=XBTUSD&interval=1440 (Caused by NameResolutionError(""HTTPSConnection(host='api.kraken.com', port=443): Failed to resolve 'api.kraken.com' ([Errno 11001] getaddrinfo failed)""))"
-Apprentice LINK 1D,2026-11-05T14:16:16+00:00,error,"ConnectionError: HTTPSConnectionPool(host='api.kraken.com', port=443): Max retries exceeded with url: /0/public/OHLC?pair=LINKUSD&interval=1440 (Caused by NameResolutionError(""HTTPSConnection(host='api.kraken.com', port=443): Failed to resolve 'api.kraken.com' ([Errno 11001] getaddrinfo failed)""))"
-Apprentice ADA 1D,2026-11-05T14:16:16+00:00,error,"ConnectionError: HTTPSConnectionPool(host='api.kraken.com', port=443): Max retries exceeded with url: /0/public/OHLC?pair=ADAUSD&interval=1440 (Caused by NameResolutionError(""HTTPSConnection(host='api.kraken.com', port=443): Failed to resolve 'api.kraken.com' ([Errno 11001] getaddrinfo failed)""))"
-Witcher ETH 2h,2026-11-05T14:16:16+00:00,error,"ConnectionError: ('Connection aborted.', ConnectionAbortedError(10053, 'An established connection was aborted by the software in your host machine'))"
 Witcher SOL 2h,2026-11-05T14:16:16+00:00,error,"ConnectionError: HTTPSConnectionPool(host='api.kraken.com', port=443): Max retries exceeded with url: /0/public/OHLC?pair=SOLUSD&interval=60 (Caused by NameResolutionError(""HTTPSConnection(host='api.kraken.com', port=443): Failed to resolve 'api.kraken.com' ([Errno 11001] getaddrinfo failed)""))"
 GRIND BTC 4h,2026-11-05T14:16:16+00:00,error,"ConnectionError: HTTPSConnectionPool(host='api.kraken.com', port=443): Max retries exceeded with url: /0/public/OHLC?pair=XBTUSD&interval=240 (Caused by NameResolutionError(""HTTPSConnection(host='api.kraken.com', port=443): Failed to resolve 'api.kraken.com' ([Errno 11001] getaddrinfo failed)""))"
 S8 ETH 12h,2026-11-05T14:16:16+00:00,error,"ConnectionError: HTTPSConnectionPool(host='api.kraken.com', port=443): Max retries exceeded with url: /0/public/OHLC?pair=ETHUSD&interval=240 (Caused by NameResolutionError(""HTTPSConnection(host='api.kraken.com', port=443): Failed to resolve 'api.kraken.com' ([Errno 11001] getaddrinfo failed)""))"
@@ -999,3 +995,7 @@ Trial #188 ETH 6h,2026-11-10T13:31:09+00:00,exit,closed (target1) +727.14 USD
 Trial #197 SOL 30m,2026-11-10T14:00:50+00:00,entry,SHORT 120.242108 @ 84.19 · its own stop 1.22% away
 Trial #197 SOL 30m,2026-11-10T15:43:02+00:00,exit,closed (target1) +171.33 USD
 Trial #197 SOL 30m,2026-11-10T16:00:47+00:00,entry,SHORT 124.751682 @ 82.52 · its own stop 1.62% away
+AUTOGRIND-2,2026-11-10T17:17:55+00:00,claude,"Claude: short (100% of the account) - TradingView GRIND BTC 30m short #2113 entry at 73209.4 (Nov 10 12:00 UTC-5), TV size 2.14M USD = 111% of 1.93M, capped at 100. Stacked on #2112, so it goes to its own run."
+AUTOGRIND-2,2026-11-10T17:19:49+00:00,entry,"SHORT 0.136957 @ 73,015.10"
+AUTOGRIND-2,2026-11-10T17:19:49+00:00,manual,"you: short -> opened short at 73,015.10"
+AUTOGRIND-2,2026-11-10T17:19:49+00:00,start,watching XBTUSD 30m
