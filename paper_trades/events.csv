@@ -1,5 +1,4 @@
 run,time,kind,text
-Witcher SOL 2h,2026-11-05T14:16:16+00:00,error,"ConnectionError: HTTPSConnectionPool(host='api.kraken.com', port=443): Max retries exceeded with url: /0/public/OHLC?pair=SOLUSD&interval=60 (Caused by NameResolutionError(""HTTPSConnection(host='api.kraken.com', port=443): Failed to resolve 'api.kraken.com' ([Errno 11001] getaddrinfo failed)""))"
 GRIND BTC 4h,2026-11-05T14:16:16+00:00,error,"ConnectionError: HTTPSConnectionPool(host='api.kraken.com', port=443): Max retries exceeded with url: /0/public/OHLC?pair=XBTUSD&interval=240 (Caused by NameResolutionError(""HTTPSConnection(host='api.kraken.com', port=443): Failed to resolve 'api.kraken.com' ([Errno 11001] getaddrinfo failed)""))"
 S8 ETH 12h,2026-11-05T14:16:16+00:00,error,"ConnectionError: HTTPSConnectionPool(host='api.kraken.com', port=443): Max retries exceeded with url: /0/public/OHLC?pair=ETHUSD&interval=240 (Caused by NameResolutionError(""HTTPSConnection(host='api.kraken.com', port=443): Failed to resolve 'api.kraken.com' ([Errno 11001] getaddrinfo failed)""))"
 Apprentice BTC 4h,2026-11-05 15:00:00+00:00,exit,closed (target2) +276.51 USD
@@ -999,3 +998,4 @@ AUTOGRIND-2,2026-11-10T17:17:55+00:00,claude,"Claude: short (100% of the account
 AUTOGRIND-2,2026-11-10T17:19:49+00:00,entry,"SHORT 0.136957 @ 73,015.10"
 AUTOGRIND-2,2026-11-10T17:19:49+00:00,manual,"you: short -> opened short at 73,015.10"
 AUTOGRIND-2,2026-11-10T17:19:49+00:00,start,watching XBTUSD 30m
+Trial #188 ETH 6h,2026-11-10T18:00:46+00:00,entry,"SHORT 5.296201 @ 2,025.44 · its own stop 3.44% away"
