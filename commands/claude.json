@@ -28,6 +28,16 @@
    "reason": "TradingView GRIND BTC 30m short #2104 entry at 75155.2, TV size 2.06M USD of 1.93M (capped 100%)",
    "at": "2026-11-08T22:02:44+00:00",
    "size_pct": 100.0
+  },
+  {
+   "id": "grind-BTC-30m-short-2026-11-10T17:00",
+   "run": "AUTOGRIND-2",
+   "symbol": "XBTUSD",
+   "timeframe": "30m",
+   "action": "short",
+   "reason": "TradingView GRIND BTC 30m short #2113 entry at 73209.4 (Nov 10 12:00 UTC-5), TV size 2.14M USD = 111% of 1.93M, capped at 100. Stacked on #2112, so it goes to its own run.",
+   "at": "2026-11-10T17:17:55+00:00",
+   "size_pct": 100.0
   }
  ]
 }
