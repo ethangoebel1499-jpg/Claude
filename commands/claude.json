@@ -48,6 +48,16 @@
    "reason": "TradingView GRIND BTC 30m new short reported by user at 07:24 ET (TV size ~2.123M USD of 1.93M = 100%); exact TV entry time/price not read (chart was on 1D), id time approximate; stacked on AUTOGRIND-3 because AUTOGRIND-2 holds #2113",
    "at": "2026-11-11T12:32:10+00:00",
    "size_pct": 100.0
+  },
+  {
+   "id": "grind-BTC-30m-short-2026-11-11T13:30",
+   "run": "AUTOGRIND-4",
+   "symbol": "BTC",
+   "timeframe": "30m",
+   "action": "short",
+   "reason": "TradingView GRIND BTC 30m new short reported by user (TV size ~2.051M USD = 100%); entry bar ~8:30 ET unverified, chart on 1D",
+   "at": "2026-11-11T14:13:22+00:00",
+   "size_pct": 100.0
   }
  ]
 }
