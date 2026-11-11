@@ -95,6 +95,16 @@
    "action": "close",
    "reason": "TradingView GRIND BTC 30m closed its shorts at 16:30 ET (exit 74,492.6) when it reversed to long #2115",
    "at": "2026-11-11T21:53:57+00:00"
+  },
+  {
+   "id": "grind-BTC-30m-long-2026-11-11T21:30",
+   "run": "AUTOGRIND-6",
+   "symbol": "XBTUSD",
+   "timeframe": "30m",
+   "action": "long",
+   "reason": "TradingView GRIND BTC 30m long #2115 entry 74,492.6 at 16:30 ET, TV size 2.06M USD = 100%",
+   "at": "2026-11-11T21:53:59+00:00",
+   "size_pct": 100.0
   }
  ]
 }
