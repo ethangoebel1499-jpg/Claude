@@ -105,6 +105,15 @@
    "reason": "TradingView GRIND BTC 30m long #2115 entry 74,492.6 at 16:30 ET, TV size 2.06M USD = 100%",
    "at": "2026-11-11T21:53:59+00:00",
    "size_pct": 100.0
+  },
+  {
+   "id": "grind-BTC-30m-close-AUTOGRIND-2026-11-11T21:30",
+   "run": "AUTOGRIND",
+   "symbol": "XBTUSD",
+   "timeframe": "30m",
+   "action": "close",
+   "reason": "User confirmed all TradingView trades before #2115 are closed (incl. #2112 leftover)",
+   "at": "2026-11-11T22:06:14+00:00"
   }
  ]
 }
