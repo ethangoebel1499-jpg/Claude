@@ -1,5 +1,4 @@
 run,time,kind,text
-Apprentice ETH 1h,2026-11-05T20:51:24+00:00,catch-up,"trader was off 2m: replayed 0 hourly candles, stop and targets not reached"
 Apprentice ETH 4h,2026-11-05T20:51:24+00:00,catch-up,"trader was off 2m: replayed 0 hourly candles, stop and targets not reached"
 Apprentice UNI 4h,2026-11-05T20:51:24+00:00,catch-up,"trader was off 2m: replayed 0 hourly candles, stop and targets not reached"
 Trial #46 ETH 1D,2026-11-05T20:52:34+00:00,start,watching ETHUSD 1D
@@ -999,3 +998,4 @@ AUTOGRIND,2026-11-11T01:38:20+00:00,error,"RuntimeError: Kraken isn't answering 
 AUTOGRIND-2,2026-11-11T01:38:20+00:00,error,"RuntimeError: Kraken isn't answering - paused for 34s more; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
 Trial #188 ETH 6h,2026-11-11T01:39:14+00:00,catch-up,"trader was off 2m: replayed 0 hourly candles, stop and targets not reached"
 Trial #197 SOL 30m,2026-11-11T01:42:23+00:00,exit,closed (stop) -251.44 USD
+Trial #197 SOL 30m,2026-11-11T02:00:41+00:00,entry,SHORT 120.680898 @ 83.22 · its own stop 1.11% away
