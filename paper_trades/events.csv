@@ -1,60 +1,4 @@
 run,time,kind,text
-Witcher SOL 2h,2026-11-09T21:17:45+00:00,error,RuntimeError: Kraken isn't answering - paused for 120s more
-GRIND BTC 4h,2026-11-09T21:17:45+00:00,error,RuntimeError: Kraken isn't answering - paused for 120s more
-S8 ETH 12h,2026-11-09T21:17:45+00:00,error,RuntimeError: Kraken isn't answering - paused for 120s more
-S3 GRIND DOGE 1h,2026-11-09T21:18:37+00:00,error,RuntimeError: Kraken isn't answering - paused for 57s more
-Apprentice BTC 4h,2026-11-09T21:18:37+00:00,error,RuntimeError: Kraken isn't answering - paused for 57s more
-Apprentice BTC 1h,2026-11-09T21:18:37+00:00,error,RuntimeError: Kraken isn't answering - paused for 57s more
-Apprentice ETH 1h,2026-11-09T21:18:37+00:00,error,RuntimeError: Kraken isn't answering - paused for 57s more
-Apprentice SHIB 1h,2026-11-09T21:18:37+00:00,error,RuntimeError: Kraken isn't answering - paused for 57s more
-Apprentice ETH 4h,2026-11-09T21:18:37+00:00,error,RuntimeError: Kraken isn't answering - paused for 57s more
-Apprentice UNI 4h,2026-11-09T21:18:37+00:00,error,RuntimeError: Kraken isn't answering - paused for 57s more
-Apprentice BTC 1D,2026-11-09T21:18:37+00:00,error,RuntimeError: Kraken isn't answering - paused for 57s more
-Apprentice LINK 1D,2026-11-09T21:18:37+00:00,error,RuntimeError: Kraken isn't answering - paused for 57s more
-Apprentice ADA 1D,2026-11-09T21:18:37+00:00,error,RuntimeError: Kraken isn't answering - paused for 57s more
-Trial #46 ETH 1D,2026-11-09T21:18:37+00:00,error,RuntimeError: Kraken isn't answering - paused for 57s more
-Trial #56 BTC 6h,2026-11-09T21:18:37+00:00,error,RuntimeError: Kraken isn't answering - paused for 57s more
-Trial #247 ETH 4h,2026-11-09T21:18:37+00:00,error,RuntimeError: Kraken isn't answering - paused for 57s more
-Trial #188 ETH 6h,2026-11-09T21:18:37+00:00,error,RuntimeError: Kraken isn't answering - paused for 57s more
-Trial #110 BTC 1D,2026-11-09T21:18:37+00:00,error,RuntimeError: Kraken isn't answering - paused for 57s more
-Trial #197 SOL 30m,2026-11-09T21:18:37+00:00,error,RuntimeError: Kraken isn't answering - paused for 57s more
-Trial #95 SOL 12h,2026-11-09T21:18:37+00:00,error,RuntimeError: Kraken isn't answering - paused for 57s more
-Trial #149 ETH 1D,2026-11-09T21:18:37+00:00,error,RuntimeError: Kraken isn't answering - paused for 57s more
-Trial #47 SOL 12h,2026-11-09T21:18:37+00:00,error,RuntimeError: Kraken isn't answering - paused for 57s more
-Trial #197 SOL 12h,2026-11-09T21:18:37+00:00,error,RuntimeError: Kraken isn't answering - paused for 57s more
-Apprentice XRP 4h,2026-11-09T21:18:37+00:00,error,RuntimeError: Kraken isn't answering - paused for 57s more
-Apprentice BCH 4h,2026-11-09T21:18:37+00:00,error,RuntimeError: Kraken isn't answering - paused for 57s more
-Apprentice XRP 1D,2026-11-09T21:18:37+00:00,error,RuntimeError: Kraken isn't answering - paused for 57s more
-AUTOGRIND,2026-11-09T21:18:37+00:00,error,RuntimeError: Kraken isn't answering - paused for 57s more
-Witcher ETH 2h,2026-11-09T21:18:37+00:00,error,RuntimeError: Kraken isn't answering - paused for 68s more
-Witcher SOL 2h,2026-11-09T21:18:37+00:00,error,RuntimeError: Kraken isn't answering - paused for 68s more
-GRIND BTC 4h,2026-11-09T21:18:37+00:00,error,RuntimeError: Kraken isn't answering - paused for 68s more
-S8 ETH 12h,2026-11-09T21:18:37+00:00,error,RuntimeError: Kraken isn't answering - paused for 68s more
-S3 GRIND DOGE 1h,2026-11-09T21:19:07+00:00,error,RuntimeError: Kraken isn't answering - paused for 27s more
-Apprentice BTC 4h,2026-11-09T21:19:07+00:00,error,RuntimeError: Kraken isn't answering - paused for 27s more
-Apprentice BTC 1h,2026-11-09T21:19:07+00:00,error,RuntimeError: Kraken isn't answering - paused for 27s more
-Apprentice ETH 1h,2026-11-09T21:19:07+00:00,error,RuntimeError: Kraken isn't answering - paused for 27s more
-Apprentice SHIB 1h,2026-11-09T21:19:07+00:00,error,RuntimeError: Kraken isn't answering - paused for 27s more
-Apprentice ETH 4h,2026-11-09T21:19:07+00:00,error,RuntimeError: Kraken isn't answering - paused for 27s more
-Apprentice UNI 4h,2026-11-09T21:19:07+00:00,error,RuntimeError: Kraken isn't answering - paused for 27s more
-Apprentice BTC 1D,2026-11-09T21:19:07+00:00,error,RuntimeError: Kraken isn't answering - paused for 27s more
-Apprentice LINK 1D,2026-11-09T21:19:07+00:00,error,RuntimeError: Kraken isn't answering - paused for 27s more
-Apprentice ADA 1D,2026-11-09T21:19:07+00:00,error,RuntimeError: Kraken isn't answering - paused for 27s more
-Trial #46 ETH 1D,2026-11-09T21:19:07+00:00,error,RuntimeError: Kraken isn't answering - paused for 27s more
-Trial #56 BTC 6h,2026-11-09T21:19:07+00:00,error,RuntimeError: Kraken isn't answering - paused for 27s more
-Trial #247 ETH 4h,2026-11-09T21:19:07+00:00,error,RuntimeError: Kraken isn't answering - paused for 27s more
-Trial #188 ETH 6h,2026-11-09T21:19:07+00:00,error,RuntimeError: Kraken isn't answering - paused for 27s more
-Trial #110 BTC 1D,2026-11-09T21:19:07+00:00,error,RuntimeError: Kraken isn't answering - paused for 27s more
-Trial #197 SOL 30m,2026-11-09T21:19:07+00:00,error,RuntimeError: Kraken isn't answering - paused for 27s more
-Trial #95 SOL 12h,2026-11-09T21:19:07+00:00,error,RuntimeError: Kraken isn't answering - paused for 27s more
-Trial #149 ETH 1D,2026-11-09T21:19:07+00:00,error,RuntimeError: Kraken isn't answering - paused for 27s more
-Trial #47 SOL 12h,2026-11-09T21:19:07+00:00,error,RuntimeError: Kraken isn't answering - paused for 27s more
-Trial #197 SOL 12h,2026-11-09T21:19:08+00:00,error,RuntimeError: Kraken isn't answering - paused for 27s more
-Apprentice XRP 4h,2026-11-09T21:19:08+00:00,error,RuntimeError: Kraken isn't answering - paused for 27s more
-Apprentice BCH 4h,2026-11-09T21:19:08+00:00,error,RuntimeError: Kraken isn't answering - paused for 27s more
-Apprentice XRP 1D,2026-11-09T21:19:08+00:00,error,RuntimeError: Kraken isn't answering - paused for 27s more
-AUTOGRIND,2026-11-09T21:19:08+00:00,error,RuntimeError: Kraken isn't answering - paused for 27s more
-Witcher ETH 2h,2026-11-09T21:19:08+00:00,error,RuntimeError: Kraken isn't answering - paused for 37s more
 Witcher SOL 2h,2026-11-09T21:19:08+00:00,error,RuntimeError: Kraken isn't answering - paused for 37s more
 GRIND BTC 4h,2026-11-09T21:19:08+00:00,error,RuntimeError: Kraken isn't answering - paused for 37s more
 S8 ETH 12h,2026-11-09T21:19:08+00:00,error,RuntimeError: Kraken isn't answering - paused for 37s more
@@ -999,3 +943,59 @@ AUTOGRIND-4,2026-11-11T17:15:35+00:00,error,"RuntimeError: Kraken: ['EQuery:Unkn
 AUTOGRIND-4,2026-11-11T17:16:40+00:00,error,"RuntimeError: Kraken: ['EQuery:Unknown asset pair']; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
 AUTOGRIND-4,2026-11-11T17:17:45+00:00,error,"RuntimeError: Kraken: ['EQuery:Unknown asset pair']; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
 AUTOGRIND-4,2026-11-11T17:18:50+00:00,error,"RuntimeError: Kraken: ['EQuery:Unknown asset pair']; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+AUTOGRIND-4,2026-11-11T17:22:29+00:00,error,"RuntimeError: Kraken: ['EQuery:Unknown asset pair']; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+Trial #188 ETH 6h,2026-11-11T17:23:16+00:00,exit,closed (stop) -467.39 USD
+AUTOGRIND-4,2026-11-11T17:23:32+00:00,catch-up,"trader was off 2m: replayed 0 hourly candles, stop and targets not reached"
+AUTOGRIND-4,2026-11-11T17:25:44+00:00,error,"RuntimeError: Kraken: ['EQuery:Unknown asset pair']; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+AUTOGRIND-4,2026-11-11T17:26:47+00:00,catch-up,"trader was off 2m: replayed 1 hourly candles, stop and targets not reached"
+AUTOGRIND-4,2026-11-11T17:30:06+00:00,error,"RuntimeError: Kraken: ['EQuery:Unknown asset pair']; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+AUTOGRIND-4,2026-11-11T17:31:09+00:00,catch-up,"trader was off 2m: replayed 0 hourly candles, stop and targets not reached"
+AUTOGRIND-4,2026-11-11T17:31:12+00:00,error,"RuntimeError: Kraken: ['EQuery:Unknown asset pair']; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+AUTOGRIND-4,2026-11-11T17:32:16+00:00,error,"RuntimeError: Kraken: ['EQuery:Unknown asset pair']; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+AUTOGRIND-4,2026-11-11T17:33:19+00:00,catch-up,"trader was off 2m: replayed 1 hourly candles, stop and targets not reached"
+AUTOGRIND-4,2026-11-11T17:35:33+00:00,error,"RuntimeError: Kraken: ['EQuery:Unknown asset pair']; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+AUTOGRIND-4,2026-11-11T17:36:38+00:00,error,"RuntimeError: Kraken: ['EQuery:Unknown asset pair']; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+AUTOGRIND-4,2026-11-11T17:40:58+00:00,error,"RuntimeError: Kraken: ['EQuery:Unknown asset pair']; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+AUTOGRIND-4,2026-11-11T17:42:00+00:00,catch-up,"trader was off 2m: replayed 1 hourly candles, stop and targets not reached"
+AUTOGRIND-4,2026-11-11T17:43:10+00:00,error,"RuntimeError: Kraken: ['EQuery:Unknown asset pair']; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+AUTOGRIND-4,2026-11-11T17:44:15+00:00,error,"RuntimeError: Kraken: ['EQuery:Unknown asset pair']; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+AUTOGRIND-4,2026-11-11T17:45:19+00:00,error,"RuntimeError: Kraken: ['EQuery:Unknown asset pair']; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+AUTOGRIND-4,2026-11-11T17:46:21+00:00,catch-up,"trader was off 2m: replayed 0 hourly candles, stop and targets not reached"
+AUTOGRIND-4,2026-11-11T17:46:23+00:00,error,"RuntimeError: Kraken: ['EQuery:Unknown asset pair']; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+AUTOGRIND-4,2026-11-11T17:48:32+00:00,error,"RuntimeError: Kraken: ['EQuery:Unknown asset pair']; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+AUTOGRIND-4,2026-11-11T17:49:38+00:00,error,"RuntimeError: Kraken: ['EQuery:Unknown asset pair']; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+AUTOGRIND-4,2026-11-11T17:51:47+00:00,error,"RuntimeError: Kraken: ['EQuery:Unknown asset pair']; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+AUTOGRIND-4,2026-11-11T17:52:50+00:00,catch-up,"trader was off 2m: replayed 0 hourly candles, stop and targets not reached"
+AUTOGRIND-4,2026-11-11T17:52:53+00:00,error,"RuntimeError: Kraken: ['EQuery:Unknown asset pair']; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+AUTOGRIND-4,2026-11-11T17:53:58+00:00,error,"RuntimeError: Kraken: ['EQuery:Unknown asset pair']; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+AUTOGRIND-4,2026-11-11T17:55:01+00:00,catch-up,"trader was off 2m: replayed 0 hourly candles, stop and targets not reached"
+AUTOGRIND-4,2026-11-11T17:55:04+00:00,error,"RuntimeError: Kraken: ['EQuery:Unknown asset pair']; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+AUTOGRIND-4,2026-11-11T17:56:09+00:00,error,"RuntimeError: Kraken: ['EQuery:Unknown asset pair']; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+AUTOGRIND-4,2026-11-11T17:57:12+00:00,catch-up,"trader was off 2m: replayed 0 hourly candles, stop and targets not reached"
+AUTOGRIND-4,2026-11-11T17:57:14+00:00,error,"RuntimeError: Kraken: ['EQuery:Unknown asset pair']; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+AUTOGRIND-4,2026-11-11T17:58:18+00:00,error,"RuntimeError: Kraken: ['EQuery:Unknown asset pair']; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+AUTOGRIND-4,2026-11-11T17:59:23+00:00,error,"RuntimeError: Kraken: ['EQuery:Unknown asset pair']; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+Trial #188 ETH 6h,2026-11-11T18:00:11+00:00,entry,"SHORT 4.911272 @ 2,089.02 · its own stop 3.21% away"
+AUTOGRIND-4,2026-11-11T18:00:27+00:00,error,"RuntimeError: Kraken: ['EQuery:Unknown asset pair']; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+AUTOGRIND-4,2026-11-11T18:01:31+00:00,catch-up,"trader was off 2m: replayed 1 hourly candles, stop and targets not reached"
+AUTOGRIND-4,2026-11-11T18:01:33+00:00,error,"RuntimeError: Kraken: ['EQuery:Unknown asset pair']; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+AUTOGRIND-4,2026-11-11T18:03:42+00:00,error,"RuntimeError: Kraken: ['EQuery:Unknown asset pair']; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+AUTOGRIND-4,2026-11-11T18:04:45+00:00,catch-up,"trader was off 2m: replayed 0 hourly candles, stop and targets not reached"
+AUTOGRIND-4,2026-11-11T18:04:48+00:00,error,"RuntimeError: Kraken: ['EQuery:Unknown asset pair']; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+AUTOGRIND-4,2026-11-11T18:05:52+00:00,error,"RuntimeError: Kraken: ['EQuery:Unknown asset pair']; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+AUTOGRIND-4,2026-11-11T18:06:55+00:00,catch-up,"trader was off 2m: replayed 0 hourly candles, stop and targets not reached"
+AUTOGRIND-4,2026-11-11T18:06:57+00:00,error,"RuntimeError: Kraken: ['EQuery:Unknown asset pair']; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+AUTOGRIND-4,2026-11-11T18:08:00+00:00,error,"RuntimeError: Kraken: ['EQuery:Unknown asset pair']; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+AUTOGRIND-4,2026-11-11T18:09:05+00:00,error,"RuntimeError: Kraken: ['EQuery:Unknown asset pair']; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+AUTOGRIND-4,2026-11-11T18:10:09+00:00,error,"RuntimeError: Kraken: ['EQuery:Unknown asset pair']; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+AUTOGRIND-4,2026-11-11T18:11:14+00:00,error,"RuntimeError: Kraken: ['EQuery:Unknown asset pair']; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+AUTOGRIND-4,2026-11-11T18:12:19+00:00,error,"RuntimeError: Kraken: ['EQuery:Unknown asset pair']; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+AUTOGRIND-4,2026-11-11T18:13:22+00:00,catch-up,"trader was off 2m: replayed 1 hourly candles, stop and targets not reached"
+AUTOGRIND-4,2026-11-11T18:14:30+00:00,error,"RuntimeError: Kraken: ['EQuery:Unknown asset pair']; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+AUTOGRIND-4,2026-11-11T18:15:33+00:00,catch-up,"trader was off 2m: replayed 1 hourly candles, stop and targets not reached"
+AUTOGRIND-4,2026-11-11T18:16:41+00:00,error,"RuntimeError: Kraken: ['EQuery:Unknown asset pair']; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+AUTOGRIND-4,2026-11-11T18:17:44+00:00,catch-up,"trader was off 2m: replayed 1 hourly candles, stop and targets not reached"
+AUTOGRIND-4,2026-11-11T18:17:48+00:00,error,"RuntimeError: Kraken: ['EQuery:Unknown asset pair']; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+AUTOGRIND-4,2026-11-11T18:18:52+00:00,error,"RuntimeError: Kraken: ['EQuery:Unknown asset pair']; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+AUTOGRIND-4,2026-11-11T18:19:55+00:00,catch-up,"trader was off 2m: replayed 0 hourly candles, stop and targets not reached"
+AUTOGRIND-4,2026-11-11T18:21:01+00:00,error,"RuntimeError: Kraken: ['EQuery:Unknown asset pair']; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
