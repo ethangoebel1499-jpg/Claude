@@ -1,11 +1,4 @@
 run,time,kind,text
-Apprentice UNI 4h,2026-11-06T00:20:36+00:00,exit,closed (breakeven) -34.07 USD
-Apprentice SOL 4h,2026-11-06T00:34:37+00:00,exit,closed (breakeven) -25.90 USD
-Apprentice LTC 1h,2026-11-06T00:42:13+00:00,exit,closed (breakeven) -32.69 USD
-S3 GRIND DOGE 1h,2026-11-06T05:38:33+00:00,error,"ConnectionError: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
-Apprentice BTC 1h,2026-11-06T07:00:23+00:00,exit,closed (opposite setup) +378.29 USD
-Apprentice BTC 1h,2026-11-06T07:00:23+00:00,entry,"LONG 0.13503 @ 75,574.80 · its own stop 1.12% away"
-Apprentice SOL 4h,2026-11-06T13:18:34+00:00,stop,removed from paper trading
 Apprentice LTC 1h,2026-11-06T13:18:34+00:00,stop,removed from paper trading
 Trial #197 SOL 30m,2026-11-06T14:46:08+00:00,exit,closed (stop) -173.76 USD
 Apprentice BTC 4h,2026-11-06T15:05:29+00:00,breakeven,"up 1.50% - stop moved to the entry 76,066.80: this trade can no longer lose"
@@ -999,3 +992,10 @@ Witcher ETH 2h,2026-11-11T08:51:42+00:00,error,"RuntimeError: Kraken isn't answe
 Witcher SOL 2h,2026-11-11T08:51:42+00:00,error,"RuntimeError: Kraken isn't answering - paused for 5s more; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
 GRIND BTC 4h,2026-11-11T08:51:42+00:00,error,"RuntimeError: Kraken isn't answering - paused for 4s more; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
 S8 ETH 12h,2026-11-11T08:51:43+00:00,error,"RuntimeError: Kraken isn't answering - paused for 4s more; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+S3 GRIND DOGE 1h,2026-11-11T11:10:45+00:00,catch-up,"trader was off 2h 4m: replayed 2 hourly candles, stop and targets not reached"
+Trial #247 ETH 4h,2026-11-11T11:11:05+00:00,catch-up,"trader was off 2h 4m: replayed 2 hourly candles, stop and targets not reached"
+Trial #188 ETH 6h,2026-11-11T11:11:05+00:00,catch-up,"trader was off 2h 4m: replayed 2 hourly candles, stop and targets not reached"
+Trial #197 SOL 30m,2026-11-11T11:11:05+00:00,catch-up,"trader was off 2h 4m: replayed 2 hourly candles, stop and targets not reached"
+Trial #197 SOL 12h,2026-11-11T11:11:09+00:00,catch-up,"trader was off 2h 4m: replayed 2 hourly candles, stop and targets not reached"
+AUTOGRIND,2026-11-11T11:11:14+00:00,catch-up,"trader was off 2h 4m: replayed 2 hourly candles, stop and targets not reached"
+AUTOGRIND-2,2026-11-11T11:11:16+00:00,catch-up,"trader was off 2h 4m: replayed 2 hourly candles, stop and targets not reached"
