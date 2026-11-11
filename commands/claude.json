@@ -68,6 +68,15 @@
    "reason": "TradingView GRIND BTC 30m new short reported by user (TV size ~2.051M USD = 100%); resend of AUTOGRIND-4 which failed on bad symbol; entry bar ~8:30 ET unverified",
    "at": "2026-11-11T15:02:39+00:00",
    "size_pct": 100.0
+  },
+  {
+   "id": "grind-BTC-30m-close-AUTOGRIND-2-2026-11-11T21:30",
+   "run": "AUTOGRIND-2",
+   "symbol": "XBTUSD",
+   "timeframe": "30m",
+   "action": "close",
+   "reason": "TradingView GRIND BTC 30m closed its shorts at 16:30 ET (exit 74,492.6) when it reversed to long #2115",
+   "at": "2026-11-11T21:53:51+00:00"
   }
  ]
 }
