@@ -1,12 +1,4 @@
 run,time,kind,text
-Trial #197 SOL 30m,2026-11-05T21:00:23+00:00,entry,SHORT 111.308993 @ 89.84 · its own stop 1.53% away
-Apprentice UNI 4h,2026-11-05T22:47:25+00:00,breakeven,up 1.50% - stop moved to the entry 6.87: this trade can no longer lose
-Apprentice LTC 1h,2026-11-05T22:59:54+00:00,breakeven,up 1.50% - stop moved to the entry 52.41: this trade can no longer lose
-Apprentice ETH 1h,2026-11-05T23:08:22+00:00,breakeven,"up 1.50% - stop moved to the entry 2,247.64: this trade can no longer lose"
-Apprentice ETH 4h,2026-11-05T23:08:23+00:00,breakeven,"up 1.50% - stop moved to the entry 2,247.65: this trade can no longer lose"
-Apprentice SOL 4h,2026-11-05T23:10:10+00:00,breakeven,up 1.50% - stop moved to the entry 90.07: this trade can no longer lose
-Trial #188 ETH 6h,2026-11-06T00:00:25+00:00,entry,"SHORT 4.475013 @ 2,234.63 · its own stop 3.62% away"
-Trial #197 SOL 12h,2026-11-06T00:00:26+00:00,entry,SHORT 112.069931 @ 89.23 · its own stop 5.66% away
 Apprentice UNI 4h,2026-11-06T00:20:36+00:00,exit,closed (breakeven) -34.07 USD
 Apprentice SOL 4h,2026-11-06T00:34:37+00:00,exit,closed (breakeven) -25.90 USD
 Apprentice LTC 1h,2026-11-06T00:42:13+00:00,exit,closed (breakeven) -32.69 USD
@@ -999,3 +991,11 @@ Witcher ETH 2h,2026-11-11T04:25:44+00:00,error,"RuntimeError: Kraken isn't answe
 Witcher SOL 2h,2026-11-11T04:25:44+00:00,error,"RuntimeError: Kraken isn't answering - paused for 5s more; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
 GRIND BTC 4h,2026-11-11T04:25:46+00:00,error,"RuntimeError: Kraken isn't answering - paused for 5s more; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
 S8 ETH 12h,2026-11-11T04:25:46+00:00,error,"RuntimeError: Kraken isn't answering - paused for 3s more; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+Witcher ETH 2h,2026-11-11T08:49:47+00:00,error,"RuntimeError: Kraken isn't answering - paused for 120s more; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+GRIND BTC 4h,2026-11-11T08:49:48+00:00,error,"RuntimeError: Kraken isn't answering - paused for 119s more; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+Witcher ETH 2h,2026-11-11T08:50:44+00:00,error,"RuntimeError: Kraken isn't answering - paused for 62s more; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+S8 ETH 12h,2026-11-11T08:50:46+00:00,error,"RuntimeError: Kraken isn't answering - paused for 61s more; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+Witcher ETH 2h,2026-11-11T08:51:42+00:00,error,"RuntimeError: Kraken isn't answering - paused for 5s more; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+Witcher SOL 2h,2026-11-11T08:51:42+00:00,error,"RuntimeError: Kraken isn't answering - paused for 5s more; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+GRIND BTC 4h,2026-11-11T08:51:42+00:00,error,"RuntimeError: Kraken isn't answering - paused for 4s more; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+S8 ETH 12h,2026-11-11T08:51:43+00:00,error,"RuntimeError: Kraken isn't answering - paused for 4s more; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
