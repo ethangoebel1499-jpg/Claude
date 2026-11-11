@@ -58,6 +58,16 @@
    "reason": "TradingView GRIND BTC 30m new short reported by user (TV size ~2.051M USD = 100%); entry bar ~8:30 ET unverified, chart on 1D",
    "at": "2026-11-11T14:13:22+00:00",
    "size_pct": 100.0
+  },
+  {
+   "id": "grind-BTC-30m-short-2026-11-11T13:30b",
+   "run": "AUTOGRIND-5",
+   "symbol": "XBTUSD",
+   "timeframe": "30m",
+   "action": "short",
+   "reason": "TradingView GRIND BTC 30m new short reported by user (TV size ~2.051M USD = 100%); resend of AUTOGRIND-4 which failed on bad symbol; entry bar ~8:30 ET unverified",
+   "at": "2026-11-11T15:02:39+00:00",
+   "size_pct": 100.0
   }
  ]
 }
