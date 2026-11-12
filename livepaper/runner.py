@@ -68,8 +68,9 @@ def max_stop() -> float:
 
 
 def exits_for(r: dict) -> Exits:
-    if r.get("source") == "claude":          # AUTOGRIND runs mirror TradingView's trades: only its own entries/exits, no app stop or targets
-        return Exits(None, [])
+    if r.get("source") == "claude":          # AUTOGRIND runs: TradingView GRIND's own ladder (9% stop; 1.7/2.3/3.4% = 33/33/34%)
+        from .claude_trades import TV_STOP, TV_TPS
+        return Exits(TV_STOP, list(TV_TPS))
     base = REGISTRY[r["strategy"]]["exits"]
     stop = r.get("stop")
     stop = base.stop if stop is None else stop

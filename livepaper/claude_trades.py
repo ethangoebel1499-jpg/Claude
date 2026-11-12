@@ -24,6 +24,10 @@ PATH = "commands/claude.json"
 RUNS = {# follows TradingView's GRIND BTC strategy only: Claude sends each open / close (with a % of the account)
         "AUTOGRIND": {"strategy": "autogrind", "symbol": "XBTUSD", "asset": "crypto", "timeframe": "30m"}}
 # Claude's earlier runs that traded GRIND's own signals: switched off - only AUTOGRIND (screenshot-based) trades now
+# TradingView GRIND's exits, as the user gave them: 9% stop; TP1 +1.7% sells 33% of the trade, TP2 +2.3% another 33%,
+# TP3 +3.4% the rest. With entries filled at TradingView's own entry price these fire where TradingView's do.
+TV_STOP = 0.09
+TV_TPS = [(0.017, 0.33), (0.023, 0.33), (0.034, 0.34)]
 RETIRED = ("Claude GRIND BTC 30m", "AUTO GRIND BTC 30m")
 
 
@@ -32,7 +36,7 @@ def run_spec(name: str, cmd: dict | None = None) -> dict:
     base = RUNS.get(name, {"strategy": "autogrind", "symbol": (cmd or {}).get("symbol", "XBTUSD"),
                            "asset": "crypto", "timeframe": (cmd or {}).get("timeframe", "30m")})
     return {"name": name, **base, "shorts": True, "longs": True, "capital": 10_000.0, "fraction": 1.0,
-            "stop": None, "take_profits": [], "active": True, "source": "claude"}
+            "stop": TV_STOP, "take_profits": [list(t) for t in TV_TPS], "active": True, "source": "claude"}
 
 
 def _applied() -> set[str]:
@@ -116,7 +120,7 @@ def autogrind_entry() -> dict:
                 "sends each open / close, with the % of the account to use. It has no signals of its own.")
 
     return {"label": "🤖 AUTOGRIND (follows TradingView's GRIND BTC)", "short": "AUTOGRIND", "signals": signals,
-            "checklist": checklist, "exits": Exits(None, []),
+            "checklist": checklist, "exits": Exits(TV_STOP, TV_TPS),
             "note": "opens / closes only what Claude sends from TradingView's GRIND BTC strategy, sized as a % of the "
                     "account, with the script's 9% stop and +1.7% / +2.3% / +3.4% targets."}
 
