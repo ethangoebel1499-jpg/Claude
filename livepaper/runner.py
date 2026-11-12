@@ -68,6 +68,8 @@ def max_stop() -> float:
 
 
 def exits_for(r: dict) -> Exits:
+    if r.get("source") == "claude":          # AUTOGRIND runs mirror TradingView's trades: only its own entries/exits, no app stop or targets
+        return Exits(None, [])
     base = REGISTRY[r["strategy"]]["exits"]
     stop = r.get("stop")
     stop = base.stop if stop is None else stop
@@ -167,7 +169,8 @@ class Runner:
             p = self.pm.state.position
             if action == "close":
                 result = "no open position" if p is None else \
-                    ("closed" if self.pm.close_all(self.price, now, "manual close") else "close order not filled")
+                    ("closed" if self.pm.close_all(self.store.command_price(cid) or self.price, now, "manual close")
+                     else "close order not filled")
             elif action in ("long", "short"):
                 if p is not None and p.side == action:
                     result = f"already {action}"
@@ -183,11 +186,12 @@ class Runner:
                         result = "couldn't close the open position first"
                     else:
                         size = self.store.command_size(cid)               # Claude can send a % of the account
+                        at = self.store.command_price(cid) or self.price  # ...and the TradingView entry price
                         normal = self.pm.fraction
                         if size is not None and 0 < size <= 100:
                             self.pm.fraction = size / 100
                         try:
-                            self.pm.open(action, self.price, now)
+                            self.pm.open(action, at, now)
                         finally:
                             self.pm.fraction = normal
                         why = getattr(self.pm.broker, "last_error", None)

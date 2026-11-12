@@ -51,6 +51,8 @@ class Store:
         ccols = {r[1] for r in self.db.execute("PRAGMA table_info(commands)")}
         if "size_pct" not in ccols:                              # added later: how much of the account a command uses
             self.db.execute("ALTER TABLE commands ADD COLUMN size_pct REAL")
+        if "price" not in ccols:                                 # TradingView's own entry / exit price for the command
+            self.db.execute("ALTER TABLE commands ADD COLUMN price REAL")
         self.db.commit()
 
     def _ins(self, table: str, row: dict):
@@ -118,14 +120,19 @@ class Store:
         return out
 
     # ---- manual orders from the dashboard (the trader carries them out on its next price check)
-    def command(self, run: str, action: str, size_pct: float | None = None) -> None:
-        """size_pct = percent of the run's account for this trade (None: the run's normal size)."""
-        self.db.execute("INSERT INTO commands (run, action, created, size_pct) VALUES (?, ?, ?, ?)",
-                        (run, action, now_utc(), size_pct))
+    def command(self, run: str, action: str, size_pct: float | None = None, price: float | None = None) -> None:
+        """size_pct = percent of the run's account for this trade (None: the run's normal size);
+        price = fill at this price instead of the market (TradingView's entry / exit)."""
+        self.db.execute("INSERT INTO commands (run, action, created, size_pct, price) VALUES (?, ?, ?, ?, ?)",
+                        (run, action, now_utc(), size_pct, price))
         self.db.commit()
 
     def command_size(self, cid: int) -> float | None:
         r = self.db.execute("SELECT size_pct FROM commands WHERE id = ?", (cid,)).fetchone()
+        return float(r[0]) if r and r[0] is not None else None
+
+    def command_price(self, cid: int) -> float | None:
+        r = self.db.execute("SELECT price FROM commands WHERE id = ?", (cid,)).fetchone()
         return float(r[0]) if r and r[0] is not None else None
 
     def pending_commands(self, run: str) -> list[tuple[int, str]]:

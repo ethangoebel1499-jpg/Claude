@@ -35,7 +35,7 @@ def current() -> dict:
 
 
 def send(action: str, cid: str, reason: str, run: str, symbol: str, timeframe: str,
-         size_pct: float | None = None) -> str:
+         size_pct: float | None = None, price: float | None = None) -> str:
     data = current()
     if any(c.get("id") == cid for c in data["commands"]):
         return f"already sent ({cid})"
@@ -43,6 +43,8 @@ def send(action: str, cid: str, reason: str, run: str, symbol: str, timeframe: s
            "at": datetime.now(timezone.utc).isoformat(timespec="seconds")}
     if size_pct is not None:
         cmd["size_pct"] = size_pct
+    if price is not None:
+        cmd["price"] = price
     data["commands"] = (data["commands"] + [cmd])[-100:]
     wt = ROOT / ".review-worktree"
     if not wt.exists():
@@ -69,12 +71,13 @@ def main() -> int:
     s.add_argument("--reason", default="")
     s.add_argument("--run", default="AUTOGRIND")
     s.add_argument("--size-pct", type=float, default=None, help="percent of the account for this trade (0-100)")
+    s.add_argument("--price", type=float, default=None, help="TradingView's entry/exit price to fill at")
     s.add_argument("--symbol", default="XBTUSD")
     s.add_argument("--timeframe", default="30m")
     sub.add_parser("list")
     a = ap.parse_args()
     if a.cmd == "send":
-        print(send(a.action, a.id, a.reason, a.run, a.symbol, a.timeframe, a.size_pct))
+        print(send(a.action, a.id, a.reason, a.run, a.symbol, a.timeframe, a.size_pct, a.price))
     else:
         for c in current()["commands"][-20:]:
             print(f"{c['at'][:16]}  {c['action']:5s}  {c['run']}  {c['id']}  {c.get('reason', '')[:80]}")
