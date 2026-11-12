@@ -181,6 +181,15 @@
    "action": "close",
    "reason": "Cleanup: watcher misread this already-closed TradingView trade as open; closing the bogus paper run",
    "at": "2026-11-12T23:27:12+00:00"
+  },
+  {
+   "id": "cleanup-close-tv2115-1826",
+   "run": "TV-2115",
+   "symbol": "XBTUSD",
+   "timeframe": "30m",
+   "action": "close",
+   "reason": "Cleanup: watcher misread this already-closed TradingView trade as open; closing the bogus paper run",
+   "at": "2026-11-12T23:27:15+00:00"
   }
  ]
 }
