@@ -32,7 +32,7 @@ def run_spec(name: str, cmd: dict | None = None) -> dict:
     base = RUNS.get(name, {"strategy": "autogrind", "symbol": (cmd or {}).get("symbol", "XBTUSD"),
                            "asset": "crypto", "timeframe": (cmd or {}).get("timeframe", "30m")})
     return {"name": name, **base, "shorts": True, "longs": True, "capital": 10_000.0, "fraction": 1.0,
-            "stop": STOP, "take_profits": [list(t) for t in TAKE_PROFITS], "active": True, "source": "claude"}
+            "stop": None, "take_profits": [], "active": True, "source": "claude"}
 
 
 def _applied() -> set[str]:
@@ -81,7 +81,13 @@ def poll(store, commands: list[dict] | None = None) -> int:
             size = None
         if size is not None and not 0 < size <= 100:
             size = None
-        store.command(run, action, size)
+        try:
+            price = float(c["price"]) if c.get("price") is not None else None
+        except (TypeError, ValueError):
+            price = None
+        if price is not None and not price > 0:
+            price = None
+        store.command(run, action, size, price)
         store.event(run, c.get("at") or "", "claude", f"Claude: {action}"
                     + (f" ({size:g}% of the account)" if size is not None else "") + f" - {c.get('reason', '')}"[:500])
         done.add(cid)
@@ -110,7 +116,7 @@ def autogrind_entry() -> dict:
                 "sends each open / close, with the % of the account to use. It has no signals of its own.")
 
     return {"label": "🤖 AUTOGRIND (follows TradingView's GRIND BTC)", "short": "AUTOGRIND", "signals": signals,
-            "checklist": checklist, "exits": Exits(STOP, TAKE_PROFITS),
+            "checklist": checklist, "exits": Exits(None, []),
             "note": "opens / closes only what Claude sends from TradingView's GRIND BTC strategy, sized as a % of the "
                     "account, with the script's 9% stop and +1.7% / +2.3% / +3.4% targets."}
 
