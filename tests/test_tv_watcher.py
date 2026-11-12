@@ -53,3 +53,9 @@ def test_live_apply_queues_a_priced_command(tmp_path, monkeypatch):
     r = [r for r in s.runs() if r["name"] == "TV-2120"][0]
     assert r["stop"] is None and r["take_profits"] == []
     assert (tmp_path / "log.csv").exists() and "short|Nov 12, 2026, 10:30|71690.2" in st["open"]
+
+
+def test_exit_before_entry_is_a_misread_and_is_dropped():
+    rows = w.parse_rows('[{"num":2120,"side":"Short","entry_time":"Nov 12, 2026, 10:30","entry_price":71690.2,'
+                        '"size_btc":29.3,"size_usd":2100000,"exit_time":"Nov 12, 2026, 09:44","exit_price":71478.4}]')
+    assert rows == []
