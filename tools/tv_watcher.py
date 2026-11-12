@@ -67,6 +67,13 @@ def ask_model(png: bytes, model: str, url: str = OLLAMA) -> str:
     return r.json()["message"]["content"]
 
 
+def _when(t: str):
+    try:
+        return datetime.strptime(" ".join(str(t).split()), "%b %d, %Y, %H:%M")
+    except Exception:
+        return None
+
+
 def parse_rows(text: str) -> list[dict]:
     """Model reply -> clean rows. Rows that fail a sanity check are dropped (never guessed)."""
     m = re.search(r"\[.*\]", text, re.S)
@@ -91,6 +98,10 @@ def parse_rows(text: str) -> list[dict]:
             continue
         if row["exit_price"] is not None and not 1_000 < row["exit_price"] < 1_000_000:
             continue
+        if row["exit_time"]:                     # an exit can't come before its own entry: a misread (e.g. another row's exit)
+            a, b = _when(row["entry_time"]), _when(row["exit_time"])
+            if a is None or b is None or b < a:
+                continue
         rows.append(row)
     return rows
 
