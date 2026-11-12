@@ -50,7 +50,7 @@ size_usd: '2.1 M USD' = 2100000, '665.85 K USD' = 665850. Prices have no thousan
 def screenshot_png() -> bytes:
     import mss
     from PIL import Image
-    with mss.mss() as sct:
+    with (mss.MSS() if hasattr(mss, "MSS") else mss.mss()) as sct:
         shot = sct.grab(sct.monitors[1])
         img = Image.frombytes("RGB", shot.size, shot.bgra, "raw", "BGRX")
     if img.width > 1600:                         # smaller image = faster, and fits the model's context
@@ -198,7 +198,17 @@ def apply(acts: list[dict], st: dict, dry: bool, db: str) -> None:
 
 def read_once(args) -> list[dict]:
     png = Path(args.image).read_bytes() if args.image else screenshot_png()
-    return parse_rows(ask_model(png, args.model, args.ollama))
+    reply = ask_model(png, args.model, args.ollama)
+    try:                                         # keep the last screenshot and reply so a bad read can be inspected
+        STATE.parent.mkdir(parents=True, exist_ok=True)
+        (STATE.parent / "tv_watcher_last.jpg").write_bytes(png)
+        (STATE.parent / "tv_watcher_last_reply.txt").write_text(reply)
+    except Exception:
+        pass
+    rows = parse_rows(reply)
+    if not rows:
+        print("model reply (first 600 chars):", reply[:600].replace("\n", " "))
+    return rows
 
 
 def check(args) -> None:
