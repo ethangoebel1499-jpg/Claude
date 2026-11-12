@@ -53,8 +53,10 @@ def screenshot_png() -> bytes:
     with mss.mss() as sct:
         shot = sct.grab(sct.monitors[1])
         img = Image.frombytes("RGB", shot.size, shot.bgra, "raw", "BGRX")
+    if img.width > 1600:                         # smaller image: faster and safer for the local model
+        img = img.resize((1600, round(img.height * 1600 / img.width)))
     buf = io.BytesIO()
-    img.save(buf, "PNG")
+    img.save(buf, "JPEG", quality=90)
     return buf.getvalue()
 
 
@@ -63,7 +65,8 @@ def ask_model(png: bytes, model: str, url: str = OLLAMA) -> str:
     r = requests.post(url, json={"model": model, "stream": False, "options": {"temperature": 0},
                                  "messages": [{"role": "user", "content": PROMPT,
                                                "images": [base64.b64encode(png).decode()]}]}, timeout=300)
-    r.raise_for_status()
+    if not r.ok:
+        raise RuntimeError(f"Ollama said {r.status_code}: {r.text[:300]}")
     return r.json()["message"]["content"]
 
 
