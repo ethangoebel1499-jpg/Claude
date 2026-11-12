@@ -163,6 +163,15 @@
    "reason": "TradingView GRIND BTC 30m short #2120 entry 71,690.2 at 10:30 ET, TV size 2.1M USD",
    "at": "2026-11-12T15:31:27+00:00",
    "size_pct": 100.0
+  },
+  {
+   "id": "cleanup-close-tv2113-1826",
+   "run": "TV-2113",
+   "symbol": "XBTUSD",
+   "timeframe": "30m",
+   "action": "close",
+   "reason": "Cleanup: watcher misread this already-closed TradingView trade as open; closing the bogus paper run",
+   "at": "2026-11-12T23:27:08+00:00"
   }
  ]
 }
