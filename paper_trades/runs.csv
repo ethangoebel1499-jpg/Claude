@@ -38,3 +38,5 @@ GRIND BTC 4h,grind,XBTUSD,crypto,4h,kraken,0,10000.0,1.0,,,1,live.toml,2026-11-0
 S8 ETH 12h,s8,ETHUSD,crypto,12h,kraken,0,10000.0,1.0,,,1,live.toml,2026-11-02T21:26:04+00:00,1,0
 AUTOGRIND-7,autogrind,XBTUSD,crypto,30m,,1,10000.0,1.0,0.09,"[[0.017, 0.33], [0.023, 0.66], [0.034, 0.01]]",1,claude,2026-11-12T13:34:11+00:00,1,0
 AUTOGRIND-8,autogrind,XBTUSD,crypto,30m,,1,10000.0,1.0,0.09,"[[0.017, 0.33], [0.023, 0.66], [0.034, 0.01]]",1,claude,2026-11-12T14:32:43+00:00,1,0
+AUTOGRIND-9,autogrind,XBTUSD,crypto,30m,,1,10000.0,1.0,0.09,"[[0.017, 0.33], [0.023, 0.66], [0.034, 0.01]]",1,claude,2026-11-12T15:03:22+00:00,1,0
+AUTOGRIND-10,autogrind,XBTUSD,crypto,30m,,1,10000.0,1.0,0.09,"[[0.017, 0.33], [0.023, 0.66], [0.034, 0.01]]",1,claude,2026-11-12T15:33:29+00:00,1,0
