@@ -163,15 +163,35 @@ class Runner:
         self.store.event(self.r["name"], now, "warning", f"closed the {was} position on the books (switched to {here}); "
                                                           f"new trades go to {here}.{still}")
 
+    def _fill_at(self, price):
+        """Context manager: for TradingView-driven runs (source 'claude') the paper broker fills at the price TradingView
+        sent, not the live market price; other runs keep filling at the market."""
+        from contextlib import contextmanager
+
+        @contextmanager
+        def cm():
+            b = self.pm.broker
+            use = price and self.r.get("source") == "claude" and hasattr(b, "force_price")
+            if use:
+                b.force_price = float(price)
+            try:
+                yield
+            finally:
+                if use:
+                    b.force_price = None
+        return cm()
+
     def manual(self, now: str) -> None:
         """Force long / force short / close now, sent from the dashboard. A forced trade gets this
         run's stop and take profits like any other (and the stop order at the broker)."""
         for cid, action in self.store.pending_commands(self.r["name"]):
             p = self.pm.state.position
             if action == "close":
-                result = "no open position" if p is None else \
-                    ("closed" if self.pm.close_all(self.store.command_price(cid) or self.price, now, "manual close")
-                     else "close order not filled")
+                cp = self.store.command_price(cid)
+                with self._fill_at(cp):
+                    result = "no open position" if p is None else \
+                        ("closed" if self.pm.close_all(cp or self.price, now, "manual close")
+                         else "close order not filled")
             elif action in ("long", "short"):
                 if p is not None and p.side == action:
                     result = f"already {action}"
@@ -192,7 +212,8 @@ class Runner:
                         if size is not None and 0 < size <= 100:
                             self.pm.fraction = size / 100
                         try:
-                            self.pm.open(action, at, now)
+                            with self._fill_at(self.store.command_price(cid)):
+                                self.pm.open(action, at, now)
                         finally:
                             self.pm.fraction = normal
                         why = getattr(self.pm.broker, "last_error", None)

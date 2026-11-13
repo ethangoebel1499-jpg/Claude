@@ -45,3 +45,18 @@ def test_unreadable_alerts_do_nothing_and_a_duplicate_name_gets_a_suffix():
     s = st(0, [{"run": "TV-1113-1930", "side": "long"}])
     a = w.plan(alert("long", 3, 70000, 3), s, 1_930_000)
     assert a[0]["run"] == "TV-1113-1930-2"
+
+
+def test_pyramiding_each_add_is_its_own_run_up_to_the_limit():
+    from tools.tv_webhook import plan
+    st = {"size": 0.0, "open": [], "seen": []}
+    for i in range(1, 9):
+        p = {"position": "short", "size": i * 0.5, "contracts": 0.5, "price": 68000 - i, "time": f"2026-11-13T23:{i:02d}:00Z"}
+        acts = plan(p, st, 1_930_000)
+        assert [a["action"] for a in acts] == ["short"]
+        st["open"].append({"run": acts[0]["run"], "side": "short"}); st["size"] = -i * 0.5
+    assert len({o["run"] for o in st["open"]}) == 8
+    ninth = {"position": "short", "size": 4.5, "contracts": 0.5, "price": 67990, "time": "2026-11-13T23:30:00Z"}
+    assert plan(ninth, st, 1_930_000) == []                                 # the chart never goes past 8
+    flat = {"position": "flat", "size": 0, "contracts": 4.0, "price": 67000, "time": "2026-11-13T23:40:00Z"}
+    assert [a["action"] for a in plan(flat, st, 1_930_000)] == ["close"] * 8     # flat closes every run

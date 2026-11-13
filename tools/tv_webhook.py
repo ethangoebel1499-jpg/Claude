@@ -75,7 +75,7 @@ def signed_size(p: dict) -> float | None:
     return abs(size) if pos == "long" else -abs(size) if pos == "short" else size
 
 
-def plan(p: dict, st: dict, account: float) -> list[dict]:
+def plan(p: dict, st: dict, account: float, max_open: int = 8) -> list[dict]:
     """Alert -> actions. Pure: changes nothing; the caller applies and then saves st['size'] and st['open']."""
     new = signed_size(p)
     price = _num(p.get("price"))
@@ -87,7 +87,8 @@ def plan(p: dict, st: dict, account: float) -> list[dict]:
     if new == 0 or flips:                                       # flat, or reversed: everything open is closed first
         for o in st["open"]:
             acts.append({"action": "close", "run": o["run"], "side": o["side"], "price": price})
-    if new != 0 and (flips or abs(new) > abs(old) + 1e-12):     # grew, or reversed: a new entry
+    still_open = 0 if (new == 0 or flips) else len(st["open"])   # pyramiding: each add is its own run, up to max_open
+    if new != 0 and (flips or abs(new) > abs(old) + 1e-12) and still_open < max_open:   # grew, or reversed: a new entry
         side = "long" if new > 0 else "short"
         added = abs(new) if flips or old == 0 else abs(new) - abs(old)
         usd = (_num(p.get("contracts")) or added) * price
@@ -112,7 +113,7 @@ def _when(s) -> datetime:
 
 
 def process(p: dict, st: dict, args) -> list[str]:
-    acts = plan(p, st, args.account)
+    acts = plan(p, st, args.account, args.max_open)
     out = []
     if not acts:
         log("ignored", {"price": p.get("price")}, "dry" if args.dry_run else "live",
@@ -195,6 +196,7 @@ def main() -> int:
     ap.add_argument("--host", default="127.0.0.1", help="keep 127.0.0.1 and put a tunnel in front of it")
     ap.add_argument("--db", default="livepaper.db")
     ap.add_argument("--account", type=float, default=1_930_000, help="TradingView's equity, to turn its order size into a %")
+    ap.add_argument("--max-open", type=int, default=8, help="the chart's pyramiding: most runs open at once (each entry is its own run)")
     ap.add_argument("--dry-run", action="store_true")
     args = ap.parse_args()
     if not args.token or len(args.token) < 12:
