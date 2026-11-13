@@ -59,3 +59,24 @@ def test_exit_before_entry_is_a_misread_and_is_dropped():
     rows = w.parse_rows('[{"num":2120,"side":"Short","entry_time":"Nov 12, 2026, 10:30","entry_price":71690.2,'
                         '"size_btc":29.3,"size_usd":2100000,"exit_time":"Nov 12, 2026, 09:44","exit_price":71478.4}]')
     assert rows == []
+
+
+def test_old_rows_misread_as_open_never_open_a_trade():
+    st = {"open": {"short|Nov 12, 2026, 08:30|72714.5": {"run": "AUTOGRIND-7", "num": 0}}, "seen": []}
+    rows = [{"num": 2115, "side": "long", "entry_time": "Nov 11, 2026, 16:30", "entry_price": 74492.6,
+             "size_btc": 1, "size_usd": 1, "exit_time": None, "exit_price": None}]
+    assert w.plan(rows, st) == []
+    rows[0]["entry_time"] = "Nov 12, 2026, 11:00"
+    assert [a["action"] for a in w.plan(rows, st)] == ["long"]
+
+
+def test_open_row_with_open_text_as_exit_time_still_counts_as_open():
+    rows = w.parse_rows('''[{"num": 2140, "side": "Short", "entry_time": "Nov 13, 2026, 19:30", "entry_price": 70000.0,
+        "size_btc": 1, "size_usd": 70000, "exit_time": "Open", "exit_price": null}]''')
+    assert len(rows) == 1 and rows[0]["exit_time"] is None
+
+
+def test_iso_dates_are_converted_to_tradingview_format():
+    rows = w.parse_rows('''[{"num": 498, "side": "Short", "entry_time": "2026-11-08T17:00", "entry_price": 75155.2,
+        "size_btc": 1, "size_usd": 1, "exit_time": "2026-11-09T01:30", "exit_price": 73877.6}]''')
+    assert rows[0]["entry_time"] == "Nov 8, 2026, 17:00" and rows[0]["exit_time"] == "Nov 9, 2026, 01:30"
