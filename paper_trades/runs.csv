@@ -39,8 +39,8 @@ AUTOGRIND-10,autogrind,XBTUSD,crypto,30m,,1,10000.0,1.0,0.09,"[[0.017, 0.33], [0
 TV-2115,autogrind,XBTUSD,crypto,30m,,1,10000.0,1.0,0.09,"[[0.017, 0.33], [0.023, 0.33], [0.034, 0.34]]",1,claude,2026-11-12T23:02:30+00:00,1,0
 TV-2114,autogrind,XBTUSD,crypto,30m,,1,10000.0,1.0,0.09,"[[0.017, 0.33], [0.023, 0.33], [0.034, 0.34]]",1,claude,2026-11-12T23:02:30+00:00,1,0
 TV-2113,autogrind,XBTUSD,crypto,30m,,1,10000.0,1.0,0.09,"[[0.017, 0.33], [0.023, 0.33], [0.034, 0.34]]",1,claude,2026-11-12T23:02:30+00:00,1,0
+TV-2123,autogrind,XBTUSD,crypto,30m,,1,10000.0,1.0,,[],1,claude,2026-11-13T00:02:19+00:00,1,0
 Witcher ETH 2h,witcher,ETHUSD,crypto,2h,kraken,0,10000.0,1.0,,,1,live.toml,2026-11-09T21:20:59+00:00,1,0
 Witcher SOL 2h,witcher,SOLUSD,crypto,2h,kraken,0,10000.0,1.0,,,1,live.toml,2026-11-02T21:26:04+00:00,1,0
 GRIND BTC 4h,grind,XBTUSD,crypto,4h,kraken,0,10000.0,1.0,,,1,live.toml,2026-11-02T21:26:04+00:00,1,0
 S8 ETH 12h,s8,ETHUSD,crypto,12h,kraken,0,10000.0,1.0,,,1,live.toml,2026-11-02T21:26:04+00:00,1,0
-TV-2123,autogrind,XBTUSD,crypto,30m,,1,10000.0,1.0,,[],1,claude,2026-11-13T00:02:19+00:00,1,0
