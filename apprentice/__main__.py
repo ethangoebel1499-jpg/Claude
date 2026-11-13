@@ -211,6 +211,9 @@ def main() -> None:
     sc = sub.add_parser("scan", help="every live setup x every timeframe x the markets (🔬 Proving ground)")
     sc.add_argument("--markets", nargs="*", default=None, help="SYMBOL:crypto or SYMBOL:stock")
     sc.add_argument("--timeframes", nargs="*", default=None)
+    ra = sub.add_parser("rate", help="rate every missed trade and setup arrow on every chart (📈 Chart tab)")
+    ra.add_argument("--markets", nargs="*", default=None, help="SYMBOL:crypto or SYMBOL:stock; default every coin and stock")
+    ra.add_argument("--timeframes", nargs="*", default=None)
     an = sub.add_parser("analyze")
     an.add_argument("symbol")
     an.add_argument("timeframe", nargs="?", default="4h")
@@ -236,6 +239,13 @@ def main() -> None:
         specs = a.markets or settings.get("proving_markets") or ["BTC:crypto", "ETH:crypto", "SOL:crypto", "SPY:stock"]
         markets = [tuple(m.split(":", 1)) if ":" in m else (m, "crypto") for m in specs]
         proving.scan(store, markets, a.timeframes or settings.get("proving_timeframes") or proving.TIMEFRAMES)
+    elif a.cmd == "rate":
+        from . import autorate
+        from livepaper.history import CRYPTO, STOCKS
+        specs = a.markets or [f"{c}:crypto" for c in CRYPTO] + [f"{t}:stock" for t in STOCKS]
+        markets = [tuple(m.split(":", 1)) if ":" in m else (m, "crypto") for m in specs]
+        tfs = a.timeframes or ["15m", "30m", "1h", "2h", "4h", "6h", "12h", "1D"]
+        print(autorate.rate_all(store, markets, tfs))
     elif a.cmd == "analyze":
         cs = charts([f"{a.symbol}:{a.timeframe}"])
         if not cs:
