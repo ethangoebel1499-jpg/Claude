@@ -49,6 +49,8 @@ class Store:
                 if col == "auto_sides":                         # the apprentice picks its own sides from now on
                     self.db.execute("UPDATE runs SET auto_sides = 1 WHERE strategy = 'apprentice'")
         ccols = {r[1] for r in self.db.execute("PRAGMA table_info(commands)")}
+        if "value" not in ccols:                                 # JSON arguments (new stop level, new targets)
+            self.db.execute("ALTER TABLE commands ADD COLUMN value TEXT")
         if "size_pct" not in ccols:                              # added later: how much of the account a command uses
             self.db.execute("ALTER TABLE commands ADD COLUMN size_pct REAL")
         if "price" not in ccols:                                 # TradingView's own entry / exit price for the command
@@ -120,16 +122,21 @@ class Store:
         return out
 
     # ---- manual orders from the dashboard (the trader carries them out on its next price check)
-    def command(self, run: str, action: str, size_pct: float | None = None, price: float | None = None) -> None:
+    def command(self, run: str, action: str, size_pct: float | None = None, price: float | None = None,
+                value: dict | None = None) -> None:
         """size_pct = percent of the run's account for this trade (None: the run's normal size);
         price = fill at this price instead of the market (TradingView's entry / exit)."""
-        self.db.execute("INSERT INTO commands (run, action, created, size_pct, price) VALUES (?, ?, ?, ?, ?)",
-                        (run, action, now_utc(), size_pct, price))
+        self.db.execute("INSERT INTO commands (run, action, created, size_pct, price, value) VALUES (?, ?, ?, ?, ?, ?)",
+                        (run, action, now_utc(), size_pct, price, json.dumps(value) if value else None))
         self.db.commit()
 
     def command_size(self, cid: int) -> float | None:
         r = self.db.execute("SELECT size_pct FROM commands WHERE id = ?", (cid,)).fetchone()
         return float(r[0]) if r and r[0] is not None else None
+
+    def command_value(self, cid: int) -> dict:
+        r = self.db.execute("SELECT value FROM commands WHERE id = ?", (cid,)).fetchone()
+        return json.loads(r[0]) if r and r[0] else {}
 
     def command_price(self, cid: int) -> float | None:
         r = self.db.execute("SELECT price FROM commands WHERE id = ?", (cid,)).fetchone()

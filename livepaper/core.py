@@ -40,6 +40,8 @@ class Position:
     be_pct: float | None = None       # once this far in profit, the stop moves to the entry (breakeven)
     be_armed: bool = False            # ... and it has been
     tp_pcts: list | None = None       # this trade's own targets (moves, e.g. [0.021, 0.048]); None = the run's
+    stop_move: float | None = None    # stop set by hand while the trade is open, as a move from the entry
+                                      # (-0.03 = 3% against it, 0 = breakeven, +0.008 = 0.8% in profit locked in)
 
 
 @dataclass
@@ -318,8 +320,47 @@ class PositionManager:
         self._protect(time)
         self._save()
 
+    def set_stop(self, move: float, price: float, time) -> str:
+        """Move the stop of the open trade by hand. move = distance from the entry in the trade's favour
+        (negative = still a loss). Refused if the price is already past it (it would fill at once)."""
+        p = self.state.position
+        if p is None:
+            return "no open position"
+        if self._move(price) <= move:
+            return (f"refused: the price is already at or past that stop ({fmt_price(self._price_at(move))}); "
+                    f"now {fmt_price(price)}")
+        if p.stop_order and not self._unprotect(time):
+            return "the stop had just filled"
+        p = self.state.position
+        if p is None:
+            return "the trade just closed"
+        old = self._price_at(self._stop_move()) if self._stop_move() is not None else None
+        p.stop_move = move
+        self._event(time, "stop-moved", f"stop {'-' if old is None else fmt_price(old)} -> {fmt_price(self._price_at(move))}"
+                                        f" ({move * 100:+.2f}% from the entry)")
+        self._protect(time)
+        self._save()
+        return f"stop now {fmt_price(self._price_at(move))} ({move * 100:+.2f}% from the entry)"
+
+    def set_targets(self, moves: list, time) -> str:
+        """Replace the take-profit levels of the open trade (moves from the entry, nearest first); targets
+        already hit keep their place. One level per target in the run's plan."""
+        p = self.state.position
+        if p is None:
+            return "no open position"
+        if len(moves) != len(self.fixed):
+            return f"refused: this run has {len(self.fixed)} targets"
+        if any(m <= 0 for m in moves) or list(moves) != sorted(moves):
+            return "refused: targets must be in profit and go from nearest to farthest"
+        p.tp_pcts = [float(m) for m in moves]
+        self._event(time, "targets-moved", "targets now " + ", ".join(fmt_price(self._price_at(m)) for m in moves))
+        self._save()
+        return "targets now " + ", ".join(fmt_price(self._price_at(m)) for m in moves)
+
     def _stop_move(self) -> float | None:
         p = self.state.position
+        if p is not None and p.stop_move is not None:
+            return p.stop_move
         if p is not None and p.be_armed:
             return 0.0
         if p is not None and p.stop_pct:

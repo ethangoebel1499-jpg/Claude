@@ -202,6 +202,14 @@ class Runner:
                             result = f"refused by {broker}: {why or 'no reason given'}"
                         else:
                             result = "entry order not filled yet - retrying" + (f" ({why})" if why else "")
+            elif action in ("set_stop", "stop_entry", "stop_lock", "set_tps"):
+                val = self.store.command_value(cid)
+                if action == "set_tps":
+                    result = self.pm.set_targets(val.get("moves") or [], now)
+                else:
+                    move = {"set_stop": val.get("move"), "stop_entry": 0.0,
+                            "stop_lock": float(val.get("lock", 0.008))}[action]
+                    result = "no stop level given" if move is None else self.pm.set_stop(float(move), self.price, now)
             else:
                 result = "unknown action"
             self.store.event(self.r["name"], now, "manual", f"you: {action} -> {result}")
