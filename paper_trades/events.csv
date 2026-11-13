@@ -1,5 +1,4 @@
 run,time,kind,text
-Trial #110 BTC 1D,2026-11-09T21:15:54+00:00,error,RuntimeError: Kraken isn't answering - paused for 79s more
 Trial #197 SOL 30m,2026-11-09T21:15:54+00:00,error,RuntimeError: Kraken isn't answering - paused for 79s more
 Trial #95 SOL 12h,2026-11-09T21:15:54+00:00,error,RuntimeError: Kraken isn't answering - paused for 79s more
 Trial #149 ETH 1D,2026-11-09T21:15:54+00:00,error,RuntimeError: Kraken isn't answering - paused for 79s more
@@ -999,3 +998,4 @@ S3 GRIND DOGE 1h,2026-11-13T19:37:29+00:00,catch-up,"trader was off 2m: replayed
 S3 GRIND DOGE 1h,2026-11-13T20:39:22+00:00,catch-up,"trader was off 2m: replayed 0 hourly candles, stop and targets not reached"
 S3 GRIND DOGE 1h,2026-11-13T21:41:14+00:00,catch-up,"trader was off 2m: replayed 0 hourly candles, stop and targets not reached"
 S3 GRIND DOGE 1h,2026-11-13T22:27:44+00:00,catch-up,"trader was off 16m: replayed 0 hourly candles, stop and targets not reached"
+S3 GRIND DOGE 1h,2026-11-13T22:31:22+00:00,catch-up,"trader was off 2m: replayed 0 hourly candles, stop and targets not reached"
