@@ -703,6 +703,19 @@ def chart_tab(store: Store) -> None:
                    "so this is Kraken's latest 720 candles. Try again in a minute, or use a 1h+ timeframe for more "
                    "history.")
 
+    # --- rate everything (rule-based, on what was visible at the time) ---
+    rb1, rb2, rb3 = st.columns([1.2, 1.4, 2.4])
+    if rb1.button("🤖 Rate this chart", key=f"ap_rate_{chart_name}",
+                  help="Rates every missed trade and setup arrow here: 👍/👎 on the missed trades plus stars and a reason."):
+        from apprentice import autorate
+        n = autorate.rate_chart(store, chart_name, df, setups)
+        st.success(f"Rated {n['missed']} missed trades and {n['arrows']} arrows on {chart_name} (ones already rated are skipped).")
+    if rb2.button("🤖 Rate every coin, stock & timeframe", key="ap_rate_all",
+                  help="Background job over all 20 coins and 22 stocks on every timeframe. It can take a while; see the job list."):
+        spawn(["rate"], "Rating every chart")
+        st.toast("Rating every chart in the background")
+    rb3.caption("Judged like the lessons teach - confirmation, zone, trend, not chasing, a sane stop - never on how it turned out.")
+
     # --- Claude's rating of every arrow on this chart ---
     rated = [x for x in review.load().get("trades", []) if x.get("kind") == "signal" and x.get("chart") == chart_name]
     if rated:
