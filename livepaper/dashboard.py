@@ -205,6 +205,7 @@ def dashboard():
             sides_controls(r)
             run_chart(r, store.load_state(r["name"]))
             manual_controls(r)
+            edit_exits(r)
             left, right = st.columns([3, 2])
             e = eq[eq.run == r["name"]]
             with left:
@@ -257,6 +258,56 @@ def manual_controls(r: dict) -> None:
         res = c.result if done else "⏳ waiting for the trader's next price check..."
         bad = bool(done) and any(w in c.result for w in ("refused", "not sent", "couldn't", "not filled"))
         (info.error if bad else info.caption)(f"{c.action} ({str(c.created)[11:16]} UTC): {res}")
+
+
+def edit_exits(r: dict) -> None:
+    """While a trade is open: move its stop, lock in profit, or change its remaining take profits."""
+    state = store.load_state(r["name"])
+    p = state.position if state else None
+    if p is None:
+        return
+    d = 1 if p.side == "long" else -1
+    ex = exits_for(r)
+    at = lambda move: p.entry_price * (1 + d * move)                                  # price at a move from the entry
+    move_of = lambda px: d * (px - p.entry_price) / p.entry_price
+    if p.stop_move is not None:
+        cur = p.stop_move
+    elif p.be_armed:
+        cur = 0.0
+    else:
+        cur = -(p.stop_pct or ex.stop or 0)
+    fixed = [lv for lv, _ in ex.take_profits if lv is not None]
+    scale = (p.stop_pct / ex.stop) if p.stop_pct and ex.stop else 1.0
+    tps = list(p.tp_pcts) if p.tp_pcts else [lv * scale for lv in fixed]
+    with st.expander(f"✏️ Edit this open trade's stop and targets ({p.side}, entry {price(p.entry_price)})"):
+        st.caption(f"Stop now {price(at(cur))} ({cur * 100:+.2f}% from the entry) · targets "
+                   + (", ".join(price(at(m)) for m in tps[p.targets_hit:]) or "none left")
+                   + ". Changes are applied on the trader's next price check.")
+        k = f"edit_{r['name']}"
+        b1, b2, b3 = st.columns([1, 1, 1])
+        lock = b2.number_input("Lock profit % (covers fees)", 0.0, 20.0, 0.8, 0.1, key=f"{k}_lock")
+        if b1.button("🛡️ Stop to entry", key=f"{k}_be", help="Breakeven: the trade can no longer lose (fees aside)"):
+            store.command(r["name"], "stop_entry")
+            st.toast("stop to entry sent")
+        if b3.button(f"🔒 Stop to +{lock:g}%", key=f"{k}_lock_btn", help="Stop above the entry so a stop-out still pays the fees"):
+            store.command(r["name"], "stop_lock", value={"lock": lock / 100})
+            st.toast("lock profit sent")
+        s1, s2 = st.columns([2, 1])
+        new_stop = s1.number_input("Stop price", 0.0, 10_000_000.0, float(at(cur)), step=float(max(p.entry_price * 0.001, 0.01)),
+                                   format="%.2f", key=f"{k}_stop")
+        if s2.button("Set stop", key=f"{k}_set"):
+            store.command(r["name"], "set_stop", value={"move": move_of(new_stop)})
+            st.toast("new stop sent")
+        if len(tps) > p.targets_hit:
+            cols = st.columns(len(tps) - p.targets_hit)
+            new = []
+            for i, col in enumerate(cols, start=p.targets_hit):
+                new.append(col.number_input(f"TP{i + 1} price", 0.0, 10_000_000.0, float(at(tps[i])),
+                                            step=float(max(p.entry_price * 0.001, 0.01)), format="%.2f", key=f"{k}_tp{i}"))
+            if st.button("Set targets", key=f"{k}_tps"):
+                moves = [m for m in tps[:p.targets_hit]] + [move_of(x) for x in new]
+                store.command(r["name"], "set_tps", value={"moves": moves})
+                st.toast("new targets sent")
 
 
 @st.cache_data(ttl=120, show_spinner=False)
