@@ -394,10 +394,11 @@ class SimBroker:
 
     def __init__(self, fee: float = 0.001, fill: str = "intended", market_price=None):
         self.fee, self.mode, self.market_price = fee, fill, market_price
+        self.force_price = None      # set around one order to fill at exactly this price (TradingView's own fill)
         self.n = 0
 
     def fill(self, run: str, side: str, qty: float, price: float, reason: str) -> Fill:
-        px = self.market_price(run) if self.mode == "market" and self.market_price else price
+        px = self.force_price or (self.market_price(run) if self.mode == "market" and self.market_price else price)
         self.n += 1
         return Fill(px, qty, abs(px * qty) * self.fee, f"sim-{self.n}")
 
