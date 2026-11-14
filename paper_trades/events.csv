@@ -1,6 +1,4 @@
 run,time,kind,text
-Apprentice BTC 1D,2026-11-09T21:16:24+00:00,error,RuntimeError: Kraken isn't answering - paused for 49s more
-Apprentice LINK 1D,2026-11-09T21:16:24+00:00,error,RuntimeError: Kraken isn't answering - paused for 49s more
 Apprentice ADA 1D,2026-11-09T21:16:24+00:00,error,RuntimeError: Kraken isn't answering - paused for 49s more
 Trial #46 ETH 1D,2026-11-09T21:16:24+00:00,error,RuntimeError: Kraken isn't answering - paused for 49s more
 Trial #56 BTC 6h,2026-11-09T21:16:24+00:00,error,RuntimeError: Kraken isn't answering - paused for 49s more
@@ -999,3 +997,5 @@ S8 ETH 12h,2026-11-14T07:52:34+00:00,error,"RuntimeError: Kraken isn't answering
 TV-1113-1845,2026-11-14T14:02:20+00:00,exit,closed (target3) +203.60 USD
 TV-1113-1845,2026-11-14T14:24:33+00:00,claude,Claude: close - TradingView alert: position -1000.0 -> 0.0 at 66149.9
 TV-1113-1845,2026-11-14T14:24:56+00:00,manual,you: close -> no open position
+S3 GRIND DOGE 1h,2026-11-14T20:54:37+00:00,exit,closed (target3) +624.64 USD
+S3 GRIND DOGE 1h,2026-11-14T21:00:47+00:00,entry,"SHORT 184,154.97522 @ 0.05798"
