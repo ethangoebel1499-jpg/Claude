@@ -33,6 +33,7 @@ Trial #448 BTC 1D,apprentice_setup:448,XBTUSD,crypto,1D,,0,10000.0,1.0,0.03,"[[0
 Trial #673 BTC 1D,apprentice_setup:673,XBTUSD,crypto,1D,,0,10000.0,1.0,0.03,"[[0.06, 1.0]]",1,proving,2026-11-13T17:34:12+00:00,1,0
 Trial #92 BTC 4h,apprentice_setup:92,XBTUSD,crypto,4h,,0,10000.0,1.0,0.03,"[[0.06, 1.0]]",1,proving,2026-11-13T17:34:12+00:00,1,0
 Trial #23 SOL 12h,apprentice_setup:23,SOLUSD,crypto,12h,,1,10000.0,1.0,0.03,"[[0.06, 1.0]]",1,proving,2026-11-13T17:34:12+00:00,0,0
+TV-1113-1845,autogrind,XBTUSD,crypto,30m,,1,10000.0,1.0,0.09,"[[0.017, 0.33], [0.023, 0.33], [0.034, 0.34]]",1,claude,2026-11-14T00:12:18+00:00,1,0
 Witcher ETH 2h,witcher,ETHUSD,crypto,2h,kraken,0,10000.0,1.0,,,1,live.toml,2026-11-09T21:20:59+00:00,1,0
 Witcher SOL 2h,witcher,SOLUSD,crypto,2h,kraken,0,10000.0,1.0,,,1,live.toml,2026-11-02T21:26:04+00:00,1,0
 GRIND BTC 4h,grind,XBTUSD,crypto,4h,kraken,0,10000.0,1.0,,,1,live.toml,2026-11-02T21:26:04+00:00,1,0
