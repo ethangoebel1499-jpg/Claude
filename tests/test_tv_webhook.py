@@ -84,3 +84,26 @@ def test_a_second_chart_has_its_own_state_runs_symbol_and_timeframe(tmp_path, mo
     flat_btc = {"position": "flat", "size": 0, "contracts": 1, "price": 68000.0, "time": "2026-11-13T23:30:00Z"}
     w.process(flat_btc, w.load_state(), args)
     assert w.load_state()["open"] == [] and len(w.load_state("ETH1D")["open"]) == 1   # flat on BTC leaves ETH open
+
+
+def test_the_server_answers_before_the_slow_work_is_done(tmp_path, monkeypatch):
+    import argparse, json, threading, time, urllib.request
+    from http.server import ThreadingHTTPServer
+    import tools.tv_webhook as w
+    done = threading.Event()
+
+    def slow(p, st, a):
+        time.sleep(1.5)
+        done.set()
+        return []
+    monkeypatch.setattr(w, "process", slow)
+    monkeypatch.setattr(w, "LOG", tmp_path / "log.csv")
+    args = argparse.Namespace(token="x" * 16, dry_run=True, account=1, max_open=8, db="x")
+    srv = ThreadingHTTPServer(("127.0.0.1", 0), w.make_handler(args))
+    threading.Thread(target=srv.serve_forever, daemon=True).start()
+    req = urllib.request.Request(f"http://127.0.0.1:{srv.server_port}/", data=json.dumps({"token": "x" * 16}).encode())
+    t0 = time.time()
+    assert urllib.request.urlopen(req, timeout=5).read() == b"ok"
+    assert time.time() - t0 < 1.0 and not done.is_set()          # replied while the work is still running
+    assert done.wait(5)
+    srv.shutdown()
