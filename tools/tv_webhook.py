@@ -25,7 +25,7 @@ import sys
 from datetime import datetime, timezone
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
-from threading import Lock
+from threading import Lock, Thread
 
 ROOT = Path(__file__).resolve().parent.parent
 STATE = ROOT / "runtime" / "tv_webhook_state.json"
@@ -184,16 +184,19 @@ def make_handler(args):
             if not hmac.compare_digest(str(p.get("token", "")), args.token):
                 return self._send(403, "bad token")
             p.pop("token", None)
+            Thread(target=self._work, args=(p,), daemon=True).start()   # TradingView gives up after ~3 s: answer first
+            self._send(200, "ok")
+
+        def _work(self, p):
             with LOCK:
                 try:
                     out = process(p, load_state(chart_key(p)), args)
                 except Exception as e:                             # never lose an alert silently
                     log("error", {}, "live", repr(e), p)
                     print("ERROR:", repr(e))
-                    return self._send(500, "error")
+                    return
             for line in out:
                 print(datetime.now().strftime("%H:%M:%S"), line)
-            self._send(200, "ok")
 
         def log_message(self, *a):
             pass
