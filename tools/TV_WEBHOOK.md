@@ -34,3 +34,12 @@ Dry run first: it logs what it would do and sends nothing. Drop `--dry-run` to g
 - Every alert and action is appended to `runtime\tv_webhook_log.csv`.
 
 Open `https://your-address/` in a browser: it should say "tv_webhook is running". A wrong token gets a 403.
+
+## More than one chart
+Each chart gets its own alert and its own `"chart"` name in the message, so positions never mix. The BTC 30m chart needs
+no change. For ETH on the 1d chart, add three fields to its message:
+```
+{"token":"...","chart":"ETH1D","symbol":"ETHUSD","timeframe":"1d","position":"{{strategy.market_position}}","size":{{strategy.market_position_size}},"contracts":{{strategy.order.contracts}},"price":{{strategy.order.price}},"time":"{{timenow}}"}
+```
+Runs are named `TV-ETH1D-<date>-<time>`, keep the same stop and targets and the same limit of 8, and the position is kept in
+`runtime\tv_webhook_state_ETH1D.json`. A flat alert on one chart only closes that chart's runs.

@@ -34,16 +34,26 @@ LOG_COLS = ["logged_at", "event", "run", "side", "price", "size_pct", "mode", "n
 LOCK = Lock()
 
 
-def load_state() -> dict:
+def chart_key(p: dict) -> str:
+    """An alert may name its chart ("chart":"ETH1D"); no name = the original BTC 30m chart, same file as before."""
+    k = "".join(c for c in str(p.get("chart") or "") if c.isalnum() or c in "-_").upper()
+    return k[:20]
+
+
+def state_path(key: str = ""):
+    return STATE.with_name(f"tv_webhook_state_{key}.json") if key else STATE
+
+
+def load_state(key: str = "") -> dict:
     try:
-        return json.loads(STATE.read_text())
+        return json.loads(state_path(key).read_text())
     except Exception:
         return {"size": 0.0, "open": [], "seen": []}      # size: signed position after the last alert; open: [{run, side}]
 
 
-def save_state(st: dict) -> None:
-    STATE.parent.mkdir(parents=True, exist_ok=True)
-    STATE.write_text(json.dumps(st, indent=1))
+def save_state(st: dict, key: str = "") -> None:
+    state_path(key).parent.mkdir(parents=True, exist_ok=True)
+    state_path(key).write_text(json.dumps(st, indent=1))
 
 
 def log(event: str, a: dict, mode: str, note: str, payload: dict) -> None:
@@ -94,7 +104,7 @@ def plan(p: dict, st: dict, account: float, max_open: int = 8) -> list[dict]:
         usd = (_num(p.get("contracts")) or added) * price
         pct = max(1, min(100, round(usd / account * 100)))
         t = _when(p.get("time"))
-        base = f"TV-{t:%m%d-%H%M}"
+        base = f"TV{'-' + chart_key(p) if chart_key(p) else ''}-{t:%m%d-%H%M}"
         taken = {o["run"] for o in st["open"]} | set(st.get("seen", []))
         run, n = base, 2
         while run in taken:
@@ -132,6 +142,8 @@ def process(p: dict, st: dict, args) -> list[str]:
             out.append("DRY-RUN would: " + what)
             continue
         cmd = {"id": f"tvhook-{a['action']}-{a['run']}-{stamp}", "run": a["run"], "action": a["action"], "price": a["price"],
+               **({"symbol": str(p["symbol"]).upper()} if p.get("symbol") else {}),
+               **({"timeframe": str(p["timeframe"]).lower()} if p.get("timeframe") else {}),
                "at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
                "reason": f"TradingView alert: position {st.get('size')} -> {signed_size(p)} at {p.get('price')}"}
         if a.get("size_pct"):
@@ -146,7 +158,7 @@ def process(p: dict, st: dict, args) -> list[str]:
         out.append("did: " + what)
     if not args.dry_run:
         st["size"] = signed_size(p) if signed_size(p) is not None else st.get("size", 0.0)
-        save_state(st)
+        save_state(st, chart_key(p))
     return out
 
 
@@ -174,7 +186,7 @@ def make_handler(args):
             p.pop("token", None)
             with LOCK:
                 try:
-                    out = process(p, load_state(), args)
+                    out = process(p, load_state(chart_key(p)), args)
                 except Exception as e:                             # never lose an alert silently
                     log("error", {}, "live", repr(e), p)
                     print("ERROR:", repr(e))
