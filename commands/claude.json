@@ -1,0 +1,195 @@
+{
+ "commands": [
+  {
+   "id": "grind-BTC-30m-short-2026-11-06T15:00",
+   "run": "AUTOGRIND",
+   "symbol": "XBTUSD",
+   "timeframe": "30m",
+   "action": "short",
+   "reason": "TradingView GRIND BTC 30m short #2095 open since Nov 6 10:00 (UTC-5) at 75620.6, TV size 1.93M USD of 1.93M",
+   "at": "2026-11-08T02:32:15+00:00",
+   "size_pct": 100.0
+  },
+  {
+   "id": "grind-BTC-30m-close-2026-11-08T21:56",
+   "run": "AUTOGRIND",
+   "symbol": "XBTUSD",
+   "timeframe": "30m",
+   "action": "close",
+   "reason": "TradingView GRIND BTC 30m #2095 short took profits (exit 74370.7 at 16:56 UTC-5), closing before new entry",
+   "at": "2026-11-08T22:02:40+00:00"
+  },
+  {
+   "id": "grind-BTC-30m-short-2026-11-08T22:00",
+   "run": "AUTOGRIND",
+   "symbol": "XBTUSD",
+   "timeframe": "30m",
+   "action": "short",
+   "reason": "TradingView GRIND BTC 30m short #2104 entry at 75155.2, TV size 2.06M USD of 1.93M (capped 100%)",
+   "at": "2026-11-08T22:02:44+00:00",
+   "size_pct": 100.0
+  },
+  {
+   "id": "grind-BTC-30m-short-2026-11-10T17:00",
+   "run": "AUTOGRIND-2",
+   "symbol": "XBTUSD",
+   "timeframe": "30m",
+   "action": "short",
+   "reason": "TradingView GRIND BTC 30m short #2113 entry at 73209.4 (Nov 10 12:00 UTC-5), TV size 2.14M USD = 111% of 1.93M, capped at 100. Stacked on #2112, so it goes to its own run.",
+   "at": "2026-11-10T17:17:55+00:00",
+   "size_pct": 100.0
+  },
+  {
+   "id": "grind-BTC-30m-short-2026-11-11T12:00",
+   "run": "AUTOGRIND-3",
+   "symbol": "XBTUSD",
+   "timeframe": "30m",
+   "action": "short",
+   "reason": "TradingView GRIND BTC 30m new short reported by user at 07:24 ET (TV size ~2.123M USD of 1.93M = 100%); exact TV entry time/price not read (chart was on 1D), id time approximate; stacked on AUTOGRIND-3 because AUTOGRIND-2 holds #2113",
+   "at": "2026-11-11T12:32:10+00:00",
+   "size_pct": 100.0
+  },
+  {
+   "id": "grind-BTC-30m-short-2026-11-11T13:30",
+   "run": "AUTOGRIND-4",
+   "symbol": "BTC",
+   "timeframe": "30m",
+   "action": "short",
+   "reason": "TradingView GRIND BTC 30m new short reported by user (TV size ~2.051M USD = 100%); entry bar ~8:30 ET unverified, chart on 1D",
+   "at": "2026-11-11T14:13:22+00:00",
+   "size_pct": 100.0
+  },
+  {
+   "id": "grind-BTC-30m-short-2026-11-11T13:30b",
+   "run": "AUTOGRIND-5",
+   "symbol": "XBTUSD",
+   "timeframe": "30m",
+   "action": "short",
+   "reason": "TradingView GRIND BTC 30m new short reported by user (TV size ~2.051M USD = 100%); resend of AUTOGRIND-4 which failed on bad symbol; entry bar ~8:30 ET unverified",
+   "at": "2026-11-11T15:02:39+00:00",
+   "size_pct": 100.0
+  },
+  {
+   "id": "grind-BTC-30m-close-AUTOGRIND-2-2026-11-11T21:30",
+   "run": "AUTOGRIND-2",
+   "symbol": "XBTUSD",
+   "timeframe": "30m",
+   "action": "close",
+   "reason": "TradingView GRIND BTC 30m closed its shorts at 16:30 ET (exit 74,492.6) when it reversed to long #2115",
+   "at": "2026-11-11T21:53:51+00:00"
+  },
+  {
+   "id": "grind-BTC-30m-close-AUTOGRIND-3-2026-11-11T21:30",
+   "run": "AUTOGRIND-3",
+   "symbol": "XBTUSD",
+   "timeframe": "30m",
+   "action": "close",
+   "reason": "TradingView GRIND BTC 30m closed its shorts at 16:30 ET (exit 74,492.6) when it reversed to long #2115",
+   "at": "2026-11-11T21:53:54+00:00"
+  },
+  {
+   "id": "grind-BTC-30m-close-AUTOGRIND-5-2026-11-11T21:30",
+   "run": "AUTOGRIND-5",
+   "symbol": "XBTUSD",
+   "timeframe": "30m",
+   "action": "close",
+   "reason": "TradingView GRIND BTC 30m closed its shorts at 16:30 ET (exit 74,492.6) when it reversed to long #2115",
+   "at": "2026-11-11T21:53:57+00:00"
+  },
+  {
+   "id": "grind-BTC-30m-long-2026-11-11T21:30",
+   "run": "AUTOGRIND-6",
+   "symbol": "XBTUSD",
+   "timeframe": "30m",
+   "action": "long",
+   "reason": "TradingView GRIND BTC 30m long #2115 entry 74,492.6 at 16:30 ET, TV size 2.06M USD = 100%",
+   "at": "2026-11-11T21:53:59+00:00",
+   "size_pct": 100.0
+  },
+  {
+   "id": "grind-BTC-30m-close-AUTOGRIND-2026-11-11T21:30",
+   "run": "AUTOGRIND",
+   "symbol": "XBTUSD",
+   "timeframe": "30m",
+   "action": "close",
+   "reason": "User confirmed all TradingView trades before #2115 are closed (incl. #2112 leftover)",
+   "at": "2026-11-11T22:06:14+00:00"
+  },
+  {
+   "id": "grind-BTC-30m-close-AUTOGRIND-6-2026-11-12T13:30",
+   "run": "AUTOGRIND-6",
+   "symbol": "XBTUSD",
+   "timeframe": "30m",
+   "action": "close",
+   "reason": "TradingView GRIND BTC 30m closed long #2115 at 72,714.5 at 08:30 ET (reversed to short #2116)",
+   "at": "2026-11-12T13:32:11+00:00"
+  },
+  {
+   "id": "grind-BTC-30m-short-2026-11-12T13:30",
+   "run": "AUTOGRIND-7",
+   "symbol": "XBTUSD",
+   "timeframe": "30m",
+   "action": "short",
+   "reason": "TradingView GRIND BTC 30m short #2116 entry 72,714.5 at 08:30 ET, TV size 2.02M USD = 100%",
+   "at": "2026-11-12T13:32:15+00:00",
+   "size_pct": 100.0
+  },
+  {
+   "id": "grind-BTC-30m-short-2026-11-12T14:30",
+   "run": "AUTOGRIND-8",
+   "symbol": "XBTUSD",
+   "timeframe": "30m",
+   "action": "short",
+   "reason": "TradingView GRIND BTC 30m short #2117 entry 72,321.4 at 09:30 ET, TV size 2.04M USD = 100%; stacked with #2116 (AUTOGRIND-7)",
+   "at": "2026-11-12T14:31:47+00:00",
+   "size_pct": 100.0
+  },
+  {
+   "id": "grind-BTC-30m-short-2026-11-12T15:00",
+   "run": "AUTOGRIND-9",
+   "symbol": "XBTUSD",
+   "timeframe": "30m",
+   "action": "short",
+   "reason": "TradingView GRIND BTC 30m short #2119 entry 71,981.5 at 10:00 ET, TV size 2.08M USD",
+   "at": "2026-11-12T15:01:51+00:00",
+   "size_pct": 100.0
+  },
+  {
+   "id": "grind-BTC-30m-short-2026-11-12T15:30",
+   "run": "AUTOGRIND-10",
+   "symbol": "XBTUSD",
+   "timeframe": "30m",
+   "action": "short",
+   "reason": "TradingView GRIND BTC 30m short #2120 entry 71,690.2 at 10:30 ET, TV size 2.1M USD",
+   "at": "2026-11-12T15:31:27+00:00",
+   "size_pct": 100.0
+  },
+  {
+   "id": "cleanup-close-tv2113-1826",
+   "run": "TV-2113",
+   "symbol": "XBTUSD",
+   "timeframe": "30m",
+   "action": "close",
+   "reason": "Cleanup: watcher misread this already-closed TradingView trade as open; closing the bogus paper run",
+   "at": "2026-11-12T23:27:08+00:00"
+  },
+  {
+   "id": "cleanup-close-tv2114-1826",
+   "run": "TV-2114",
+   "symbol": "XBTUSD",
+   "timeframe": "30m",
+   "action": "close",
+   "reason": "Cleanup: watcher misread this already-closed TradingView trade as open; closing the bogus paper run",
+   "at": "2026-11-12T23:27:12+00:00"
+  },
+  {
+   "id": "cleanup-close-tv2115-1826",
+   "run": "TV-2115",
+   "symbol": "XBTUSD",
+   "timeframe": "30m",
+   "action": "close",
+   "reason": "Cleanup: watcher misread this already-closed TradingView trade as open; closing the bogus paper run",
+   "at": "2026-11-12T23:27:15+00:00"
+  }
+ ]
+}

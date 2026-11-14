@@ -1,0 +1,40 @@
+name,strategy,symbol,asset,timeframe,feed,shorts,capital,fraction,stop,take_profits,active,source,created,longs,auto_sides
+S3 GRIND DOGE 1h,grind,XDGUSD,crypto,1h,,1,10000.0,1.0,0.06,"[[0.055, 0.33], [0.075, 0.66], [0.15, 0.01]]",1,dashboard,2026-11-02T21:50:14+00:00,1,0
+Apprentice BTC 4h,apprentice,XBTUSD,crypto,4h,,1,10000.0,1.0,0.03,"[[0.03, 0.5], [0.06, 0.5]]",1,apprentice,2026-11-03T00:48:12+00:00,1,1
+Apprentice DOGE 1h,apprentice,XDGUSD,crypto,1h,,1,10000.0,1.0,0.03,"[[0.03, 0.5], [0.06, 0.5]]",0,apprentice,2026-11-03T03:14:47+00:00,1,1
+Apprentice SOL 4h,apprentice,SOLUSD,crypto,4h,,1,10000.0,1.0,0.03,"[[0.03, 0.5], [0.06, 0.5]]",0,apprentice,2026-11-03T23:59:22+00:00,1,1
+Apprentice BTC 1h,apprentice,XBTUSD,crypto,1h,,1,10000.0,1.0,0.03,"[[0.03, 0.5], [0.06, 0.5]]",1,apprentice,2026-11-03T03:14:32+00:00,1,1
+Apprentice LTC 1h,apprentice,LTCUSD,crypto,1h,,1,10000.0,1.0,0.03,"[[0.03, 0.5], [0.06, 0.5]]",0,apprentice,2026-11-04T01:04:30+00:00,1,1
+Apprentice ETH 1h,apprentice,ETHUSD,crypto,1h,,1,10000.0,1.0,0.03,"[[0.03, 0.5], [0.06, 0.5]]",1,apprentice,2026-11-04T03:43:48+00:00,1,1
+Apprentice SHIB 1h,apprentice,SHIBUSD,crypto,1h,,1,10000.0,1.0,0.03,"[[0.03, 0.5], [0.06, 0.5]]",1,apprentice,2026-11-04T03:43:53+00:00,1,1
+Apprentice ETH 4h,apprentice,ETHUSD,crypto,4h,,1,10000.0,1.0,0.03,"[[0.03, 0.5], [0.06, 0.5]]",1,apprentice,2026-11-04T03:44:03+00:00,1,1
+Apprentice UNI 4h,apprentice,UNIUSD,crypto,4h,,1,10000.0,1.0,0.03,"[[0.03, 0.5], [0.06, 0.5]]",1,apprentice,2026-11-04T03:44:12+00:00,1,1
+Apprentice BTC 1D,apprentice,XBTUSD,crypto,1D,,1,10000.0,1.0,0.03,"[[0.03, 0.5], [0.06, 0.5]]",1,apprentice,2026-11-04T11:28:07+00:00,1,1
+Apprentice LINK 1D,apprentice,LINKUSD,crypto,1D,,1,10000.0,1.0,0.03,"[[0.03, 0.5], [0.06, 0.5]]",1,apprentice,2026-11-04T11:28:18+00:00,1,1
+Apprentice ADA 1D,apprentice,ADAUSD,crypto,1D,,1,10000.0,1.0,0.03,"[[0.03, 0.5], [0.06, 0.5]]",1,apprentice,2026-11-04T11:28:21+00:00,1,1
+Trial #46 ETH 1D,apprentice_setup:46,ETHUSD,crypto,1D,,0,10000.0,1.0,0.03,"[[0.09, 1.0]]",1,proving,2026-11-05T20:52:00+00:00,1,0
+Trial #56 BTC 6h,apprentice_setup:56,XBTUSD,crypto,6h,,1,10000.0,1.0,0.03,"[[0.06, 1.0]]",0,proving,2026-11-05T20:52:00+00:00,0,0
+Trial #247 ETH 4h,apprentice_setup:247,ETHUSD,crypto,4h,,0,10000.0,1.0,0.03,"[[0.06, 1.0]]",1,proving,2026-11-05T20:52:00+00:00,1,0
+Trial #188 ETH 6h,apprentice_setup:188,ETHUSD,crypto,6h,,1,10000.0,1.0,0.03,"[[0.06, 1.0]]",0,proving,2026-11-05T20:52:00+00:00,0,0
+Trial #110 BTC 1D,apprentice_setup:110,XBTUSD,crypto,1D,,1,10000.0,1.0,0.03,"[[0.06, 1.0]]",0,proving,2026-11-05T20:52:00+00:00,0,0
+Trial #197 SOL 30m,apprentice_setup:197,SOLUSD,crypto,30m,,1,10000.0,1.0,0.03,"[[0.06, 1.0]]",0,proving,2026-11-05T20:52:00+00:00,0,0
+Trial #95 SOL 12h,apprentice_setup:95,SOLUSD,crypto,12h,,1,10000.0,1.0,0.03,"[[0.06, 1.0]]",1,proving,2026-11-05T20:52:00+00:00,0,0
+Trial #149 ETH 1D,apprentice_setup:149,ETHUSD,crypto,1D,,1,10000.0,1.0,0.03,"[[0.06, 1.0]]",0,proving,2026-11-05T20:52:00+00:00,0,0
+Trial #47 SOL 12h,apprentice_setup:47,SOLUSD,crypto,12h,,1,10000.0,1.0,0.03,"[[0.06, 1.0]]",0,proving,2026-11-05T20:52:00+00:00,0,0
+Trial #197 SOL 12h,apprentice_setup:197,SOLUSD,crypto,12h,,1,10000.0,1.0,0.03,"[[0.06, 1.0]]",0,proving,2026-11-05T20:52:00+00:00,0,0
+Apprentice XRP 4h,apprentice,XRPUSD,crypto,4h,,1,10000.0,1.0,0.03,"[[0.03, 0.5], [0.06, 0.5]]",1,apprentice,2026-11-06T23:34:59+00:00,1,1
+Apprentice BCH 4h,apprentice,BCHUSD,crypto,4h,,1,10000.0,1.0,0.03,"[[0.03, 0.5], [0.06, 0.5]]",1,apprentice,2026-11-06T23:39:54+00:00,1,1
+Apprentice XRP 1D,apprentice,XRPUSD,crypto,1D,,1,10000.0,1.0,0.03,"[[0.03, 0.5], [0.06, 0.5]]",1,apprentice,2026-11-06T23:40:24+00:00,1,1
+AUTO GRIND BTC 30m,claude_grind,XBTUSD,crypto,30m,,1,10000.0,1.0,0.09,"[[0.017, 0.33], [0.023, 0.66], [0.034, 0.01]]",0,claude,2026-11-08T01:37:40+00:00,1,0
+Trial #448 ETH 1D,apprentice_setup:448,ETHUSD,crypto,1D,,0,10000.0,1.0,0.03,"[[0.06, 1.0]]",1,proving,2026-11-13T17:34:12+00:00,1,0
+Trial #673 ETH 1D,apprentice_setup:673,ETHUSD,crypto,1D,,0,10000.0,1.0,0.03,"[[0.06, 1.0]]",1,proving,2026-11-13T17:34:12+00:00,1,0
+Trial #92 BTC 1h,apprentice_setup:92,XBTUSD,crypto,1h,,0,10000.0,1.0,0.03,"[[0.06, 1.0]]",1,proving,2026-11-13T17:34:12+00:00,1,0
+Trial #448 BTC 1D,apprentice_setup:448,XBTUSD,crypto,1D,,0,10000.0,1.0,0.03,"[[0.06, 1.0]]",1,proving,2026-11-13T17:34:12+00:00,1,0
+Trial #673 BTC 1D,apprentice_setup:673,XBTUSD,crypto,1D,,0,10000.0,1.0,0.03,"[[0.06, 1.0]]",1,proving,2026-11-13T17:34:12+00:00,1,0
+Trial #92 BTC 4h,apprentice_setup:92,XBTUSD,crypto,4h,,0,10000.0,1.0,0.03,"[[0.06, 1.0]]",1,proving,2026-11-13T17:34:12+00:00,1,0
+Trial #23 SOL 12h,apprentice_setup:23,SOLUSD,crypto,12h,,1,10000.0,1.0,0.03,"[[0.06, 1.0]]",1,proving,2026-11-13T17:34:12+00:00,0,0
+TV-1113-1845,autogrind,XBTUSD,crypto,30m,,1,10000.0,1.0,0.09,"[[0.017, 0.33], [0.023, 0.33], [0.034, 0.34]]",1,claude,2026-11-14T00:12:18+00:00,1,0
+Witcher ETH 2h,witcher,ETHUSD,crypto,2h,kraken,0,10000.0,1.0,,,1,live.toml,2026-11-09T21:20:59+00:00,1,0
+Witcher SOL 2h,witcher,SOLUSD,crypto,2h,kraken,0,10000.0,1.0,,,1,live.toml,2026-11-02T21:26:04+00:00,1,0
+GRIND BTC 4h,grind,XBTUSD,crypto,4h,kraken,0,10000.0,1.0,,,1,live.toml,2026-11-02T21:26:04+00:00,1,0
+S8 ETH 12h,s8,ETHUSD,crypto,12h,kraken,0,10000.0,1.0,,,1,live.toml,2026-11-02T21:26:04+00:00,1,0
