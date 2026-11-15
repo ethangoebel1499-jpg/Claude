@@ -1,8 +1,4 @@
 run,time,kind,text
-Trial #110 BTC 1D,2026-11-09T21:16:24+00:00,error,RuntimeError: Kraken isn't answering - paused for 49s more
-Trial #197 SOL 30m,2026-11-09T21:16:24+00:00,error,RuntimeError: Kraken isn't answering - paused for 49s more
-Trial #95 SOL 12h,2026-11-09T21:16:24+00:00,error,RuntimeError: Kraken isn't answering - paused for 49s more
-Trial #149 ETH 1D,2026-11-09T21:16:24+00:00,error,RuntimeError: Kraken isn't answering - paused for 49s more
 Trial #47 SOL 12h,2026-11-09T21:16:24+00:00,error,RuntimeError: Kraken isn't answering - paused for 49s more
 Trial #197 SOL 12h,2026-11-09T21:16:24+00:00,error,RuntimeError: Kraken isn't answering - paused for 49s more
 Apprentice XRP 4h,2026-11-09T21:16:24+00:00,error,RuntimeError: Kraken isn't answering - paused for 49s more
@@ -999,3 +995,7 @@ Trial #23 SOL 12h,2026-11-15T00:00:27+00:00,entry,SHORT 158.316988 @ 70.18 · it
 S3 GRIND DOGE 1h,2026-11-15T00:59:25+00:00,catch-up,"trader was off 2m: replayed 0 hourly candles, stop and targets not reached"
 Trial #23 SOL 12h,2026-11-15T00:59:49+00:00,catch-up,"trader was off 2m: replayed 0 hourly candles, stop and targets not reached"
 Trial #92 BTC 1h,2026-11-15T15:00:59+00:00,entry,"LONG 0.154568 @ 64,696.30 · its own stop 1.83% away"
+TV-1115-1530,2026-11-15T15:30:05+00:00,claude,Claude: short (3% of the account) - TradingView alert: position 0.0 -> -0.855 at 64800.7
+TV-1115-1530,2026-11-15T15:31:32+00:00,entry,"SHORT 0.004629 @ 64,800.70"
+TV-1115-1530,2026-11-15T15:31:32+00:00,manual,"you: short -> opened short at 64,800.70"
+TV-1115-1530,2026-11-15T15:31:32+00:00,start,watching XBTUSD 30m
