@@ -1,7 +1,7 @@
-# Paper Trader snapshot · 2026-11-15T12:10:11+00:00
+# Paper Trader snapshot · 2026-11-15T13:11:44+00:00
 
 - Paper trades closed: 85 · win rate 49% · P&L 3,479.72 USD
-- Apprentice: 403 lessons, 3394 concepts, 942 setups (97 trading)
+- Apprentice: 403 lessons, 3407 concepts, 946 setups (96 trading)
 - Streams: 2 streams, 6 setups
 
 Claude writes its review to reviews/claude_review.json on this branch; the app shows it in 🧠 Apprentice → What it knows.
