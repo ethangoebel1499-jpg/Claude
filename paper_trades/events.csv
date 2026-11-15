@@ -1,5 +1,4 @@
 run,time,kind,text
-Trial #188 ETH 6h,2026-11-09T21:16:24+00:00,error,RuntimeError: Kraken isn't answering - paused for 49s more
 Trial #110 BTC 1D,2026-11-09T21:16:24+00:00,error,RuntimeError: Kraken isn't answering - paused for 49s more
 Trial #197 SOL 30m,2026-11-09T21:16:24+00:00,error,RuntimeError: Kraken isn't answering - paused for 49s more
 Trial #95 SOL 12h,2026-11-09T21:16:24+00:00,error,RuntimeError: Kraken isn't answering - paused for 49s more
@@ -999,3 +998,4 @@ Trial #23 SOL 12h,2026-11-14T22:08:56+00:00,exit,"closed (target1) +1,110.69 USD
 Trial #23 SOL 12h,2026-11-15T00:00:27+00:00,entry,SHORT 158.316988 @ 70.18 · its own stop 7.23% away
 S3 GRIND DOGE 1h,2026-11-15T00:59:25+00:00,catch-up,"trader was off 2m: replayed 0 hourly candles, stop and targets not reached"
 Trial #23 SOL 12h,2026-11-15T00:59:49+00:00,catch-up,"trader was off 2m: replayed 0 hourly candles, stop and targets not reached"
+Trial #92 BTC 1h,2026-11-15T15:00:59+00:00,entry,"LONG 0.154568 @ 64,696.30 · its own stop 1.83% away"
