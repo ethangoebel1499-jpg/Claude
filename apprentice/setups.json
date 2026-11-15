@@ -146924,5 +146924,79 @@
   "hints": null,
   "tune": null,
   "exit_plan": null
+ },
+ {
+  "id": 822,
+  "name": "Watar Explosion Line Above Dead Zone Line and Strong Buy Signal",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 150.0,
+  "rr": 1.33,
+  "timeframe": "5m",
+  "why": "The Watar explosion line above the dead zone line and a strong buy signal indicate a potential bullish setup.",
+  "quote": "The second rule is that on the wadatar the wadatar explosion line which is this yellow line needs to be above the wadar dead zone line which is this gray area right here. And at the same time we need a strong buy signal which is a dark green bar like this one here. This bar needs to be above both the dead zone line and the explosion line.",
+  "unchecked": [
+   "The Watar explosion line must be above the Watar dead zone line and a strong buy signal (dark green bar) must be above both lines."
+  ],
+  "lesson_id": 398,
+  "rules": [
+   {
+    "rule": "wt_above"
+   },
+   {
+    "rule": "wt_green_dot"
+   },
+   {
+    "rule": "close_above_sma"
+   }
+  ],
+  "rules_text": [
+   "Market Cipher wave above 53 (overbought)",
+   "Market Cipher green dot (WaveTrend crosses up) below 0",
+   "Close above SMA (200)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 823,
+  "name": "RSI Above 60 and ADX Above ADX EMA",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 150.0,
+  "rr": 1.33,
+  "timeframe": "5m",
+  "why": "RSI above 60 and ADX above ADX EMA indicate a potential bullish setup.",
+  "quote": "On the RSI, we are going to use the RSI in a very unusual way cuz in case of a valid long entry, we need the RSI to be above the 60 level and not below the 60 level. So, as you can see on this entry signal candle, the RSI just broke above the 60 level, which is this white line. So, this rule is also met. Now on the ADX plus EMA, simply the ADX line needs to be above the ADX based EMA.",
+  "unchecked": [
+   "The RSI must be above 60 and the ADX line must be above the ADX based EMA."
+  ],
+  "lesson_id": 398,
+  "rules": [
+   {
+    "rule": "rsi_above"
+   },
+   {
+    "rule": "ema_above_ema"
+   }
+  ],
+  "rules_text": [
+   "RSI (14) above 70",
+   "EMA (50) is above EMA (200) (uptrend)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  }
 ]
