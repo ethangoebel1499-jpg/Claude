@@ -151669,5 +151669,1115 @@
   "hints": null,
   "tune": null,
   "exit_plan": null
+ },
+ {
+  "id": 889,
+  "name": "atr_explosion_above_dead_zone",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "50 min",
+  "why": "The explosion line above the dead zone line indicates growing volatility and momentum, making it a good entry point.",
+  "quote": "should look like let's say I only want to allow trades when the explosion line is above the dead zone line which signals a growing volatility and momentum",
+  "unchecked": [
+   "checked"
+  ],
+  "lesson_id": 412,
+  "rules": [
+   {
+    "rule": "close_above_ema"
+   },
+   {
+    "rule": "wt_above"
+   }
+  ],
+  "rules_text": [
+   "Close above EMA (50)",
+   "Market Cipher wave above 53 (overbought)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 890,
+  "name": "atr_explosion_below_dead_zone",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "50 min",
+  "why": "The explosion line below the dead zone line indicates a potential short entry due to decreasing volatility and momentum.",
+  "quote": "should look like let's say I only want to allow trades when the explosion line is above the dead zone line which signals a growing volatility and momentum to do that open up the explosion slash Dead Zone relation and click on the explosion over that zone option this way here we won't get an entry as the explosion line was under the dead zone line but here we do get an entry because the orange line was above the dead zone line",
+  "unchecked": [
+   "checked"
+  ],
+  "lesson_id": 412,
+  "rules": [
+   {
+    "rule": "close_below_ema"
+   },
+   {
+    "rule": "wt_below"
+   }
+  ],
+  "rules_text": [
+   "Close below EMA (50)",
+   "Market Cipher wave below -53 (oversold)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 891,
+  "name": "Fair Value Gap Strategy",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 0.3,
+  "rr": 0.2,
+  "timeframe": "14:03",
+  "why": "The script can only enter into a short position if the candle immediately after the fair value gap is red.",
+  "quote": "if we get a red candle in immediately after the fair value Gap was printed then the strategy can only enter into a short position",
+  "unchecked": [
+   "fair value gap height"
+  ],
+  "lesson_id": 413,
+  "rules": [
+   {
+    "rule": "close_below_ema"
+   },
+   {
+    "rule": "close_below_sma"
+   }
+  ],
+  "rules_text": [
+   "Close below EMA (50)",
+   "Close below SMA (200)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 892,
+  "name": "Fair Value Gap Strategy",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 0.3,
+  "rr": 0.2,
+  "timeframe": "14:03",
+  "why": "The script can only enter into a long position if the candle immediately after the fair value gap is green.",
+  "quote": "if after the fair value Gap we get a green candle then the strategy can only enter into a long position",
+  "unchecked": [
+   "fair value gap height"
+  ],
+  "lesson_id": 413,
+  "rules": [
+   {
+    "rule": "close_above_ema"
+   },
+   {
+    "rule": "close_above_sma"
+   }
+  ],
+  "rules_text": [
+   "Close above EMA (50)",
+   "Close above SMA (200)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 893,
+  "name": "Fair Value Gap Strategy",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 0.4,
+  "rr": 0.2,
+  "timeframe": "1H, 5M, 30M, 1D",
+  "why": "Fair value Gap is only a good Target until it hasn't been filled. If the entry candle has already vicked through the whole fair value Gap, it might not be a good entry anymore.",
+  "quote": "the 300% Target works the best so if you want to use the fair value Gap based takeprofit Target make sure the box next to it is sticked otherwise the script will use the original exit strategy",
+  "unchecked": [
+   "volume_spike"
+  ],
+  "lesson_id": 413,
+  "rules": [
+   {
+    "rule": "close_above_ema",
+    "a": 100
+   },
+   {
+    "rule": "higher_low",
+    "a": 0.2
+   }
+  ],
+  "rules_text": [
+   "Close above EMA (100)",
+   "Higher low: the last 0.2 candles' low is above the 0.2 candles before"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 894,
+  "name": "Super Trend and Donan Trend Ribbon Combined Entry",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "null",
+  "why": "Both Super Trend and Donan Trend Ribbon print a buy signal on the same candle.",
+  "quote": "if you only want to enter into a position if the Donan Trend ribbon and the super Trend prints a Buy Signal on the same candle to do that just stick both the super Trend and the Don Tren ribbon",
+  "unchecked": [
+   "unchecked"
+  ],
+  "lesson_id": 414,
+  "rules": [
+   {
+    "rule": "close_above_ema"
+   },
+   {
+    "rule": "close_below_ema"
+   }
+  ],
+  "rules_text": [
+   "Close above EMA (50)",
+   "Close below EMA (50)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 895,
+  "name": "Super Trend and Donan Trend Ribbon Combined Entry with Tolerance",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "null",
+  "why": "Both Super Trend and Donan Trend Ribbon print a buy signal with a 5 candle tolerance.",
+  "quote": "if you only want to enter into a position if the Donan Trend ribbon and the super Trend prints a Buy Signal on the same candle to do that just stick both the super Trend and the Don Tren ribbon and use an entry signal tolerance",
+  "unchecked": [
+   "unchecked"
+  ],
+  "lesson_id": 414,
+  "rules": [
+   {
+    "rule": "close_above_ema",
+    "a": 5,
+    "b": 0
+   },
+   {
+    "rule": "close_below_ema",
+    "a": 5,
+    "b": 0
+   }
+  ],
+  "rules_text": [
+   "Close above EMA (5)",
+   "Close below EMA (5)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 896,
+  "name": "Range Filter Exit",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "null",
+  "why": "RSI goes above 80.",
+  "quote": "if you also want to exit the strategy when the price gets into an oversold or overbo condition on the RSI to do that here you can set up the RSI exit just stick this box next to it and set up your parameters the strategy will exit from a long position after the RSI went above the RSI overbo level in this case 80 and it will exit short positions if the RSI goes below the oversaw level in this case 20",
+  "unchecked": [
+   "unchecked"
+  ],
+  "lesson_id": 414,
+  "rules": [
+   {
+    "rule": "rsi_above",
+    "a": 80
+   }
+  ],
+  "rules_text": [
+   "RSI (14) above 80"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 897,
+  "name": "RSI Exit",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "null",
+  "why": "RSI goes below 20.",
+  "quote": "if you also want to exit the strategy when the price gets into an oversold or overbo condition on the RSI to do that here you can set up the RSI exit just stick this box next to it and set up your parameters the strategy will exit from a long position after the RSI went above the RSI overbo level in this case 80 and it will exit short positions if the RSI goes below the oversaw level in this case 20",
+  "unchecked": [
+   "unchecked"
+  ],
+  "lesson_id": 414,
+  "rules": [
+   {
+    "rule": "rsi_below",
+    "a": 20
+   }
+  ],
+  "rules_text": [
+   "RSI (14) below 20"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 898,
+  "name": "Ma Crossover Exit",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "null",
+  "why": "Fast moving average crosses below the slow moving average.",
+  "quote": "if you want to use this just stick the box next to it with the ma crossover exits we have two different moving averages here I set up an smma which is a smoothed moving average for both the fast moving average and the slow moving average I set their length to 30 and 10010 so basically if I only allow the use Ma crossover exit signal then the script will exit a long position if the fast moving average crosses below the slow moving average and it will exit a short position if the fast moving average crosses above the slow moving average",
+  "unchecked": [
+   "unchecked"
+  ],
+  "lesson_id": 414,
+  "rules": [
+   {
+    "rule": "ema_cross_down"
+   }
+  ],
+  "rules_text": [
+   "EMA (9) crosses below EMA (21)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 899,
+  "name": "Ma Crossover Exit",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "null",
+  "why": "Fast moving average crosses above the slow moving average.",
+  "quote": "if you want to use this just stick the box next to it with the ma crossover exits we have two different moving averages here I set up an smma which is a smoothed moving average for both the fast moving average and the slow moving average I set their length to 30 and 10010 so basically if I only allow the use Ma crossover exit signal then the script will exit a long position if the fast moving average crosses below the slow moving average and it will exit a short position if the fast moving average crosses above the slow moving average",
+  "unchecked": [
+   "unchecked"
+  ],
+  "lesson_id": 414,
+  "rules": [
+   {
+    "rule": "ema_cross_up"
+   }
+  ],
+  "rules_text": [
+   "EMA (9) crosses above EMA (21)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 900,
+  "name": "WiMA Filtered Long Entry",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "30m",
+  "why": "WiMA (150) is above 0 for long entry.",
+  "quote": "short entry only occurs below the moving average and long entry is only above it",
+  "unchecked": [
+   "wiia (150) above 0"
+  ],
+  "lesson_id": 414,
+  "rules": [
+   {
+    "rule": "close_above_sma"
+   },
+   {
+    "rule": "wt_above"
+   }
+  ],
+  "rules_text": [
+   "Close above SMA (200)",
+   "Market Cipher wave above 53 (overbought)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 901,
+  "name": "WiMA Filtered Short Entry",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "30m",
+  "why": "WiMA (150) is below 0 for short entry.",
+  "quote": "short entry only occurs below the moving average and long entry is only above it",
+  "unchecked": [
+   "wiia (150) below 0"
+  ],
+  "lesson_id": 414,
+  "rules": [
+   {
+    "rule": "close_below_sma"
+   },
+   {
+    "rule": "wt_below"
+   }
+  ],
+  "rules_text": [
+   "Close below SMA (200)",
+   "Market Cipher wave below -53 (oversold)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 902,
+  "name": "Counter Channel Break Below",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 15.0,
+  "rr": 1.0,
+  "timeframe": "15-minute",
+  "why": "The price is breaking below the counter channel at a discounted price, indicating a potential mean reversion.",
+  "quote": "The price breaks below the counter channel at a discounted price.",
+  "unchecked": [
+   "not on Thursday"
+  ],
+  "lesson_id": 415,
+  "rules": [
+   {
+    "rule": "close_above_ema"
+   },
+   {
+    "rule": "close_below_sma"
+   },
+   {
+    "rule": "rsi_below",
+    "a": 70
+   },
+   {
+    "rule": "close_above_sma",
+    "a": 3.5
+   },
+   {
+    "rule": "in_bullish_pattern"
+   }
+  ],
+  "rules_text": [
+   "Close above EMA (50)",
+   "Close below SMA (200)",
+   "RSI (14) below 70",
+   "Close above SMA (3.5)",
+   "Inside a pattern that usually breaks up (falling wedge, ascending triangle, bull flag...)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 903,
+  "name": "CCI-based Long Entry",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 15.0,
+  "rr": 15.0,
+  "timeframe": "15m",
+  "why": "The strategy enters long when the close is above the CCI level and the RSI is below 70.",
+  "quote": "we need a close outside of the cner channel Bands A Touch of the cner channel band is not enough but if you want to build a strategy that allows trades even if we are closing inside the cner channel only touching the outside bands you should choose the touching option here you can set up the cter channel length cner Channel multiplier value the cter Channel's close value its band style and its ATR length",
+  "unchecked": [
+   "CCI value below 70"
+  ],
+  "lesson_id": 415,
+  "rules": [
+   {
+    "rule": "close_above_ema"
+   },
+   {
+    "rule": "rsi_below",
+    "a": 70
+   }
+  ],
+  "rules_text": [
+   "Close above EMA (50)",
+   "RSI (14) below 70"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 904,
+  "name": "CCI-based Long Exit",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 15.0,
+  "rr": 15.0,
+  "timeframe": "15m",
+  "why": "The strategy exits long when the CCI goes above 65.",
+  "quote": "I set the CCI long limit to 65 this means that the strategy will exit the position if the CCI goes above the 65 level",
+  "unchecked": [],
+  "lesson_id": 415,
+  "rules": [
+   {
+    "rule": "rsi_above",
+    "b": 65
+   }
+  ],
+  "rules_text": [
+   "RSI (14) above 70"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 905,
+  "name": "ATR-based Trailing Stop",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 15.0,
+  "rr": 15.0,
+  "timeframe": "15m",
+  "why": "The strategy uses an ATR-based trailing stop with an ATR length of 30 and an ATR factor of 15.",
+  "quote": "I am using an ATR based trailing stoploss and I set its ATR length to 30 and the ATR factor to 15 and the smoothing to R",
+  "unchecked": [
+   "ATR-based trailing stop"
+  ],
+  "lesson_id": 415,
+  "rules": [
+   {
+    "rule": "bb_above_upper"
+   }
+  ],
+  "rules_text": [
+   "Close above the upper Bollinger band (20 candles, 2 deviations)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 906,
+  "name": "Super Trend Buy Signal and RMI Above RMI EMA",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "2 hours",
+  "why": "Buy Signal from Super Trend and RMI above RMI EMA",
+  "quote": "For a long entry, we need a Buy Signal from the super Trend and the RMI line needs to be above the RMI based EMA.",
+  "unchecked": [
+   "unchecked"
+  ],
+  "lesson_id": 416,
+  "rules": [
+   {
+    "rule": "close_above_ema"
+   },
+   {
+    "rule": "rsi_above"
+   }
+  ],
+  "rules_text": [
+   "Close above EMA (50)",
+   "RSI (14) above 70"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 907,
+  "name": "Range Filter Exit Signal",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "2 hours",
+  "why": "Cell Signal from Range Filter",
+  "quote": "We will use the range filter which prints these cell signals to exit each trade.",
+  "unchecked": [
+   "unchecked"
+  ],
+  "lesson_id": 416,
+  "rules": [
+   {
+    "rule": "close_below_ema"
+   }
+  ],
+  "rules_text": [
+   "Close below EMA (50)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 908,
+  "name": "Simple 2 Indicator Strategy",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "daily",
+  "why": "RSI above 70 and MACD above zero indicate a strong bullish momentum.",
+  "quote": "This strategy uses two indicators to identify potential trades in Bitcoin & Ethereum",
+  "unchecked": [
+   "The specific indicators used are not mentioned."
+  ],
+  "lesson_id": 416,
+  "rules": [
+   {
+    "rule": "rsi_above"
+   },
+   {
+    "rule": "macd_positive"
+   }
+  ],
+  "rules_text": [
+   "RSI (14) above 70",
+   "MACD above zero"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 909,
+  "name": "Stochastic RSI Entry",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "30-minute",
+  "why": "Stochastic RSI generates a buy signal when it crosses up through 30 and is below 30.",
+  "quote": "Our main entry signal indicator which is the stochastic RSI.",
+  "unchecked": [
+   "unchecked"
+  ],
+  "lesson_id": 418,
+  "rules": [
+   {
+    "rule": "rsi_below"
+   },
+   {
+    "rule": "rsi_cross_up"
+   }
+  ],
+  "rules_text": [
+   "RSI (14) below 30",
+   "RSI (14) crosses up through 30"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 910,
+  "name": "9:00 a.m. to 10:00 a.m. breakout + stochastic RSI cross up + 200 EMA + Chand mom",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 4.0,
+  "rr": 2.0,
+  "timeframe": "1h",
+  "why": "Breakout of the 9:00 a.m. to 10:00 a.m. range, stochastic RSI cross up, 200 EMA, Chand momentum, Watar, and 50 EMA not between entry and takeprofit level.",
+  "quote": "the price needs to broke and close above the 9:00 a.m. to 10 a.m. range here on the bottom you can see the 9:00 a.m. range starts here and ends here to determine the range of the 9: a.m. to 10: a.m. you just need to take a look on the candles where was the lowest point during these three candles it was right here and what was the highest price out of these three candles it was this level from now on we are looking for a breakout of this range once we get the breakout we can move on to the second rule keep in mind that a valid breakout is when a candle breaks and closes Above This range and the breakout happened right on this candle you can see a blue cross above the candle that's only because our script prints X signals when the breakout occurs so as the breakout occurred we can move on to the second rule the second rule is that the stochastic RSI needs to cross up under the 70 level three candles before the breakout or anywhere after the breakout until the next 9 to 10 a.m. range it might sound complicated at first but it really isn't let me explain so we got our breakout right here and we need to see a Val stochastic RSI cross anywhere between the last three candles so this is 1 2 and three up until the next 9 to 10 a.m. range which is right on this candle let's open up the stochastic RSI and check if we get a valid cross up so after the breakout the stochastic RSI is already bullish the blue line has already crossed above the orange line but when did the cross up occur if we count back three candles and we see a cross up under the 70 level then it's valid cross up let's see 1 2 and three and across cross up happened way earlier back here so this is not a valid entry yet as time goes on we get a cross down but we need a cross up which occurs right here and if I zoom in we can clearly see that right before the cross up both of the stochastic RSI lines were below the 70 level which is this dotted line so this is a very stochastic crossup which means we can move on to the third rule the third rule says that the signal candle needs to close above the 200 length smma the smma is the white line right here and on the potential signal candle the price clearly closed above the 200 length smma let's move on to the fourth rule the fourth rule says that the Chand momentum is above the Chand momentum based wiia let's open up our chandel momentum oscillator the blue line is the Chand momentum line and this red or green line is orbia on the ENT signal candle the blue line was above the widia so this rule is also met moving on we have only two rules left for a ready long entry and the fifth rule is that the water atar is above both the dead zone line and the explosion line here is our wadar explosion indicator and on the potential entry signal candle it is clear that the wadar which are these bars is above the White and the blue line which are or explosion line and or dead zone line and finally there's one last a bit strange rule that you probably haven't seen anywhere else and that is that the 50 EMA should not be between the entry price level and the first takeprofit level what does that mean our first takeprofit level is a 50% take profit at a 1 to 1.5 risk reward ratio level so let's say this is a very long entry then our stop plusus would be here and our takeprofit level would be somewhere around here do we have the 50 length ma between these two levels well we don't cuz the 50 ma is this blue line right here so the sixth and final rule is also met which means that this is indeed a valid long entry signal",
+  "unchecked": [
+   "9:00 a.m. to 10:00 a.m. range"
+  ],
+  "lesson_id": 418,
+  "rules": [
+   {
+    "rule": "close_above_sma"
+   },
+   {
+    "rule": "rsi_cross_up"
+   },
+   {
+    "rule": "close_above_ema"
+   },
+   {
+    "rule": "macd_positive"
+   },
+   {
+    "rule": "wt_above"
+   }
+  ],
+  "rules_text": [
+   "Close above SMA (200)",
+   "RSI (14) crosses up through 30",
+   "Close above EMA (50)",
+   "MACD above zero",
+   "Market Cipher wave above 53 (overbought)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 911,
+  "name": "4 times ATR stop loss + 50% take profit + trading stop loss + squeeze momentum",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 4.0,
+  "rr": 2.0,
+  "timeframe": "1h",
+  "why": "4 times ATR stop loss, 50% take profit, trading stop loss, and squeeze momentum.",
+  "quote": "first of all we will exit the position if a four times ATR distance stoploss gets hit for the stoploss we use the nnfx ATR indicator which will print our stop losses right below the candles in this case the stop loss will be here so let's place it there the second exit rule says we will exit 50% of the position at a 1 to 1.5 reward ratio level will be at the upper nnfx ATR line which is this green line and here you can see it is a 1 to 1.5 rest reward ratio and we will exit 50% of the position if that level gets hit and that level got hit right here and you can also see the long exit he printed above by or script the third rule is that we will exit a position if the price closes below the four times ATR trading stoploss so the initial four time at stoploss is not just a static stoploss which will stay there until the position is fully closed we will be updating it on each new candle so after this candle closed we moved our stop loss here after this closed we moved it here then we moved it here and here but on the next candle the ATR stop plusus moves lower but as this is a trading stoploss we will not move our stoploss lower we will keep it at the latest and highest level until we get an even higher level stoploss on this candle it moved slightly higher on this candle a bit higher again here a bit higher again and again and again so we are continuously moving or stop lus higher but never lower and the Final Exit rule is that we will exit the full position if the squeeze momentum turns from green to red on the bottom we set up or squeeze momentum it will be printing green and red bars so if you are in the long position and you see something like this a green bar turns into a red bar this is an exit signal",
+  "unchecked": [
+   "4 times ATR stop loss",
+   "50% take profit",
+   "trading stop loss",
+   "squeeze momentum"
+  ],
+  "lesson_id": 418,
+  "rules": [
+   {
+    "rule": "bb_touch_lower"
+   },
+   {
+    "rule": "rsi_bear_div"
+   },
+   {
+    "rule": "wt_bear_div"
+   },
+   {
+    "rule": "macd_bear_div"
+   }
+  ],
+  "rules_text": [
+   "Low touched the lower Bollinger band in the last 3 candles",
+   "Bearish divergence: price higher high, RSI lower high - in the last 3 candles, lows/highs at most 60 candles apart",
+   "Bearish divergence: price higher high, Market Cipher wave lower high - in the last 3 candles, lows/highs at most 60 candles apart",
+   "Bearish divergence: price higher high, MACD lower high - in the last 3 candles, lows/highs at most 60 candles apart"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 912,
+  "name": "Breakout and Stochastic RSI Cross Up",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "1H",
+  "why": "Breakout followed by a stochastic RSI cross up under 70.",
+  "quote": "a Breakout just after that we get a perfect stochastic RSI cross up under the 70 level and the script entered into a long position",
+  "unchecked": [
+   "rsi_below: RSI (14) below 30"
+  ],
+  "lesson_id": 418,
+  "rules": [
+   {
+    "rule": "breakout_high"
+   },
+   {
+    "rule": "rsi_cross_up"
+   }
+  ],
+  "rules_text": [
+   "Close above the highest high of the last 20 candles",
+   "RSI (14) crosses up through 30"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 913,
+  "name": "Simple Breakout",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "1H",
+  "why": "Simple breakout followed by a take profit hit.",
+  "quote": "the script entered the First Take profit was hit right there and then the trading stop plusus cles out the full position right there",
+  "unchecked": [
+   "rsi_below: RSI (14) below 30"
+  ],
+  "lesson_id": 418,
+  "rules": [
+   {
+    "rule": "breakout_high"
+   }
+  ],
+  "rules_text": [
+   "Close above the highest high of the last 20 candles"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 914,
+  "name": "Stochastic and Chand Momentum",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 40.0,
+  "rr": 1.7,
+  "timeframe": "10-minute",
+  "why": "The setup meets all the required conditions for a long entry.",
+  "quote": "For a valid long entry, the super Trend must give a buy signal, the price needs to be above the baseline, the stochastic line needs to be above the stochastic D line and below 100, the Chand momentum line needs to be above its EMA, and the TDFI needs to be above its moving average and its lower limit.",
+  "unchecked": [
+   "Close above the upper Bollinger band (20 candles, 2 deviations)"
+  ],
+  "lesson_id": 419,
+  "rules": [
+   {
+    "rule": "close_above_sma",
+    "a": 100
+   },
+   {
+    "rule": "rsi_above",
+    "a": 97.58,
+    "b": 100
+   },
+   {
+    "rule": "macd_cross_up"
+   },
+   {
+    "rule": "wt_above",
+    "a": 0.3
+   }
+  ],
+  "rules_text": [
+   "Close above SMA (100)",
+   "RSI (14) above 97.58",
+   "MACD crosses above its signal line",
+   "Market Cipher wave above 0.3 (overbought)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 915,
+  "name": "Stochastic and Chand Momentum",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 40.0,
+  "rr": 1.7,
+  "timeframe": "10-minute",
+  "why": "The setup meets all the required conditions for a short entry.",
+  "quote": "For a valid short entry, the super Trend must give a sell signal, the price needs to close under the baseline, the stochastic line needs to be under the stochastic D line but above the lower limit, the Chand momentum line needs to be under its EMA, and the TDFI needs to be under its moving average and its lower limit.",
+  "unchecked": [
+   "Close above the upper Bollinger band (20 candles, 2 deviations)"
+  ],
+  "lesson_id": 419,
+  "rules": [
+   {
+    "rule": "rsi_below",
+    "a": -15
+   },
+   {
+    "rule": "macd_cross_down"
+   },
+   {
+    "rule": "wt_below",
+    "a": -0.3
+   }
+  ],
+  "rules_text": [
+   "RSI (14) below -15",
+   "MACD crosses below its signal line",
+   "Market Cipher wave below -0.3 (oversold)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 916,
+  "name": "Stochastic D and TDFI Divergence",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 20.0,
+  "rr": 1.6,
+  "timeframe": "10 minute",
+  "why": "Stochastic and TDFI divergences with Chendo and Chanmo EMA conditions",
+  "quote": "the stochastic needs to be under the stochastic D line but it needs to be above the lower limit which is 15, the blue chendo line is under the chanmo based moving average, the tdfi line which is this one needs to be under the tdfi based moving average this white line and its lower limit level which is a negative 0.30",
+  "unchecked": [
+   "Chendo line below Chanmo EMA"
+  ],
+  "lesson_id": 419,
+  "rules": [
+   {
+    "rule": "rsi_below",
+    "a": 15
+   },
+   {
+    "rule": "wt_below",
+    "b": -0.3
+   },
+   {
+    "rule": "ema_below_ema"
+   }
+  ],
+  "rules_text": [
+   "RSI (14) below 15",
+   "Market Cipher wave below -53 (oversold)",
+   "EMA (50) is below EMA (200) (downtrend)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 917,
+  "name": "Chandelier Exit and K Relative Index Confirmation",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "1H",
+  "why": "The setup requires confirmation from both the Chandelier Exit and K Relative Index, the Chand Momentum line to be under the Chand Momentum based EMA, the Water Atar bar to be red and above both the dead zone line and the explosion line, and the trade signal to occur inside one of the New York, Tokyo, or Sydney sessions.",
+  "quote": "For a valid short entry, we need confirmation from both the Chandelier Exit and K Relative Index.",
+  "unchecked": [
+   "chandelier_exit",
+   "k_relative_index",
+   "chand_momentum_below_chand_momentum_ema",
+   "water_atar_red_above_dead_zone_and_explosion",
+   "session_new_york_or_tokyo_or_sydney"
+  ],
+  "lesson_id": 420,
+  "rules": [
+   {
+    "rule": "close_below_ema",
+    "a": 15
+   },
+   {
+    "rule": "ao_red"
+   },
+   {
+    "rule": "wt_red_dot"
+   },
+   {
+    "rule": "wt_below"
+   }
+  ],
+  "rules_text": [
+   "Close below EMA (15)",
+   "Awesome Oscillator column is red (AO falling)",
+   "Market Cipher red dot (WaveTrend crosses down) above 0",
+   "Market Cipher wave below -53 (oversold)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 918,
+  "name": "MFI and Volume Oscillator Above EMAs",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "15m",
+  "why": "MFI and Volume Oscillator Above EMAs",
+  "quote": "For a very long entry, the price needs to close above the Wijia, MFI needs to be above the MFI based EMA, candle momentum needs to be above the CH momentum based EMA, and the TDFI needs to print a green bar.",
+  "unchecked": [
+   "Close above Wijia"
+  ],
+  "lesson_id": 421,
+  "rules": [
+   {
+    "rule": "mf_positive",
+    "a": 120,
+    "b": 75
+   },
+   {
+    "rule": "close_above_ema",
+    "a": 130,
+    "b": 25
+   },
+   {
+    "rule": "close_above_ema",
+    "a": 40,
+    "b": 0.4
+   }
+  ],
+  "rules_text": [
+   "Market Cipher money flow above zero (green)",
+   "Close above EMA (130)",
+   "Close above EMA (40)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  }
 ]
