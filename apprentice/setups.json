@@ -152779,5 +152779,134 @@
   "hints": null,
   "tune": null,
   "exit_plan": null
+ },
+ {
+  "id": 919,
+  "name": "Watar Explosion + WIDYA + Chando + Volume EMA",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 3.0,
+  "rr": 2.68,
+  "timeframe": "1 hour",
+  "why": "A bullish Watar explosion, price above WIDYA, Chando above CMA, and volume above EMA.",
+  "quote": "For a valid long entry, first we need to check the Watar explosion for a buy signal. A buy signal is when the Watar explosion bar is above both the explosion and the dead zone line, which is the case here. Also it needs to be a green color as we are looking for longs. That's a bullish signal. That rule is met right here. Then the price needs to close above the widya which is this blue line here. After that the chando needs to be above the chando based CMA line. So the blue line needs to be above this white line and that's the case here. And on the bottom on the volume indicator with an EMA the volume needs to be higher than the volume based EMA. So the volume bar needs to be higher than this white line here and that is the case here.",
+  "unchecked": [
+   "atr_based_stop_loss"
+  ],
+  "lesson_id": 422,
+  "rules": [
+   {
+    "rule": "wt_above"
+   },
+   {
+    "rule": "close_above_ema"
+   },
+   {
+    "rule": "volume_spike"
+   }
+  ],
+  "rules_text": [
+   "Market Cipher wave above 53 (overbought)",
+   "Close above EMA (50)",
+   "Volume above 1.5 \u00d7 its 20-candle average"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 920,
+  "name": "Watar Explosion + WIDYA + Chando + Volume EMA",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 3.0,
+  "rr": 2.0,
+  "timeframe": "1 hour",
+  "why": "A bearish Watar explosion, price below WIDYA, Chando below CMA, and volume above EMA.",
+  "quote": "Here we found a valid short entry signal. And the rules for a valid short entry are the following. First, we need the water explosion to give an entry signal. And an entry signal is when the water explosion bar is red and closes above both the explosion line and the dead zone line. And that is the case here. Then the price needs to close under the widget trend filter which is this blue line. And that was the case here on the Chando. The Chando line needs to be under the Chandomo based CMA line which is this white line. So that rule is also met. The volume needs to be higher than the volume based EMA and that's the case.",
+  "unchecked": [
+   "atr_based_stop_loss"
+  ],
+  "lesson_id": 422,
+  "rules": [
+   {
+    "rule": "wt_below"
+   },
+   {
+    "rule": "close_below_ema"
+   },
+   {
+    "rule": "volume_spike"
+   }
+  ],
+  "rules_text": [
+   "Market Cipher wave below -53 (oversold)",
+   "Close below EMA (50)",
+   "Volume above 1.5 \u00d7 its 20-candle average"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 921,
+  "name": "Water Explosion Bar",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 1.5,
+  "timeframe": "1H",
+  "why": "Water explosion bar is a valid short entry signal.",
+  "quote": "First, we need the water explosion to give an entry signal. And an entry signal is when the water explosion bar is red and closes above both the explosion line and the dead zone line.",
+  "unchecked": [
+   "water explosion bar is red and closes above both the explosion line and the dead zone line"
+  ],
+  "lesson_id": 422,
+  "rules": [
+   {
+    "rule": "close_below_ema",
+    "a": 0,
+    "b": 0
+   },
+   {
+    "rule": "wt_below",
+    "a": 0,
+    "b": 0
+   },
+   {
+    "rule": "volume_spike",
+    "a": 0,
+    "b": 0
+   },
+   {
+    "rule": "wt_green_dot",
+    "a": 0,
+    "b": 0
+   }
+  ],
+  "rules_text": [
+   "Close below EMA (0)",
+   "Market Cipher wave below 0 (oversold)",
+   "Volume above 0 \u00d7 its 0-candle average",
+   "Market Cipher green dot (WaveTrend crosses up) below 0"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  }
 ]
