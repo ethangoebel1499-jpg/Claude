@@ -1,5 +1,4 @@
 run,time,kind,text
-Trial #46 ETH 1D,2026-11-09T21:16:24+00:00,error,RuntimeError: Kraken isn't answering - paused for 49s more
 Trial #56 BTC 6h,2026-11-09T21:16:24+00:00,error,RuntimeError: Kraken isn't answering - paused for 49s more
 Trial #247 ETH 4h,2026-11-09T21:16:24+00:00,error,RuntimeError: Kraken isn't answering - paused for 49s more
 Trial #188 ETH 6h,2026-11-09T21:16:24+00:00,error,RuntimeError: Kraken isn't answering - paused for 49s more
@@ -999,3 +998,4 @@ TV-1113-1845,2026-11-14T14:24:56+00:00,manual,you: close -> no open position
 S3 GRIND DOGE 1h,2026-11-14T20:54:37+00:00,exit,closed (target3) +624.64 USD
 S3 GRIND DOGE 1h,2026-11-14T21:00:47+00:00,entry,"SHORT 184,154.97522 @ 0.05798"
 Trial #23 SOL 12h,2026-11-14T22:08:56+00:00,exit,"closed (target1) +1,110.69 USD"
+Trial #23 SOL 12h,2026-11-15T00:00:27+00:00,entry,SHORT 158.316988 @ 70.18 · its own stop 7.23% away
