@@ -170304,5 +170304,406 @@
   "hints": null,
   "tune": null,
   "exit_plan": null
+ },
+ {
+  "id": 967,
+  "name": "adx_with_ema",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "2-hour",
+  "why": "ADX with an EMA is the best momentum indicator for different assets and time frames.",
+  "quote": "the adx with an EMA is the best momentum indicator for different assets and time frames",
+  "unchecked": [
+   "asset: Microsoft"
+  ],
+  "lesson_id": 432,
+  "rules": [
+   {
+    "rule": "ema_above_ema",
+    "a": 2100,
+    "b": 2556
+   }
+  ],
+  "rules_text": [
+   "EMA (2100) is above EMA (2556) (uptrend)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 968,
+  "name": "stochastic",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "2-hour",
+  "why": "Stochastic is the best momentum indicator for 2-hour chart on Microsoft.",
+  "quote": "the stochastic is the best momentum indicator for 2-hour chart on Microsoft",
+  "unchecked": [
+   "asset: Microsoft"
+  ],
+  "lesson_id": 432,
+  "rules": [
+   {
+    "rule": "ema_above_ema",
+    "a": 549,
+    "b": 941
+   }
+  ],
+  "rules_text": [
+   "EMA (549) is above EMA (941) (uptrend)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 969,
+  "name": "magd_2h",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "2-hour",
+  "why": "Magd is the best momentum indicator for 2-hour chart on Microsoft.",
+  "quote": "the magd is the best momentum indicator for 2-hour chart on Microsoft",
+  "unchecked": [
+   "asset: Microsoft"
+  ],
+  "lesson_id": 432,
+  "rules": [
+   {
+    "rule": "ema_above_ema",
+    "a": 473,
+    "b": 680
+   }
+  ],
+  "rules_text": [
+   "EMA (473) is above EMA (680) (uptrend)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 970,
+  "name": "Stochastic below 20, RSI above 50, MACD bullish, and stochastic above 80",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 10.0,
+  "rr": 1.3,
+  "timeframe": "5m",
+  "why": "Stochastic lines below 20, RSI above 50, MACD bullish, and stochastic lines above 80.",
+  "quote": "Stochastic lines below 20, RSI above 50, MACD bullish, and stochastic lines above 80.",
+  "unchecked": [
+   "MACD bullish"
+  ],
+  "lesson_id": 433,
+  "rules": [
+   {
+    "rule": "close_below_sma",
+    "a": 20
+   },
+   {
+    "rule": "rsi_above",
+    "a": 50
+   },
+   {
+    "rule": "close_above_sma",
+    "b": 80
+   }
+  ],
+  "rules_text": [
+   "Close below SMA (20)",
+   "RSI (14) above 50",
+   "Close above SMA (200)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 971,
+  "name": "Stochastic above 80, RSI below 50, MACD bearish, and stochastic below 20",
+  "direction": "short",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 10.0,
+  "rr": 1.3,
+  "timeframe": "5m",
+  "why": "Stochastic lines above 80, RSI below 50, MACD bearish, and stochastic lines below 20.",
+  "quote": "Stochastic lines above 80, RSI below 50, MACD bearish, and stochastic lines below 20.",
+  "unchecked": [
+   "MACD bearish"
+  ],
+  "lesson_id": 433,
+  "rules": [
+   {
+    "rule": "close_above_sma",
+    "a": 80
+   },
+   {
+    "rule": "rsi_below",
+    "a": 50
+   },
+   {
+    "rule": "close_below_sma",
+    "b": 20
+   }
+  ],
+  "rules_text": [
+   "Close above SMA (80)",
+   "RSI (14) below 50",
+   "Close below SMA (200)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 972,
+  "name": "macd_crossover",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 1.0,
+  "timeframe": "5m",
+  "why": "MACD crossover is the only entry signal.",
+  "quote": "I made one slight modification to that script and that is that I only allow trade entries on macd crossovers",
+  "unchecked": [
+   "Close above the upper Bollinger band (20 candles, 2 deviations)",
+   "Shooting star / bearish pin bar (long upper wick)"
+  ],
+  "lesson_id": 433,
+  "rules": [
+   {
+    "rule": "macd_cross_up",
+    "a": 0,
+    "b": 0
+   }
+  ],
+  "rules_text": [
+   "MACD crosses above its signal line"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 973,
+  "name": "optimized_long",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "5m",
+  "why": "MACD crossover and close above 200 SMA are additional conditions.",
+  "quote": "I will use 30 tick slippage $100,000 capital and I will use it with a two X leverage which will be a 200,000 JPY order size",
+  "unchecked": [
+   "Close above the upper Bollinger band (20 candles, 2 deviations)",
+   "Shooting star / bearish pin bar (long upper wick)"
+  ],
+  "lesson_id": 433,
+  "rules": [
+   {
+    "rule": "macd_cross_up",
+    "a": 0,
+    "b": 0
+   },
+   {
+    "rule": "close_above_sma",
+    "a": 0,
+    "b": 0
+   }
+  ],
+  "rules_text": [
+   "MACD crosses above its signal line",
+   "Close above SMA (0)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 974,
+  "name": "optimized_long_5x",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 5.0,
+  "timeframe": "5m",
+  "why": "MACD crossover, close above 200 SMA, and close above 50 EMA are additional conditions.",
+  "quote": "I will change the order size to a 5x leverage which means 500,000 JPY on each trade and now we have 15% maximum draw down with almost 100% net profit",
+  "unchecked": [
+   "Close above the upper Bollinger band (20 candles, 2 deviations)",
+   "Shooting star / bearish pin bar (long upper wick)"
+  ],
+  "lesson_id": 433,
+  "rules": [
+   {
+    "rule": "macd_cross_up",
+    "a": 0,
+    "b": 0
+   },
+   {
+    "rule": "close_above_sma",
+    "a": 0,
+    "b": 0
+   },
+   {
+    "rule": "close_above_ema",
+    "a": 0,
+    "b": 0
+   }
+  ],
+  "rules_text": [
+   "MACD crosses above its signal line",
+   "Close above SMA (0)",
+   "Close above EMA (0)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 975,
+  "name": "adx_with_ema",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "daily",
+  "why": "The ADX with EMA is the best performing indicator out of the 11 tested.",
+  "quote": "ADX with limit levels, the ADX is above the EMA",
+  "unchecked": [
+   "adx_above_ema"
+  ],
+  "lesson_id": 434,
+  "rules": [
+   {
+    "rule": "rsi_above",
+    "a": 20
+   },
+   {
+    "rule": "ema_above_ema",
+    "a": 50,
+    "b": 200
+   }
+  ],
+  "rules_text": [
+   "RSI (14) above 20",
+   "EMA (50) is above EMA (200) (uptrend)"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 976,
+  "name": "mtm_with_limit_level",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "daily",
+  "why": "The MTM with limit level is used to determine long entries.",
+  "quote": "MTM with limit level, the MTM momentum is above the zero level",
+  "unchecked": [],
+  "lesson_id": 434,
+  "rules": [
+   {
+    "rule": "rsi_above",
+    "a": 0
+   }
+  ],
+  "rules_text": [
+   "RSI (14) above 0"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
+ },
+ {
+  "id": 977,
+  "name": "rmi_with_50_limit_level",
+  "direction": "long",
+  "status": "candidate",
+  "weight": 0.0,
+  "source": "lesson",
+  "stop_atr": 1.5,
+  "rr": 2.0,
+  "timeframe": "daily",
+  "why": "The RMI with 50 limit level is used to determine long entries.",
+  "quote": "RMI with 50 limit level, the RMI is above the 50 level",
+  "unchecked": [],
+  "lesson_id": 434,
+  "rules": [
+   {
+    "rule": "rsi_above",
+    "a": 50
+   }
+  ],
+  "rules_text": [
+   "RSI (14) above 50"
+  ],
+  "stats": {},
+  "charts": {},
+  "after_entry": null,
+  "hints": null,
+  "tune": null,
+  "exit_plan": null
  }
 ]
