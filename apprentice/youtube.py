@@ -13,6 +13,7 @@ from __future__ import annotations
 
 import json
 import re
+import time
 from urllib.parse import parse_qs, urlparse
 
 LANGS = ("en", "en-US", "en-GB", "en-orig")
@@ -96,15 +97,30 @@ def parse_json3(text: str) -> list[tuple[int, str]]:
     return segs
 
 
+def _retry(fn, waits=(20, 60, 150), log=print):
+    """YouTube answers "HTTP Error 429: Too Many Requests" when a playlist is fetched quickly; waiting and
+    trying again usually works. Other errors (private video, no captions) are raised straight away."""
+    for i in range(len(waits) + 1):
+        try:
+            return fn()
+        except Exception as e:
+            if "429" not in str(e) and "too many requests" not in str(e).lower():
+                raise
+            if i == len(waits):
+                raise
+            log(f"  YouTube says slow down (429) - waiting {waits[i]}s, then trying again")
+            time.sleep(waits[i])
+
+
 def captions(url: str) -> tuple[dict, list[tuple[int, str]]]:
     """(video info, transcript segments). Raises RuntimeError when the video has no captions."""
     with _ydl({"writesubtitles": True, "writeautomaticsub": True}) as y:
-        info = y.extract_info(url, download=False)
+        info = _retry(lambda: y.extract_info(url, download=False))
         pick = _pick(info.get("subtitles") or {}) or _pick(info.get("automatic_captions") or {})
         if not pick:
             raise RuntimeError("no English captions on this video - paste its transcript by hand instead")
         fmt, cap_url = pick
-        text = y.urlopen(cap_url).read().decode("utf-8", errors="replace")
+        text = _retry(lambda: y.urlopen(cap_url).read().decode("utf-8", errors="replace"))
     if fmt == "json3":
         segs = parse_json3(text)
     else:

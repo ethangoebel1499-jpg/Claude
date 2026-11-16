@@ -15,6 +15,7 @@ with simple keyword matching instead (rough, but works with no model at all).
 
 from __future__ import annotations
 
+import time
 import argparse
 import os
 import sys
@@ -70,6 +71,8 @@ def teach_source(store: Store, source: str, title: str | None, llm, log=print, r
                 log(f"[{n}/{len(vids)}] already learned: {v['title'] or v['id']}")
                 total["skipped"] += 1
                 continue
+            if n > 1:
+                time.sleep(4)                                   # a short pause between videos keeps YouTube from throttling us
             try:
                 meta, segs = youtube.captions(v["url"])
             except Exception as e:
