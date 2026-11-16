@@ -67,6 +67,12 @@ def log(event: str, a: dict, mode: str, note: str, payload: dict) -> None:
                     a.get("price", ""), a.get("size_pct", ""), mode, note, json.dumps(payload)])
 
 
+def norm_tf(v) -> str:
+    """The app's timeframe names: 1m ... 12h are lower case, days are upper case (1D, 2D). TradingView sends "1d"."""
+    t = str(v).strip()
+    return t.upper() if t[-1:] in ("d", "D") else t.lower()
+
+
 def _num(v) -> float | None:
     try:
         return float(v)
@@ -143,7 +149,7 @@ def process(p: dict, st: dict, args) -> list[str]:
             continue
         cmd = {"id": f"tvhook-{a['action']}-{a['run']}-{stamp}", "run": a["run"], "action": a["action"], "price": a["price"],
                **({"symbol": str(p["symbol"]).upper()} if p.get("symbol") else {}),
-               **({"timeframe": str(p["timeframe"]).lower()} if p.get("timeframe") else {}),
+               **({"timeframe": norm_tf(p["timeframe"])} if p.get("timeframe") else {}),
                "at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
                "reason": f"TradingView alert: position {st.get('size')} -> {signed_size(p)} at {p.get('price')}"}
         if a.get("size_pct"):
