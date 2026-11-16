@@ -1,41 +1,4 @@
 run,time,kind,text
-Apprentice UNI 4h,2026-11-09T21:16:54+00:00,error,RuntimeError: Kraken isn't answering - paused for 19s more
-Apprentice BTC 1D,2026-11-09T21:16:54+00:00,error,RuntimeError: Kraken isn't answering - paused for 19s more
-Apprentice LINK 1D,2026-11-09T21:16:54+00:00,error,RuntimeError: Kraken isn't answering - paused for 19s more
-Apprentice ADA 1D,2026-11-09T21:16:54+00:00,error,RuntimeError: Kraken isn't answering - paused for 19s more
-Trial #46 ETH 1D,2026-11-09T21:16:54+00:00,error,RuntimeError: Kraken isn't answering - paused for 19s more
-Trial #56 BTC 6h,2026-11-09T21:16:54+00:00,error,RuntimeError: Kraken isn't answering - paused for 19s more
-Trial #247 ETH 4h,2026-11-09T21:16:54+00:00,error,RuntimeError: Kraken isn't answering - paused for 19s more
-Trial #188 ETH 6h,2026-11-09T21:16:54+00:00,error,RuntimeError: Kraken isn't answering - paused for 19s more
-Trial #110 BTC 1D,2026-11-09T21:16:54+00:00,error,RuntimeError: Kraken isn't answering - paused for 19s more
-Trial #197 SOL 30m,2026-11-09T21:16:54+00:00,error,RuntimeError: Kraken isn't answering - paused for 19s more
-Trial #95 SOL 12h,2026-11-09T21:16:54+00:00,error,RuntimeError: Kraken isn't answering - paused for 19s more
-Trial #149 ETH 1D,2026-11-09T21:16:54+00:00,error,RuntimeError: Kraken isn't answering - paused for 19s more
-Trial #47 SOL 12h,2026-11-09T21:16:54+00:00,error,RuntimeError: Kraken isn't answering - paused for 19s more
-Trial #197 SOL 12h,2026-11-09T21:16:54+00:00,error,RuntimeError: Kraken isn't answering - paused for 19s more
-Apprentice XRP 4h,2026-11-09T21:16:54+00:00,error,RuntimeError: Kraken isn't answering - paused for 19s more
-Apprentice BCH 4h,2026-11-09T21:16:54+00:00,error,RuntimeError: Kraken isn't answering - paused for 19s more
-Apprentice XRP 1D,2026-11-09T21:16:54+00:00,error,RuntimeError: Kraken isn't answering - paused for 19s more
-Witcher ETH 2h,2026-11-09T21:16:54+00:00,error,RuntimeError: Kraken isn't answering - paused for 29s more
-Witcher SOL 2h,2026-11-09T21:16:54+00:00,error,RuntimeError: Kraken isn't answering - paused for 29s more
-GRIND BTC 4h,2026-11-09T21:16:54+00:00,error,RuntimeError: Kraken isn't answering - paused for 29s more
-S8 ETH 12h,2026-11-09T21:16:54+00:00,error,RuntimeError: Kraken isn't answering - paused for 29s more
-S3 GRIND DOGE 1h,2026-11-09T21:17:35+00:00,error,RuntimeError: Kraken isn't answering - paused for 120s more
-Apprentice BTC 4h,2026-11-09T21:17:35+00:00,error,RuntimeError: Kraken isn't answering - paused for 120s more
-Apprentice BTC 1h,2026-11-09T21:17:35+00:00,error,RuntimeError: Kraken isn't answering - paused for 120s more
-Apprentice ETH 1h,2026-11-09T21:17:35+00:00,error,RuntimeError: Kraken isn't answering - paused for 120s more
-Apprentice SHIB 1h,2026-11-09T21:17:35+00:00,error,RuntimeError: Kraken isn't answering - paused for 120s more
-Apprentice ETH 4h,2026-11-09T21:17:35+00:00,error,RuntimeError: Kraken isn't answering - paused for 120s more
-Apprentice UNI 4h,2026-11-09T21:17:35+00:00,error,RuntimeError: Kraken isn't answering - paused for 120s more
-Apprentice BTC 1D,2026-11-09T21:17:35+00:00,error,RuntimeError: Kraken isn't answering - paused for 120s more
-Apprentice LINK 1D,2026-11-09T21:17:35+00:00,error,RuntimeError: Kraken isn't answering - paused for 120s more
-Apprentice ADA 1D,2026-11-09T21:17:35+00:00,error,RuntimeError: Kraken isn't answering - paused for 120s more
-Trial #46 ETH 1D,2026-11-09T21:17:35+00:00,error,RuntimeError: Kraken isn't answering - paused for 120s more
-Trial #56 BTC 6h,2026-11-09T21:17:35+00:00,error,RuntimeError: Kraken isn't answering - paused for 120s more
-Trial #247 ETH 4h,2026-11-09T21:17:35+00:00,error,RuntimeError: Kraken isn't answering - paused for 120s more
-Trial #188 ETH 6h,2026-11-09T21:17:35+00:00,error,RuntimeError: Kraken isn't answering - paused for 120s more
-Trial #110 BTC 1D,2026-11-09T21:17:35+00:00,error,RuntimeError: Kraken isn't answering - paused for 120s more
-Trial #197 SOL 30m,2026-11-09T21:17:35+00:00,error,RuntimeError: Kraken isn't answering - paused for 120s more
 Trial #95 SOL 12h,2026-11-09T21:17:35+00:00,error,RuntimeError: Kraken isn't answering - paused for 120s more
 Trial #149 ETH 1D,2026-11-09T21:17:35+00:00,error,RuntimeError: Kraken isn't answering - paused for 120s more
 Trial #47 SOL 12h,2026-11-09T21:17:35+00:00,error,RuntimeError: Kraken isn't answering - paused for 120s more
@@ -984,18 +947,55 @@ TV-1115-1530,2026-11-15T15:30:05+00:00,claude,Claude: short (3% of the account) 
 TV-1115-1530,2026-11-15T15:31:32+00:00,entry,"SHORT 0.004629 @ 64,800.70"
 TV-1115-1530,2026-11-15T15:31:32+00:00,manual,"you: short -> opened short at 64,800.70"
 TV-1115-1530,2026-11-15T15:31:32+00:00,start,watching XBTUSD 30m
-TV-1116-0000,2026-11-16T00:00:45+00:00,claude,Claude: short (27% of the account) - TradingView alert: position -0.855 -> -139.84 at 1856.36
-TV-1115-1530,2026-11-16T00:00:45+00:00,claude,Claude: close - TradingView alert: position -139.84 -> 0.0 at 1856.36
-TV-1116-0000,2026-11-16T00:00:45+00:00,claude,Claude: close - TradingView alert: position -139.84 -> 0.0 at 1856.36
-TV-1116-0000-2,2026-11-16T00:00:45+00:00,claude,Claude: short (1% of the account) - TradingView alert: position 0.0 -> -419.53 at 1856.36
-TV-1115-1530,2026-11-16T00:01:12+00:00,exit,closed (manual close) +290.14 USD
-TV-1115-1530,2026-11-16T00:01:12+00:00,manual,you: close -> closed
-TV-1116-0000,2026-11-16T00:02:15+00:00,entry,"SHORT 1.454459 @ 1,856.36"
-TV-1116-0000,2026-11-16T00:02:15+00:00,manual,"you: short -> opened short at 1,856.36"
-TV-1116-0000,2026-11-16T00:02:15+00:00,exit,closed (manual close) -21.60 USD
-TV-1116-0000,2026-11-16T00:02:15+00:00,manual,you: close -> closed
-TV-1116-0000,2026-11-16T00:02:15+00:00,start,watching XBTUSD 30m
-TV-1116-0000-2,2026-11-16T00:02:15+00:00,entry,"SHORT 0.053868 @ 1,856.36"
-TV-1116-0000-2,2026-11-16T00:02:15+00:00,manual,"you: short -> opened short at 1,856.36"
-TV-1116-0000-2,2026-11-16T00:02:15+00:00,start,watching XBTUSD 30m
-TV-1116-0000-2,2026-11-16T00:02:15+00:00,exit,"closed (stop) -3,431.77 USD"
+Apprentice BCH 4h,2026-11-16T21:08:10+00:00,error,"RuntimeError: Kraken isn't answering - paused for 119s more; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+Apprentice XRP 1D,2026-11-16T21:08:11+00:00,error,"RuntimeError: Kraken isn't answering - paused for 119s more; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+Trial #673 ETH 1D,2026-11-16T21:08:11+00:00,error,"RuntimeError: Kraken isn't answering - paused for 118s more; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+Trial #92 BTC 1h,2026-11-16T21:08:12+00:00,error,"RuntimeError: Kraken isn't answering - paused for 118s more; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+Trial #448 BTC 1D,2026-11-16T21:08:12+00:00,error,"RuntimeError: Kraken isn't answering - paused for 118s more; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+Trial #673 BTC 1D,2026-11-16T21:08:12+00:00,error,"RuntimeError: Kraken isn't answering - paused for 117s more; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+S3 GRIND DOGE 1h,2026-11-16T21:08:52+00:00,error,"RuntimeError: Kraken isn't answering - paused for 78s more; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+Apprentice BTC 1h,2026-11-16T21:08:52+00:00,error,"RuntimeError: Kraken isn't answering - paused for 77s more; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+Apprentice ETH 1h,2026-11-16T21:08:53+00:00,error,"RuntimeError: Kraken isn't answering - paused for 77s more; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+Apprentice SHIB 1h,2026-11-16T21:08:53+00:00,error,"RuntimeError: Kraken isn't answering - paused for 77s more; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+Apprentice ETH 4h,2026-11-16T21:08:53+00:00,error,"RuntimeError: Kraken isn't answering - paused for 76s more; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+Apprentice UNI 4h,2026-11-16T21:08:53+00:00,error,"RuntimeError: Kraken isn't answering - paused for 76s more; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+Apprentice BTC 1D,2026-11-16T21:08:54+00:00,error,"RuntimeError: Kraken isn't answering - paused for 76s more; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+Apprentice LINK 1D,2026-11-16T21:08:54+00:00,error,"RuntimeError: Kraken isn't answering - paused for 76s more; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+Trial #46 ETH 1D,2026-11-16T21:08:55+00:00,error,"RuntimeError: Kraken isn't answering - paused for 74s more; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+Trial #247 ETH 4h,2026-11-16T21:08:55+00:00,error,"RuntimeError: Kraken isn't answering - paused for 74s more; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+Trial #95 SOL 12h,2026-11-16T21:08:56+00:00,error,"RuntimeError: Kraken isn't answering - paused for 74s more; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+Apprentice XRP 4h,2026-11-16T21:08:56+00:00,error,"RuntimeError: Kraken isn't answering - paused for 73s more; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+Apprentice XRP 1D,2026-11-16T21:08:57+00:00,error,"RuntimeError: Kraken isn't answering - paused for 72s more; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+Trial #448 ETH 1D,2026-11-16T21:08:58+00:00,error,"RuntimeError: Kraken isn't answering - paused for 72s more; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+Trial #673 ETH 1D,2026-11-16T21:08:58+00:00,error,"RuntimeError: Kraken isn't answering - paused for 72s more; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+Trial #92 BTC 1h,2026-11-16T21:08:58+00:00,error,"RuntimeError: Kraken isn't answering - paused for 71s more; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+Trial #448 BTC 1D,2026-11-16T21:08:58+00:00,error,"RuntimeError: Kraken isn't answering - paused for 71s more; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+Trial #673 BTC 1D,2026-11-16T21:08:59+00:00,error,"RuntimeError: Kraken isn't answering - paused for 71s more; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+Trial #23 SOL 12h,2026-11-16T21:08:59+00:00,error,"RuntimeError: Kraken isn't answering - paused for 70s more; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+S3 GRIND DOGE 1h,2026-11-16T21:09:38+00:00,error,"RuntimeError: Kraken isn't answering - paused for 32s more; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+Apprentice BTC 1h,2026-11-16T21:09:39+00:00,error,"RuntimeError: Kraken isn't answering - paused for 31s more; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+Apprentice ETH 1h,2026-11-16T21:09:39+00:00,error,"RuntimeError: Kraken isn't answering - paused for 31s more; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+Apprentice SHIB 1h,2026-11-16T21:09:39+00:00,error,"RuntimeError: Kraken isn't answering - paused for 30s more; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+Apprentice UNI 4h,2026-11-16T21:09:40+00:00,error,"RuntimeError: Kraken isn't answering - paused for 29s more; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+Apprentice BTC 1D,2026-11-16T21:09:41+00:00,error,"RuntimeError: Kraken isn't answering - paused for 29s more; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+Apprentice ADA 1D,2026-11-16T21:09:42+00:00,error,"RuntimeError: Kraken isn't answering - paused for 28s more; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+Trial #247 ETH 4h,2026-11-16T21:09:43+00:00,error,"RuntimeError: Kraken isn't answering - paused for 27s more; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+Trial #95 SOL 12h,2026-11-16T21:09:43+00:00,error,"RuntimeError: Kraken isn't answering - paused for 26s more; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+Apprentice XRP 4h,2026-11-16T21:09:44+00:00,error,"RuntimeError: Kraken isn't answering - paused for 25s more; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+Apprentice BCH 4h,2026-11-16T21:09:44+00:00,error,"RuntimeError: Kraken isn't answering - paused for 25s more; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+Trial #448 ETH 1D,2026-11-16T21:09:45+00:00,error,"RuntimeError: Kraken isn't answering - paused for 24s more; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+Trial #673 ETH 1D,2026-11-16T21:09:46+00:00,error,"RuntimeError: Kraken isn't answering - paused for 24s more; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+Trial #92 BTC 1h,2026-11-16T21:09:46+00:00,error,"RuntimeError: Kraken isn't answering - paused for 24s more; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+Trial #448 BTC 1D,2026-11-16T21:09:46+00:00,error,"RuntimeError: Kraken isn't answering - paused for 23s more; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+Trial #673 BTC 1D,2026-11-16T21:09:46+00:00,error,"RuntimeError: Kraken isn't answering - paused for 23s more; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+TV-1113-1845,2026-11-16T21:09:48+00:00,error,"RuntimeError: Kraken isn't answering - paused for 22s more; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+TV-1115-1530,2026-11-16T21:09:54+00:00,error,"RuntimeError: Kraken isn't answering - paused for 15s more; Coinbase backup failed too: ('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+S3 GRIND DOGE 1h,2026-11-16T21:10:25+00:00,catch-up,"trader was off 2m: replayed 0 hourly candles, stop and targets not reached"
+TV-ETH1D-1116-0000,2026-11-16T00:00:46+00:00,claude,"Claude: short (1% of the account) - TradingView ETH 1D alert, re-booked on the right chart"
+S3 GRIND DOGE 1h,2026-11-16T22:54:44+00:00,catch-up,"trader was off 1h 25m: replayed 1 hourly candles, stop and targets not reached"
+Trial #92 BTC 1h,2026-11-16T22:55:08+00:00,catch-up,"trader was off 1h 25m: replayed 1 hourly candles, stop and targets not reached"
+Trial #23 SOL 12h,2026-11-16T22:55:08+00:00,catch-up,"trader was off 1h 25m: replayed 1 hourly candles, stop and targets not reached"
+TV-1115-1530,2026-11-16T22:55:10+00:00,catch-up,"trader was off 1h 25m: replayed 1 hourly candles, stop and targets not reached"
+TV-ETH1D-1116-0000,2026-11-16T22:55:10+00:00,error,RuntimeError: '1d'; Coinbase backup failed too: '1d'
+TV-ETH1D-1116-0000,2026-11-16T22:56:13+00:00,error,RuntimeError: '1d'; Coinbase backup failed too: '1d'
+TV-ETH1D-1116-0000,2026-11-16T22:57:14+00:00,error,RuntimeError: '1d'; Coinbase backup failed too: '1d'
