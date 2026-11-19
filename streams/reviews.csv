@@ -1,0 +1,2 @@
+call_id,verdict,note,corrected,reviewed
+9,wrong,,"{""call"": {""asset"": ""NULL"", ""direction"": ""long"", ""kind"": ""plan"", ""timeframe"": ""null"", ""entry"": null, ""stop"": null, ""targets"": [10000000.0], ""summary"": ""Identified the most important resistance in the past 10 years, but no specific asset or direction mentioned."", ""quote"": ""This is the most important resistance in the past 10 years.""}, ""changes"": {}}",2026-11-03T01:24:19+00:00
